@@ -1,0 +1,3581 @@
+{
+  "id": "lesson-depositional-coastal-landforms-dkhv6x",
+  "type": "resource",
+  "title": "Depositional coastal landforms",
+  "meta": {
+    "schemaVersion": "0.11",
+    "credits": "© Oak National Academy 2025. Produced in partnership with The Geographical Association. Licensed on the Open Government Licence v3.0, except where otherwise stated. See Oak terms and conditions.",
+    "language": "en-GB"
+  },
+  "sequence": [
+    "sec-intro",
+    "sec-lc1",
+    "sec-lc2",
+    "sec-plenary"
+  ],
+  "sections": {
+    "sec-lc1": {
+      "id": "sec-lc1",
+      "type": "learning-cycle",
+      "heading": "How does deposition shape our coastlines?",
+      "sequence": [
+        "blk-s6-deposition",
+        "blk-s6-debris",
+        "blk-s7-beaches",
+        "blk-s7-longshore",
+        "blk-s8-check",
+        "blk-s9-text",
+        "blk-s9-diagram",
+        "blk-s9-transport",
+        "blk-s10-text",
+        "blk-s10-diagram",
+        "blk-s11-check",
+        "blk-s12-text",
+        "blk-s12-diagram",
+        "blk-s13-text",
+        "blk-s13-diagram",
+        "blk-s14-check",
+        "blk-s15-task"
+      ]
+    },
+    "sec-lc2": {
+      "id": "sec-lc2",
+      "type": "learning-cycle",
+      "heading": "What coastal landforms does deposition create?",
+      "sequence": [
+        "blk-s18-text",
+        "blk-s18-diagram",
+        "blk-s19-intro",
+        "blk-s19-diagram",
+        "blk-s19-steps",
+        "blk-s20-check",
+        "blk-s21-saltmarsh",
+        "blk-s22-bar",
+        "blk-s23-tombolo",
+        "blk-s24-check",
+        "blk-s25-task",
+        "blk-s26-task",
+        "blk-s26-answer"
+      ]
+    },
+    "sec-plenary": {
+      "id": "sec-plenary",
+      "type": "plenary",
+      "heading": "Summary",
+      "sequence": [
+        "blk-summary"
+      ]
+    },
+    "sec-intro": {
+      "id": "sec-intro",
+      "type": "intro",
+      "heading": "Depositional coastal landforms",
+      "sequence": [
+        "blk-objective",
+        "blk-glossary"
+      ]
+    }
+  },
+  "blocks": {
+    "blk-objective": {
+      "id": "blk-objective",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I can explain depositional processes and describe the coastal landforms they create."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-glossary": {
+      "id": "blk-glossary",
+      "type": "primitive_glossary",
+      "content": {
+        "items": [
+          {
+            "id": "deposition",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "deposition"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "when material such as sand, mud or rocks is dropped by the water that was carrying it"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "transportation",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "transportation"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "when water moves sand, mud and rocks from one place to another"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "swash",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "swash"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "when a wave rushes up the beach"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "backwash",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "backwash"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "when the water from a wave retreats back into the sea"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "sediment",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "sediment"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "material that is moved by water or air and settles in another place"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "meta": {
+        "keywordIds": [
+          "kw-deposition",
+          "kw-transportation",
+          "kw-swash",
+          "kw-backwash",
+          "kw-sediment"
+        ]
+      }
+    },
+    "blk-s6-deposition": {
+      "id": "blk-s6-deposition",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Deposition",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " happens at the coast when a wave loses energy and can no longer carry its load.  This often happens in sheltered parts of the coast, like bays."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s6-debris": {
+      "id": "blk-s6-debris",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "altText": "Photograph of a beach strewn with plastic bottles and other litter washed up on the sand."
+        },
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "It then drops any "
+                },
+                {
+                  "type": "text",
+                  "text": "sediment ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "that it is carrying, such as sand, mud or rocks. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "color": "#000000"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "It also drops any other debris it has picked up, such as plastics and litter, which pollute the natural environment. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "color": "#000000"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "color": "#000000"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s7-beaches": {
+      "id": "blk-s7-beaches",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "altText": "Photograph of a pebble beach with a rocky headland and waves breaking on the shore."
+        },
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "When sediment, like sand and shingle, is deposited at the coast, it can create landforms, like beaches. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s7-longshore": {
+      "id": "blk-s7-longshore",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "One of the main ways that "
+                },
+                {
+                  "type": "text",
+                  "text": "transportation",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " and "
+                },
+                {
+                  "type": "text",
+                  "text": "deposition",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " take place at the coast is through a process called longshore drift."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "color": "#000000"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s8-check": {
+      "id": "blk-s8-check",
+      "type": "question_choice",
+      "content": {
+        "variant": "multi",
+        "response": {
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Deposition",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " only happens in bays."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Waves can deposit "
+                      },
+                      {
+                        "type": "text",
+                        "text": "sediment",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " and other debris at the coast. "
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Deposition",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " happens when waves have lots of energy."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Deposition",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " happens when waves lose energy."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": [
+          "b",
+          "d"
+        ],
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "heading",
+                "attrs": {
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Which sentences about "
+                  },
+                  {
+                    "type": "text",
+                    "text": "deposition",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " are true?"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-s9-text": {
+      "id": "blk-s9-text",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Longshore drift occurs when waves approach the coast                        at an angle because of the direction of the prevailing wind."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s9-transport": {
+      "id": "blk-s9-transport",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Sediment ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "is then transported along the coastline by the waves. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s9-diagram": {
+      "id": "blk-s9-diagram",
+      "type": "primitive_layered",
+      "content": {
+        "canvas": {
+          "width": 960,
+          "height": 540
+        },
+        "altText": "Diagram showing longshore drift carrying sediment along a beach at an angle set by the prevailing wind.",
+        "layers": [
+          {
+            "id": "base",
+            "type": "image",
+            "zOrder": 0,
+            "geometry": {
+              "x": 303,
+              "y": 163,
+              "width": 523,
+              "height": 336
+            },
+            "src": "PLACEHOLDER",
+            "altText": "Illustration of waves approaching a beach at an angle, with red arrows showing swash up the beach and blue arrows showing backwash returning to the sea."
+          },
+          {
+            "id": "arr-prevailing-wind",
+            "type": "arrow",
+            "zOrder": 1,
+            "from": {
+              "x": 236,
+              "y": 464
+            },
+            "to": {
+              "x": 475,
+              "y": 454
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-prevailing-wind",
+            "type": "text",
+            "zOrder": 2,
+            "geometry": {
+              "x": 40,
+              "y": 439,
+              "width": 288,
+              "height": 82
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "prevailing wind"
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "color": "#000000",
+              "align": "left"
+            }
+          }
+        ]
+      }
+    },
+    "blk-s10-text": {
+      "id": "blk-s10-text",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The "
+                },
+                {
+                  "type": "text",
+                  "text": "swash",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " (waves moving up the beach) moves "
+                },
+                {
+                  "type": "text",
+                  "text": "sediment ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "towards the beach at an angle due to the prevailing wind."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s10-diagram": {
+      "id": "blk-s10-diagram",
+      "type": "primitive_layered",
+      "content": {
+        "canvas": {
+          "width": 960,
+          "height": 540
+        },
+        "altText": "Diagram labelling the swash and prevailing wind on a beach where longshore drift moves sediment.",
+        "layers": [
+          {
+            "id": "base",
+            "type": "image",
+            "zOrder": 0,
+            "geometry": {
+              "x": 399,
+              "y": 115,
+              "width": 523,
+              "height": 336
+            },
+            "src": "PLACEHOLDER",
+            "altText": "Illustration of waves approaching a beach at an angle with arrows showing swash and backwash."
+          },
+          {
+            "id": "arr-swash",
+            "type": "arrow",
+            "zOrder": 1,
+            "from": {
+              "x": 219,
+              "y": 339
+            },
+            "to": {
+              "x": 445,
+              "y": 269
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-swash",
+            "type": "text",
+            "zOrder": 2,
+            "geometry": {
+              "x": 130,
+              "y": 313,
+              "width": 114,
+              "height": 82
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "swash",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "bold": true,
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "bold": true,
+              "color": "#000000",
+              "align": "left"
+            }
+          },
+          {
+            "id": "arr-prevailing-wind",
+            "type": "arrow",
+            "zOrder": 3,
+            "from": {
+              "x": 288,
+              "y": 427
+            },
+            "to": {
+              "x": 579,
+              "y": 402
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-prevailing-wind",
+            "type": "text",
+            "zOrder": 4,
+            "geometry": {
+              "x": 93,
+              "y": 401,
+              "width": 245,
+              "height": 82
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "prevailing wind"
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "color": "#000000",
+              "align": "left"
+            }
+          }
+        ]
+      }
+    },
+    "blk-s11-check": {
+      "id": "blk-s11-check",
+      "type": "question_choice",
+      "content": {
+        "variant": "boolean",
+        "correctAnswer": true,
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Swash",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " carries sediment up the beach. "
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "feedback": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The "
+                  },
+                  {
+                    "type": "text",
+                    "text": "swash",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " is waves breaking on the shore and washing up onto the beach."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-s12-text": {
+      "id": "blk-s12-text",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The "
+                },
+                {
+                  "type": "text",
+                  "text": "backwash",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " (waves moving back down the beach)                 carries "
+                },
+                {
+                  "type": "text",
+                  "text": "sediment ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "back towards the sea because of gravity."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s12-diagram": {
+      "id": "blk-s12-diagram",
+      "type": "primitive_layered",
+      "content": {
+        "canvas": {
+          "width": 960,
+          "height": 540
+        },
+        "altText": "Diagram labelling backwash, swash and the prevailing wind on a beach experiencing longshore drift.",
+        "layers": [
+          {
+            "id": "base",
+            "type": "image",
+            "zOrder": 0,
+            "geometry": {
+              "x": 303,
+              "y": 171,
+              "width": 523,
+              "height": 336
+            },
+            "src": "PLACEHOLDER",
+            "altText": "Illustration of waves on a beach with arrows showing swash up the beach and backwash returning to the sea."
+          },
+          {
+            "id": "arr-backwash",
+            "type": "arrow",
+            "zOrder": 1,
+            "from": {
+              "x": 161,
+              "y": 256
+            },
+            "to": {
+              "x": 399,
+              "y": 321
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-backwash",
+            "type": "text",
+            "zOrder": 2,
+            "geometry": {
+              "x": 30,
+              "y": 229,
+              "width": 165,
+              "height": 82
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "backwash",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "bold": true,
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "bold": true,
+              "color": "#000000",
+              "align": "left"
+            }
+          },
+          {
+            "id": "arr-swash",
+            "type": "arrow",
+            "zOrder": 3,
+            "from": {
+              "x": 148,
+              "y": 353
+            },
+            "to": {
+              "x": 344,
+              "y": 331
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-swash",
+            "type": "text",
+            "zOrder": 4,
+            "geometry": {
+              "x": 60,
+              "y": 326,
+              "width": 114,
+              "height": 82
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "swash",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "bold": true,
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "bold": true,
+              "color": "#000000",
+              "align": "left"
+            }
+          },
+          {
+            "id": "arr-prevailing-wind",
+            "type": "arrow",
+            "zOrder": 5,
+            "from": {
+              "x": 220,
+              "y": 466
+            },
+            "to": {
+              "x": 480,
+              "y": 455
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-prevailing-wind",
+            "type": "text",
+            "zOrder": 6,
+            "geometry": {
+              "x": 26,
+              "y": 441,
+              "width": 251,
+              "height": 82
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "prevailing wind"
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "color": "#000000",
+              "align": "left"
+            }
+          }
+        ]
+      }
+    },
+    "blk-s13-text": {
+      "id": "blk-s13-text",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The process repeats itself along the coast, in a zigzag pattern."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-s13-diagram": {
+      "id": "blk-s13-diagram",
+      "type": "primitive_layered",
+      "content": {
+        "canvas": {
+          "width": 960,
+          "height": 540
+        },
+        "altText": "Diagram showing longshore drift repeating in a zigzag along the coast, with swash, backwash and prevailing wind labelled.",
+        "layers": [
+          {
+            "id": "base",
+            "type": "image",
+            "zOrder": 0,
+            "geometry": {
+              "x": 269,
+              "y": 155,
+              "width": 523,
+              "height": 336
+            },
+            "src": "PLACEHOLDER",
+            "altText": "Illustration of waves moving sediment along a beach in a zigzag pattern by swash and backwash."
+          },
+          {
+            "id": "lbl-longshore",
+            "type": "text",
+            "zOrder": 1,
+            "geometry": {
+              "x": 361,
+              "y": 162,
+              "width": 334,
+              "height": 41
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "direction of longshore drift"
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "color": "#000000",
+              "align": "left"
+            }
+          },
+          {
+            "id": "arr-backwash",
+            "type": "arrow",
+            "zOrder": 2,
+            "from": {
+              "x": 170,
+              "y": 232
+            },
+            "to": {
+              "x": 363,
+              "y": 301
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-backwash",
+            "type": "text",
+            "zOrder": 3,
+            "geometry": {
+              "x": 45,
+              "y": 213,
+              "width": 153,
+              "height": 29
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "backwash",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "bold": true,
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "bold": true,
+              "color": "#000000",
+              "align": "left"
+            }
+          },
+          {
+            "id": "arr-swash",
+            "type": "arrow",
+            "zOrder": 4,
+            "from": {
+              "x": 145,
+              "y": 321
+            },
+            "to": {
+              "x": 302,
+              "y": 321
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-swash",
+            "type": "text",
+            "zOrder": 5,
+            "geometry": {
+              "x": 63,
+              "y": 305,
+              "width": 87,
+              "height": 29
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "swash",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "bold": true,
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "bold": true,
+              "color": "#000000",
+              "align": "left"
+            }
+          },
+          {
+            "id": "arr-prevailing-wind",
+            "type": "arrow",
+            "zOrder": 6,
+            "from": {
+              "x": 227,
+              "y": 423
+            },
+            "to": {
+              "x": 434,
+              "y": 458
+            },
+            "stroke": {
+              "width": 4,
+              "fill": {
+                "type": "solid",
+                "color": {
+                  "kind": "scheme",
+                  "value": "accent4",
+                  "mods": [],
+                  "resolvedHex": "#845ad9"
+                }
+              },
+              "dash": "solid"
+            },
+            "capEnd": "arrow"
+          },
+          {
+            "id": "lbl-prevailing-wind",
+            "type": "text",
+            "zOrder": 7,
+            "geometry": {
+              "x": 42,
+              "y": 409,
+              "width": 193,
+              "height": 29
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "prevailing wind"
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            },
+            "textStyle": {
+              "fontSize": 18,
+              "color": "#000000",
+              "align": "left"
+            }
+          }
+        ]
+      }
+    },
+    "blk-s14-check": {
+      "id": "blk-s14-check",
+      "type": "question_choice",
+      "content": {
+        "variant": "boolean",
+        "correctAnswer": false,
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Backwash",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " carries sediment up the beach. "
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "feedback": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Swash",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " is waves breaking on the shore and washing up onto the beach, "
+                  },
+                  {
+                    "type": "text",
+                    "text": "backwash",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " is waves flowing back down the beach toward the sea."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-s15-task": {
+      "id": "blk-s15-task",
+      "type": "question_labelling",
+      "content": {
+        "response": {
+          "blanks": [
+            {
+              "id": "A"
+            },
+            {
+              "id": "B"
+            },
+            {
+              "id": "C"
+            },
+            {
+              "id": "D"
+            }
+          ]
+        },
+        "correctAnswer": {
+          "A": "direction of prevailing wind",
+          "B": "swash",
+          "C": "direction of longshore drift",
+          "D": "backwash"
+        },
+        "diagram": {
+          "canvas": {
+            "width": 960,
+            "height": 540
+          },
+          "altText": "Diagram of a beach experiencing longshore drift, with four positions marked A, B, C and D for labelling.",
+          "layers": [
+            {
+              "id": "base",
+              "type": "image",
+              "zOrder": 0,
+              "geometry": {
+                "x": 46,
+                "y": 141,
+                "width": 475,
+                "height": 305
+              },
+              "src": "PLACEHOLDER",
+              "altText": "Illustration of waves on a beach showing swash and backwash arrows and the direction of longshore drift."
+            },
+            {
+              "id": "blank-A",
+              "type": "text",
+              "zOrder": 1,
+              "geometry": {
+                "x": 183,
+                "y": 425,
+                "width": 43,
+                "height": 43
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "A"
+                      }
+                    ],
+                    "attrs": {
+                      "align": "ctr",
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              },
+              "textStyle": {
+                "fontSize": 20,
+                "align": "center"
+              }
+            },
+            {
+              "id": "blank-B",
+              "type": "text",
+              "zOrder": 2,
+              "geometry": {
+                "x": 34,
+                "y": 295,
+                "width": 43,
+                "height": 43
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "B"
+                      }
+                    ],
+                    "attrs": {
+                      "align": "ctr",
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              },
+              "textStyle": {
+                "fontSize": 18,
+                "align": "center"
+              }
+            },
+            {
+              "id": "blank-C",
+              "type": "text",
+              "zOrder": 3,
+              "geometry": {
+                "x": 262,
+                "y": 151,
+                "width": 43,
+                "height": 43
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "C"
+                      }
+                    ],
+                    "attrs": {
+                      "align": "ctr",
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              },
+              "textStyle": {
+                "fontSize": 18,
+                "align": "center"
+              }
+            },
+            {
+              "id": "blank-D",
+              "type": "text",
+              "zOrder": 4,
+              "geometry": {
+                "x": 512,
+                "y": 295,
+                "width": 43,
+                "height": 43
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "D"
+                      }
+                    ],
+                    "attrs": {
+                      "align": "ctr",
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              },
+              "textStyle": {
+                "fontSize": 18,
+                "align": "center"
+              }
+            }
+          ]
+        },
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Add the labels to the diagram in the correct place."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-s18-text": {
+      "id": "blk-s18-text",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Depositional",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " landforms created by the"
+                },
+                {
+                  "type": "text",
+                  "text": " transportation",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " of                    "
+                },
+                {
+                  "type": "text",
+                  "text": "sediment ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "at the coast include spits, bars and tombolos. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-s18-diagram": {
+      "id": "blk-s18-diagram",
+      "type": "primitive_layered",
+      "content": {
+        "canvas": {
+          "width": 960,
+          "height": 540
+        },
+        "layers": [
+          {
+            "id": "base",
+            "type": "image",
+            "zOrder": 0,
+            "geometry": {
+              "x": 160,
+              "y": 168,
+              "width": 650,
+              "height": 330
+            },
+            "src": "PLACEHOLDER",
+            "altText": "Map showing depositional coastal landforms"
+          },
+          {
+            "id": "shape-spit",
+            "type": "shape",
+            "zOrder": 1,
+            "geometry": {
+              "x": 336,
+              "y": 243,
+              "width": 77,
+              "height": 81
+            },
+            "shapeKind": "ellipse"
+          },
+          {
+            "id": "shape-bar",
+            "type": "shape",
+            "zOrder": 2,
+            "geometry": {
+              "x": 490,
+              "y": 265,
+              "width": 77,
+              "height": 81
+            },
+            "shapeKind": "ellipse"
+          },
+          {
+            "id": "shape-tombolo",
+            "type": "shape",
+            "zOrder": 3,
+            "geometry": {
+              "x": 653,
+              "y": 216,
+              "width": 86,
+              "height": 86
+            },
+            "shapeKind": "ellipse"
+          }
+        ]
+      }
+    },
+    "blk-s19-intro": {
+      "id": "blk-s19-intro",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A "
+                },
+                {
+                  "type": "text",
+                  "text": "spit",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " forms when longshore drift is interrupted because of a change in direction of the coastline."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "bold": true
+                }
+              }
+            }
+          ]
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ],
+        "keywordIds": [
+          "kw-deposition"
+        ]
+      }
+    },
+    "blk-s19-diagram": {
+      "id": "blk-s19-diagram",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0.04632,
+            "t": 0.2573,
+            "r": 0.53251,
+            "b": 0.32608
+          },
+          "altText": "Map showing a spit and salt marsh forming at the coast"
+        }
+      }
+    },
+    "blk-s19-steps": {
+      "id": "blk-s19-steps",
+      "type": "primitive_flow",
+      "content": {
+        "orientation": "vertical",
+        "items": [
+          {
+            "id": "st1",
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "1. "
+                    },
+                    {
+                      "type": "text",
+                      "text": "Sediment ",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "text": "is carried along the coast by longshore drift."
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    }
+                  }
+                },
+                {
+                  "type": "paragraph",
+                  "content": [],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "bold": true
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "st2",
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "2. When the waves meet a change in direction of the coastline, "
+                    },
+                    {
+                      "type": "text",
+                      "text": "transportation ",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "text": "and "
+                    },
+                    {
+                      "type": "text",
+                      "text": "deposition",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "text": " continues in the original direction. "
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "color": "#000000"
+                    }
+                  }
+                },
+                {
+                  "type": "paragraph",
+                  "content": [],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    },
+                    "pEndDefaults": {
+                      "color": "#000000"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "st3",
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "3. "
+                    },
+                    {
+                      "type": "text",
+                      "text": "Sediment ",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "text": "builds up and forms a long, narrow landform called a spit."
+                    },
+                    {
+                      "type": "text",
+                      "text": " ",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "st4",
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "4. A change in prevailing wind direction causes a spit to curve into a hook."
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "blk-s20-check": {
+      "id": "blk-s20-check",
+      "type": "question_ordering",
+      "content": {
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Number the statements 1 - 5 to show how a spit forms, where 1 is the first stage."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "response": {
+          "items": [
+            {
+              "id": "i-sediment",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sediment is transported along a beach by longshore drift."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "i-hook",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "If the wind direction changes over time, a hook is formed at the end of the spit."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "i-ridge",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "A long, narrow ridge of land projects out of the coastline, called a spit."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "i-change",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "There is a change in direction of the coastline."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "i-continues",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Transportation and deposition of sediment continues in the original direction and sediment builds up over time."
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": [
+          "i-sediment",
+          "i-change",
+          "i-continues",
+          "i-ridge",
+          "i-hook"
+        ]
+      }
+    },
+    "blk-s21-saltmarsh": {
+      "id": "blk-s21-saltmarsh",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Salt marshes",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " often form behind a spit. This is a very sheltered area, as waves can’t get past the spit so they have low energy. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "color": "#000000"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "color": "#000000"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Water movement slows down enough so that even fine material like mud is deposited"
+                },
+                {
+                  "type": "text",
+                  "text": ". ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "Over time, this builds up and salt-tolerant plants start to grow."
+                },
+                {
+                  "type": "text",
+                  "text": " ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "bold": true,
+                  "color": "#000000"
+                }
+              }
+            }
+          ]
+        },
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0,
+            "t": 0.23007,
+            "r": 0.52169,
+            "b": 0.27492
+          }
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-s22-bar": {
+      "id": "blk-s22-bar",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Sometimes a spit grows across a bay joining two headlands. This is called a "
+                },
+                {
+                  "type": "text",
+                  "text": "bar",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": ". "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The bar cuts off the water behind from the open sea and creates a "
+                },
+                {
+                  "type": "text",
+                  "text": "lagoon",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        },
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0.30334,
+            "t": 0,
+            "r": 0.27846,
+            "b": 0.26046
+          }
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-s23-tombolo": {
+      "id": "blk-s23-tombolo",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A"
+                },
+                {
+                  "type": "text",
+                  "text": " tombolo",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " is formed when a spit connects the mainland coast to an island."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        },
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0.67024,
+            "t": 0.081,
+            "r": 0,
+            "b": 0.28067
+          }
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-s24-check": {
+      "id": "blk-s24-check",
+      "type": "question_choice",
+      "content": {
+        "variant": "single",
+        "response": {
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "in front of a spit"
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "behind a spit"
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "in a bay"
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": "b",
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "heading",
+                "attrs": {
+                  "level": 2
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Where do salt marshes often form?"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-s25-task": {
+      "id": "blk-s25-task",
+      "type": "question_labelling",
+      "content": {
+        "response": {
+          "blanks": [
+            {
+              "id": "spit"
+            },
+            {
+              "id": "saltmarsh"
+            },
+            {
+              "id": "tombolo"
+            },
+            {
+              "id": "bar"
+            },
+            {
+              "id": "lagoon"
+            }
+          ]
+        },
+        "correctAnswer": {
+          "spit": "spit",
+          "saltmarsh": "saltmarsh",
+          "tombolo": "tombolo",
+          "bar": "bar",
+          "lagoon": "lagoon"
+        },
+        "diagram": {
+          "canvas": {
+            "width": 960,
+            "height": 540
+          },
+          "altText": "Map of a coastline showing depositional landforms to be labelled: spit, salt marsh, tombolo, bar and lagoon.",
+          "layers": [
+            {
+              "id": "base",
+              "type": "image",
+              "zOrder": 0,
+              "geometry": {
+                "x": 165,
+                "y": 128,
+                "width": 615,
+                "height": 312
+              },
+              "src": "PLACEHOLDER",
+              "altText": "Map of a coastline with depositional landforms marked for labelling."
+            },
+            {
+              "id": "blank-spit",
+              "zOrder": 1,
+              "type": "text",
+              "geometry": {
+                "x": 330,
+                "y": 245,
+                "width": 90,
+                "height": 30
+              }
+            },
+            {
+              "id": "blank-saltmarsh",
+              "zOrder": 2,
+              "type": "text",
+              "geometry": {
+                "x": 345,
+                "y": 300,
+                "width": 100,
+                "height": 30
+              }
+            },
+            {
+              "id": "blank-tombolo",
+              "zOrder": 3,
+              "type": "text",
+              "geometry": {
+                "x": 615,
+                "y": 205,
+                "width": 90,
+                "height": 30
+              }
+            },
+            {
+              "id": "blank-bar",
+              "zOrder": 4,
+              "type": "text",
+              "geometry": {
+                "x": 475,
+                "y": 275,
+                "width": 80,
+                "height": 30
+              }
+            },
+            {
+              "id": "blank-lagoon",
+              "zOrder": 5,
+              "type": "text",
+              "geometry": {
+                "x": 455,
+                "y": 312,
+                "width": 90,
+                "height": 30
+              }
+            }
+          ]
+        },
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "1. Label the diagram of "
+                  },
+                  {
+                    "type": "text",
+                    "text": "depositional",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " landforms."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-s26-task": {
+      "id": "blk-s26-task",
+      "type": "question_text_input",
+      "content": {
+        "variant": "long",
+        "marksAvailable": 5,
+        "stem": {
+          "image": {
+            "src": "PLACEHOLDER",
+            "srcRect": {
+              "l": 0.01449,
+              "t": 0.19918,
+              "r": 0.52838,
+              "b": 0.27596
+            },
+            "altText": "Map of a coastline showing depositional landforms for the extended-writing task."
+          },
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "2. The picture shows a spit and a salt marsh. "
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Complete the boxes with short sentences to describe how they were formed."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": [],
+                "attrs": {
+                  "marL": 48,
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-s26-answer": {
+      "id": "blk-s26-answer",
+      "type": "content_table",
+      "content": {
+        "hasHeaderRow": false,
+        "rows": [
+          {
+            "cells": [
+              {
+                "text": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "1 Waves deposit sediment at the coast and longshore drift transports it along the coast."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "text": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "2 When the coast changes direction, transportation and deposition continues happening in the original direction."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "text": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "3 Sediment, like sand or stones, builds up over time creating a long narrow ridge called a spit."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "text": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "4 The spit curves around into a hook shape where there is a change in wind direction."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "text": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "5 Salt marshes form behind spits where waves have low energy; only salt-tolerant plants can grow there."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "heading": "Model answer",
+      "reveal": true
+    },
+    "blk-summary": {
+      "id": "blk-summary",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Longshore drift is the lateral movement of "
+                },
+                {
+                  "type": "text",
+                  "text": "sediment ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "across the beach through "
+                },
+                {
+                  "type": "text",
+                  "text": "swash",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " and "
+                },
+                {
+                  "type": "text",
+                  "text": "backwash",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Longshore drift creates depositional landforms such as spits, bars and tombolos."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Spits are long, narrow ridges of sand or shingle which project from a coastline into the sea."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Salt marshes may form behind spits, as these are low energy zones."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Spits can change direction due to the prevailing wind, which makes them curve into a hook."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    }
+  },
+  "objectives": [
+    {
+      "id": "obj-1",
+      "elementId": "el-slide3-1877",
+      "text": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "I can explain depositional processes and describe the coastal landforms they create."
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "keywords": [
+    {
+      "id": "kw-deposition",
+      "termElementId": "el-slide4-1883",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "deposition"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1884",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "when material such as sand, mud or rocks                             is dropped by the water that was carrying it",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "#1f1f1f"
+                    }
+                  }
+                ]
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kw-transportation",
+      "termElementId": "el-slide4-1888",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "transportation"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1889",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "when water moves sand, mud and rocks from one place to another"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kw-swash",
+      "termElementId": "el-slide4-1882",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "swash"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1885",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "when a wave rushes up the beach\t\t\t\t\t",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "#1f1f1f"
+                    }
+                  }
+                ]
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kw-backwash",
+      "termElementId": "el-slide4-1890",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "backwash"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1891",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "when the water from a wave retreats back into the sea",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "#1f1f1f"
+                    }
+                  }
+                ]
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kw-sediment",
+      "termElementId": "el-slide4-1886",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "sediment"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1887",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "material that is moved by water or air and settles in another place"
+              },
+              {
+                "type": "text",
+                "text": "\t\t\t\t",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "#1f1f1f"
+                    }
+                  }
+                ]
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "misconceptions": [],
+  "assumedKnowledge": []
+}

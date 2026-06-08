@@ -1,0 +1,2507 @@
+{
+  "id": "lesson-1066-and-claims-to-the-throne-dbs5yr",
+  "type": "resource",
+  "title": "1066 and claims to the throne",
+  "description": "The Norman Conquest: how do we know about the impact of the Conquest on England?",
+  "meta": {
+    "schemaVersion": "0.11",
+    "credits": "© Oak National Academy 2024. Produced in partnership with Future Academies Trust. Licensed on the Open Government Licence v3.0, except where otherwise stated. See Oak terms and conditions.",
+    "language": "en-GB"
+  },
+  "sequence": [
+    "sec-intro",
+    "sec-lc1",
+    "sec-lc2",
+    "sec-plenary"
+  ],
+  "sections": {
+    "sec-intro": {
+      "id": "sec-intro",
+      "type": "intro",
+      "heading": "Outcome and keywords",
+      "sequence": [
+        "blk-outcome",
+        "blk-keywords"
+      ]
+    },
+    "sec-lc1": {
+      "id": "sec-lc1",
+      "type": "learning-cycle",
+      "heading": "The 1066 succession crisis",
+      "sequence": [
+        "blk-coffin-img",
+        "blk-funeral",
+        "blk-genealogy",
+        "blk-fig-harold",
+        "blk-fig-william",
+        "blk-q-edward-heir",
+        "blk-q-claimants",
+        "blk-coronation",
+        "blk-q-tf-harold",
+        "blk-task-a"
+      ]
+    },
+    "sec-lc2": {
+      "id": "sec-lc2",
+      "type": "learning-cycle",
+      "heading": "William of Poitiers' Gesta Guillelmi",
+      "sequence": [
+        "blk-sources-1",
+        "blk-sources-2",
+        "blk-careful-1",
+        "blk-careful-2",
+        "blk-fig-harold-2",
+        "blk-fig-william-2",
+        "blk-extract-a",
+        "blk-extract-b",
+        "blk-q-claim",
+        "blk-q-tf-certainty",
+        "blk-q-oath",
+        "blk-task-b1",
+        "blk-task-b2"
+      ]
+    },
+    "sec-plenary": {
+      "id": "sec-plenary",
+      "type": "plenary",
+      "heading": "Summary",
+      "sequence": [
+        "blk-summary"
+      ]
+    }
+  },
+  "blocks": {
+    "blk-outcome": {
+      "id": "blk-outcome",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I can describe the succession crisis of 1066 and explain how William of Poitiers' writing can be used by historians to investigate claims to the throne."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "meta": {
+        "objectiveIds": [
+          "obj-1"
+        ]
+      }
+    },
+    "blk-keywords": {
+      "id": "blk-keywords",
+      "type": "primitive_glossary",
+      "content": {
+        "items": [
+          {
+            "id": "i0",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "succession crisis"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a period when there is no clear heir to a position"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "i1",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "heir"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a person who expects to inherit the property or position of another person when that person dies"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "i2",
+            "term": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "papal"
+                    }
+                  ]
+                }
+              ]
+            },
+            "definition": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "something related to the Pope"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "meta": {
+        "keywordIds": [
+          "kw-succession-crisis",
+          "kw-heir",
+          "kw-papal"
+        ]
+      }
+    },
+    "blk-coffin-img": {
+      "id": "blk-coffin-img",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0,
+            "t": 0.12647,
+            "r": 0,
+            "b": 0.12647
+          },
+          "altText": "Illustration of a section of the Bayeux Tapestry showing a coffin being carried to a church.",
+          "caption": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Illustration of a section of the Bayeux Tapestry showing a coffin being carried to a church"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Can you see the coffin being carried in this image?"
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-funeral": {
+      "id": "blk-funeral",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0,
+            "t": 0.12647,
+            "r": 0,
+            "b": 0.12647
+          },
+          "altText": "Illustration of a section of the Bayeux Tapestry showing a coffin being carried to a church.",
+          "caption": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Illustration of a section of the Bayeux Tapestry showing a coffin being carried to a church"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "This depicts the funeral of Edward the Confessor, who died on 5th January 1066. Edward’s death led to a terrible "
+                },
+                {
+                  "type": "text",
+                  "text": "succession crisis",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "color": "#000000"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-genealogy": {
+      "id": "blk-genealogy",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "altText": "Diagram showing the family relationships between the claimants to the English throne in 1066."
+        }
+      }
+    },
+    "blk-q-edward-heir": {
+      "id": "blk-q-edward-heir",
+      "type": "question_choice",
+      "content": {
+        "variant": "single",
+        "response": {
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "He was not likely to have any children."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "He was estranged from his children."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "He wanted to disinherit his children."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": "a",
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Why did Edward the Confessor have to decide upon an "
+                  },
+                  {
+                    "type": "text",
+                    "text": "heir",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": "?"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-q-claimants": {
+      "id": "blk-q-claimants",
+      "type": "question_choice",
+      "content": {
+        "variant": "multi",
+        "response": {
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Edward the Confessor"
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Harold Godwinson"
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "William of Normandy"
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Earl Godwin"
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": [
+          "b",
+          "c"
+        ],
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Which "
+                  },
+                  {
+                    "type": "text",
+                    "text": "two ",
+                    "marks": [
+                      {
+                        "type": "textStyle",
+                        "attrs": {
+                          "color": "#845ad9"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": "of the following were claimants to the "
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "throne in 1066?"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-fig-harold": {
+      "id": "blk-fig-harold",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0.69004,
+            "t": 0.27036,
+            "r": 0.07561,
+            "b": 0.13255
+          },
+          "altText": "Depiction of Harold Godwinson from the Bayeux Tapestry.",
+          "caption": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Depiction of Harold Godwinson from the Bayeux Tapestry"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-fig-william": {
+      "id": "blk-fig-william",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0.02856,
+            "t": 0,
+            "r": 0.02866,
+            "b": 0
+          },
+          "altText": "Illustration of William of Normandy based on the Bayeux Tapestry.",
+          "caption": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Illustration of William of Normandy based on the Bayeux Tapestry"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-coronation": {
+      "id": "blk-coronation",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0,
+            "t": 0,
+            "r": 0.03929,
+            "b": 0
+          },
+          "altText": "Section of the Bayeux Tapestry showing Harold Godwinson's coronation.",
+          "caption": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Section of the Bayeux Tapestry showing Harold Godwinson’s coronation"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-q-tf-harold": {
+      "id": "blk-q-tf-harold",
+      "type": "question_choice",
+      "content": {
+        "variant": "boolean",
+        "correctAnswer": false,
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Harold Godwinson claimed that he had been promised the throne when Edward was young."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "feedback": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Harold Godwinson claimed the throne because he had the support of the English earls and churchmen. "
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-task-a": {
+      "id": "blk-task-a",
+      "type": "question_ordering",
+      "content": {
+        "response": {
+          "items": [
+            {
+              "id": "s1",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Harold Godwinson was crowned king."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "s2",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Edward promised the throne to two people."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "s3",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "William received "
+                      },
+                      {
+                        "type": "text",
+                        "text": "papal ",
+                        "marks": [
+                          {
+                            "type": "bold"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": "support for an invasion of England."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "s4",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Edward the Confessor realised he was unlikely to have any children."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "s5",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Edward the Confessor died."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": [
+          "s4",
+          "s2",
+          "s5",
+          "s1",
+          "s3"
+        ],
+        "markScheme": {
+          "type": "exact"
+        },
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Sort "
+                  },
+                  {
+                    "type": "text",
+                    "text": "the following events into chronological order "
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "by numbering"
+                  },
+                  {
+                    "type": "text",
+                    "text": " ",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": "them 1 to "
+                  },
+                  {
+                    "type": "text",
+                    "text": "5 with 1 as the earliest."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  },
+                  "pEndDefaults": {
+                    "color": "#000000"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-sources-1": {
+      "id": "blk-sources-1",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Historians rely upon sources to help them complete their work."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-sources-2": {
+      "id": "blk-sources-2",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Sources include written documents, images and artefacts (objects) produced in the past. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "These sources help to inform historians about the periods they are studying."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-careful-1": {
+      "id": "blk-careful-1",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "When historians use sources, they have to think carefully about them."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-careful-2": {
+      "id": "blk-careful-2",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Historians not only need to consider what sources may suggest about the periods they are studying. It is also necessary to consider why sources may have been produced and how reliable (trustworthy) the information they provide seems to be."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-fig-harold-2": {
+      "id": "blk-fig-harold-2",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0.69004,
+            "t": 0.27036,
+            "r": 0.07561,
+            "b": 0.13255
+          },
+          "altText": "Depiction of Harold Godwinson from the Bayeux Tapestry.",
+          "caption": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Depiction of Harold Godwinson from the Bayeux Tapestry"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-fig-william-2": {
+      "id": "blk-fig-william-2",
+      "type": "content",
+      "content": {
+        "image": {
+          "src": "PLACEHOLDER",
+          "srcRect": {
+            "l": 0.03384,
+            "t": 0,
+            "r": 0.03384,
+            "b": 0
+          },
+          "altText": "Illustration of William of Normandy based on the Bayeux Tapestry.",
+          "caption": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Illustration of William of Normandy based on the Bayeux Tapestry"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-extract-a": {
+      "id": "blk-extract-a",
+      "type": "content",
+      "content": {
+        "annotations": [
+          {
+            "id": "ann-bloodline",
+            "anchor": {
+              "value": "close bloodline connection"
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Poitiers mentions the bloodline connection "
+                    },
+                    {
+                      "type": "hardBreak"
+                    },
+                    {
+                      "type": "text",
+                      "text": "established by Edward’s mother, Emma of Normandy, in order to add legitimacy to William’s claim. "
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "ann-heir",
+            "anchor": {
+              "value": "rightful heir"
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Poitiers claims that Edward chose William as his "
+                    },
+                    {
+                      "type": "text",
+                      "text": "heir",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "text": " early in his reign."
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Extract A"
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "While Edward was considering the favours bestowed upon him by William, as well as the "
+                },
+                {
+                  "type": "text",
+                  "text": "close bloodline connection",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " which existed between them, [...] he decided to "
+                },
+                {
+                  "type": "text",
+                  "text": "establish William as the rightful ",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "heir",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    },
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " ",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "to the [English] crown."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "italic": true
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-extract-b": {
+      "id": "blk-extract-b",
+      "type": "content",
+      "content": {
+        "annotations": [
+          {
+            "id": "ann-fealty",
+            "anchor": {
+              "value": "pledged fealty"
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Poitiers claims that Harold promised to be loyal to William, so"
+                    },
+                    {
+                      "type": "hardBreak"
+                    },
+                    {
+                      "type": "text",
+                      "text": " that he can present his later actions as treacherous, strengthening William’s claim. "
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "ann-sacred",
+            "anchor": {
+              "value": "sacred rite"
+            },
+            "text": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Poitiers asserts that Harold promised to support William’s claim to the throne. This suggests that Harold broke a holy (sacred) promise and depicts him as dishonest, strengthening William’s claim."
+                    }
+                  ],
+                  "attrs": {
+                    "bullet": {
+                      "kind": "none"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Extract B"
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Harold "
+                },
+                {
+                  "type": "text",
+                  "text": "pledged fealty",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " to William in a sacred rite. [...] He swore ‘that he would ensure "
+                },
+                {
+                  "type": "text",
+                  "text": "the English monarchy would be confirmed in William’s hands",
+                  "marks": [
+                    {
+                      "type": "textStyle",
+                      "attrs": {
+                        "color": "#037b7d"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": " after Edward’s death.’"
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                },
+                "pEndDefaults": {
+                  "italic": true
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blk-q-claim": {
+      "id": "blk-q-claim",
+      "type": "question_choice",
+      "content": {
+        "variant": "single",
+        "response": {
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Both Edward and Harold had promised the English throne to William."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Only Edward had promised the English throne to William."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Only Harold had promised the English throne to William."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": "a",
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "What does the Gesta Guillelmi claim?"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-q-tf-certainty": {
+      "id": "blk-q-tf-certainty",
+      "type": "question_choice",
+      "content": {
+        "variant": "boolean",
+        "correctAnswer": false,
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Historians can say with certainty that Edward promised William the throne."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "feedback": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Historians have to treat claims in Norman sources, like Poitiers’ Gesta Guillelmi, carefully as they were often made to flatter William."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-q-oath": {
+      "id": "blk-q-oath",
+      "type": "question_choice",
+      "content": {
+        "variant": "single",
+        "response": {
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "He wanted to portray Harold as an honourable man."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "He wanted to damage Harold’s claim to the throne."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "He wanted to discredit William’s claim to the throne."
+                      }
+                    ],
+                    "attrs": {
+                      "bullet": {
+                        "kind": "none"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "correctAnswer": "b",
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Why did William of Poitiers describe Harold’s oath to William?"
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-task-b1": {
+      "id": "blk-task-b1",
+      "type": "question_text_input",
+      "content": {
+        "variant": "long",
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "orderedList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "List "
+                          },
+                          {
+                            "type": "text",
+                            "text": "three",
+                            "marks": [
+                              {
+                                "type": "textStyle",
+                                "attrs": {
+                                  "color": "#037b7d"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " ways in which the Gesta Guillelmi seeks to justify or strengthen William’s claim to the throne:"
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "auto",
+                        "sizePts": 22,
+                        "autoType": "arabicParenR",
+                        "startAt": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [],
+                "attrs": {
+                  "marL": 48,
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": [],
+                "attrs": {
+                  "marL": 48,
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": [],
+                "attrs": {
+                  "marL": 48,
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": [],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "feedback": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "orderedList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "List"
+                          },
+                          {
+                            "type": "text",
+                            "text": " three",
+                            "marks": [
+                              {
+                                "type": "textStyle",
+                                "attrs": {
+                                  "color": "#037b7d"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " ways in which the Gesta Guillelmi seeks to justify or strengthen William’s claim to the throne:"
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "auto",
+                        "sizePts": 22,
+                        "autoType": "arabicParenR",
+                        "startAt": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Your answers could include:"
+                  }
+                ],
+                "attrs": {
+                  "marL": 48,
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "orderedList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "It states that Edward the Confessor promised William the throne."
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "auto",
+                        "font": "Kalam",
+                        "sizePts": 22,
+                        "autoType": "arabicParenR",
+                        "startAt": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "It states that Harold promised to support William’s claim."
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "auto",
+                        "font": "Kalam",
+                        "sizePts": 22,
+                        "autoType": "arabicParenR",
+                        "startAt": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "It states that Harold was a treacherous liar who broke his promises."
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "auto",
+                        "font": "Kalam",
+                        "sizePts": 22,
+                        "autoType": "arabicParenR",
+                        "startAt": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-task-b2": {
+      "id": "blk-task-b2",
+      "type": "question_text_input",
+      "content": {
+        "variant": "long",
+        "stem": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "orderedList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Answer"
+                          },
+                          {
+                            "type": "text",
+                            "text": " ",
+                            "marks": [
+                              {
+                                "type": "textStyle",
+                                "attrs": {
+                                  "color": "#037b7d"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": "the following question in "
+                          },
+                          {
+                            "type": "text",
+                            "text": "two",
+                            "marks": [
+                              {
+                                "type": "textStyle",
+                                "attrs": {
+                                  "color": "#037b7d"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " or "
+                          },
+                          {
+                            "type": "hardBreak"
+                          },
+                          {
+                            "type": "text",
+                            "text": "three",
+                            "marks": [
+                              {
+                                "type": "textStyle",
+                                "attrs": {
+                                  "color": "#037b7d"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " sentences:"
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "auto",
+                        "sizePts": 22,
+                        "autoType": "arabicParenR",
+                        "startAt": 2
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "When using the Gesta Guillelmi, why do historians "
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "need to keep in mind that Poitiers wrote it in order "
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "to promote William’s claim to the throne?"
+                  }
+                ],
+                "attrs": {
+                  "marL": 48,
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "You could consider the following in your answer:"
+                  }
+                ],
+                "attrs": {
+                  "marL": 48,
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Poitiers’ role"
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "char",
+                        "char": "●",
+                        "sizePts": 22
+                      }
+                    }
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Poitiers’ motive"
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38.666666666666664,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "char",
+                        "char": "●",
+                        "sizePts": 22
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "feedback": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "orderedList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "When using the Gesta Guillelmi, why do historians "
+                          },
+                          {
+                            "type": "hardBreak"
+                          },
+                          {
+                            "type": "text",
+                            "text": "need to keep in mind that Poitiers wrote it in order to promote William’s claim to the throne? Your answer could include:"
+                          }
+                        ]
+                      }
+                    ],
+                    "attrs": {
+                      "indent": -38,
+                      "marL": 48,
+                      "bullet": {
+                        "kind": "auto",
+                        "sizePts": 21,
+                        "autoType": "arabicParenR",
+                        "startAt": 2
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Historians need to keep in mind that Poitiers was writing in order to promote William’s claim because this would have influenced his work. Poitiers was "
+                  },
+                  {
+                    "type": "text",
+                    "text": "a member of William’s household and served as William’s priest",
+                    "marks": [
+                      {
+                        "type": "textStyle",
+                        "attrs": {
+                          "color": "#037b7d"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " and therefore "
+                  },
+                  {
+                    "type": "text",
+                    "text": "he had a motive to flatter and praise William",
+                    "marks": [
+                      {
+                        "type": "textStyle",
+                        "attrs": {
+                          "color": "#037b7d"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": ", rather than remaining ‘bound by the truth’. Subsequently, his claims that William had been promised the throne and that Harold was a liar need to be approached with caution by historians."
+                  }
+                ],
+                "attrs": {
+                  "bullet": {
+                    "kind": "none"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blk-summary": {
+      "id": "blk-summary",
+      "type": "content",
+      "content": {
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "When Edward the Confessor died, there was no "
+                },
+                {
+                  "type": "hardBreak"
+                },
+                {
+                  "type": "text",
+                  "text": "heir ",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "to the throne."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Both William of Normandy and Harold Godwinson claimed the throne."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "William of Poitiers’ Gesta Guillelmi is an important source which supported William’s claim to the throne by claiming that Harold had promised to support William and uphold the Norman’s own claim. "
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The Gesta Guillelmi has to be read with caution by historians because William of Poitiers may have been motivated to report some events inaccurately."
+                }
+              ],
+              "attrs": {
+                "bullet": {
+                  "kind": "none"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "objectives": [
+    {
+      "id": "obj-1",
+      "elementId": "el-slide3-1897",
+      "text": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "I can describe the succession crisis of 1066 and explain how William of Poitiers' writing can be used by historians to investigate claims to the throne."
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "keywords": [
+    {
+      "id": "kw-succession-crisis",
+      "termElementId": "el-slide4-1902",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "succession crisis"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1903",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "a period when there is no clear "
+              },
+              {
+                "type": "text",
+                "text": "heir",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "text": " to a position"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kw-heir",
+      "termElementId": "el-slide4-1904",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "heir"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1905",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "a person who expects to inherit the property or position of another person when that person dies"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "kw-papal",
+      "termElementId": "el-slide4-1906",
+      "term": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "papal"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      },
+      "definitionElementId": "el-slide4-1907",
+      "definition": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "something related to the Pope"
+              }
+            ],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          },
+          {
+            "type": "paragraph",
+            "content": [],
+            "attrs": {
+              "bullet": {
+                "kind": "none"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "misconceptions": [],
+  "assumedKnowledge": []
+}
