@@ -1,0 +1,231 @@
+{
+  "ref": "geometry/similarity-ratio-table@1",
+  "family": "geometry",
+  "name": "similarity-ratio-table",
+  "version": 1,
+  "title": "Similar shapes scale-factor table",
+  "tagline": "Length, Area and Volume scale-factor table (k, k², k³); one factor back-derives the others exactly with surds; cells occlude for complete-the-table.",
+  "description": "A canonical working table for the similar-shapes scale-factor relationship: Length SF = k, Area SF = k², Volume SF = k³, shown as three columns with a symbolic power row (k, k², k³) above the numeric scale-factor row. You give exactly one scale factor — the length SF k, the area SF (k²) or the volume SF (k³) — and the model back-derives k and the other two exactly: k = the value, √(area SF) or ∛(volume SF), then k² and k³. Non-integer factors stay exact (k = 1.5 → 9⁄4 → 27⁄8 i.e. 2.25, 3.375) and an irrational k renders as a real surd (area SF 2 → k = √2 → volume SF 2√2; volume SF 10 → k = ∛10 → area SF ∛100). Occlude any value cell to \"?\" for \"complete the table\" / \"given the area ratio, find the volume ratio\", highlight the answer in amber, and switch on the working strip to show how k is found and substituted. The tabular, numeric partner to the geometry/similar-shapes figure.",
+  "whenToUse": "Reach for this for the similar-shapes scale-factor relationship as a table: length scale factor k, area scale factor k², volume scale factor k³ — \"given any one, find the others\". Author the one scale factor you are given with given { of: \"length\" | \"area\" | \"volume\", value }: of \"length\" gives k directly (forward — find the area and volume factors); of \"area\" gives the area SF and the model finds k = √(area SF) (reverse — \"area ratio → length / volume ratio\"); of \"volume\" gives the volume SF and the model finds k = ∛(volume SF). Everything else — k, k², k³, every cell, the widths — is derived, so you never write a derived factor. The common questions: complete the table / forward — given.of \"length\" (k known), occlude: { area: true, volume: true } for the answer space; area → volume (the classic) — given.of \"area\", occlude: { length: true, volume: true }, optionally highlight: { volume: true } on the answer; volume → area — given.of \"volume\", occlude length and area; find the scale factor — given.of \"area\" or \"volume\", occlude: { length: true } (k is the unknown). Switch show.working on for a worked example (it reveals the find-k step \"k = √9 = 3\" and the substitutions \"k³ = 3³ = 27\"); the working is occlusion-aware, so on an occluded question it shows \"?\" for the hidden value rather than leaking it. show.powers (default on) is the k / k² / k³ reference row — keep it on while teaching the relationship, off for a bare recall table. show.volume false drops the volume column for a length-and-area-only lesson (forced on when given.of is volume). Keep the same orientation and the powers row consistent across a lesson. Surds: an area SF that is not a perfect square gives a surd k (area SF 2 → √2, area SF 8 → 2√2) and a surd volume SF — the cells and working render the real radicals. Switch primitive when the teaching changes — to draw the two similar figures with marked corresponding sides and a × k arrow use geometry/similar-shapes; for an enlargement about a centre on a grid use geometry/transformations; for a single 3D solid's volume / surface area use geometry/solid. Synonyms a teacher might use: similar shapes scale factor, length area volume scale factor, LSF ASF VSF, area ratio, volume ratio, ratio of areas, ratio of volumes, k squared k cubed, area scale factor, volume scale factor, scale factor table, complete the table, find the volume scale factor.",
+  "responseModes": [
+    "fill-derived"
+  ],
+  "tags": [
+    "similar shapes",
+    "similarity",
+    "scale factor",
+    "scale factor table",
+    "length scale factor",
+    "area scale factor",
+    "volume scale factor",
+    "area ratio",
+    "volume ratio",
+    "ratio of areas",
+    "ratio of volumes",
+    "LSF",
+    "ASF",
+    "VSF",
+    "k squared",
+    "k cubed",
+    "k2",
+    "k3",
+    "similar shapes area and volume",
+    "complete the table",
+    "surd",
+    "square root",
+    "cube root",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "given": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The ONE scale factor you are given — the single stimulus of the question. The model back-derives k and the other two factors from it, so this is the only number you author.",
+        "properties": {
+          "of": {
+            "type": "string",
+            "enum": [
+              "length",
+              "area",
+              "volume"
+            ],
+            "description": "Which scale factor `value` is. \"length\" = the linear scale factor k itself (forward case); \"area\" = the area scale factor k² (the model finds k = √value); \"volume\" = the volume scale factor k³ (the model finds k = ∛value)."
+          },
+          "value": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The numeric scale factor named by `of`, a positive number. e.g. of \"length\" value 3 → areas ×9, volumes ×27; of \"area\" value 9 → k = 3; of \"volume\" value 8 → k = 2. Non-integers stay exact (length 1.5 → area 2.25, volume 3.375); an area that is not a perfect square gives a surd k (area 2 → √2)."
+          }
+        },
+        "required": [
+          "of",
+          "value"
+        ]
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Per-dimension Render the value as \"?\" (the question hook) for. Address a value by its dimension: length (= k), area (= k²) or volume (= k³). The power row (k, k², k³) and the column headers are never affected.",
+        "properties": {
+          "length": {
+            "type": "boolean",
+            "description": "Render the value as \"?\" (the question hook) for the Length SF value (k)."
+          },
+          "area": {
+            "type": "boolean",
+            "description": "Render the value as \"?\" (the question hook) for the Area SF value (k²)."
+          },
+          "volume": {
+            "type": "boolean",
+            "description": "Render the value as \"?\" (the question hook) for the Volume SF value (k³)."
+          }
+        }
+      },
+      "highlight": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Per-dimension Amber the value (answer emphasis) for. Address a value by its dimension: length (= k), area (= k²) or volume (= k³). The power row (k, k², k³) and the column headers are never affected.",
+        "properties": {
+          "length": {
+            "type": "boolean",
+            "description": "Amber the value (answer emphasis) for the Length SF value (k)."
+          },
+          "area": {
+            "type": "boolean",
+            "description": "Amber the value (answer emphasis) for the Area SF value (k²)."
+          },
+          "volume": {
+            "type": "boolean",
+            "description": "Amber the value (answer emphasis) for the Volume SF value (k³)."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "powers": {
+            "type": "boolean",
+            "description": "Show the symbolic power row k / k² / k³ above the numeric scale factors — the relationship reference. Default true; set false for a bare recall table of just the numbers."
+          },
+          "working": {
+            "type": "boolean",
+            "description": "Show the derivation strip beneath the table: how k is found (e.g. \"k = √9 = 3\" or \"k = ∛8 = 2\") and the substitutions for the other factors (\"Area SF = k² = 3² = 9\"). Occlusion-aware — a hidden value shows \"?\" in the working too, so it never leaks. Use on worked examples. Default false."
+          },
+          "volume": {
+            "type": "boolean",
+            "description": "Show the Volume SF (k³) column. Default true. Set false for a length-and-area-only lesson (length and area are always shown). Forced true when given.of is \"volume\"."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the table; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "given"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example (forward, k = 3) — areas ×9, volumes ×27, working shown",
+      "params": {
+        "header": "Length, area and volume scale factors",
+        "given": {
+          "of": "length",
+          "value": 3
+        },
+        "show": {
+          "working": true
+        },
+        "caption": "The lengths scale by 3, so areas scale by 3² and volumes by 3³."
+      }
+    },
+    {
+      "label": "Blank answer space — k given, complete the area and volume factors",
+      "params": {
+        "given": {
+          "of": "length",
+          "value": 4
+        },
+        "occlude": {
+          "area": true,
+          "volume": true
+        },
+        "caption": "Two similar shapes have length scale factor 4. Find the area and volume scale factors."
+      }
+    },
+    {
+      "label": "Occluded question (area → length & volume) — find both from the area ratio",
+      "params": {
+        "given": {
+          "of": "area",
+          "value": 9
+        },
+        "occlude": {
+          "length": true,
+          "volume": true
+        },
+        "highlight": {
+          "volume": true
+        },
+        "caption": "The area scale factor of two similar shapes is 9. Work out the length and volume scale factors."
+      }
+    },
+    {
+      "label": "Hard case — surd k from an area scale factor of 2 (k = √2, volume 2√2)",
+      "params": {
+        "header": "Surd scale factor",
+        "given": {
+          "of": "area",
+          "value": 2
+        },
+        "show": {
+          "working": true
+        },
+        "caption": "The area scale factor is 2, so the length scale factor is √2 and the volume scale factor is 2√2."
+      }
+    },
+    {
+      "label": "Reverse from volume (perfect cube 64) — find length and area",
+      "params": {
+        "header": "From the volume ratio",
+        "given": {
+          "of": "volume",
+          "value": 64
+        },
+        "occlude": {
+          "length": true,
+          "area": true
+        },
+        "show": {
+          "working": true
+        },
+        "caption": "Two similar solids have volume scale factor 64. Find the length and area scale factors."
+      }
+    },
+    {
+      "label": "Non-integer scale factor — k = 1.5 stays exact (2.25, 3.375)",
+      "params": {
+        "given": {
+          "of": "length",
+          "value": 1.5
+        },
+        "show": {
+          "working": true
+        },
+        "caption": "A length scale factor of 1.5 gives an area scale factor of 2.25 and a volume scale factor of 3.375."
+      }
+    }
+  ]
+}

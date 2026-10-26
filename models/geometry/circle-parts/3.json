@@ -1,0 +1,908 @@
+{
+  "ref": "geometry/circle-parts@3",
+  "family": "geometry",
+  "name": "circle-parts",
+  "version": 3,
+  "title": "Circle: parts, sectors and regions",
+  "tagline": "A circle with named parts and derived measures; plus isolated sectors, annuli and composite sector/triangle regions — lettered, edge-dimensioned, right-angle marked, shaded or not.",
+  "description": "A circle-mensuration figure with four shapes selected by `shape`. shape:\"circle\" (the default) draws ONE full circle of radius r with its named parts — radius, diameter, chord, arc, sector, segment, tangent — and a stack of derived measures (circumference 2πr, area πr², arc length and sector area as θ/360 of the whole, sector perimeter, chord length, segment area), each optionally worked, exact \"in terms of π\", occluded or highlighted, with a draggable moving radius. shape:\"sector\" draws an ISOLATED sector — two radii and the connecting arc, no surrounding circle — so a plain exam sector, a semicircle (θ = 180°, a flat diameter edge and one arc) or a three-quarter circle (θ = 270°); the radii carry bare length labels on both arms, the arc endpoints and centre take letters (A, B, O), and the arc can carry a GIVEN length datum on the curve for questions where the angle is hidden. shape:\"annulus\" draws a concentric ring (outer radius and inner radius or diameter) with the band shaded and the ring area π(R² − r²) derived. shape:\"composite\" draws a curved region built from real-unit pieces — a rectangle, sector, circle, semicircle or triangle base with circular or straight features added (a glued-on semicircle, a triangle sharing an edge) or subtracted (an inscribed circle, a semicircular bite, a triangle cut off a sector to leave a segment), the net region shaded (or left as a plain outline with shaded:false) and its area derived as Σ added − Σ subtracted. A composite is annotated like an exam figure: `vertices` letters each piece's corners (letters shared between pieces are drawn once), `edgeLabels` dimensions a named edge with its DERIVED length — an arc edge with its derived arc length — and `composite.rightAngles` marks a 90° corner between two named arms, checked against the real geometry before it is drawn. Every numeric value is derived from the given lengths and angles — there is nowhere to author a measure, so the figure is always arithmetically honest.",
+  "whenToUse": "Reach for this across circle mensuration KS3–KS4. FULL CIRCLE (shape omitted / \"circle\"): naming the parts, circumference and area, arc length and sector area of a slice on the whole circle, chord and segment — write `radius`, the central `angle`, list `parts` and `measures`; the draggable moving radius (`draggable:true`) recomputes the sector measures live. ISOLATED SECTOR (`shape:\"sector\"`): the standalone exam sector — write `radius` and `angle`; both radii are labelled with the bare length (set `showRadiusValue:false` for a naming-only figure, or a `radiusLabel` string to force the text), the arc endpoints get letters via `endpointLabels:[\"A\",\"B\"]` and the centre \"O\" via showCentre for the \"AOB is a sector\" convention, `showAngle` marks θ. A SEMICIRCLE is `shape:\"sector\", angle:180` (the two radii become the flat diameter edge; usually `showAngle:false`); a THREE-QUARTER circle is `angle:270`. When the arc length is GIVEN and the angle hidden, pass `arcLabel:\"15 cm\"` (or \"6π\") to print it on the curve and set `showAngle:false`. Set `shaded:true` to shade the sector (MG sectors are usually left unshaded, the default). ANNULUS (`shape:\"annulus\"`): write the outer `radius` and the `innerRadius` (or `innerDiameter`); the ring is shaded and labelled. COMPOSITE curved shaded region (`shape:\"composite\"`): give `composite.shapes` — a list of pieces in real-unit coordinates (y upward). Put the outer base first with op \"add\" (a `rect` for a square/rectangle, a `sector` for a quarter-circle, a `circle`), then the features: a `subtract` piece for a hole (an inscribed circle, a semicircular bite drawn fully inside), or an \"add\" piece for a glued-on shape (a semicircle bulging off an edge). The shaded region is the net; its area is derived. Common composites — square + semicircle on an edge (add); square with an inscribed circle, shaded corners (subtract); rectangle with a semicircular bite (subtract); a quarter-circle sector minus a semicircle on one radius as diameter (subtract); and the A Level radians family — a sector with the triangle cut off to leave the SEGMENT (sector add + triangle subtract on the two radius endpoints), a sector minus a cevian triangle to a midpoint, a sector with a triangle glued on. ANNOTATING a composite to exam standard: letter each piece with `vertices` (triangle letters map to `points` in order; a letter another piece already put at that point is drawn once, so a sector and a triangle sharing corners just work); dimension edges with `edgeLabels` — `{\"AB\": true}` prints the DERIVED length on the edge AB (on a sector's arc edge it prints the derived arc length), and a string value overrides it for an unknown (\"x\") or an answer hook (\"?\"); mark a 90° corner with `composite.rightAngles: [{ at: \"A\", between: [\"B\",\"D\"] }]`, whose arms may come from different pieces and which is silently skipped unless the geometry really is perpendicular. Set `shaded:false` for the plain outline figures (\"find the total area of ABCD\"), leave it out for a shaded-region question. Set `units` (default \"cm\"; areas get ² automatically), `decimals`, or `exact:true` for π-exact answers. Cross-block: keep the same radius, units and decimals across a lesson; show one active region per figure; put the WORKING in the block text, not on the figure (the new shapes draw a clean labelled diagram, not a worked solution). Switch model for the ANGLE theorems (geometry/circle-theorems) or RECTILINEAR compound area with no curves (geometry/compound-area). Synonyms: parts of a circle, radius, diameter, chord, arc, sector, segment, tangent, circumference, area of a circle, arc length, sector area, perimeter of a sector, isolated sector, semicircle, semi-circle, half circle, three-quarter circle, quarter circle, annulus, ring, concentric circles, shaded region, shaded ring, area by subtraction, composite curved region, in terms of pi, mensuration.",
+  "responseModes": [],
+  "tags": [
+    "circle",
+    "parts of a circle",
+    "radius",
+    "diameter",
+    "chord",
+    "arc",
+    "sector",
+    "segment",
+    "tangent",
+    "circumference",
+    "area",
+    "area of a circle",
+    "arc length",
+    "sector area",
+    "perimeter of a sector",
+    "segment area",
+    "isolated sector",
+    "semicircle",
+    "semi-circle",
+    "half circle",
+    "three-quarter circle",
+    "quarter circle",
+    "annulus",
+    "ring",
+    "concentric circles",
+    "shaded region",
+    "shaded ring",
+    "composite region",
+    "area by subtraction",
+    "mensuration",
+    "in terms of pi",
+    "pi",
+    "geometry",
+    "maths",
+    "radians",
+    "segment area",
+    "sector minus triangle",
+    "chord",
+    "midpoint",
+    "right angle",
+    "labelled diagram",
+    "lettered figure",
+    "dimensioned figure",
+    "outline shape",
+    "perimeter of a region"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "shape": {
+        "type": "string",
+        "enum": [
+          "circle",
+          "sector",
+          "annulus",
+          "composite"
+        ],
+        "description": "Which figure to draw. \"circle\" (default when omitted) = one full circle with `parts` and `measures` (the original model). \"sector\" = an isolated sector (two radii + arc, no full circle; 180° = semicircle, 270° = three-quarter). \"annulus\" = a concentric ring. \"composite\" = a curved shaded region from `composite.shapes`. `parts` / `measures` apply to \"circle\" only; the other shapes use their own fields below."
+      },
+      "radius": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "description": "The radius r — the cardinal datum. For \"annulus\" this is the OUTER radius. For \"composite\" the base pieces carry their own r; this is unused there. A positive number in `units`."
+      },
+      "units": {
+        "type": "string",
+        "description": "Length unit appended to length measures and the radius, e.g. \"cm\", \"m\", \"mm\". Area measures get a ² automatically. Default \"cm\". Pass \"\" for no units."
+      },
+      "decimals": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4,
+        "description": "Decimal places for rounded (non-exact) values. Default 2."
+      },
+      "exact": {
+        "type": "boolean",
+        "description": "Give answers in terms of π where clean — circumference, area, arc length, sector area, sector perimeter, diameter, and the annulus / sector region areas (e.g. \"12π cm\", \"36π cm²\"). Chord length and segment area stay decimal. Default false."
+      },
+      "angle": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 360,
+        "description": "The central angle θ in degrees. For \"circle\" it defines the active sector / arc / segment / chord. For \"sector\" it is the sector's angle (180 = semicircle, 270 = three-quarter). Defaults to 90 when a shape needs it."
+      },
+      "start": {
+        "type": "number",
+        "description": "Orientation: the angle in degrees of the FIRST radius (0° = east / right, anticlockwise positive); the sector spans `start` to `start + angle`. Default centres the slice pointing up (90 − angle/2). Rotation only — never changes a measure."
+      },
+      "parts": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "part": {
+              "type": "string",
+              "enum": [
+                "radius",
+                "diameter",
+                "chord",
+                "arc",
+                "sector",
+                "segment",
+                "tangent"
+              ],
+              "description": "Which part to draw and name (shape:\"circle\" only). radius / diameter / tangent are placed at their own angle `at`. chord / arc / sector / segment all belong to the ONE central angle θ (see `angle` / `start`): chord = the straight line across it, arc = the curved edge, sector = the pie slice (two radii + arc), segment = the region between the chord and the arc. Drawing sector AND segment together tiles the slice into a triangle (accent) and the segment (amber) meeting at the chord — the picture of \"sector = triangle + segment\"."
+            },
+            "label": {
+              "type": "string",
+              "description": "Text rendered beside the part. Default per kind: a radius shows \"r = <value>\" (or \"r\" if showRadiusValue is false), a diameter \"d\", and chord / arc / sector / segment / tangent their plain name. Override for a naming diagram (\"radius\", \"AB\", \"tangent\") or to suppress the value. Use the SAME naming convention across one lesson."
+            },
+            "occludeLabel": {
+              "type": "boolean",
+              "description": "Render this part's label as \"?\" — the \"name this part\" / \"find the radius\" hook. The part itself stays drawn. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the eye to this part in amber (an amber stroke for lines, an amber tint for the sector / segment region). Default false. Use at most two highlight cues per figure. Amber is the RESULT / emphasis cue — for telling several parts apart by colour use `colour` instead."
+            },
+            "colour": {
+              "type": "string",
+              "enum": [
+                "blue",
+                "teal",
+                "purple",
+                "coral",
+                "green"
+              ],
+              "description": "Optional categorical colour for THIS part's line (and its matching name label) so a labelled diagram can tell several parts apart at a glance — e.g. a blue radius, a teal chord and a purple tangent. Draws from the themeable palette: blue = --orp-accent, teal = --orp-accent-2, purple = --orp-accent-3, coral = --orp-accent-4, green = --orp-accent-5. Omit to keep the default ink. Amber is NOT a choice here: it stays reserved for `highlight`. Keep the same colour for a given part across one lesson."
+            },
+            "at": {
+              "type": "number",
+              "description": "ONLY for radius / diameter / tangent: the angle in degrees at which to place it (0° = east / right, anticlockwise positive — the same convention as `start`). A radius / tangent is drawn to that point; a diameter runs through the centre at that angle. Ignored for chord / arc / sector / segment (those follow θ). Sensible defaults if omitted (radius −50°, diameter 0°, tangent −90°)."
+            }
+          },
+          "required": [
+            "part"
+          ]
+        },
+        "description": "shape:\"circle\" only — the parts to draw and name on the full circle. Omit for a bare circle. Ignored for sector / annulus / composite."
+      },
+      "measures": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "measure": {
+              "type": "string",
+              "enum": [
+                "circumference",
+                "area",
+                "arc-length",
+                "sector-area",
+                "sector-perimeter",
+                "chord-length",
+                "segment-area",
+                "diameter",
+                "radius"
+              ],
+              "description": "The quantity to compute and list (shape:\"circle\" only), derived from r and θ: circumference = 2πr; area = πr²; arc-length = (θ/360)·2πr; sector-area = (θ/360)·πr²; sector-perimeter = arc + 2r; chord-length = 2r·sin(θ/2); segment-area = sector − triangle; diameter = 2r; radius = r. The angular measures use `angle`."
+            },
+            "showWorking": {
+              "type": "boolean",
+              "description": "Show the general formula and the substitution before the result (\"Circumference = 2πr = 2 × π × 6 = 37.70 cm\"). false shows just \"= result\". When the measure is also occluded, the formula stays but the substitution and answer become \"?\". Default false."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the RESULT as \"?\" — \"work this out\". The line (and its formula, if showWorking) stays; only the answer is hidden. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this measure line — answer emphasis. Default false."
+            }
+          },
+          "required": [
+            "measure"
+          ]
+        },
+        "description": "shape:\"circle\" only — the measures to compute and list beneath the figure. Ignored for the other shapes (their working belongs in the block text)."
+      },
+      "showCentre": {
+        "type": "boolean",
+        "description": "Show the centre dot and its \"O\" label. For \"circle\" defaults true when a radius/diameter/sector references the centre. For \"sector\"/\"annulus\" defaults true. Set false to hide."
+      },
+      "showAngle": {
+        "type": "boolean",
+        "description": "Mark the central angle θ (an arc between the two radii with its value) — for \"circle\" (when a sector/arc/segment/chord is present) and \"sector\". Default true. Set false for a plain semicircle / three-quarter, or when the angle is hidden and the arc is given instead."
+      },
+      "showRadiusValue": {
+        "type": "boolean",
+        "description": "Label the drawn radius with its length. \"circle\": \"r = 6 cm\" on the radius part / sector edge. \"sector\": the bare length (e.g. \"8 cm\") on BOTH radii. Default true. Set false for a naming-only diagram (the radii show \"r\", or nothing). A part's explicit `label` always wins."
+      },
+      "radiusLabel": {
+        "type": "string",
+        "description": "shape:\"sector\"/\"annulus\": override the radius label text on the arms (e.g. \"8 cm\", \"r\", \"x\"). Omit to use the derived bare length (when showRadiusValue) — the usual case."
+      },
+      "endpointLabels": {
+        "type": "array",
+        "maxItems": 2,
+        "items": {
+          "type": "string"
+        },
+        "description": "shape:\"sector\": letters for the two arc endpoints, in sweep order from `start` (e.g. [\"A\",\"B\"] for \"AOB is a sector\"). Placed just outside the arc ends. Omit for an unlettered sector."
+      },
+      "arcLabel": {
+        "type": "string",
+        "description": "shape:\"sector\": a GIVEN length printed ON the arc (e.g. \"15 cm\", \"6π cm\") — the datum for questions where the arc is given and the angle hidden. This is authored (a given), distinct from the derived measures; pair with showAngle:false. Omit for no arc label."
+      },
+      "shaded": {
+        "type": "boolean",
+        "description": "Whether the region is filled. shape:\"sector\": shade the sector interior (light accent fill) — default FALSE, since exam sectors are drawn as an unshaded outline. shape:\"composite\": shade the net region — default TRUE, but set false for the many exam figures that are a plain OUTLINE of the whole shape (\"find the total area of ABCD\") rather than a shaded-region question. (The annulus band is always shaded.)"
+      },
+      "innerRadius": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "description": "shape:\"annulus\": the inner circle radius r (the outer radius is `radius`). Must be less than `radius`. Give this OR `innerDiameter`."
+      },
+      "innerDiameter": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "description": "shape:\"annulus\": the inner circle DIAMETER, if the question gives the diameter rather than the radius (inner radius = innerDiameter / 2). Give this OR `innerRadius`."
+      },
+      "composite": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "shape:\"composite\": the curved shaded region. `shapes` lists the pieces (base first, op \"add\", then features); the shaded region is the net (Σ add − Σ subtract) and its area is derived.",
+        "properties": {
+          "shapes": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 6,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "One piece of a composite region, positioned in real-unit coordinates (y UPWARD, like a coordinate grid). The shaded region is the net of all pieces: every \"add\" piece unions in, every \"subtract\" piece is cut out (a hole). Order pieces outer-first (the base \"add\"), then the features.",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "rect",
+                    "circle",
+                    "semicircle",
+                    "sector",
+                    "triangle"
+                  ],
+                  "description": "The piece shape. rect = axis-aligned rectangle from its bottom-left corner (x,y) with width w, height h. circle = full disc at (cx,cy) radius r. semicircle = half disc at centre (cx,cy) radius r, its flat DIAMETER edge perpendicular to `facing` and the arc bulging toward `facing`. sector = a slice at centre (cx,cy) radius r from `start` sweeping `angle` degrees (use angle 90 for a quarter). triangle = the polygon of its `points`."
+                },
+                "op": {
+                  "type": "string",
+                  "enum": [
+                    "add",
+                    "subtract"
+                  ],
+                  "description": "Whether this piece ADDS to the shaded region (part of the area, unioned in — the base and any glued-on shape) or is SUBTRACTED (cut out as a hole — an inscribed circle, a semicircular bite). The net area is Σ add − Σ subtract. A subtract piece must sit FULLY INSIDE an add piece; an add feature must be edge-adjacent (not partially overlapping). Default \"add\"."
+                },
+                "x": {
+                  "type": "number",
+                  "description": "rect only: bottom-left corner x (real units)."
+                },
+                "y": {
+                  "type": "number",
+                  "description": "rect only: bottom-left corner y (real units, y upward)."
+                },
+                "w": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "rect only: width (real units)."
+                },
+                "h": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "rect only: height (real units)."
+                },
+                "cx": {
+                  "type": "number",
+                  "description": "circle / semicircle / sector: centre x (real units)."
+                },
+                "cy": {
+                  "type": "number",
+                  "description": "circle / semicircle / sector: centre y (real units, y upward)."
+                },
+                "r": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "circle / semicircle / sector: radius (real units)."
+                },
+                "facing": {
+                  "type": "number",
+                  "description": "semicircle only: the direction (degrees, 0° = east/right, anticlockwise positive) the arc bulges. The flat diameter edge is perpendicular to it. E.g. facing 90 sits the diameter horizontal with the bump ON TOP; facing 180 bulges left. Default 90."
+                },
+                "start": {
+                  "type": "number",
+                  "description": "sector only: the angle (degrees) of the first radius (0° = east, ACW +). Default 0."
+                },
+                "angle": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 360,
+                  "description": "sector only: the sweep in degrees (90 for a quarter-circle). Default 90."
+                },
+                "points": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 6,
+                  "items": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "number"
+                    }
+                  },
+                  "description": "triangle only: the [x, y] vertices (real units, y upward)."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Optional text drawn beside this piece — a given datum (a side length \"15 cm\", a radius, a diameter \"AC = 10 cm\"). circle: printed beside a dashed radius guide. semicircle: printed outside the flat diameter edge. sector: printed on BOTH radii (the usual exam convention \"6 cm\" on each arm). triangle: printed at the centroid — prefer `edgeLabels` there, which puts the length ON the edge it measures. Any arm/edge named in `edgeLabels` wins over this text. Omit for no label."
+                },
+                "vertices": {
+                  "type": "array",
+                  "maxItems": 6,
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Optional corner / key-point letters, drawn at each point and nudged outward. rect: the four corners as [bottom-left, bottom-right, top-right, top-left]. sector: [centre, arc-start, arc-end] (e.g. [\"A\",\"B\",\"C\"] for sector BAC drawn from centre A). triangle: one letter per entry of `points`, in the same order (a midpoint M, a corner D). Use \"\" to leave a point unnamed. Letters at a point an EARLIER piece already named are drawn once, not twice — so a sector and a triangle sharing corners can both name them and only the new letters appear. Naming a piece's points is also what lets `edgeLabels` address its edges."
+                },
+                "edgeLabels": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "boolean"
+                    ]
+                  },
+                  "description": "Dimension NAMED EDGES of this piece — the exam figure's \"7 cm on AB, 5 cm on AD\". Each key names an edge by two of this piece's `vertices` in either order (\"AB\", or \"A-B\" when a letter is more than one character); each value is `true` to print the DERIVED measurement (the honest default — the model measures the edge in `units` at `decimals`), or a string to print that text verbatim (for an unknown \"x\", or a \"?\" answer hook). rect / triangle: the two points must be ADJACENT corners; the label sits on the edge, nudged clear of the shape (a `subtract` piece nudges INWARD, into the unshaded hole, so the text never lands on the shading). sector: [centre, arc-start] and [centre, arc-end] are the two RADII (derived value = r); [arc-start, arc-end] is the ARC, labelled on the curve with the derived ARC LENGTH rθ, not the chord. Requires `vertices` on this piece. Not supported on circle / semicircle pieces — use their `label`."
+                },
+                "showEdges": {
+                  "type": "boolean",
+                  "description": "rect only: label the width (bottom) and height (left) edges with their derived lengths. Default true when the rect has no explicit `label`; set false to suppress. Use `label` on a specific rect for a single given, or showEdges for both sides."
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "description": "The pieces of the composite, in real-unit coordinates (y upward). Put the outer base first (op \"add\"); add holes (op \"subtract\", fully inside) and glued-on shapes (op \"add\", edge-adjacent) after."
+          },
+          "shadeLabel": {
+            "type": "string",
+            "description": "Optional short label placed in the shaded region (e.g. \"shaded\"). Omit for a clean figure — the block text names what is shaded."
+          },
+          "occludeArea": {
+            "type": "boolean",
+            "description": "Set true on any figure that ASKS for the area (\"Find the shaded area\", \"Find the total area of ABCD\"). The area is never printed on the canvas either way, but the aria-label states it by default — which reads the answer aloud to a screen-reader user that a sighted pupil has to work out. This is the composite's `occlude` hook: it replaces that clause with \"it is the thing to work out\". Leave it out for a worked or reference figure, where naming the area is useful. Default false."
+          },
+          "rightAngles": {
+            "type": "array",
+            "maxItems": 3,
+            "description": "Right-angle square marks. Each { at, between } draws the small 90° corner square at the point lettered `at`, in the wedge between the two arms running to the lettered points in `between`. The letters are resolved across EVERY piece's `vertices`, so the two arms may belong to different pieces (a sector radius and a triangle side — the usual \"sector with a right-angled triangle glued on\"). The model MEASURES the angle and draws nothing unless it really is 90° (within 1°), so the figure can never assert a right angle the geometry does not have.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "at": {
+                  "type": "string",
+                  "description": "The vertex letter the square sits at (must appear in some piece's `vertices`)."
+                },
+                "between": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "The two other vertex letters the arms run to, e.g. [\"B\",\"D\"] for the right angle at A between AB and AD."
+                }
+              },
+              "required": [
+                "at",
+                "between"
+              ]
+            }
+          }
+        },
+        "required": [
+          "shapes"
+        ]
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "shape:\"circle\" only. The sector's moving radius gets a handle pupils can drag to change θ; the measures recompute live. Needs a sector / arc / segment / chord to drag. Default false. (Ignored for the other shapes — they are static diagrams.)"
+      }
+    },
+    "required": [
+      "radius"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Name the parts — radius, diameter, chord, tangent labelled (no measures)",
+      "params": {
+        "header": "Parts of a circle",
+        "radius": 5,
+        "angle": 70,
+        "start": 150,
+        "showRadiusValue": false,
+        "showAngle": false,
+        "parts": [
+          {
+            "part": "diameter",
+            "label": "diameter",
+            "at": 0
+          },
+          {
+            "part": "radius",
+            "label": "radius",
+            "at": -52
+          },
+          {
+            "part": "chord",
+            "label": "chord"
+          },
+          {
+            "part": "tangent",
+            "label": "tangent",
+            "at": -90
+          }
+        ]
+      }
+    },
+    {
+      "label": "Colour-coded parts — radius (blue), chord (teal), tangent (purple), diameter (coral)",
+      "params": {
+        "header": "Parts of a circle",
+        "radius": 5,
+        "angle": 70,
+        "start": 150,
+        "showRadiusValue": false,
+        "showAngle": false,
+        "parts": [
+          {
+            "part": "diameter",
+            "label": "diameter",
+            "at": 0,
+            "colour": "coral"
+          },
+          {
+            "part": "radius",
+            "label": "radius",
+            "at": -52,
+            "colour": "blue"
+          },
+          {
+            "part": "chord",
+            "label": "chord",
+            "colour": "teal"
+          },
+          {
+            "part": "tangent",
+            "label": "tangent",
+            "at": -90,
+            "colour": "purple"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Worked example — circumference and area, full working",
+      "params": {
+        "header": "Circumference and area",
+        "radius": 6,
+        "parts": [
+          {
+            "part": "radius"
+          }
+        ],
+        "measures": [
+          {
+            "measure": "circumference",
+            "showWorking": true
+          },
+          {
+            "measure": "area",
+            "showWorking": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — find the sector area (arc length given)",
+      "params": {
+        "radius": 10,
+        "angle": 72,
+        "parts": [
+          {
+            "part": "sector",
+            "highlight": true
+          }
+        ],
+        "measures": [
+          {
+            "measure": "arc-length",
+            "showWorking": false
+          },
+          {
+            "measure": "sector-area",
+            "showWorking": true,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case (circle) — sector with arc, area AND perimeter, plus a labelled segment",
+      "params": {
+        "header": "Sector and segment",
+        "radius": 6,
+        "angle": 120,
+        "parts": [
+          {
+            "part": "sector",
+            "label": "sector"
+          },
+          {
+            "part": "segment",
+            "label": "segment"
+          }
+        ],
+        "measures": [
+          {
+            "measure": "arc-length",
+            "showWorking": true
+          },
+          {
+            "measure": "sector-area",
+            "showWorking": true
+          },
+          {
+            "measure": "sector-perimeter",
+            "showWorking": true
+          },
+          {
+            "measure": "segment-area",
+            "showWorking": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Isolated sector AOB — both radii bare-labelled, endpoint letters, angle",
+      "params": {
+        "header": "Sector AOB",
+        "shape": "sector",
+        "radius": 7,
+        "angle": 140,
+        "endpointLabels": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "label": "Sector with the arc given, angle hidden (find the angle / area)",
+      "params": {
+        "header": "The arc is given",
+        "shape": "sector",
+        "radius": 10,
+        "angle": 100,
+        "showAngle": false,
+        "arcLabel": "14 cm",
+        "endpointLabels": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "label": "Semicircle — flat diameter edge and one arc (θ = 180°)",
+      "params": {
+        "header": "A semicircle",
+        "shape": "sector",
+        "radius": 8,
+        "angle": 180,
+        "showAngle": false
+      }
+    },
+    {
+      "label": "Three-quarter circle — two straight edges and a 270° arc",
+      "params": {
+        "header": "Three-quarter circle",
+        "shape": "sector",
+        "radius": 9,
+        "angle": 270,
+        "showAngle": false
+      }
+    },
+    {
+      "label": "Annulus — shaded ring between two concentric circles",
+      "params": {
+        "header": "The shaded ring",
+        "shape": "annulus",
+        "radius": 8,
+        "innerRadius": 5
+      }
+    },
+    {
+      "label": "Composite (hard case) — quarter-circle minus a semicircle on one radius",
+      "params": {
+        "shape": "composite",
+        "radius": 1,
+        "units": "cm",
+        "exact": true,
+        "composite": {
+          "occludeArea": true,
+          "shapes": [
+            {
+              "kind": "sector",
+              "op": "add",
+              "cx": 0,
+              "cy": 0,
+              "r": 8,
+              "start": 0,
+              "angle": 90,
+              "vertices": [
+                "A",
+                "C",
+                "B"
+              ]
+            },
+            {
+              "kind": "semicircle",
+              "op": "subtract",
+              "cx": 4,
+              "cy": 0,
+              "r": 4,
+              "facing": 90,
+              "label": "AC = 8 cm"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Composite — square with an inscribed circle, shaded corners",
+      "params": {
+        "header": "Shaded corners",
+        "shape": "composite",
+        "radius": 1,
+        "composite": {
+          "shapes": [
+            {
+              "kind": "rect",
+              "op": "add",
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 6,
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            {
+              "kind": "circle",
+              "op": "subtract",
+              "cx": 3,
+              "cy": 3,
+              "r": 3,
+              "label": "r = 3 cm"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Composite (@3) — shaded segment: sector minus its triangle, radii and chord dimensioned",
+      "params": {
+        "shape": "composite",
+        "radius": 1,
+        "units": "cm",
+        "composite": {
+          "occludeArea": true,
+          "shapes": [
+            {
+              "kind": "sector",
+              "op": "add",
+              "cx": 0,
+              "cy": 0,
+              "r": 10,
+              "start": 53.1301,
+              "angle": 73.7398,
+              "vertices": [
+                "O",
+                "Q",
+                "P"
+              ],
+              "edgeLabels": {
+                "OP": true,
+                "OQ": true
+              }
+            },
+            {
+              "kind": "triangle",
+              "op": "subtract",
+              "points": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  6,
+                  8
+                ],
+                [
+                  -6,
+                  8
+                ]
+              ],
+              "vertices": [
+                "O",
+                "Q",
+                "P"
+              ],
+              "edgeLabels": {
+                "PQ": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Composite (@3) — sector minus a cevian triangle, the midpoint M lettered",
+      "params": {
+        "header": "The shaded region",
+        "shape": "composite",
+        "radius": 1,
+        "units": "m",
+        "composite": {
+          "shapes": [
+            {
+              "kind": "sector",
+              "op": "add",
+              "cx": 0,
+              "cy": 0,
+              "r": 6,
+              "start": 0,
+              "angle": 40,
+              "vertices": [
+                "A",
+                "C",
+                "B"
+              ],
+              "edgeLabels": {
+                "AB": true
+              }
+            },
+            {
+              "kind": "triangle",
+              "op": "subtract",
+              "points": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  4.5963,
+                  3.8567
+                ],
+                [
+                  3,
+                  0
+                ]
+              ],
+              "vertices": [
+                "A",
+                "B",
+                "M"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Composite (@3, hard case) — sector plus a glued triangle, right angle at A, unshaded outline",
+      "params": {
+        "header": "The shape ABCD",
+        "shape": "composite",
+        "radius": 1,
+        "units": "cm",
+        "shaded": false,
+        "composite": {
+          "shapes": [
+            {
+              "kind": "sector",
+              "op": "add",
+              "cx": 0,
+              "cy": 0,
+              "r": 8,
+              "start": 50,
+              "angle": 40,
+              "vertices": [
+                "A",
+                "C",
+                "B"
+              ],
+              "edgeLabels": {
+                "AB": true
+              }
+            },
+            {
+              "kind": "triangle",
+              "op": "add",
+              "points": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  5.1423,
+                  6.1284
+                ],
+                [
+                  6,
+                  0
+                ]
+              ],
+              "vertices": [
+                "A",
+                "C",
+                "D"
+              ],
+              "edgeLabels": {
+                "AD": true
+              }
+            }
+          ],
+          "rightAngles": [
+            {
+              "at": "A",
+              "between": [
+                "B",
+                "D"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Composite — square plus a semicircle glued to one edge",
+      "params": {
+        "header": "A square and a semicircle",
+        "shape": "composite",
+        "radius": 1,
+        "composite": {
+          "shapes": [
+            {
+              "kind": "rect",
+              "op": "add",
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 6,
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            {
+              "kind": "semicircle",
+              "op": "add",
+              "cx": 6,
+              "cy": 3,
+              "r": 3,
+              "facing": 0,
+              "label": "r = 3 cm"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

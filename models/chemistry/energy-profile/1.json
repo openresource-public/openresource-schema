@@ -1,0 +1,361 @@
+{
+  "ref": "chemistry/energy-profile@1",
+  "family": "chemistry",
+  "name": "energy-profile",
+  "version": 1,
+  "title": "Reaction energy profile",
+  "tagline": "Reaction energy profile: reactant and product levels, with the peak, ΔH and the exo/endothermic verdict derived; optional catalyst curve at a lower Ea; readouts occludable.",
+  "description": "A reaction energy profile (reaction pathway diagram): a horizontal reactant level on the left and a product level on the right, joined by a smooth curve up over the transition state and down again, on Energy / Progress-of-reaction axes. You author the reactant energy, the product energy and the activation energy; the model derives the transition-state peak (reactants + activation energy, raised if it would not clear both levels), the activation-energy arrow and its readout measured off the drawn gap, the energy change ΔH (products − reactants, signed + or −), and the exothermic / endothermic verdict from the sign of ΔH — there is nowhere to author the verdict, so it can never contradict the levels. Add a catalyst and a second, lower curve is drawn over the same two levels with its own activation-energy arrow: a lower Ea, the SAME ΔH, derived not authored. The activation energy, the catalysed activation energy, the energy change, the verdict and each level value occlude independently as \"?\", and each can be highlighted. Level species labels, level values, the curve itself and every annotation toggle off for answer spaces and staged builds.",
+  "whenToUse": "Reach for this for energetics: exothermic vs endothermic, activation energy, energy level / reaction profile diagrams, and the effect of a catalyst. Author three numbers — reactants.energy, products.energy and activation.energy — in whatever unit the question uses (unit defaults to \"kJ/mol\"). The usual convention is to put the reactants at 0 and the products at ΔH: products.energy −180 draws an exothermic profile that reports ΔH = −180 kJ/mol and \"Exothermic\"; +178 draws an endothermic one and reports \"Endothermic\". Absolute energies work too — only the difference is read. The activation energy is measured from the REACTANT level to the peak (not from the products), so an endothermic reaction needs activation.energy greater than the energy change; if it is not, the peak is raised just clear of the product level and the readout reports the raised value rather than drawing a peak that contradicts its own label. Common configurations: teaching figure — the defaults (curve, Ea arrow, ΔH arrow and verdict all shown) with label on each level for the species; \"is this exothermic or endothermic?\" — verdict: { occlude: true } and energyChange: { occlude: true } so the shape alone answers it; \"what is the activation energy?\" / \"what is the energy change?\" — show: { levelValues: true } so the numbers are readable off the diagram, then occlude the one being asked for; answer space — show: { curve: false, activation: false, energyChange: false, verdict: false } leaves the two labelled levels for pupils to draw the pathway on. Catalysts: add catalyst: { energy: 35 } for the second curve; omit its energy and a lower value is derived, and either way the catalysed peak sits over the SAME product level so pupils can see that a catalyst lowers the activation energy and leaves ΔH unchanged — the point of the comparison. Staged builds work well: open on the two levels (show.curve false), add the curve, then the activation arrow, then the energy change and the verdict. Keep the catalyst object, the unit and show.levelValues the SAME across every stage of one staged build and toggle only the show.* flags (including show.catalyst, which reveals a catalysed pathway that was reserved from the first frame) — the canvas is sized from the full figure with every value written out, so neither a reveal nor an occlusion changes its size between stages. Across a lesson keep the unit and the level convention (reactants at 0) identical so pupils compare like with like, and put the arithmetic (\"ΔH = −180 kJ/mol so the reaction gives out energy\") in the block text, not on the figure. Synonyms teachers use: energy profile, reaction profile, reaction pathway diagram, energy level diagram, activation energy, Ea, energy change, delta H, enthalpy change, exothermic, endothermic, transition state, catalyst, catalysed.",
+  "responseModes": [],
+  "tags": [
+    "energy profile",
+    "reaction profile",
+    "reaction pathway",
+    "energy level diagram",
+    "activation energy",
+    "energy change",
+    "enthalpy",
+    "delta H",
+    "exothermic",
+    "endothermic",
+    "transition state",
+    "catalyst",
+    "catalysed",
+    "energetics",
+    "chemistry",
+    "science"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "reactants": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The reactant level — the left-hand plateau the reaction starts from.",
+        "properties": {
+          "energy": {
+            "type": "number",
+            "description": "Energy of the reactants, in the figure's unit. Usually 0 (the conventional baseline), so the product energy reads directly as ΔH. Only the DIFFERENCE between the two levels is read, so absolute values work equally well."
+          },
+          "label": {
+            "type": "string",
+            "description": "Species written under this level, e.g. \"CH₄ + 2O₂\" or just \"Reactants\". Omit for an unlabelled level."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this level's energy value as \"?\" — the question hook. The arrow and the figure stay drawn and correct; the hidden value is hidden in the accessible label too. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber this level's energy value and its arrow — answer / result emphasis. Default false."
+          }
+        },
+        "required": [
+          "energy"
+        ]
+      },
+      "products": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The product level — the right-hand plateau the reaction ends on. Below the reactants makes the reaction exothermic, above it endothermic; the model works out which and says so.",
+        "properties": {
+          "energy": {
+            "type": "number",
+            "description": "Energy of the products, in the figure's unit. With the reactants at 0 this IS the energy change: −180 gives ΔH = −180 (exothermic), +178 gives ΔH = +178 (endothermic)."
+          },
+          "label": {
+            "type": "string",
+            "description": "Species written under this level, e.g. \"CO₂ + 2H₂O\" or just \"Products\". Omit for an unlabelled level."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this level's energy value as \"?\" — the question hook. The arrow and the figure stay drawn and correct; the hidden value is hidden in the accessible label too. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber this level's energy value and its arrow — answer / result emphasis. Default false."
+          }
+        },
+        "required": [
+          "energy"
+        ]
+      },
+      "activation": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The activation energy — the height of the transition state ABOVE THE REACTANT LEVEL. This is the only thing that sets how tall the hump is; the peak's energy is derived from it.",
+        "properties": {
+          "energy": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Activation energy Ea, measured from the reactant level up to the peak, in the figure's unit. Must be positive. For an ENDOTHERMIC reaction it must also exceed the energy change (the peak has to clear the products); if it does not, the peak is raised just above the product level and the readout reports that raised value, so the number and the picture always agree."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the activation energy as \"?\" — the question hook. The arrow and the figure stay drawn and correct; the hidden value is hidden in the accessible label too. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the activation energy and its arrow — answer / result emphasis. Default false."
+          }
+        },
+        "required": [
+          "energy"
+        ]
+      },
+      "catalyst": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this to overlay a SECOND pathway for the catalysed reaction: a lower curve over the same two levels, in its own colour, with its own activation-energy arrow. The product level — and so ΔH — is untouched, which is the comparison the topic turns on. Omit for a single pathway.",
+        "properties": {
+          "energy": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Activation energy WITH the catalyst, measured from the reactant level, in the figure's unit. Must be positive and SMALLER than activation.energy — a value at or above it is capped at the uncatalysed activation energy, because a catalyst can never raise the barrier, and the two curves then draw on top of each other with the same readout (which is the figure telling you the value was rejected). Omit it and a lower value is derived (about three fifths of the uncatalysed Ea, rounded), which is enough for a qualitative \"the catalyst lowers it\" figure."
+          },
+          "label": {
+            "type": "string",
+            "description": "Name for the catalysed pathway shown beside its curve, e.g. \"with a catalyst\" or \"with MnO₂\". Defaults to \"with catalyst\"."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the catalysed activation energy as \"?\" — the question hook. The arrow and the figure stay drawn and correct; the hidden value is hidden in the accessible label too. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the catalysed activation energy and its arrow — answer / result emphasis. Default false."
+          }
+        }
+      },
+      "energyChange": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Flags for the DERIVED energy change ΔH (products − reactants, written with its sign). There is no value to author here — the arrow spans the two levels and the readout is measured off them. Use show.energyChange to hide the arrow entirely.",
+        "properties": {
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the energy change ΔH as \"?\" — the question hook. The arrow and the figure stay drawn and correct; the hidden value is hidden in the accessible label too. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the energy change ΔH and its arrow — answer / result emphasis. Default false."
+          }
+        }
+      },
+      "verdict": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Flags for the DERIVED verdict — \"Exothermic\" when ΔH is negative, \"Endothermic\" when positive, \"No overall energy change\" when the levels match. Written on its own line under the figure. There is nothing to author: occlude it as \"?\" to ask pupils to classify the reaction. Use show.verdict to hide the line entirely.",
+        "properties": {
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the exothermic / endothermic verdict as \"?\" — the question hook. The arrow and the figure stay drawn and correct; the hidden value is hidden in the accessible label too. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the exothermic / endothermic verdict and its arrow — answer / result emphasis. Default false."
+          }
+        }
+      },
+      "unit": {
+        "type": "string",
+        "description": "Unit written after every energy value, e.g. \"kJ/mol\" (default) or \"kJ mol⁻¹\". Set it to \"\" for a purely qualitative figure with bare numbers. Keep it the same across a lesson."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles — what is DRAWN. All default true except levelValues. The canvas is sized from the full figure whatever these say, so toggling them across the frames of a staged build never resizes it.",
+        "properties": {
+          "curve": {
+            "type": "boolean",
+            "description": "Draw the pathway curve up over the transition state and down to the products. false leaves the two level plateaus alone — the answer space for \"sketch the reaction pathway\", and the natural opening frame of a staged build. With no curve there is no peak to point at, so the activation-energy arrow is suppressed with it. Default true."
+          },
+          "catalyst": {
+            "type": "boolean",
+            "description": "Draw the catalysed pathway (its curve, its arrow and its readout). Default true, and ignored when there is no catalyst object. Set it false on the OPENING frames of a staged build — keep the catalyst object in every frame and switch this on to reveal the catalysed pathway, and the figure will not resize as it appears."
+          },
+          "activation": {
+            "type": "boolean",
+            "description": "Draw the activation-energy arrow from the reactant level up to the peak, with its readout. Default true."
+          },
+          "energyChange": {
+            "type": "boolean",
+            "description": "Draw the energy-change arrow between the two levels on the right of the figure, with its ΔH readout. Default true."
+          },
+          "verdict": {
+            "type": "boolean",
+            "description": "Write the derived \"Exothermic\" / \"Endothermic\" line under the figure. Default true."
+          },
+          "levelLabels": {
+            "type": "boolean",
+            "description": "Write each level's species label under its plateau. Default true (nothing is drawn for a level with no label)."
+          },
+          "levelValues": {
+            "type": "boolean",
+            "description": "Print each level's energy value above its plateau, and the peak's value above the peak. Default FALSE. Turn it on when the question is read OFF the diagram — \"use the diagram to work out the activation energy\" needs the numbers on the levels — and keep it the same across the frames of one staged build."
+          },
+          "axisNames": {
+            "type": "boolean",
+            "description": "Name the axes (\"Energy\" up the left, \"Progress of reaction\" along the bottom). Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional short line centred below the figure, e.g. the equation the profile belongs to. Keep the working in the block text, not here."
+      }
+    },
+    "required": [
+      "reactants",
+      "products",
+      "activation"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — an exothermic reaction: Ea, ΔH and the derived verdict",
+      "params": {
+        "reactants": {
+          "energy": 0,
+          "label": "Reactants"
+        },
+        "products": {
+          "energy": -180,
+          "label": "Products"
+        },
+        "activation": {
+          "energy": 90
+        },
+        "show": {
+          "levelValues": true
+        },
+        "header": "An exothermic reaction"
+      }
+    },
+    {
+      "label": "Blank answer space — the two levels only, sketch the pathway",
+      "params": {
+        "reactants": {
+          "energy": 0,
+          "label": "Reactants"
+        },
+        "products": {
+          "energy": -140,
+          "label": "Products"
+        },
+        "activation": {
+          "energy": 80
+        },
+        "show": {
+          "curve": false,
+          "activation": false,
+          "energyChange": false,
+          "verdict": false
+        }
+      }
+    },
+    {
+      "label": "Occluded question — which is it? ΔH and the verdict hidden",
+      "params": {
+        "reactants": {
+          "energy": 0,
+          "label": "Reactants"
+        },
+        "products": {
+          "energy": 120,
+          "label": "Products"
+        },
+        "activation": {
+          "energy": 200
+        },
+        "energyChange": {
+          "occlude": true
+        },
+        "verdict": {
+          "occlude": true
+        },
+        "show": {
+          "levelValues": true
+        }
+      }
+    },
+    {
+      "label": "Worked example — endothermic decomposition of calcium carbonate",
+      "params": {
+        "reactants": {
+          "energy": 0,
+          "label": "CaCO₃"
+        },
+        "products": {
+          "energy": 178,
+          "label": "CaO + CO₂"
+        },
+        "activation": {
+          "energy": 250
+        },
+        "show": {
+          "levelValues": true
+        },
+        "caption": "CaCO₃ → CaO + CO₂"
+      }
+    },
+    {
+      "label": "Catalyst overlay — a lower activation energy, the same energy change",
+      "params": {
+        "reactants": {
+          "energy": 0,
+          "label": "2H₂O₂"
+        },
+        "products": {
+          "energy": -98,
+          "label": "2H₂O + O₂"
+        },
+        "activation": {
+          "energy": 75
+        },
+        "catalyst": {
+          "energy": 35,
+          "label": "with MnO₂"
+        },
+        "header": "The effect of a catalyst"
+      }
+    },
+    {
+      "label": "Hard case — endothermic with a catalyst whose peak barely clears the products, everything occluded",
+      "params": {
+        "reactants": {
+          "energy": 0,
+          "label": "CaCO₃ + heat"
+        },
+        "products": {
+          "energy": 178,
+          "label": "CaO + CO₂ (gas)"
+        },
+        "activation": {
+          "energy": 250,
+          "occlude": true
+        },
+        "catalyst": {
+          "energy": 200,
+          "label": "with a catalyst",
+          "occlude": true
+        },
+        "energyChange": {
+          "occlude": true
+        },
+        "verdict": {
+          "occlude": true
+        },
+        "show": {
+          "levelValues": true
+        }
+      }
+    }
+  ]
+}

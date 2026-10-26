@@ -1,0 +1,262 @@
+{
+  "ref": "physics/ray-optics@1",
+  "family": "physics",
+  "name": "ray-optics",
+  "version": 1,
+  "title": "Ray diagrams (mirror & lens)",
+  "tagline": "Light ray diagrams: plane-mirror reflection (derived reflected ray, normal, equal angles) and convex-lens principal-ray construction with the derived image and its nature.",
+  "description": "GCSE light ray diagrams built by construction. Choose kind \"mirror\" for plane-mirror reflection: an incident ray strikes a vertical mirror at an authored angle and the model derives the reflected ray, the normal, and the two equal angles (angle of incidence = angle of reflection, marked equal), and — given an object — locates its virtual image behind the mirror by reflecting across the mirror line, with dashed construction rays. Choose kind \"lens\" for a converging (convex) lens: mark the focal points F and 2F from a focal length, place an object arrow, and the model traces the three principal rays (parallel-then-through-F, straight-through-centre, through-F-then-parallel) and derives the IMAGE where they meet — its position, its height, and its nature (real or virtual, upright or inverted, magnified or diminished) all computed from the thin-lens construction. When the object sits inside the focal length the refracted rays diverge and the image is found by extending them backwards (dashed) to a virtual, upright, magnified image — the magnifying-glass case. The image is never authored; occlude it (\"construct the image\") or occlude the reflected ray to pose the construction as a question. Staged builds add one principal ray per stage and reveal the image last.",
+  "whenToUse": "Reach for this for GCSE physics light ray diagrams — reflection in a plane mirror and image formation by a converging (convex) lens. For reflection set kind \"mirror\": give incident.angle (measured from the NORMAL, the physics convention) and the model draws the incident ray, the derived reflected ray on the other side of the normal, the dashed normal and the equal angle arcs; add an object to also construct its virtual image behind the mirror. For a lens set kind \"lens\": give focalLength (F and 2F are marked automatically at those distances each side) and an object (its distance from the lens and its height); the model traces the three principal rays and derives the image and its nature. Author only the object and the optic — never the image: there is no way to write an image position or say whether it is real or virtual, because that is exactly what the construction computes (it stays correct if you move the object). Common configurations: real image beyond 2F (object beyond 2F -> real, inverted, diminished, between F and 2F); real image (object between F and 2F -> real, inverted, magnified, beyond 2F); the classic triptych completes with the virtual case (object inside F -> virtual, upright, magnified, same side). Occlude \"image\" for \"construct the image\" (hides the image arrow, its rays and the nature readout); occlude \"reflected-ray\" for \"draw the reflected ray\". Set draggable (lens only) to let pupils slide the object along the axis and watch the image flip real->virtual as it crosses F. Staged builds read especially well here: base = the object + optic + focal marks, then add one principal ray per stage, and reveal the image on the last stage — ship the three object positions as three separate staged stories. Keep the same focal length and object height across a lesson so pupils compare like with like. Synonyms a teacher might use: ray diagram, reflection, plane mirror, angle of incidence, angle of reflection, normal, law of reflection, virtual image, converging lens, convex lens, principal rays, focal point, focal length, real image, magnification, magnifying glass, object and image, upright, inverted, diminished, magnified.",
+  "responseModes": [],
+  "tags": [
+    "ray diagram",
+    "ray diagrams",
+    "reflection",
+    "plane mirror",
+    "mirror",
+    "angle of incidence",
+    "angle of reflection",
+    "normal",
+    "law of reflection",
+    "virtual image",
+    "real image",
+    "converging lens",
+    "convex lens",
+    "lens",
+    "principal rays",
+    "focal point",
+    "focal length",
+    "magnification",
+    "magnifying glass",
+    "upright",
+    "inverted",
+    "diminished",
+    "magnified",
+    "optics",
+    "light",
+    "physics",
+    "gcse"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "mirror",
+          "lens"
+        ],
+        "description": "Which ray diagram to draw. \"mirror\" = reflection in a vertical plane mirror (incident ray, derived reflected ray, normal, equal angles, and optionally the virtual image of an object). \"lens\" = a converging (convex) lens with F and 2F marked, an object, the three derived principal rays and the derived image. Required."
+      },
+      "object": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The upright object arrow, standing on the principal axis to the LEFT of the optic. Required for a lens (there is no image without an object) and optional for a mirror (add it to construct the virtual image; omit it to show only the incident/reflected ray law). The IMAGE is derived from this and the optic — never authored.",
+        "properties": {
+          "distance": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Distance u of the object from the optic, in the same arbitrary units as focalLength (lens) or as a plain scene distance (mirror). For a lens, this relative to focalLength decides the image: > 2f, between f and 2f, or < f (inside the focal length — the magnifying-glass case)."
+          },
+          "height": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Height of the object arrow above the axis, same units. The image height is derived (object height x magnification); never author it."
+          },
+          "label": {
+            "type": "string",
+            "description": "Name beside the object arrow, e.g. \"O\" or \"Object\". The image is labelled with the primed form automatically (\"I\" / \"I'\"). Default \"O\"."
+          }
+        },
+        "required": [
+          "distance",
+          "height"
+        ]
+      },
+      "focalLength": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "description": "LENS ONLY. The focal length f of the converging lens, in the same units as object.distance. F is marked at distance f on BOTH sides of the lens and 2F at 2f. Required when kind is \"lens\"; ignored for a mirror."
+      },
+      "incident": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "MIRROR ONLY. The single incident ray striking the mirror. The reflected ray, the normal and the equal angles are all derived from it. Ignored for a lens.",
+        "properties": {
+          "angle": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 85,
+            "description": "Angle of incidence in degrees, measured from the NORMAL (the perpendicular to the mirror) — the physics convention, NOT from the mirror surface. The angle of reflection is derived equal to it on the other side of the normal. e.g. 30, 45, 60."
+          },
+          "fromTop": {
+            "type": "boolean",
+            "description": "Whether the incident ray comes down from ABOVE the strike point (true) or up from below (false). Default true (the usual textbook picture, ray descending onto the mirror)."
+          }
+        },
+        "required": [
+          "angle"
+        ]
+      },
+      "occlude": {
+        "type": "string",
+        "enum": [
+          "image",
+          "reflected-ray"
+        ],
+        "description": "Pose the construction as a question by hiding what a pupil should construct. \"image\" hides the derived image arrow, the rays that locate it AND the real/virtual nature readout, leaving the object, optic and focal marks — the \"construct the image\" hook. \"reflected-ray\" (mirror only) hides the reflected ray and its angle mark, leaving the incident ray and normal — the \"draw the reflected ray\" hook. Omit for a fully worked figure."
+      },
+      "highlight": {
+        "type": "boolean",
+        "description": "Draw the derived image (arrow and label) in amber emphasis — result semantics, to draw the eye to the answer once constructed. Default false."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles; all default true.",
+        "properties": {
+          "foci": {
+            "type": "boolean",
+            "description": "LENS: mark and label F and 2F on both sides of the lens. Default true."
+          },
+          "normal": {
+            "type": "boolean",
+            "description": "MIRROR: draw the dashed normal at the strike point. Default true."
+          },
+          "angles": {
+            "type": "boolean",
+            "description": "MIRROR: draw the equal angle arcs and tick marks for the angles of incidence and reflection, with their value. Default true."
+          },
+          "nature": {
+            "type": "boolean",
+            "description": "LENS: show the derived nature readout of the image (real/virtual, upright/inverted, magnified/diminished) beneath the figure. Hidden automatically when the image is occluded. Default true."
+          }
+        }
+      },
+      "reveal": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "STAGED-BUILD control — gates which construction elements are DRAWN, one stage at a time, without moving anything (the layout is sized from the full construction, so the figure never shifts between stages). Use it to build a diagram up one principal ray at a time and reveal the image last. Omit for a fully drawn figure. Every field defaults to shown, so set only what a stage hides.",
+        "properties": {
+          "rays": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3,
+            "description": "LENS: how many of the three principal rays to draw (0, 1, 2 or 3), in the standard order — parallel-then-F, through-centre, through-F-then-parallel. Stage a build 0 → 1 → 2 → 3. Default 3 (all)."
+          },
+          "image": {
+            "type": "boolean",
+            "description": "LENS: draw the derived image (and its nature readout). Set false on the ray-building stages and true only on the final stage so the image appears LAST. The image also needs all three rays drawn. Default true."
+          },
+          "incident": {
+            "type": "boolean",
+            "description": "MIRROR (law): draw the incident ray. Default true."
+          },
+          "normal": {
+            "type": "boolean",
+            "description": "MIRROR (law): draw the normal. Default true."
+          },
+          "reflected": {
+            "type": "boolean",
+            "description": "MIRROR (law): draw the reflected ray. Default true. (occlude \"reflected-ray\" also hides it.)"
+          },
+          "angles": {
+            "type": "boolean",
+            "description": "MIRROR (law): draw the equal angle arcs. Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "LENS ONLY, web-only. The object arrow gets a handle pupils can drag ALONG the axis; the three principal rays and the derived image recompute live, so the image visibly flips from real (inverted, on the far side) to virtual (upright, magnified, same side) as the object crosses the focal point F. The object height is fixed; it slides only. Default false."
+      }
+    },
+    "required": [
+      "kind"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked — plane mirror, incident ray at 50 degrees, reflected ray + normal + equal angles",
+      "params": {
+        "kind": "mirror",
+        "header": "Reflection in a plane mirror",
+        "incident": {
+          "angle": 50
+        },
+        "caption": "The angle of reflection equals the angle of incidence."
+      }
+    },
+    {
+      "label": "Occluded question — mirror, draw the reflected ray (incident ray + normal shown)",
+      "params": {
+        "kind": "mirror",
+        "incident": {
+          "angle": 35
+        },
+        "occlude": "reflected-ray"
+      }
+    },
+    {
+      "label": "Mirror with a virtual image — object reflected behind the mirror by construction",
+      "params": {
+        "kind": "mirror",
+        "object": {
+          "distance": 3,
+          "height": 2,
+          "label": "O"
+        },
+        "caption": "The image is the same distance behind the mirror as the object is in front."
+      }
+    },
+    {
+      "label": "Worked lens — real image, object beyond 2F (real, inverted, diminished)",
+      "params": {
+        "kind": "lens",
+        "header": "Image formed by a converging lens",
+        "focalLength": 4,
+        "object": {
+          "distance": 12,
+          "height": 3,
+          "label": "O"
+        },
+        "caption": "The three principal rays meet where the image forms."
+      }
+    },
+    {
+      "label": "Occluded lens question — construct the image (object between F and 2F)",
+      "params": {
+        "kind": "lens",
+        "focalLength": 4,
+        "object": {
+          "distance": 6,
+          "height": 3
+        },
+        "occlude": "image"
+      }
+    },
+    {
+      "label": "Hard case — object inside F: virtual, upright, magnified (the magnifying glass)",
+      "params": {
+        "kind": "lens",
+        "header": "Object inside the focal length",
+        "focalLength": 6,
+        "object": {
+          "distance": 3.5,
+          "height": 2
+        },
+        "highlight": true,
+        "caption": "The rays diverge, so the image is found by extending them backwards."
+      }
+    }
+  ]
+}

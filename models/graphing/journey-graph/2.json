@@ -1,0 +1,943 @@
+{
+  "ref": "graphing/journey-graph@2",
+  "family": "graphing",
+  "name": "journey-graph",
+  "version": 2,
+  "title": "Journey graph (distance–time / speed–time)",
+  "tagline": "Piecewise motion graph from waypoints; derives each section's gradient and area; occlude to question, or arm draw-journey to draw it / read-off to read a value off it.",
+  "description": "A piecewise-linear distance–time, speed–time or velocity–time graph — the model for motion graphs. You give the journey as waypoints [time, value] and a kind (\"distance-time\", \"speed-time\", \"velocity-time\"); the model draws the segments and DERIVES each segment's gradient (the speed for a distance–time graph, the acceleration for a speed/velocity–time graph) and the area under the graph (the distance / displacement). Label every segment's gradient, shade and measure the area, or read the value at a chosen time — all computed. Occlude a gradient or the area for a \"find the speed / acceleration / distance\" question; highlight the answer. A second journey can be shown for comparison. Web: drag a waypoint up or down to reshape the journey and the readouts update. ANSWER ON THE MODEL (@2, responseMode \"draw-journey\"): the GCSE \"draw / complete the graph\" task — from a described journey, the pupil plots the waypoints on a blank squared time–value grid (or completes a partly-drawn journey), and the model self-checks each placed height against the target within half a small square. The target journey lives in drawJourney, never in journeys, so a posed / print surface (no response ctx) shows a BLANK answer grid, never the answer. READ A VALUE OFF THE GRAPH (@2, responseMode \"read-off\"): the GCSE \"use the graph to find how far / how long\" task — the journey is SHOWN (the stimulus) and readOff names a GIVEN value on one axis; the pupil drags the dashed construction line to the journey and back to the other axis (from a given time UP to the line then ACROSS to the value axis; from a given value ACROSS to the line then DOWN to the time axis), and the endpoint self-checks against the derived reading within a tolerance. The given value is public; the reading is derived and never labelled on a posed surface.",
+  "whenToUse": "Reach for this for motion graphs: distance–time and speed–time (or velocity–time) graphs, reading and finding speed or acceleration as the gradient of a section, and the distance or displacement as the area under a speed/velocity–time graph. Set kind to \"distance-time\", \"speed-time\" or \"velocity-time\" (this sets what the gradient and area mean and the default axis names), and give journeys: [{ points: [[t, value], …] }] with the times increasing — a horizontal section is a rest (distance–time) or constant speed (speed–time), a steeper section is faster / a bigger acceleration, a section going back down is the return leg (distance–time) or deceleration. Set showGradients to label every section's derived gradient; use segments: [{ index }] to occlude one section's gradient as the question or highlight the answer; add area: { from, to } to shade and measure the area (= distance under a speed–time graph); add marks: [{ t }] to read the value at a time with guide lines. Give unit: { time, value, gradient } so readouts carry units (\"s\", \"m\", \"m/s\"; gradient \"m/s\" for distance–time, \"m/s²\" for speed–time). Provide axes only to fix the window across a lesson's blocks (otherwise it fits the waypoints). A SKETCH WHOSE HEIGHT IS THE UNKNOWN (\"below is a sketch of the speed-time graph… work out the maximum speed\"): sketch: true, axes.timeTicks with just the times the question prints (e.g. [0, 6, 25]), drops at those times for the dotted verticals, and no value numbers — the plateau height is the answer, so nothing on the figure may give it away; in the worked solution name it with valueTicks [{ at, label: \"x\" }] and a drop with across: true. A staged build reads well: draw the journey section by section, then shade the area / reveal the answer. To make the pupil DRAW the graph (the \"draw / complete the graph\" exam task), set responseMode \"draw-journey\" on the tile and give drawJourney: { points } — the target journey; the pupil plots a point at each waypoint time on a blank squared grid and the model marks each placed height. Leave journeys EMPTY for a from-scratch draw; for \"complete the graph\" put the given partial journey in journeys and only the NEW waypoint(s) in drawJourney, and the completion is drawn from the given journey's end. To make the pupil READ A VALUE OFF the journey (the \"use the graph to find …\" task), set responseMode \"read-off\" on the tile and give readOff: { from, value } — the GIVEN value (\"from\": \"x\" a time, \"y\" a distance/speed/velocity) and its amount (public — it is the question); the journey stays SHOWN as the stimulus and the pupil drags the construction line to read the OTHER axis, self-checked against the derived value within readOff.tolerance (default a quarter of the target step — half a small square; carry over the part's existing answer tolerance). Use \"from\": \"x\" for \"how far after t minutes\" (up-and-across) and \"from\": \"y\" for \"at what time did it reach d\" (across-and-down). Switch primitive when the teaching changes — for a curve y = f(x), its roots or turning points use graphing/function-graph; for the area under a curved graph, the trapezium rule or Riemann strips use graphing/area-under-curve; for the tangent / gradient of a curve use graphing/first-principles; for a shaded inequality region use graphing/inequality-region. Synonyms a teacher might use: distance-time graph, speed-time graph, velocity-time graph, travel graph, journey, motion graph, gradient, speed, velocity, acceleration, deceleration, area under the graph, total distance, displacement, rest, stationary, return journey.",
+  "responseModes": [
+    "draw-journey",
+    "read-off"
+  ],
+  "tags": [
+    "distance-time",
+    "speed-time",
+    "velocity-time",
+    "travel graph",
+    "journey",
+    "motion",
+    "kinematics",
+    "gradient",
+    "speed",
+    "velocity",
+    "acceleration",
+    "deceleration",
+    "area under the graph",
+    "distance",
+    "displacement",
+    "rest",
+    "graphing",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "distance-time",
+          "speed-time",
+          "velocity-time"
+        ],
+        "description": "What the graph plots: 'distance-time' (gradient = speed, no meaningful area), 'speed-time' (gradient = acceleration, area = distance), 'velocity-time' (gradient = acceleration, signed area = displacement). Sets the default axis names."
+      },
+      "journeys": {
+        "type": "array",
+        "maxItems": 2,
+        "description": "The journey (or two, for a comparison). Each is a list of waypoints; consecutive waypoints are joined by straight segments. The first journey is the subject of any annotations by default.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "points": {
+              "type": "array",
+              "minItems": 2,
+              "description": "The waypoints [time, value] in order of increasing time. e.g. [[0,0],[4,20],[10,20],[14,0]] is accelerate, hold, decelerate to rest.",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "label": {
+              "type": "string",
+              "description": "A name for this journey (e.g. \"Amir\"), drawn near its line. Omit for an unlabelled journey."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this journey in amber. Default false."
+            }
+          },
+          "required": [
+            "points"
+          ]
+        }
+      },
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional window override. By default the window fits the waypoints (with 0 on the value axis included). Set this to FIX the window across a lesson's blocks.",
+        "properties": {
+          "time": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the time axis."
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the value (distance / speed / velocity) axis."
+          },
+          "timeStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between time gridlines / numbers. Default: a sensible round value."
+          },
+          "valueStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between value gridlines / numbers. Default: a sensible round value."
+          },
+          "timeTicks": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "at": {
+                      "type": "number"
+                    },
+                    "label": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "at"
+                  ]
+                }
+              ]
+            },
+            "description": "Number the time axis ONLY at these times, replacing the step numbers — e.g. [0, 5, 20.32] for a sketch that marks just the times the question gives. Each entry is a time or { at, label } for custom text. Explicit ticks draw even with sketch: true (which hides the generated numbers). The grid, when shown, still follows timeStep."
+          },
+          "valueTicks": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "at": {
+                      "type": "number"
+                    },
+                    "label": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "at"
+                  ]
+                }
+              ]
+            },
+            "description": "Number the value axis ONLY at these heights, replacing the step numbers. Each entry is a value or { at, label } — { at: 12, label: \"x\" } names an unknown height \"x\" in a worked solution without printing its number. [] leaves the value axis unnumbered on a scaled graph. Explicit ticks draw even with sketch: true."
+          }
+        }
+      },
+      "axisNames": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Override the axis titles. Defaults follow kind (\"Time\" and \"Distance\" / \"Speed\" / \"Velocity\").",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "The horizontal-axis title, e.g. \"Time (s)\"."
+          },
+          "value": {
+            "type": "string",
+            "description": "The vertical-axis title, e.g. \"Distance (m)\"."
+          }
+        }
+      },
+      "unit": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Unit suffixes appended to the derived readouts.",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "Time unit, e.g. \"s\", \"h\"."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value unit, e.g. \"m\", \"km\", \"m/s\"."
+          },
+          "gradient": {
+            "type": "string",
+            "description": "Unit for a segment gradient, e.g. \"m/s\" (distance–time) or \"m/s²\" (speed–time). Shown after a derived speed / acceleration."
+          },
+          "area": {
+            "type": "string",
+            "description": "Unit for the area readout (distance / displacement), e.g. \"m\". This is the value unit × the time unit, which the model can't simplify, so state it directly. Shown after the derived area."
+          }
+        }
+      },
+      "grid": {
+        "type": "boolean",
+        "description": "Show the background grid. Default true."
+      },
+      "sketch": {
+        "type": "boolean",
+        "description": "Render as an UNSCALED qualitative sketch: hide the grid, the tick numbers and the waypoint dots, keeping only the axis arrows, the axis names and the journey line. For \"which graph matches the story?\" figures where only the SHAPE matters (a service-station stop = a flat section, a return = a fall back to zero) and exact values are irrelevant. Default false."
+      },
+      "showGradients": {
+        "type": "boolean",
+        "description": "Label every segment with its derived gradient (the speed / acceleration of that section). Default false. For per-segment control (occlude one, highlight another) use segments."
+      },
+      "segments": {
+        "type": "array",
+        "description": "Per-segment annotations / questions, each addressing one straight section by its 0-based index (0 = the section from the first waypoint to the second).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "index": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Which segment (0-based) this annotates."
+            },
+            "journey": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Which journey (0-based). Default 0."
+            },
+            "label": {
+              "type": "string",
+              "description": "Custom text on this segment (e.g. \"rest\", \"constant speed\") instead of the derived gradient. Omit to show the derived gradient."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Hide this segment's gradient as \"?\" — the \"find the speed / acceleration\" hook. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber emphasis on this segment. Default false."
+            }
+          },
+          "required": [
+            "index"
+          ]
+        }
+      },
+      "area": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Shade and measure the area under a journey between two times — the distance (speed–time) or displacement (velocity–time). Meaningless for distance–time.",
+        "properties": {
+          "journey": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Which journey (0-based). Default 0."
+          },
+          "from": {
+            "type": "number",
+            "description": "Start time of the area. Default: the journey start."
+          },
+          "to": {
+            "type": "number",
+            "description": "End time of the area. Default: the journey end."
+          },
+          "showValue": {
+            "type": "boolean",
+            "description": "Print the derived area (distance / displacement). Default true."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the area value as \"?\" — the \"find the total distance\" hook. Default false."
+          },
+          "label": {
+            "type": "string",
+            "description": "Text in the area or an override of the value readout. Omit to show the derived value."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Shade in amber emphasis. Default false."
+          }
+        }
+      },
+      "marks": {
+        "type": "array",
+        "description": "Read the journey's value at chosen times — a point on the graph at (t, value) with its coordinates computed.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "t": {
+              "type": "number",
+              "description": "The time to read at; the mark sits at (t, value) on the journey."
+            },
+            "journey": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Which journey (0-based). Default 0."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the coordinate readout (e.g. a name). Omit to show the derived (t, value)."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Show the value as \"?\". Default false."
+            },
+            "guides": {
+              "type": "boolean",
+              "description": "Dashed guide lines to each axis. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber emphasis. Default false."
+            }
+          },
+          "required": [
+            "t"
+          ]
+        }
+      },
+      "drops": {
+        "type": "array",
+        "description": "Dotted construction lines from the journey at chosen times down to the time axis — the dotted verticals of a sketch that mark where a section starts and ends. No dot and no readout (use marks to read a value). across: true also runs the line over to the value axis, e.g. from a plateau to an axis label \"x\" named in valueTicks.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "t": {
+              "type": "number",
+              "description": "The time; the line starts on the journey at (t, value)."
+            },
+            "journey": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Which journey (0-based). Default 0."
+            },
+            "down": {
+              "type": "boolean",
+              "description": "Draw the line down to the time axis. Default true."
+            },
+            "across": {
+              "type": "boolean",
+              "description": "Draw the line across to the value axis. Default false."
+            }
+          },
+          "required": [
+            "t"
+          ]
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Drag a waypoint up or down (its time stays fixed) to reshape the journey; the segment gradients and the area recompute live. Default false."
+      },
+      "drawJourney": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The \"draw / complete the graph\" ANSWER surface (@2, responseMode \"draw-journey\"). The pupil plots one point at each waypoint TIME (the time is fixed by the described journey; only the height is chosen) and straight segments form the journey; the model self-checks each placed height against the target within half a small square. The target journey lives HERE, never in journeys — so a posed / print surface (no response ctx) shows a BLANK squared grid, never the answer. Leave journeys EMPTY for a from-scratch draw; for \"complete the graph\" put the given partial journey in journeys and only the NEW waypoint(s) here. Give the axes window the printed grid expects.",
+        "properties": {
+          "points": {
+            "type": "array",
+            "description": "The target waypoints [time, value] the pupil must plot, in any order (sorted by time internally). From scratch: the whole journey (≥2). Complete-the-graph: only the new waypoint(s) beyond the given journey (≥1).",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "tolerance": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Override the value acceptance band (in value units). Default: half a small square = a quarter of the value-step."
+          }
+        },
+        "required": [
+          "points"
+        ]
+      },
+      "readOff": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The \"use the graph to read off a value\" ANSWER surface (@2, responseMode \"read-off\"). Names a GIVEN value on one axis; the journey stays SHOWN (the stimulus) and the pupil drags the dashed construction line to it and back to the OTHER axis (from a time UP to the line then ACROSS to the value axis; from a value ACROSS then DOWN to the time axis). The reading on the target axis self-checks against the derived value within tolerance. The given value is public (it IS the question); the reading is derived and NEVER labelled on a posed / print surface. Use journeys (not drawJourney) — the graph is given, not drawn.",
+        "properties": {
+          "from": {
+            "type": "string",
+            "enum": [
+              "x",
+              "y"
+            ],
+            "description": "\"x\" — the given value is a TIME (x-axis); read UP to the journey then ACROSS to the value axis (find the distance/speed at that time). \"y\" — the given value is a distance/speed/velocity (y-axis); read ACROSS to the journey then DOWN to the time axis (find the time it reached that value)."
+          },
+          "value": {
+            "type": "number",
+            "description": "The GIVEN amount on the \"from\" axis (the question input — public, always shown). Must lie within that axis range and meet the journey inside the window."
+          },
+          "journey": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Which journey (0-based) to read off. Default 0."
+          },
+          "tolerance": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Acceptance band on the TARGET (read) axis, in that axis's units. Default: a quarter of the target axis step (half a small square). Set it to carry over the question's existing answer tolerance."
+          }
+        },
+        "required": [
+          "from",
+          "value"
+        ]
+      }
+    },
+    "required": [
+      "kind",
+      "journeys"
+    ]
+  },
+  "examples": [
+    {
+      "label": "The hard case — speed–time: accelerate, hold, decelerate; total distance = area",
+      "params": {
+        "kind": "speed-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                20
+              ],
+              [
+                10,
+                20
+              ],
+              [
+                14,
+                0
+              ]
+            ]
+          }
+        ],
+        "axisNames": {
+          "time": "Time (s)",
+          "value": "Speed (m/s)"
+        },
+        "unit": {
+          "time": "s",
+          "value": "m/s",
+          "gradient": "m/s²",
+          "area": "m"
+        },
+        "showGradients": true,
+        "area": {
+          "highlight": true,
+          "label": "distance"
+        }
+      }
+    },
+    {
+      "label": "Distance–time — find the speed of a section (occluded question)",
+      "params": {
+        "kind": "distance-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                2,
+                30
+              ],
+              [
+                5,
+                30
+              ],
+              [
+                8,
+                60
+              ]
+            ]
+          }
+        ],
+        "axisNames": {
+          "time": "Time (min)",
+          "value": "Distance (km)"
+        },
+        "unit": {
+          "gradient": "km/min"
+        },
+        "segments": [
+          {
+            "index": 2,
+            "occlude": true,
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Distance–time — a return journey with a rest",
+      "params": {
+        "kind": "distance-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                3,
+                12
+              ],
+              [
+                5,
+                12
+              ],
+              [
+                9,
+                0
+              ]
+            ]
+          }
+        ],
+        "axisNames": {
+          "time": "Time (h)",
+          "value": "Distance from home (km)"
+        },
+        "unit": {
+          "gradient": "km/h"
+        },
+        "segments": [
+          {
+            "index": 0,
+            "label": "out"
+          },
+          {
+            "index": 1,
+            "label": "rest"
+          },
+          {
+            "index": 2,
+            "label": "return"
+          }
+        ],
+        "marks": [
+          {
+            "t": 5,
+            "guides": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Velocity–time crossing zero — displacement vs distance",
+      "params": {
+        "kind": "velocity-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                8
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                6,
+                0
+              ],
+              [
+                10,
+                -6
+              ]
+            ]
+          }
+        ],
+        "axisNames": {
+          "time": "Time (s)",
+          "value": "Velocity (m/s)"
+        },
+        "unit": {
+          "time": "s",
+          "value": "m/s",
+          "gradient": "m/s²"
+        },
+        "showGradients": true,
+        "caption": "The velocity becomes negative — the object reverses direction"
+      }
+    },
+    {
+      "label": "Two journeys compared — who is faster?",
+      "params": {
+        "kind": "distance-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                6,
+                18
+              ]
+            ],
+            "label": "Bea"
+          },
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                18
+              ]
+            ],
+            "label": "Cal",
+            "highlight": true
+          }
+        ],
+        "axisNames": {
+          "time": "Time (min)",
+          "value": "Distance (km)"
+        }
+      }
+    },
+    {
+      "label": "Draw the journey (responseMode \"draw-journey\") — plot the whole graph on a blank grid",
+      "params": {
+        "kind": "speed-time",
+        "journeys": [],
+        "axes": {
+          "time": [
+            0,
+            12
+          ],
+          "value": [
+            0,
+            15
+          ],
+          "timeStep": 2,
+          "valueStep": 5
+        },
+        "axisNames": {
+          "time": "Time (s)",
+          "value": "Speed (m/s)"
+        },
+        "drawJourney": {
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              4,
+              12
+            ],
+            [
+              8,
+              12
+            ],
+            [
+              12,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "label": "Complete the graph (responseMode \"draw-journey\") — given prefix, pupil draws the final leg",
+      "params": {
+        "kind": "distance-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                10,
+                0
+              ],
+              [
+                11.3333,
+                60
+              ],
+              [
+                12,
+                60
+              ],
+              [
+                12.6667,
+                90
+              ]
+            ]
+          }
+        ],
+        "axes": {
+          "time": [
+            10,
+            14
+          ],
+          "value": [
+            0,
+            130
+          ],
+          "timeStep": 1,
+          "valueStep": 20
+        },
+        "axisNames": {
+          "time": "Time",
+          "value": "Distance from London (miles)"
+        },
+        "drawJourney": {
+          "points": [
+            [
+              14,
+              120
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "label": "Read off (responseMode \"read-off\", from a time) — how far after 1 hour? (up-and-across)",
+      "params": {
+        "kind": "distance-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                2,
+                60
+              ],
+              [
+                5,
+                60
+              ],
+              [
+                8,
+                150
+              ]
+            ]
+          }
+        ],
+        "axes": {
+          "time": [
+            0,
+            8
+          ],
+          "value": [
+            0,
+            160
+          ],
+          "timeStep": 1,
+          "valueStep": 20
+        },
+        "axisNames": {
+          "time": "Time (hours)",
+          "value": "Distance (km)"
+        },
+        "readOff": {
+          "from": "x",
+          "value": 1
+        }
+      }
+    },
+    {
+      "label": "Unscaled sketch — \"which graph matches the story?\" MCQ option (a stop then continue)",
+      "params": {
+        "kind": "distance-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                8,
+                11
+              ]
+            ]
+          }
+        ],
+        "axes": {
+          "time": [
+            0,
+            10
+          ],
+          "value": [
+            0,
+            12
+          ]
+        },
+        "axisNames": {
+          "time": "Time",
+          "value": "Distance from home"
+        },
+        "sketch": true
+      }
+    },
+    {
+      "label": "Sketch with an unknown height — only the given times marked, dotted drops, no speed numbers (the maximum speed is the question)",
+      "params": {
+        "kind": "speed-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                6,
+                9
+              ],
+              [
+                25,
+                9
+              ]
+            ]
+          }
+        ],
+        "axes": {
+          "time": [
+            0,
+            27
+          ],
+          "value": [
+            0,
+            12
+          ],
+          "timeTicks": [
+            0,
+            6,
+            25
+          ]
+        },
+        "axisNames": {
+          "time": "Time (seconds)",
+          "value": "Speed (m/s)"
+        },
+        "sketch": true,
+        "drops": [
+          {
+            "t": 6
+          },
+          {
+            "t": 25
+          }
+        ]
+      }
+    },
+    {
+      "label": "Read off (responseMode \"read-off\", from a distance) — when did it reach 90 km? (across-and-down)",
+      "params": {
+        "kind": "distance-time",
+        "journeys": [
+          {
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                2,
+                60
+              ],
+              [
+                5,
+                60
+              ],
+              [
+                8,
+                150
+              ]
+            ]
+          }
+        ],
+        "axes": {
+          "time": [
+            0,
+            8
+          ],
+          "value": [
+            0,
+            160
+          ],
+          "timeStep": 1,
+          "valueStep": 20
+        },
+        "axisNames": {
+          "time": "Time (hours)",
+          "value": "Distance (km)"
+        },
+        "readOff": {
+          "from": "y",
+          "value": 90,
+          "tolerance": 0.5
+        }
+      }
+    }
+  ]
+}

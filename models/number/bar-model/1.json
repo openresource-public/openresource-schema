@@ -1,0 +1,470 @@
+{
+  "ref": "number/bar-model@1",
+  "family": "number",
+  "name": "bar-model",
+  "version": 1,
+  "title": "Bar model",
+  "tagline": "Singapore bar model — bars split into value or unit segments with braces; derives the unit value and unknown parts for part–whole, ratio and fractions.",
+  "description": "One or more horizontal bars divided into segments drawn to scale, with braces over runs of segments showing totals — the Singapore bar model for part–whole and ratio reasoning. You give each segment a `value` (an absolute quantity) or `units` (a count of one shared \"part\"); the model derives every segment width, the value of one unit (solved from a brace whose `total` is a known given), any unknown part, and each brace's total. Stack two bars to compare them on one shared unit width (ratio comparison), brace a sub-run to show a share or a difference, or set `align: \"whole\"` to draw every bar the same length for comparing or equating fractions. Segments and brace totals occlude to \"?\" for questions, blank for staged builds, and highlight in amber. Covers ratio sharing and simplifying, fractions of an amount, fraction equivalence and comparison, percentage bars (one unit = 1 %), and equation bar models like 3x + 4 = 19.",
+  "whenToUse": "Reach for this whenever a quantity is taught as bars split into parts: sharing in a ratio (share £40 in 3 : 2 — a bar of 5 units, a £40 brace over all of them, sub-braces over the 3 and the 2), ratio comparison (A : B = 3 : 5 with B twelve more than A — two bars on the shared unit width, a brace over B's extra 2 units = 12), fraction of an amount (three fifths of 30 — five units, three shaded, the part read off), percentage bars (treat one unit as 1 %: a 20-unit and an 80-unit segment, brace the 20 with the given 70, and the whole 100 units derives to 350), and equation bar models (3x + 4 = 19 — three unit-segments labelled \"x\" plus a value-segment 4, a total brace 19; the model solves the unit so the boxes are true-to-scale). Author the semantics: each segment's `value` or `units`, and the known totals as brace `total`s — you never write a width, a unit value, or an unknown part; they are all computed. Key choices: give `units` (not `value`) whenever parts share a common size you want solved from a total; give a brace a `total` to state a given and let the unit value follow; `occlude` a segment or a brace total to pose the question, `highlight` to shade a fraction part or mark the answer, `blank` a segment for a staged reveal, and `show.values: false` to leave every derived value off for an answer space. Align: leave `align` as the default \"unit\" for ratio, percentage and equation work (every bar shares one unit width, so a longer bar really is longer); set `align: \"whole\"` only to compare or equate fractions, where each bar is one whole drawn the same length and subdivided differently (½ = 2/4; 2/3 vs 3/5). Cross-block convention: keep the same bar count, labels and align across a lesson so pupils track one diagram — change only what is shaded, braced or occluded. A staged build reads well: open on the labelled empty bars, reveal one part or one brace per stage, bring the answer in last. Synonyms a teacher might use: bar model, bar modelling, Singapore bar, strip diagram, part-whole model, part whole, tape diagram, ratio bar, fraction strip, fraction wall, comparison model, share in a ratio, fraction of an amount, percentage bar, model drawing.",
+  "responseModes": [],
+  "tags": [
+    "bar model",
+    "bar modelling",
+    "singapore bar",
+    "strip diagram",
+    "tape diagram",
+    "part-whole",
+    "part whole",
+    "ratio",
+    "ratio bar",
+    "sharing",
+    "share in a ratio",
+    "fraction",
+    "fraction of an amount",
+    "fraction strip",
+    "fraction wall",
+    "equivalent fractions",
+    "comparing fractions",
+    "percentage",
+    "percentage bar",
+    "comparison",
+    "equation",
+    "forming equations",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "bars": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One horizontal bar: a row of segments, optionally named and braced. Stack several bars to compare quantities (they share the unit width in the default \"unit\" align, or are drawn equal length in \"whole\" align).",
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "A name shown to the LEFT of the bar — \"A\", \"Boys\", \"French\", or a fraction like \"2/3\" (rendered stacked). Omit for an unlabelled bar."
+            },
+            "segments": {
+              "type": "array",
+              "maxItems": 16,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "One box in a bar, left to right. Give it a size as EITHER `value` (an absolute quantity) OR `units` (a count of the shared unit / \"part\") — never both. Omit both for a single equal unit (handy for dividing a bar into equal parts). Its width is derived from that size; its displayed text is derived too (the computed value) unless you override with `label` or hide it.",
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "An absolute quantity for this segment (a length, an amount of money, a constant term). Its width is proportional to this number. Use for known parts and for the constant box in an equation model (the \"4\" in 3x + 4). Mutually exclusive with `units`."
+                  },
+                  "units": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "The size of this segment as a count of the shared unit (one \"part\"). Usually a whole number: 1 for one ratio part or one \"x\", 3 for \"3 parts\" or \"3x\", 20 for the 20 % part of a percentage bar. The actual value (units × the unit value) is derived once the unit is known — given via `unit.value` or solved from a brace `total`. Mutually exclusive with `value`."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Text shown for this segment, overriding the derived value. Use \"x\" (or \"2x\") for an unknown part in an equation model, \"20%\" / \"£8\" to fix the wording, or \"?\" via `occlude` instead. An \"a/b\" string (e.g. \"1/2\") renders as a stacked fraction. Omit to show the derived value (when `show.values` is on and the value is known)."
+                  },
+                  "occlude": {
+                    "type": "boolean",
+                    "description": "Render this segment's value as \"?\" — the question hook (\"what is this part?\"). The box itself stays visible and correctly sized. Default false."
+                  },
+                  "blank": {
+                    "type": "boolean",
+                    "description": "Render the box with no text at all — an unfilled part, for staged builds that reveal one segment at a time. Different from `occlude` (\"?\" poses a question; blank poses nothing yet). If both are set, blank wins. Default false."
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Fill this segment amber — the shaded part of a fraction, the share in focus, or the answer box. Default false."
+                  }
+                },
+                "allOf": [
+                  {
+                    "not": {
+                      "required": [
+                        "value",
+                        "units"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "description": "The boxes of this bar, left to right. Size each with `value` or `units`; the widths are derived to scale."
+            },
+            "braces": {
+              "type": "array",
+              "maxItems": 10,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "A brace spanning a run of consecutive segments in THIS bar, showing the run's total. Place several to show a whole and its parts (a total brace over everything plus sub-braces over each share). Its total is derived (the sum of the spanned segments) unless you give a known `total`.",
+                "properties": {
+                  "from": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "First segment of the span, counted from 1 at the LEFT of this bar."
+                  },
+                  "to": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Last segment of the span (inclusive), counted from 1 at the left. Equal to `from` to brace a single segment."
+                  },
+                  "total": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "The KNOWN total of this span — a given in the problem (the £40 shared, the 19 in 3x + 4 = 19, the 70 that is 20 %). It is shown above/below the brace AND used to solve the unit: if this is the only known total covering unit-segments, the model derives the value of one unit from it, and from that every unknown part. Omit to let the total be derived as the sum of the span."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Text shown at the brace, overriding the numeric total — e.g. \"3 parts\", \"1/2\" (renders as a stacked fraction), or the whole left unnamed. Omit to show the total (`total` if given, else the derived sum)."
+                  },
+                  "occlude": {
+                    "type": "boolean",
+                    "description": "Render the brace total as \"?\" — \"what is this total / share?\". The brace stays drawn. Default false."
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Amber the brace and its total — answer emphasis. Default false."
+                  },
+                  "side": {
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "bottom"
+                    ],
+                    "description": "Which side of the bar the brace sits on. Default \"top\". Use \"bottom\" for sub-shares so a whole-bar total can sit on top without colliding; braces on the same side stack automatically."
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ]
+              },
+              "description": "Braces over runs of this bar's segments, showing totals/shares. Omit for a bar with no braces."
+            }
+          },
+          "required": [
+            "segments"
+          ]
+        },
+        "description": "The bars, stacked top to bottom. One bar for a single part–whole or equation model; two (or more) to compare quantities. All bars share the left edge."
+      },
+      "align": {
+        "type": "string",
+        "enum": [
+          "unit",
+          "whole"
+        ],
+        "description": "How bar lengths relate across bars. \"unit\" (default): every bar shares ONE unit width, so bar length is proportional to total size — the regime for ratio sharing, ratio comparison, percentage and equation models, where a bigger quantity must look bigger. \"whole\": every bar is drawn the SAME total length, each one whole subdivided differently — the regime for comparing or equating FRACTIONS (½ vs 2/4, 2/3 vs 3/5), where the wholes are equal and only the partition changes."
+      },
+      "unit": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The shared unit (one \"part\"). Only consulted in \"unit\" align. Usually omitted — the unit value is solved from the brace `total` that covers unit-segments. Set it explicitly only when no brace pins it down (e.g. drawing a bare ratio to a scale you choose).",
+        "properties": {
+          "value": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The value of one unit, when you want to state it rather than have it solved (e.g. unit.value 6 means each ratio part is worth 6). If a brace `total` is also given, this takes priority and the totals should agree."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout toggles.",
+        "properties": {
+          "values": {
+            "type": "boolean",
+            "description": "Show each segment's derived value as its text when the segment has no `label` of its own. Default true (the worked look). Set false for an answer space — every unlabelled, unbraced value is left blank for pupils to fill (braces still show their own totals, and segments with an explicit `label` still show it)."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "bars"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank answer space — share £40 in the ratio 3 : 2",
+      "params": {
+        "caption": "Share £40 in the ratio 3 : 2",
+        "bars": [
+          {
+            "segments": [
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              }
+            ],
+            "braces": [
+              {
+                "from": 1,
+                "to": 5,
+                "total": 40,
+                "side": "top"
+              },
+              {
+                "from": 1,
+                "to": 3,
+                "label": "3 parts",
+                "side": "bottom"
+              },
+              {
+                "from": 4,
+                "to": 5,
+                "label": "2 parts",
+                "side": "bottom"
+              }
+            ]
+          }
+        ],
+        "show": {
+          "values": false
+        }
+      }
+    },
+    {
+      "label": "Worked example — three fifths of 30",
+      "params": {
+        "header": "Three fifths of 30",
+        "bars": [
+          {
+            "segments": [
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              }
+            ],
+            "braces": [
+              {
+                "from": 1,
+                "to": 5,
+                "total": 30,
+                "side": "top"
+              },
+              {
+                "from": 1,
+                "to": 3,
+                "side": "bottom",
+                "highlight": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — 20% of a number is 70, find the number",
+      "params": {
+        "bars": [
+          {
+            "segments": [
+              {
+                "units": 20,
+                "label": "20%"
+              },
+              {
+                "units": 80,
+                "label": "80%"
+              }
+            ],
+            "braces": [
+              {
+                "from": 1,
+                "to": 1,
+                "total": 70,
+                "side": "bottom"
+              },
+              {
+                "from": 1,
+                "to": 2,
+                "occlude": true,
+                "side": "top"
+              }
+            ]
+          }
+        ],
+        "show": {
+          "values": false
+        }
+      }
+    },
+    {
+      "label": "Hard case — equation bar model 3x + 4 = 19",
+      "params": {
+        "bars": [
+          {
+            "segments": [
+              {
+                "units": 1,
+                "label": "x"
+              },
+              {
+                "units": 1,
+                "label": "x"
+              },
+              {
+                "units": 1,
+                "label": "x"
+              },
+              {
+                "value": 4,
+                "label": "4"
+              }
+            ],
+            "braces": [
+              {
+                "from": 1,
+                "to": 4,
+                "total": 19,
+                "side": "top"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — two-bar ratio comparison on a shared unit width",
+      "params": {
+        "caption": "A : B = 3 : 5 and B is 12 more than A. Find A and B.",
+        "bars": [
+          {
+            "label": "A",
+            "segments": [
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              }
+            ]
+          },
+          {
+            "label": "B",
+            "segments": [
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              }
+            ],
+            "braces": [
+              {
+                "from": 4,
+                "to": 5,
+                "total": 12,
+                "side": "bottom"
+              }
+            ]
+          }
+        ],
+        "show": {
+          "values": false
+        }
+      }
+    },
+    {
+      "label": "Comparing fractions (whole align) — which is larger, 2/3 or 3/5?",
+      "params": {
+        "align": "whole",
+        "bars": [
+          {
+            "label": "2/3",
+            "segments": [
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1
+              }
+            ]
+          },
+          {
+            "label": "3/5",
+            "segments": [
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1,
+                "highlight": true
+              },
+              {
+                "units": 1
+              },
+              {
+                "units": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

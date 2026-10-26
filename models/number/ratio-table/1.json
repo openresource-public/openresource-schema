@@ -1,0 +1,458 @@
+{
+  "ref": "number/ratio-table@1",
+  "family": "number",
+  "name": "ratio-table",
+  "version": 1,
+  "title": "Ratio table",
+  "tagline": "Ratio as a working table with scaled rows and ×k/÷k edge arrows; derives every cell, the factors and Total/Difference columns from one known value.",
+  "description": "A ratio a : b (: c …) drawn as a working table: the ratio parts across the columns, the original ratio on the top row, then any number of scaled rows beneath it, with ×k / ÷k scale-factor arrows outside the table on both the left (down) and right (up) edges between consecutive rows. Cells hold plain numbers. You write the original ratio (`parts`, each with its `units`) and, per scaled row, either a `factor`, a `unitary` column (\"one part = 1\"), or one known `value` to back-derive the factor; the model computes every scaled cell, each row-to-row arrow multiplier (an exact fraction), and optional derived Total and Difference columns on the right. Any cell occludes to \"?\" for complete-the-table / find-the-missing-value / find-the-total questions, and columns, rows or cells highlight in amber. A `combineWith` second ratio that shares a named term draws the combine table: each ratio scaled to the common term (the LCM of the shared units) and merged into one a : b : c, the shared column ambered. The tabular cousin of number/ratio-bars — same proportional reasoning, the table picture.",
+  "whenToUse": "Reach for this whenever a ratio or proportion is worked in a table with scale-factor arrows down the sides: share in a ratio, scale up or down (×k / ÷k), find a quantity from a Total or a Difference column, the unitary method (\"one part = 1\"), complete the table / find a missing value, recipe and best-buy proportion scaling, and combining two ratios that share a term. Author the semantics: list the `parts` with their `units` (the original ratio, written as it appears — it need not be simplest form), then add `rows`, each fixing its scale relative to the original by exactly one of `factor` (×3, or 0.5 for ÷2), `unitary` (make that part = 1), or `value` + `valueCol` (one known cell → back-derive the factor, where valueCol may be a part, \"total\" or \"difference\"). You never write a scaled value, a width, or an arrow label — all derived. Add a `total` object for a derived Total column, a `difference` object (its `between` names the two parts, default the first two) for a Difference column. To pose a question: list `cells` to `occlude` chosen cells to \"?\" (a hidden value never appears anywhere else, so it cannot leak — the visible arrows and totals are the SCAFFOLD for finding it, not a giveaway); set `show.values: false` for a blank answer-space table (the original given row stays, every scaled cell blanks); set `show.factors: false` to pose \"what is the scale factor?\" (arrows read \"× ?\"). `highlight` a part column, a row, or a cell to mark the answer. The arrows default to an inverse pair (×k down-left, ÷k up-right); set `show.arrowStyle: \"both\"` to write the same ×k on both edges, both arrows pointing down — the \"multiply every part by the same factor\" convention. Combine: give `combineWith` a second ratio whose `parts` reuse exactly one `name` from the primary ratio (e.g. both name a part \"B\"); the model finds the common value of the shared term (the LCM of its two units), scales each ratio to it, and draws the merged ratio with the shared column ambered — `rows`/`total`/`difference` do not apply when combining. Cross-block convention: keep the same parts, names and column set across one lesson so pupils track one table; change only what is scaled, occluded or asked. Strongly staged: open on the original ratio, bring in one scaled row (with its arrow) per stage, reveal the answer last — the base (the original row alone) stands as a sensible figure. Switch model when the teaching is the equal-unit bar picture (the simplified ↔ actual pair) — use number/ratio-bars; for a generic part–whole strip use number/bar-model. Synonyms a teacher might use: ratio table, proportion table, scale up, scale down, scale factor, share in a ratio, unitary method, one part, equivalent ratios, missing value, complete the table, recipe, best buy, combine ratios, common term, ratio to fraction.",
+  "responseModes": [
+    "fill-derived"
+  ],
+  "tags": [
+    "ratio",
+    "ratios",
+    "ratio table",
+    "proportion",
+    "proportion table",
+    "scale up",
+    "scale down",
+    "scale factor",
+    "equivalent ratios",
+    "share in a ratio",
+    "unitary method",
+    "one part",
+    "missing value",
+    "complete the table",
+    "recipe",
+    "best buy",
+    "combine ratios",
+    "common term",
+    "LCM",
+    "ratio to fraction",
+    "direct proportion",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "part": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "One ratio part = one COLUMN, left to right. Its `units` is the value on the ORIGINAL (top) row; every scaled-row value in this column is derived. Add `name` for the column header, `highlight` to amber the whole column.",
+        "properties": {
+          "units": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The ratio number for this part on the ORIGINAL (top) row — a whole number. For the ratio 5 : 3 the parts are units 5 and 3; for 2 : 3 : 5 they are 2, 3, 5. Write the ratio as it appears in the problem (it need NOT be in simplest form — a ÷HCF row simplifies it)."
+          },
+          "name": {
+            "type": "string",
+            "description": "Column header for this part — \"Sand\", \"Boys\", \"A\", \"Flour (g)\". Omit for an unnamed column. Keep it short; it sits in the header row."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber this whole column (header + every cell) — the part in focus. Use sparingly; amber is the result/emphasis colour. Default false."
+          }
+        },
+        "required": [
+          "units"
+        ]
+      }
+    },
+    "properties": {
+      "parts": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 6,
+        "items": {
+          "$ref": "#/$defs/part"
+        },
+        "description": "The ratio parts = the table COLUMNS, left to right (two to six). Each `units` is the value on the original (top) row. Write the ratio as in the problem."
+      },
+      "rows": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One SCALED row below the original. Give EXACTLY ONE of `factor`, `unitary`, or `value` (+`valueCol`) to fix the row's scale relative to the ORIGINAL row; every cell, the arrow to the row above, and the Total/Difference cells are then derived. Precedence if more than one is given: value > unitary > factor.",
+          "properties": {
+            "factor": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Scale factor relative to the ORIGINAL row: every original value is multiplied by it. 3 → ×3 (scale up), 0.5 → ÷2, 0.1 → ÷10 (terminating decimals are read as exact fractions, so 0.5 is ÷2 exactly). For thirds/sevenths use `unitary` or `value` instead."
+            },
+            "unitary": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "The UNITARY method: make this part column equal 1 (factor = 1 / units). For 2 : 3 with `unitary: 1` the row is 1 : 1.5 and the arrow reads ÷2; with `unitary: 2` it is 0.667 : 1 (÷3). The \"one part = 1\" row."
+            },
+            "value": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "ONE known value somewhere in this row, used to BACK-DERIVE the scale factor (factor = value ÷ the original value of `valueCol`). e.g. parts 2 : 5, a row with value 15 in valueCol 2 → factor 3 → 6 : 15. Requires `valueCol`."
+            },
+            "valueCol": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "total",
+                    "difference"
+                  ]
+                }
+              ],
+              "description": "Which column the known `value` sits in — a part index (1-based), or \"total\" (value is this row's total → factor = value ÷ Σunits) or \"difference\" (value is this row's difference → factor = value ÷ |part−part|). Required when `value` is given."
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional row label in a left-hand label column — \"Recipe\", \"4 people\", \"Simplest form\". A label column appears only if some row has a label."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render EVERY cell of this scaled row as \"?\" — the \"find this whole row\" hook. The arrow and the other rows stay visible as the method. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber every cell of this scaled row — the answer row. Default false."
+            }
+          }
+        },
+        "description": "The SCALED rows beneath the original, top to bottom (up to six). Each fixes its scale relative to the original by ONE of `factor` / `unitary` / `value`. The original row is always the top row; omit `rows` for the original ratio alone (no arrows). Does not apply when `combineWith` is set."
+      },
+      "total": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to add a derived Total column on the right (the sum of the parts in each row). Omit it for no Total column.",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Header for the Total column. Default \"Total\"."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the whole Total column. Default false."
+          }
+        }
+      },
+      "difference": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to add a derived Difference column on the right (|part − part| in each row). Omit it for no Difference column.",
+        "properties": {
+          "between": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "The two part columns (1-based) whose difference is shown, e.g. [1, 2]. Default [1, 2] (the first two parts)."
+          },
+          "label": {
+            "type": "string",
+            "description": "Header for the Difference column. Default \"Difference\"."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the whole Difference column. Default false."
+          }
+        }
+      },
+      "cells": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "A per-cell override for occlusion or highlight. The cell's value is always computed; list it here only to hide it (\"?\") or amber it.",
+          "properties": {
+            "row": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Which row: 0 = the ORIGINAL (top) data row; 1..N = the Nth scaled row in `rows` order."
+            },
+            "col": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "total",
+                    "difference"
+                  ]
+                }
+              ],
+              "description": "Which column. A positive integer 1..P is a ratio-part column (1 = leftmost part). \"total\" is the optional Total column; \"difference\" the optional Difference column."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this cell as \"?\" — the \"find the missing value\" / \"complete the table\" / \"find the total\" hook. Its value appears nowhere else (cell, arrow, total, aria), so it cannot leak. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this single cell — answer emphasis. Default false."
+            }
+          },
+          "required": [
+            "row",
+            "col"
+          ]
+        },
+        "description": "Per-cell occlusion / highlight overrides. Address by `row` (0 = original, 1..N = scaled rows) and `col` (part index, or \"total\"/\"difference\"). Values are always computed; list a cell only to hide (\"?\") or amber it."
+      },
+      "combineWith": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A SECOND ratio to combine with `parts` through a shared term — the LCM-combine table. Its `parts` must reuse exactly ONE `name` from the primary ratio (the shared term). The model finds the common value of the shared term (the LCM of its two units), scales each ratio to it, and draws the merged ratio with the shared column ambered. `rows`/`total`/`difference` do not apply when combining — omit them.",
+        "properties": {
+          "parts": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 5,
+            "items": {
+              "$ref": "#/$defs/part"
+            },
+            "description": "The second ratio's parts. Exactly one must share a `name` with a part of the primary ratio; the others become new columns of the combined ratio."
+          },
+          "occludeResult": {
+            "type": "boolean",
+            "description": "Render the combined (final) row as \"?\" — \"find the combined ratio\". The two scaled rows stay visible as the method. Default false."
+          }
+        },
+        "required": [
+          "parts"
+        ]
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout and furniture toggles.",
+        "properties": {
+          "headers": {
+            "type": "boolean",
+            "description": "Show the column-header row (part names, \"Total\", \"Difference\"). Default true; automatically omitted when there is nothing to label (no part names and no derived columns)."
+          },
+          "arrows": {
+            "type": "boolean",
+            "description": "Show the scale-factor arrows between consecutive rows. Default true. Only drawn when there are scaled rows."
+          },
+          "arrowStyle": {
+            "type": "string",
+            "enum": [
+              "split",
+              "both"
+            ],
+            "description": "How the two arrows read. \"split\" (default): the multiplier on the LEFT going down (×k) and its inverse on the RIGHT going up (÷k) — the \"there and back\" convention. \"both\": the SAME multiplier on BOTH edges, both arrows pointing down the scaling direction (×3 and ×3) — the convention that stresses multiplying every part by the same factor."
+          },
+          "factors": {
+            "type": "boolean",
+            "description": "Show the numeric multiplier on each arrow. Default true. Set false to pose \"what is the scale factor?\" — the arrows then read \"× ?\" / \"÷ ?\"."
+          },
+          "values": {
+            "type": "boolean",
+            "description": "Show every derived (scaled-row) value. Default true. Set false for a blank answer-space table: the original given row and the headers stay, every scaled cell (and its Total/Difference) blanks for pupils to fill. Set `factors: false` too for a fully blank space (otherwise the arrows hand over the method)."
+          }
+        }
+      },
+      "cornerLabel": {
+        "type": "string",
+        "description": "Text for the top-left corner cell, shown only when a left-hand row-label column exists (i.e. some row has a `label`). Default empty."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the table; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "parts"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — share in 5 : 3, scale up ×7 (total 56)",
+      "params": {
+        "header": "Share £56 in the ratio 5 : 3",
+        "parts": [
+          {
+            "units": 5,
+            "name": "A"
+          },
+          {
+            "units": 3,
+            "name": "B"
+          }
+        ],
+        "rows": [
+          {
+            "value": 56,
+            "valueCol": "total"
+          }
+        ],
+        "total": {},
+        "caption": "One part is worth £7, so the shares are £35 and £21."
+      }
+    },
+    {
+      "label": "Blank answer space — complete the table for 4 : 3 scaled to 28 : ?",
+      "params": {
+        "parts": [
+          {
+            "units": 4,
+            "name": "Red"
+          },
+          {
+            "units": 3,
+            "name": "Blue"
+          }
+        ],
+        "rows": [
+          {
+            "value": 28,
+            "valueCol": 1
+          }
+        ],
+        "show": {
+          "values": false,
+          "factors": false
+        }
+      }
+    },
+    {
+      "label": "Occluded question — find the missing value (×3 down)",
+      "params": {
+        "parts": [
+          {
+            "units": 2,
+            "name": "A"
+          },
+          {
+            "units": 5,
+            "name": "B"
+          }
+        ],
+        "rows": [
+          {
+            "factor": 3
+          }
+        ],
+        "cells": [
+          {
+            "row": 1,
+            "col": 2,
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "caption": "A : B = 2 : 5. If A becomes 6, find B."
+      }
+    },
+    {
+      "label": "Unitary + scale up — 3 cakes : 450 g, find 1 then 5",
+      "params": {
+        "parts": [
+          {
+            "units": 3,
+            "name": "Cakes"
+          },
+          {
+            "units": 450,
+            "name": "Flour (g)"
+          }
+        ],
+        "rows": [
+          {
+            "unitary": 1,
+            "label": "one cake"
+          },
+          {
+            "value": 5,
+            "valueCol": 1,
+            "label": "five cakes",
+            "highlight": true
+          }
+        ],
+        "cells": [
+          {
+            "row": 2,
+            "col": 2,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Difference — A : B = 7 : 4, A is 24 more than B",
+      "params": {
+        "parts": [
+          {
+            "units": 7,
+            "name": "A"
+          },
+          {
+            "units": 4,
+            "name": "B"
+          }
+        ],
+        "rows": [
+          {
+            "value": 24,
+            "valueCol": "difference"
+          }
+        ],
+        "difference": {
+          "between": [
+            1,
+            2
+          ]
+        },
+        "total": {},
+        "caption": "A : B = 7 : 4 and A is 24 more than B. Find A, B and the total."
+      }
+    },
+    {
+      "label": "Hard case — combine A : B = 2 : 3 with B : C = 4 : 5",
+      "params": {
+        "header": "Combine the ratios",
+        "parts": [
+          {
+            "units": 2,
+            "name": "A"
+          },
+          {
+            "units": 3,
+            "name": "B"
+          }
+        ],
+        "combineWith": {
+          "parts": [
+            {
+              "units": 4,
+              "name": "B"
+            },
+            {
+              "units": 5,
+              "name": "C"
+            }
+          ]
+        },
+        "caption": "A : B = 2 : 3 and B : C = 4 : 5. Find A : B : C."
+      }
+    }
+  ]
+}

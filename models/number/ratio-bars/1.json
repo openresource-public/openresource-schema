@@ -1,0 +1,373 @@
+{
+  "ref": "number/ratio-bars@1",
+  "family": "number",
+  "name": "ratio-bars",
+  "version": 1,
+  "title": "Ratio bars",
+  "tagline": "Ratio as equal-unit part-bars at simplified and actual scales joined by ×k/÷k arrows; derives the share value and every quantity from one known.",
+  "description": "A ratio a : b (: c) shown as adjacent equal-unit part-bars at two scales — the simplified ratio on top and the actual quantities beneath — joined by ×k / ÷k scale-factor arrows, where k is the value of one share. You write the ratio (`parts`, each with its `units` number) and exactly one known quantity (`known`: a total, one part, or the difference between two parts); the model derives the simplest form (÷ HCF), the scale factor k, every part's quantity, the total, and each part's fraction of the whole. Parts and quantities occlude to \"?\" for questions and highlight in amber; `occludeSimplified` poses \"write this in its simplest form\". An optional `combineWith` ratio that shares a named term draws the combine figure: both ratios scaled to the common term (LCM) and merged into one bar, the shared term aligned and ambered. Covers simplifying, scaling up/down, sharing a total, finding a quantity from a total / a part / a difference, the unit value, ratio ↔ fraction, and combining two ratios.",
+  "whenToUse": "Reach for this whenever a ratio is taught through the ×k / ÷k relationship between its simplest form and the actual amounts: simplifying (18 : 12 → 3 : 2 by dividing by the HCF), scaling up or down (2 : 3 = 8 : 12), sharing a total in a ratio (£56 in 5 : 3 → £35 : £21), finding one quantity from a given total, from one known part, or from the difference between two parts (\"A : B = 7 : 4 and A is 24 more than B\"), the unit value (what one share is worth), ratio ↔ fraction (each part as a fraction of the whole — 5 : 3 means 5/8 and 3/8), and combining two ratios that share a term. Author the semantics: list the `parts` with their `units` (the ratio numbers — you may write them un-simplified), then give exactly one `known` — `{ type: \"total\", value }`, `{ type: \"part\", part, value }`, or `{ type: \"difference\", between: [i, j], value }`. You never write a quantity, a unit value, or a width; the model computes them all. To pose a question: `occlude` a part to hide its quantity (\"find this share\" — the scale factor and the total are hidden too so they can't give it away), set `show.values: false` (and, for a fully blank space, `show.unitValue: false`) for an answer space with the quantities left to fill, set `occludeSimplified: true` to ask for the simplest form, or set `show.unitValue: false` to ask for the scale factor. `highlight` a part to mark the answer; add `unit` (\"£\", or \"ml\" with `after: true`) so quantities read as money or measures; set `show.fractions: true` to label each part with its fraction of the whole. Combine: give `combineWith` a second ratio whose `parts` reuse exactly one `name` from the primary (A:B = 2:3 plus B:C = 4:5, sharing \"B\"); the model finds the common term (LCM), scales each ratio to it, and draws the merged ratio with the shared part aligned — leave `known` out, it does not apply to combine. Cross-block convention: keep the same parts, names and `unit` across a lesson so pupils track one diagram; change only what is shaded, occluded or asked. A staged build reads well — open on the simplified ratio, bring in the arrows and the unit value, then the quantities last. Switch model when the teaching is not the ratio scale relationship: for a generic part–whole or comparison strip, a fraction of an amount, a percentage bar or an equation bar model use number/bar-model; for fraction equivalence/comparison use number/fraction-wall. Synonyms a teacher might use: ratio, simplify a ratio, simplest form, equivalent ratios, share in a ratio, scale factor, unit value, one part, parts, ratio table, divide in a given ratio, combine ratios, ratio to fraction.",
+  "responseModes": [],
+  "tags": [
+    "ratio",
+    "ratios",
+    "simplify ratio",
+    "simplest form",
+    "equivalent ratios",
+    "share in a ratio",
+    "sharing",
+    "scale factor",
+    "unit value",
+    "one part",
+    "ratio table",
+    "divide in a ratio",
+    "combine ratios",
+    "common term",
+    "ratio to fraction",
+    "proportion",
+    "HCF",
+    "LCM",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "part": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "One part of the ratio, left to right. Its ratio number is `units`; everything shown for it (its simplified number, its actual quantity, its fraction of the whole) is derived. Add `name`, or `occlude`/`highlight` to pose or emphasise.",
+        "properties": {
+          "units": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The ratio number for this part — its count of equal shares. For the ratio 5 : 3 the parts are units 5 and 3; for 2 : 3 : 5 they are 2, 3, 5. Whole numbers only; the ratio need NOT be in its simplest form (write 18 : 12 as units 18 and 12 — the model simplifies it). Each part is drawn as this many equal unit squares."
+          },
+          "name": {
+            "type": "string",
+            "description": "A name for this part, centred above its run — \"Sand\", \"Boys\", \"A\". Omit for an unnamed part. Keep names short; they sit over the bar."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render THIS part's actual quantity as \"?\" — the \"find this share\" hook. The part stays visible and correctly sized; the simplified number and any total still show. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Draw this part in amber instead of its categorical colour — the share in focus or the answer. Use sparingly (amber is the result colour). Default false."
+          }
+        },
+        "required": [
+          "units"
+        ]
+      }
+    },
+    "properties": {
+      "parts": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 5,
+        "items": {
+          "$ref": "#/$defs/part"
+        },
+        "description": "The ratio, left to right — two to five parts, each with its `units` (ratio number). Write the ratio as it appears in the problem; if it is not in simplest form (e.g. 18 : 12) the model derives the simplified row from it."
+      },
+      "known": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The ONE given quantity that scales the actual-quantity row. Omit it to show the ratio at its authored scale (the simplify / equivalent-ratio case: the actual row shows your numbers, the top row their simplest form). Give at most one known.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "total",
+              "part",
+              "difference"
+            ],
+            "description": "\"total\": `value` is the total of ALL the quantities (share a total). \"part\": `value` is the quantity of the single part named by `part` (find the rest from one). \"difference\": `value` is the gap between the two parts named by `between` (find the rest from a difference)."
+          },
+          "value": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The amount of the known: the total, the one part, or the difference — depending on `type`."
+          },
+          "part": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required when `type` is \"part\": which part the `value` belongs to, counted from 1 at the left."
+          },
+          "between": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Required when `type` is \"difference\": the two parts (1-based, left to right) whose quantities differ by `value`, e.g. [1, 2] for \"the first is `value` more than the second\"."
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "part"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "part"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "difference"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "between"
+              ]
+            }
+          }
+        ]
+      },
+      "unit": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A currency or measure symbol applied to every actual quantity. Omit for bare numbers.",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "The symbol, e.g. \"£\", \"$\", \"kg\", \"ml\", \"cm\"."
+          },
+          "after": {
+            "type": "boolean",
+            "description": "Place the symbol AFTER the number with a space (\"350 ml\") instead of before it (\"£24\"). Default false (before, no space)."
+          }
+        },
+        "required": [
+          "symbol"
+        ]
+      },
+      "combineWith": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A SECOND ratio to combine with `parts` through a shared term — the LCM-combine figure. Its `parts` must reuse exactly ONE `name` from the primary ratio (the shared term, e.g. both ratios name a part \"B\"). The model finds the common value of the shared term (the LCM of its two `units`), scales each ratio to it, and draws the merged ratio with the shared part aligned and ambered. `known` does not apply when combining — omit it.",
+        "properties": {
+          "parts": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 4,
+            "items": {
+              "$ref": "#/$defs/part"
+            },
+            "description": "The second ratio's parts. Exactly one must share a `name` with a part of the primary ratio; the others are new parts of the combined ratio."
+          }
+        },
+        "required": [
+          "parts"
+        ]
+      },
+      "occludeSimplified": {
+        "type": "boolean",
+        "description": "Render the simplified-ratio row's numbers as \"?\" — the \"write this ratio in its simplest form\" hook. The unit squares are suppressed so their count cannot leak the answer; the actual quantities (your authored ratio) stay visible. Default false."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout and furniture toggles.",
+        "properties": {
+          "values": {
+            "type": "boolean",
+            "description": "Show every derived actual quantity. Default true. Set false for an answer space — all quantities are left blank for pupils to fill, while the simplified ratio and any GIVEN total still show. For a fully blank answer space also set `unitValue: false` (otherwise the scale factor on the arrows hands pupils the answer in one step); leave `unitValue: true` to give the scale factor as a hint."
+          },
+          "unitValue": {
+            "type": "boolean",
+            "description": "Show the scale factor k (the value of one share) on the ×k / ÷k arrows. Default true. Set false to pose \"what is the scale factor?\" — the arrows then read \"× ?\" / \"÷ ?\"."
+          },
+          "arrows": {
+            "type": "boolean",
+            "description": "Show the ×k (down, left) and ÷k (up, right) scale-factor arrows between the two rows. Default true. Only drawn when the two rows differ (k ≠ 1)."
+          },
+          "unitSquares": {
+            "type": "boolean",
+            "description": "Subdivide each part into its count of equal unit squares (the \"equal-unit\" look). Default true. Automatically suppressed when the simplified parts total more than 20 squares, or when `occludeSimplified` is set; the parts then draw as solid boxes."
+          },
+          "fractions": {
+            "type": "boolean",
+            "description": "Label each part with its fraction of the whole (5 : 3 → 5/8 and 3/8) — the ratio ↔ fraction reading. Default false."
+          },
+          "total": {
+            "type": "boolean",
+            "description": "Brace the actual-quantity row with its total — drawn only when a `known` quantity is given (the total is meaningless without one). Default true. A GIVEN total (a \"total\" known) always shows; a DERIVED total reads \"?\" whenever a part is occluded or `show.values` is false, so it can never leak a hidden share."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "parts"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — share £56 in the ratio 5 : 3",
+      "params": {
+        "header": "Share £56 in the ratio 5 : 3",
+        "parts": [
+          {
+            "units": 5,
+            "name": "Amara"
+          },
+          {
+            "units": 3,
+            "name": "Beth"
+          }
+        ],
+        "known": {
+          "type": "total",
+          "value": 56
+        },
+        "unit": {
+          "symbol": "£"
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — share £84 in the ratio 4 : 3",
+      "params": {
+        "caption": "Share £84 in the ratio 4 : 3",
+        "parts": [
+          {
+            "units": 4
+          },
+          {
+            "units": 3
+          }
+        ],
+        "known": {
+          "type": "total",
+          "value": 84
+        },
+        "unit": {
+          "symbol": "£"
+        },
+        "show": {
+          "values": false,
+          "unitValue": false
+        }
+      }
+    },
+    {
+      "label": "Simplify question — write 18 : 12 in its simplest form",
+      "params": {
+        "parts": [
+          {
+            "units": 18
+          },
+          {
+            "units": 12
+          }
+        ],
+        "occludeSimplified": true
+      }
+    },
+    {
+      "label": "Occluded — A : B = 2 : 5, A is 14, find B",
+      "params": {
+        "caption": "A : B = 2 : 5. A is 14. Find B.",
+        "parts": [
+          {
+            "units": 2,
+            "name": "A"
+          },
+          {
+            "units": 5,
+            "name": "B",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "known": {
+          "type": "part",
+          "part": 1,
+          "value": 14
+        }
+      }
+    },
+    {
+      "label": "Hard case — combine A : B = 2 : 3 with B : C = 4 : 5",
+      "params": {
+        "header": "Combine the ratios",
+        "caption": "A : B = 2 : 3 and B : C = 4 : 5. Find A : B : C.",
+        "parts": [
+          {
+            "units": 2,
+            "name": "A"
+          },
+          {
+            "units": 3,
+            "name": "B"
+          }
+        ],
+        "combineWith": {
+          "parts": [
+            {
+              "units": 4,
+              "name": "B"
+            },
+            {
+              "units": 5,
+              "name": "C"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Difference + fractions — A : B = 7 : 4, A is 24 more than B",
+      "params": {
+        "caption": "A : B = 7 : 4 and A is 24 more than B. Find A and B.",
+        "parts": [
+          {
+            "units": 7,
+            "name": "A"
+          },
+          {
+            "units": 4,
+            "name": "B"
+          }
+        ],
+        "known": {
+          "type": "difference",
+          "between": [
+            1,
+            2
+          ],
+          "value": 24
+        },
+        "show": {
+          "fractions": true
+        }
+      }
+    }
+  ]
+}

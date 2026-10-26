@@ -1,0 +1,727 @@
+{
+  "ref": "cs/er-diagram@1",
+  "family": "cs",
+  "name": "er-diagram",
+  "version": 1,
+  "title": "Entity-relationship diagram",
+  "tagline": "Entity boxes joined by cardinality-marked relationship lines, or the relations written out; foreign keys, link-entity composite keys and the 1NF/2NF/3NF table sets all derived.",
+  "description": "A relational database schema drawn two ways off one derived model: as an entity-relationship diagram — entity boxes holding their attribute lists, joined by relationship lines carrying crow's-foot (or 1 / N) cardinality — or as the standard relation lines, \"Pupil(PupilID, Surname, TutorID*)\", with primary keys underlined and foreign keys starred. Everything a designer has to work out is computed. Each foreign key is derived from its relationship's cardinality: a one-to-many puts the \"one\" side's primary key onto the \"many\" side, so the key can never sit on the wrong table. A many-to-many resolves through a link entity whose attributes are the composite of the two original primary keys — each attribute at once primary and foreign — together with the two one-to-many relationships that replace it; you name the link entity, the model derives its keys. And from a single un-normalised relation plus its functional dependencies the model derives the whole table set at each normal form — UNF → 1NF → 2NF → 3NF, each stage computed from the one before by applying exactly one rule (remove repeating groups, then partial dependencies, then transitive dependencies) — so a staged build walks the normalisation without an author ever writing a relation down. Relationships occlude to \"?\" (\"state the cardinality\") or vanish entirely for the blank answer space where the entity boxes are given and the pupil derives the relationships from a written data description; a hidden relationship contributes no foreign key and no reserved slot anywhere, so the answer cannot be read off the rest of the figure.",
+  "whenToUse": "Reach for this for any database-design figure: an entity-relationship diagram, cardinality (one-to-one, one-to-many, many-to-many), resolving a many-to-many with a link table, \"where does the foreign key go?\", writing the relations for a schema, and normalisation to first, second and third normal form. Author the STRUCTURE only. For a diagram: entities (id + name + attributes, with key \"primary\" on the attributes that form the primary key) and relationships ({ from, to, type }) — for \"one-to-many\" put the ONE side in from and the MANY side in to, because that is what places the derived foreign key. Add link: { name: \"Enrolment\" } to a many-to-many to resolve it through a link entity (its composite key is derived; give link.attributes only for extra non-key data the link carries, like a grade or a date). Common configurations: worked example — a couple of entities with full attribute lists so the derived foreign key shows; blank answer space — set show.relationships false and the entity boxes stand alone for pupils to join up from a written description (nothing about the answer is drawn); state-the-cardinality question — occlude the relationship, which shows \"?\" at the midpoint of the line and suppresses the derived foreign key so it cannot be read off the boxes; name-the-entity — occlude on the entity; identify-the-key — show.keys false so the underlines and stars disappear. Set view \"tables\" to write the schema out as relation lines instead — the \"write the relations for this ER diagram, showing primary and foreign keys\" task. For normalisation give normalise: the un-normalised relation (its flat attributes, its repeating group with a name for the relation the group will become) plus dependencies as { determinant, dependents } pairs (add relation to name the table a dependency will split into), and stage \"unf\" | \"1nf\" | \"2nf\" | \"3nf\". A staged build is the natural shape: hold everything else fixed and step stage through all four, letting the block text carry the rule being applied at each step — the canvas width is sized from all four stages at once, so the figure never resizes as the tables split. Cross-block conventions: keep the same entity names, the same notation and the same layout across every block in a lesson, and keep the ONE side in from throughout so the foreign keys stay on the side pupils expect. layout \"columns\" (default) reads left to right and suits two or three entities; switch to \"rows\" for a chain of four or more, which would otherwise run wide. Synonyms teachers use: ER diagram, ERD, entity relationship model, entity, attribute, relationship, cardinality, crow's foot, one-to-many, many-to-many, link table, junction table, primary key, composite key, foreign key, referential integrity, relational database, schema, table design, normalisation, normalization, first/second/third normal form, 1NF, 2NF, 3NF, repeating group, partial dependency, transitive dependency, functional dependency, flat file.",
+  "responseModes": [],
+  "tags": [
+    "ER diagram",
+    "ERD",
+    "entity relationship diagram",
+    "entity",
+    "attribute",
+    "relationship",
+    "cardinality",
+    "crows foot",
+    "one-to-many",
+    "many-to-many",
+    "link table",
+    "link entity",
+    "primary key",
+    "composite key",
+    "foreign key",
+    "referential integrity",
+    "relational database",
+    "database design",
+    "schema",
+    "relation",
+    "normalisation",
+    "normalization",
+    "first normal form",
+    "second normal form",
+    "third normal form",
+    "1NF",
+    "2NF",
+    "3NF",
+    "repeating group",
+    "partial dependency",
+    "transitive dependency",
+    "functional dependency",
+    "computer science",
+    "A Level computer science"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "description": "Give EITHER entities (with optional relationships) to draw a schema, OR normalise to derive the table set at a normal form — never both.",
+    "$defs": {
+      "attribute": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The attribute name as written in the box, e.g. \"PupilID\", \"Surname\", \"DateOfBirth\". Use the same spelling wherever the attribute appears — matching names are how the model tracks one attribute across relations."
+          },
+          "key": {
+            "type": "string",
+            "enum": [
+              "primary"
+            ],
+            "description": "Mark this attribute as part of the entity's PRIMARY key — it renders underlined. Give it to SEVERAL attributes for a composite key. Never mark a foreign key: foreign keys are derived from the relationships and marked with * for you."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this attribute's name as \"?\" — the \"which attribute goes here?\" hook. Anti-leak: the same attribute is masked everywhere it appears, including where it is another relation's derived foreign key. Default false."
+          },
+          "blank": {
+            "type": "boolean",
+            "description": "Render this attribute's row EMPTY — an unfilled answer space, or a staged build that has not reached it yet. \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber this attribute — e.g. the key the question is about. Default false."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "properties": {
+      "entities": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 6,
+        "description": "The entities (tables). Drawn as boxes in the diagram view and as relation lines in the tables view; positions, sizes and ordering are all derived from the relationship graph. A link entity is NOT listed here — it is derived from its relationship.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+              "description": "Unique kebab-case id relationships wire from, e.g. \"pupil\". Never shown — it is the wiring handle."
+            },
+            "name": {
+              "type": "string",
+              "description": "The entity name written in the box header / before the bracket, e.g. \"Pupil\". Conventionally singular and capitalised."
+            },
+            "attributes": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "$ref": "#/$defs/attribute"
+              },
+              "description": "The entity's own attributes, in the order they are written. Mark the primary key with key \"primary\". Derived foreign keys are appended for you — do not list them. Omit attributes entirely for the bare cardinality diagram (name-only boxes); once ANY entity has attributes, every box shows an attribute compartment."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this entity's NAME as \"?\" — the \"which entity is this?\" hook. Its attributes and relationships stay drawn, and the hidden name never reaches the aria description. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this entity's outline and name — draw the eye to one table. Default false."
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ]
+        }
+      },
+      "relationships": {
+        "type": "array",
+        "maxItems": 6,
+        "description": "The relationships between entities. Each one's cardinality markers AND the foreign key it forces are derived — there is nowhere to write a foreign key. Omit for entities with no relationships drawn.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "The id of the entity at the FIRST end. For \"one-to-many\" this is the ONE side — the side whose primary key becomes the foreign key on the other. Getting from/to the right way round is the whole question."
+            },
+            "to": {
+              "type": "string",
+              "description": "The id of the entity at the SECOND end. For \"one-to-many\" this is the MANY side — the side that receives the derived foreign key."
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "one-to-one",
+                "one-to-many",
+                "many-to-many"
+              ],
+              "description": "The cardinality. \"one-to-many\": from = one, to = many, and to receives from's primary key as a foreign key. \"one-to-one\": the foreign key goes on the \"to\" side. \"many-to-many\": no foreign key can be placed — add link to resolve it through a link entity, or leave it unresolved to pose \"why will this not work?\"."
+            },
+            "label": {
+              "type": "string",
+              "description": "A short verb phrase written along the line, e.g. \"teaches\", \"borrows\". Keep it a verb — never write the cardinality into the label, or an occluded relationship would leak its own answer."
+            },
+            "link": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Resolve a many-to-many through a LINK entity (junction table). The link entity's composite primary key — one attribute per original primary key, each also a foreign key — and the two one-to-many relationships that replace this one are all derived. Only meaningful on a \"many-to-many\"; ignored otherwise.",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The link entity's name, e.g. \"Enrolment\", \"Loan\". Authored because naming it is a design choice, not a derivation. Omit and the model joins the two entity names."
+                },
+                "attributes": {
+                  "type": "array",
+                  "maxItems": 4,
+                  "items": {
+                    "$ref": "#/$defs/attribute"
+                  },
+                  "description": "EXTRA non-key attributes the link entity carries in its own right, e.g. \"Grade\", \"DateIssued\". The composite key attributes are derived — never list them here, and do not mark key \"primary\"."
+                }
+              }
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Hide the CARDINALITY: the line is drawn with a single \"?\" at its midpoint instead of markers at the ends — \"state the cardinality of this relationship\". Anti-leak: the derived foreign key is suppressed too (an appearing foreign key would name the \"many\" side), and nothing is reserved in its place. With link, each derived line shows its own \"?\" and the link box stays drawn but loses its derived composite key. Default false."
+            },
+            "blank": {
+              "type": "boolean",
+              "description": "Draw NO line at all for this relationship — the answer space where the pupil adds it, or a staged build that has not reached it yet. Layout still allows for it, so the figure does not shift when it appears. Its derived foreign key is suppressed. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this line and its markers — the relationship under discussion. Default false."
+            }
+          },
+          "required": [
+            "from",
+            "to",
+            "type"
+          ]
+        }
+      },
+      "normalise": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Derive the table set at a normal form from ONE un-normalised relation and its functional dependencies. Always renders as relation lines (the tables view). Every stage is computed from the one before by applying exactly one rule, so the four stages of one paramset are a ready-made staged build.",
+        "properties": {
+          "relation": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The starting un-normalised relation — the flat file everything is derived from.",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The relation's name, e.g. \"Booking\". It stays with the relation that keeps the primary key."
+              },
+              "attributes": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 10,
+                "items": {
+                  "$ref": "#/$defs/attribute"
+                },
+                "description": "The attributes that occur ONCE per record, in order. Mark the relation's primary key with key \"primary\" (several for a composite key). occlude / blank / highlight travel with the attribute into whichever derived relation it ends up in."
+              },
+              "repeating": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "The REPEATING GROUP — the attributes that occur many times per record, drawn nested in brackets at UNF. Removing it is the 1NF rule: it becomes its own relation, keyed by the original primary key plus the group's own key. Omit if the relation is already in 1NF.",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name for the relation the repeating group becomes at 1NF, e.g. \"BookingSlot\". Authored because naming it is a design choice."
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 8,
+                    "items": {
+                      "$ref": "#/$defs/attribute"
+                    },
+                    "description": "The repeating attributes. Mark the group's own key with key \"primary\" — at 1NF it joins the original primary key to form the new relation's composite key."
+                  }
+                },
+                "required": [
+                  "name",
+                  "attributes"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "attributes"
+            ]
+          },
+          "dependencies": {
+            "type": "array",
+            "maxItems": 6,
+            "description": "The functional dependencies, \"determinant → dependents\". These drive 2NF (a determinant that is only PART of a composite key) and 3NF (a determinant that is a non-key attribute). A dependency on the whole primary key needs no entry — it is already fine. A chain (A → B, B → C) may be listed in any order — the splits are sequenced for you.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "determinant": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "The attribute name(s) the dependents depend on, e.g. [\"RoomID\"]. Must match attribute names exactly."
+                },
+                "dependents": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "The attribute names determined by it, e.g. [\"RoomName\", \"HourlyRate\"]. When this dependency is resolved they move into a relation of their own, keyed by the determinant, which stays behind as a foreign key."
+                },
+                "relation": {
+                  "type": "string",
+                  "description": "Name for the relation this dependency splits into, e.g. \"Room\". Omit and the name is derived from the determinant by dropping a trailing \"ID\"."
+                }
+              },
+              "required": [
+                "determinant",
+                "dependents"
+              ]
+            }
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "unf",
+              "1nf",
+              "2nf",
+              "3nf"
+            ],
+            "description": "Which normal form to render. \"unf\" = the flat un-normalised relation with its repeating group nested in brackets; \"1nf\" = repeating groups removed; \"2nf\" = partial dependencies removed; \"3nf\" = transitive dependencies removed. Default \"unf\". Step this across a staged build."
+          },
+          "occlude": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Names of relations whose whole attribute list renders as \"(?)\" — the \"write the relations at this normal form\" question. Anti-leak: a hidden relation's primary key is masked wherever it appears as another relation's foreign key. Names may be the source relation, the repeating group's name, or any dependency's relation name."
+          },
+          "blank": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Names of relations rendered with an EMPTY bracket — the answer space to fill in, or a staged build that has not reached them. Same addressing and the same anti-leak masking as occlude; blank wins if a relation is in both."
+          },
+          "highlight": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Names of relations to amber — e.g. the table this stage has just split out."
+          }
+        },
+        "required": [
+          "relation"
+        ]
+      },
+      "view": {
+        "type": "string",
+        "enum": [
+          "diagram",
+          "tables"
+        ],
+        "description": "\"diagram\" (default) draws entity boxes joined by cardinality-marked lines. \"tables\" writes the schema out as relation lines — \"Pupil(PupilID, Surname, TutorID*)\" — with primary keys underlined and derived foreign keys starred. Ignored with normalise, which is always the tables view."
+      },
+      "notation": {
+        "type": "string",
+        "enum": [
+          "crows-foot",
+          "one-many"
+        ],
+        "description": "Diagram view only. \"crows-foot\" (default) marks the \"one\" end with a single bar and the \"many\" end with a three-pronged fork. \"one-many\" writes 1, N and M at the ends instead. Pick whichever your class uses and keep it the same across a lesson."
+      },
+      "layout": {
+        "type": "string",
+        "enum": [
+          "columns",
+          "rows"
+        ],
+        "description": "Diagram view only. \"columns\" (default) ranks entities left to right — best for two or three. \"rows\" ranks them top to bottom — use it for a chain of four or more, which drawn across would run wide."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "relationships": {
+            "type": "boolean",
+            "description": "Draw the relationship lines. false draws NO lines and suppresses every derived foreign key — the blank answer space where the entity boxes are given and the pupil works the relationships out from a written data description. In the tables view of an authored schema it drops the derived foreign keys, so pupils add them. Not applicable to normalise, whose relations ARE the derivation. Default true."
+          },
+          "keys": {
+            "type": "boolean",
+            "description": "Mark keys — primary keys underlined, derived foreign keys starred. false leaves every attribute unmarked, for \"underline the primary key and star the foreign keys\". The foreign-key attributes still appear; only the marks go. Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "oneOf": [
+      {
+        "required": [
+          "entities"
+        ]
+      },
+      {
+        "required": [
+          "normalise"
+        ]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — Tutor one-to-many Pupil, with the foreign key derived onto the many side",
+      "params": {
+        "entities": [
+          {
+            "id": "tutor",
+            "name": "Tutor",
+            "attributes": [
+              {
+                "name": "TutorID",
+                "key": "primary"
+              },
+              {
+                "name": "Surname"
+              },
+              {
+                "name": "Instrument"
+              }
+            ]
+          },
+          {
+            "id": "pupil",
+            "name": "Pupil",
+            "attributes": [
+              {
+                "name": "PupilID",
+                "key": "primary"
+              },
+              {
+                "name": "Surname"
+              },
+              {
+                "name": "YearGroup"
+              }
+            ]
+          }
+        ],
+        "relationships": [
+          {
+            "from": "tutor",
+            "to": "pupil",
+            "type": "one-to-many",
+            "label": "teaches"
+          }
+        ],
+        "caption": "One tutor teaches many pupils"
+      }
+    },
+    {
+      "label": "Blank answer space — three entity boxes, relationships deliberately missing",
+      "params": {
+        "entities": [
+          {
+            "id": "member",
+            "name": "Member",
+            "attributes": [
+              {
+                "name": "MemberID",
+                "key": "primary"
+              },
+              {
+                "name": "Surname"
+              }
+            ]
+          },
+          {
+            "id": "hire",
+            "name": "Hire",
+            "attributes": [
+              {
+                "name": "HireID",
+                "key": "primary"
+              },
+              {
+                "name": "StartTime"
+              }
+            ]
+          },
+          {
+            "id": "bike",
+            "name": "Bike",
+            "attributes": [
+              {
+                "name": "BikeID",
+                "key": "primary"
+              },
+              {
+                "name": "Model"
+              }
+            ]
+          }
+        ],
+        "relationships": [
+          {
+            "from": "member",
+            "to": "hire",
+            "type": "one-to-many"
+          },
+          {
+            "from": "bike",
+            "to": "hire",
+            "type": "one-to-many"
+          }
+        ],
+        "show": {
+          "relationships": false
+        },
+        "caption": "A member may hire many bikes; each hire is of one bike"
+      }
+    },
+    {
+      "label": "Occluded question — state the cardinality (the derived foreign key is suppressed with it)",
+      "params": {
+        "entities": [
+          {
+            "id": "ward",
+            "name": "Ward",
+            "attributes": [
+              {
+                "name": "WardID",
+                "key": "primary"
+              },
+              {
+                "name": "WardName"
+              }
+            ]
+          },
+          {
+            "id": "bed",
+            "name": "Bed",
+            "attributes": [
+              {
+                "name": "BedID",
+                "key": "primary"
+              },
+              {
+                "name": "BedNumber"
+              }
+            ]
+          }
+        ],
+        "relationships": [
+          {
+            "from": "ward",
+            "to": "bed",
+            "type": "one-to-many",
+            "label": "contains",
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case (diagram) — many-to-many resolved through a derived link entity with a composite key",
+      "params": {
+        "entities": [
+          {
+            "id": "pupil",
+            "name": "Pupil",
+            "attributes": [
+              {
+                "name": "PupilID",
+                "key": "primary"
+              },
+              {
+                "name": "Surname"
+              }
+            ]
+          },
+          {
+            "id": "ensemble",
+            "name": "Ensemble",
+            "attributes": [
+              {
+                "name": "EnsembleID",
+                "key": "primary"
+              },
+              {
+                "name": "Ensemble"
+              }
+            ]
+          }
+        ],
+        "relationships": [
+          {
+            "from": "pupil",
+            "to": "ensemble",
+            "type": "many-to-many",
+            "link": {
+              "name": "Seat",
+              "attributes": [
+                {
+                  "name": "Part"
+                }
+              ]
+            }
+          }
+        ],
+        "caption": "The link entity takes both primary keys as its composite key"
+      }
+    },
+    {
+      "label": "Tables view — write the relations, primary keys underlined and derived foreign keys starred",
+      "params": {
+        "view": "tables",
+        "entities": [
+          {
+            "id": "venue",
+            "name": "Venue",
+            "attributes": [
+              {
+                "name": "VenueID",
+                "key": "primary"
+              },
+              {
+                "name": "VenueName"
+              },
+              {
+                "name": "Capacity"
+              }
+            ]
+          },
+          {
+            "id": "concert",
+            "name": "Concert",
+            "attributes": [
+              {
+                "name": "ConcertID",
+                "key": "primary"
+              },
+              {
+                "name": "ConcertDate"
+              }
+            ]
+          },
+          {
+            "id": "ticket",
+            "name": "Ticket",
+            "attributes": [
+              {
+                "name": "TicketID",
+                "key": "primary"
+              },
+              {
+                "name": "Price"
+              }
+            ]
+          }
+        ],
+        "relationships": [
+          {
+            "from": "venue",
+            "to": "concert",
+            "type": "one-to-many"
+          },
+          {
+            "from": "concert",
+            "to": "ticket",
+            "type": "one-to-many"
+          }
+        ],
+        "caption": "Each foreign key sits on the many side of its relationship"
+      }
+    },
+    {
+      "label": "Hard case (normalisation) — third normal form derived from an un-normalised booking relation",
+      "params": {
+        "normalise": {
+          "relation": {
+            "name": "Booking",
+            "attributes": [
+              {
+                "name": "BookingID",
+                "key": "primary"
+              },
+              {
+                "name": "BookingDate"
+              },
+              {
+                "name": "HirerID"
+              },
+              {
+                "name": "HirerName"
+              },
+              {
+                "name": "HirerPhone"
+              }
+            ],
+            "repeating": {
+              "name": "BookingSlot",
+              "attributes": [
+                {
+                  "name": "RoomID",
+                  "key": "primary"
+                },
+                {
+                  "name": "Hours"
+                },
+                {
+                  "name": "RoomName"
+                },
+                {
+                  "name": "HourlyRate"
+                }
+              ]
+            }
+          },
+          "dependencies": [
+            {
+              "determinant": [
+                "BookingID"
+              ],
+              "dependents": [
+                "BookingDate",
+                "HirerID"
+              ]
+            },
+            {
+              "determinant": [
+                "RoomID"
+              ],
+              "dependents": [
+                "RoomName",
+                "HourlyRate"
+              ],
+              "relation": "Room"
+            },
+            {
+              "determinant": [
+                "HirerID"
+              ],
+              "dependents": [
+                "HirerName",
+                "HirerPhone"
+              ],
+              "relation": "Hirer"
+            }
+          ],
+          "stage": "3nf",
+          "highlight": [
+            "Hirer"
+          ]
+        },
+        "header": "Third normal form",
+        "caption": "Four relations, each fully dependent on its own key — Hirer is the 3NF split"
+      }
+    }
+  ]
+}

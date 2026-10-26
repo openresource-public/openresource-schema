@@ -1,0 +1,326 @@
+{
+  "ref": "mechanics/pulley-system@1",
+  "family": "mechanics",
+  "name": "pulley-system",
+  "version": 1,
+  "title": "Connected particles over a pulley",
+  "tagline": "Two particles on a taut string over a pulley — Atwood, table-edge or a wedge at a labelled angle; string path, wedge and angle arcs derived, masses and heights occludable.",
+  "description": "The apparatus diagram for connected particles: two particles joined by a light inextensible string running taut over a smooth pulley, each drawn as a filled dot labelled with its mass. Three scenes: \"atwood\" hangs both particles vertically from a fixed pulley; \"table-edge\" rests one on a horizontal table with the string passing over a pulley at the edge and the partner hanging below; \"incline\" builds a wedge at a labelled angle with a particle on the slope and its partner hanging from the pulley at the apex — and naming a second face makes it the double-incline wedge with a particle on each face. Everything drawn is derived from the scene and the angles: the wheel sits tangent to the faces it rests between, the string is a genuine tangent-arc-tangent path over it, the wedge is fitted from its face angles, each angle arc measures its own face, and hanging depths follow the authored heights. A height above the ground adds the ground line and a dimension arrow. Masses may be numbers, named unknowns (\"m kg\"), or occluded to \"?\"; angles and heights occlude the same way. Nothing is resolved on the figure — no tension, no acceleration, no direction of motion — because working those out is the question.",
+  "whenToUse": "Reach for this for any \"two particles connected by a light inextensible string passing over a smooth pulley\" figure: the Atwood machine, a particle on a table with a mass hanging over the edge, a particle on a rough inclined plane connected to a hanging partner, and the double-incline wedge with a particle on each face. Set scene, then give exactly TWO particles. ORDER MATTERS and is the one rule to remember: particles[0] is the one on the SURFACE — on the table, or on the left-hand slope — or the LEFT-hand hanger in an Atwood machine; particles[1] is its partner, which hangs unless you name a right-hand face for it to rest on. For scene \"incline\" give incline.left ({ angle: 40 }) and the partner hangs from the apex; ALSO give incline.right ({ angle: 45 }) and the wedge grows a second sloping face with particles[1] sitting on it — that is the double incline, so there is no separate scene name for it. Masses: a number for a known mass, a string for a named unknown (\"m\", the \"where m < 2\" figures), occlude: true for \"find the mass\". A symbolic angle is face.label \"θ°\" over an angle that matches it. Heights: give height { value: 1.4 } on the HANGING particle and the ground line and its dimension arrow appear — that is the \"hangs 1.4 m above the ground\" / \"released from rest 2 m above the ground\" figure; in an Atwood machine give both heights and the drawn positions follow them. Mark the rough face with face.rough — in a double incline where one face is smooth and one is rough, the hatching is what tells them apart (write the value of the coefficient of friction in the block text, not on the figure). Staged builds work well and the beats matter pedagogically: reveal 1 is the bare apparatus, 2 adds the first particle, 3 its partner, 4 draws the taut string — so \"the string is inextensible, so they move with the same acceleration\" lands on its own step. The base of a staged build should be reveal 1 for a wedge or table scene (the plane or table alone is a sensible opening figure); for an Atwood machine start at reveal 2, since a lone pulley is too thin to open a slide on. Switch primitive when the teaching changes: to draw the FORCE ARROWS on one of these particles (weight, tension, normal reaction, friction, resolved components) use mechanics/force-diagram, which owns the free-body figure; for a rod, beam or ladder with supports use mechanics/rod; for KS3/GCSE science force diagrams that DO resolve a resultant use physics/forces. Synonyms a teacher might use: connected particles, Atwood machine, pulley, smooth pulley, light inextensible string, string over a pulley, particle on a table, particle on a slope, wedge, double incline, taut string, hanging mass.",
+  "responseModes": [],
+  "tags": [
+    "connected particles",
+    "pulley",
+    "smooth pulley",
+    "Atwood machine",
+    "light inextensible string",
+    "taut string",
+    "string over a pulley",
+    "table edge",
+    "hanging mass",
+    "inclined plane",
+    "slope",
+    "wedge",
+    "double incline",
+    "tension",
+    "acceleration",
+    "dynamics",
+    "mechanics",
+    "M1",
+    "A Level",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "face": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "angle": {
+            "type": "number",
+            "minimum": 15,
+            "maximum": 70,
+            "description": "Angle between this face and the horizontal base, in degrees — the angle the arc measures at that base corner. The whole wedge is derived from it. Capped at 70° because a steeper corner cannot host a visible pulley with the string still running along the plane; real inclined-plane questions sit between about 20° and 55°."
+          },
+          "label": {
+            "type": "string",
+            "description": "Override the text on this face's angle arc. The value is derived from `angle`, so set this only for a SYMBOLIC angle — \"θ°\", as in \"inclined at θ° where cos θ = 0.8\". Include the degree sign yourself, and pick an `angle` that looks like the symbolic one so the picture stays honest (cos θ = 0.8 → angle 37)."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this face's angle as \"?\" — \"find the angle of the plane\". The arc still draws. Default false."
+          },
+          "showArc": {
+            "type": "boolean",
+            "description": "Draw the marked angle at this face's base corner. Default true. The two arms are the real base and face lines, so no construction arms are added. Set false for a face whose angle is not part of the question."
+          },
+          "rough": {
+            "type": "boolean",
+            "description": "Hatch the underside of this face — the \"rough plane\" of the question. Default false (a smooth face is a plain line). Use it to tell the two faces of a double incline apart when one is smooth and one is rough. The VALUE of the coefficient of friction is question text: write it in the block, not on the figure."
+          }
+        },
+        "required": [
+          "angle"
+        ]
+      }
+    },
+    "properties": {
+      "scene": {
+        "type": "string",
+        "enum": [
+          "atwood",
+          "table-edge",
+          "incline"
+        ],
+        "description": "\"atwood\" — a fixed pulley with both particles hanging vertically, one each side. \"table-edge\" — particles[0] rests on a horizontal table, the string runs level to a pulley at the table edge and particles[1] hangs below it. \"incline\" — a wedge with the pulley at its apex; particles[0] lies on the left-hand face, and particles[1] hangs from the apex unless incline.right gives it a face to sit on (the double incline). Required."
+      },
+      "incline": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The wedge, for scene \"incline\" only. `left` is the face particles[0] lies on; adding `right` grows a second sloping face for particles[1] and turns the figure into a double incline. Leave `right` out and the wedge keeps a vertical right-hand side with the partner hanging free from the apex.",
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/face",
+            "description": "The left-hand sloping face — the plane particles[0] lies on, rising left to right to the pulley at the apex. Required when scene is \"incline\"."
+          },
+          "right": {
+            "$ref": "#/$defs/face",
+            "description": "The right-hand sloping face. Include it for the DOUBLE INCLINE — the wedge gains a second slope and particles[1] sits on it instead of hanging. Omit it for the single incline: the wedge keeps a vertical right side and the partner hangs vertically from the apex pulley."
+          }
+        },
+        "required": [
+          "left"
+        ]
+      },
+      "particles": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "The two connected particles, drawn as filled dots. ORDER IS THE POSITION: particles[0] is the one on the surface (the table, or the left-hand slope) or the left-hand hanger in an Atwood machine; particles[1] is its partner (hanging, or on the right-hand face when incline.right is given). Both entries are required even if one carries no mass.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "The particle's name, as the question letters it — \"A\", \"B\", \"P\", \"Q\". Drawn beside the dot, with the mass in brackets after it (\"A (2 kg)\")."
+            },
+            "mass": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "string",
+                  "minLength": 1
+                }
+              ],
+              "description": "The particle's mass in kilograms. A NUMBER for a known mass (2 → \"A (2 kg)\"); a STRING for an unknown the question names (\"m\" → \"B (m kg)\", the usual \"where m < 2\" figure). Omit for a particle whose mass is not stated. The \"kg\" is added for you."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the mass as \"?\" — \"find the mass of B\" (\"B (? kg)\"). Different from a symbolic mass: \"m\" poses a named unknown to work with, \"?\" poses the blank to fill. Occlusion always wins, so you may leave the real value in `mass` alongside it: the label then reserves the width the answer will need, and a staged build that reveals the mass on a later frame does not grow the figure. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this particle and its label — the one the question is about, or the answer. Default false."
+            },
+            "height": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "How far this particle is above the ground. Include it to draw the ground line and a dimension arrow from the particle down to it. Only meaningful for a HANGING particle — a particle resting on a table or a slope ignores it. When BOTH particles hang (the Atwood machine) the two heights set which one hangs lower: the drawn positions follow the values, so the picture can never contradict the labels.",
+              "properties": {
+                "value": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  ],
+                  "description": "The height above the ground in metres — a NUMBER (3, 1.4) or a STRING for a named height (\"h\"). The \"m\" is added for you. A symbolic height labels the arrow but cannot set a position, so the particle keeps its default depth."
+                },
+                "occlude": {
+                  "type": "boolean",
+                  "description": "Render the height as \"?\" — \"how far above the ground is it?\". The arrow still draws, and as with an occluded mass the real value may stay in `value` so a later reveal does not resize the figure. Default false."
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          }
+        }
+      },
+      "showGround": {
+        "type": "boolean",
+        "description": "Draw the horizontal ground line, hatched underneath. Defaults to true when either particle has a `height` (the dimension arrow needs something to measure to) and when scene is \"incline\" (the wedge stands on it), false otherwise. Set it explicitly to force the ground in or out."
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "Staged build: draw only the first N parts of the apparatus. 1 = the scene furniture and the pulley; 2 = plus particles[0]; 3 = plus particles[1]; 4 = plus the taut string (everything). Omit to draw it all. Each particle's height dimension arrives with the particle. The figure never changes size between stages, so the frames line up."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it, and a long one wraps rather than widening the canvas."
+      }
+    },
+    "required": [
+      "scene",
+      "particles"
+    ],
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "scene": {
+              "const": "incline"
+            }
+          },
+          "required": [
+            "scene"
+          ]
+        },
+        "then": {
+          "required": [
+            "incline"
+          ]
+        }
+      }
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — Atwood machine, both masses known, the heavier one 2.5 m up",
+      "params": {
+        "scene": "atwood",
+        "particles": [
+          {
+            "label": "A",
+            "mass": 7,
+            "height": {
+              "value": 2.5
+            }
+          },
+          {
+            "label": "B",
+            "mass": 4,
+            "height": {
+              "value": 0.9
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — Atwood machine: find the mass of B",
+      "params": {
+        "scene": "atwood",
+        "particles": [
+          {
+            "label": "A",
+            "mass": 7
+          },
+          {
+            "label": "B",
+            "mass": 4,
+            "occlude": true,
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer space — the bare table-edge apparatus, no masses given",
+      "params": {
+        "scene": "table-edge",
+        "particles": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Worked example — table-edge pulley, hanging particle 1.2 m above the ground",
+      "params": {
+        "scene": "table-edge",
+        "particles": [
+          {
+            "label": "A",
+            "mass": 3
+          },
+          {
+            "label": "B",
+            "mass": 8,
+            "height": {
+              "value": 1.2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Symbolic angle — rough plane at α°, partner hanging 1.8 m up",
+      "params": {
+        "scene": "incline",
+        "incline": {
+          "left": {
+            "angle": 35,
+            "label": "α°",
+            "rough": true
+          }
+        },
+        "particles": [
+          {
+            "label": "P",
+            "mass": 9
+          },
+          {
+            "label": "Q",
+            "mass": 6,
+            "height": {
+              "value": 1.8
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — double incline, 25° smooth and 55° rough, a particle on each face",
+      "params": {
+        "header": "One particle on each face",
+        "scene": "incline",
+        "incline": {
+          "left": {
+            "angle": 25
+          },
+          "right": {
+            "angle": 55,
+            "rough": true
+          }
+        },
+        "particles": [
+          {
+            "label": "R",
+            "mass": 11
+          },
+          {
+            "label": "S",
+            "mass": 3
+          }
+        ]
+      }
+    }
+  ]
+}

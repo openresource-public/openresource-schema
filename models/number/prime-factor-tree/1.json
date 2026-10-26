@@ -1,0 +1,260 @@
+{
+  "ref": "number/prime-factor-tree@1",
+  "family": "number",
+  "name": "prime-factor-tree",
+  "version": 1,
+  "title": "Prime factor tree",
+  "tagline": "Number split into a prime factor tree with primes ringed; derives the product in index or expanded form and, with a second tree, the HCF and LCM.",
+  "description": "A number broken into prime factors as a branching factor tree: the number at the top splits into a factor pair, each composite branch splits again, and every leaf is a prime ringed in amber. The product of primes is derived and written beneath — in index form (2³ × 3² × 5) or expanded (2 × 2 × 2 × 3 × 3 × 5) — and is always correct whatever shape the tree takes, because the author writes only the number (and, at most, which factor to pull at a node; the cofactor, the leaves and the product are all computed). With a second tree, the HCF and LCM of the two numbers are derived and shown with their working, read off the trees as the shared primes (HCF) and all the primes (LCM). The branching follows a balanced strategy (a bushy textbook tree) or a smallest-prime ladder (\"keep dividing by the smallest prime\"); a \"splits\" rule list reproduces a specific tree. Occlude the product (or the HCF/LCM) for a question; \"reveal\" the tree level by level for a staged build.",
+  "whenToUse": "Reach for this for prime factorisation and anything read off prime factors. One tree: \"write 360 as a product of primes\", building a factor tree, index form (2³ × 3² × 5), and square / cube spotting (use product.form \"index\" — all-even powers means a perfect square, all powers divisible by 3 means a cube). Two trees + hcfLcm: highest common factor and lowest common multiple from prime factors — the figure shows both trees and derives HCF (the shared primes, lowest powers) and LCM (all the primes, highest powers) with working. Author the number per tree; the cofactor at every split, the circled primes, the product, the HCF and the LCM are all computed — you never write a factor pair that could be wrong. Common configurations: worked example — one tree, product shown (default index form). Answer space — set reveal 1 (just the root) for \"draw a factor tree for 84\", or product.show false to leave the product for the pupil. Question — product.occlude true (\"write it as a product of primes\"); for HCF/LCM set hcfLcm.occlude true. Choose the tree shape — strategy \"balanced\" (default, bushy) or \"smallest-prime\" (the division ladder); or a \"splits\" rule list to match a particular textbook tree. Staged build — step \"reveal\" 1, 2, 3 … to grow the tree one level at a time (the layout is fixed to the full tree, so nothing shifts as levels appear), then bring in the product line last; or ring the primes last with ringPrimes false→true. Cross-block: keep the same number on the same side across the blocks of one lesson, and keep product.form consistent. This is not a probability tree (for staged outcomes / conditional probability use probability/tree) and not a Venn HCF/LCM diagram (probability/venn also derives HCF & LCM, from region values rather than trees — use whichever representation the lesson teaches). Synonyms a teacher might use: prime factors, prime factorisation, factor tree, product of primes, product of its prime factors, index form, index notation, HCF, highest common factor, GCD, greatest common divisor, LCM, lowest common multiple, least common multiple, factorise, square number, cube number.",
+  "responseModes": [],
+  "tags": [
+    "prime factors",
+    "prime factorisation",
+    "factor tree",
+    "product of primes",
+    "index form",
+    "indices",
+    "hcf",
+    "highest common factor",
+    "gcd",
+    "lcm",
+    "lowest common multiple",
+    "least common multiple",
+    "factorise",
+    "factorize",
+    "factors",
+    "multiples",
+    "square number",
+    "cube number",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "trees": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 2,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One factor tree. Write the number; the branching, the circled primes and the product of primes are all derived.",
+          "properties": {
+            "n": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 100000,
+              "description": "The number to factorise — the root of the tree. If n is itself prime the tree is a single ringed node. Required."
+            },
+            "strategy": {
+              "type": "string",
+              "enum": [
+                "balanced",
+                "smallest-prime"
+              ],
+              "description": "How nodes with no matching \"splits\" rule are auto-split. \"balanced\" (default) pulls the factor pair closest to √value, giving a bushy, branching tree (the usual textbook factor tree). \"smallest-prime\" repeatedly pulls the smallest prime, giving the lopsided \"keep dividing by the smallest prime\" ladder. Authored \"splits\" rules override this per value."
+            },
+            "splits": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "One branching rule: wherever the tree needs to split a node whose value equals \"value\", pull out the factor \"by\" (the other branch, value ÷ by, is derived). Rules are matched by value, so a rule for 6 splits BOTH sixes in the tree for 360 the same way. Order-independent. A rule whose \"by\" does not divide \"value\" (or is 1 or value itself) is ignored, and that node auto-splits by the tree's strategy.",
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": 4,
+                    "description": "A COMPOSITE node value that appears in the tree (e.g. 360, 36, 10, 6). Primes never split, so a prime value here has no effect."
+                  },
+                  "by": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "description": "The factor to pull out of that node — the LEFT branch. The right branch is value ÷ by, derived. Must divide value and be strictly between 1 and value, else the rule is ignored. e.g. value 360, by 36 → branches 36 and 10."
+                  }
+                },
+                "required": [
+                  "value",
+                  "by"
+                ]
+              },
+              "description": "Optional construction control: a list of branching rules to shape THIS tree (see each rule). Omit to let the strategy build the whole tree. Use it to reproduce a specific tree, e.g. for 360: [{ \"value\": 360, \"by\": 36 }, { \"value\": 36, \"by\": 6 }, { \"value\": 10, \"by\": 2 }, { \"value\": 6, \"by\": 2 }]."
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional caption centred beneath this tree (e.g. the number itself, or \"Number A\"). Useful to name the two trees in an HCF/LCM figure."
+            },
+            "ringPrimes": {
+              "type": "boolean",
+              "description": "Ring each prime leaf in amber (the \"circle the primes\" convention) and colour it as the result. Default true. Set false for a staged build that draws the bare tree first and rings the primes as the final step."
+            },
+            "product": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "The \"= product of primes\" line beneath this tree. Always derived from the number, never authored, so it is correct whatever shape the tree takes.",
+              "properties": {
+                "show": {
+                  "type": "boolean",
+                  "description": "Show the product-of-primes line. false leaves the tree as an answer space for the pupil to write the product themselves. Default true."
+                },
+                "form": {
+                  "type": "string",
+                  "enum": [
+                    "index",
+                    "expanded"
+                  ],
+                  "description": "How the product is written. \"index\" (default) uses powers — 2³ × 3² × 5 (the standard answer, and the form that exposes squares/cubes: all-even powers ⇒ a perfect square). \"expanded\" lists every prime — 2 × 2 × 2 × 3 × 3 × 5 (the step before collecting into indices)."
+                },
+                "occlude": {
+                  "type": "boolean",
+                  "description": "Render the product as \"?\" — the \"write 360 as a product of primes\" question hook. The tree stays visible and correct. Default false."
+                },
+                "highlight": {
+                  "type": "boolean",
+                  "description": "Amber the product line as the result/answer emphasis. Default false."
+                }
+              }
+            }
+          },
+          "required": [
+            "n"
+          ]
+        },
+        "description": "One or two factor trees. One tree: a prime-factorisation figure. Two trees: an HCF/LCM figure — add the hcfLcm object to derive and show them."
+      },
+      "hcfLcm": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this (with TWO trees) to derive and show the HCF and LCM beneath the trees, with working. HCF = the primes both numbers share at their lowest powers; LCM = all the primes at their highest powers. Ignored with a single tree. Omit for no HCF/LCM line.",
+        "properties": {
+          "showWorking": {
+            "type": "boolean",
+            "description": "Show the index-form working, e.g. \"HCF = 2² × 3 = 12\". false shows just the value, \"HCF = 12\". Default true."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the HCF and LCM values as \"?\" — the \"find the HCF and LCM\" question hook. Any working still shows. Default false."
+          }
+        }
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "Staging: the number of tree LEVELS to draw, counting the root as level 1 (reveal 1 = just the root number; reveal 2 = the root and its first split; and so on). Omit to draw the whole tree. Because every node is positioned from the full tree, increasing reveal across steps grows the tree without anything shifting. Applies to both trees."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "trees"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — 360 = 2³ × 3² × 5 (balanced tree, index form)",
+      "params": {
+        "trees": [
+          {
+            "n": 360,
+            "product": {
+              "show": true,
+              "form": "index",
+              "highlight": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer space — draw a factor tree for 84 (root only)",
+      "params": {
+        "trees": [
+          {
+            "n": 84,
+            "product": {
+              "show": false
+            }
+          }
+        ],
+        "reveal": 1
+      }
+    },
+    {
+      "label": "Occluded question — write 120 as a product of primes (product hidden)",
+      "params": {
+        "trees": [
+          {
+            "n": 120,
+            "product": {
+              "occlude": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Construction control — 72 forced as 8 × 9, then split down",
+      "params": {
+        "trees": [
+          {
+            "n": 72,
+            "splits": [
+              {
+                "value": 72,
+                "by": 8
+              },
+              {
+                "value": 8,
+                "by": 2
+              },
+              {
+                "value": 9,
+                "by": 3
+              }
+            ],
+            "product": {
+              "show": true,
+              "form": "expanded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — HCF & LCM of 360 and 84 from two trees",
+      "params": {
+        "trees": [
+          {
+            "n": 360
+          },
+          {
+            "n": 84
+          }
+        ],
+        "hcfLcm": {
+          "showWorking": true
+        }
+      }
+    },
+    {
+      "label": "Smallest-prime ladder — 540 by repeated division",
+      "params": {
+        "header": "Keep dividing by the smallest prime",
+        "trees": [
+          {
+            "n": 540,
+            "strategy": "smallest-prime",
+            "product": {
+              "show": true,
+              "form": "index"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

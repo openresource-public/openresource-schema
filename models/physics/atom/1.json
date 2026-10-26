@@ -1,0 +1,226 @@
+{
+  "ref": "physics/atom@1",
+  "family": "physics",
+  "name": "atom",
+  "version": 1,
+  "title": "Atom (shell model)",
+  "tagline": "Bohr shell-model atom — nucleus counts, electron shells and configuration, all derived from the species; draws neutral atoms, ions and isotopes.",
+  "description": "The Bohr or \"solar-system\" model of an atom: a central nucleus showing its proton and neutron counts, ringed by concentric electron shells with electron dots spread evenly around each ring, plus an electron-configuration readout (\"2, 8, 1\"), the full nuclide/ion notation and the element name. You write only the species — the element as a chemical symbol (\"Na\") or atomic number (z), an optional mass number A (which isotope; defaults to the representative isotope), and an optional charge (0 for a neutral atom, a signed integer for an ion). Everything else is derived: protons = Z, neutrons = A − Z, electrons = Z − charge, the shells filled in GCSE order (2, 8, 8, 2 — exact for hydrogen to calcium), the configuration string, and the element name, group and period from an engine periodic table. The same figure draws neutral atoms, ions (the electron count differs from Z) and isotopes (a different mass number changes the neutrons) — one interface, no presets. Occlude any single derived readout (the neutron count, electron count, configuration, …) to pose a question while the figure stays visible and correct; highlight the outer shell for reactivity teaching; fill shell by shell for a staged build.",
+  "whenToUse": "Reach for this whenever a lesson draws the structure of an atom as a nucleus with electron shells (the \"solar-system\" / Bohr picture): atomic structure, electronic configuration (\"draw the electron arrangement of sodium\", \"2, 8, 1\"), working out protons / neutrons / electrons from the atomic and mass numbers, isotopes, and ions. Author the species only: give element as a symbol (\"Na\", \"Cl\") or set z to the atomic number; set mass to the mass number A for a specific isotope (omit it for the representative isotope, e.g. carbon-12); set charge to a signed integer for an ion (charge -1 adds one electron, +2 removes two) or omit it / 0 for a neutral atom. The model derives every count, the shell arrangement, the rings and dots, and the nuclide/ion notation — you never write a particle count. Common configurations: electronic structure — show the rings and the \"2, 8, 1\" config; the highlight flag ambers the outer (valence) shell for reactivity / group-number teaching, and show.shellCounts labels each ring with its electron count. A question — set occlude to \"neutrons\" (\"how many neutrons?\"), \"electrons\", \"config\" (\"write the electron arrangement\"), \"mass\", \"protons\" or \"symbol\" (\"which element is this?\"), and the chosen readout becomes \"?\" while the figure stays correct; equivalent readouts blank with it so nothing leaks. Isotopes — draw two blocks with the same element but different mass (carbon-12 vs carbon-14) so only the neutron count changes. Ions — set charge so the electron count differs from the proton number; the figure shows the extra / missing outer electrons and the charge superscript. A staged build sets fillShells to 0 then 1, 2, 3 … across stages so electrons fill one shell at a time and the config is revealed last; the base frame (fillShells 0) is the bare nucleus with empty rings. fillShells 0 with occlude \"config\" is also a \"draw the electron arrangement yourself\" answer space. Keep the same show* flags and the same element framing across a lesson so pupils compare like with like. v1 covers Z = 1 to 20 (hydrogen to calcium). Switch model when the teaching is A-level sub-shells (s/p/d orbital boxes), energy-level transitions, or bonding (dot-and-cross) — those are different figures, not this one. Synonyms a teacher might use: atom, atomic structure, Bohr model, shell model, electron shells, electron configuration / arrangement, electronic structure, energy levels, protons neutrons electrons, atomic number, mass number, nucleon number, isotope, ion, periodic table.",
+  "responseModes": [],
+  "tags": [
+    "atom",
+    "atomic structure",
+    "bohr model",
+    "shell model",
+    "electron shell",
+    "electron configuration",
+    "electron arrangement",
+    "electronic structure",
+    "energy levels",
+    "proton",
+    "neutron",
+    "electron",
+    "nucleus",
+    "atomic number",
+    "mass number",
+    "nucleon number",
+    "isotope",
+    "ion",
+    "periodic table",
+    "chemistry",
+    "physics",
+    "science"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "element": {
+        "type": "string",
+        "enum": [
+          "H",
+          "He",
+          "Li",
+          "Be",
+          "B",
+          "C",
+          "N",
+          "O",
+          "F",
+          "Ne",
+          "Na",
+          "Mg",
+          "Al",
+          "Si",
+          "P",
+          "S",
+          "Cl",
+          "Ar",
+          "K",
+          "Ca"
+        ],
+        "description": "The element as its chemical symbol, capitalised — one of H, He, Li, Be, B, C, N, O, F, Ne, Na, Mg, Al, Si, P, S, Cl, Ar, K, Ca (Z = 1 to 20). Identifies the atomic number Z, so protons = Z. Give EITHER element OR z; if both are given and disagree, element wins."
+      },
+      "z": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 20,
+        "description": "The atomic number (proton number), an alternative to element — z 11 is sodium. Use it to pose the element by its number, or for an element you would rather not name. Give EITHER element OR z. v1 covers Z = 1 to 20 (hydrogen to calcium)."
+      },
+      "mass": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "The mass number A (nucleon number = protons + neutrons), selecting which ISOTOPE — neutrons = A − Z. OMIT for the representative isotope (carbon → 12, chlorine → 35); set it for a specific isotope (carbon-14 → mass 14, so 8 neutrons). Should be ≥ Z (you cannot have fewer nucleons than protons)."
+      },
+      "charge": {
+        "type": "integer",
+        "minimum": -3,
+        "maximum": 3,
+        "description": "The net charge, making the species an ION. 0 (or omitted) is a neutral atom (electrons = protons). A POSITIVE charge removes electrons (Na charge +1 → 10 electrons, a full outer shell lost); a NEGATIVE charge adds them (Cl charge −1 → 18 electrons, a full outer shell gained). electrons = Z − charge. Drawn as a superscript on the symbol."
+      },
+      "fillShells": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Staged-build / answer-space control. Draw electrons into only the first N shells; the rings still ALL draw, so the figure keeps the same size between stages. OMIT for the complete atom. Step it 0 → 1 → 2 → 3 across showcase stages to fill the configuration shell by shell (stage 0 is the bare nucleus with empty rings — a sensible opening frame). fillShells 0 with occlude \"config\" is the \"draw the electron arrangement\" answer space. The config and electron readouts reflect the electrons actually drawn; the nucleus (protons, neutrons) is unaffected. Purely presentational — never a chemistry claim."
+      },
+      "occlude": {
+        "type": "string",
+        "enum": [
+          "neutrons",
+          "electrons",
+          "protons",
+          "config",
+          "mass",
+          "symbol"
+        ],
+        "description": "Render ONE derived readout as \"?\" — the question hook. The figure (rings, dots, nucleus) always stays visible and correct; the hidden value is also hidden in the accessible label, and EQUIVALENT readouts blank together so the answer cannot leak. \"neutrons\": find the neutrons from the mass and atomic numbers (both stay shown). \"mass\": find the mass number — only the mass number blanks; the proton and neutron counts stay shown so it is found by adding them (the reverse of the neutrons question). \"electrons\": the electron count blanks AND the configuration string with it (they carry the same information). \"config\": \"write the electron arrangement\" — the configuration string, per-shell counts and electron count all blank; the shells stay drawn to read. \"protons\": the proton count blanks, and because protons = the atomic number = the element, the atomic number, symbol and name blank with it. \"symbol\": \"which element is this?\" — the symbol and name blank, the atomic number stays as a clue. Omit for a fully shown figure."
+      },
+      "highlight": {
+        "type": "boolean",
+        "description": "Amber the OUTER (valence) shell and its electrons — the reactivity / group-number emphasis (\"the outer shell decides how the atom reacts\"). One emphasis cue, no extra rings. Default false."
+      },
+      "label": {
+        "type": "string",
+        "description": "An optional caption drawn beneath the figure (e.g. \"Sodium atom\", \"Chloride ion\", or exam wording). Omit to let the figure speak for itself."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles — what to draw around the rings-and-dots figure. All default true except shellCounts and particles.",
+        "properties": {
+          "nucleusCounts": {
+            "type": "boolean",
+            "description": "Show the proton and neutron counts inside the nucleus (\"11 p\", \"12 n\", colour-coded). Default true."
+          },
+          "config": {
+            "type": "boolean",
+            "description": "Show the electron-configuration readout string (\"2, 8, 1\") below the figure. Default true."
+          },
+          "charge": {
+            "type": "boolean",
+            "description": "Show the charge superscript on the symbol for an ion. Default true; ignored for a neutral atom (no charge to show)."
+          },
+          "shellCounts": {
+            "type": "boolean",
+            "description": "Label each ring with the number of electrons it holds, just outside the ring. Default FALSE (the dots already show it; turn on for an explicit per-shell count beside each shell)."
+          },
+          "particles": {
+            "type": "boolean",
+            "description": "Show a sub-atomic particle tally line (protons · neutrons · electrons) below the figure. Default FALSE. Useful for ions, where the electron count differs from the proton number."
+          },
+          "name": {
+            "type": "boolean",
+            "description": "Show the element name with its group and period as a small caption (\"Sodium · group 1 · period 3\"). Default true."
+          },
+          "notation": {
+            "type": "boolean",
+            "description": "Show the nuclide/ion notation — the symbol with the mass number and atomic number stacked to its left and the charge as a superscript. Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "anyOf": [
+      {
+        "required": [
+          "element"
+        ]
+      },
+      {
+        "required": [
+          "z"
+        ]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — a neutral sodium atom, 2, 8, 1",
+      "params": {
+        "element": "Na",
+        "header": "Sodium atom",
+        "label": "A neutral atom of sodium"
+      }
+    },
+    {
+      "label": "Reactivity — chlorine with the outer shell highlighted and counted",
+      "params": {
+        "element": "Cl",
+        "highlight": true,
+        "show": {
+          "shellCounts": true
+        },
+        "label": "Chlorine has 7 electrons in its outer shell"
+      }
+    },
+    {
+      "label": "Occluded question — carbon with the neutron count hidden",
+      "params": {
+        "element": "C",
+        "occlude": "neutrons",
+        "show": {
+          "particles": true,
+          "name": false
+        }
+      }
+    },
+    {
+      "label": "Isotope — carbon-14 (same protons, two extra neutrons)",
+      "params": {
+        "element": "C",
+        "mass": 14,
+        "show": {
+          "particles": true
+        },
+        "label": "Carbon-14, an isotope of carbon"
+      }
+    },
+    {
+      "label": "The hard case — the chloride ion, Cl⁻ (18 electrons, full outer shell, charge −1)",
+      "params": {
+        "element": "Cl",
+        "charge": -1,
+        "highlight": true,
+        "show": {
+          "particles": true
+        },
+        "label": "A chloride ion has gained one electron"
+      }
+    },
+    {
+      "label": "Answer space — draw the electron arrangement of this atom (shells empty, config hidden)",
+      "params": {
+        "z": 12,
+        "fillShells": 0,
+        "occlude": "config",
+        "show": {
+          "name": false
+        }
+      }
+    }
+  ]
+}

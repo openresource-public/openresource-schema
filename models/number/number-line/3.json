@@ -1,0 +1,711 @@
+{
+  "ref": "number/number-line@3",
+  "family": "number",
+  "name": "number-line",
+  "version": 3,
+  "title": "Number line",
+  "tagline": "Horizontal number line with marked points, signed jumps and shaded open/closed intervals; answer on it — draw an inequality or mark a probability with a cross; positions derived.",
+  "description": "A horizontal number line over a numeric range with regular ticks, carrying three kinds of overlay: marked points (a labelled value at a position — an optional cross glyph for probability marks), jumps (a signed hop from one value to another, drawn as a labelled arc above the line — used for negative-number arithmetic and \"add the inverse\"), and intervals (a shaded ray or segment with open or filled endpoint circles — used for single and compound inequalities, rounding error intervals, and the 0–1 probability scale). All pixel positions, the jump delta, the endpoint circle style (open vs filled), and the shaded side are derived from the values you give. An optional axisLabel prints the axis variable letter (x, n, y, …) in italics just past the right arrowhead — the exam convention on inequality number lines — and any auto-derived interval caption then uses that letter as its variable. Hosted as a marked model tile the line becomes an answer surface two ways. responseMode \"show-inequality\" (with a constructInequality param naming the target): a complete but WRONG interval is pre-drawn and the pupil reshapes it — dragging each endpoint (snapped to the tick step), clicking an endpoint circle to toggle open/closed, and for a single ray dragging a grip to flip its direction — until it shows the required inequality; the snapped endpoint value shows under the pointer while dragging and no inequality caption ever renders (anti-leak). responseMode \"mark-cross\" (with a markCrosses param naming the target position(s)): the pupil drags a cross — or several pre-labelled crosses — onto the scale to mark a probability, each snapping to crossSnap and checked within half a snap step. Both modes self-check against the model's own targets (the derivation is the key) and report per-component cells; there is no authored answer key.",
+  "whenToUse": "Reach for this whenever the teaching lives on a number line. Set range to a span that frames the action with a little air on each side, and ticks.step to the natural counting unit (1s for −20..20 jumps, 0.1 for rounding bounds, fractions for the probability scale). Common configurations: negative-number jumps — two marks plus a jump between them; the arc labels its signed size (a jump from 5 to −3 reads −8), so subtraction shows as adding the inverse. Inequalities — an interval with from/to bounds and open (>, <, strict) or closed (≥, ≤) endpoints; use to: null for an open-ended ray (x > 3), or both bounds for a compound inequality (−2 ≤ x < 5, one end open, one filled); every interval needs at least one numeric bound. Exam inequality figures print the variable letter just past the right arrowhead — set axisLabel to that letter (\"x\", \"n\", \"y\") whenever the question names its variable; the auto caption then reads in that letter too (so a y figure derives \"−2 ≤ y < 5\", never x), which matters most on read-off questions where the answer must name the variable. Error intervals from rounding are the same interval with closed-lower, open-upper convention (4.5 ≤ x < 5.5). Probability scale — range [0,1], ticks.step a fraction (0.25 or 0.2), word labels like \"impossible\"/\"certain\" via ticks.labels, events marked as points. Cross-block convention: keep the same range and tick step across blocks in one lesson so pupils read movement, not a redrawn axis; only change what is being marked. Use occlude on a mark to hide its value behind \"?\" for a \"where does this go / what is this point?\" question while the position stays visible. Answer ON the line (auto-marked model tiles): to make \"show the inequality on a number line\" markable, host a marked model tile with responseMode \"show-inequality\", marking { mode: \"auto\", correctAnswer: { derived: true } }, and a constructInequality param giving the target ({ from, to, fromClosed, toClosed } — a null bound is a ray, both bounds a compound); the pupil reshapes a pre-drawn wrong interval and it is checked component by component (endpoint value within half a tick step, open/closed and direction exact). To make \"mark with a cross the probability that…\" markable, host responseMode \"mark-cross\" with correctAnswer { derived: true } and a markCrosses param listing the target position(s) as [{ at, label }] (label is the pre-printed name for that cross, e.g. \"Red\"); set crossSnap to the reading grain the cross should snap to when the answer sits BETWEEN whole ticks (e.g. 0.5 on a 0–1 scale ticked only at 0 and 1, or a sixth) — default is the tick step. The target inequality / cross position is never drawn on the posed or armed figure, and the aria states the task, never the answer, so nothing leaks. Both modes need the two mode names wired into the schema RESPONSE_MODES enum first (see the model REPORT). For a worked/answer figure showing a probability cross at rest (not a question), give a mark { at, glyph: \"cross\", label }. Synonyms a teacher might use: number line, numberline, jumps, hops, counting on/back, inequality, open/closed circle, show the inequality, represent on a number line, error interval, bounds, upper and lower bound, probability scale, likelihood line, mark with a cross, mark the probability.",
+  "responseModes": [
+    "show-inequality",
+    "mark-cross"
+  ],
+  "tags": [
+    "number line",
+    "numberline",
+    "number-line",
+    "jump",
+    "jumps",
+    "hop",
+    "counting on",
+    "counting back",
+    "negative numbers",
+    "integers",
+    "inequality",
+    "inequalities",
+    "open circle",
+    "closed circle",
+    "compound inequality",
+    "error interval",
+    "bounds",
+    "upper bound",
+    "lower bound",
+    "rounding",
+    "axis label",
+    "variable letter",
+    "in terms of",
+    "probability",
+    "probability scale",
+    "likelihood",
+    "impossible",
+    "certain",
+    "fraction",
+    "maths",
+    "number",
+    "show the inequality",
+    "represent on a number line",
+    "draw the inequality",
+    "mark with a cross",
+    "mark the probability",
+    "place a cross",
+    "cross",
+    "answer on the model",
+    "construct",
+    "place point"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "range": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "The line's extent as [min, max] in the line's own units, e.g. [-20, 20] for integer jumps, [4, 6] for rounding bounds, [0, 1] for the probability scale. Choose a span that frames every mark, jump, and interval with a little room at each end. Required."
+      },
+      "ticks": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "How the line is graduated and numbered.",
+        "properties": {
+          "step": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Distance between tick marks in the line's units. Default 1. Use the natural counting unit: 1 for integers, 0.1 for rounding bounds, 0.25 or 0.2 for the probability scale."
+          },
+          "labelStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Number the line every this many units while ticks stay at step — e.g. step 1 with labelStep 5 ticks every unit but numbers every 5. Use a multiple of step. Default: every tick is numbered, which CROWDS on wide ranges — if the range spans more than ~20 ticks, set labelStep so numbers stay clearly separated."
+          },
+          "labels": {
+            "type": "array",
+            "description": "Word labels at specific tick values — e.g. the probability scale ([{ \"at\": 0, \"text\": \"impossible\" }, { \"at\": 1, \"text\": \"certain\" }]) or naming a known value. Numeric tick numbers still show unless suppressed by labelStep.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "at": {
+                  "type": "number",
+                  "description": "The tick value to label, in the line's units."
+                },
+                "text": {
+                  "type": "string",
+                  "description": "The word label shown at that value."
+                }
+              },
+              "required": [
+                "at",
+                "text"
+              ]
+            }
+          },
+          "showNumbers": {
+            "type": "boolean",
+            "description": "Show the numeric labels under the ticks. Default true. Set false for a bare scaffold where only word labels or marks carry meaning."
+          }
+        }
+      },
+      "marks": {
+        "type": "array",
+        "description": "Labelled points ON the line. Each is a value with an optional name and occlusion. Use for events on the probability scale, endpoints of a jump you also draw, or any \"this point is here\" reference.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "type": "number",
+              "description": "The value to mark, in the line's units."
+            },
+            "label": {
+              "type": "string",
+              "description": "Display name shown beside the mark, e.g. \"A\", \"rain\", \"x\". Omit for an unnamed dot."
+            },
+            "glyph": {
+              "type": "string",
+              "enum": [
+                "dot",
+                "cross"
+              ],
+              "description": "Marker glyph. Default \"dot\" (a filled circle on the line). \"cross\" draws an X centred on the line — the exam glyph for \"mark with a cross\" on a probability scale; use it on a WORKED / answer figure showing where the cross goes (for a markable \"mark the probability\" question use responseMode \"mark-cross\" with markCrosses instead)."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the mark's value as \"?\" instead of its number — the question hook for \"what is this point?\". The dot itself stays visible. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the eye to this mark with an amber ring (dot) or amber glyph (cross) — result/answer emphasis. Default false."
+            }
+          },
+          "required": [
+            "at"
+          ]
+        }
+      },
+      "jumps": {
+        "type": "array",
+        "description": "Signed hops along the line, drawn as a curved arrow above the line from one value to another with its size labelled (the delta is computed and signed: a jump from 5 to −3 is labelled −8). Use for counting on/back, negative-number arithmetic, and subtraction-as-adding-the-inverse. Several jumps stack so a multi-step calculation reads left to right.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "number",
+              "description": "Start value of the jump, in the line's units."
+            },
+            "to": {
+              "type": "number",
+              "description": "End value of the jump. The arrowhead points here; the labelled size is to − from (signed)."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the auto-computed signed size, e.g. \"−8\" or \"+ 12\" or \"add the inverse\". Omit to show the computed signed delta. Set to \"\" to draw the arc with no label."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the jump size as \"?\" — the question hook for \"how big is this jump?\". The arc stays visible. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber the arc and its label — result emphasis. Default false."
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        }
+      },
+      "intervals": {
+        "type": "array",
+        "description": "Shaded ranges of the line for inequalities, error intervals, and bounded regions. Each draws a thick segment (or open-ended ray) with an endpoint circle at each finite bound — filled for a closed bound (≥, ≤) or open for a strict bound (>, <). One interval renders a single OR a compound inequality; two intervals can show a union.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Lower bound value, or null for a ray open to the left (x < to). When a number, fromClosed decides the circle style."
+            },
+            "to": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Upper bound value, or null for a ray open to the right (x > from). When a number, toClosed decides the circle style."
+            },
+            "fromClosed": {
+              "type": "boolean",
+              "description": "true = lower bound is included (≥), drawn as a filled circle; false = excluded (>), drawn as an open circle. Default false. Ignored when from is null. For rounding error intervals the lower bound is closed (4.5 ≤ x)."
+            },
+            "toClosed": {
+              "type": "boolean",
+              "description": "true = upper bound is included (≤), filled circle; false = excluded (<), open circle. Default false. Ignored when to is null. For rounding error intervals the upper bound is open (x < 5.5)."
+            },
+            "label": {
+              "type": "string",
+              "description": "Caption for the interval, e.g. \"−2 ≤ x < 5\" or \"x > 3\", placed near the shaded region. Omit to let an auto inequality string be derived from the bounds and open/closed flags."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the interval label as \"?\" — for \"write the inequality this shows\". The shading and circles stay visible. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber the shaded region — result emphasis. Default false."
+            }
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title rendered centred above the line; the top padding grows to clear it."
+      },
+      "axisLabel": {
+        "type": "string",
+        "description": "The axis variable letter (e.g. \"x\", \"n\", \"y\") printed in italics just past the right arrowhead — the exam convention on inequality number lines. Also becomes the variable in any auto-derived interval caption (a y-axis figure captions \"−2 ≤ y < 5\", not x). Omit for a plain unlettered line."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only exploration. Lets a pupil drag mark dots and jump/interval endpoints along the line (snapped to ticks.step) to feel how position and the derived readouts move. Exploratory only — the drag is not saved."
+      },
+      "constructInequality": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The TARGET inequality for a \"show the inequality on a number line\" answer-on-the-model question (responseMode \"show-inequality\"). Give the SAME shape you would give an `intervals` entry — from / to / fromClosed / toClosed — naming the inequality the pupil must build (a null bound is an open-ended ray, e.g. { from: 3, to: null, fromClosed: false } for x > 3; two finite bounds is a compound, e.g. { from: -3, to: 0, fromClosed: true, toClosed: false } for −3 ≤ x < 0). This is PUBLIC — it is the question, printed in the block text — but it is NEVER drawn on the figure: the posed/armed figure shows a deliberately WRONG interval (a fixed, target-independent start) that the pupil drags into shape, and the model self-checks against this target. Do not also pass `intervals` on the same tile. Presence of this param makes the tile pose the construct question on every surface (print/slide show the wrong start, not the answer).",
+        "properties": {
+          "from": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target lower bound, or null for a ray open to the left (x < to)."
+          },
+          "to": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target upper bound, or null for a ray open to the right (x > from)."
+          },
+          "fromClosed": {
+            "type": "boolean",
+            "description": "true = the lower bound is included (≥, filled circle); false = excluded (>, open circle). Ignored when from is null. Default false."
+          },
+          "toClosed": {
+            "type": "boolean",
+            "description": "true = the upper bound is included (≤, filled circle); false = excluded (<, open circle). Ignored when to is null. Default false."
+          }
+        }
+      },
+      "markCrosses": {
+        "type": "array",
+        "description": "The TARGET cross position(s) for a \"mark with a cross the probability that…\" answer-on-the-model question (responseMode \"mark-cross\"). Each entry names where a cross should end up and the label pre-printed beside it. These positions are PUBLIC (the question) but are NEVER drawn at their target on the posed/armed figure — each cross starts PARKED off the scale (the source question has no cross), and the pupil drags it onto the line; the model self-checks against `at`. Supports several crosses on one scale (e.g. mark P(red) AND P(yellow)), each its own observation cell. Posed on a non-interactive surface (print) the scale renders blank — the answer space the pupil marks on paper.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "type": "number",
+              "description": "The target value the cross should be placed at, in the line's units (e.g. 0.5 for an even chance on a 0–1 scale). Never rendered at this value on the question figure."
+            },
+            "label": {
+              "type": "string",
+              "description": "Pre-printed name shown beside this cross so the pupil knows which one it is, e.g. \"Red\", \"Yellow\", \"A\". Rendered on the parked and placed cross alike (it does not leak the position). Omit for a single unlabelled cross."
+            },
+            "id": {
+              "type": "string",
+              "description": "Stable id for this cross's observation cell (kebab-case). Omit to auto-key by order (x0, x1, …)."
+            }
+          },
+          "required": [
+            "at"
+          ]
+        }
+      },
+      "crossSnap": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "description": "The reading grain a dragged cross snaps to, in the line's units — used ONLY by responseMode \"mark-cross\". Default: ticks.step. Set it when the answer sits BETWEEN whole ticks: a 0–1 probability scale ticked only at 0 and 1 whose answers are halves needs crossSnap 0.5; a sixths scale needs 1/6. A cross is marked correct within half of this grain."
+      }
+    },
+    "required": [
+      "range"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank labelled line (answer space) — plot or read a point",
+      "params": {
+        "range": [
+          -20,
+          20
+        ],
+        "ticks": {
+          "step": 1,
+          "labelStep": 5
+        }
+      }
+    },
+    {
+      "label": "Negative-number jump (worked) — 5 to −3 as a hop of −8",
+      "params": {
+        "range": [
+          -10,
+          10
+        ],
+        "ticks": {
+          "step": 1,
+          "labelStep": 5
+        },
+        "marks": [
+          {
+            "at": 5,
+            "label": "5"
+          },
+          {
+            "at": -3,
+            "label": "−3"
+          }
+        ],
+        "jumps": [
+          {
+            "from": 5,
+            "to": -3,
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded jump (question) — how big is this jump?",
+      "params": {
+        "range": [
+          -20,
+          20
+        ],
+        "ticks": {
+          "step": 1,
+          "labelStep": 5
+        },
+        "marks": [
+          {
+            "at": -12,
+            "label": "−12"
+          },
+          {
+            "at": 8,
+            "label": "8"
+          }
+        ],
+        "jumps": [
+          {
+            "from": -12,
+            "to": 8,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Open-ended inequality x > 3 (worked) — open circle, ray right",
+      "params": {
+        "range": [
+          -2,
+          10
+        ],
+        "ticks": {
+          "step": 1
+        },
+        "intervals": [
+          {
+            "from": 3,
+            "to": null,
+            "fromClosed": false,
+            "label": "x > 3"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Compound inequality −2 ≤ x < 5 (the hard case) — one filled end, one open",
+      "params": {
+        "range": [
+          -5,
+          8
+        ],
+        "ticks": {
+          "step": 1
+        },
+        "intervals": [
+          {
+            "from": -2,
+            "to": 5,
+            "fromClosed": true,
+            "toClosed": false,
+            "label": "−2 ≤ x < 5"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Rounding error interval 4.5 ≤ x < 5.5 — closed lower, open upper",
+      "params": {
+        "range": [
+          4,
+          6
+        ],
+        "ticks": {
+          "step": 0.5,
+          "labelStep": 0.5
+        },
+        "intervals": [
+          {
+            "from": 4.5,
+            "to": 5.5,
+            "fromClosed": true,
+            "toClosed": false,
+            "label": "4.5 ≤ x < 5.5"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Read-off inequality with axis letter n (question) — write the inequality shown",
+      "params": {
+        "range": [
+          -5,
+          5
+        ],
+        "ticks": {
+          "step": 1
+        },
+        "axisLabel": "n",
+        "intervals": [
+          {
+            "from": -3,
+            "to": null,
+            "fromClosed": true,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Compound inequality on a y-lettered line (worked) — auto caption derives in y",
+      "params": {
+        "range": [
+          -6,
+          6
+        ],
+        "ticks": {
+          "step": 1
+        },
+        "axisLabel": "y",
+        "intervals": [
+          {
+            "from": -1,
+            "to": 4,
+            "fromClosed": false,
+            "toClosed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Probability scale 0–1 with events marked",
+      "params": {
+        "range": [
+          0,
+          1
+        ],
+        "ticks": {
+          "step": 0.25,
+          "labels": [
+            {
+              "at": 0,
+              "text": "impossible"
+            },
+            {
+              "at": 0.5,
+              "text": "even chance"
+            },
+            {
+              "at": 1,
+              "text": "certain"
+            }
+          ]
+        },
+        "marks": [
+          {
+            "at": 0.25,
+            "label": "rain"
+          },
+          {
+            "at": 0.75,
+            "label": "sun"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Probability scale (worked) — mark a given probability on the 0–1 scale",
+      "params": {
+        "range": [
+          0,
+          1
+        ],
+        "ticks": {
+          "step": 0.1,
+          "showNumbers": false,
+          "labels": [
+            {
+              "at": 0,
+              "text": "impossible"
+            },
+            {
+              "at": 0.5,
+              "text": "even chance"
+            },
+            {
+              "at": 1,
+              "text": "certain"
+            }
+          ]
+        },
+        "marks": [
+          {
+            "at": 0.7,
+            "label": "7/10",
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Show the inequality x ≥ 1 (question) — responseMode \"show-inequality\"; drag the wrong ray into shape",
+      "params": {
+        "range": [
+          -5,
+          5
+        ],
+        "ticks": {
+          "step": 1
+        },
+        "axisLabel": "x",
+        "constructInequality": {
+          "from": 1,
+          "to": null,
+          "fromClosed": true
+        }
+      }
+    },
+    {
+      "label": "Show the compound inequality 1 < x ≤ 4 (the construct hard case) — both endpoints and both fills to set",
+      "params": {
+        "range": [
+          -2,
+          7
+        ],
+        "ticks": {
+          "step": 1
+        },
+        "axisLabel": "x",
+        "constructInequality": {
+          "from": 1,
+          "to": 4,
+          "fromClosed": false,
+          "toClosed": true
+        }
+      }
+    },
+    {
+      "label": "Mark with a cross (question) — mark P(a fair spinner lands on green) on the 0–1 scale (responseMode \"mark-cross\")",
+      "params": {
+        "range": [
+          0,
+          1
+        ],
+        "ticks": {
+          "step": 1,
+          "showNumbers": false,
+          "labels": [
+            {
+              "at": 0,
+              "text": "0"
+            },
+            {
+              "at": 1,
+              "text": "1"
+            }
+          ]
+        },
+        "crossSnap": 0.25,
+        "markCrosses": [
+          {
+            "at": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "label": "Mark two crosses on one scale (question) — mark P(A) and P(B); each pre-labelled, each its own cell",
+      "params": {
+        "range": [
+          0,
+          1
+        ],
+        "ticks": {
+          "step": 0.5,
+          "showNumbers": false,
+          "labels": [
+            {
+              "at": 0,
+              "text": "0"
+            },
+            {
+              "at": 0.5,
+              "text": "½"
+            },
+            {
+              "at": 1,
+              "text": "1"
+            }
+          ]
+        },
+        "crossSnap": 0.5,
+        "markCrosses": [
+          {
+            "at": 0,
+            "label": "A",
+            "id": "a"
+          },
+          {
+            "at": 0.5,
+            "label": "B",
+            "id": "b"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Worked cross — where the cross goes for P = 3/10 (a static answer figure, glyph \"cross\")",
+      "params": {
+        "range": [
+          0,
+          1
+        ],
+        "ticks": {
+          "step": 0.1,
+          "showNumbers": false,
+          "labels": [
+            {
+              "at": 0,
+              "text": "impossible"
+            },
+            {
+              "at": 0.5,
+              "text": "even chance"
+            },
+            {
+              "at": 1,
+              "text": "certain"
+            }
+          ]
+        },
+        "marks": [
+          {
+            "at": 0.3,
+            "label": "3/10",
+            "glyph": "cross",
+            "highlight": true
+          }
+        ]
+      }
+    }
+  ]
+}

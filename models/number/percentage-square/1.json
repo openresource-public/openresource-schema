@@ -1,0 +1,212 @@
+{
+  "ref": "number/percentage-square@1",
+  "family": "number",
+  "name": "percentage-square",
+  "version": 1,
+  "title": "Percentage square",
+  "tagline": "10×10 hundred-square shaded for a percentage with derived decimal, fraction and multiplier; models increase/decrease and forward or reverse percentage.",
+  "description": "A 10×10 hundred-square (100 unit cells, each worth 1%) with a reading-order run of cells shaded to model a percentage, beside a derived readout. You write the percentage; the model shades the cells, and computes the decimal, the reduced fraction and the multiplier (35% → 0.35 = 7/20, ×0.35). Set change to \"increase\" or \"decrease\" to model a percentage change: an increase draws the whole 100% in blue plus the extra cells in amber (a 120% total, ×1.2), a decrease draws the whole with the lost cells struck out in amber (leaving 85%, ×0.85). Supply a known amount and the model finds the answer — forward (a percentage of an amount, or the amount after a change) when the value is the original, or backward (reverse percentage — find the original) when the value is the result. Fractional percentages shade a partial cell (12.5% = twelve and a half cells = 0.125 = 1/8). Cells, multiplier, decimal, fraction and answer occlude independently, so one figure asks \"what percentage is shaded?\", \"what is the multiplier?\", \"write it as a fraction\", or \"what is the amount?\".",
+  "whenToUse": "Reach for this whenever a percentage is taught on the hundred-square: writing a percentage as a fraction and a decimal, the multiplier method, a percentage of an amount, percentage increase and decrease, and reverse percentage. Write `percent` (the percentage modelled, or the size of a change); the cells, multiplier, decimal and fraction are all derived. Common configurations: equivalence — percent alone shades that many cells and shows \"35% = 0.35 = 7/20\" with the ×0.35 multiplier (use a fractional percent like 12.5 to land a tidy fraction, 1/8); percentage of amount — add known { value, represents: \"original\" } to compute value × multiplier (\"£80 × 0.35 = £28\"); increase / decrease — set change to \"increase\" or \"decrease\"; the amber cells are the change, the multiplier becomes 1 ± percent/100, and known { represents: \"original\" } gives the new amount; reverse — known { represents: \"result\" } labels the shaded figure with the known \"after\" value and the model divides to find the original (\"£72 ÷ 1.2 = £60\"); answer space — percent 0 (an empty square) with the instruction in the header, or show.equivalence / show.multiplier false to strip the readout; question — occlude the multiplier, the fraction, the decimal, the percent, or the answer. Use known.prefix \"£\" / \"$\" for money and known.suffix for units (\" kg\"). Keep percent ≤ 100 for a change (a bigger increase would run off the page) and remember each cell is exactly 1%. Staged builds read very well: open on the labelled square, shade the whole, bring the amber change in, then reveal the multiplier and the answer last. Sibling boundary: for number PROPERTIES shaded on a hundred-square (multiples, primes, sequences) use number/number-grid; for a part-whole BAR or a ratio share use number/bar-model; for a fraction of a shape use number/fraction-shape. Synonyms a teacher might use: percentage, percent, per cent, hundred square, hundredths, percentage of an amount, multiplier, decimal multiplier, percentage increase, percentage decrease, percentage change, reverse percentage, original amount, fraction decimal percentage, FDP.",
+  "responseModes": [],
+  "tags": [
+    "percentage",
+    "percent",
+    "per cent",
+    "hundred square",
+    "hundredths",
+    "percentage of an amount",
+    "multiplier",
+    "decimal multiplier",
+    "percentage increase",
+    "percentage decrease",
+    "percentage change",
+    "reverse percentage",
+    "original amount",
+    "fraction decimal percentage",
+    "fdp",
+    "equivalence",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "percent": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 200,
+        "description": "The percentage the square models. With no `change` it is the proportion shaded (35 → 35 cells of 100). With a `change` it is the SIZE of the increase or decrease (20 with change \"increase\" → a 120% total). May be fractional — 12.5 shades twelve and a half cells. Plain percentages above 100 draw extra rows; for a change keep it ≤ 100 (a larger increase is clamped so the grid stays on the page)."
+      },
+      "change": {
+        "type": "string",
+        "enum": [
+          "increase",
+          "decrease"
+        ],
+        "description": "Model a percentage CHANGE instead of a plain proportion. Omit for a plain percentage. \"increase\": the whole 100% is shaded blue and `percent` extra cells are appended in amber — the total is (100 + percent)%, multiplier 1 + percent/100. \"decrease\": the whole is shaded and the last `percent` cells are struck out in amber, leaving (100 − percent)% blue — multiplier 1 − percent/100. Amber always marks the change."
+      },
+      "known": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A single known amount to turn the figure into a numeric problem. Omit for a pure proportion / equivalence figure. The model derives the unknown amount from this value and the multiplier — there is nowhere to author the answer.",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "The known quantity (money or measure). What it labels is set by `represents`."
+          },
+          "represents": {
+            "type": "string",
+            "enum": [
+              "original",
+              "result"
+            ],
+            "description": "\"original\" (default): the value is 100% — the original whole. The model works FORWARD to value × multiplier (a percentage of an amount, or the amount after a change). \"result\": the value labels the shaded figure (the part, or the amount AFTER a change). The model works BACKWARD, dividing by the multiplier to find the original — a REVERSE percentage."
+          },
+          "prefix": {
+            "type": "string",
+            "description": "A unit symbol written before every amount, e.g. \"£\" or \"$\". Default none."
+          },
+          "suffix": {
+            "type": "string",
+            "description": "A unit written after every amount, e.g. \" kg\" or \" m\". Default none."
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Hide a readout as \"?\" — the question hooks. The shading itself always stays visible, so the pupil reads the square to answer. Each flag is independent; default all false.",
+        "properties": {
+          "percent": {
+            "type": "boolean",
+            "description": "Hide the headline percentage (\"what percentage is shaded?\"). Default false."
+          },
+          "decimal": {
+            "type": "boolean",
+            "description": "Hide the decimal equivalent (\"write it as a decimal\"). Default false."
+          },
+          "fraction": {
+            "type": "boolean",
+            "description": "Hide the fraction equivalent (\"write it as a fraction\"). Default false."
+          },
+          "multiplier": {
+            "type": "boolean",
+            "description": "Hide the multiplier (\"what do you multiply by?\"). Default false."
+          },
+          "answer": {
+            "type": "boolean",
+            "description": "Hide the computed amount — the forward result or the reverse original (\"what is the amount?\"). Only meaningful with `known`. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout and furniture toggles.",
+        "properties": {
+          "equivalence": {
+            "type": "boolean",
+            "description": "Show the \"percent% = decimal = fraction\" line beneath the square. Default true."
+          },
+          "multiplier": {
+            "type": "boolean",
+            "description": "Show the \"Multiplier × …\" line. Default true. The signature readout of this model."
+          },
+          "guides": {
+            "type": "boolean",
+            "description": "Draw the heavier every-five-cells division lines that help count the square in fives and tens. Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the square; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the readout, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "percent"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — 35% of £80 with the multiplier",
+      "params": {
+        "percent": 35,
+        "known": {
+          "value": 80,
+          "represents": "original",
+          "prefix": "£"
+        }
+      }
+    },
+    {
+      "label": "Answer space — an empty hundred-square to shade 25%",
+      "params": {
+        "percent": 0,
+        "show": {
+          "equivalence": false,
+          "multiplier": false
+        }
+      }
+    },
+    {
+      "label": "Worked example — increase £40 by 20% (×1.2, 120% shaded)",
+      "params": {
+        "percent": 20,
+        "change": "increase",
+        "known": {
+          "value": 40,
+          "represents": "original",
+          "prefix": "£"
+        },
+        "caption": "Increase £40 by 20%"
+      }
+    },
+    {
+      "label": "Occluded question — decrease £80 by 15%, multiplier and answer hidden",
+      "params": {
+        "percent": 15,
+        "change": "decrease",
+        "known": {
+          "value": 80,
+          "represents": "original",
+          "prefix": "£"
+        },
+        "occlude": {
+          "multiplier": true,
+          "answer": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — reverse percentage on an increase (after +20% it is £30 000)",
+      "params": {
+        "header": "Reverse percentage",
+        "percent": 20,
+        "change": "increase",
+        "known": {
+          "value": 30000,
+          "represents": "result",
+          "prefix": "£"
+        },
+        "occlude": {
+          "answer": true
+        }
+      }
+    },
+    {
+      "label": "Equivalence — 12.5% as a decimal and a fraction (a partial cell)",
+      "params": {
+        "percent": 12.5
+      }
+    }
+  ]
+}

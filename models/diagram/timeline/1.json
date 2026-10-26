@@ -1,0 +1,482 @@
+{
+  "ref": "diagram/timeline@1",
+  "family": "diagram",
+  "name": "timeline",
+  "version": 1,
+  "title": "Timeline",
+  "tagline": "Dated event cards along a line — evenly spaced (ordinal) or by date (scaled, gaps meaningful); optional photos and era bands; positions and ticks derived, events occludable.",
+  "description": "A sequence of dated events shown along a straight line: a marker on a spine for each event, joined to a card carrying its label and (optionally) its date, a photo and a one-line detail, with cards alternating above and below the line. Two modes set how positions derive: \"ordinal\" spaces the events evenly in the order given (for \"put these in order\" / a story or process sequence), while \"scaled\" positions each event by its date on a numeric axis so the gaps mean elapsed time (1066 to 1485 sits wider than 1485 to 1509) — the model sorts by date, draws round-year axis ticks, and can shade named era bands (periods). Dates are years (negative = BC); a dateLabel can override the printed text (\"c. 3000 BC\"). Horizontal or vertical. When dates cluster, the marker stays at the true date and the card shifts to keep a minimum spacing, its connector slanting — so nothing overlaps and the positions stay honest. Any label, date or photo occludes to \"?\" for a question; events highlight in amber; reveal draws the events one at a time for a staged build, positions fixed from the full set. The open, date-scaled sibling of diagram/cycle. For a repeating loop use diagram/cycle; for a maths number line (jumps, intervals, inequalities) use number/number-line; for a measured quantity over time use statistics/time-series; for cyclic-time counting use time/cycle-wheel.",
+  "whenToUse": "Reach for this for a timeline of dated or ordered events — history (reigns, wars, a person's life, a country's milestones), the history of science or an invention, geological or evolutionary eras, the sequence of a story or a process. Author the events as a list (each an id + a label); add a `date` (a year; negative = BC) to each and set `scale:\"scaled\"` to position them by date with a true-to-scale axis and round-year ticks, or leave `scale:\"ordinal\"` (the default) to space them evenly in the order you list them (for ordering/sequence work where exact dates do not matter). Give an event an `image` { url, alt } to show a photo (a portrait, an artefact) above its label; add a one-line `detail` for a short gloss; use `dateLabel` for a date a number can't express (\"c. 3000 BC\", \"March 1066\"). Shade eras with `periods` [{ from, to, label }] in scaled mode (the Tudor period, the Jurassic). Set `orientation:\"vertical\"` for a narrow column. Questions: `occlude` a label (\"which event?\"), `occludeDate` a date (\"when did this happen?\"), `occludeImage` to stop a photo giving it away; `highlight` to mark an answer or the event in focus. Staged build: set `reveal` to add events one at a time along the line (positions never move). Conventions: keep the same `scale` and orientation across a lesson; keep one image `aspect` so the cards match; in scaled mode list any number of events — they sort by date themselves. Synonyms a teacher might use: timeline, time line, chronology, dates, in order, sequence of events, era, period, history, when did, put in order. Switch model when the shape changes: a repeating cycle that returns to the start is diagram/cycle; a maths axis with jumps/intervals/inequalities is number/number-line; a graph of a measured quantity over time is statistics/time-series; naming months/days and counting round them is time/cycle-wheel.",
+  "responseModes": [],
+  "tags": [
+    "timeline",
+    "time line",
+    "chronology",
+    "dates",
+    "history",
+    "sequence",
+    "order of events",
+    "in order",
+    "era",
+    "period",
+    "when",
+    "ordering",
+    "history of science",
+    "geological time",
+    "evolution",
+    "diagram",
+    "humanities",
+    "science",
+    "image",
+    "photo",
+    "ks2",
+    "ks3"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "events": {
+        "type": "array",
+        "maxItems": 10,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+              "description": "Unique kebab-case id for this event (e.g. \"moon-landing\"). Not shown to pupils — the wiring handle."
+            },
+            "label": {
+              "type": "string",
+              "description": "The event name, wrapped to fit the card (e.g. \"Battle of Hastings\")."
+            },
+            "date": {
+              "type": "number",
+              "description": "The event's year as a number; NEGATIVE means BC (−44 = 44 BC). Drives the position in scale \"scaled\" AND the default printed date. Ignored for positioning in scale \"ordinal\" (events are then spaced evenly in list order), though it still prints if given."
+            },
+            "dateLabel": {
+              "type": "string",
+              "description": "Optional display override for the printed date that a raw number can't express (\"44 BC\", \"c. 3000 BC\", \"March 1066\", \"1969\"). The POSITION still comes from `date`; this only changes the text shown."
+            },
+            "detail": {
+              "type": "string",
+              "description": "Optional short second line under the label — a brief gloss (\"King Harold killed\"). Wraps to fit."
+            },
+            "image": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "An optional photo shown above the label in the card (a portrait, an artefact). The model reserves a fixed slot and crops the photo to fill it; the photo is opaque author content — only the layout is derived. Photos display on the live web/slide; a static PNG/print/PPTX export shows a labelled placeholder frame until asset-rasterisation lands.",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "Absolute image URL — e.g. a Wikimedia Commons upload.wikimedia.org thumbnail. Must be a real, reachable image."
+                },
+                "alt": {
+                  "type": "string",
+                  "description": "Short description of the photo, for accessibility and the figure aria."
+                },
+                "aspect": {
+                  "type": "string",
+                  "enum": [
+                    "square",
+                    "landscape",
+                    "portrait"
+                  ],
+                  "description": "Shape of the image slot the photo is cropped to fill. Default \"landscape\" (4:3); use \"portrait\" for face portraits. Keep one aspect across a timeline so the cards match."
+                }
+              },
+              "required": [
+                "url"
+              ]
+            },
+            "side": {
+              "type": "string",
+              "enum": [
+                "above",
+                "below"
+              ],
+              "description": "Force this card above or below the line (left/right when vertical). OMIT to let the model auto-alternate — only set it to resolve a specific clash."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this event's LABEL as \"?\" — \"which event is this?\". The marker, date and card stay drawn; the hidden word never leaks into the aria. Default false."
+            },
+            "occludeDate": {
+              "type": "boolean",
+              "description": "Render this event's printed DATE as \"?\" — \"when did this happen?\". (In scale \"scaled\" the marker's position still hints at the date, so this reads as \"estimate when\"; in \"ordinal\" it is a clean recall.) Default false."
+            },
+            "occludeImage": {
+              "type": "boolean",
+              "description": "Blank this event's photo to a \"?\" placeholder so the picture does not give the answer away. Ignored when there is no image. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this event — the answer, or the one in focus. Default false."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override THIS event card's colour (an explicit author/teacher request — \"make this card dark green\"). Wins over the figure-wide `colors.cards` and the default palette. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\" or \"aquamarine\") is honoured exactly and opts this card OUT of brand reskinning. Ignored on a highlighted event (amber is reserved). Omit to use the palette."
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "description": "The events on the timeline. In \"ordinal\" mode they are spaced evenly in this order; in \"scaled\" mode they are positioned by `date` (and sorted by date — list order then does not matter)."
+      },
+      "scale": {
+        "type": "string",
+        "enum": [
+          "ordinal",
+          "scaled"
+        ],
+        "description": "How positions derive. \"ordinal\" (default): evenly spaced in list order, no date maths — for ordering/sequence work. \"scaled\": positioned by `date` on a numeric axis with round-year ticks, so the gaps mean elapsed time. Era bands (`periods`) need this mode."
+      },
+      "orientation": {
+        "type": "string",
+        "enum": [
+          "horizontal",
+          "vertical"
+        ],
+        "description": "Line direction. \"horizontal\" (default) runs left→right with cards above/below; \"vertical\" runs top→bottom with cards left/right (fits a narrow column)."
+      },
+      "periods": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "number",
+              "description": "Start year of the era (negative = BC). Positioned on the date axis."
+            },
+            "to": {
+              "type": "number",
+              "description": "End year of the era (negative = BC)."
+            },
+            "label": {
+              "type": "string",
+              "description": "The era name, drawn in the band (\"Tudor period\", \"Carboniferous\")."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override this band's tint. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\" or \"aquamarine\") is honoured exactly. Omit to auto-cycle the categorical palette by band order."
+            }
+          },
+          "required": [
+            "from",
+            "to",
+            "label"
+          ]
+        },
+        "description": "Optional shaded era bands spanning date ranges along the axis (the Tudor period, the Jurassic). Only drawn in scale \"scaled\" (they are positioned by date). Each is { from, to, label, color? }."
+      },
+      "colors": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional figure-wide colour overrides (an explicit author/teacher request — \"make the timeline line grey\", \"make the cards aquamarine\"). Each is a reserved role keyword (themeable) or a colour literal (honoured exactly, opts out of reskinning). A per-event `color` overrides `cards` for that one card; a highlighted event stays amber regardless.",
+        "properties": {
+          "line": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of the spine line and its end arrow. Default the neutral axis ink."
+          },
+          "markers": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of the event marker dots on the line. Default accent blue."
+          },
+          "cards": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Default colour of every event card (border + light fill). Default the cycled categorical palette (text cards) or a neutral frame (photo cards). A per-event `color` overrides this for one card."
+          }
+        }
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Draw only the first N events (in the drawn order) — a staged \"build the timeline\". Omit to show all. Use across steps (0, 1, 2, …) to add events one at a time; positions are fixed from the full set, so nothing moves."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "events"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked, scaled with portraits — great scientists by birth year",
+      "params": {
+        "header": "Pioneers of modern science",
+        "scale": "scaled",
+        "periods": [
+          {
+            "from": 1543,
+            "to": 1700,
+            "label": "The Scientific Revolution",
+            "color": "accent-2"
+          }
+        ],
+        "events": [
+          {
+            "id": "copernicus",
+            "label": "Copernicus",
+            "date": 1473,
+            "detail": "Sun-centred model",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Nikolaus_Kopernikus.jpg/500px-Nikolaus_Kopernikus.jpg",
+              "alt": "Portrait of Nicolaus Copernicus",
+              "aspect": "portrait"
+            }
+          },
+          {
+            "id": "galileo",
+            "label": "Galileo",
+            "date": 1564,
+            "detail": "Telescope, motion",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Justus_Sustermans_-_Portrait_of_Galileo_Galilei_%28Uffizi%29.jpg/500px-Justus_Sustermans_-_Portrait_of_Galileo_Galilei_%28Uffizi%29.jpg",
+              "alt": "Portrait of Galileo Galilei",
+              "aspect": "portrait"
+            }
+          },
+          {
+            "id": "newton",
+            "label": "Newton",
+            "date": 1643,
+            "detail": "Laws of motion",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Portrait_of_Sir_Isaac_Newton%2C_1689.jpg/500px-Portrait_of_Sir_Isaac_Newton%2C_1689.jpg",
+              "alt": "Portrait of Isaac Newton",
+              "aspect": "portrait"
+            }
+          },
+          {
+            "id": "darwin",
+            "label": "Darwin",
+            "date": 1809,
+            "detail": "Evolution",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Charles_Darwin_01.jpg/500px-Charles_Darwin_01.jpg",
+              "alt": "Portrait of Charles Darwin",
+              "aspect": "portrait"
+            }
+          },
+          {
+            "id": "curie",
+            "label": "Curie",
+            "date": 1867,
+            "detail": "Radioactivity",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Marie_Curie_1903.jpg/500px-Marie_Curie_1903.jpg",
+              "alt": "Portrait of Marie Curie",
+              "aspect": "portrait"
+            }
+          },
+          {
+            "id": "einstein",
+            "label": "Einstein",
+            "date": 1879,
+            "detail": "Relativity",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Albert_Einstein_by_Mishkin%2C_1921.png/500px-Albert_Einstein_by_Mishkin%2C_1921.png",
+              "alt": "Portrait of Albert Einstein",
+              "aspect": "portrait"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Worked, ordinal — the stages of a story (no dates)",
+      "params": {
+        "header": "Structure of a story",
+        "events": [
+          {
+            "id": "opening",
+            "label": "Opening",
+            "detail": "Characters and setting introduced"
+          },
+          {
+            "id": "buildup",
+            "label": "Build-up",
+            "detail": "Events lead towards a problem"
+          },
+          {
+            "id": "climax",
+            "label": "Climax",
+            "detail": "The turning point"
+          },
+          {
+            "id": "resolution",
+            "label": "Resolution",
+            "detail": "The problem is resolved"
+          },
+          {
+            "id": "ending",
+            "label": "Ending",
+            "detail": "How things are left"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — when did this happen? (date hidden)",
+      "params": {
+        "scale": "scaled",
+        "events": [
+          {
+            "id": "sputnik",
+            "label": "First satellite",
+            "date": 1957
+          },
+          {
+            "id": "gagarin",
+            "label": "First person in space",
+            "date": 1961
+          },
+          {
+            "id": "moon",
+            "label": "First Moon landing",
+            "date": 1969,
+            "occludeDate": true,
+            "highlight": true
+          },
+          {
+            "id": "shuttle",
+            "label": "First Space Shuttle",
+            "date": 1981
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blank / answer space — order the events",
+      "params": {
+        "header": "Putting a plant's life cycle in order",
+        "events": [
+          {
+            "id": "s1",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "s2",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "s3",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "s4",
+            "label": "?",
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — BC↔AD with clustered dates (scaled)",
+      "params": {
+        "header": "The ancient world",
+        "scale": "scaled",
+        "periods": [
+          {
+            "from": -509,
+            "to": 476,
+            "label": "Ancient Rome",
+            "color": "accent-4"
+          }
+        ],
+        "events": [
+          {
+            "id": "pyramids",
+            "label": "Great Pyramid built",
+            "date": -2560,
+            "dateLabel": "c. 2560 BC"
+          },
+          {
+            "id": "olympics",
+            "label": "First Olympic Games",
+            "date": -776,
+            "dateLabel": "776 BC"
+          },
+          {
+            "id": "republic",
+            "label": "Roman Republic founded",
+            "date": -509,
+            "dateLabel": "509 BC"
+          },
+          {
+            "id": "caesar",
+            "label": "Julius Caesar killed",
+            "date": -44,
+            "dateLabel": "44 BC"
+          },
+          {
+            "id": "vesuvius",
+            "label": "Vesuvius erupts",
+            "date": 79,
+            "dateLabel": "AD 79"
+          },
+          {
+            "id": "rome-falls",
+            "label": "Western Rome falls",
+            "date": 476,
+            "dateLabel": "AD 476"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Vertical orientation — a school day",
+      "params": {
+        "header": "A day at school",
+        "orientation": "vertical",
+        "events": [
+          {
+            "id": "register",
+            "label": "Registration",
+            "detail": "8:50 am"
+          },
+          {
+            "id": "lessons",
+            "label": "Morning lessons",
+            "detail": "9:00 am"
+          },
+          {
+            "id": "break",
+            "label": "Break",
+            "detail": "10:30 am"
+          },
+          {
+            "id": "lunch",
+            "label": "Lunch",
+            "detail": "12:30 pm"
+          },
+          {
+            "id": "home",
+            "label": "Home time",
+            "detail": "3:15 pm"
+          }
+        ]
+      }
+    }
+  ]
+}

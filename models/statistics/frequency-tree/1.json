@@ -1,0 +1,455 @@
+{
+  "ref": "statistics/frequency-tree@1",
+  "family": "statistics",
+  "name": "frequency-tree",
+  "version": 1,
+  "title": "Frequency tree",
+  "tagline": "Frequency tree: a count inside an ellipse node at each junction (root total → stage counts), category words on the branches; a missing count derives, any node occludes to \"?\".",
+  "description": "A two-stage frequency tree — the GCSE / Edexcel exam figure. An ellipse node holds a whole-number count at every junction: a root node (the total) fans into stage-1 nodes (each a category count), and each of those fans into stage-2 leaf nodes. The category words (Pass/Fail, Male/Female, Tea/Coffee, …) label the BRANCHES between the nodes, not the nodes themselves, and optional stage headers band the top (e.g. \"Literacy\", \"Numeracy\"). You write only the scenario — the branch words and the counts you know — and everything else is computed: every node position and branch line, a single missing sibling count (parent − the other siblings), a missing parent (the sum of its children), and the root total (the sum of the stage-1 counts). Nodes occlude to \"?\" independently (the \"complete the frequency tree\" question) or blank to an empty ellipse (a staged build or a whole-tree answer space), and highlight to trace an answer. Distinct from probability/tree, which draws probabilities ON the branches with an end-outcome column; this model draws counts inside the node bubbles.",
+  "whenToUse": "Reach for this for the GCSE \"frequency tree\" topic: two categorical stages (a first split, then a second split within each) recorded as whole-number counts, drawn the exam way — counts inside oval nodes, the category words on the branches. Author the tree as the scenario: nodes is the first category (each entry a { label, count } where label is the branch word), and each node's children is the second category. Put the count you know inside each node; leave the single missing sibling in a group without a count and it is filled as the parent − the others (and the root total auto-sums from the stage-1 counts, or set root.count). Common configurations: complete the frequency tree — occlude the nodes the pupil must find (root, a stage-1 count, some leaves), give the rest, and the derivation stays correct behind the \"?\"; blank answer space — showCounts:false blanks every node (label the branches, keep the structure) for pupils to fill in; worked example — give enough counts and the rest derive and show; find a specific frequency — highlight the node that answers \"how many passed both?\" and occlude it, or highlight the path. Stage headers: pass stages:[{label:\"Literacy\"},{label:\"Numeracy\"}] to band the top like the exam. Cross-block convention in a lesson: keep the same categories on the same branches and the same structure across blocks — change only what is given, occluded or highlighted. A staged build reads well: open on the given nodes, then reveal one derived count per stage (parent − siblings up the tree). Take the pupil's completion values with gaps below the figure (this v1 is a stimulus; answering ON the nodes is a flagged future response mode). Synonyms a teacher might use: frequency tree, complete the frequency tree, two-way frequency, tree of counts, conditional frequencies, Venn/tree crossover. For probabilities on the branches and P(outcome) products, use probability/tree instead; for a grid of the same counts with row/column totals, statistics/two-way-table.",
+  "responseModes": [
+    "fill-derived"
+  ],
+  "tags": [
+    "frequency tree",
+    "frequency trees",
+    "complete the frequency tree",
+    "tree diagram",
+    "counts",
+    "two-stage",
+    "conditional frequency",
+    "two-way",
+    "categorical",
+    "probability from frequency",
+    "GCSE",
+    "statistics",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "stages": {
+        "type": "array",
+        "maxItems": 3,
+        "description": "Optional bold column headers banding the top, one per branch stage — stages[0] labels the root→stage-1 branches, stages[1] the stage-1→stage-2 branches (e.g. [{label:\"Literacy\"},{label:\"Numeracy\"}]). Omit for no headers.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "The stage / column heading, e.g. \"Literacy\", \"Drink\", \"Gender\"."
+            }
+          }
+        }
+      },
+      "showCounts": {
+        "type": "boolean",
+        "description": "Show the count inside every node. false renders every node as an EMPTY ellipse — the whole-tree answer space for \"complete the frequency tree\" (the branches stay labelled). Per-node occlude (\"?\") or blank does the same one node at a time. Default true."
+      },
+      "root": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The root node at the left — the total. Its count auto-sums from the stage-1 counts, so set it only to state the total explicitly or when the stage-1 counts are incomplete.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The total inside the root node. Omit to auto-sum from the stage-1 counts. Set occlude to pose it as \"?\"."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the total as \"?\" (find-the-total). The count stays derived for the answer. Default false."
+          },
+          "blank": {
+            "type": "boolean",
+            "description": "Render the root as an empty ellipse (staged build / answer space). Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the root node. Default false."
+          }
+        }
+      },
+      "nodes": {
+        "type": "array",
+        "maxItems": 4,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "A stage-1 node fanning from the root (the first category), optionally fanning into stage-2 children (the second category).",
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "The category word on the BRANCH from the root into this node — e.g. \"Male\", \"Female\", \"Right-handed\". Drawn on the branch, not inside the node. Omit for an unlabelled branch."
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "The whole-number count INSIDE this node. OMIT to DERIVE it as the root total − the other stage-1 nodes when it is the only one missing. Set occlude to show it as \"?\" instead."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this node's count as \"?\" — the complete-the-tree hook. The ellipse stays visible; the count is still derived for the answer. Default false."
+            },
+            "blank": {
+              "type": "boolean",
+              "description": "Render an EMPTY ellipse (staged build / blank answer space). blank wins over occlude. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this node — ellipse, fill and count — to mark an answer. Default false."
+            },
+            "children": {
+              "type": "array",
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "A stage-2 node (the second category). May optionally fan into a third stage of children; omit children for the standard two-stage tree.",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "description": "The category word on the BRANCH leading into this node — e.g. \"Pass\", \"Fail\", \"Tea\", \"Coffee\". Drawn on the branch between the parent node and this one, NOT inside the node. Omit for an unlabelled branch."
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "The whole-number count INSIDE this node. OMIT to DERIVE it: when exactly one node in a sibling group has no count it is filled as parent count − the other siblings. Set occlude to show it as \"?\" (the find-the-count question) instead of the derived value."
+                  },
+                  "occlude": {
+                    "type": "boolean",
+                    "description": "Render this node's count as \"?\" — the question hook (\"complete the frequency tree\"). The ellipse stays visible. The count is still derived for the answer/aria; only the display is hidden. Default false."
+                  },
+                  "blank": {
+                    "type": "boolean",
+                    "description": "Render an EMPTY ellipse (no count, no \"?\") — a staged build filling nodes one at a time, or the exam-style blank answer space. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Amber this node — its ellipse, fill and count — to trace or mark an answer. Default false."
+                  },
+                  "children": {
+                    "type": "array",
+                    "maxItems": 4,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "description": "A leaf node with no children of its own — the end of a path. Same shape as any node; this is as deep as the tree goes.",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "description": "The category word on the BRANCH leading into this node — e.g. \"Pass\", \"Fail\", \"Tea\", \"Coffee\". Drawn on the branch between the parent node and this one, NOT inside the node. Omit for an unlabelled branch."
+                        },
+                        "count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "description": "The whole-number count INSIDE this node. OMIT to DERIVE it: when exactly one node in a sibling group has no count it is filled as parent count − the other siblings. Set occlude to show it as \"?\" (the find-the-count question) instead of the derived value."
+                        },
+                        "occlude": {
+                          "type": "boolean",
+                          "description": "Render this node's count as \"?\" — the question hook (\"complete the frequency tree\"). The ellipse stays visible. The count is still derived for the answer/aria; only the display is hidden. Default false."
+                        },
+                        "blank": {
+                          "type": "boolean",
+                          "description": "Render an EMPTY ellipse (no count, no \"?\") — a staged build filling nodes one at a time, or the exam-style blank answer space. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+                        },
+                        "highlight": {
+                          "type": "boolean",
+                          "description": "Amber this node — its ellipse, fill and count — to trace or mark an answer. Default false."
+                        }
+                      }
+                    },
+                    "description": "An optional THIRD stage fanning from this node. Omit for a two-stage tree. Up to 4 nodes."
+                  }
+                }
+              },
+              "description": "The stage-2 nodes fanning from this node (the second category). Omit for a one-stage tree. Up to 4 nodes."
+            }
+          }
+        },
+        "description": "The stage-1 nodes fanning from the root (the first category), top to bottom. Each carries a branch label and a count, and fans into stage-2 children. Up to 4. Every node position and branch line is derived from this structure — nothing is placed in pixels."
+      }
+    },
+    "required": [
+      "nodes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — 60 members, gym use then class booking (all counts shown)",
+      "params": {
+        "header": "Gym survey of 60 members",
+        "stages": [
+          {
+            "label": "Uses weights"
+          },
+          {
+            "label": "Booked a class"
+          }
+        ],
+        "root": {
+          "count": 60
+        },
+        "nodes": [
+          {
+            "label": "Yes",
+            "count": 35,
+            "children": [
+              {
+                "label": "Yes",
+                "count": 20
+              },
+              {
+                "label": "No",
+                "count": 15
+              }
+            ]
+          },
+          {
+            "label": "No",
+            "children": [
+              {
+                "label": "Yes",
+                "count": 9
+              },
+              {
+                "label": "No",
+                "count": 16
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Complete the frequency tree — total and one leaf given, the rest to find",
+      "params": {
+        "stages": [
+          {
+            "label": "Owns a bike"
+          },
+          {
+            "label": "Wears a helmet"
+          }
+        ],
+        "root": {
+          "count": 48
+        },
+        "nodes": [
+          {
+            "label": "Yes",
+            "occlude": true,
+            "children": [
+              {
+                "label": "Yes",
+                "count": 21
+              },
+              {
+                "label": "No",
+                "occlude": true
+              }
+            ]
+          },
+          {
+            "label": "No",
+            "count": 20,
+            "children": [
+              {
+                "label": "Yes",
+                "count": 12
+              },
+              {
+                "label": "No",
+                "occlude": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blank answer space — structure and branch words only, every node empty",
+      "params": {
+        "stages": [
+          {
+            "label": "Cat owner"
+          },
+          {
+            "label": "Dog owner"
+          }
+        ],
+        "showCounts": false,
+        "root": {
+          "count": 90
+        },
+        "nodes": [
+          {
+            "label": "Yes",
+            "children": [
+              {
+                "label": "Yes"
+              },
+              {
+                "label": "No"
+              }
+            ]
+          },
+          {
+            "label": "No",
+            "children": [
+              {
+                "label": "Yes"
+              },
+              {
+                "label": "No"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Find a frequency — how many walk AND are late? (answer highlighted, occluded)",
+      "params": {
+        "stages": [
+          {
+            "label": "Travel"
+          },
+          {
+            "label": "Punctuality"
+          }
+        ],
+        "root": {
+          "count": 150
+        },
+        "nodes": [
+          {
+            "label": "Bus",
+            "count": 95,
+            "children": [
+              {
+                "label": "On time",
+                "count": 78
+              },
+              {
+                "label": "Late",
+                "count": 17
+              }
+            ]
+          },
+          {
+            "label": "Walk",
+            "children": [
+              {
+                "label": "On time",
+                "count": 41
+              },
+              {
+                "label": "Late",
+                "occlude": true,
+                "highlight": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Total auto-summed — root count omitted, derived from the stage-1 nodes",
+      "params": {
+        "header": "Left / right-handed by year group",
+        "stages": [
+          {
+            "label": "Handedness"
+          },
+          {
+            "label": "Year group"
+          }
+        ],
+        "nodes": [
+          {
+            "label": "Right-handed",
+            "count": 68,
+            "children": [
+              {
+                "label": "Year 10",
+                "count": 37
+              },
+              {
+                "label": "Year 11",
+                "count": 31
+              }
+            ]
+          },
+          {
+            "label": "Left-handed",
+            "count": 12,
+            "children": [
+              {
+                "label": "Year 10",
+                "count": 5
+              },
+              {
+                "label": "Year 11",
+                "count": 7
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — long labels, root occluded, a whole side to derive",
+      "params": {
+        "stages": [
+          {
+            "label": "Handedness"
+          },
+          {
+            "label": "Preference"
+          }
+        ],
+        "root": {
+          "occlude": true
+        },
+        "nodes": [
+          {
+            "label": "Right-handed",
+            "count": 220,
+            "children": [
+              {
+                "label": "Likes coffee",
+                "count": 143
+              },
+              {
+                "label": "Does not like coffee",
+                "occlude": true
+              }
+            ]
+          },
+          {
+            "label": "Left-handed",
+            "count": 80,
+            "children": [
+              {
+                "label": "Likes coffee",
+                "occlude": true,
+                "highlight": true
+              },
+              {
+                "label": "Does not like coffee",
+                "count": 18
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

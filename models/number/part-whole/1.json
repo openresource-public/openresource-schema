@@ -1,0 +1,281 @@
+{
+  "ref": "number/part-whole@1",
+  "family": "number",
+  "name": "part-whole",
+  "version": 1,
+  "title": "Part-whole model",
+  "tagline": "Part-whole \"cherry\" — a whole linked to 2–3 parts for number bonds and fact families; the omitted node derived (fractions too), any node occludes.",
+  "description": "The part-whole \"cherry\" model: one whole circle linked down to 2 or 3 part circles for number bonds, fact families, partitioning and mixed-number composition. You author only the node values (the givens) and omit the one you want found — the model derives it exactly (whole = sum of parts, or a missing part = whole minus the others), using rational arithmetic when fractions or mixed numbers are involved. The derived fact family (3 + 4 = 7, 7 − 3 = 4, …) and a derived stem sentence (\"3 and 4 make 7\") come for free, with \"?\" substituted for any hidden node so the answer never leaks. Any node occludes to \"?\" for a question, blanks for a staged build or answer space, and highlights amber for the answer; a unit prefix/suffix dresses money and measures (12p, £5). Values may be whole numbers, decimals, fractions (\"3/4\") or mixed numbers (\"2 3/4\"), rendered as proper stacked fractions in the bubbles. The bubble/branch picture distinguishes it from number/bar-model, which draws part-whole reasoning as bars to scale.",
+  "whenToUse": "Reach for this for the primary (KS1/KS2) part-whole \"cherry\" diagram: number bonds (3 and 4 make 7 — a whole of 7 over two parts 3 and 4), missing number / missing part (omit one node's value, or `occlude` it, and the model finds it — 7 = 3 + ?), fact families (turn on `show.factFamily` to show 3 + 4 = 7, 4 + 3 = 7, 7 − 3 = 4, 7 − 4 = 3), partitioning place value (63 → 60 + 3, or 248 → 200 + 40 + 8 with three parts, labelled \"hundreds\"/\"tens\"/\"ones\"), money (12p → 10p + 2p, or give change, with `unit.suffix:\"p\"` or `unit.prefix:\"£\"`), and mixed-number / fraction composition (2¾ → 2 + ¾ via value \"2 3/4\" and parts 2 and \"3/4\"; or ¾ → ¼ + ½). Author the semantics only: each known node's `value` and which node to leave unknown — you never position a bubble or write a total; the missing value, the fact family and the stem sentence are all computed. Key choices: OMIT a value (or `occlude` a known one) to pose the question; `blank` the parts for an answer space; `highlight` the answer node amber once it is revealed; set `unit` for money/measures; turn on `stem.show` for the verbal twin and pick `stem.style` (\"parts-make-whole\" for \"3 and 4 make 7\", \"whole-is-parts\" for \"The whole is 7. The parts are 3 and 4.\"). Cross-block convention: keep the same whole, part count and layout across one lesson so pupils track one diagram — change only what is hidden, blanked or highlighted. A staged build reads well: open on the empty/partly-built cherry, reveal one part per stage, and bring the answer (amber) in last. Use number/bar-model instead when the parts must be drawn to scale (ratio, fractions of an amount, percentage bars). Synonyms a teacher might use: part-whole, part whole, part-part-whole, cherry model, cherry diagram, number bond, bonds to 10/20/100, fact family, related facts, partition, partitioning, missing number, missing part, number partition, splitting numbers, addition and subtraction, mixed number, composing fractions, whole and parts.",
+  "responseModes": [
+    "fill-derived"
+  ],
+  "tags": [
+    "part-whole",
+    "part whole",
+    "part-part-whole",
+    "cherry model",
+    "cherry diagram",
+    "number bond",
+    "number bonds",
+    "bonds to 10",
+    "bonds to 20",
+    "fact family",
+    "related facts",
+    "missing number",
+    "missing part",
+    "partition",
+    "partitioning",
+    "place value",
+    "addition",
+    "subtraction",
+    "composition",
+    "mixed number",
+    "fraction",
+    "money",
+    "change",
+    "number",
+    "maths",
+    "primary",
+    "ks1",
+    "ks2"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "node": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "One bubble (the whole, or one part). Give it a `value` (a number, or a fraction string), or OMIT `value` to make it the single unknown the model derives. Hide it for a question with `occlude` (\"?\"), empty it for a staged reveal with `blank`, or amber it as the answer with `highlight`.",
+        "properties": {
+          "value": {
+            "type": [
+              "number",
+              "string"
+            ],
+            "description": "The amount in this bubble. A NUMBER for whole numbers / decimals (7, 60, 0.4, 12). A STRING for fractions — \"3/4\" (a proper fraction) or \"2 3/4\" (a mixed number, a space between the whole part and the fraction). OMIT this on exactly ONE node and the model computes it: an omitted whole becomes Σ parts; an omitted part becomes whole − Σ other parts. Omitting more than one leaves them all unknown (no derivation)."
+          },
+          "label": {
+            "type": "string",
+            "description": "An optional name shown just outside the bubble — \"tens\" and \"ones\" for a partition, \"boys\" / \"girls\", \"spent\" / \"change\". Omit for a bare value bubble."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this bubble's value as \"?\" — the question hook (\"what is this part?\"). The bubble stays drawn and the engine still knows the value, so the stem and fact family show \"?\" for it too (no leak). Default false."
+          },
+          "blank": {
+            "type": "boolean",
+            "description": "Render the bubble EMPTY (no text at all) — an unfilled node for a staged build or a blank answer space. Different from `occlude`: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Fill this bubble amber — the answer/result once revealed, or the node in focus. Reserve it for emphasis; do not amber every node. Default false."
+          }
+        }
+      }
+    },
+    "properties": {
+      "whole": {
+        "$ref": "#/$defs/node",
+        "description": "The WHOLE bubble, drawn on top. Give it a `value`, or omit the value to make the whole the unknown (then it becomes the sum of the parts). One bubble (the whole, or one part). Give it a `value` (a number, or a fraction string), or OMIT `value` to make it the single unknown the model derives. Hide it for a question with `occlude` (\"?\"), empty it for a staged reveal with `blank`, or amber it as the answer with `highlight`."
+      },
+      "parts": {
+        "type": "array",
+        "maxItems": 3,
+        "items": {
+          "$ref": "#/$defs/node"
+        },
+        "description": "The PART bubbles below the whole, left to right — usually 2 or 3. Give each a `value`, or omit ONE part's value to make it the unknown (it becomes whole − the other parts). Their sum is the whole."
+      },
+      "unit": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An optional unit dressing applied to every NUMERIC value (not to bare fraction glyphs) wherever it is shown — in the bubbles, the stem and the fact family. Use it for money and measures.",
+        "properties": {
+          "prefix": {
+            "type": "string",
+            "description": "Text before the number — \"£\" for pounds, \"$\" for dollars."
+          },
+          "suffix": {
+            "type": "string",
+            "description": "Text after the number — \"p\" for pence, \"cm\", \"kg\". Include a leading space (\" kg\") if you want one."
+          }
+        }
+      },
+      "stem": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The derived stem sentence — the verbal twin of the figure, shown below it. Hidden nodes appear as \"?\" (anti-leak).",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Show the stem sentence. Default true. Set false for a bare figure."
+          },
+          "style": {
+            "type": "string",
+            "enum": [
+              "parts-make-whole",
+              "whole-is-parts"
+            ],
+            "description": "\"parts-make-whole\" (default): \"3 and 4 make 7\". \"whole-is-parts\": \"The whole is 7. The parts are 3 and 4.\" — the Oak phrasing."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout toggles.",
+        "properties": {
+          "factFamily": {
+            "type": "boolean",
+            "description": "Show the derived fact family beneath the figure — the related addition and subtraction facts (3 + 4 = 7, 4 + 3 = 7, 7 − 3 = 4, 7 − 4 = 3 for a two-part bond; the addition and the part-by-part subtractions for three parts). Hidden nodes appear as \"?\". Default false."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the whole bubble; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below everything, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "whole",
+      "parts"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked number bond — 3 and 4 make 7",
+      "params": {
+        "header": "Number bond to 7",
+        "whole": {
+          "value": 7
+        },
+        "parts": [
+          {
+            "value": 3
+          },
+          {
+            "value": 4
+          }
+        ],
+        "stem": {
+          "show": true
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — two parts that make 10",
+      "params": {
+        "whole": {
+          "value": 10
+        },
+        "parts": [
+          {
+            "blank": true
+          },
+          {
+            "blank": true
+          }
+        ],
+        "stem": {
+          "show": false
+        }
+      }
+    },
+    {
+      "label": "Occluded question — money missing part (12p)",
+      "params": {
+        "whole": {
+          "value": 12
+        },
+        "parts": [
+          {
+            "value": 10
+          },
+          {
+            "occlude": true,
+            "value": 2
+          }
+        ],
+        "unit": {
+          "suffix": "p"
+        },
+        "stem": {
+          "show": false
+        }
+      }
+    },
+    {
+      "label": "Fact family — 5 + 6 = 11",
+      "params": {
+        "header": "Fact family for 11",
+        "whole": {
+          "value": 11
+        },
+        "parts": [
+          {
+            "value": 5
+          },
+          {
+            "value": 6
+          }
+        ],
+        "stem": {
+          "show": true
+        },
+        "show": {
+          "factFamily": true
+        }
+      }
+    },
+    {
+      "label": "Three parts — 2, 3 and 5 make 10",
+      "params": {
+        "header": "Three parts of 10",
+        "whole": {
+          "value": 10
+        },
+        "parts": [
+          {
+            "value": 2
+          },
+          {
+            "value": 3
+          },
+          {
+            "value": 5
+          }
+        ],
+        "stem": {
+          "show": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — mixed-number composition 2 3/4",
+      "params": {
+        "header": "Compose 2¾",
+        "whole": {
+          "value": "2 3/4"
+        },
+        "parts": [
+          {
+            "value": 2
+          },
+          {
+            "value": "3/4"
+          }
+        ],
+        "stem": {
+          "show": true
+        },
+        "caption": "A whole number and a fraction make a mixed number."
+      }
+    }
+  ]
+}

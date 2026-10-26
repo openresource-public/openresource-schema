@@ -8,6 +8,7 @@
  * - versions.json, CHANGELOG.md, SCHEMA.md, the examples, PROVENANCE.json and
  *   migrations/index.mjs all name the same current version
  * - every migration fixture replays: the step turns before into after
+ * - models/catalogue.json counts what it lists and its interface digests match
  *
  * CI runs it on every push and weekly (.github/workflows/check.yml).
  */
@@ -71,6 +72,15 @@ for (const step of MIGRATIONS) {
   const stamped = JSON.stringify({ ...out, meta: { ...(out.meta || {}), schemaVersion: step.to } });
   check(stamped === JSON.stringify(fx.after), `${file}: the step no longer turns before into after`);
 }
+const catalogue = JSON.parse(read('models/catalogue.json'));
+check(catalogue.count === catalogue.models.length, 'models/catalogue.json count differs from its list');
+for (const m of catalogue.models) {
+  const cur = m.versions[0];
+  check(cur && cur.status === 'current' && cur.version === m.current, `models: ${m.ref} does not list its current version first`);
+  if (cur && existsSync(path.join(ROOT, cur.interface))) check(sha256(read(cur.interface)) === cur.sha256, `${cur.interface}: digest differs from the catalogue`);
+  else problems.push(`${m.ref}: interface file missing`);
+}
+
 const oldest = JSON.parse(read(`migrations/fixtures/${MIGRATIONS[0].name}.json`));
 check(migrate(oldest.before).resource.meta.schemaVersion === current, 'migrations: the chain does not end at the current version');
 
@@ -79,4 +89,4 @@ if (problems.length) {
   for (const p of problems) console.error(`  - ${p}`);
   process.exit(1);
 }
-console.log(`✓ ${current}: index, schemas, labels, provenance and migration fixtures agree`);
+console.log(`✓ ${current}: index, schemas, labels, provenance, migration fixtures and the model catalogue agree`);

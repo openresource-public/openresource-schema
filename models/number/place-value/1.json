@@ -1,0 +1,280 @@
+{
+  "ref": "number/place-value@1",
+  "family": "number",
+  "name": "place-value",
+  "version": 1,
+  "title": "Place value chart",
+  "tagline": "Number in a power-of-ten place-value chart; ×/÷ by a power of ten drawn as derived digit shifts with a fixed point; standard form ↔ ordinary.",
+  "description": "A number laid out in a place-value chart: equal columns indexed by power of ten (… Thousands, Hundreds, Tens, Ones, then a fixed decimal point, then Tenths, Hundredths, Thousandths …), each holding one digit as a card. Give a number; the model decomposes it into the correct columns. Add an operation (multiply or divide by a power of ten) and the chart grows a second row — the derived result — with arrows showing every digit shift the same number of columns left (×) or right (÷) while the decimal point stays put, the vacated places filling with placeholder zeros. The result, every digit position, the column headers, a highlighted digit's value and the caption are all computed from the number and the operation — you never author a digit in a column. Headers read as place names, powers of ten (10², 10¹, 1, 10⁻¹ …), both, or none; set standardForm to write the multiplier as a power of ten so the caption reads as a standard-form ↔ ordinary statement (4.732 × 10³ = 4732). Highlight a digit to show its value; occlude a digit, a row, the operator or the result for a question; hide all digits for a blank \"complete the chart\" answer space.",
+  "whenToUse": "Reach for this whenever place value is the point: writing a number into the columns of a place-value chart, the value of a particular digit (what is the 7 in 4 732 worth?), multiplying and dividing by powers of ten shown as the digits shifting across the columns, and standard form ↔ ordinary numbers. Author a `value` (3.42, 3407, 0.056) and the digits land in the right columns automatically, with the decimal point fixed between the ones and tenths columns. To show × or ÷ by a power of ten, add operation { type: \"multiply\" | \"divide\", power: n } (power is the exponent — power 2 means ×100 or ÷100); the model draws the result row and a shift arrow per digit, derives the result (including the placeholder zeros that fill the emptied places), and writes the caption \"3.42 × 100 = 342\". For standard form set standardForm: true so the multiplier is written 10ⁿ and a divide reads as a negative power (5.6 × 10⁻⁴ = 0.00056) — give the standard-form coefficient as `value` and the index as the operation. For the value of a digit use highlight { power: p, value: \"show\" } to amber that column's digit and read out what it is worth; value: \"hide\" poses it as a question (\"the 4 is worth ?\"). Questions: occlude { result: true } for \"× / ÷ = ?\", occlude { operation: true } for \"what do you multiply by?\", occlude { source: true } or occlude { digits: [{ row, power }] } for specific gaps; show: { digits: false } gives a blank labelled chart to complete. headers \"name\" (Ones, Tenths …) suits KS2/3; headers \"power\" (10², 10⁻¹ …) is compact and pairs naturally with standard form and deep decimals — prefer it past hundredths so columns stay narrow; \"both\" stacks name over power; \"none\" drops the header band. Keep the same headers style and, where it helps comparison, the same `columns` range across a lesson. Staged builds read well: place the number, bring the arrows in, land the result, reveal the caption last — the base (number in a labelled chart) stands alone. Synonyms a teacher might use: place value, place value chart, place value grid, digit value, columns, multiply by 10 100 1000, divide by powers of ten, moving digits, the digits shift, decimal point, tenths hundredths, standard form, ordinary number, index form, powers of ten. Switch model when the teaching changes: for a number on a line (rounding, negatives, intervals) use number/number-line; for a hundred-square / multiples grid use number/number-grid; for partitioning a product by place value use algebra/area-model.",
+  "responseModes": [],
+  "tags": [
+    "place value",
+    "place value chart",
+    "place value grid",
+    "digit value",
+    "value of a digit",
+    "columns",
+    "powers of ten",
+    "multiply by 10",
+    "multiply by 100",
+    "divide by 10",
+    "divide by powers of ten",
+    "moving digits",
+    "shifting digits",
+    "decimal point",
+    "decimals",
+    "tenths",
+    "hundredths",
+    "thousandths",
+    "standard form",
+    "ordinary number",
+    "index form",
+    "ones tens hundreds",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "value": {
+        "type": "number",
+        "description": "The number placed in the chart (the SOURCE row). Its digits are decomposed into the correct columns by power of ten — 3.42 fills Ones=3, Tenths=4, Hundredths=2; 3407 fills Thousands=3, Hundreds=4, Tens=0, Ones=7. For standard form, give the coefficient here (4.732 for 4.732 × 10³). Negatives render with a leading minus; trailing zeros after a decimal point cannot be carried by a number (3.40 is the number 3.4)."
+      },
+      "operation": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Multiply or divide `value` by a power of ten. Present this to grow a SECOND row (the derived result) with a shift arrow per digit; omit it for a single-row chart. The result, the destination of each digit (its power ± the shift) and the placeholder zeros are all computed.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "multiply",
+              "divide"
+            ],
+            "description": "multiply shifts every digit LEFT (into higher columns); divide shifts every digit RIGHT (into lower columns). The decimal point never moves."
+          },
+          "power": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9,
+            "description": "The exponent of ten: power 2 means × 100 (or ÷ 100), the number of columns every digit shifts. power 0 is the identity (no shift)."
+          }
+        },
+        "required": [
+          "type",
+          "power"
+        ]
+      },
+      "standardForm": {
+        "type": "boolean",
+        "description": "Write the operation's multiplier as a power of ten (10ⁿ), so a multiply reads \"value × 10ⁿ = result\" and a divide reads as a NEGATIVE index \"value × 10⁻ⁿ = result\" — the standard-form ↔ ordinary statement. Only meaningful with an operation. Default false (the operator is written ×100 / ÷100)."
+      },
+      "columns": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional override of the power range of columns shown. By default the chart spans exactly the union of the source and result digits. Set this to pin a fixed frame across a lesson (e.g. always show Thousands…Thousandths). Powers outside the range that hold a digit are still shown — the override only EXTENDS the range, never clips a digit.",
+        "properties": {
+          "from": {
+            "type": "integer",
+            "description": "Highest-power (leftmost) column to show, as a power of ten: 3 = Thousands, 2 = Hundreds, 0 = Ones."
+          },
+          "to": {
+            "type": "integer",
+            "description": "Lowest-power (rightmost) column to show: 0 = Ones, −1 = Tenths, −2 = Hundredths."
+          }
+        }
+      },
+      "headers": {
+        "type": "string",
+        "enum": [
+          "name",
+          "power",
+          "both",
+          "none"
+        ],
+        "description": "The column header band. \"name\" = place names (Thousands, Hundreds, Tens, Ones, Tenths …) — best for KS2/3. \"power\" = powers of ten (10², 10¹, 1, 10⁻¹ …) — compact, ideal for standard form and for charts deeper than hundredths so columns stay narrow. \"both\" stacks the name over the power. \"none\" drops the header band. Default \"name\"."
+      },
+      "highlight": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Draw the eye to ONE digit (amber) — the \"value of a digit\" hook. Optionally read out what that digit is worth (its value = digit × its place value).",
+        "properties": {
+          "power": {
+            "type": "integer",
+            "description": "Which column's digit to highlight, as a power of ten (0 = Ones, −1 = Tenths, 2 = Hundreds). Must hold a digit in the chosen row."
+          },
+          "row": {
+            "type": "string",
+            "enum": [
+              "source",
+              "result"
+            ],
+            "description": "Which row's digit to highlight. Default \"source\" (the original number). \"result\" only applies when an operation is present."
+          },
+          "value": {
+            "type": "string",
+            "enum": [
+              "show",
+              "hide",
+              "none"
+            ],
+            "description": "\"show\" prints the digit's value under it (\"= 0.4\"); \"hide\" prints \"= ?\" — the question \"what is this digit worth?\"; \"none\" highlights without a readout. Default \"none\"."
+          }
+        },
+        "required": [
+          "power"
+        ]
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Hide chosen things as \"?\" — the question hooks. The chart, its columns and the un-hidden digits stay visible and correct; the caption mirrors what is hidden so it cannot leak the answer.",
+        "properties": {
+          "source": {
+            "type": "boolean",
+            "description": "Render every SOURCE-row digit as \"?\". Default false."
+          },
+          "result": {
+            "type": "boolean",
+            "description": "Render every RESULT-row digit (and the result side of the caption) as \"?\" — \"× / ÷ = ?\". Default false."
+          },
+          "operation": {
+            "type": "boolean",
+            "description": "Render the operator in the caption as \"?\" — \"what do you multiply / divide by?\". Default false."
+          },
+          "digits": {
+            "type": "array",
+            "description": "Occlude specific digits. Each names a row and a column (by power); that digit renders \"?\" while the rest stay visible.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "row": {
+                  "type": "string",
+                  "enum": [
+                    "source",
+                    "result"
+                  ],
+                  "description": "Which row the digit is in. Default \"source\"."
+                },
+                "power": {
+                  "type": "integer",
+                  "description": "The digit's column, as a power of ten."
+                }
+              },
+              "required": [
+                "power"
+              ]
+            }
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "digits": {
+            "type": "boolean",
+            "description": "Show the digits in the cards. false renders every card empty — a blank labelled chart for \"complete the place value chart\". Default true."
+          },
+          "arrows": {
+            "type": "boolean",
+            "description": "Draw the shift arrow from each source digit to its result column (only with an operation). Default true."
+          },
+          "point": {
+            "type": "boolean",
+            "description": "Show the decimal point and the faint fixed-point separator between the ones and tenths columns. Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the chart; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the chart. Overrides the derived caption (\"3.42 × 100 = 342\"), e.g. \"24.5 ÷ 10 = ?\" to hide the answer; omit to let the derivation speak. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "value"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — the value of a digit: the 4 in 3.42 is worth 0.4",
+      "params": {
+        "value": 3.42,
+        "headers": "both",
+        "highlight": {
+          "power": -1,
+          "value": "show"
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — complete the place value chart for 3407",
+      "params": {
+        "value": 3407,
+        "headers": "name",
+        "show": {
+          "digits": false
+        }
+      }
+    },
+    {
+      "label": "Worked example — 3.6 × 100 = 360, digits shift two columns left, a zero fills the ones",
+      "params": {
+        "value": 3.6,
+        "operation": {
+          "type": "multiply",
+          "power": 2
+        },
+        "headers": "name"
+      }
+    },
+    {
+      "label": "Occluded question — 24.5 ÷ 10 = ? (result row hidden)",
+      "params": {
+        "value": 24.5,
+        "operation": {
+          "type": "divide",
+          "power": 1
+        },
+        "headers": "name",
+        "occlude": {
+          "result": true
+        },
+        "caption": "24.5 ÷ 10 = ?"
+      }
+    },
+    {
+      "label": "Standard form — 4.732 × 10³ = 4732 (power headers)",
+      "params": {
+        "value": 4.732,
+        "operation": {
+          "type": "multiply",
+          "power": 3
+        },
+        "standardForm": true,
+        "headers": "power"
+      }
+    },
+    {
+      "label": "Hard case — 5.6 × 10⁻⁴ = 0.00056, digits cross the point, placeholder zeros appear",
+      "params": {
+        "value": 5.6,
+        "operation": {
+          "type": "divide",
+          "power": 4
+        },
+        "standardForm": true,
+        "headers": "power",
+        "header": "Standard form to an ordinary number"
+      }
+    }
+  ]
+}

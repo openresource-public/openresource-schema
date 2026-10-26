@@ -1,0 +1,214 @@
+{
+  "ref": "cs/caesar-cipher@1",
+  "family": "cs",
+  "name": "caesar-cipher",
+  "version": 1,
+  "title": "Caesar cipher",
+  "tagline": "Caesar cipher: an authored message + shift with the encoded/decoded twin, A→D mapping strip and letter-frequency bars all derived; occlude the shift, output or mapping.",
+  "description": "A Caesar-cipher figure — the authored message drawn as a row of letter cells with its shift-derived twin aligned beneath (plaintext over ciphertext), plus a derived 26-column alphabet mapping strip (A→D, B→E, …) and optional letter-frequency bars. Everything except the message is computed by applying the shift: each output letter is the input letter moved shift places round the alphabet (wrapping Z→A), the mapping strip shows where every letter of the alphabet goes, and the frequency bars count the letters of the ciphertext as percentages against the typical-English profile — the tool for teaching frequency analysis / cracking a cipher. Non-letter characters (spaces, digits, punctuation) pass through unchanged and letter case is preserved. mode \"encode\" runs plaintext → ciphertext; mode \"decode\" runs ciphertext → plaintext (a shift of −k). Occlude the shift (\"find the shift\"), the whole output row (an answer space to encode/decode yourself), or the mapping; occluding the shift also hides the mapping row so the key can never be read off it. Highlight one letter to trace it through the strip and the message. Draggable adds a live shift slider that re-derives the output, mapping and bars as pupils scrub it.",
+  "whenToUse": "Reach for this for GCSE Computer Science encryption (and cross-curricular maths enrichment): teaching the Caesar / shift cipher, encoding and decoding a message with a given key, the alphabet mapping, and cracking a cipher by frequency analysis. Author the MESSAGE and the SHIFT only — the output, the mapping strip and the bars are all derived. Common configurations: worked encode — mode \"encode\", a short plaintext, a shift, show the mapping strip so pupils see A→D; decode — mode \"decode\", a ciphertext + the shift, the plaintext derived; find the shift — occlude.shift true (the mapping row hides too, so it can't leak); encode/decode it yourself — occlude.output true for a blank answer row; frequency-analysis crack — a LONGER ciphertext (a sentence or two so the counts are meaningful) in decode mode with show.frequency true and occlude.shift true, so pupils spot the tall bar, line it up with E, and read off the shift; edge cases — shift 0 (the cipher does nothing, output = input) and shift 25 (every letter moves back one, the classic \"off by one\" trap) are worth showing explicitly. Keep the same message across the blocks of one lesson so pupils track one text; keep show.mapping consistent so the strips line up. Set draggable to let pupils scrub the shift 0–25 and watch the whole figure re-derive. A staged build reads well two ways: reveal the output one letter at a time (encode letter by letter), or reveal the mapping strip then the output then the answer. Synonyms teachers use: Caesar cipher, shift cipher, ROT (ROT13), encryption, encrypt, decrypt, encode, decode, cipher, ciphertext, plaintext, key, shift, frequency analysis, cryptography, cracking a code, substitution cipher.",
+  "responseModes": [],
+  "tags": [
+    "caesar cipher",
+    "shift cipher",
+    "rot13",
+    "cipher",
+    "ciphertext",
+    "plaintext",
+    "encryption",
+    "encrypt",
+    "decrypt",
+    "encode",
+    "decode",
+    "cryptography",
+    "frequency analysis",
+    "key",
+    "shift",
+    "substitution",
+    "computer science",
+    "GCSE computer science",
+    "computing",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "message": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240,
+        "description": "The message to transform — the PLAINTEXT in encode mode, the CIPHERTEXT in decode mode. Letters are shifted; spaces, digits and punctuation pass through unchanged; case is preserved. Keep it short for a worked letter-cell figure (a phrase); use a sentence or two for a frequency-analysis crack, where longer text makes the letter counts meaningful."
+      },
+      "shift": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 25,
+        "description": "The key: how many places each letter moves round the alphabet (A→D is shift 3). 0 leaves the text unchanged; 25 moves every letter back one (Z→Y). In decode mode the shift is applied in reverse. Required."
+      },
+      "mode": {
+        "type": "string",
+        "enum": [
+          "encode",
+          "decode"
+        ],
+        "description": "\"encode\" (default) runs the message as PLAINTEXT and derives the CIPHERTEXT (plain row on top, cipher row beneath). \"decode\" runs the message as CIPHERTEXT and derives the PLAINTEXT (cipher row on top, plain row beneath) — a shift of −k. Use decode for \"here is the ciphertext and the key, read the message\" and for frequency-analysis cracking."
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Which derived surfaces to hide as \"?\" — the question hooks. The message row itself always stays visible (it is the given).",
+        "properties": {
+          "shift": {
+            "type": "boolean",
+            "description": "Hide the shift readout as \"?\" — \"find the shift\". Also hides the mapping strip's shifted row and any shift arrows, so the key can never be read off the figure. Default false."
+          },
+          "output": {
+            "type": "boolean",
+            "description": "Hide every letter of the DERIVED output row as \"?\" (non-letter characters stay visible, since they are stated to pass through unchanged) — a blank row to encode/decode yourself. Default false."
+          },
+          "mapping": {
+            "type": "boolean",
+            "description": "Hide the mapping strip's shifted (bottom) row as \"?\" while keeping the A–Z row — \"where does each letter go?\". Default false."
+          }
+        }
+      },
+      "highlightLetter": {
+        "type": "string",
+        "pattern": "^[A-Za-z]$",
+        "description": "Trace one letter: amber its cell in the mapping strip (with the shift arrow) and tint its occurrences in the message and output rows. A single letter (case-insensitive), e.g. \"e\". Omit for no highlight."
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Staging cursor for a build: fill only the FIRST this-many LETTER slots of the output row, leaving the rest blank (non-letters always show). 0 = a fully blank output row (an answer space); omit or set high to fill the whole row. Advance it stage by stage to encode the message letter by letter. Never combine with draggable."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "mapping": {
+            "type": "boolean",
+            "description": "Show the 26-column alphabet mapping strip (A–Z over its shifted image). Default true."
+          },
+          "shift": {
+            "type": "boolean",
+            "description": "Show the shift readout (e.g. \"shift 3\"). Default true. (occlude.shift hides its VALUE while keeping the label.)"
+          },
+          "output": {
+            "type": "boolean",
+            "description": "Show the derived output row of letter cells. Default true. false draws only the message row and the strip — e.g. a mapping-only reference."
+          },
+          "frequency": {
+            "type": "boolean",
+            "description": "Show letter-frequency bars for the CIPHERTEXT side (the derived output in encode mode, the authored input in decode mode) as percentages, with the typical-English profile drawn behind them for comparison — the frequency-analysis view. Default false. Best with a longer message."
+          },
+          "expected": {
+            "type": "boolean",
+            "description": "When frequency bars are shown, overlay the typical-English frequency profile (amber outline) behind the observed bars. Default true. Set false for the observed counts alone."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Add a shift slider (0–25) above the figure; dragging it re-derives the output row, the mapping strip and the frequency bars live so pupils can watch the cipher change. The message is fixed. Default false."
+      }
+    },
+    "required": [
+      "message",
+      "shift"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked encode — \"Meet me by the old oak.\" shifted 3, with the mapping strip",
+      "params": {
+        "header": "Encrypt with a shift of 3",
+        "message": "Meet me by the old oak.",
+        "shift": 3,
+        "mode": "encode",
+        "show": {
+          "mapping": true
+        },
+        "caption": "Each letter moves 3 places: A→D, B→E, …"
+      }
+    },
+    {
+      "label": "Worked decode — ciphertext \"ZLUK TVYL ZBWWSPLZ\" with the key 7 given",
+      "params": {
+        "message": "ZLUK TVYL ZBWWSPLZ",
+        "shift": 7,
+        "mode": "decode",
+        "show": {
+          "mapping": true
+        },
+        "caption": "The key is 7 — shift each letter back to read the message."
+      }
+    },
+    {
+      "label": "Occluded question — find the shift (mapping row hidden too)",
+      "params": {
+        "message": "THE DROP IS AT NOON",
+        "shift": 3,
+        "mode": "encode",
+        "occlude": {
+          "shift": true,
+          "mapping": true
+        }
+      }
+    },
+    {
+      "label": "Answer space — encode it yourself (blank output row)",
+      "params": {
+        "header": "Encrypt with a shift of 5",
+        "message": "GUARD THE BRIDGE AT 6PM",
+        "shift": 5,
+        "mode": "encode",
+        "occlude": {
+          "output": true
+        },
+        "caption": "Shift each letter 5 places and write the ciphertext."
+      }
+    },
+    {
+      "label": "Hard case — crack by frequency analysis (long ciphertext, shift + output hidden)",
+      "params": {
+        "header": "Crack the cipher",
+        "message": "JXU IUSHUJ WQHTUD WQJU EFUDI QJ CYTDYWXJ. BUQLU JXU BUJJUH RUDUQJX JXU JXYHT IJEDU QDT JUBB DE EDU. JXU AUUFUH IUUI ULUHOJXYDW JXQJ CELUI RUJMUUD JXU XUTWUI.",
+        "shift": 16,
+        "mode": "decode",
+        "occlude": {
+          "shift": true,
+          "output": true,
+          "mapping": true
+        },
+        "show": {
+          "frequency": true
+        }
+      }
+    },
+    {
+      "label": "Edge cases — shift 0 (does nothing) and the highlighted trace of one letter",
+      "params": {
+        "header": "A shift of 0 changes nothing",
+        "message": "ADD ONE MORE DAY",
+        "shift": 0,
+        "mode": "encode",
+        "highlightLetter": "D",
+        "show": {
+          "mapping": true
+        },
+        "caption": "With shift 0 every letter maps to itself — trace D."
+      }
+    }
+  ]
+}

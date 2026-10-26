@@ -1,0 +1,384 @@
+{
+  "ref": "physics/gear-train@1",
+  "family": "physics",
+  "name": "gear-train",
+  "version": 1,
+  "title": "Gear train",
+  "tagline": "Meshed gears drawn to scale from their tooth counts; rotation directions, turns/rpm and the overall gear ratio derived, compound shaft pairs included; each occludes.",
+  "description": "A train of spur gears drawn as toothed discs that really mesh: you write each gear's tooth count and how it joins the one before it — teeth engaged, or keyed to the same shaft as a compound gear — and everything else is computed. Each gear's radius comes from its tooth count, so the gears are to scale and neighbouring pitch circles touch; each gear's tooth phase is set so its teeth interlock with its neighbour's rather than clash. Name one gear as the driver and give it a direction and (optionally) a number of turns or an rpm, and the model propagates through the whole train in both directions: rotation reverses across every mesh and carries unchanged across every shaft, and each gear's turns are computed as an exact fraction of the driver's (× teeth of the previous ÷ teeth of this one). The overall gear ratio between driver and output is derived and simplified to lowest terms — so an idler in the middle visibly changes the direction without changing the ratio, and a compound shaft pair multiplies it. Tooth counts, rotation arrows, turn readouts and the ratio each occlude to \"?\" for questions, and the figure suppresses whatever else would leak the hidden value. On the web the train can also MOVE: dragging the drive gear turns the whole train live at its derived rates, or animate sets it running by itself (\"run\") or behind a play button (\"play\"), each gear carrying a marked tooth so revolutions can be counted; static surfaces always show the still figure.",
+  "whenToUse": "Reach for this whenever gears are the picture: GCSE physics gear systems (a gear passes on a turning effect; a larger gear turns more slowly), the ratio and inverse-proportion questions that go with them (\"gear A has 12 teeth and gear B has 30; A turns 5 times, how many times does B turn?\"), design-and-technology gear trains, idlers and compound gears, and any \"which way does the last gear turn?\" reasoning. Author the tooth counts and the drive; never author a direction, a speed or a ratio — they are derived, and stay right when you change a tooth count. Common configurations: a simple two-gear drive (show.directions with show.turns for the speed question); a three-gear train where the middle gear is an idler (show.ratio makes the point that it changes the direction and not the ratio); a compound train, where the third gear takes mesh \"shaft\" so it rides the second gear's axle and the ratios multiply; a bent train using angle on one gear (90 for straight up, −90 for down) when a row would run off the page. Question hooks: occlude \"turns\" on the output gear for the calculation, occlude \"direction\" for the alternation question (this hides every arrow but the driver's, so pupils reason rather than read off), occlude \"teeth\" with show.teeth false for \"how many teeth must it have?\" — with the teeth drawn, a pupil can simply count them; and per-gear showDirection false to hide chosen arrows WITHOUT a \"?\" — the driver-only figure (every other gear's showDirection false, \"which way do the others turn?\" in the caption) poses the whole train at once. Staged builds work well: open on the driver alone, add one gear per stage, and bring the readouts in last. Motion: use draggable when the pupil's own hand should produce the ratio, animate \"play\" for a whole-class watch-and-count demonstration (the marked teeth make revolutions countable), and animate \"run\" sparingly — motion on a question figure is decoration unless counting it IS the task; never animate a figure whose direction or turns are the thing being asked (occlusion forces it off anyway). Cross-block: keep the same gear names and the same drive gear across a lesson so pupils track one machine, and keep tooth counts in the same range so the gears stay a comparable size from block to block. Synonyms teachers use: gears, gear train, gear ratio, cogs, cogwheels, driver and driven gear, idler gear, compound gears, gearing up, gearing down, teeth ratio, transmission.",
+  "responseModes": [],
+  "tags": [
+    "gears",
+    "gear train",
+    "gear ratio",
+    "cog",
+    "cogs",
+    "cogwheel",
+    "driver",
+    "driven",
+    "idler",
+    "compound gears",
+    "meshed",
+    "rotation",
+    "clockwise",
+    "anticlockwise",
+    "turning effect",
+    "ratio",
+    "inverse proportion",
+    "rpm",
+    "speed",
+    "transmission",
+    "mechanisms",
+    "physics",
+    "design and technology",
+    "DT"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "gears": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "teeth": {
+              "type": "integer",
+              "minimum": 6,
+              "maximum": 80,
+              "description": "Number of teeth on this gear — the ONLY size input. The pitch radius is derived from it (radius ∝ teeth), so a 40-tooth gear is drawn exactly twice the size of a 20-tooth one and the two mesh with tangent pitch circles. Keep counts in the classroom range (8–60 reads best)."
+            },
+            "label": {
+              "type": "string",
+              "description": "Short name for the gear (\"A\", \"B\", \"driver\", \"wheel gear\"). Drawn on the gear when it fits inside, otherwise outward beside it. Omit for an unnamed gear."
+            },
+            "mesh": {
+              "type": "string",
+              "enum": [
+                "meshed",
+                "shaft"
+              ],
+              "description": "How this gear joins the PREVIOUS one. \"meshed\" (default): its teeth engage the previous gear's — it turns the OPPOSITE way, at a speed in the inverse ratio of the tooth counts. \"shaft\": it is keyed to the same axle as the previous gear (a compound gear) — drawn concentric with it, turning the SAME way at the SAME speed, and the ratio carries on from it. Ignored on the first gear."
+            },
+            "angle": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180,
+              "description": "Direction in which the train continues from the previous gear, in degrees anticlockwise from \"to the right\": 0 (default) = right, 90 = straight up, −90 = straight down, −45 = down and to the right. The DISTANCE is derived (the two pitch circles touch), so this only bends the train — use it for an L-shaped or stacked layout. Ignored when mesh is \"shaft\" (a shaft gear is concentric)."
+            },
+            "occlude": {
+              "type": "string",
+              "enum": [
+                "teeth",
+                "turns",
+                "direction"
+              ],
+              "description": "Hide one derived-or-given value on this gear as \"?\" — the question hook. \"teeth\": the tooth-count label (\"how many teeth must it have?\") — note the gear is still DRAWN to scale, so pair it with show.teeth false when counting must not be possible. \"turns\": this gear's turns / rpm readout (\"how many times does it turn?\"). \"direction\": its rotation arrow — and, because the alternation would give it away, every other arrow except the drive gear's (\"which way does it turn?\"). Any occlusion also blanks the gear-ratio readout to \"?\" so it cannot leak the answer. Default: nothing hidden."
+            },
+            "showDirection": {
+              "type": "boolean",
+              "description": "Show this gear's rotation arrow. Set false to hide ONE gear's arrow without posing it as a question — e.g. keep only the driver's arrow and ask \"which way do the others turn?\" in the caption. Unlike occlude \"direction\" there is no \"?\", the other gears' arrows stay, and the figure (and its aria) simply stays silent about this gear. The global show.directions switch still masters everything; occlude \"direction\" on this gear wins over this flag. Default true."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this gear and its labels — the gear being asked about, or the answer. Default false."
+            }
+          },
+          "required": [
+            "teeth"
+          ]
+        },
+        "description": "The gears in order along the train, first to last. Each one after the first joins the one before it — meshed with it (the default) or keyed to its shaft. Order is the chain, not left-to-right on the page: use angle to bend it."
+      },
+      "drive": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Which gear is turned, which way, and how fast — the single input the whole train is derived from. Omit for a still figure driven clockwise from the first gear.",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5,
+            "description": "Position in the gears array of the gear being turned, counting from 0. Default 0 (the first gear). The derivation runs BOTH ways from it, so a middle gear can be the driver."
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "clockwise",
+              "anticlockwise"
+            ],
+            "description": "Which way the drive gear turns. Default \"clockwise\". Every other gear's direction is derived from it — reversed across each mesh, unchanged across each shaft."
+          },
+          "turns": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "How many complete turns the drive gear makes. Every other gear's turns are derived from it as an exact fraction and shown when show.turns is on. Pick a number divisible by the ratio for whole-number answers (12 turns of a 12-tooth driver gives exactly 4 turns of a 36-tooth gear)."
+          },
+          "rpm": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Rotational speed of the drive gear in revolutions per minute. Derived for every other gear the same way as turns, and shown alongside it when show.turns is on. Use instead of (or as well as) turns for the physics framing."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "teeth": {
+            "type": "boolean",
+            "description": "Draw the actual teeth, interlocking at each mesh. false draws smooth wheels (pitch circles) instead — the friction-drive picture, and the honest choice when a tooth count is occluded and counting must not be possible. Default true."
+          },
+          "toothCounts": {
+            "type": "boolean",
+            "description": "Label each gear with its tooth count (\"24T\"), on the gear where it fits and outward beside it where it does not. Default true."
+          },
+          "directions": {
+            "type": "boolean",
+            "description": "Draw the curved rotation arrow inside each gear. false leaves the train still — the whole-figure answer space for \"which way does each gear turn?\". Default true."
+          },
+          "turns": {
+            "type": "boolean",
+            "description": "Show each gear's derived turns and/or rpm beside it. Needs drive.turns or drive.rpm; nothing is shown without one. Default false."
+          },
+          "ratio": {
+            "type": "boolean",
+            "description": "Show the overall gear ratio between the drive gear and the last gear in the train, simplified to lowest terms and read as \"the driver turns 5 for every 2 of the output\". Blanks to \"?\" if any gear occludes anything, so it can never leak. Default false."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional short line under the figure, e.g. a short context note. Keep the question, the working and the explanation in the block text, not here."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web only: drag the drive gear to turn the whole train live, every gear moving at its derived rate and direction with the teeth staying meshed. Exploratory — nothing is written back. Default false. Takes precedence over animate (one controller per figure)."
+      },
+      "animate": {
+        "type": "string",
+        "enum": [
+          "run",
+          "play"
+        ],
+        "description": "Web only: set the train turning by itself — every gear at its exact derived rate and direction, the teeth staying meshed, the fastest gear paced at one revolution per ~6 s. Each gear gets a marked tooth (a solid dot) so revolutions can be COUNTED, which is what makes the motion worth having: ask \"how many times does the marked tooth of C come round while A's comes round once?\". \"run\" starts moving on load; \"play\" stays still until the pupil presses the play button. A play/pause control appears on the web in both modes, and users who prefer reduced motion see the still figure until they press play. Print, PPTX and every static surface always show the still figure. Ignored fail-closed when any gear occludes anything (motion would reveal a hidden direction or turn count) and when draggable is set. Default: no animation."
+      }
+    },
+    "required": [
+      "gears"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — a 12-tooth driver turning a 30-tooth gear, 5 turns",
+      "params": {
+        "header": "A simple gear drive",
+        "gears": [
+          {
+            "teeth": 12,
+            "label": "A"
+          },
+          {
+            "teeth": 30,
+            "label": "B"
+          }
+        ],
+        "drive": {
+          "index": 0,
+          "direction": "clockwise",
+          "turns": 5
+        },
+        "show": {
+          "directions": true,
+          "turns": true,
+          "ratio": true
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — three gears, no arrows: which way does each turn?",
+      "params": {
+        "gears": [
+          {
+            "teeth": 24,
+            "label": "A"
+          },
+          {
+            "teeth": 12,
+            "label": "B"
+          },
+          {
+            "teeth": 18,
+            "label": "C"
+          }
+        ],
+        "drive": {
+          "index": 0,
+          "direction": "clockwise"
+        },
+        "show": {
+          "directions": false
+        },
+        "caption": "Gear A is turned clockwise."
+      }
+    },
+    {
+      "label": "Occluded question — how many turns does the driven gear make?",
+      "params": {
+        "gears": [
+          {
+            "teeth": 15,
+            "label": "A"
+          },
+          {
+            "teeth": 24,
+            "label": "B",
+            "occlude": "turns",
+            "highlight": true
+          }
+        ],
+        "drive": {
+          "index": 0,
+          "direction": "anticlockwise",
+          "turns": 8
+        },
+        "show": {
+          "directions": true,
+          "turns": true
+        },
+        "caption": "Gear A makes 8 complete turns."
+      }
+    },
+    {
+      "label": "Idler gear — the middle gear changes the direction, not the ratio",
+      "params": {
+        "gears": [
+          {
+            "teeth": 20,
+            "label": "A"
+          },
+          {
+            "teeth": 8,
+            "label": "B"
+          },
+          {
+            "teeth": 40,
+            "label": "C"
+          }
+        ],
+        "drive": {
+          "index": 0,
+          "direction": "clockwise",
+          "turns": 4
+        },
+        "show": {
+          "directions": true,
+          "turns": true,
+          "ratio": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — a compound train: C rides B's shaft, so the ratios multiply",
+      "params": {
+        "header": "A compound gear train",
+        "gears": [
+          {
+            "teeth": 12,
+            "label": "A"
+          },
+          {
+            "teeth": 36,
+            "label": "B"
+          },
+          {
+            "teeth": 20,
+            "label": "C",
+            "mesh": "shaft"
+          },
+          {
+            "teeth": 40,
+            "label": "D",
+            "angle": -60
+          }
+        ],
+        "drive": {
+          "index": 0,
+          "direction": "clockwise",
+          "turns": 12
+        },
+        "show": {
+          "directions": true,
+          "turns": true,
+          "ratio": true
+        }
+      }
+    },
+    {
+      "label": "Animated — press play and count the marked teeth (1 : 3 gearing up)",
+      "params": {
+        "header": "Watch the marked teeth",
+        "gears": [
+          {
+            "teeth": 36,
+            "label": "A"
+          },
+          {
+            "teeth": 12,
+            "label": "B"
+          }
+        ],
+        "drive": {
+          "index": 0,
+          "direction": "clockwise"
+        },
+        "show": {
+          "directions": true,
+          "ratio": true
+        },
+        "animate": "play"
+      }
+    },
+    {
+      "label": "Occluded direction — a four-gear train with every arrow but the driver's hidden",
+      "params": {
+        "gears": [
+          {
+            "teeth": 16,
+            "label": "A"
+          },
+          {
+            "teeth": 28,
+            "label": "B"
+          },
+          {
+            "teeth": 14,
+            "label": "C"
+          },
+          {
+            "teeth": 28,
+            "label": "D",
+            "occlude": "direction",
+            "highlight": true
+          }
+        ],
+        "drive": {
+          "index": 0,
+          "direction": "anticlockwise"
+        },
+        "show": {
+          "directions": true
+        }
+      }
+    }
+  ]
+}

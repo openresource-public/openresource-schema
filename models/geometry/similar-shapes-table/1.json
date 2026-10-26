@@ -1,0 +1,348 @@
+{
+  "ref": "geometry/similar-shapes-table@1",
+  "family": "geometry",
+  "name": "similar-shapes-table",
+  "version": 1,
+  "title": "Similar shapes measurements table",
+  "tagline": "Two or three similar shapes compared in a working table — shapes as columns, Length / Area / Volume as rows, with derived ×k / ×k² / ×k³ scale-factor arrows across the gaps.",
+  "description": "Two or three similar shapes compared in a working table: the shapes are the columns (Shape A, Shape B, optionally Shape C) and Length, Area and Volume are the rows, each cell holding a shape's actual measurement, with ×k / ×k² / ×k³ scale-factor arrows running across the gap between shape columns — one per row, because lengths scale by k, areas by k² and volumes by k³. You write the reference shape's measurements (its length, and optionally its area and volume) and, for each other shape, either its linear scale factor k or one known corresponding measurement; the model derives every other measurement (reference × k / k² / k³), the per-row factors, and an optional working strip. Occlude any measurement to \"?\" for \"find the missing length / area / volume\" and \"given the area ratio, find the volume\", highlight the answer in amber, hide the factors for \"what is the area scale factor?\", and add a base unit so the rows read cm / cm² / cm³. The concrete, measurement-bearing partner to geometry/similarity-ratio-table (which shows only the abstract k / k² / k³) and the geometry/similar-shapes figure.",
+  "whenToUse": "Reach for this to compare two or three similar shapes by their actual measurements in a table — Shape A, B (and C) down the columns, Length / Area / Volume down the rows — with the ×k / ×k² / ×k³ relationship shown across the columns. This is the figure for \"Shape A has length 5 cm and area 20 cm²; Shape B is similar with length 15 cm — find its area\", and for \"the volumes of two similar solids are 8 and 216; find the ratio of their surface areas\". Author a `shapes` array: the first shape is the reference — give its `length` (required) and optionally `area` and `volume` (a row shows only if the reference has it); each later shape gives either `scale` (its linear scale factor k) or `known` ({ of, value } — one corresponding measurement, to back-derive k). You never write a derived shape's measurements — length × k, area × k², volume × k³ are all computed. Common configurations: worked — give scale, show.working true to reveal \"Area ×k² = 3² = 9\"; find a missing measure — occlude a cell (e.g. shape 2 area) and highlight it, giving the scaffold (the lengths + the other areas) in the visible cells; area / volume ratio — give a shape via known area or known volume and occlude another row; what is the area scale factor — show.factors false so the arrows read \"× ?\"; blank table — occlude every derived cell. Add `unit` (e.g. \"cm\") so the rows read Length (cm) / Area (cm²) / Volume (cm³). Keep k rational (a scale, a known length, or a perfect-square area / perfect-cube volume ratio) — for surd scale-factor reasoning on the abstract k / k² / k³ relationship use geometry/similarity-ratio-table instead. Switch model: to draw the two similar shapes with marked corresponding sides use geometry/similar-shapes; for the abstract scale-factor-only table (no real measurements) use geometry/similarity-ratio-table; for a generic ratio/proportion table use number/ratio-table. Strongly staged: open on the reference column with the others blank, bring in the per-row factors, then the derived cells. Synonyms a teacher might use: similar shapes, similar solids, scale factor, area scale factor, volume scale factor, k squared, k cubed, ratio of areas, ratio of volumes, find the missing area, find the volume, corresponding lengths, enlargement.",
+  "responseModes": [
+    "fill-derived"
+  ],
+  "tags": [
+    "similar shapes",
+    "similar solids",
+    "similarity",
+    "scale factor",
+    "area scale factor",
+    "volume scale factor",
+    "length scale factor",
+    "ratio of areas",
+    "ratio of volumes",
+    "k squared",
+    "k cubed",
+    "find the missing area",
+    "find the volume",
+    "corresponding sides",
+    "enlargement",
+    "comparison table",
+    "measurements",
+    "length area volume",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "shapes": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One shape = one COLUMN, left to right. The FIRST shape is the REFERENCE: give its actual measurements (`length` required, `area` / `volume` optional — a row appears only if the reference has that measure). Every LATER shape is DERIVED from the reference: give EITHER `scale` (its linear scale factor k) OR `known` (one corresponding measurement, to back-derive k) — never its raw measurements.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Column header for this shape — \"Shape A\", \"P\", \"Small\". Defaults to \"Shape A\", \"Shape B\", … by position."
+            },
+            "length": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "REFERENCE shape only: its length (a side, height, …). Required on the first shape; the Length row is always shown. Ignored on a derived shape (its length = reference length × k)."
+            },
+            "area": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "REFERENCE shape only: its area. Optional — give it to show the Area row. Ignored on a derived shape (area = reference area × k²)."
+            },
+            "volume": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "REFERENCE shape only: its volume. Optional — give it to show the Volume row. Ignored on a derived shape (volume = reference volume × k³)."
+            },
+            "scale": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "DERIVED shape only: the LINEAR scale factor k from the reference to this shape (3 → lengths ×3, areas ×9, volumes ×27; 0.5 → ÷2; 2.5 stays exact). Use this OR `known`, not both (scale wins)."
+            },
+            "known": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "DERIVED shape only: ONE known corresponding measurement of this shape, used to BACK-DERIVE k (k = known length ÷ reference length, √(known area ÷ reference area), or ∛(known volume ÷ reference volume)). The classic \"given a length / area, find the rest\". Keep k rational (a length, or a perfect-square area / perfect-cube volume ratio).",
+              "properties": {
+                "of": {
+                  "type": "string",
+                  "enum": [
+                    "length",
+                    "area",
+                    "volume"
+                  ],
+                  "description": "Which measure the known value is — \"length\", \"area\" or \"volume\"."
+                },
+                "value": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "This shape's value for that measure."
+                }
+              },
+              "required": [
+                "of",
+                "value"
+              ]
+            }
+          }
+        },
+        "description": "The shape columns, left to right (two or three). Item 0 is the REFERENCE (give its measurements); items 1+ are DERIVED (give `scale` or `known`)."
+      },
+      "unit": {
+        "type": "string",
+        "description": "Optional base length unit, e.g. \"cm\", \"m\", \"mm\". The row labels become Length (cm) / Area (cm²) / Volume (cm³); cells stay bare numbers. Omit for unitless rows."
+      },
+      "cells": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "A per-cell question / emphasis flag. The cell's value is always computed; list it here only to occlude (\"?\") or amber it.",
+          "properties": {
+            "shape": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Which shape COLUMN, 1-based (1 = the reference / first shape)."
+            },
+            "measure": {
+              "type": "string",
+              "enum": [
+                "length",
+                "area",
+                "volume"
+              ],
+              "description": "Which measure ROW — \"length\", \"area\" or \"volume\"."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this measurement as \"?\" — the \"find the missing measurement\" hook. It appears nowhere else, so it cannot leak. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this measurement — answer emphasis. Default false."
+            }
+          },
+          "required": [
+            "shape",
+            "measure"
+          ]
+        },
+        "description": "Per-cell occlusion / highlight overrides, addressed by `shape` (1-based column) and `measure` (row). Values are always computed; list a cell only to hide (\"?\") or amber it."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout and furniture toggles.",
+        "properties": {
+          "factors": {
+            "type": "boolean",
+            "description": "Show the numeric scale factor on each row's arrow (×3, ×9, ×27). Default true. Set false to pose \"what do you multiply by?\" — the arrows read \"× ?\"."
+          },
+          "working": {
+            "type": "boolean",
+            "description": "Show the derivation strip beneath the table — how k is found and how each row's factor follows (\"Length ×3; Area ×3² = 9; Volume ×3³ = 27\"). Occlusion-aware (a hidden value shows \"?\"). Use on worked examples. Default false."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the table; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "shapes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — A (5, 20, 8), Shape B ×3: areas ×9, volumes ×27, working shown",
+      "params": {
+        "header": "Two similar shapes, scale factor 3",
+        "unit": "cm",
+        "shapes": [
+          {
+            "name": "Shape A",
+            "length": 5,
+            "area": 20,
+            "volume": 8
+          },
+          {
+            "name": "Shape B",
+            "scale": 3
+          }
+        ],
+        "show": {
+          "working": true
+        },
+        "caption": "Lengths scale by 3, so areas scale by 3² = 9 and volumes by 3³ = 27."
+      }
+    },
+    {
+      "label": "Find the missing area — A length 4 area 24, B length 10, find B's area (k = 2.5)",
+      "params": {
+        "unit": "cm",
+        "shapes": [
+          {
+            "name": "Shape A",
+            "length": 4,
+            "area": 24
+          },
+          {
+            "name": "Shape B",
+            "known": {
+              "of": "length",
+              "value": 10
+            }
+          }
+        ],
+        "cells": [
+          {
+            "shape": 2,
+            "measure": "area",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "caption": "Two similar shapes. Shape A: length 4 cm, area 24 cm². Shape B: length 10 cm. Find the area of Shape B."
+      }
+    },
+    {
+      "label": "Blank answer space — complete Shape B from scale factor 2",
+      "params": {
+        "unit": "mm",
+        "shapes": [
+          {
+            "name": "Shape A",
+            "length": 6,
+            "area": 15,
+            "volume": 10
+          },
+          {
+            "name": "Shape B",
+            "scale": 2
+          }
+        ],
+        "cells": [
+          {
+            "shape": 2,
+            "measure": "length",
+            "occlude": true
+          },
+          {
+            "shape": 2,
+            "measure": "area",
+            "occlude": true
+          },
+          {
+            "shape": 2,
+            "measure": "volume",
+            "occlude": true
+          }
+        ],
+        "caption": "Shape B is similar to Shape A with a scale factor of 2. Complete the table."
+      }
+    },
+    {
+      "label": "Area ratio → length — given the areas (4 and 36), find the length scale factor",
+      "params": {
+        "unit": "cm",
+        "shapes": [
+          {
+            "name": "Shape A",
+            "length": 2,
+            "area": 4
+          },
+          {
+            "name": "Shape B",
+            "known": {
+              "of": "area",
+              "value": 36
+            }
+          }
+        ],
+        "cells": [
+          {
+            "shape": 2,
+            "measure": "length",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "show": {
+          "working": true
+        },
+        "caption": "The areas of two similar shapes are 4 cm² and 36 cm². Find the length of Shape B."
+      }
+    },
+    {
+      "label": "Three similar shapes — A, B (×2), C (×3) across the columns",
+      "params": {
+        "header": "Three similar shapes",
+        "unit": "cm",
+        "shapes": [
+          {
+            "name": "Shape A",
+            "length": 4,
+            "area": 6
+          },
+          {
+            "name": "Shape B",
+            "scale": 2
+          },
+          {
+            "name": "Shape C",
+            "scale": 3
+          }
+        ]
+      }
+    },
+    {
+      "label": "Volume ratio → area — volumes 8 and 64 (k = 2), find the area scale factor",
+      "params": {
+        "header": "From the volume ratio",
+        "unit": "cm",
+        "shapes": [
+          {
+            "name": "Shape A",
+            "length": 3,
+            "area": 7,
+            "volume": 8
+          },
+          {
+            "name": "Shape B",
+            "known": {
+              "of": "volume",
+              "value": 64
+            }
+          }
+        ],
+        "cells": [
+          {
+            "shape": 2,
+            "measure": "area",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "show": {
+          "working": true
+        },
+        "caption": "Two similar solids have volumes 8 cm³ and 64 cm³. Find the area of Shape B."
+      }
+    }
+  ]
+}

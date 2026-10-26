@@ -1,0 +1,575 @@
+{
+  "ref": "probability/probability-table@3",
+  "family": "probability",
+  "name": "probability-table",
+  "version": 3,
+  "title": "Probability table",
+  "tagline": "Discrete distribution table summing to 1; derives missing probabilities, expected frequency and a cumulative F(x) row; occluded cells show \"?\" or a named unknown (a, b).",
+  "description": "A discrete probability distribution as a table: the outcomes across the top (one column each), a Probability row beneath whose values sum to 1, an optional cumulative F(x) row, an optional Frequency / Expected-frequency row, and an optional Total column. You write the semantics of each outcome — a known `p` (kept exact: 0.25, \"1/4\", \"25%\"), a relative `weight` (its share of the remaining mass), or an observed `count` — and the model derives every probability by exact rational arithmetic: a single un-`p`'d outcome takes 1 − Σ; weighted outcomes split the remainder (so 5 : 4 : 3 → 5/12, 4/12, 3/12, and \"black = 3 × blue\" → weights 3, 1); a count-bearing table derives each probability as count ÷ Σcount. `show.cumulative: true` adds the cumulative distribution F(x) = P(X ≤ x) as a derived row — each cell the running total of the probability row, last cell exactly 1 — and `show.probability: false` beside it renders the cumulative-only table an A Level question gives. A `trials` object adds the Expected-frequency row (probability × n), or works the reverse total (a known count ÷ its probability → the population, then the other counts). Any cell occludes to \"?\" for complete-the-table questions — or to a NAMED unknown (an italic `symbol` like a, b, c) so several hidden cells can be referred to separately, as exam papers print them — and a `display` choice renders the probabilities as common-denominator fractions (\"fraction\"), each in its own denominator (\"fraction-each\" — 3/10 beside 3/5, so a question that states probabilities in mixed denominators is never rewritten), decimals or percents. Distinct from the 2-D two-way-table (sums to a count), relative-frequency (experimental convergence) and the tree diagram (compound probability).",
+  "whenToUse": "Reach for this whenever a discrete probability distribution is laid out in a table and the probabilities must sum to 1: complete the table (find the missing probability = 1 − Σ), probabilities given as a ratio (5 : 4 : 3), a relational constraint (\"blue = green\", \"black = 3 × blue\", \"P(1) = 2 × P(3)\"), expected frequency (probability × number of trials), the reverse total (a known count ÷ its probability → how many trials, then the other expected counts), a frequency / counts row turned into relative frequency (probability = count ÷ Σcount), and the A Level discrete-random-variable forms — a table whose unknowns are NAMED constants (\"find the value of a\") and the cumulative distribution F(x) = P(X ≤ x). Author the semantics: list the `outcomes`, each with a `name`, and fix its probability by exactly one of `p` (a known value, kept exact — use a fraction string \"5/12\" to stay fractional), `weight` (its share of the remaining mass — the construction language for every ratio / equality / multiple constraint), or nothing (one un-`p`'d outcome absorbs 1 − Σ; all-unweighted gives a fair, uniform distribution). For a frequency-first table give each outcome a `count` and the probabilities derive as count ÷ Σcount. You never write a derived probability, a total, an expected frequency, or a cumulative value. Add a `trials` object for the Expected-frequency row — `n` directly, or `fromOutcome` + `count` for the reverse total. Set `show.cumulative: true` for the F(x) row (label via `cumulativeLabel`, default \"F(x)\") — every cell is the derived running total, so a \"construct a table for F(x)\" question occludes them all (`occludeCumulative`) and the fill-derived mode self-checks each; pair with `show.probability: false` when the question gives ONLY the cumulative table. To pose a question, set `occlude` on an outcome to hide its probability as \"?\" (it appears nowhere else, so it cannot leak — the visible Total is the scaffold), `occludeFrequency` to hide an expected count, `occludeCumulative` to hide an F(x) cell, and use the `total` object to occlude or hide the Total cells. When the source NAMES an unknown, give the outcome a `symbol` (\"a\") and the letter prints, italic, in place of the \"?\" — several named unknowns can then share one row and be asked for separately; `cumulativeSymbol` names the cumulative cell when the same column also hides its probability. `highlight` an outcome column or a total cell to mark the answer. `display` picks the form: \"auto\" (decimals when every value terminates, else common-denominator fractions), \"fraction\" (all over one denominator, so 5/12, 4/12, 3/12 visibly sum to 12/12), \"fraction-each\" (each probability in its OWN denominator — a fraction-string cell keeps its exact denominator, so P = 3/10 and P = 3/5 sit side by side and are NEVER normalised to 6/10; reach for this the moment a question states its probabilities in mixed denominators, since \"fraction\" would rewrite a given value and \"decimal\" would turn 3/5 into 0.6), \"decimal\", or \"percent\". Cross-block convention: keep the same outcomes, names and display form across one lesson so pupils track one table; change only what is asked or revealed — and keep `show.cumulative` constant across a staged sequence (reveal F cells by dropping `occludeCumulative`, never by toggling the row, which reshapes the grid). Strongly staged: open on the question (the table with a \"?\" or a named unknown), reveal the method (the sum, the constraint, the running total), then the answer last — the base state (named outcomes, known cells, the \"?\") stands alone as a sensible figure. Switch model when the table is two-dimensional (a count split by two categories → statistics/two-way-table), when the lesson is the experimental relative frequency settling towards a probability over many trials (probability/relative-frequency), or when the probability is built along the branches of a tree (probability/tree). Synonyms a teacher might use: probability table, probability distribution, sum to 1, missing probability, complete the table, ratio of probabilities, biased dice, biased spinner, relative frequency, expected frequency, expected number, how many would you expect, number of trials, cumulative distribution, cumulative distribution function, F(x), P(X less than or equal to x), discrete random variable, find the value of a.",
+  "responseModes": [
+    "fill-derived"
+  ],
+  "tags": [
+    "probability",
+    "probability table",
+    "probability distribution",
+    "sum to 1",
+    "missing probability",
+    "complete the table",
+    "biased dice",
+    "biased spinner",
+    "spinner",
+    "ratio of probabilities",
+    "expected frequency",
+    "expected number",
+    "expected results",
+    "relative frequency",
+    "frequency table",
+    "number of trials",
+    "reverse total",
+    "fair",
+    "equally likely",
+    "statistics",
+    "maths",
+    "fraction probabilities",
+    "mixed denominators",
+    "different denominators",
+    "probability as a fraction",
+    "cumulative distribution",
+    "cumulative distribution function",
+    "F(x)",
+    "discrete random variable",
+    "named unknown",
+    "find the value of a",
+    "probability function",
+    "a level statistics"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "outcomes": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One outcome = one COLUMN, left to right. Give its probability by EXACTLY ONE of: a known `p`; a relative `weight` (its share of the remaining mass — the ratio / equality / multiple constraints); or nothing (a single un-`p`'d outcome takes 1 − Σ). A `count` instead makes the whole table frequency-first (probability = count ÷ Σcount).",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The outcome label, shown as the column header — \"Red\", \"1\", \"Win\", \"Heads\". Keep it short."
+            },
+            "p": {
+              "oneOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "description": "A known probability, kept EXACT. A number 0..1 (0.25), a fraction string (\"1/4\", \"5/12\" — never reduced or turned into an ugly decimal), or a percent string (\"25%\"). Omit on an outcome whose probability the model should DERIVE (it absorbs the remaining mass in proportion to its `weight`)."
+            },
+            "weight": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "A relative weight: this outcome takes `weight` shares of the remaining probability mass (1 − Σ of the known `p`s), split across all weighted outcomes. The construction language for every RELATIVE constraint: a ratio 5 : 4 : 3 is weights 5, 4, 3; \"blue = green\" is equal weights; \"black = 3 × blue\" is weights 3 and 1; \"P(1) = 2 × P(3)\" is weights 2 and 1. Default 1 when an outcome has neither `p` nor `weight`. Ignored if `p` is given."
+            },
+            "count": {
+              "type": "number",
+              "minimum": 0,
+              "description": "An OBSERVED frequency. If ANY outcome has a `count`, the table is frequency-first: this count fills the Frequency row and the probability is DERIVED as count ÷ Σcount (relative frequency). Do not mix with `p` / `weight`."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this outcome's PROBABILITY cell as \"?\" (or as its `symbol`) — the \"complete the table\" / \"find the probability\" hook. The value appears nowhere else (the visible Total is the scaffold for deriving it, not a leak). Default false."
+            },
+            "occludeFrequency": {
+              "type": "boolean",
+              "description": "Render this outcome's FREQUENCY (or expected-frequency) cell as \"?\" — \"how many would you expect?\". Default false."
+            },
+            "occludeCumulative": {
+              "type": "boolean",
+              "description": "Render this outcome's CUMULATIVE F(x) cell as \"?\" (or as its `cumulativeSymbol`/`symbol`) — the \"complete the cumulative table\" / \"construct a table for F(x)\" hook. The derived running total appears nowhere. Only meaningful with `show.cumulative: true`. Default false."
+            },
+            "symbol": {
+              "type": "string",
+              "description": "A NAME for this outcome's hidden value — a short constant (\"a\", \"b\", \"k\") printed in italics IN PLACE OF the \"?\" on this outcome's occluded cell(s), exactly as an exam paper names an unknown (\"find the value of a\"). The true derived value stays anti-leaked exactly as with \"?\"; this only changes the placeholder glyph, and it lets SEVERAL named unknowns coexist in one row and be asked for separately. Occlude at most one cell per symbol-bearing outcome (a symbol on both the probability and cumulative cell would print twice — use `cumulativeSymbol` to name the cumulative cell separately)."
+            },
+            "cumulativeSymbol": {
+              "type": "string",
+              "description": "Overrides `symbol` on this outcome's occluded CUMULATIVE cell only, so one column can carry two differently-named unknowns (probability-row \"a\" and F(x)-row \"d\"). Falls back to `symbol` when omitted."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this outcome's whole column — the outcome in focus / the answer. Use sparingly; amber is the result colour. Default false."
+            }
+          }
+        },
+        "description": "The outcomes = the table COLUMNS, left to right (two to eight). Each fixes its probability by ONE of `p`, `weight`, or nothing (absorbs the remainder), or carries a `count` for a frequency-first table."
+      },
+      "trials": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Adds the EXPECTED FREQUENCY row (probability × number of trials). Give `n` directly, OR give `fromOutcome` + `count` to work the REVERSE TOTAL — the number of trials is derived as count ÷ probability(that outcome), then every expected frequency follows. Only applies to a probability-first table (ignored when outcomes carry `count`).",
+        "properties": {
+          "n": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The number of trials / experiments. Each expected frequency is probability × n; the Frequency-row total is n. Choose n so the products come out whole."
+          },
+          "fromOutcome": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "REVERSE TOTAL: the 1-based outcome whose observed `count` is known. The number of trials is derived as `count` ÷ probability(this outcome); the other expected frequencies are then probability × that n. Pair with `count`. Use INSTEAD of `n`."
+          },
+          "count": {
+            "type": "number",
+            "minimum": 0,
+            "description": "The observed count of `fromOutcome`, used to back-derive n in the reverse-total. Required when `fromOutcome` is given."
+          },
+          "label": {
+            "type": "string",
+            "description": "Override the Frequency-row label. Default \"Expected frequency\"."
+          }
+        }
+      },
+      "display": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "fraction",
+          "fraction-each",
+          "decimal",
+          "percent"
+        ],
+        "description": "How probabilities render. \"auto\" (default): decimals when EVERY probability is a terminating decimal, otherwise common-denominator fractions. \"fraction\": every probability over ONE common denominator (5/12, 4/12, 3/12 — they visibly sum to 12/12), best for a ratio the pupil must see share a whole. \"fraction-each\": each probability in its OWN denominator, NOT normalised to a common one — a cell authored as a fraction string keeps that exact fraction (P = 3/10 beside P = 3/5, never rewritten to 6/10), and a derived cell shows its reduced fraction; use this when the QUESTION states probabilities in mixed denominators and you must not alter a given value. \"decimal\": decimals. \"percent\": percentages. The cumulative F(x) row follows the same form. Frequencies are always plain whole numbers regardless."
+      },
+      "total": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The derived Total column on the right (Probability total = 1; Frequency total = n; the F(x) row's Total cell is EMPTY — a sum of running totals means nothing). Include to configure it; omit for the default shown Total.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Show the Total column. Default true."
+          },
+          "occludeProbability": {
+            "type": "boolean",
+            "description": "Render the probability Total (\"1\") as \"?\" — rare; for \"what must the probabilities add up to?\". Default false."
+          },
+          "occludeFrequency": {
+            "type": "boolean",
+            "description": "Render the frequency Total (the number of trials n) as \"?\" — the \"how many times was it spun?\" hook in a reverse-total question. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the Total column. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Row toggles.",
+        "properties": {
+          "probability": {
+            "type": "boolean",
+            "description": "Show the Probability row. Default true. (Set false to show a frequency-only table — e.g. raw counts before relative frequency is introduced — or, with `cumulative: true`, the cumulative-only F(x) table an A Level question gives.)"
+          },
+          "cumulative": {
+            "type": "boolean",
+            "description": "Show the cumulative F(x) row — each cell the DERIVED running total P(X ≤ x) of the probability row, last cell exactly 1. Sits between the Probability and Frequency rows; its Total cell is empty. Default false. Keep it constant across a staged sequence (occlude cells instead of toggling the row)."
+          },
+          "frequency": {
+            "type": "boolean",
+            "description": "Show the Frequency / Expected-frequency row. Default: true when outcomes carry `count` or a `trials` object is given, false otherwise. Set false to suppress it, or true on a counts table to keep the raw counts visible alongside."
+          }
+        }
+      },
+      "probabilityLabel": {
+        "type": "string",
+        "description": "Row label for the Probability row. Default \"Probability\"."
+      },
+      "cumulativeLabel": {
+        "type": "string",
+        "description": "Row label for the cumulative row. Default \"F(x)\"."
+      },
+      "frequencyLabel": {
+        "type": "string",
+        "description": "Row label for the Frequency row. Default \"Frequency\" for a counts table, \"Expected frequency\" for a trials table. (`trials.label` overrides this for a trials table.)"
+      },
+      "totalLabel": {
+        "type": "string",
+        "description": "Header for the Total column. Default \"Total\"."
+      },
+      "cornerLabel": {
+        "type": "string",
+        "description": "Text for the top-left corner cell — the outcome category, e.g. \"Colour\", \"Score\", \"Outcome\". Default empty."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "outcomes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — missing probability (decimals), Total column",
+      "params": {
+        "header": "A four-colour spinner",
+        "cornerLabel": "Colour",
+        "outcomes": [
+          {
+            "name": "Red",
+            "p": 0.15
+          },
+          {
+            "name": "Blue",
+            "p": 0.25
+          },
+          {
+            "name": "Yellow",
+            "p": 0.4
+          },
+          {
+            "name": "Green"
+          }
+        ],
+        "caption": "The four probabilities add up to 1, so green is 1 − 0.8 = 0.2."
+      }
+    },
+    {
+      "label": "Occluded question — find the missing probability",
+      "params": {
+        "header": "A biased spinner",
+        "outcomes": [
+          {
+            "name": "A",
+            "p": 0.5
+          },
+          {
+            "name": "B",
+            "p": 0.2
+          },
+          {
+            "name": "C",
+            "occlude": true,
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Ratio constraint — counters 5 : 4 : 3 as common-denominator fractions",
+      "params": {
+        "header": "Counters in the ratio 5 : 4 : 3",
+        "cornerLabel": "Colour",
+        "display": "fraction",
+        "outcomes": [
+          {
+            "name": "Red",
+            "weight": 5
+          },
+          {
+            "name": "Blue",
+            "weight": 4
+          },
+          {
+            "name": "Green",
+            "weight": 3
+          }
+        ],
+        "caption": "Each probability is that colour's share of the 12 equal parts."
+      }
+    },
+    {
+      "label": "Frequency → relative frequency (blank answer space)",
+      "params": {
+        "header": "Spinner spun 40 times",
+        "cornerLabel": "Colour",
+        "outcomes": [
+          {
+            "name": "Red",
+            "count": 14,
+            "occlude": true
+          },
+          {
+            "name": "Blue",
+            "count": 10,
+            "occlude": true
+          },
+          {
+            "name": "Green",
+            "count": 16,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Reverse total — landed on red 40 times, find the spins and the rest",
+      "params": {
+        "outcomes": [
+          {
+            "name": "Red",
+            "p": 0.4
+          },
+          {
+            "name": "Blue",
+            "p": 0.25
+          },
+          {
+            "name": "Green",
+            "p": 0.35
+          }
+        ],
+        "trials": {
+          "fromOutcome": 1,
+          "count": 40
+        }
+      }
+    },
+    {
+      "label": "Hard case — mixed constraint (equality + multiple) with expected frequency, occluded",
+      "params": {
+        "header": "A biased four-sided spinner",
+        "outcomes": [
+          {
+            "name": "1",
+            "p": 0.4
+          },
+          {
+            "name": "2",
+            "weight": 1,
+            "occlude": true,
+            "occludeFrequency": true
+          },
+          {
+            "name": "3",
+            "weight": 1,
+            "occlude": true,
+            "occludeFrequency": true
+          },
+          {
+            "name": "4",
+            "weight": 2,
+            "occlude": true,
+            "occludeFrequency": true
+          }
+        ],
+        "trials": {
+          "n": 200
+        },
+        "caption": "P(2) = P(3) and P(4) = 2 × P(2). Complete the table for 200 spins."
+      }
+    },
+    {
+      "label": "Per-outcome fractions — mixed denominators kept, missing probability derived",
+      "params": {
+        "header": "A bag of counters",
+        "cornerLabel": "Colour",
+        "display": "fraction-each",
+        "outcomes": [
+          {
+            "name": "Red",
+            "p": "1/2"
+          },
+          {
+            "name": "Blue",
+            "p": "1/3"
+          },
+          {
+            "name": "Green"
+          }
+        ],
+        "caption": "Each probability keeps its own denominator: 1 − 1/2 − 1/3 = 1/6 for green."
+      }
+    },
+    {
+      "label": "Per-outcome fractions — occluded question, given cells in different denominators",
+      "params": {
+        "header": "A four-colour spinner",
+        "cornerLabel": "Colour",
+        "display": "fraction-each",
+        "outcomes": [
+          {
+            "name": "Red",
+            "p": "2/5"
+          },
+          {
+            "name": "Yellow",
+            "p": "1/4"
+          },
+          {
+            "name": "Blue",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "caption": "P(red) = 2/5 and P(yellow) = 1/4 — shown exactly. Work out P(blue)."
+      }
+    },
+    {
+      "label": "Cumulative distribution — worked F(x) row of running totals",
+      "params": {
+        "header": "A discrete random variable",
+        "cornerLabel": "x",
+        "probabilityLabel": "P(X = x)",
+        "display": "decimal",
+        "total": {
+          "show": false
+        },
+        "show": {
+          "cumulative": true
+        },
+        "outcomes": [
+          {
+            "name": "1",
+            "p": 0.1
+          },
+          {
+            "name": "2",
+            "p": 0.3
+          },
+          {
+            "name": "3",
+            "p": 0.4
+          },
+          {
+            "name": "4",
+            "p": 0.2
+          }
+        ],
+        "caption": "Each F(x) is the running total: F(2) = 0.1 + 0.3 = 0.4, and F(4) = 1."
+      }
+    },
+    {
+      "label": "Named unknown — occluded probability prints its letter (find the value of a)",
+      "params": {
+        "header": "The probability function of X",
+        "cornerLabel": "x",
+        "probabilityLabel": "P(X = x)",
+        "display": "decimal",
+        "total": {
+          "show": false
+        },
+        "outcomes": [
+          {
+            "name": "1",
+            "p": 0.35
+          },
+          {
+            "name": "2",
+            "occlude": true,
+            "symbol": "a",
+            "highlight": true
+          },
+          {
+            "name": "3",
+            "p": 0.15
+          },
+          {
+            "name": "4",
+            "p": 0.3
+          }
+        ],
+        "caption": "The probabilities sum to 1. Find the value of a."
+      }
+    },
+    {
+      "label": "Cumulative-only table — the given F(x) with named unknowns (probability row hidden)",
+      "params": {
+        "header": "The cumulative distribution of X",
+        "cornerLabel": "x",
+        "display": "decimal",
+        "total": {
+          "show": false
+        },
+        "show": {
+          "probability": false,
+          "cumulative": true
+        },
+        "outcomes": [
+          {
+            "name": "0",
+            "p": 0.3,
+            "occludeCumulative": true,
+            "cumulativeSymbol": "c"
+          },
+          {
+            "name": "1",
+            "p": 0.25
+          },
+          {
+            "name": "2",
+            "p": 0.15,
+            "occludeCumulative": true,
+            "cumulativeSymbol": "d"
+          },
+          {
+            "name": "3",
+            "p": 0.3,
+            "occludeCumulative": true,
+            "cumulativeSymbol": "e"
+          }
+        ],
+        "caption": "The cumulative table as the paper prints it — naming c, d and e lets each part ask for one."
+      }
+    },
+    {
+      "label": "Hard case — both rows, two named unknowns in P(X = x) and two in F(x), one column carrying both",
+      "params": {
+        "header": "The distribution and its cumulative table",
+        "cornerLabel": "x",
+        "probabilityLabel": "P(X = x)",
+        "display": "decimal",
+        "total": {
+          "show": false
+        },
+        "show": {
+          "cumulative": true
+        },
+        "outcomes": [
+          {
+            "name": "0",
+            "p": 0.05
+          },
+          {
+            "name": "1",
+            "weight": 1,
+            "occlude": true,
+            "symbol": "a",
+            "occludeCumulative": true,
+            "cumulativeSymbol": "d"
+          },
+          {
+            "name": "2",
+            "p": 0.45
+          },
+          {
+            "name": "3",
+            "weight": 1,
+            "occlude": true,
+            "symbol": "b",
+            "occludeCumulative": true,
+            "cumulativeSymbol": "e"
+          }
+        ],
+        "caption": "P(1) = P(3). Find a and b, then complete F(x)."
+      }
+    }
+  ]
+}

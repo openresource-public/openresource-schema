@@ -1,0 +1,555 @@
+{
+  "ref": "diagram/flowchart@1",
+  "family": "diagram",
+  "name": "flowchart",
+  "version": 1,
+  "title": "Flowchart",
+  "tagline": "Decision/flow diagram — start, process, decision and input-output boxes joined by directed arrows with Yes/No branches; auto-laid-out, every box occludable.",
+  "description": "A flowchart: titled boxes joined by directed arrows. Each box is one of the standard symbols — a rounded stadium for start/end, a rectangle for a process step, a diamond for a yes/no decision, a parallelogram for input/output — and a decision branches to labelled outcomes (\"Yes\"/\"No\"). You author only the graph (the boxes and which box arrows run between); the model derives every box's shape from its kind, its size from its wrapped label, every box position from a layered auto-layout, and every arrow's route — including loop-backs that curve around a side margin so \"repeat until correct\" draws cleanly. Any box label can be occluded to \"?\" for \"what step goes here?\", and boxes and arrows highlight in amber to mark an answer or trace a route stage by stage. For a straight-line chain of arithmetic operations use algebra/function-machine; for a branching hierarchy with no loops use diagram/tree.",
+  "whenToUse": "Reach for this to draw an algorithm or procedure as a flowchart / flow diagram: a sequence of steps with one or more yes/no decisions that branch the flow, and optionally a loop back to an earlier step (\"repeat until…\"). Common in computing / computational thinking (selection and iteration, turning pseudocode into a flowchart), in science method, and in any \"follow the steps\" procedure. Author the graph: list the boxes as nodes (each a kind — start, process, decision, io, end — and a label) and the arrows as edges (from one box id to another, with an optional branch label like \"Yes\"/\"No\" on the arrows leaving a decision); the layout, box shapes, sizes and arrow routes are all derived, so you never position anything. Conventions: give every flowchart one \"start\" and at least one \"end\"; a \"decision\" box poses a yes/no question and has two outgoing edges with branch labels; draw a loop by pointing an edge back at an earlier box (it routes around the margin). Keep direction consistent across a lesson (\"down\" reads top-to-bottom, the default; \"right\" for a short left-to-right pipeline). Questions: set a box's occlude to ask \"what step / decision goes here?\" (the rest of the chart stays visible); highlight a box or arrow to mark the answer. Staged build: keep the boxes fixed and move the highlight along the traced route stage by stage (the layout never moves). Synonyms a teacher might use: flowchart, flow chart, flow diagram, decision diagram, algorithm, pseudocode, selection, branching, iteration, loop, computational thinking, process diagram. Switch model when the picture changes: a straight chain of × ÷ + − operations on a number is algebra/function-machine; a top-down classification or family hierarchy (no loops, no merging arrows) is diagram/tree; a hub with radial branches is diagram/mind-map.",
+  "responseModes": [],
+  "tags": [
+    "flowchart",
+    "flow chart",
+    "flow diagram",
+    "decision diagram",
+    "decision",
+    "algorithm",
+    "pseudocode",
+    "selection",
+    "branching",
+    "iteration",
+    "loop",
+    "computational thinking",
+    "process",
+    "procedure",
+    "computing",
+    "computer science",
+    "diagram"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "nodes": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 14,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+              "description": "Unique kebab-case id for this box, referenced by edges (e.g. \"start\", \"check-age\", \"print-even\"). Not shown to pupils — it is the wiring handle."
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "start",
+                "process",
+                "decision",
+                "io",
+                "end"
+              ],
+              "description": "The flowchart symbol drawn: \"start\"/\"end\" → rounded stadium (the terminators), \"process\" → rectangle (a step / action), \"decision\" → diamond (a yes/no question — give it ≥2 outgoing edges with branch labels), \"io\" → parallelogram (input or output, e.g. \"Read n\", \"Print total\"). The shape is derived from this; you never draw it."
+            },
+            "label": {
+              "type": "string",
+              "description": "The text inside the box, wrapped to fit. A decision's label is the question (\"Is n even?\"); a process's is the action (\"Add 1 to total\")."
+            },
+            "image": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "An optional photo shown above the label inside the box (the diagram/cycle image-node pattern) — e.g. a step in a practical procedure. Honoured on the rectangular kinds (process / io / start / end), IGNORED on a decision (a diamond can't hold a photo). The box grows to fit. Photos display on the live web/slide; a static export shows a labelled placeholder frame until asset-rasterisation lands.",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "Absolute image URL — e.g. a Wikimedia Commons upload.wikimedia.org thumbnail. Must be a real, reachable image."
+                },
+                "alt": {
+                  "type": "string",
+                  "description": "A short description of the photo, for accessibility and the figure aria."
+                },
+                "aspect": {
+                  "type": "string",
+                  "enum": [
+                    "square",
+                    "landscape",
+                    "portrait"
+                  ],
+                  "description": "Shape of the image slot the photo is cropped to fill. Default \"landscape\" (4:3). Keep one aspect across the chart so the boxes match."
+                }
+              },
+              "required": [
+                "url"
+              ]
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this box's label as \"?\" — the question hook (\"which step/decision goes here?\"). The box and all arrows stay drawn and the hidden word never leaks into the aria description. Default false."
+            },
+            "occludeImage": {
+              "type": "boolean",
+              "description": "Blank this box's photo to a \"?\" placeholder. Ignored when there is no image. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this box — the answer, or the box reached when a staged build traces a route. Default false."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override THIS box's colour (an explicit author/teacher request). NOTE: the box hue normally ENCODES its kind (decision = teal, start/end = grey, process/io = blue), so overriding it blurs that cue — use for emphasis, not wholesale recolour. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts this box OUT of brand reskinning. Ignored on a highlighted box (amber is reserved)."
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "label"
+          ]
+        },
+        "description": "The boxes of the flowchart. Each has a unique id, a kind (the symbol) and a label. Order does not matter — positions are derived from the edges."
+      },
+      "edges": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 24,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "Id of the box the arrow leaves."
+            },
+            "to": {
+              "type": "string",
+              "description": "Id of the box the arrow enters. An edge whose target sits at or above its source (a loop-back) is routed around a side margin automatically — that is how you draw \"repeat until…\"."
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional branch label drawn at the arrow's start — the outcome of a decision, e.g. \"Yes\" / \"No\" / \"True\". Omit on a plain flow arrow."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this arrow — used to trace the active branch in a staged build, or to draw the eye to one route. Default false."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override THIS arrow's colour (and its branch label) — so a single route/branch can be picked out without recolouring the rest (\"make the Yes branch green\"). Wins over the figure-wide `colors.edges`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour) is honoured exactly and opts this arrow OUT of brand reskinning. Ignored on a highlighted arrow (amber is reserved)."
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        },
+        "description": "The directed arrows: each runs from one node id to another. A decision box should have two edges leaving it, each with a branch label (\"Yes\"/\"No\"). Point an edge back at an earlier box to draw a loop."
+      },
+      "direction": {
+        "type": "string",
+        "enum": [
+          "down",
+          "right"
+        ],
+        "description": "Reading flow: \"down\" (default) lays the chart top-to-bottom; \"right\" lays a short chart left-to-right. Keep it consistent across a lesson."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "colors": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"make the arrows grey\"). Omit to keep the themeable defaults. A per-edge `color` overrides this for one arrow; per-node `color` overrides a box's kind hue.",
+        "properties": {
+          "edges": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Default colour of every arrow and its branch label, replacing the near-black ink. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly. A single arrow can still differ via its own `color`."
+          }
+        }
+      }
+    },
+    "required": [
+      "nodes",
+      "edges"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — odd or even (a decision branching to two outputs, merging at the end)",
+      "params": {
+        "header": "Odd or even?",
+        "nodes": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "read",
+            "kind": "io",
+            "label": "Read number n"
+          },
+          {
+            "id": "check",
+            "kind": "decision",
+            "label": "Is n even?"
+          },
+          {
+            "id": "even",
+            "kind": "process",
+            "label": "Print 'even'"
+          },
+          {
+            "id": "odd",
+            "kind": "process",
+            "label": "Print 'odd'"
+          },
+          {
+            "id": "end",
+            "kind": "end",
+            "label": "End"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "read"
+          },
+          {
+            "from": "read",
+            "to": "check"
+          },
+          {
+            "from": "check",
+            "to": "even",
+            "label": "Yes"
+          },
+          {
+            "from": "check",
+            "to": "odd",
+            "label": "No"
+          },
+          {
+            "from": "even",
+            "to": "end"
+          },
+          {
+            "from": "odd",
+            "to": "end"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer space — two output boxes occluded (\"what does each branch do?\")",
+      "params": {
+        "nodes": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "read",
+            "kind": "io",
+            "label": "Read mark out of 100"
+          },
+          {
+            "id": "check",
+            "kind": "decision",
+            "label": "mark ≥ 40?"
+          },
+          {
+            "id": "pass",
+            "kind": "process",
+            "label": "Print 'pass'",
+            "occlude": true
+          },
+          {
+            "id": "fail",
+            "kind": "process",
+            "label": "Print 'fail'",
+            "occlude": true
+          },
+          {
+            "id": "end",
+            "kind": "end",
+            "label": "End"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "read"
+          },
+          {
+            "from": "read",
+            "to": "check"
+          },
+          {
+            "from": "check",
+            "to": "pass",
+            "label": "Yes"
+          },
+          {
+            "from": "check",
+            "to": "fail",
+            "label": "No"
+          },
+          {
+            "from": "pass",
+            "to": "end"
+          },
+          {
+            "from": "fail",
+            "to": "end"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — the decision box is hidden (\"what is the missing decision?\")",
+      "params": {
+        "nodes": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "read",
+            "kind": "io",
+            "label": "Read age"
+          },
+          {
+            "id": "check",
+            "kind": "decision",
+            "label": "age ≥ 18?",
+            "occlude": true
+          },
+          {
+            "id": "yes",
+            "kind": "process",
+            "label": "Can vote"
+          },
+          {
+            "id": "no",
+            "kind": "process",
+            "label": "Cannot vote"
+          },
+          {
+            "id": "end",
+            "kind": "end",
+            "label": "End"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "read"
+          },
+          {
+            "from": "read",
+            "to": "check"
+          },
+          {
+            "from": "check",
+            "to": "yes",
+            "label": "Yes"
+          },
+          {
+            "from": "check",
+            "to": "no",
+            "label": "No"
+          },
+          {
+            "from": "yes",
+            "to": "end"
+          },
+          {
+            "from": "no",
+            "to": "end"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — a loop-back (repeat until correct) with a merge into the retry step",
+      "params": {
+        "header": "Login check",
+        "nodes": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "ask",
+            "kind": "io",
+            "label": "Ask for password"
+          },
+          {
+            "id": "check",
+            "kind": "decision",
+            "label": "Correct?"
+          },
+          {
+            "id": "unlock",
+            "kind": "process",
+            "label": "Unlock account"
+          },
+          {
+            "id": "end",
+            "kind": "end",
+            "label": "End"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "ask"
+          },
+          {
+            "from": "ask",
+            "to": "check"
+          },
+          {
+            "from": "check",
+            "to": "unlock",
+            "label": "Yes"
+          },
+          {
+            "from": "check",
+            "to": "ask",
+            "label": "No"
+          },
+          {
+            "from": "unlock",
+            "to": "end"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Left-to-right pipeline — input, two processes, output (direction: right)",
+      "params": {
+        "direction": "right",
+        "nodes": [
+          {
+            "id": "in",
+            "kind": "io",
+            "label": "Input list"
+          },
+          {
+            "id": "sort",
+            "kind": "process",
+            "label": "Sort ascending"
+          },
+          {
+            "id": "filter",
+            "kind": "process",
+            "label": "Keep positives"
+          },
+          {
+            "id": "out",
+            "kind": "io",
+            "label": "Output list"
+          }
+        ],
+        "edges": [
+          {
+            "from": "in",
+            "to": "sort"
+          },
+          {
+            "from": "sort",
+            "to": "filter"
+          },
+          {
+            "from": "filter",
+            "to": "out"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Author-set colours — the Yes/No branches picked out (per-edge), a box emphasised",
+      "params": {
+        "header": "Odd or even?",
+        "nodes": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "read",
+            "kind": "io",
+            "label": "Read number n"
+          },
+          {
+            "id": "check",
+            "kind": "decision",
+            "label": "Is n even?",
+            "color": "#9b5de5"
+          },
+          {
+            "id": "even",
+            "kind": "process",
+            "label": "Print 'even'"
+          },
+          {
+            "id": "odd",
+            "kind": "process",
+            "label": "Print 'odd'"
+          },
+          {
+            "id": "end",
+            "kind": "end",
+            "label": "End"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "read"
+          },
+          {
+            "from": "read",
+            "to": "check"
+          },
+          {
+            "from": "check",
+            "to": "even",
+            "label": "Yes",
+            "color": "#3f9a57"
+          },
+          {
+            "from": "check",
+            "to": "odd",
+            "label": "No",
+            "color": "#d6453c"
+          },
+          {
+            "from": "even",
+            "to": "end"
+          },
+          {
+            "from": "odd",
+            "to": "end"
+          }
+        ]
+      }
+    }
+  ]
+}

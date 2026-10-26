@@ -1,0 +1,1336 @@
+{
+  "ref": "geometry/triangle@6",
+  "family": "geometry",
+  "name": "triangle",
+  "version": 6,
+  "title": "Triangle",
+  "tagline": "Single triangle from three vertices with angles, sides, ticks, right angles and altitude/cevians; colour-paired angle↔opposite-side annotation for sine/cosine/area-rule figures.",
+  "description": "A single triangle drawn from three vertices, with any of its interior or exterior angles, side lengths, equal-side ticks and right angles marked, plus optional internal altitude / cevian lines dropped from a vertex to the opposite side. One figure for angles in a triangle (the interior angles add to 180°), isosceles and equilateral triangles, the exterior-angle theorem (extend a side), Pythagoras (right-angle mark + side lengths), trigonometry (SOHCAHTOA with opposite/adjacent/hypotenuse labels, the sine and cosine rules), and area (½ab·sinC, or ½·base·height using a dropped perpendicular). You place the vertices as a sketch in any units; the model derives every angle and side length from them and auto-fits the figure, so the marks stay correct. A cevian drops from a named vertex to the opposite side — a perpendicular altitude (the foot is the true projection, with a right-angle mark and a derived height) or a general line at a chosen fraction (a median at ½); the two sub-segments it splits the side into carry derived, label-overridable lengths. Per-element occlusion (\"find x\"), highlighting, a \"not to scale\" note and draggable vertices on the web. Override any displayed value with a label for the given data of a not-to-scale figure. For exam-style figures: vertexLabels: false suppresses the printed vertex letters while keeping A/B/C addressing; an angle with bare: true is marked with an arc and no value (so a derived measure cannot leak an answer); and a cevian entry can mark apexAngles — the sub-angle at its apex between the cevian line and one named side, with the arc terminating at the cevian. For the trig rules, pairs annotates the opposite-pair structure: each pair paints one angle mark and its partner side's length label in a shared hue (teal, then purple, then coral — one hue per pair, up to three), so the sine-rule ratio pairs (an angle with its opposite side), the cosine-rule pair, or the area-rule trio (the included angle with its two enclosing sides) are visible on the figure; the partner side derives as the side opposite the angle when not named. pairStrokes: true also draws the literal worked-solution stroke from each paired angle across to its opposite side — the hand-drawn gesture exam solutions use before writing the ratios.",
+  "whenToUse": "Reach for this whenever the teaching lives on a triangle: the angle sum, isosceles/equilateral, the exterior-angle theorem, Pythagoras, SOHCAHTOA, the sine and cosine rules, the area rule, or any figure with a perpendicular height / dropped altitude. Place three vertices as [x, y] points making a sketch of the triangle (any units — [0,0],[6,0],[2,4]); the vertices default to labels A, B, C in the order given (override a vertex's label if you want different names). Reference an angle by its vertex label (at: \"A\") and a side by its two endpoint labels (between: [\"A\",\"B\"]). The model derives each angle and side length from the vertices, so for a to-scale figure (e.g. a 3-4-5 Pythagoras triangle placed at [0,0],[4,0],[0,3]) just mark the element and the right number shows; for a not-to-scale exam figure place a rough sketch, set notToScale: true, and override each shown value with a label (the given data, e.g. \"8 cm\", \"72°\", \"x\"). Common configurations: angle sum — mark all three angles, give two and occlude+highlight the third. Isosceles — make two sides equal in the sketch, tick them, mark the equal base angles. Pythagoras — right-angle mark at the right-angled vertex, label the two known sides, occlude the unknown. SOHCAHTOA — right triangle, one acute angle given, label sides. Sine / cosine rule — any triangle, label the known sides and angles, occlude the unknown. Exterior angle — extend a side past a vertex and mark the exterior angle there; name the point the ray reaches with tipLabel on the extend entry (base A–B extended to C prints \"C\" at the tip, showing A, B, C collinear). ALTITUDE / PERPENDICULAR HEIGHT — add a cevians entry from the apex (cevians: [{ from: \"A\" }]); by default it is a perpendicular altitude, so the model drops the foot at the true projection onto the opposite side, draws a right-angle mark, and can show the derived height (label / occlude / showLength on the entry). Split the base into named pieces with segments: [{ toward: \"B\", label: \"5 cm\" }, { toward: \"C\" }] — each sub-segment length is derived (override with label on a not-to-scale figure). Name the foot with footLabel: \"D\". Mark a cevian EQUAL to a side with ticks (1–3, matching sides[].ticks): the isosceles-sub-triangle figure ticks side DA and cevian DB with one tick each to show DA = DB (a cevian to a base point splitting a triangle, the sub-triangle isosceles). For a NON-perpendicular line (a median or general cevian) set rightAngle: false and place it with at (0 at the opposite side's first vertex in your vertices order, 1 at the second; 0.5 = midpoint = median). Keep the sketch acute enough that a perpendicular foot lands within the side (external/obtuse feet are not drawn in v1). Occlude renders a value as \"?\"; the element itself stays drawn. EXAM FIGURES with no vertex letters — set vertexLabels: false; the letters stop printing but you still address angles/sides/cevians by the default A/B/C (or your custom labels). Mark an angle with an arc and NO value with bare: true on its angles entry — use it when the figure marks an angle without giving it (a derived or occluded value would change the question); occlude beats bare if both are set. Angle between a side and an altitude/cevian — never mark the whole vertex angle when the figure's arc stops at an internal line; instead put apexAngles on the cevians entry: apexAngles: [{ toward: \"B\", label: \"65°\" }] marks the angle at the cevian's apex between the apex→B side and the cevian line (toward names the opposite-side endpoint that side reaches; the measure is derived from the sketch, override with label on a not-to-scale figure; bare/occlude/highlight as on angles). Do not also mark the whole apex angle in angles[] — the two arcs would overlap. OPPOSITE-PAIR ANNOTATION (sine rule / cosine rule / area rule) — when the teaching move is \"this angle pairs with this side\", add pairs: each entry names an angle by its vertex label (pairs: [{ angle: \"A\" }, { angle: \"C\" }]) and the model paints that angle's arc + value AND its partner side's length label in one shared hue, a different hue per pair (teal, purple, coral by array position — keep the array order stable across the blocks/stages of a lesson so each pair keeps its hue). Omit sides to derive the partner as the side OPPOSITE the angle (the sine/cosine-rule pairing); for the area rule ½ab·sinC name the TWO enclosing sides explicitly (pairs: [{ angle: \"C\", sides: [[\"C\",\"A\"],[\"C\",\"B\"]] }]). Mark the paired angle in angles[] (label or bare) and give each paired side a sides[] entry (label or occlude) — the pair recolours those marks (a pair on an unmarked angle draws a bare arc in the hue; a paired side with no entry has no label to paint). highlight beats the pair hue — keep amber for the answer. Set pairStrokes: true to ALSO draw the hand-drawn worked-solution stroke from each paired angle across the triangle to its opposite side (the faithful exam-solution form; strokes only draw to a side opposite the angle, never to one touching its vertex). Stage the pairs one beat at a time by growing the array (stage 1: pairs: [pair1]; stage 2: [pair1, pair2]) with the matching ratio in each beat's text. Cross-block convention: keep the same triangle shape and vertex labels across the blocks of one lesson so pupils track the triangle, not a redrawn sketch — change only what is given, occluded or highlighted. Almost any triangle figure can be built up in stages (empty triangle → add the givens → drop the altitude → reveal the answer). UNITS — set unit: \"cm\" once per figure to append it to every bare-number length label (derived or authored \"12\"); a label carrying its own text (\"12 cm\", \"x\") stays verbatim. Synonyms a teacher might use: triangle, angles in a triangle, angle sum, isosceles, equilateral, scalene, base angles, exterior angle, missing angle, Pythagoras, hypotenuse, right-angled, SOHCAHTOA, trigonometry, sine rule, cosine rule, opposite, adjacent, area of a triangle, perpendicular height, altitude, drop a perpendicular, foot of the perpendicular, cevian, median, not to scale, opposite pairs, pair the angle with its opposite side, included angle, colour-coded ratios.",
+  "responseModes": [],
+  "tags": [
+    "triangle",
+    "angles in a triangle",
+    "angle sum",
+    "isosceles",
+    "equilateral",
+    "scalene",
+    "base angles",
+    "exterior angle",
+    "missing angle",
+    "pythagoras",
+    "hypotenuse",
+    "right-angled",
+    "right angle",
+    "sohcahtoa",
+    "trigonometry",
+    "trig",
+    "sine rule",
+    "cosine rule",
+    "opposite",
+    "adjacent",
+    "area",
+    "perpendicular height",
+    "altitude",
+    "cevian",
+    "median",
+    "drop a perpendicular",
+    "foot of the perpendicular",
+    "not to scale",
+    "unlabelled vertices",
+    "bare angle mark",
+    "angle between side and altitude",
+    "opposite pairs",
+    "angle and opposite side",
+    "included angle",
+    "colour-coded ratios",
+    "sine rule pairs",
+    "cevian marked equal",
+    "isosceles sub-triangle",
+    "equal cevian",
+    "extended side named",
+    "straight line point",
+    "ray tip label",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "vertices": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "description": "The three corners of the triangle, in order. Each is a point in any units — place them as a SKETCH of the triangle you want; the model derives the angles and side lengths from them and auto-fits the figure to the canvas. The order fixes the default labels: the first corner is A, the second B, the third C. Avoid a degenerate (near-collinear) triangle.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Position of this corner as [x, y] in your own units (y up). Only the SHAPE matters — the figure is scaled to fit."
+            },
+            "label": {
+              "type": "string",
+              "description": "Display name for this corner, drawn just outside it. Defaults to A, B, C by order. Override for different names (and then reference this corner by the new label in angles/sides/extend/cevians)."
+            }
+          },
+          "required": [
+            "at"
+          ]
+        }
+      },
+      "angles": {
+        "type": "array",
+        "description": "The angles to MARK with an arc and a value. Address each by its vertex label (the default A/B/C, or a custom label). The measure is DERIVED from the vertices; for a not-to-scale figure override it with label. Omit a vertex to leave its angle unmarked.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "type": "string",
+              "description": "Which vertex this angle sits at — the vertex label (e.g. \"A\")."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the displayed value — the given measure on a not-to-scale figure (\"72°\"), or an unknown (\"x\"). Omit to show the measure derived from the vertices (e.g. \"59°\")."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this angle's value as \"?\" — the \"find the missing angle\" hook. The arc still shows. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the eye to this angle (amber arc + value) — the answer, or the angle a question is about. Default false."
+            },
+            "bare": {
+              "type": "boolean",
+              "description": "Mark this angle with the arc ONLY — no value text. Use when the source figure marks an angle without giving its size (printing the derived measure would leak an answer). occlude beats bare: set occlude instead when the question asks FOR this angle. Default false."
+            },
+            "rightAngle": {
+              "type": "boolean",
+              "description": "Mark this angle as a right angle: a small square instead of an arc and value. Use when the vertex is the right angle of the triangle. Default false."
+            },
+            "exterior": {
+              "type": "boolean",
+              "description": "Mark the EXTERIOR angle at this vertex (between an extended side and the next side) instead of the interior one. Requires a matching extend entry through this vertex. Use for the exterior-angle theorem. Default false."
+            }
+          },
+          "required": [
+            "at"
+          ]
+        }
+      },
+      "sides": {
+        "type": "array",
+        "description": "The sides to LABEL with a length and/or tick as equal. Address each by its two endpoint vertex labels. The length is DERIVED from the vertices; override with label for the given value or an unknown. Omit a side to leave it bare.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "between": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "The two endpoint vertex labels of this side, e.g. [\"A\",\"B\"] (order does not matter)."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the displayed length — the given value (\"8 cm\", \"x\"), or a trig role (\"opposite\", \"adjacent\", \"hypotenuse\"). Omit to show the length derived from the vertices."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this side's length as \"?\" — the \"find the missing side\" hook. The side stays drawn. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the eye to this side (amber) — the answer, or the side in question. Default false."
+            },
+            "ticks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3,
+              "description": "Draw this many small equal-length ticks across the side. Sides with the SAME tick count read as equal (isosceles = 1 tick on each of the two equal sides; congruence figures use 1, 2, 3 to pair sides). Omit for no tick."
+            }
+          },
+          "required": [
+            "between"
+          ]
+        }
+      },
+      "cevians": {
+        "type": "array",
+        "description": "Internal lines dropped from a vertex to a point on the opposite side — an altitude (perpendicular height), a median, or a general cevian. Each splits the opposite side into two sub-segments whose lengths are derived (override with a label on a not-to-scale figure). Usually one. Omit for none. @2.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "The vertex label the line drops FROM (its apex). The line lands on the opposite side — the one not touching this vertex."
+            },
+            "rightAngle": {
+              "type": "boolean",
+              "description": "Whether this is a perpendicular altitude. Default TRUE: the foot is placed at the true perpendicular projection of the apex onto the opposite side and a right-angle square is drawn there, so the mark is always a genuine 90° even on a not-to-scale sketch (`at` is ignored). Set false for an oblique line (median / general cevian) placed by `at`, with no square."
+            },
+            "at": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "For an oblique cevian (rightAngle: false) only: the foot's fractional position along the opposite side, 0 at the side's first endpoint in your vertices order and 1 at the second. 0.5 = the midpoint (a median). Ignored for a perpendicular altitude (its foot is derived). Default 0.5."
+            },
+            "footLabel": {
+              "type": "string",
+              "description": "Optional name for the foot point where the line meets the side (e.g. \"D\"), drawn just outside the side at the foot. Omit for no name."
+            },
+            "ticks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3,
+              "description": "Draw this many equal-length ticks across the cevian line, so it can be marked EQUAL to a ticked side. A cevian and a side carrying the SAME tick count read as equal — the isosceles-sub-triangle figure: tick side DA and cevian DB with one tick each to show DA = DB. Matches sides[].ticks (same accent tick). Omit for no tick. @6."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the displayed length of the cevian itself (the perpendicular height) — a given value (\"h\", \"12 cm\") or an unknown (\"x\"). Omit to leave the line unlabelled unless showLength is set."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the cevian's own length as \"?\" (the \"find the height\" hook) and draw its length position. The line still shows. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the eye to the cevian line and its length (amber) — the answer, or the height a question is about. Default false."
+            },
+            "showLength": {
+              "type": "boolean",
+              "description": "Show the derived length of the cevian (the perpendicular height) even with no label. Default false — a bare cevian draws just the line. (label or occlude also force the length to show.)"
+            },
+            "apexAngles": {
+              "type": "array",
+              "maxItems": 2,
+              "description": "Mark the sub-angle(s) at this cevian's APEX between the cevian line and one of the apex's two sides — the arc terminates at the cevian. Use when a figure marks the angle between a side and an internal altitude (a whole-vertex angles entry would sweep across the cevian and read as the full apex angle). At most one per side. Omit for none. @3.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "toward": {
+                    "type": "string",
+                    "description": "Which side of the apex bounds this sub-angle: the opposite-side endpoint that side reaches (a vertex label, e.g. \"B\" marks the angle between side apex→B and the cevian)."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Override the displayed value — the given measure on a not-to-scale figure (\"65°\") or an unknown (\"x°\"). Omit to show the measure derived from the sketch."
+                  },
+                  "occlude": {
+                    "type": "boolean",
+                    "description": "Render this sub-angle's value as \"?\" — the \"find this angle\" hook. The arc still shows. Default false."
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Draw the eye to this sub-angle (amber arc + value). Default false."
+                  },
+                  "bare": {
+                    "type": "boolean",
+                    "description": "Arc only, no value text (as angles[].bare). occlude beats bare. Default false."
+                  }
+                },
+                "required": [
+                  "toward"
+                ]
+              }
+            },
+            "segments": {
+              "type": "array",
+              "maxItems": 2,
+              "description": "Label the two sub-segments the foot splits the opposite side into. Each length is DERIVED; override with label. Address a sub-segment by the endpoint it reaches (toward). Omit for unlabelled sub-segments.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "toward": {
+                    "type": "string",
+                    "description": "The opposite-side endpoint this sub-segment reaches — a vertex label. The sub-segment runs from the foot to this vertex (e.g. toward: \"B\" is the foot→B piece)."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Override the displayed length of this sub-segment — the given value (\"5 cm\", \"x\"). Omit to show the length derived from the vertices."
+                  },
+                  "occlude": {
+                    "type": "boolean",
+                    "description": "Render this sub-segment's length as \"?\" — the \"find this piece\" hook. Default false."
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Draw the eye to this sub-segment (amber). Default false."
+                  }
+                },
+                "required": [
+                  "toward"
+                ]
+              }
+            }
+          },
+          "required": [
+            "from"
+          ]
+        }
+      },
+      "extend": {
+        "type": "array",
+        "description": "Side extensions, for exterior-angle figures. Each draws the side from one vertex through another and onward past it as a ray, so the exterior angle at the far vertex can be marked (an angles entry there with exterior: true). Omit for none.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "The vertex label the side starts at."
+            },
+            "through": {
+              "type": "string",
+              "description": "The vertex label the side passes through; the ray continues past this vertex. The exterior angle is marked here."
+            },
+            "tipLabel": {
+              "type": "string",
+              "description": "Optional letter drawn at the FAR tip of the extended ray — the collinear point beyond `through` (e.g. base A–B extended to C prints \"C\" at the ray end, so \"A, B and C lie on a straight line\" is shown on the figure). Use when the source figure names the point the side is extended to. Omit for an unnamed ray. @6."
+            }
+          },
+          "required": [
+            "from",
+            "through"
+          ]
+        }
+      },
+      "pairs": {
+        "type": "array",
+        "maxItems": 3,
+        "description": "Opposite-pair annotation — the sine/cosine/area-rule teaching move of visually pairing an angle with its partner side(s). Each pair paints one marked angle (arc + value) and its partner side's length label in one shared hue, a DISTINCT hue per pair (teal, then purple, then coral — array position fixes the hue, so keep the order stable across the blocks/stages of a lesson). Mark the paired angle in angles[] (a pair on an unmarked angle draws a bare arc in the hue) and give each partner side a sides[] entry so there is a label to paint. highlight on an element beats its pair hue (amber stays the answer); when two pairs claim one side, the first keeps it. Omit for none. @4.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "angle": {
+              "type": "string",
+              "description": "The vertex label of the paired angle (e.g. \"A\"). Interior angles only."
+            },
+            "sides": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 2,
+              "description": "The partner side(s), each as its two endpoint vertex labels (e.g. [[\"B\",\"C\"]]; order within a side does not matter). OMIT to derive the side OPPOSITE the angle — the sine/cosine-rule partner. For the area rule ½ab·sinC name the TWO sides enclosing the included angle explicitly (e.g. angle \"C\" with sides [[\"C\",\"A\"],[\"C\",\"B\"]]).",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "One side, as its two endpoint vertex labels."
+              }
+            }
+          },
+          "required": [
+            "angle"
+          ]
+        }
+      },
+      "pairStrokes": {
+        "type": "boolean",
+        "description": "With pairs: also draw the literal worked-solution stroke from each paired angle across the triangle to its partner side (a straight line in the pair hue, stopped short of the side) — the hand-drawn gesture exam solutions use before writing the sine-rule ratios. Strokes only draw to a side OPPOSITE the angle (never to a side touching its vertex — colour alone carries an area-rule pair). Default false. @4."
+      },
+      "unit": {
+        "type": "string",
+        "description": "The figure's length unit, e.g. \"cm\", \"m\", \"mm\". Appended to every length label that is a BARE NUMBER — a derived length or a purely numeric authored label (\"12\" → \"12 cm\"). A label with any other text (\"12 cm\", \"x\", \"2x + 1\") is shown verbatim — an authored override always wins. Angle labels never take it. Default \"\" (labels stay bare). Set it once per figure and keep it consistent across a lesson. @5."
+      },
+      "vertexLabels": {
+        "type": "boolean",
+        "description": "Whether to PRINT the vertex letters beside the corners. Set false for exam figures drawn without letters (common in sine/cosine-rule questions) — addressing in angles/sides/extend/cevians still uses the default A/B/C (or custom labels); only the printing is suppressed. Default true."
+      },
+      "notToScale": {
+        "type": "boolean",
+        "description": "Print a \"Not to scale\" note by the figure. Only when the source figure prints one — most exam figures don't. Default false."
+      },
+      "caption": {
+        "type": "string",
+        "description": "An optional line of text centred below the figure — the rule or fact being taught, e.g. \"Angles in a triangle add to 180°\" or \"Base angles of an isosceles triangle are equal\". Omit for none."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "draggablePoints": {
+        "type": "boolean",
+        "description": "Web-only. Let pupils drag a vertex to reshape the triangle; the derived angles, side lengths and any cevian foot/height recompute live while the angle sum stays 180° — the invariant. Best on a to-scale figure (no overridden labels). Default false."
+      }
+    },
+    "required": [
+      "vertices"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank triangle frame (label A, B, C) — answer space",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              6,
+              0
+            ]
+          },
+          {
+            "at": [
+              2.4,
+              4
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Angle sum (occluded question) — find the third angle",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              7,
+              0
+            ]
+          },
+          {
+            "at": [
+              1.6,
+              4
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "A",
+            "label": "72°"
+          },
+          {
+            "at": "B",
+            "label": "49°"
+          },
+          {
+            "at": "C",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "notToScale": true,
+        "caption": "Angles in a triangle add to 180°"
+      }
+    },
+    {
+      "label": "Isosceles — equal sides ticked, find the base angles",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              3,
+              5
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              6,
+              0
+            ]
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "ticks": 1
+          },
+          {
+            "between": [
+              "A",
+              "C"
+            ],
+            "ticks": 1
+          }
+        ],
+        "angles": [
+          {
+            "at": "A",
+            "label": "40°"
+          },
+          {
+            "at": "B",
+            "occlude": true
+          },
+          {
+            "at": "C",
+            "occlude": true
+          }
+        ],
+        "caption": "Base angles of an isosceles triangle are equal"
+      }
+    },
+    {
+      "label": "Pythagoras (to scale) — 3 and 4, find the hypotenuse",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              3
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              4,
+              0
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "B",
+            "rightAngle": true
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "3 cm"
+          },
+          {
+            "between": [
+              "B",
+              "C"
+            ],
+            "label": "4 cm"
+          },
+          {
+            "between": [
+              "A",
+              "C"
+            ],
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "caption": "a² + b² = c²"
+      }
+    },
+    {
+      "label": "Trigonometry (SOHCAHTOA, not to scale) — find the opposite side",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              3.5
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              5,
+              0
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "B",
+            "rightAngle": true
+          },
+          {
+            "at": "C",
+            "label": "35°"
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "C"
+            ],
+            "label": "12 cm"
+          },
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "notToScale": true
+      }
+    },
+    {
+      "label": "Altitude (to scale) — perpendicular height, area = ½·base·height",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              3,
+              4
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              7,
+              0
+            ]
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "B",
+              "C"
+            ],
+            "label": "7"
+          }
+        ],
+        "cevians": [
+          {
+            "from": "A",
+            "showLength": true,
+            "highlight": true
+          }
+        ],
+        "unit": "cm",
+        "caption": "Area = ½ × base × perpendicular height"
+      }
+    },
+    {
+      "label": "The hard case — Q7 altitude, sub-segments labelled (not to scale)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              2.6,
+              3.4
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              7,
+              0
+            ]
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "7 cm"
+          },
+          {
+            "between": [
+              "A",
+              "C"
+            ],
+            "label": "10 cm"
+          }
+        ],
+        "cevians": [
+          {
+            "from": "A",
+            "footLabel": "D",
+            "occlude": true,
+            "segments": [
+              {
+                "toward": "B",
+                "label": "5 cm"
+              },
+              {
+                "toward": "C",
+                "label": "8 cm"
+              }
+            ]
+          }
+        ],
+        "notToScale": true,
+        "caption": "Drop a perpendicular to split the triangle into two right-angled triangles"
+      }
+    },
+    {
+      "label": "Altitude question — height occluded, one sub-segment given",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              3,
+              3.6
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              6,
+              0
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "B",
+            "label": "52°"
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "9 cm"
+          }
+        ],
+        "cevians": [
+          {
+            "from": "A",
+            "footLabel": "D",
+            "occlude": true,
+            "highlight": true,
+            "segments": [
+              {
+                "toward": "B",
+                "occlude": true
+              }
+            ]
+          }
+        ],
+        "notToScale": true
+      }
+    },
+    {
+      "label": "Median (oblique cevian) — line to the midpoint of the base",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              1.5,
+              4
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              6,
+              0
+            ]
+          }
+        ],
+        "cevians": [
+          {
+            "from": "A",
+            "rightAngle": false,
+            "at": 0.5,
+            "footLabel": "M",
+            "segments": [
+              {
+                "toward": "B"
+              },
+              {
+                "toward": "C"
+              }
+            ]
+          }
+        ],
+        "caption": "A median joins a vertex to the midpoint of the opposite side"
+      }
+    },
+    {
+      "label": "The hard case — exterior angle of an obtuse triangle",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              8,
+              0
+            ]
+          },
+          {
+            "at": [
+              5.39,
+              3.11
+            ]
+          }
+        ],
+        "extend": [
+          {
+            "from": "A",
+            "through": "B"
+          }
+        ],
+        "angles": [
+          {
+            "at": "A"
+          },
+          {
+            "at": "C"
+          },
+          {
+            "at": "B",
+            "exterior": true,
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "caption": "An exterior angle equals the sum of the two opposite interior angles"
+      }
+    },
+    {
+      "label": "Exam figure, no vertex letters — sine rule (vertexLabels: false)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              7.4,
+              0
+            ]
+          },
+          {
+            "at": [
+              4.8,
+              2.7
+            ]
+          }
+        ],
+        "vertexLabels": false,
+        "angles": [
+          {
+            "at": "A",
+            "label": "44°"
+          },
+          {
+            "at": "C",
+            "label": "98°"
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "11 cm"
+          },
+          {
+            "between": [
+              "B",
+              "C"
+            ],
+            "label": "y cm",
+            "highlight": true
+          }
+        ],
+        "notToScale": true
+      }
+    },
+    {
+      "label": "Bare angle mark — arc with no value (angles[].bare)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              3.2,
+              3.6
+            ]
+          },
+          {
+            "at": [
+              7.6,
+              0
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "A",
+            "label": "78°"
+          },
+          {
+            "at": "C",
+            "label": "44°"
+          },
+          {
+            "at": "B",
+            "bare": true
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "10 m"
+          }
+        ],
+        "notToScale": true
+      }
+    },
+    {
+      "label": "The hard case — angle between a side and the altitude (apexAngles)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              3,
+              3.8
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              7.2,
+              0
+            ]
+          }
+        ],
+        "vertexLabels": false,
+        "angles": [
+          {
+            "at": "B",
+            "label": "35°"
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "y cm",
+            "highlight": true
+          },
+          {
+            "between": [
+              "A",
+              "C"
+            ],
+            "label": "11 cm"
+          }
+        ],
+        "cevians": [
+          {
+            "from": "A",
+            "apexAngles": [
+              {
+                "toward": "B",
+                "label": "58°"
+              }
+            ],
+            "segments": [
+              {
+                "toward": "C",
+                "label": "4 cm"
+              }
+            ]
+          }
+        ],
+        "notToScale": true
+      }
+    },
+    {
+      "label": "Sine rule — opposite pairs coloured (find a side)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              7.6,
+              0
+            ]
+          },
+          {
+            "at": [
+              5.2,
+              3.1
+            ]
+          }
+        ],
+        "vertexLabels": false,
+        "angles": [
+          {
+            "at": "A",
+            "label": "46°"
+          },
+          {
+            "at": "C",
+            "label": "103°"
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "B",
+              "C"
+            ],
+            "label": "x cm"
+          },
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "9 cm"
+          }
+        ],
+        "pairs": [
+          {
+            "angle": "A"
+          },
+          {
+            "angle": "C"
+          }
+        ],
+        "notToScale": true
+      }
+    },
+    {
+      "label": "Area rule — included angle paired with its two sides",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              3.4,
+              3.2
+            ]
+          },
+          {
+            "at": [
+              7,
+              0
+            ]
+          },
+          {
+            "at": [
+              0,
+              0
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "C",
+            "label": "38°"
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "C",
+              "B"
+            ],
+            "label": "11 cm"
+          },
+          {
+            "between": [
+              "C",
+              "A"
+            ],
+            "label": "8 cm"
+          }
+        ],
+        "pairs": [
+          {
+            "angle": "C",
+            "sides": [
+              [
+                "C",
+                "B"
+              ],
+              [
+                "C",
+                "A"
+              ]
+            ]
+          }
+        ],
+        "notToScale": true,
+        "caption": "Area = ½ ab sin C"
+      }
+    },
+    {
+      "label": "The hard case — three pairs with strokes (perimeter figure)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "at": [
+              7.4,
+              -0.4
+            ]
+          },
+          {
+            "at": [
+              6,
+              -2.4
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "A",
+            "label": "26°"
+          },
+          {
+            "at": "B",
+            "label": "112°"
+          },
+          {
+            "at": "C",
+            "label": "42°"
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "A",
+              "C"
+            ],
+            "label": "12.4 m"
+          },
+          {
+            "between": [
+              "A",
+              "B"
+            ],
+            "label": "x m"
+          },
+          {
+            "between": [
+              "B",
+              "C"
+            ],
+            "label": "y m"
+          }
+        ],
+        "pairs": [
+          {
+            "angle": "B"
+          },
+          {
+            "angle": "C"
+          },
+          {
+            "angle": "A"
+          }
+        ],
+        "pairStrokes": true,
+        "notToScale": true
+      }
+    },
+    {
+      "label": "Cevian marked equal to a side — isosceles sub-triangle (ticks, @6)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              1.3,
+              3.6
+            ],
+            "label": "P"
+          },
+          {
+            "at": [
+              0,
+              0
+            ],
+            "label": "Q"
+          },
+          {
+            "at": [
+              6,
+              0
+            ],
+            "label": "R"
+          }
+        ],
+        "cevians": [
+          {
+            "from": "P",
+            "rightAngle": false,
+            "at": 0.32,
+            "footLabel": "S",
+            "ticks": 1,
+            "apexAngles": [
+              {
+                "toward": "Q",
+                "label": "74°"
+              }
+            ]
+          }
+        ],
+        "sides": [
+          {
+            "between": [
+              "P",
+              "Q"
+            ],
+            "ticks": 1
+          }
+        ],
+        "notToScale": true,
+        "caption": "PQ = PS — an isosceles sub-triangle"
+      }
+    },
+    {
+      "label": "Extended base named at its tip (tipLabel, @6)",
+      "params": {
+        "vertices": [
+          {
+            "at": [
+              0,
+              0
+            ],
+            "label": "P"
+          },
+          {
+            "at": [
+              5,
+              0
+            ],
+            "label": "Q"
+          },
+          {
+            "at": [
+              1.8,
+              3.6
+            ],
+            "label": "R"
+          }
+        ],
+        "extend": [
+          {
+            "from": "P",
+            "through": "Q",
+            "tipLabel": "T"
+          }
+        ],
+        "angles": [
+          {
+            "at": "R",
+            "label": "43°"
+          },
+          {
+            "at": "P",
+            "label": "73°"
+          },
+          {
+            "at": "Q",
+            "exterior": true,
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "notToScale": true,
+        "caption": "P, Q and T lie on a straight line"
+      }
+    }
+  ]
+}

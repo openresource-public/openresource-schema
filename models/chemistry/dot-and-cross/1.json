@@ -1,0 +1,180 @@
+{
+  "ref": "chemistry/dot-and-cross@1",
+  "family": "chemistry",
+  "name": "dot-and-cross",
+  "version": 1,
+  "title": "Dot-and-cross diagram (bonding)",
+  "tagline": "Dot-and-cross bonding diagram derived from the formula — shells, shared pairs, transferred electrons and ion charges all computed; electrons and charges occludable.",
+  "description": "The GCSE dot-and-cross bonding diagram. Each atom is drawn as its outer-shell circle with the symbol at the centre and its outer electrons around the edge — one atom's electrons as dots, the other's as crosses — so you can see where every electron came from. A covalent species draws the circles OVERLAPPING with the shared pair (or two pairs for a double bond, three for a triple) sitting in the overlap; an ionic species draws separate ions in square brackets with their charges, the metal's outer shell emptied and the transferred electrons now visible as the other symbol inside the non-metal. You write only the formula, e.g. \"H2O\", \"MgCl2\", \"CO2\", \"N2\". Everything else is derived: the bond type from whether a metal is present, each element's outer-shell count from its group, which atom is central and where its ligands sit, the bond order from how many electrons the central atom still needs, every shared pair and lone pair, which electrons transfer and where they land, and the ion charges — which must balance, or the formula is refused rather than drawn wrongly. A species the octet rule cannot derive (SO2, O3, C2H6) is refused for the same reason. Step the stage from the separate atoms, through the transfer arrows or the first shared pairs, to the finished diagram for a staged build; occlude the shared or transferred electrons to pose \"complete the diagram\", occlude every electron for a blank answer space, or occlude the charges, the bond type, the formula or the symbols to pose those instead.",
+  "whenToUse": "Reach for this for GCSE (and KS3) chemical bonding whenever the lesson draws a dot-and-cross diagram: ionic bonding (electron transfer, ions and their charges) and simple covalent bonding (shared pairs, single / double / triple bonds). Author the formula only — \"NaCl\", \"MgO\", \"MgCl2\", \"Na2O\", \"CaF2\" for ionic; \"H2\", \"Cl2\", \"O2\", \"N2\", \"HCl\", \"H2O\", \"NH3\", \"CH4\", \"CO2\", \"H2S\", \"PH3\", \"CCl4\", \"SiH4\" for covalent — and the model works out the bonding, the electrons and the charges. It refuses anything the octet rule cannot derive, so if a formula is rejected the chemistry needs a different representation, not a workaround. Common configurations. A worked figure: just the formula, with show.key on so pupils can see which symbol belongs to which element. A staged build: use stage \"atoms\" for the opening frame (the separate atoms with their own outer electrons), then \"transfer\" (ionic: curved arrows showing which electrons move; covalent: the shared pairs placed, lone pairs not yet drawn), then \"bonded\" (the finished diagram) — the frames are the same size, so the figure never jumps. A question: occlude \"bonding\" hides the shared pairs / transferred electrons for \"complete the dot-and-cross diagram\" (the ion charges hide with them, since a charge announces how many electrons arrived); occlude \"electrons\" empties every shell for a full \"draw the diagram\" answer space; occlude \"charges\" asks for the charge on each ion from a complete diagram; occlude \"bond-type\" asks \"what type of bonding is this?\"; occlude \"formula\" asks pupils to write the formula from the picture; occlude \"symbols\" hides the element symbols. highlight \"bonding\" ambers the shared or transferred electrons — the \"these are the electrons that moved\" emphasis; \"lone\" and \"charges\" do the same for those. Conventions: keep show.key on for the first diagram of a lesson and off once pupils know the code; keep the same stage across a comparison so pupils compare like with like; draw ONE species per block (two compounds side by side are two blocks, not one figure); and keep the explanation — why a metal loses electrons, why a shared pair counts for both atoms — in the block text, not on the canvas. v1 draws outer shells only (the GCSE convention), binary species of up to five atoms or three ions, and no giant structures, metallic bonding, dative bonds or 3-D shape. Switch model when the teaching is atomic structure rather than bonding (physics/atom draws the full shell model of a single atom, with its nucleus and every shell) or the states of matter (chemistry/particle-model). Synonyms a teacher might use: dot and cross, dot-and-cross diagram, bonding diagram, electron transfer, ionic bonding, ions, covalent bonding, shared pair, bonding pair, lone pair, double bond, triple bond, molecule, outer shell, valence electrons, octet.",
+  "responseModes": [],
+  "tags": [
+    "dot and cross",
+    "dot-and-cross",
+    "bonding",
+    "chemical bonding",
+    "ionic bonding",
+    "ionic",
+    "ion",
+    "ions",
+    "electron transfer",
+    "covalent bonding",
+    "covalent",
+    "shared pair",
+    "bonding pair",
+    "lone pair",
+    "double bond",
+    "triple bond",
+    "molecule",
+    "outer shell",
+    "valence electrons",
+    "octet",
+    "noble gas structure",
+    "charge",
+    "cation",
+    "anion",
+    "chemistry",
+    "science",
+    "ks3",
+    "gcse"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "formula"
+    ],
+    "properties": {
+      "formula": {
+        "type": "string",
+        "pattern": "^(?:[A-Z][a-z]?[0-9]{0,2}){1,4}$",
+        "description": "The species, written as a chemical formula with element symbols capitalised and counts as plain digits — \"NaCl\", \"MgCl2\", \"Na2O\", \"H2O\", \"NH3\", \"CO2\", \"N2\". This is the ONLY chemistry you author: the bond type, the electron counts, the bond order and the charges are all derived from it. Supported elements: H, Li, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca. IONIC (a metal — Li, Na, K, Mg, Ca — with a non-metal): the charges must balance and there must be at most three ions in total, so NaCl, MgO, CaO, MgCl2, CaF2, Na2O, K2S all work but Al2O3 and Na3N do not. COVALENT (non-metals only): either two atoms of one element (H2, O2, N2, Cl2) or one central atom with up to four identical ligands (HCl, H2O, NH3, CH4, CO2, H2S, PH3, CCl4, SiH4) — the bond order must come out whole, so SO2, O3, NO, C2H6, H2O2 and CH3Cl are refused rather than drawn wrongly."
+      },
+      "stage": {
+        "type": "string",
+        "enum": [
+          "atoms",
+          "transfer",
+          "bonded"
+        ],
+        "description": "Which frame of the build to draw — the staged-build control. \"atoms\" (the opening frame): the separate, uncombined atoms, each with its own outer electrons and no brackets or charges. \"transfer\": IONIC — the same atoms with curved arrows showing which electrons move and where they land; COVALENT — the atoms brought together with the shared pair(s) placed in the overlap, lone pairs not yet drawn. \"bonded\" (the default, and the finished diagram): ionic — the ions in square brackets with their charges, the metal's outer shell now empty and the transferred electrons visible inside the non-metal; covalent — the whole molecule, shared pairs and lone pairs. Step it \"atoms\" → \"transfer\" → \"bonded\" across a staged block's frames; the atom size and the canvas are computed from all three stages together, so the frames are exactly the same size and the figure never swells. Purely presentational — never a chemistry claim."
+      },
+      "occlude": {
+        "type": "string",
+        "enum": [
+          "bonding",
+          "lone",
+          "electrons",
+          "charges",
+          "bond-type",
+          "formula",
+          "symbols"
+        ],
+        "description": "Hide ONE thing to pose a question. Values naming ELECTRONS leave the space empty — the diagram to complete; values naming READOUTS render \"?\". Equivalent readouts blank together so the answer cannot leak, in the figure and in the accessible label alike. \"bonding\": the shared pairs (covalent) or the transferred electrons (ionic) are left out — \"complete the dot-and-cross diagram\"; the ion charges and the shared-pair / transferred-electron count blank with them, since either would announce the answer. \"lone\": the non-bonding electrons are left out (the bonding ones stay). \"electrons\": EVERY electron is left out — empty shells, the \"draw the dot-and-cross diagram\" answer space; the charges and counts blank too. \"charges\": only the ion charge superscripts blank — \"give the charge on each ion\", read off the completed diagram. \"bond-type\": the bonding readout blanks — \"what type of bonding is this?\"; the shared-pair / transferred-electron count blanks with it. \"formula\": the formula readout blanks — \"write down the formula of this compound\", counted off the figure. \"symbols\": the element symbols blank, and the formula and key names with them. Omit for a fully shown figure."
+      },
+      "highlight": {
+        "type": "string",
+        "enum": [
+          "bonding",
+          "lone",
+          "charges"
+        ],
+        "description": "Amber ONE feature — the result / emphasis cue, one cue at a time. \"bonding\": the shared pairs (covalent) or the transferred electrons (ionic) — the \"these are the electrons that moved\" emphasis. \"lone\": the non-bonding electrons. \"charges\": the ion charge superscripts. Omit for no emphasis. A feature that is occluded is never highlighted (there is nothing to see)."
+      },
+      "label": {
+        "type": "string",
+        "description": "An optional caption drawn in italics beneath the figure (e.g. \"Sodium chloride\", \"A molecule of water\", or exam wording). Omit to let the figure speak for itself."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles — what to draw around the atoms. All default true except key.",
+        "properties": {
+          "formula": {
+            "type": "boolean",
+            "description": "Show the formula readout (with proper subscripts) below the figure. Default true."
+          },
+          "bondType": {
+            "type": "boolean",
+            "description": "Show the derived bonding readout below the figure — \"Covalent bonding · 2 shared pairs\" / \"Ionic bonding · 1 electron transferred\". Default true."
+          },
+          "key": {
+            "type": "boolean",
+            "description": "Show a small key naming whose electrons the dots and the crosses are (\"● oxygen ✕ hydrogen\"). Default FALSE — turn it on for the first diagram of a lesson, off once pupils know the code. For a diatomic element (Cl2) the key names the two atoms instead."
+          },
+          "charges": {
+            "type": "boolean",
+            "description": "Show the ion charge superscripts on an ionic diagram. Default true; ignored on a covalent species (there are no charges) and on the \"atoms\" stage (the ions do not exist yet)."
+          },
+          "brackets": {
+            "type": "boolean",
+            "description": "Draw the square brackets round each ion on an ionic diagram. Default true; ignored on a covalent species and on the \"atoms\" stage."
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Worked example — water, two shared pairs",
+      "params": {
+        "formula": "H2O",
+        "show": {
+          "key": true
+        },
+        "header": "Water",
+        "label": "Each hydrogen shares one pair with the oxygen"
+      }
+    },
+    {
+      "label": "Worked example — sodium chloride, one electron transferred",
+      "params": {
+        "formula": "NaCl",
+        "show": {
+          "key": true
+        },
+        "header": "Sodium chloride",
+        "label": "Sodium gives its outer electron to chlorine"
+      }
+    },
+    {
+      "label": "The transfer stage — magnesium oxide, arrows showing both electrons moving",
+      "params": {
+        "formula": "MgO",
+        "stage": "transfer",
+        "header": "Magnesium oxide",
+        "label": "Magnesium loses two electrons; oxygen gains two"
+      }
+    },
+    {
+      "label": "Occluded question — complete the bonding in ammonia",
+      "params": {
+        "formula": "NH3",
+        "occlude": "bonding"
+      }
+    },
+    {
+      "label": "Answer space — draw the diagram for magnesium chloride (every shell empty)",
+      "params": {
+        "formula": "MgCl2",
+        "occlude": "electrons"
+      }
+    },
+    {
+      "label": "The hard case — carbon dioxide, two double bonds",
+      "params": {
+        "formula": "CO2",
+        "show": {
+          "key": true
+        },
+        "highlight": "bonding",
+        "header": "Carbon dioxide",
+        "label": "Carbon shares two pairs with each oxygen"
+      }
+    }
+  ]
+}

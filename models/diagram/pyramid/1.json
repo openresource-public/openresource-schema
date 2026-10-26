@@ -1,0 +1,461 @@
+{
+  "ref": "diagram/pyramid@1",
+  "family": "diagram",
+  "name": "pyramid",
+  "version": 1,
+  "title": "Pyramid (stacked tiers)",
+  "tagline": "Stacked-triangle pyramid of labelled tiers from a broad base to a narrow tip; equal or value-proportional heights, derived percentages, occludable labels/values, invertible.",
+  "description": "A 2-D pyramid: one triangle (point at the top, widest at the base) sliced into an ordered stack of labelled tiers, each a horizontal trapezium band (the tip tier is a triangle). It draws the classic \"broad base to a narrow top\" pictures: ecological pyramids of energy, biomass or numbers (with their trophic levels producers → primary → secondary → apex predator), the food / healthy-eating pyramid, and Maslow's hierarchy of needs. You author only an ordered list of tiers, top to bottom, each with a label and optional value/detail; the model derives the triangle outline, every tier's trapezium slice and width, the tier heights (equal by default, or proportional to each value), the centred labels, each value's percentage of the total, and an optional side-axis caption (\"energy decreases ▲\"). A tier's label occludes to \"?\" (\"name this trophic level\"), its value occludes independently, a tier highlights in amber to mark the answer, `reveal` builds the pyramid from its base one tier at a time, and `invert:true` flips the triangle to point downward for an inverted pyramid of numbers. For a 3-D pyramid solid (volume, surface area, nets) use geometry/solid; for an addition pyramid where each brick is the sum of the two below use algebra/number-pyramid.",
+  "whenToUse": "Reach for this for any \"layers from a broad base to a narrow top\" diagram. The big uses: an ecological pyramid — energy / biomass / numbers across trophic levels (producers at the base, then primary, secondary and tertiary consumers up to the apex predator); a food / healthy-eating pyramid (eat most from the base, least from the tip); and Maslow's hierarchy of needs. Author the tiers as an ordered list, top first down to the base last — the order is the only thing you set; widths and heights are derived. Give each tier an id and a label; add a `value` (and a figure-wide `unit`) when the levels carry a quantity. Heights: leave `scale` as \"equal\" for an ordinal pyramid (Maslow, food groups) where the bands are just layers; set scale:\"proportional\" to make each tier's height reflect its value — energy pyramids taper hard because energy falls ~90% per level, and the value-1 apex stays a thin labelled tip (its exact value is in the readout). Turn on showValues/showPercent for the numeric readouts, and add `axis:{label:\"Energy available\", arrow:\"up\"}` for the side caption. Inverted pyramids: set invert:true (point at the bottom) for a pyramid of numbers where one producer supports many consumers. Questions: set a tier's occlude to hide its label (\"name this level\"), occludeValue to hide its number (\"how much energy reaches the top?\"), or highlight a tier to mark the answer. Staged builds: use reveal (1, 2, 3, …) to grow the pyramid from its base, or toggle occlude per step to recall the labels on a fixed pyramid. Colour-code distinct tiers (a food pyramid's bands) with a per-tier `color`. Keep the same pyramid (same tiers, same scale) across the blocks of one lesson. Synonyms a teacher might use: pyramid, ecological pyramid, energy pyramid, pyramid of energy / biomass / numbers, trophic levels, food chain energy, food pyramid, Eatwell, healthy eating, hierarchy, Maslow, hierarchy of needs, triangle diagram, layers. Switch model when the picture changes: a 3-D pyramid solid you find a volume or surface area of, or unfold into a net, is geometry/solid; a number pyramid where each brick is the sum of the two bricks below it is algebra/number-pyramid; a hub with one ring of branches is diagram/mind-map; a top-down branching hierarchy of boxes is diagram/tree.",
+  "responseModes": [],
+  "tags": [
+    "pyramid",
+    "ecological pyramid",
+    "energy pyramid",
+    "pyramid of energy",
+    "pyramid of biomass",
+    "pyramid of numbers",
+    "trophic levels",
+    "food chain",
+    "food pyramid",
+    "eatwell",
+    "healthy eating",
+    "hierarchy",
+    "maslow",
+    "hierarchy of needs",
+    "triangle",
+    "tiers",
+    "layers",
+    "diagram"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "tiers": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+              "description": "Unique kebab-case id for this tier (e.g. \"producers\", \"esteem\"). Not shown to pupils — the wiring handle for reveal/occlude addressing."
+            },
+            "label": {
+              "type": "string",
+              "description": "The text shown in the tier, wrapped to fit and centred. For a blank answer space author \"?\" with occlude:true."
+            },
+            "value": {
+              "type": "number",
+              "description": "Optional quantity this tier carries (energy in kJ, biomass in g, a number of organisms, …). Drives the proportional-height mode (scale:\"proportional\") and the value/percentage readout. Omit on a purely ordinal pyramid (Maslow, a food pyramid)."
+            },
+            "detail": {
+              "type": "string",
+              "description": "Optional short secondary line under the label (e.g. \"grass, algae\" beneath \"Producers\", or examples of a food group). Rendered smaller and muted. Omit for a plain tier."
+            },
+            "image": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "An optional small thumbnail shown above this tier's label (the diagram/cycle image-node pattern) — a species photo per trophic level on an ecological pyramid, a food photo per group on a healthy-eating pyramid. The model reserves a fixed slot and crops the photo to fill it; the tier grows to fit. Photos display on the live web/slide; a static PNG/print/PPTX export shows a labelled placeholder frame until asset-rasterisation lands.",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "Absolute image URL — e.g. a Wikimedia Commons upload.wikimedia.org thumbnail. Must be a real, reachable image."
+                },
+                "alt": {
+                  "type": "string",
+                  "description": "A short description of the photo, for accessibility and the figure aria."
+                },
+                "aspect": {
+                  "type": "string",
+                  "enum": [
+                    "square",
+                    "landscape",
+                    "portrait"
+                  ],
+                  "description": "Shape of the image slot the photo is cropped to fill. Default \"landscape\" (4:3). Keep one aspect across the pyramid so the tiers match."
+                }
+              },
+              "required": [
+                "url"
+              ]
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this tier's LABEL as \"?\" — the question hook (\"name this trophic level / what belongs here?\"). The tier, its value and the rest of the pyramid stay drawn; the hidden word never leaks into the aria. Default false."
+            },
+            "occludeValue": {
+              "type": "boolean",
+              "description": "Render this tier's VALUE (and its percentage) as \"?\" — \"how much energy reaches this level?\". The tier and its label stay visible; the hidden number never leaks into the aria. Ignored when the tier has no value. Default false."
+            },
+            "occludeImage": {
+              "type": "boolean",
+              "description": "Blank this tier's thumbnail to a \"?\" placeholder (the photo would otherwise give the answer away). Ignored when there is no image. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this tier — the answer, or the level under discussion. Default false. Amber is reserved for emphasis and overrides any colour."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override THIS tier's colour (an explicit author/teacher request — \"make the vegetables tier green\"). Every tier is a single neutral grey by default; set this to COLOUR-CODE distinct tiers (e.g. the bands of a food pyramid). Wins over the figure-wide `colors.tiers`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\" or \"darkgreen\") is honoured exactly and opts this tier OUT of brand reskinning. Ignored on a highlighted tier (amber is reserved). Omit for the neutral default."
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "description": "The tiers of the pyramid as an ordered list, TOP (the narrow tip) first down to the BASE (the widest tier) last. Each tier names its id and label; value/detail/colour/occlusion are optional. With invert:true the first tier is the wide TOP and the last is the narrow bottom tip."
+      },
+      "scale": {
+        "type": "string",
+        "enum": [
+          "equal",
+          "proportional"
+        ],
+        "description": "Tier height rule. \"equal\" (default) gives every tier the same height — an ordinal pyramid (Maslow, food groups). \"proportional\" makes each tier's height reflect its `value`; values spanning orders of magnitude taper hard (the honest energy drop), and every tier is floored at its own label height so the tip stays visible and labelled. Proportional with no values falls back to equal."
+      },
+      "invert": {
+        "type": "boolean",
+        "description": "Point the triangle DOWNWARD — wide top, narrow base — for an inverted pyramid (a pyramid of numbers where one producer supports many consumers). The tiers stay listed top → bottom. Default false (point at the top)."
+      },
+      "unit": {
+        "type": "string",
+        "description": "Unit appended to every value readout (e.g. \"kJ\", \"g\", \"kcal\", or \"\" for a bare count). Omit when tiers have no values."
+      },
+      "showValues": {
+        "type": "boolean",
+        "description": "Show each tier's value (with the unit) under its label. Default true — but a tier with no value shows nothing. Set false to hide all numbers (e.g. ask pupils to recall them)."
+      },
+      "showPercent": {
+        "type": "boolean",
+        "description": "Also show each value as a percentage of the total of all values (derived). Useful for \"what fraction of the energy is lost between levels?\". Default false."
+      },
+      "axis": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional vertical caption drawn to the LEFT of the pyramid — the \"energy decreases ▲ / increases ▼\" annotation.",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "The axis text, drawn rotated up the side (e.g. \"Energy available\", \"Biomass\", \"Number of organisms\")."
+          },
+          "arrow": {
+            "type": "string",
+            "enum": [
+              "up",
+              "down"
+            ],
+            "description": "Direction of the axis arrowhead: \"up\" (the quantity grows toward the top) or \"down\" (grows toward the base). Omit for a plain caption with no arrow."
+          }
+        },
+        "required": [
+          "label"
+        ]
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "Draw only the bottom N tiers (the base upward). Omit to show the whole pyramid. Use across staged steps (1, 2, 3, …) to BUILD the pyramid from its base — the tiers never move as they appear, because the layout comes from the full tier list. With invert:true the same N counts from the wide top downward."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "colors": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"make the tiers green\", \"the outline should be grey\"). Omit to keep the themeable defaults (neutral-grey tiers, a dark outline), which follow a brand reskin. A per-tier `color` overrides this for one tier.",
+        "properties": {
+          "tiers": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of every (non-highlighted, non-overridden) tier, replacing the default neutral grey. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the tiers OUT of brand reskinning. A single tier can still differ via its own `color`."
+          },
+          "outline": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of the triangle silhouette and the cut-lines between tiers. Same value space as `tiers`."
+          }
+        }
+      }
+    },
+    "required": [
+      "tiers"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked energy pyramid — equal tiers with values and percentages",
+      "params": {
+        "header": "Pyramid of energy",
+        "unit": "kJ",
+        "showValues": true,
+        "showPercent": true,
+        "axis": {
+          "label": "Energy available",
+          "arrow": "up"
+        },
+        "tiers": [
+          {
+            "id": "tertiary",
+            "label": "Hawk",
+            "detail": "tertiary consumer",
+            "value": 10
+          },
+          {
+            "id": "secondary",
+            "label": "Stoat",
+            "detail": "secondary consumer",
+            "value": 120
+          },
+          {
+            "id": "primary",
+            "label": "Rabbit",
+            "detail": "primary consumer",
+            "value": 1400
+          },
+          {
+            "id": "producer",
+            "label": "Grass",
+            "detail": "producer",
+            "value": 16000
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — proportional energy pyramid spanning orders of magnitude",
+      "params": {
+        "header": "Energy lost up the chain",
+        "scale": "proportional",
+        "unit": "kJ",
+        "showValues": true,
+        "showPercent": true,
+        "axis": {
+          "label": "Energy available",
+          "arrow": "up"
+        },
+        "tiers": [
+          {
+            "id": "apex",
+            "label": "Eagle",
+            "value": 1
+          },
+          {
+            "id": "secondary",
+            "label": "Fox",
+            "value": 100
+          },
+          {
+            "id": "primary",
+            "label": "Vole",
+            "value": 1000
+          },
+          {
+            "id": "producer",
+            "label": "Wheat",
+            "value": 10000
+          }
+        ]
+      }
+    },
+    {
+      "label": "Inverted pyramid of numbers — one tree supports many",
+      "params": {
+        "header": "Pyramid of numbers",
+        "invert": true,
+        "scale": "proportional",
+        "unit": "",
+        "showValues": true,
+        "axis": {
+          "label": "Number of organisms",
+          "arrow": "down"
+        },
+        "tiers": [
+          {
+            "id": "birds",
+            "label": "Robins",
+            "value": 4
+          },
+          {
+            "id": "caterpillars",
+            "label": "Caterpillars",
+            "value": 600
+          },
+          {
+            "id": "tree",
+            "label": "Oak tree",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "label": "Food pyramid — colour-coded groups with detail lines",
+      "params": {
+        "header": "A healthy-eating pyramid",
+        "tiers": [
+          {
+            "id": "oils",
+            "label": "Oils & spreads",
+            "detail": "eat least",
+            "color": "accent-4"
+          },
+          {
+            "id": "protein",
+            "label": "Beans, fish, eggs, meat",
+            "detail": "some",
+            "color": "accent-3"
+          },
+          {
+            "id": "dairy",
+            "label": "Dairy & alternatives",
+            "detail": "some",
+            "color": "accent-2"
+          },
+          {
+            "id": "fruitveg",
+            "label": "Fruit & vegetables",
+            "detail": "plenty",
+            "color": "accent-5"
+          },
+          {
+            "id": "carbs",
+            "label": "Potatoes, bread, rice, pasta",
+            "detail": "eat most",
+            "color": "accent"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Photo tiers — a healthy-eating pyramid with a food photo per group",
+      "params": {
+        "header": "Eat well",
+        "tiers": [
+          {
+            "id": "oils",
+            "label": "Oils & spreads",
+            "detail": "eat least",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Oliven_V1.jpg/500px-Oliven_V1.jpg",
+              "alt": "Olives, a source of oil",
+              "aspect": "landscape"
+            }
+          },
+          {
+            "id": "protein",
+            "label": "Meat, fish, eggs, beans",
+            "detail": "some",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Huevo_frito.jpg/500px-Huevo_frito.jpg",
+              "alt": "A fried egg",
+              "aspect": "landscape"
+            }
+          },
+          {
+            "id": "dairy",
+            "label": "Milk & dairy",
+            "detail": "some",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Cheese_platter.jpg/500px-Cheese_platter.jpg",
+              "alt": "A platter of cheeses",
+              "aspect": "landscape"
+            }
+          },
+          {
+            "id": "fruitveg",
+            "label": "Fruit & vegetables",
+            "detail": "plenty",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Marketvegetables.jpg/500px-Marketvegetables.jpg",
+              "alt": "Fresh vegetables at a market",
+              "aspect": "landscape"
+            }
+          },
+          {
+            "id": "carbs",
+            "label": "Bread, rice, potatoes, pasta",
+            "detail": "eat most",
+            "image": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Korb_mit_Br%C3%B6tchen.JPG/500px-Korb_mit_Br%C3%B6tchen.JPG",
+              "alt": "Bread rolls",
+              "aspect": "landscape"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — name the hidden trophic level",
+      "params": {
+        "unit": "kJ",
+        "showValues": true,
+        "axis": {
+          "label": "Energy",
+          "arrow": "up"
+        },
+        "tiers": [
+          {
+            "id": "tertiary",
+            "label": "Owl",
+            "value": 9
+          },
+          {
+            "id": "secondary",
+            "label": "?",
+            "occlude": true,
+            "value": 110
+          },
+          {
+            "id": "primary",
+            "label": "Mouse",
+            "value": 1300
+          },
+          {
+            "id": "producer",
+            "label": "Seeds",
+            "value": 15000
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blank answer space — complete the pyramid",
+      "params": {
+        "tiers": [
+          {
+            "id": "t1",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "t2",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "t3",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "t4",
+            "label": "?",
+            "occlude": true
+          }
+        ]
+      }
+    }
+  ]
+}

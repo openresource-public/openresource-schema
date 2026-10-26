@@ -1,0 +1,394 @@
+{
+  "ref": "number/cuisenaire-rods@1",
+  "family": "number",
+  "name": "cuisenaire-rods",
+  "version": 1,
+  "title": "Cuisenaire rods",
+  "tagline": "Coloured proportional rods in trains; length and colour from value, with derived totals, number sentences and fractions for iterating, comparing and building a whole.",
+  "description": "A set of coloured Cuisenaire rods laid in left-aligned horizontal trains, where each rod's length is proportional to its value and its colour is the canonical length-colour (1 white, 2 red, 3 light green, 4 pink, 5 yellow, 6 dark green, 7 black, 8 brown, 9 blue, 10 orange). You write only each rod's value and how many of it (`repeat`), which train it sits in, and the chosen `whole`; the model derives every length and colour, each train's total, its number sentence (\"5 × 2 = 10\" for a run of identical rods, \"3 + 7 = 10\" for a mixed train), any missing addend, and each train's fraction of the whole (a red train of a brown whole reads 1/4). Stack trains and they left-align so lengths compare directly: iterate a small rod to build a longer one (the inverse of partitioning), compare two rods, or declare a rod a unit fraction and construct the whole. A guide line marks the whole's length, a unit ruler measures in white-rod units, rods occlude to \"?\" for questions, blank to ghost outlines for staged builds, and highlight in amber. Distinct from the bar model, which cuts one known whole down into segments; here rods build a length up.",
+  "whenToUse": "Reach for this for Cuisenaire rod work — coloured rods whose length is the value: iterating a unit rod to build a whole (how many red rods make the orange? five, because 5 × 2 = 10 — the inverse of partitioning a whole), comparing rods by length (three red rods are as long as one dark-green: 6 = 3 × 2), early multiplication and number bonds as lengths (orange = 8 + 2; the missing-addend bond), and fraction work where a rod is a unit fraction of a chosen whole (the brown rod is the whole, so the red rod is 1/4). Author the semantics only: give each train a list of `rods`, each rod a `value` 1–10 (which fixes its colour and length) and a `repeat` count for a run of identical rods. Stack rows to compare — every train is drawn from the same left edge, so a train that matches another lines up against it; add `guide: true` (with a `whole`) to drop a vertical line at the matching length, or `ruler: true` to measure rods in white-rod units. Turn on readouts as the task needs them and keep them steady across a lesson: show.values (the number on each rod, on by default), show.colourNames, show.totals (each train's total at its right end), show.equations (the derived \"5 × 2 = 10\" / \"3 + 7 = 10\" sentence), show.fractions (each train as a fraction of `whole`). Pose questions by hiding what is asked: a rod's `occlude` shows \"?\" on that rod and in its equation term (a missing addend keeps the total but hides one part — \"8 + ? = 10\"); a row's `occlude` hides that train's total/equation/fraction answer; `show.values: false` with `blank` rods leaves a ghost track for pupils to fill. `highlight` ambers a rod or a whole train as the answer. A staged build reads beautifully: open on the target (an orange whole) plus an empty ghost track, then reveal one rod per stage as the train is built, bringing the number sentence in last; the base frame (the whole plus an empty track) stands alone as a sensible slide. Switch primitive when the teaching changes: to cut one known whole into braced parts (share £40 in 3 : 2, a fraction of an amount) use number/bar-model; for proportional base-ten blocks (tens and ones) use number/place-value-blocks; for a numbered line or a measuring scale use number/number-line or measures/measuring-scale. Synonyms a teacher might use: Cuisenaire rods, coloured rods, rods, number rods, length, build the whole, make the whole, iterate, equal rods, equivalence by length, number bonds, fraction of a rod, unit fraction, compare lengths.",
+  "responseModes": [],
+  "tags": [
+    "cuisenaire",
+    "cuisenaire rods",
+    "coloured rods",
+    "colored rods",
+    "rods",
+    "number rods",
+    "length",
+    "build the whole",
+    "make the whole",
+    "iterate",
+    "equivalence",
+    "number bonds",
+    "unit fraction",
+    "fraction of a rod",
+    "compare lengths",
+    "early multiplication",
+    "manipulative",
+    "primary",
+    "ks1",
+    "ks2",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "rows": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One train: rods laid end-to-end from the shared LEFT edge. Stack rows to compare lengths, iterate a rod to build a whole, or show equivalent bonds — every row is left-aligned, so lengths compare directly.",
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "A name to the LEFT of the train — \"orange\", \"the whole\", \"1\", \"A\", or a fraction like \"1/5\" (rendered as a stacked fraction). Omit for an unlabelled train."
+            },
+            "rods": {
+              "type": "array",
+              "maxItems": 20,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "One rod. Give it a `value` 1–10; its length (proportional) and its canonical colour are both derived from that. Use `repeat` for several identical rods in a run.",
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10,
+                    "description": "The rod, 1–10. Sets BOTH its length (proportional to the value) and its canonical Cuisenaire colour: 1 white, 2 red, 3 light green, 4 pink, 5 yellow, 6 dark green, 7 black, 8 brown, 9 blue, 10 orange. This is the only authored number — length, colour and every readout follow from it. (A single rod is at most 10; a train can total more by combining rods.)"
+                  },
+                  "repeat": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 20,
+                    "description": "Draw this many identical rods end-to-end — the iterate-a-unit shorthand: \"five red rods\" is { value: 2, repeat: 5 }. The flags below apply to every copy. Default 1."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Text shown on the rod, overriding the derived value/colour-name. An \"a/b\" string (e.g. \"1/5\") renders as a stacked fraction. Omit to show the derived value (when show.values is on)."
+                  },
+                  "occlude": {
+                    "type": "boolean",
+                    "description": "Render this rod's value as \"?\" — the question hook (\"what is this rod?\"). The rod keeps its correct colour and length, and its term in this train's equation also shows \"?\" so the equation cannot leak it. Default false."
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Tint this rod amber for result/emphasis, overriding its canonical colour (the sanctioned override when a real colour would clash — e.g. to mark one yellow rod as the answer). Default false."
+                  },
+                  "blank": {
+                    "type": "boolean",
+                    "description": "Draw the rod as a faint dashed ghost outline of its length, with no colour and no value — an empty slot to fill, for staged builds and answer spaces. If both blank and occlude are set, blank wins. Default false."
+                  }
+                },
+                "required": [
+                  "value"
+                ]
+              },
+              "description": "The rods of this train, left to right. Their widths are derived to scale from their values."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render THIS train's derived readout answer — its total (show.totals), its equation result (show.equations) or its fraction (show.fractions) — as \"?\". The rods stay visible. Use to ask \"what is this total / fraction?\". Distinct from a rod's occlude, which hides one rod's value. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Tint every rod in this train amber — emphasise the answer train. Default false."
+            }
+          },
+          "required": [
+            "rods"
+          ]
+        },
+        "description": "The trains, stacked top to bottom and all sharing the left edge. One train for a single rod or run; two or more to compare lengths, iterate a rod against a whole, or show equivalent bonds."
+      },
+      "whole": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 100,
+        "description": "A reference whole for fraction work and the comparison guide: each train's fraction (show.fractions) is its total value ÷ whole, simplified, and the guide line (guide) sits at this length. Usually a rod value (8 = the brown rod is the whole) but may be a train total (20 = two oranges). Omit when there is no chosen whole."
+      },
+      "guide": {
+        "type": "boolean",
+        "description": "Drop a faint vertical line down the figure at the `whole` length (or, with no `whole`, at the longest train's right edge), so trains that match it line up visibly. Default false."
+      },
+      "ruler": {
+        "type": "boolean",
+        "description": "Draw a unit ruler (ticks one white-rod apart, numbered) along the bottom so rod lengths can be measured in units. Default false."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout toggles. Defaults keep the figure clean — turn on only what the task needs and keep them steady across a lesson.",
+        "properties": {
+          "values": {
+            "type": "boolean",
+            "description": "Show each rod's value (the number) on the rod. Default true. Set false for an answer space where pupils read the length themselves."
+          },
+          "colourNames": {
+            "type": "boolean",
+            "description": "Show each rod's colour name (white, red, light green …) under the rod. Default false."
+          },
+          "totals": {
+            "type": "boolean",
+            "description": "Show each train's derived total value at its right-hand end. Default false. On a row where show.equations also applies the equation wins (it already ends in the total)."
+          },
+          "equations": {
+            "type": "boolean",
+            "description": "Write each train's derived number sentence: a run of identical rods reads \"5 × 2 = 10\"; a mixed train reads \"3 + 7 = 10\". An occluded rod shows \"?\" as its term (a missing addend); a row's occlude hides the \"= total\" result. Default false."
+          },
+          "fractions": {
+            "type": "boolean",
+            "description": "Show each train's value as a fraction of `whole`, simplified (a red train of a brown whole reads 1/4; the whole itself reads 1). Requires `whole`. Default false."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure: a stem sentence, e.g. \"___ red rods make one orange rod.\" Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "rows"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — iterate red rods to build the orange whole (5 × 2 = 10)",
+      "params": {
+        "header": "Building the orange rod",
+        "rows": [
+          {
+            "label": "orange",
+            "rods": [
+              {
+                "value": 10
+              }
+            ]
+          },
+          {
+            "label": "reds",
+            "rods": [
+              {
+                "value": 2,
+                "repeat": 5
+              }
+            ]
+          }
+        ],
+        "whole": 10,
+        "guide": true,
+        "show": {
+          "values": true,
+          "equations": true
+        },
+        "caption": "Five red rods are as long as one orange rod."
+      }
+    },
+    {
+      "label": "Blank answer space — which rod, repeated, builds the orange?",
+      "params": {
+        "rows": [
+          {
+            "label": "orange",
+            "rods": [
+              {
+                "value": 10
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 10,
+                "blank": true
+              }
+            ]
+          }
+        ],
+        "whole": 10,
+        "guide": true,
+        "show": {
+          "values": false
+        }
+      }
+    },
+    {
+      "label": "Occluded question — the brown rod is the whole, what fraction is the red rod?",
+      "params": {
+        "rows": [
+          {
+            "label": "1 (whole)",
+            "rods": [
+              {
+                "value": 8
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 2
+              }
+            ],
+            "occlude": true
+          }
+        ],
+        "whole": 8,
+        "guide": true,
+        "show": {
+          "values": true,
+          "fractions": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — number bonds to 10 staircase, one bond a missing addend",
+      "params": {
+        "header": "Bonds that make 10",
+        "rows": [
+          {
+            "label": "10",
+            "rods": [
+              {
+                "value": 10
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 5
+              },
+              {
+                "value": 5
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 2,
+                "repeat": 5
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 8
+              },
+              {
+                "value": 2,
+                "occlude": true
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 3
+              },
+              {
+                "value": 7
+              }
+            ]
+          }
+        ],
+        "whole": 10,
+        "guide": true,
+        "show": {
+          "values": true,
+          "equations": true
+        },
+        "caption": "Every train below is as long as the orange rod. Complete the missing bond."
+      }
+    },
+    {
+      "label": "Comparison with a ruler — three reds are as long as one dark-green (6 = 3 × 2)",
+      "params": {
+        "rows": [
+          {
+            "label": "dark green",
+            "rods": [
+              {
+                "value": 6
+              }
+            ]
+          },
+          {
+            "label": "reds",
+            "rods": [
+              {
+                "value": 2,
+                "repeat": 3
+              }
+            ]
+          }
+        ],
+        "guide": true,
+        "ruler": true,
+        "show": {
+          "values": true,
+          "equations": true
+        }
+      }
+    },
+    {
+      "label": "Unit fractions of ten — white, red and yellow as fractions of the orange",
+      "params": {
+        "header": "Fractions of the orange rod",
+        "rows": [
+          {
+            "label": "1",
+            "rods": [
+              {
+                "value": 10
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 1
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 2
+              }
+            ]
+          },
+          {
+            "rods": [
+              {
+                "value": 5
+              },
+              {
+                "value": 5,
+                "blank": true
+              }
+            ]
+          }
+        ],
+        "whole": 10,
+        "guide": true,
+        "show": {
+          "values": true,
+          "fractions": true
+        },
+        "caption": "Each rod written as a fraction of the orange rod (the whole)."
+      }
+    }
+  ]
+}

@@ -1,0 +1,993 @@
+{
+  "ref": "geometry/vector-proof-free@1",
+  "family": "geometry",
+  "name": "vector-proof-free",
+  "version": 1,
+  "title": "Vector proof (free figure)",
+  "tagline": "Author any vector figure point-by-point — each point a position vector in {a, b}, joined by chosen edges; base arrows, amber segment highlighter, derived routes / k / collinearity.",
+  "description": "The GCSE grade-9 vector-geometry proof figure, drawn freely rather than from a preset shape. The author names every point as a position vector in a chosen basis {a, b} — directly (at: [2, 4] = 2a + 4b, supports decimals and exact [num,den] fractions) or by construction (a midpoint, a ratio point on a segment, a point on an extended line) — then lists the edges to draw. The base-vector arrows appear automatically on any edge whose vector is exactly ±a or ±b (override with arrows), with their labels (a, 2a, −b, …) derived. A required per-segment amber highlighter (highlight: [[\"E\",\"D\"],[\"O\",\"C\"]]) draws a highlighter behind chosen lines — for \"show these two are parallel\". The same exact rational engine as the preset then expresses any route between two named points (express: [\"OH\",\"CI\"]) or a single find (\"OP\") in terms of a and b in simplest form, finds the scalar k when as:\"scalar\", and proves three points collinear (one route a scalar multiple of another sharing a point). Everything is laid out from the two basis directions so the not-to-scale figure stays internally consistent (midpoints look like midpoints, collinear points line up) and the figure cannot lie — there is nowhere to author a route value. This draws the figures the preset cannot: a trapezium, a tiling of parallelograms, two concentric hexagons with both rings labelled (inner a,b / outer 2a,2b), a straight-line + triangle configuration. The target answer occludes for a question; the worked route reveals one line at a time for a staged build.",
+  "whenToUse": "Reach for this for vector-proof figures the preset cannot draw — a trapezium, tiled parallelograms, two labelled concentric hexagons, a straight-line + triangle — anything authored point by point. For the standard triangle OAB / parallelogram / regular hexagon (vertex algebra built in) prefer geometry/vector-proof-preset; for column vectors on a squared grid use geometry/vectors. Author: basis ({ a: <deg>, b: <deg> } — the two base-vector directions on screen, math y-up; e.g. {a:90,b:0} for an upright a and a rightward b, {a:120,b:60} for a hexagon, default {a:115,b:35}); labels ({ a, b } — the base-vector letters, default a, b — relabel to p, q, x, y …); points (each name + one of at / midpoint / divide / extend — at is the position vector [p,q] in {a,b}; constructions reference earlier points); edges (the segments to draw as [U,W] pairs — drawing is explicit, since one point cloud supports many figures); arrows (optional — [{ edge:[U,W], label? }] to force/label a base arrow; omit and any ±a/±b edge is auto-arrowed); highlight ([[U,W],…] amber highlighter behind those segments — for \"show ED and OC are parallel\"). Then a task: { find:\"OP\" } expresses that route in terms of a and b; { find:\"OP\", as:\"scalar\" } writes OP = k(…) and gives k; { express:[\"OH\",\"CI\",\"FK\"] } expresses several routes (one answer line each — the \"write each vector in terms of a and b\" build); { prove:[\"A\",\"M\",\"X\"] } proves those three lie on a straight line. occlude the answer for a question; solution.show renders the worked/listed routes below the figure, solution.reveal limits it to the first N lines for a staged build (base = figure + question, then one line per stage). Keep the same basis and labels across a lesson so pupils track one diagram. Synonyms a teacher might use: vector proof, vectors in terms of a and b, express the vector, position vector, ratio point, midpoint, point on the line extended, prove collinear, show points lie on a straight line, show vectors are parallel, scalar multiple, find the value of k, trapezium vectors, hexagon vectors, grade 9 vectors.",
+  "responseModes": [],
+  "tags": [
+    "vector",
+    "vectors",
+    "vector proof",
+    "vector geometry",
+    "a and b",
+    "in terms of a and b",
+    "position vector",
+    "ratio point",
+    "midpoint",
+    "collinear",
+    "straight line",
+    "parallel",
+    "scalar multiple",
+    "find k",
+    "trapezium",
+    "parallelogram",
+    "hexagon",
+    "polygon",
+    "free figure",
+    "grade 9",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "basis": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The two base-vector DIRECTIONS on screen, in degrees, measured anticlockwise from the positive x-axis (math y-up: 0 = right, 90 = up). a points along basis.a, b along basis.b. These only set the drawing frame (the not-to-scale tilt); they never change any derived vector. Default { a: 115, b: 35 } — a clean oblique pair. For an upright/right figure use { a: 90, b: 0 }; for a regular hexagon use { a: 120, b: 60 }.",
+        "properties": {
+          "a": {
+            "type": "number",
+            "description": "Direction of base vector a, degrees anticlockwise from +x (math y-up). Default 115."
+          },
+          "b": {
+            "type": "number",
+            "description": "Direction of base vector b, degrees anticlockwise from +x (math y-up). Default 35."
+          }
+        }
+      },
+      "labels": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The letters the two base vectors are drawn and written with. Default a and b. Relabel to p, q / x, y etc. — threaded through every arrow label, route line and answer.",
+        "properties": {
+          "a": {
+            "type": "string",
+            "description": "Letter for base vector a, e.g. \"p\". Default \"a\"."
+          },
+          "b": {
+            "type": "string",
+            "description": "Letter for base vector b, e.g. \"q\". Default \"b\"."
+          }
+        }
+      },
+      "points": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 16,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^[A-Z]$",
+              "description": "The point's single-letter name — ANY uppercase letter (A, O, P, X, …). Names are free; there are no reserved base vertices. Must be unique within points."
+            },
+            "at": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "number",
+                    "description": "An integer or decimal coefficient, e.g. 2, -1, 0.5."
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "description": "An exact fraction as [numerator, denominator], e.g. [1, 3] for ⅓, [-2, 3] for −⅔."
+                  }
+                ],
+                "description": "One coefficient of a base vector: an integer, a decimal, or an exact [num, den] fraction pair."
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "The point's position vector as [p, q] = p·a + q·b in the basis {a, b}. e.g. [0, 0] is the common origin O, [1, 0] is a, [0, 1] is b, [1, 1] is a + b, [2, 4] is 2a + 4b, [1, 0.5] or [[1,1],[1,2]] is a + ½b. Use this OR exactly one construction (midpoint / divide / extend)."
+            },
+            "midpoint": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Z]$",
+                "description": "A single uppercase point name."
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "This point is the MIDPOINT of the segment between two EARLIER points, e.g. [\"B\",\"C\"] for \"M is the midpoint of BC\"."
+            },
+            "divide": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "of": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Z]$",
+                    "description": "A single uppercase point name."
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "An ordered pair of existing point names [start, end]."
+                },
+                "ratio": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "Two positive whole numbers [first, second] — the two parts of the ratio, in the order the construction names them."
+                }
+              },
+              "required": [
+                "of",
+                "ratio"
+              ],
+              "description": "This point divides a segment INTERNALLY. of [\"A\",\"B\"], ratio [1,3] means \"P on AB with AP:PB = 1:3\" — the ratio is (start→point):(point→end). Both named points must be earlier in the list."
+            },
+            "extend": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "of": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Z]$",
+                    "description": "A single uppercase point name."
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "An ordered pair of existing point names [start, end]."
+                },
+                "ratio": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "Two positive whole numbers [first, second] — the two parts of the ratio, in the order the construction names them."
+                }
+              },
+              "required": [
+                "of",
+                "ratio"
+              ],
+              "description": "This point lies on a segment EXTENDED beyond its end. of [\"A\",\"B\"], ratio [3,2] means \"X on AB extended with AB:BX = 3:2\" — the ratio is (whole segment start→end):(end→point). A dashed extension is drawn from the end vertex out to the point."
+            },
+            "dot": {
+              "type": "boolean",
+              "description": "Draw a filled dot at this point (in addition to its label). Default: dots are drawn on constructed (midpoint/divide/extend) points and OMITTED on direct `at` polygon vertices, which read as corners. Set true to force a dot, false to suppress one."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this point's dot + label in amber (result/emphasis). Default false."
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "oneOf": [
+            {
+              "required": [
+                "at"
+              ]
+            },
+            {
+              "required": [
+                "midpoint"
+              ]
+            },
+            {
+              "required": [
+                "divide"
+              ]
+            },
+            {
+              "required": [
+                "extend"
+              ]
+            }
+          ]
+        },
+        "description": "Every point in the figure. Each names exactly one of at (a position vector [p,q] in {a,b}) OR a construction (midpoint / divide / extend) referencing EARLIER points in this list (they resolve top to bottom). Give the common origin as a point at [0,0] (any letter, conventionally O). All points are labelled; dots appear on constructed points by default (override with dot)."
+      },
+      "edges": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]$",
+            "description": "A single uppercase point name."
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "A segment to DRAW between two named points, e.g. [\"O\",\"A\"]. Order does not matter for drawing."
+        },
+        "description": "The segments to DRAW, each a pair of point names [U,W]. The drawing is explicit because one set of points supports many figures (a trapezium vs a triangle on the same corners). A figure with no edges shows just the labelled points."
+      },
+      "arrows": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "edge": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Z]$",
+                "description": "A single uppercase point name."
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "The edge [U,W] to put a base-vector arrowhead + label on."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the auto-derived label (e.g. force \"2a\"). Omit to derive it from the edge's vector."
+            }
+          },
+          "required": [
+            "edge"
+          ]
+        },
+        "description": "Which edges carry a base-vector arrowhead and label. OMIT this and the SPOKES from the common origin O (the point at [0,0]) whose vector is a pure ±k·a or ±k·b are auto-arrowed and labelled (OA = a, OB = b, OA = 2a — the usual case). Other edges that happen to run parallel to a base vector (a hexagon side, a tile edge) are figure content and are NOT auto-arrowed — declare any of those here, e.g. [{ edge:[\"A\",\"B\"] }, { edge:[\"O\",\"C\"], label:\"8b\" }]. Each entry: edge [U,W] (oriented for the label) + optional label override. Give an empty array to suppress all auto-arrows. If an arrowed edge is not in `edges`, the spoke line is drawn under the arrow so no arrowhead floats."
+      },
+      "highlight": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]$",
+            "description": "A single uppercase point name."
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "A segment to DRAW between two named points, e.g. [\"O\",\"A\"]. Order does not matter for drawing."
+        },
+        "description": "Segments to draw an amber HIGHLIGHTER behind (a thick translucent stroke under the line) — the \"highlight these line sections\" feature, e.g. [[\"E\",\"D\"],[\"O\",\"C\"]] for \"show ED and OC are parallel\". Result/emphasis semantics; pairs with a prove/express task."
+      },
+      "task": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "What the figure asks. Omit for a plain labelled diagram.",
+        "properties": {
+          "find": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z]$",
+            "description": "A target route as two point names, e.g. \"OP\", \"MN\" (from the first letter's point to the second's). Expresses this vector in terms of a and b (or finds k with as:\"scalar\")."
+          },
+          "express": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z]$"
+            },
+            "maxItems": 12,
+            "description": "A LIST of routes to express, e.g. [\"OH\",\"CI\",\"FK\"]. Each becomes one answer line (\"OH = 2b\", \"CI = −a + b\"). Pair with solution.show and stage with solution.reveal to reveal one per click — the \"write each vector in terms of a and b\" build. Use instead of find when the figure asks for several vectors."
+          },
+          "as": {
+            "type": "string",
+            "enum": [
+              "vector",
+              "scalar"
+            ],
+            "description": "\"vector\" (default): express find as pa + qb. \"scalar\": write find as k(…) over a coprime integer bracket and give k — the \"find the value of k\" question."
+          },
+          "scalarName": {
+            "type": "string",
+            "description": "The letter for the scalar in as:\"scalar\". Default \"k\"."
+          },
+          "prove": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z]$",
+              "description": "A single uppercase point name."
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "Three point names to prove collinear, e.g. [\"A\",\"M\",\"X\"]. The engine takes the first as the shared point, derives the two routes from it, and shows one is a scalar multiple of the other → the three lie on a straight line."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the final answer (k, the vector, or each expressed route) as \"?\" — the question hook. The figure and any shown working up to the answer stay visible. Default false."
+          }
+        }
+      },
+      "solution": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The worked route shown below the figure (also the answer list for task.express). Omit (or show:false) for a question / answer space.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Render the worked route lines (the derivation in terms of a and b), or — with task.express — the list of routes. Default false: figure + question only."
+          },
+          "reveal": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Show only the first N lines — for a STAGED build (one line per stage). Default: all lines. N = 0 shows the figure and question with no working (a sensible base stage)."
+          },
+          "highlightAnswer": {
+            "type": "boolean",
+            "description": "Amber the final answer line. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles (all default true).",
+        "properties": {
+          "labels": {
+            "type": "boolean",
+            "description": "Label every point. Default true."
+          },
+          "arrows": {
+            "type": "boolean",
+            "description": "Draw the base-vector arrows + labels. Default true."
+          },
+          "dots": {
+            "type": "boolean",
+            "description": "Draw point dots (where a point's own dot default/flag asks for one). Default true; false suppresses all dots."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "points"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Answer space — trapezium, express OB (answer hidden for the pupil)",
+      "params": {
+        "basis": {
+          "a": 90,
+          "b": 0
+        },
+        "labels": {
+          "a": "a",
+          "b": "b"
+        },
+        "points": [
+          {
+            "name": "O",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "A",
+            "at": [
+              2,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              2,
+              3
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              0,
+              9
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "O",
+            "A"
+          ],
+          [
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "C"
+          ],
+          [
+            "C",
+            "O"
+          ]
+        ],
+        "arrows": [
+          {
+            "edge": [
+              "O",
+              "A"
+            ]
+          },
+          {
+            "edge": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "edge": [
+              "O",
+              "C"
+            ]
+          }
+        ],
+        "task": {
+          "find": "OB",
+          "occlude": true
+        },
+        "caption": "OABC is a trapezium with OA = 2a, AB = 3b and OC = 9b. Express OB in terms of a and b."
+      }
+    },
+    {
+      "label": "Worked example — trapezium, express AC with the full route",
+      "params": {
+        "basis": {
+          "a": 90,
+          "b": 0
+        },
+        "points": [
+          {
+            "name": "O",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "A",
+            "at": [
+              3,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              3,
+              2
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              0,
+              7
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "O",
+            "A"
+          ],
+          [
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "C"
+          ],
+          [
+            "C",
+            "O"
+          ]
+        ],
+        "arrows": [
+          {
+            "edge": [
+              "O",
+              "A"
+            ]
+          },
+          {
+            "edge": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "edge": [
+              "O",
+              "C"
+            ]
+          }
+        ],
+        "task": {
+          "find": "AC"
+        },
+        "solution": {
+          "show": true,
+          "highlightAnswer": true
+        },
+        "caption": "OABC is a trapezium with OA = 3a, AB = 2b and OC = 7b. Work out AC in terms of a and b."
+      }
+    },
+    {
+      "label": "Occluded question — find the value of k, OC = k(a + 4b)",
+      "params": {
+        "basis": {
+          "a": 90,
+          "b": 0
+        },
+        "points": [
+          {
+            "name": "O",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "A",
+            "at": [
+              2,
+              0
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              2,
+              8
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "O",
+            "A"
+          ],
+          [
+            "A",
+            "C"
+          ],
+          [
+            "C",
+            "O"
+          ]
+        ],
+        "arrows": [
+          {
+            "edge": [
+              "O",
+              "A"
+            ]
+          },
+          {
+            "edge": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "task": {
+          "find": "OC",
+          "as": "scalar",
+          "occlude": true
+        },
+        "caption": "OA = 2a and AC = 8b, and OC = k(a + 4b). Find the value of k."
+      }
+    },
+    {
+      "label": "Hard case — two regular hexagons, both rings labelled, express OH, CI and FK",
+      "params": {
+        "basis": {
+          "a": 120,
+          "b": 60
+        },
+        "points": [
+          {
+            "name": "O",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "A",
+            "at": [
+              1,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              -1,
+              1
+            ]
+          },
+          {
+            "name": "D",
+            "at": [
+              -1,
+              0
+            ]
+          },
+          {
+            "name": "E",
+            "at": [
+              0,
+              -1
+            ]
+          },
+          {
+            "name": "F",
+            "at": [
+              1,
+              -1
+            ]
+          },
+          {
+            "name": "G",
+            "at": [
+              2,
+              0
+            ]
+          },
+          {
+            "name": "H",
+            "at": [
+              0,
+              2
+            ]
+          },
+          {
+            "name": "I",
+            "at": [
+              -2,
+              2
+            ]
+          },
+          {
+            "name": "J",
+            "at": [
+              -2,
+              0
+            ]
+          },
+          {
+            "name": "K",
+            "at": [
+              0,
+              -2
+            ]
+          },
+          {
+            "name": "L",
+            "at": [
+              2,
+              -2
+            ]
+          }
+        ],
+        "edges": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "C"
+          ],
+          [
+            "C",
+            "D"
+          ],
+          [
+            "D",
+            "E"
+          ],
+          [
+            "E",
+            "F"
+          ],
+          [
+            "F",
+            "A"
+          ],
+          [
+            "G",
+            "H"
+          ],
+          [
+            "H",
+            "I"
+          ],
+          [
+            "I",
+            "J"
+          ],
+          [
+            "J",
+            "K"
+          ],
+          [
+            "K",
+            "L"
+          ],
+          [
+            "L",
+            "G"
+          ],
+          [
+            "A",
+            "G"
+          ],
+          [
+            "B",
+            "H"
+          ],
+          [
+            "C",
+            "I"
+          ],
+          [
+            "D",
+            "J"
+          ],
+          [
+            "E",
+            "K"
+          ],
+          [
+            "F",
+            "L"
+          ],
+          [
+            "O",
+            "A"
+          ],
+          [
+            "O",
+            "B"
+          ]
+        ],
+        "task": {
+          "express": [
+            "OH",
+            "CI",
+            "FK"
+          ]
+        },
+        "solution": {
+          "show": true
+        },
+        "caption": "Two regular hexagons share centre O; the outer hexagon GHIJKL is the inner hexagon ABCDEF scaled by 2. With OA = a and OB = b, express OH, CI and FK in terms of a and b."
+      }
+    },
+    {
+      "label": "Prove collinear — triangle, C, M and D lie on a straight line",
+      "params": {
+        "basis": {
+          "a": 115,
+          "b": 35
+        },
+        "points": [
+          {
+            "name": "O",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "A",
+            "at": [
+              4,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              0,
+              2
+            ]
+          },
+          {
+            "name": "C",
+            "divide": {
+              "of": [
+                "O",
+                "A"
+              ],
+              "ratio": [
+                3,
+                1
+              ]
+            }
+          },
+          {
+            "name": "M",
+            "midpoint": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "name": "D",
+            "extend": {
+              "of": [
+                "O",
+                "B"
+              ],
+              "ratio": [
+                2,
+                1
+              ]
+            }
+          }
+        ],
+        "edges": [
+          [
+            "O",
+            "A"
+          ],
+          [
+            "O",
+            "B"
+          ],
+          [
+            "A",
+            "B"
+          ],
+          [
+            "C",
+            "M"
+          ],
+          [
+            "M",
+            "D"
+          ]
+        ],
+        "task": {
+          "prove": [
+            "C",
+            "M",
+            "D"
+          ]
+        },
+        "solution": {
+          "show": true
+        },
+        "caption": "OA = 4a, OB = 2b. C is on OA with OC:CA = 3:1, M is the midpoint of AB, and OB is extended to D with OB:BD = 2:1. Show that C, M and D lie on a straight line."
+      }
+    },
+    {
+      "label": "Custom letters — triangle in x, y, express PQ (answer space)",
+      "params": {
+        "basis": {
+          "a": 100,
+          "b": 20
+        },
+        "labels": {
+          "a": "x",
+          "b": "y"
+        },
+        "points": [
+          {
+            "name": "O",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "A",
+            "at": [
+              3,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              0,
+              2
+            ]
+          },
+          {
+            "name": "P",
+            "divide": {
+              "of": [
+                "O",
+                "A"
+              ],
+              "ratio": [
+                2,
+                1
+              ]
+            }
+          },
+          {
+            "name": "Q",
+            "divide": {
+              "of": [
+                "A",
+                "B"
+              ],
+              "ratio": [
+                1,
+                1
+              ]
+            }
+          }
+        ],
+        "edges": [
+          [
+            "O",
+            "A"
+          ],
+          [
+            "O",
+            "B"
+          ],
+          [
+            "A",
+            "B"
+          ],
+          [
+            "P",
+            "Q"
+          ]
+        ],
+        "task": {
+          "find": "PQ",
+          "occlude": true
+        },
+        "caption": "OA = 3x, OB = 2y. P is on OA with OP:PA = 2:1 and Q is the midpoint of AB. Express PQ in terms of x and y."
+      }
+    }
+  ]
+}

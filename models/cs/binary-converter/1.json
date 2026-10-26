@@ -1,0 +1,222 @@
+{
+  "ref": "cs/binary-converter@1",
+  "family": "cs",
+  "name": "binary-converter",
+  "version": 1,
+  "title": "Binary converter",
+  "tagline": "Binary place-value board (128 64 32 ... 1, 4/8/16-bit) with toggleable bits and a derived denary, hex and binary readout; bits, total and hex occlude for conversion questions.",
+  "description": "A binary place-value board: a row of bit columns headed by their place values (128, 64, 32, 16, 8, 4, 2, 1 for a byte, extending to 16 bits) with a 0 or 1 in each column, and a derived readout beneath showing the denary total, the binary string and (optionally) the hexadecimal value. The author writes only the number — either as a denary value that is converted to bits, or as an explicit bit pattern — and the width; the place-value headers, the denary total (the sum of the set place values), the hex, the binary string, the nibble split and the most/least-significant-bit marks are all computed, so the board cannot show a conversion that does not hold. Bits, the total and the hex occlude independently to \"?\", turning one board into \"what denary is this binary number?\", \"set the bits for 42\" (a blank answer space), or \"convert 172 to hex\". On the web, interactive mode makes each bit cell clickable so the denary total and hex count up and down as pupils toggle bits.",
+  "whenToUse": "Reach for this whenever binary place value is taught: converting denary to binary and back, reading a byte, introducing hexadecimal as a shorthand for four bits, and the vocabulary of bit, byte, nibble, most/least significant bit. Author the number as a denary `value` (converted to `width` bits) OR as an explicit `bits` string when you need a specific pattern with leading zeros; never author the total or the hex — they are derived. Common configurations: a worked conversion — give the value, show hex and the nibble split, and pupils see 172 = 10101100 = 0xAC; a blank \"set the bits\" answer space — bits all 0 with the target in the header text and `occlude` on the total, so pupils toggle or write the bits; \"read the binary\" — give the bits and occlude the total (and hex) so pupils convert; \"convert to hex\" — occlude only the hex. Widths: 4 (a nibble), 8 (a byte, the default and the GCSE staple), 16 (two bytes, for larger numbers and address-style examples). Turn on show.hex when hex is the point, show.nibbleSplit to draw the 8-bit byte as two nibbles (the hex grouping), show.msbLsb to mark the ends. Keep the SAME width across the blocks of one lesson so pupils read one board. On the web set interactive:true so bits are clickable and the readouts update live — pair it with block text that invites exploration (\"Turn bits on and off. Which single bit adds 32?\") without giving the answer away. Staged builds: reveal the total by turning bits on one place at a time, or reveal the answer last. This is a computer-science model (binary/denary/hex), distinct from number/place-value (powers of ten) and number/gattegno-chart. Synonyms teachers use: binary, denary, decimal, base 2, base 16, hex, hexadecimal, place value, bit, byte, nibble, most significant bit, least significant bit, convert, number system, data representation.",
+  "responseModes": [],
+  "tags": [
+    "binary",
+    "denary",
+    "decimal",
+    "hexadecimal",
+    "hex",
+    "base 2",
+    "base 16",
+    "place value",
+    "bit",
+    "byte",
+    "nibble",
+    "most significant bit",
+    "least significant bit",
+    "msb",
+    "lsb",
+    "convert",
+    "conversion",
+    "number system",
+    "data representation",
+    "computer science",
+    "cs",
+    "computing",
+    "gcse"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "width": {
+        "type": "integer",
+        "enum": [
+          4,
+          8,
+          16
+        ],
+        "description": "How many bit columns the board has: 4 (a nibble), 8 (a byte — the default and the GCSE staple), or 16 (two bytes). Columns are place values 2^(width-1) down to 2^0, left to right (8-bit: 128 64 32 16 8 4 2 1). Default 8."
+      },
+      "value": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "The number to show, in DENARY. It is converted to `width` bits (the bit pattern is derived, never authored). Use this for the common \"here is 172\" case. A value at or above 2^width is clamped to fit and the overflow is noted in the accessible label. Ignored if `bits` is given. Default 0 (an empty board — the \"set the bits\" answer space)."
+      },
+      "bits": {
+        "type": "string",
+        "pattern": "^[01?]+$",
+        "description": "The bit pattern directly, as a string of 0 and 1 (a \"?\" marks an occluded bit — see occludeBits), most significant bit first, e.g. \"10101100\". Use this instead of `value` when you need an exact pattern such as leading zeros (\"00001010\" for 10 in a byte). It is right-padded/truncated to `width` bits. When given, it wins over `value`."
+      },
+      "occludeBits": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": "Bit positions to render as \"?\" instead of 0/1 — the \"which bit goes here?\" hook. Positions are counted from 0 at the LEAST significant bit (the rightmost, place value 1), so position 5 is the 32-column. An occluded bit also forces the derived denary total and hex to \"?\" so a visible readout cannot leak the hidden bit."
+      },
+      "highlightBits": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": "Bit positions to draw the eye to with an amber column — e.g. the single bit worth 32, or the nibble under discussion. Positions counted from 0 at the least significant (rightmost) bit, same as occludeBits. Emphasis only; does not change any value."
+      },
+      "total": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The denary total readout beneath the board (the sum of the set place values — always computed). Include to configure it; omit for defaults (shown, not occluded).",
+        "properties": {
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the denary total as \"?\" — the \"what denary is this?\" hook. The bits stay visible. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the denary total — answer emphasis. Default false."
+          }
+        }
+      },
+      "hex": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The hexadecimal readout (derived from the denary total, grouped by nibble). Only rendered when show.hex is true; this object configures it.",
+        "properties": {
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the hex value as \"?\" — the \"convert this to hex\" hook. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the hex value — answer emphasis. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "placeValues": {
+            "type": "boolean",
+            "description": "Show the place-value header (128 64 32 ...) above each column. Turn off for a bare bit row once pupils know the places. Default true."
+          },
+          "binaryString": {
+            "type": "boolean",
+            "description": "Show the bits re-read as a single binary string in the readout (e.g. \"10101100\"). Default true."
+          },
+          "hex": {
+            "type": "boolean",
+            "description": "Show the hexadecimal readout. Off by default — turn on when hex is part of the lesson. Default false."
+          },
+          "nibbleSplit": {
+            "type": "boolean",
+            "description": "Draw a gap between each group of four bits (nibbles), the grouping hex is read in. Most useful at width 8 (two nibbles) and 16. Default false."
+          },
+          "msbLsb": {
+            "type": "boolean",
+            "description": "Mark the most significant bit (leftmost) and least significant bit (rightmost) columns with small MSB / LSB labels. Default false."
+          }
+        }
+      },
+      "interactive": {
+        "type": "boolean",
+        "description": "Web only: make each bit cell clickable, so toggling a bit updates the derived denary total and hex live (the count-up/count-down seen happening). The static render is unchanged and complete on its own. Exploratory — toggles are never written back to the lesson. Default false."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the board; the top padding grows to clear it."
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Worked conversion — 172 as a byte, with hex, nibble split and MSB/LSB",
+      "params": {
+        "header": "172 in binary and hex",
+        "width": 8,
+        "value": 172,
+        "show": {
+          "hex": true,
+          "nibbleSplit": true,
+          "msbLsb": true
+        }
+      }
+    },
+    {
+      "label": "Blank \"set the bits\" answer space — make 42 in a byte (all bits 0, total occluded)",
+      "params": {
+        "header": "Set the bits to make 42",
+        "width": 8,
+        "value": 0,
+        "total": {
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Occluded \"read the binary\" question — bits given, denary total hidden",
+      "params": {
+        "width": 8,
+        "bits": "01101001",
+        "total": {
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — 255 uses every column, shown with hex (0xFF), split and MSB/LSB",
+      "params": {
+        "width": 8,
+        "value": 255,
+        "show": {
+          "hex": true,
+          "nibbleSplit": true,
+          "msbLsb": true
+        },
+        "hex": {
+          "highlight": true
+        }
+      }
+    },
+    {
+      "label": "Which bit is worth 32? — a nibble with the 32-column highlighted",
+      "params": {
+        "header": "Place values",
+        "width": 8,
+        "value": 0,
+        "highlightBits": [
+          5
+        ],
+        "total": {
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Convert to hex — 16-bit number with the hex occluded and the bits filled",
+      "params": {
+        "header": "Convert to hexadecimal",
+        "width": 16,
+        "value": 2748,
+        "show": {
+          "hex": true,
+          "nibbleSplit": true
+        },
+        "hex": {
+          "occlude": true
+        }
+      }
+    }
+  ]
+}

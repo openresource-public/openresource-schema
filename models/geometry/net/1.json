@@ -1,0 +1,520 @@
+{
+  "ref": "geometry/net@1",
+  "family": "geometry",
+  "name": "net",
+  "version": 1,
+  "title": "Net of a solid",
+  "tagline": "Net of a solid (cuboid, prism, pyramid, cylinder) and/or the solid it folds to; fold and cut edges, face areas and surface area derived; staged fold.",
+  "description": "The net of a 3-D solid and/or the assembled solid it folds to — for a cuboid (or cube), a triangular prism, a square-based pyramid, or a cylinder. In the default \"net\" mode it draws the unfolded net: faces laid flat in a connected arrangement, joined along dashed fold edges and bounded by a solid cut outline. In \"solid\" mode it draws the same solid assembled, in an isometric projection with bold-border light-fill three-tone faces and hidden edges dashed. You give the solid (its type and dimensions); the model derives which faces exist and their true shapes, the net layout, which edges fold and which are cut, the dimension labels, each face's area and the total surface area, and the assembled solid — the solid is fitted into the net's box so net and solid share one scale/viewBox and a staged block can show net → fold → solid without the figure jumping size. The triangular end of a prism is solved by Heron's formula from its three sides; the cylinder's curved face is the unrolled circumference 2πr wide. Show the surface-area working (in either mode), occlude it (\"find the surface area\"), label faces with letters (\"which faces are opposite?\"), occlude a face's dimensions, or highlight a face. Staged builds: net → solid (\"fold the net\"), reveal the area sum step by step, or add detail per step.",
+  "whenToUse": "Reach for this for nets and for the net→solid relationship: an unfolded solid, surface area from a net, fold-to-solid, identify-the-net, which-net-makes-X, and \"fold the net\" staged builds that end on the assembled solid. Give the solid and its dimensions — type \"cuboid\" (length/width/height; a cube has all three equal), \"triangular-prism\" (sides: the three cross-section side lengths, e.g. [3,4,5]; length), \"square-pyramid\" (base; perpendicular height), or \"cylinder\" (radius; height) — and every face, fold line, dimension, area, and the assembled 3-D solid is derived. Net vs solid — mode \"net\" (default) draws the flat net; mode \"solid\" draws the same solid assembled (isometric, three-tone faces, hidden edges dashed, dimensions on the near edges). Both modes share one scale/viewBox. Common configurations: net → fold → solid (staged) — a content block with steps: a \"net\" frame (the flat net, which must stand alone as a sensible figure) then a \"solid\" frame (the assembled solid); the figure does not jump size between stages. Use a caption/header like \"Fold the net\" or \"Which solid does this net make?\". Surface area from a net — set surfaceArea (workedSteps true shows the summed working \"2×40 + 2×24 + 2×15 = 158\", occlude true hides only the result for \"find the surface area\"); show.faceAreas writes each face's area inside it; the readout also renders in \"solid\" mode. Which solid does this net make / fold to a solid — draw the net and ask which solid it folds to (a net does not name its solid), or stage straight to the \"solid\" frame to reveal the answer. Which net folds to X — author several blocks, each the net of a different solid, and ask which makes the named solid (all are valid nets; this model does not draw invalid arrangements). Opposite / adjacent faces — give faces letters via faces[].label and ask which meets which when folded; highlight one face to anchor it. Use layout \"cross\" (default) or \"zigzag\" to show that one cuboid has several different nets. Keep the unit consistent across a lesson (default \"cm\"; areas read in unit²). Synonyms a teacher might use: net, nets, net and solid, net of a cube, net of a cuboid, unfold, fold up, fold the net, folds to, which solid does this net make, surface area, total surface area, faces, fold lines, cut edges, cuboid, cube, prism, triangular prism, pyramid, cylinder, opposite faces, 3D shape. Switch primitive for the 3-D solid on its own (volume, the drawn solid with no net) — that is geometry/solid — or for plan and elevation views — geometry/plan-elevation.",
+  "responseModes": [],
+  "tags": [
+    "net",
+    "nets",
+    "unfold",
+    "fold",
+    "fold the net",
+    "folds to",
+    "net and solid",
+    "net of a cube",
+    "which solid does this net make",
+    "surface area",
+    "total surface area",
+    "TSA",
+    "faces",
+    "fold lines",
+    "cut edges",
+    "cuboid",
+    "cube",
+    "prism",
+    "triangular prism",
+    "square pyramid",
+    "pyramid",
+    "cylinder",
+    "opposite faces",
+    "3d",
+    "3d shape",
+    "solid",
+    "assembled solid",
+    "isometric",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "solid"
+    ],
+    "properties": {
+      "solid": {
+        "description": "The solid the net folds up to — its type plus the dimensions that type needs. Everything else is derived from this.",
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "dimensions"
+            ],
+            "properties": {
+              "type": {
+                "const": "cuboid",
+                "description": "A cuboid (a cube when all three dimensions are equal). Net = six rectangles. Faces: \"top\", \"bottom\", \"front\", \"back\", \"left\", \"right\"."
+              },
+              "dimensions": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "length",
+                  "width",
+                  "height"
+                ],
+                "description": "The three edge lengths (same unit). front/back are length×height, left/right are width×height, top/bottom are length×width.",
+                "properties": {
+                  "length": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Edge running left→right (the width of the front face)."
+                  },
+                  "width": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Edge running front→back (the depth)."
+                  },
+                  "height": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Edge running bottom→top."
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "dimensions"
+            ],
+            "properties": {
+              "type": {
+                "const": "triangular-prism",
+                "description": "A prism with a triangular cross-section. Net = two triangular ends + three rectangles (one per triangle side). Faces: \"end-1\", \"end-2\" (the triangles), \"rect-1\", \"rect-2\", \"rect-3\" (the rectangle on side 1, 2, 3 of the cross-section)."
+              },
+              "dimensions": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "sides",
+                  "length"
+                ],
+                "description": "The triangular cross-section and the prism length. The cross-section area is derived from the three sides by Heron's formula — list real lengths that obey the triangle inequality (e.g. [3,4,5] for a right-angled section).",
+                "properties": {
+                  "sides": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "description": "The three side lengths of the triangular cross-section [s1, s2, s3]. The SECOND side (s2) is drawn as the hinge edge the two triangular ends fold from; the apex points outward. Each rectangle \"rect-k\" is s_k × length. For a 3-4-5 right-angled section use [3,4,5] (the hinge 4 and side 3 form the right angle)."
+                  },
+                  "length": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "The length of the prism (how far the cross-section is extruded)."
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "dimensions"
+            ],
+            "properties": {
+              "type": {
+                "const": "square-pyramid",
+                "description": "A right pyramid on a square base. Net = the square base + four congruent triangular faces. Faces: \"base\", \"side-1\", \"side-2\", \"side-3\", \"side-4\"."
+              },
+              "dimensions": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "base",
+                  "height"
+                ],
+                "description": "The square base side and the pyramid's perpendicular height. The triangular faces' slant height — and so their area — is derived: slant = √((base/2)² + height²).",
+                "properties": {
+                  "base": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Side length of the square base."
+                  },
+                  "height": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Perpendicular height of the pyramid (apex above the base centre). The triangular faces are drawn at the DERIVED slant height, not this."
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "dimensions"
+            ],
+            "properties": {
+              "type": {
+                "const": "cylinder",
+                "description": "A cylinder. Net = two circular ends + one rectangle (the curved surface unrolled). Faces: \"top\", \"bottom\" (circles), \"curved\" (the rectangle, width = circumference 2πr)."
+              },
+              "dimensions": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "radius",
+                  "height"
+                ],
+                "description": "The circle radius and the cylinder height. The curved-surface rectangle is DERIVED as (2πr) wide × height tall — the key idea that the circumference becomes the rectangle's width.",
+                "properties": {
+                  "radius": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Radius of the circular ends."
+                  },
+                  "height": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Height of the cylinder (the rectangle's height)."
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "mode": {
+        "type": "string",
+        "enum": [
+          "net",
+          "solid"
+        ],
+        "description": "What to draw FROM THE SAME solid+dimensions. \"net\" (default): the flat unfolded net (faces laid out, fold/cut edges, every face's true shape) — the existing behaviour. \"solid\": the ASSEMBLED 3-D solid, drawn in an isometric projection with bold-border light-fill three-tone faces (top lightest → sides darker), hidden edges dashed, and the same derived dimensions labelled on the near edges. Both modes share ONE scale and viewBox (the solid is fitted into the net's box), so a STAGED block can show net → solid without the figure jumping size. Use \"solid\" for \"which solid does this net make?\", \"fold the net\", or the final frame of a net→fold→solid staged build. The surface-area readout, if requested, works in either mode (it describes the same solid)."
+      },
+      "layout": {
+        "type": "string",
+        "enum": [
+          "cross",
+          "zigzag"
+        ],
+        "description": "Which valid net arrangement to draw — CUBOID only (a cuboid folds from several different nets). \"cross\" (default): the four side faces in a row with the top above and the bottom below the front. \"zigzag\": a staggered arrangement with the top and bottom faces attached at opposite ends of the row. Both fold to the same cuboid. The other solids each have one standard layout and ignore this. Use different layouts to show that one solid has many nets, or for \"is this also a net of the cube?\" tasks."
+      },
+      "faces": {
+        "type": "array",
+        "description": "Per-face naming and question flags. Faces always exist and are always drawn at their derived size; list a face here only to label, occlude or highlight it. Each entry addresses a face by its id (see the id enum); ids that are not faces of the chosen solid are ignored.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "top",
+                "bottom",
+                "front",
+                "back",
+                "left",
+                "right",
+                "end-1",
+                "end-2",
+                "rect-1",
+                "rect-2",
+                "rect-3",
+                "base",
+                "side-1",
+                "side-2",
+                "side-3",
+                "side-4",
+                "curved"
+              ],
+              "description": "Which face this entry styles. Must be a face of the chosen solid (cuboid: top/bottom/front/back/left/right; triangular-prism: end-1/end-2/rect-1/rect-2/rect-3; square-pyramid: base/side-1..side-4; cylinder: top/bottom/curved). An id that is not a face of the current solid is ignored."
+            },
+            "label": {
+              "type": "string",
+              "description": "A short name drawn in the centre of this face — a letter (\"A\") for \"which faces are opposite?\", or a word (\"top\"). Omit for no centre label. show.faceLabels must stay true."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this face's area (shown when show.faceAreas is on) as \"?\" — the \"find this face's area\" hook. The face itself stays visible. To stop the answer leaking, the surface-area working and total are then hidden too, and congruent faces should be occluded together. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this face (bold amber border + light amber fill) — emphasis, e.g. \"the shaded face folds to the top\". Default false."
+            }
+          }
+        }
+      },
+      "surfaceArea": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to render the surface-area readout beneath the net; omit it for no readout. The areas and total are computed from the net (e.g. cuboid \"2×40 + 2×24 + 2×15 = 158\"; cylinder shown both exactly in π and as a 2-dp decimal).",
+        "properties": {
+          "workedSteps": {
+            "type": "boolean",
+            "description": "Show the full summed working \"area + area + … = total\". false shows only \"Surface area = total\". Default true."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the total as \"?\" — \"find the surface area\". The working, if shown, stays visible. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the total — answer emphasis. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "dimensions": {
+            "type": "boolean",
+            "description": "Label the net's edges with their derived lengths (and the cylinder's 2πr width). Default true."
+          },
+          "foldMarks": {
+            "type": "boolean",
+            "description": "Draw the internal edges (where faces meet and fold) as dashed fold-lines in the construction grey, leaving the cut outline solid. false draws every edge solid (no fold/cut distinction). Default true."
+          },
+          "faceLabels": {
+            "type": "boolean",
+            "description": "Show the centre labels authored in faces[].label. Default true."
+          },
+          "faceAreas": {
+            "type": "boolean",
+            "description": "Write each face's computed area inside it — for \"surface area from a net\". An occluded face shows \"?\" instead. Default false."
+          }
+        }
+      },
+      "unit": {
+        "type": "string",
+        "description": "Length unit shown on the surface-area readout (areas read in this unit squared), e.g. \"cm\", \"m\", \"mm\". Edge labels are bare numbers. Default \"cm\"."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Worked example — cuboid 8×5×3, surface area summed from the net",
+      "params": {
+        "solid": {
+          "type": "cuboid",
+          "dimensions": {
+            "length": 8,
+            "width": 5,
+            "height": 3
+          }
+        },
+        "show": {
+          "dimensions": true,
+          "faceAreas": true
+        },
+        "surfaceArea": {
+          "workedSteps": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Answer space — cuboid net with dimensions, work out the surface area",
+      "params": {
+        "solid": {
+          "type": "cuboid",
+          "dimensions": {
+            "length": 6,
+            "width": 4,
+            "height": 2
+          }
+        },
+        "show": {
+          "dimensions": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Occluded question — triangular prism, find the surface area",
+      "params": {
+        "solid": {
+          "type": "triangular-prism",
+          "dimensions": {
+            "sides": [
+              6,
+              8,
+              10
+            ],
+            "length": 12
+          }
+        },
+        "show": {
+          "dimensions": true,
+          "faceAreas": true
+        },
+        "surfaceArea": {
+          "workedSteps": true,
+          "occlude": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Hard case — triangular prism 3-4-5 (right-angled), length 10, surface area 132",
+      "params": {
+        "solid": {
+          "type": "triangular-prism",
+          "dimensions": {
+            "sides": [
+              3,
+              4,
+              5
+            ],
+            "length": 10
+          }
+        },
+        "show": {
+          "dimensions": true,
+          "faceAreas": true
+        },
+        "surfaceArea": {
+          "workedSteps": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Square-based pyramid — base 6, height 4 (slant 5), surface area 96",
+      "params": {
+        "solid": {
+          "type": "square-pyramid",
+          "dimensions": {
+            "base": 6,
+            "height": 4
+          }
+        },
+        "show": {
+          "dimensions": true,
+          "faceAreas": true
+        },
+        "surfaceArea": {
+          "workedSteps": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Cylinder — radius 3.5, height 10, curved face highlighted, surface area in π",
+      "params": {
+        "solid": {
+          "type": "cylinder",
+          "dimensions": {
+            "radius": 3.5,
+            "height": 10
+          }
+        },
+        "faces": [
+          {
+            "id": "curved",
+            "highlight": true
+          }
+        ],
+        "show": {
+          "dimensions": true
+        },
+        "surfaceArea": {
+          "workedSteps": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Net → solid (staged) base frame — the flat net of a cuboid 6×4×3",
+      "params": {
+        "mode": "net",
+        "header": "Fold the net",
+        "solid": {
+          "type": "cuboid",
+          "dimensions": {
+            "length": 6,
+            "width": 4,
+            "height": 3
+          }
+        },
+        "show": {
+          "dimensions": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Net → solid (staged) final frame — the assembled cuboid 6×4×3",
+      "params": {
+        "mode": "solid",
+        "header": "Fold the net",
+        "solid": {
+          "type": "cuboid",
+          "dimensions": {
+            "length": 6,
+            "width": 4,
+            "height": 3
+          }
+        },
+        "show": {
+          "dimensions": true
+        },
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Which solid does this net make? — assembled triangular prism (3-4-5, length 10)",
+      "params": {
+        "mode": "solid",
+        "solid": {
+          "type": "triangular-prism",
+          "dimensions": {
+            "sides": [
+              3,
+              4,
+              5
+            ],
+            "length": 10
+          }
+        },
+        "show": {
+          "dimensions": true
+        },
+        "unit": "cm",
+        "caption": "A triangular prism"
+      }
+    }
+  ]
+}

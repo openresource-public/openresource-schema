@@ -1,0 +1,444 @@
+{
+  "ref": "geometry/area-grid@1",
+  "family": "geometry",
+  "name": "area-grid",
+  "version": 1,
+  "title": "Area on squared paper",
+  "tagline": "A shape on squared paper with its cells shaded and counted (whole and half squares) for area as counting; the outline, tally and area are derived and the area occludes.",
+  "description": "A shape — or several, to compare — drawn on squared paper, with its cells shaded and counted to give the area. The intro-to-area manipulative: area as counting unit squares, including counting two half-squares as one whole. You write only which squares are shaded — whole-cell blocks (rects), individual whole or half cells (cells), and optionally cells subdivided into strips (subdivisions) for fractions of a square. The model derives the shape's outline (tracing the boundary of the shaded cells, diagonals included), fills the cells in the shape's own colour, can number them as they are counted, and computes the area as an exact mixed number — Σ whole squares + ½ × half-squares + Σ shaded/into. Nothing but the shaded cells is authored, so the figure can never lie about how many squares a shape covers. Occlude a shape's area for \"what is the area?\" (the tally and the stem sentence mirror the \"?\" so nothing leaks), highlight the answer in amber, compare two shapes' counted areas, or count in real square units with unit \"cm\". Distinct from geometry/compound-area, which splits a shape into rectangles and sums length × width.",
+  "whenToUse": "Reach for this to teach area by counting squares on squared / squared paper: find the area of a shape by counting the squares inside it, count two half-squares as one whole square, and compare the areas of two shapes drawn on the same sheet — the primary intro to area, before the length × width formula. Write the squared-paper size with grid: { cols, rows } (squares across and up; x from the left, y from the bottom, both 0-based) — keep it identical across the blocks of one lesson so pupils count on the same sheet — or omit it to auto-fit the shapes. Then give shapes: each shape is the set of shaded squares. Use rects for blocks of whole squares ([x, y, w, h] — a rectangle is one block; a rectilinear L-/T-shape is two or three) and cells for single squares or half-squares (cells: [{ at: [x, y] }] whole, [{ at: [x, y], half: \"BL\" }] a half-square triangle with its right angle at that corner — BL/BR/TL/TR). A right-angled triangle with equal legs of 3 is three whole squares and three half-squares, area 4½. Common configurations: count the squares — one shape with show.tally true to number every square as it is counted, and the derived \"Area = N squares\" readout; what is the area? — set the shape's area.occlude true so the readout reads \"?\" while the squares stay countable (an answer space); compare — two or more shapes, each its own colour, with compare true to add the derived \"Area A = Area B\" / \"Area A > Area B\" line (the \"same area, different shape\" idea); half squares — a triangle or parallelogram drawn with half cells, so pupils pair the halves; fractions of a square — subdivisions cut a square into strips (into: 4, shaded: 3 → three quarters), each adding its fraction to the area or standing alone; real units — set unit \"cm\" so each square is 1 cm and the area reads in cm². Toggle show.tally (counting numbers), show.area (the readout, on by default), show.grid (the paper) and stem (a warm derived fill-in sentence). Highlight a shape or its area in amber for the answer; occludeLabel hides a shape's name for \"name this shape\". Switch model when the teaching changes: for area by splitting into rectangles and summing length × width (compound / composite shapes, the shaded-area-by-subtraction method) use geometry/compound-area; for the grid (box) method of multiplication use algebra/area-model; for constructing polygons and reading their properties on a pin-board use geometry/geoboard; for coordinates and plotting points use graphing/coordinate-grid. Synonyms a teacher might use: area, count the squares, counting squares, squared paper, square paper, square grid, square centimetres, cm², whole squares, half squares, half-squares, two halves make a whole, area of a shape, compare areas, same area different shape, fractions of a square, intro to area, KS1, KS2.",
+  "responseModes": [],
+  "tags": [
+    "area",
+    "count the squares",
+    "counting squares",
+    "squared paper",
+    "square paper",
+    "square grid",
+    "unit squares",
+    "half squares",
+    "half-square",
+    "whole squares",
+    "compare areas",
+    "same area",
+    "area by counting",
+    "intro to area",
+    "square centimetres",
+    "cm2",
+    "fractions of a square",
+    "triangle",
+    "rectangle",
+    "rectilinear",
+    "parallelogram",
+    "KS1",
+    "KS2",
+    "primary",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "grid": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The squared-paper extent. Omit to auto-fit the shapes (with a one-square margin). Keep it identical across the blocks of one lesson so pupils count on the same sheet.",
+        "properties": {
+          "cols": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "description": "Squares ACROSS the paper (x runs 0…cols−1, left to right)."
+          },
+          "rows": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "description": "Squares UP the paper (y runs 0…rows−1, bottom to top)."
+          }
+        }
+      },
+      "shapes": {
+        "type": "array",
+        "maxItems": 4,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "rects": {
+              "type": "array",
+              "maxItems": 12,
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "minItems": 4,
+                "maxItems": 4
+              },
+              "description": "Blocks of WHOLE squares, each [x, y, w, h]: a w-wide by h-tall block of filled cells with its bottom-left square at column x, row y. The terse way to fill a rectangle (a 3-by-4 rectangle is one block [0,0,3,4] = 12 squares) or a rectilinear shape (an L-shape is two or three blocks). Blocks may abut; a square filled twice is counted once."
+            },
+            "cells": {
+              "type": "array",
+              "maxItems": 80,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "at": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "description": "A square's position [x, y]: column x from the LEFT (0-based) and row y from the BOTTOM (0-based). The square spans x…x+1 across and y…y+1 up."
+                  },
+                  "half": {
+                    "type": "string",
+                    "enum": [
+                      "BL",
+                      "BR",
+                      "TL",
+                      "TR"
+                    ],
+                    "description": "Shade only HALF the square — a right-angled triangle that is half of it, split along a diagonal. The value names the corner where the RIGHT ANGLE sits: \"BL\" bottom-left, \"BR\" bottom-right, \"TL\" top-left, \"TR\" top-right (the triangle is that corner and its two neighbours). Two half-squares count as one whole. Omit to shade the whole square."
+                  }
+                },
+                "required": [
+                  "at"
+                ]
+              },
+              "description": "Individual squares — whole or HALF — added to the shape. Use for slanted shapes whose sides cut squares into half-square triangles (a triangle, a parallelogram), or for any single square not in a block. A whole cell duplicating one a block already filled is counted once."
+            },
+            "label": {
+              "type": "string",
+              "description": "A name drawn at the shape's centre — \"A\", \"B\", or a word like \"triangle\". The TEXT is authored (a name can't be derived); its POSITION is computed. Omit for an unlabelled shape."
+            },
+            "occludeLabel": {
+              "type": "boolean",
+              "description": "Render the label as \"?\" — the \"name this shape\" hook. The shape stays visible. Default false; only meaningful with label."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this shape — fill, outline and area readout — in amber, for emphasis / \"this is the answer\". Reserved colour; use sparingly. Default false."
+            },
+            "area": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Question / emphasis flags for THIS shape's area readout.",
+              "properties": {
+                "occlude": {
+                  "type": "boolean",
+                  "description": "Render the area as \"?\" — \"what is the area of this shape?\". The squares stay visible and countable; the tally and stem mirror the \"?\" so nothing leaks. Default false."
+                },
+                "highlight": {
+                  "type": "boolean",
+                  "description": "Amber the area value — answer emphasis (independent of shape highlight). Default false."
+                }
+              }
+            }
+          }
+        },
+        "description": "The shapes on the paper, each a set of shaded squares. Omit (or pass an empty array) for BLANK squared paper — an answer space for pupils to shade their own shape. Multiple shapes draw in distinct colours (first blue, then teal, purple, coral) so they read apart; use highlight to amber the one that matters."
+      },
+      "subdivisions": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "cell": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "The square [x, y] to cut into finer parts."
+            },
+            "into": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 10,
+              "description": "How many equal parts to cut the square into: 2 = halves, 3 = thirds, 4 = quarters, and so on."
+            },
+            "dir": {
+              "type": "string",
+              "enum": [
+                "rows",
+                "cols"
+              ],
+              "description": "Cut into horizontal strips (\"rows\", default) or vertical strips (\"cols\")."
+            },
+            "shaded": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "How many of the parts to shade (0…into). Each shaded part adds 1/into of a square to the area — the \"fraction of a square\" the cell shows. Default: all of them."
+            },
+            "shape": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Index (0-based) of the shape in `shapes` whose area this cell's shaded fraction joins (e.g. a shape that is \"6 squares and three quarters\"). Omit for a STANDALONE divided square — it shows its own little \"¾ of a square\" readout, the usual fractions-on-a-grid use."
+            }
+          },
+          "required": [
+            "cell",
+            "into"
+          ]
+        },
+        "description": "Cells cut into finer STRIPS — the fractions-on-a-grid device. Each divides one square into equal parts and shades some of them; the shaded fraction (shaded/into) joins a shape's area (via shape) or stands alone with its own little readout. Dashed strip lines show the division."
+      },
+      "compare": {
+        "type": "boolean",
+        "description": "When two or more shapes are shown, add a DERIVED comparison line from their counted areas — \"Area A = Area B\", \"Area A > Area B\". The \"same area, different shape\" / \"which is bigger?\" hook. Default false."
+      },
+      "unit": {
+        "type": "string",
+        "description": "The real length one square represents, e.g. \"cm\" — the paper then notes \"1 square = 1 cm\" and areas read in square units (\"12 cm²\"). Omit to count in bare \"squares\"."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "tally": {
+            "type": "boolean",
+            "description": "Number each whole square 1, 2, 3 … as it is counted and mark each half-square \"½\" — the counting made visible. Default false."
+          },
+          "area": {
+            "type": "boolean",
+            "description": "Show the derived \"Area = N squares\" readout beneath each shape. Default true."
+          },
+          "grid": {
+            "type": "boolean",
+            "description": "Draw the faint squared-paper grid behind the shapes. Default true."
+          }
+        }
+      },
+      "stem": {
+        "type": "boolean",
+        "description": "Add a warm derived fill-in sentence beneath the figure — the verbal twin of the count (\"There are 7 squares inside, so the area is 7 squares\"). Occlusion-aware (shows \"?\" when the area is hidden). Default false."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the paper; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure (wraps), e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Blank answer space — empty squared paper to shade on",
+      "params": {
+        "grid": {
+          "cols": 7,
+          "rows": 6
+        },
+        "header": "Your turn"
+      }
+    },
+    {
+      "label": "Worked example — an L-shape, every square numbered as it is counted (area 7)",
+      "params": {
+        "grid": {
+          "cols": 7,
+          "rows": 6
+        },
+        "shapes": [
+          {
+            "rects": [
+              [
+                1,
+                1,
+                4,
+                1
+              ],
+              [
+                1,
+                2,
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "show": {
+          "tally": true
+        },
+        "stem": true
+      }
+    },
+    {
+      "label": "Occluded question — what is the area of this rectangle? (area 6, hidden)",
+      "params": {
+        "grid": {
+          "cols": 7,
+          "rows": 5
+        },
+        "shapes": [
+          {
+            "rects": [
+              [
+                1,
+                1,
+                3,
+                2
+              ]
+            ],
+            "label": "R",
+            "area": {
+              "occlude": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — a right-angled triangle: three whole and three half squares (area 4½)",
+      "params": {
+        "grid": {
+          "cols": 6,
+          "rows": 5
+        },
+        "shapes": [
+          {
+            "cells": [
+              {
+                "at": [
+                  1,
+                  1
+                ]
+              },
+              {
+                "at": [
+                  2,
+                  1
+                ]
+              },
+              {
+                "at": [
+                  1,
+                  2
+                ]
+              },
+              {
+                "at": [
+                  3,
+                  1
+                ],
+                "half": "BL"
+              },
+              {
+                "at": [
+                  2,
+                  2
+                ],
+                "half": "BL"
+              },
+              {
+                "at": [
+                  1,
+                  3
+                ],
+                "half": "BL"
+              }
+            ],
+            "area": {
+              "occlude": true
+            }
+          }
+        ],
+        "show": {
+          "tally": true
+        },
+        "caption": "Two half-squares make one whole square."
+      }
+    },
+    {
+      "label": "Compare — two different shapes with the same area (both 6 squares)",
+      "params": {
+        "grid": {
+          "cols": 9,
+          "rows": 5
+        },
+        "shapes": [
+          {
+            "rects": [
+              [
+                0,
+                1,
+                2,
+                3
+              ]
+            ],
+            "label": "A"
+          },
+          {
+            "rects": [
+              [
+                4,
+                1,
+                3,
+                1
+              ],
+              [
+                4,
+                2,
+                1,
+                3
+              ]
+            ],
+            "label": "B"
+          }
+        ],
+        "compare": true
+      }
+    },
+    {
+      "label": "Fractions of a square — one cell as a half, one as a quarter, one as three quarters",
+      "params": {
+        "grid": {
+          "cols": 7,
+          "rows": 2
+        },
+        "subdivisions": [
+          {
+            "cell": [
+              0,
+              0
+            ],
+            "into": 2,
+            "shaded": 1
+          },
+          {
+            "cell": [
+              3,
+              0
+            ],
+            "into": 4,
+            "shaded": 1,
+            "dir": "cols"
+          },
+          {
+            "cell": [
+              5,
+              0
+            ],
+            "into": 4,
+            "shaded": 3
+          }
+        ],
+        "show": {
+          "grid": true
+        },
+        "header": "Fractions of a square"
+      }
+    }
+  ]
+}

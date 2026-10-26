@@ -1,0 +1,291 @@
+{
+  "ref": "cs/pseudocode-editor@1",
+  "family": "cs",
+  "name": "pseudocode-editor",
+  "version": 1,
+  "title": "Pseudo-code editor",
+  "tagline": "Editable AQA pseudo-code listing that really runs: Run/Step/Reset, live variables, output where USERINPUT waits for the pupil; occlude for predict-the-output; run-program marking.",
+  "description": "An editable AQA pseudo-code listing in the app's coding window: one header row with three coloured window circles, the title and Run, Step, Reset and full screen; the listing with line numbers; a right-hand column with a live variables table and the output (underneath on a phone), where a USERINPUT waits for the pupil to type the answer; and a footer naming the language, with the step count (\"Step 9 of 14\") while stepping. It comes in seven colour themes (`theme`). The listing really executes — a hand-rolled tokenise/parse/execute engine for the dialect AQA prints in its assessment material, pure and synchronous, with seeded RANDOM_INT and hard step/output caps — so the output column and every variable value are produced by running the code, never authored, and the window as first shown already carries the listing WITH its real output (print and slides capture exactly that). Step walks the same run one executed statement at a time: the current line highlights in the listing, the variables panel shows every variable after that statement, the output column fills as lines are displayed, and at a USERINPUT the walk waits for the pupil's answer, which stays in the output where it was typed. Pupils can edit the listing and re-run; set editable false for read-and-trace (the pupil still types the answers). Set occlude true for predict-the-output (the window poses pre-run, nothing baked). As a marked answer space (\"write pseudo-code that…\") the editor marks by behaviour: the pupil's listing and a hidden reference run over the same tests — including generated inputs that plant the reference's own boundary literals — and must agree.",
+  "whenToUse": "Reach for this whenever a lesson needs runnable AQA pseudo-code on the page: a live worked listing pupils can edit and re-run, a Step-through dry run watching the variables move (the Python Tutor experience in the exam dialect), a read-and-trace listing (editable false), a predict-the-output prompt (occlude true — the output stays hidden until the pupil presses Run; carry the \"write your prediction down first\" instruction in the block text), a run-it-with-your-own-data dry run (editable false: the listing locks and the pupil types each USERINPUT answer), or a blank/stub answer space for \"write pseudo-code that…\" with run-based marking (markProgram). Author `program` in AQA pseudo-code: assignment ← (or <-, or :=), comments #, IF … THEN / ELSE IF / ELSE / ENDIF, WHILE … ENDWHILE, REPEAT … UNTIL, FOR … TO … [STEP] … ENDFOR, FOR … IN …, SUBROUTINE/PROCEDURE/FUNCTION with RETURN, arrays by assignment and a[i] / a[i][j], RECORD … ENDRECORD, OUTPUT, USERINPUT, and the AQA built-ins (LEN, POSITION, SUBSTRING, STRING_TO_INT, INT_TO_STRING, CHAR_TO_CODE, CODE_TO_CHAR, RANDOM_INT, …). Keywords are case-insensitive; commands from other languages (PRINT, INPUT, ELIF, CASE, ==) are refused by name with the AQA form to use instead. Supply `inputs` for everything USERINPUT reads — authored, so the same listing runs identically on every surface — `startVars` for state the question gives, and `seed` when RANDOM_INT is involved (the same draws every time; the printed answer always matches the screen). Keep the listing to about 24 lines: the window is as wide as its longest line and as tall as its listing, so past roughly 30 lines it becomes a tall column that a slide can only shrink. (Displayed output does not lengthen the figure — the column draws as many lines as fit and says how many it did not.) A runaway loop is safe: the engine stops it at a step cap with a one-line teaching-voice message, in the same place every run. The window title (`header`) defaults to \"pseudo-code\"; `theme` picks the window's colours — one theme for every coding window in a lesson, varied between lessons (see the theme param). AQA dialect ONLY in v1: do NOT promise OCR Exam Reference Language (ERL) or any other board's pseudo-code with this model — the ERL frontend is planned separately (CODE_LANGUAGES.md P3) and until it ships an OCR lesson should pose listings as text or use cs/code-editor's Python. Switch model when the figure is the completed-run TABLE on paper (cs/trace-table — the svg register of the same engine, for \"complete the trace table\" marking), when the lesson is about real Python or JavaScript (cs/code-editor), or when an operation table over a stack/queue/list is being traced (cs/cells). Synonyms teachers use: pseudocode, pseudo-code, AQA pseudocode, dry run, trace, step through, walk through the algorithm, predict the output, write pseudocode, algorithm editor, run pseudocode, GCSE computer science, A level computer science. This model owns its own mutable state (the editor and the run), so it does not support staged `steps` or draggable params — build predict → run → discuss flows by sequencing blocks.",
+  "responseModes": [
+    "run-program"
+  ],
+  "tags": [
+    "pseudocode",
+    "pseudo-code",
+    "aqa pseudocode",
+    "pseudocode editor",
+    "dry run",
+    "trace",
+    "step through",
+    "predict the output",
+    "write pseudocode",
+    "algorithm",
+    "variables",
+    "iteration",
+    "selection",
+    "subroutine",
+    "userinput",
+    "output",
+    "run",
+    "computer science",
+    "computing",
+    "gcse",
+    "a level",
+    "python tutor",
+    "code",
+    "editor"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "program": {
+        "type": "string",
+        "minLength": 1,
+        "description": "The listing, as AQA pseudo-code, newline separated — the only authored content (the output is NOT written anywhere; it is produced by running this). Assignment is ← (or <-, or :=); comments start #. Selection IF … THEN / ELSE IF … THEN / ELSE / ENDIF; iteration WHILE [DO] … ENDWHILE, REPEAT … UNTIL, FOR i ← a TO b [STEP n] … ENDFOR, FOR x IN … ENDFOR; subroutines SUBROUTINE / SUB / PROCEDURE / FUNCTION with a matching END… and RETURN; arrays are created by assigning a list (scores ← [0, 0, 0]) and indexed a[i], a[i][j] or a[i, j]; RECORD … ENDRECORD with typed fields; OUTPUT e, …, e and x ← USERINPUT; built-ins LEN POSITION SUBSTRING STRING_TO_INT STRING_TO_REAL INT_TO_STRING REAL_TO_STRING CHAR_TO_CODE CODE_TO_CHAR RANDOM_INT. Keywords are case-insensitive; identifiers keep their case. Commands from other languages (PRINT, INPUT, ELIF, CASE, DIM, //, ==) are refused by name with the AQA form to use instead. For a blank answer space, pose the task as # comment lines. Keep listings short and self-contained — no imports, no files, no network exist in the dialect."
+      },
+      "inputs": {
+        "type": "array",
+        "maxItems": 20,
+        "items": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "One value USERINPUT consumes. Numeric text is a number in arithmetic and comparisons with numbers, and stays text in LEN, joins and OUTPUT."
+        },
+        "description": "The values USERINPUT reads on PAPER, in order: a printed listing has nobody to type, so it runs on these and shows each one in the output where it was read. On screen a USERINPUT waits for the pupil to type the answer, so these are not used there. On paper, a program that asks for more input than is given stops with a clear one-line error naming how many values were supplied."
+      },
+      "startVars": {
+        "type": "object",
+        "description": "Variables the program STARTS with — state the question gives rather than the listing setting up (an unsorted array for a sort pass, a memory array, a grid). They appear in the variables panel from the first step. Keys are variable names; values are numbers, text, True/False (as JSON true/false), or arrays (which may hold arrays).",
+        "propertyNames": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "additionalProperties": {
+          "description": "The starting value: a number, text, a boolean, or an array (which may hold arrays)."
+        }
+      },
+      "seed": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Seed for RANDOM_INT, so a program that draws at random shows the same run every time and the baked poster output always matches what pressing Run shows. Default 1. Change it for a different but equally fixed set of draws."
+      },
+      "editable": {
+        "enum": [
+          true,
+          false,
+          "data"
+        ],
+        "description": "The read/write dial. true (default): pupils edit the listing and re-run — the authored program is initial state, never a cage. false: read-and-trace — the listing locks, but Run/Step/Reset still work and the pupil types any USERINPUT answers. \"data\" is kept for older lessons and now behaves as false: every run asks the pupil for its answers, so there is no separate data to unlock. Ignored (forced editable) when markProgram is set: a marked answer space must accept the pupil's code."
+      },
+      "occlude": {
+        "type": "boolean",
+        "description": "Predict-the-output. true poses the window PRE-RUN: the output column and variables panel stay blank (saying \"Press Run to see the output\") instead of carrying the executed result, on screen and on every posed print/slide surface alike. The pupil predicts, then presses Run to check. Default false — the window as first shown carries the real executed output (the honest poster)."
+      },
+      "header": {
+        "type": "string",
+        "description": "The title in the window's header. Defaults to \"pseudo-code\". Purely cosmetic — pseudo-code has no filenames, so what the algorithm does reads well (\"Binary search\", \"Add up three marks\"), in sentence case."
+      },
+      "theme": {
+        "type": "string",
+        "enum": [
+          "platinum",
+          "paper",
+          "contrast",
+          "chalkboard",
+          "terminal",
+          "aubergine",
+          "amber"
+        ],
+        "description": "The window's colour theme. Light: \"platinum\" (default, warm grey), \"paper\" (white chrome, ink colours), \"contrast\" (black on white, every colour at least 7:1 — for pupils who need it or a weak projector). Dark: \"chalkboard\" (dark green, chalk colours), \"terminal\" (warm dark), \"aubergine\" (deep plum), \"amber\" (an old amber monitor). Use ONE theme for every coding window in a lesson, and VARY it between lessons rather than leaving every lesson on platinum. Dark themes print as paper automatically."
+      },
+      "skin": {
+        "type": "string",
+        "description": "Retired (the old glossy and bevel window skins). Accepted so older lessons still validate; ignored — use theme."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "variables": {
+            "type": "boolean",
+            "description": "Show the live variables panel. Default true. Set false when the lesson is only about the output and the panel would crowd the point. Setting `output` false takes the variables panel with it whatever this says — a \"final variables\" reading with no way to run would leak an answer the pupil is meant to derive."
+          },
+          "inputs": {
+            "type": "boolean",
+            "description": "Retired: there is no queued-inputs row any more, since on screen every USERINPUT waits for the pupil to type the answer in the output. Accepted and ignored."
+          },
+          "output": {
+            "type": "boolean",
+            "description": "Show the output column AND the Run/Step/Reset controls. Default true. Set false to present the listing alone as a static code figure — no run surface at all."
+          }
+        }
+      },
+      "markProgram": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Turns the editor into an AUTO-MARKED answer space (\"write pseudo-code that…\"). Set it on a marked model tile whose responseMode is run-program; correctAnswer is { derived: true }. The pupil writes pseudo-code and presses Run (the commit); the model executes THEIR listing and the reference over every test — synchronously, the engine is pure and step-capped — and reports agreement, so any listing that computes the right thing passes and one that hard-codes the shown case fails on the varied inputs. Two shapes: PROGRAM mode (default) compares OUTPUT lines per test's inputs; SUBROUTINE mode (set `subroutine`) calls the named subroutine per test and compares its canonical RETURN value (anything OUTPUT while debugging is ignored). Keep the visible `program` param as the TASK (comment lines or a stub), never the answer; the reference is never rendered on any surface.",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "A correct answer to the question, in AQA pseudo-code. It is the KEY, never displayed: marking compares what running it produces, so the pupil may write any equivalent listing. Required unless every test carries an authored `out`. A reference that fails to run leaves the tile unmarked with an authoring error — it never marks a pupil wrong. Its whole-number literals are planted into generated tests, so a boundary slip (≥ 50 answered as > 50) is caught."
+          },
+          "subroutine": {
+            "type": "string",
+            "description": "Subroutine-harness mode: the name of the subroutine the question asks the pupil to define (e.g. \"total\"). Per test the harness calls it with that test's `args` and marks the RETURN value. Omit for whole-program inputs→output marking."
+          },
+          "tests": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "inputs": {
+                  "type": "array",
+                  "items": {
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "description": "Program mode: the USERINPUT values for this test, in order."
+                },
+                "args": {
+                  "type": "array",
+                  "description": "Subroutine mode: the arguments to call the subroutine with (JSON values; arrays arrive as pseudo-code arrays)."
+                },
+                "out": {
+                  "description": "Optional authored expectation: program mode an array of output lines, subroutine mode the expected return value (JSON). When present the reference is not run for this test; when absent it is derived by running the reference."
+                }
+              }
+            },
+            "description": "The test battery (max 8). The FIRST test is conventionally the case the visible `inputs` param shows; later tests are the hidden ones that catch hard-coding. Every test must either carry `out` or be derivable from `reference`."
+          },
+          "generate": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "How many tests to generate (default 3, max 5)."
+              },
+              "ints": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "description": "One [min, max] range per USERINPUT the program reads, e.g. [[0, 100]] for a program reading one whole number."
+              }
+            },
+            "description": "Program mode only: generate extra whole-number-input tests deterministically, with the reference's own numeric literals (and their neighbours) planted first — so `mark ≥ 50` answered as `mark > 50` diverges on the planted 50. Needs `reference`. The same tests are generated on every run, so a re-mark reproduces its verdict."
+          },
+          "require": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Structural facts the pupil's SOURCE must show, asserted alongside the behaviour, from the engine's facts vocabulary: uses-loop, uses-definite-loop, uses-indefinite-loop, uses-nested-loop, uses-selection, uses-arrays, uses-records, uses-random, calls-input, uses-output, uses-recursion, defines-subroutine:<name>. Use sparingly — \"must use a loop\" fails a pupil who finds a closed form, which is only right when the loop IS the lesson."
+          }
+        }
+      }
+    },
+    "required": [
+      "program"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked listing — a FOR loop totalling 1 to 10 (output baked into the poster)",
+      "params": {
+        "header": "total of 1 to 10",
+        "program": "total ← 0\nFOR n ← 1 TO 10\n   total ← total + n\nENDFOR\nOUTPUT 'The total is ' + INT_TO_STRING(total)"
+      }
+    },
+    {
+      "label": "Predict the output — occluded question (selection inside iteration)",
+      "params": {
+        "occlude": true,
+        "editable": false,
+        "program": "count ← 0\nFOR i ← 1 TO 12\n   IF i MOD 4 = 0 THEN\n      count ← count + 1\n   ENDIF\nENDFOR\nOUTPUT count"
+      }
+    },
+    {
+      "label": "Read and trace with Step — the hard case (binary search, subroutine + WHILE + arrays)",
+      "params": {
+        "header": "binary search",
+        "editable": false,
+        "startVars": {
+          "items": [
+            3,
+            8,
+            11,
+            19,
+            24,
+            30,
+            37
+          ]
+        },
+        "program": "SUBROUTINE find(list, target)\n   low ← 0\n   high ← LEN(list) - 1\n   WHILE low ≤ high\n      mid ← (low + high) DIV 2\n      IF list[mid] = target THEN\n         RETURN mid\n      ENDIF\n      IF list[mid] < target THEN\n         low ← mid + 1\n      ELSE\n         high ← mid - 1\n      ENDIF\n   ENDWHILE\n   RETURN -1\nENDSUBROUTINE\n\nposition ← find(items, 24)\nOUTPUT position"
+      }
+    },
+    {
+      "label": "Run it with your own data — the listing locks, the pupil types the mark",
+      "params": {
+        "header": "pass or fail",
+        "editable": false,
+        "inputs": [
+          67
+        ],
+        "program": "mark ← USERINPUT\nIF mark ≥ 45 THEN\n   OUTPUT 'pass'\nELSE\n   OUTPUT 'fail'\nENDIF"
+      }
+    },
+    {
+      "label": "Blank answer space — pupils write the listing",
+      "params": {
+        "header": "your answer",
+        "program": "# Write pseudo-code that displays the 4 times table\n# from 4 up to 40, one line per multiple.\n"
+      }
+    },
+    {
+      "label": "Auto-marked — write pseudo-code that reads an age and decides (run-program, generated boundaries)",
+      "params": {
+        "header": "your answer",
+        "inputs": [
+          14
+        ],
+        "program": "# Write pseudo-code that reads an age and displays\n# 'child' if it is under 16, otherwise 'adult'.\n",
+        "markProgram": {
+          "reference": "age ← USERINPUT\nIF age < 16 THEN\n   OUTPUT 'child'\nELSE\n   OUTPUT 'adult'\nENDIF",
+          "tests": [
+            {
+              "inputs": [
+                14
+              ]
+            },
+            {
+              "inputs": [
+                41
+              ]
+            }
+          ],
+          "generate": {
+            "count": 3,
+            "ints": [
+              [
+                0,
+                100
+              ]
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

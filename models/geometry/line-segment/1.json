@@ -1,0 +1,366 @@
+{
+  "ref": "geometry/line-segment@1",
+  "family": "geometry",
+  "name": "line-segment",
+  "version": 1,
+  "title": "Line segment",
+  "tagline": "Bare horizontal line with ordered labelled collinear points, ticks and occludable length braces; each length derived from the ratio + one given length. Not a numeric axis.",
+  "description": "A single horizontal straight line segment carrying ordered, labelled collinear points (A–B–C…) that divide it into sub-segments, with a short vertical tick at each point, optional length braces on any span, and a \"Not to scale\" caption. The author writes the ordered points, the ratio of consecutive sub-segments, and ONE known length; every sub-segment length, span length, and the answer are derived (length = unit × ratio units spanned, the unit fixed by the given). Points are positioned proportional to the ratio (with a floor so extreme ratios stay legible) or spaced evenly for the bare exam figure. Point labels and measure values occlude independently to \"?\" — the \"ABC is a straight line, AB:BC = m:n, find BC\" hook — and any brace can be highlighted amber for the answer. This is deliberately NOT a number line: there is no numeric scale, no graduations, no zero — just a marked segment and the lengths of its parts.",
+  "whenToUse": "Reach for this whenever the teaching is \"points lie on a straight line\" and you divide the line in a ratio: \"ABC is a straight line, AB:BC = 3:2, AC = 30 cm, find BC\", points dividing a segment in a ratio, or simply showing three or more collinear points in order. Author the points in left-to-right order, the ratio over the consecutive sub-segments (length points − 1), and ONE given length (`given`) as the scale anchor — the model derives every other length. Common configurations: worked example — show the given and highlight the answer measure; occluded question — occlude the answer measure so its value reads \"?\" while the given stays visible; blank configuration — just points and ticks, no ratio or given (a bare \"ABC is a straight line\" stimulus). Spacing: \"ratio\" (default) draws the sub-segments proportional to their derived lengths — the honest ratio picture; \"even\" spaces the points equally — the schematic look of a bare exam figure that is genuinely not to scale. Do NOT reach for number/number-line here: it imposes a numeric axis, ticks-per-unit and a zero the source lacks; this model is the plain segment. Keep the same points and unit across the blocks of one lesson so pupils track one line. For algebraic parts (AB = 3x, BC = 2x) omit the given and use a measure `label` override on each span. Synonyms a teacher might use: straight line, collinear points, line segment, divide a line in a ratio, points on a line, AB:BC, partition a segment, ABC is a straight line, share a length.",
+  "responseModes": [],
+  "tags": [
+    "line segment",
+    "straight line",
+    "collinear",
+    "collinear points",
+    "points on a line",
+    "divide in a ratio",
+    "partition",
+    "partitioned segment",
+    "ratio",
+    "sharing ratio",
+    "AB:BC",
+    "segment",
+    "length",
+    "not to scale",
+    "brace",
+    "ticks",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "points": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 6,
+        "description": "The collinear points ON the line, in LEFT-TO-RIGHT order — this order defines their position order. Two points give one segment (A–B); three give two (A–B–C, B between A and C); and so on.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "Display name shown beside the point, e.g. \"A\", \"B\", \"P\". Keep short (usually a single capital). Referenced by `given` and `measures` via from/to."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this point's label as \"?\" — a \"name this point\" hook. The tick stays visible. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this point's label — draw the eye to it. Default false."
+            }
+          },
+          "required": [
+            "label"
+          ]
+        }
+      },
+      "ratio": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 5,
+        "items": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "description": "The ratio of the consecutive sub-segments, left to right — one integer PER sub-segment, so its length must be (points − 1). AB:BC = 3:2 is [3, 2]; AB:BC:CD = 1:2:3 is [1, 2, 3]. Combined with `given` it derives every length. Omit for a bare configuration with no measurements (points and ticks only), or when every measure carries its own `label` override."
+      },
+      "given": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The ONE known length that fixes the scale — every other length derives from it. It is drawn as a length brace (so you never repeat it in `measures`). Needs `ratio` to derive the rest. Omit for a bare configuration or a fully label-overridden (algebraic) figure.",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Label of the point the known length starts at (must be one of `points`)."
+          },
+          "to": {
+            "type": "string",
+            "description": "Label of the point it ends at. `from`/`to` may be adjacent (a sub-segment, e.g. AB) OR span several points (e.g. AC, the total, or an interior span BD)."
+          },
+          "length": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The known length in `unit`s, e.g. 30. Positive."
+          },
+          "show": {
+            "type": "boolean",
+            "description": "Draw the given's length brace and value. Default true. Set false to fix the scale without drawing this measurement."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the given's brace and value. Default false."
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "length"
+        ]
+      },
+      "measures": {
+        "type": "array",
+        "maxItems": 8,
+        "description": "Additional length braces to draw on the line, each spanning `from`→`to` points. Every value is DERIVED (unit × ratio units spanned) unless a `label` override is given — you never author a derived length. This is where the answer segment lives (occlude it to pose the question, highlight it for the reveal).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "Label of the point the measured span starts at."
+            },
+            "to": {
+              "type": "string",
+              "description": "Label of the point it ends at (right of `from`)."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this measure's value as \"?\" — the \"find this length\" hook. The brace stays visible. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this measure's brace and value — answer emphasis. Default false."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the derived value with this exact string, e.g. \"3x\" for an algebraic part or a custom annotation. Bypasses derivation (like number-line's jump label) — use only when there is no numeric length to derive. Set \"\" to draw the brace with no value."
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        }
+      },
+      "spacing": {
+        "type": "string",
+        "enum": [
+          "ratio",
+          "even"
+        ],
+        "description": "\"ratio\" (default): sub-segments are drawn proportional to their derived lengths (floored so an extreme ratio stays legible) — the honest ratio picture. \"even\": points are spaced equally regardless of length — the schematic look of a bare exam figure that is genuinely not to scale. Use \"even\" to reproduce a not-to-scale source figure; \"ratio\" when the proportion should be visible."
+      },
+      "unit": {
+        "type": "string",
+        "description": "Unit appended to every derived length, e.g. \"cm\", \"m\". Default \"\" (bare numbers). Keep consistent across a lesson."
+      },
+      "showTicks": {
+        "type": "boolean",
+        "description": "Draw the short vertical tick through the line at each point. Default true."
+      },
+      "showNotToScale": {
+        "type": "boolean",
+        "description": "Show the small \"Not to scale\" caption. Default true — the segment is schematic, never a ruler."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "points"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank marked line (configuration) — three collinear points, no measurements",
+      "params": {
+        "points": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "spacing": "even"
+      }
+    },
+    {
+      "label": "Worked example — AB:BC = 3:2, AC = 30 cm, BC derived and highlighted",
+      "params": {
+        "points": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "ratio": [
+          3,
+          2
+        ],
+        "given": {
+          "from": "A",
+          "to": "C",
+          "length": 30
+        },
+        "measures": [
+          {
+            "from": "B",
+            "to": "C",
+            "highlight": true
+          }
+        ],
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Occluded question — ABC straight line, AB:BC = 3:2, AC = 30 cm, find BC",
+      "params": {
+        "header": "ABC is a straight line",
+        "points": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "ratio": [
+          3,
+          2
+        ],
+        "given": {
+          "from": "A",
+          "to": "C",
+          "length": 30
+        },
+        "measures": [
+          {
+            "from": "B",
+            "to": "C",
+            "occlude": true
+          }
+        ],
+        "unit": "cm",
+        "spacing": "even"
+      }
+    },
+    {
+      "label": "Hard case — four points, interior span BD = 20 given, find AB (occluded + highlighted), even spacing",
+      "params": {
+        "points": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          },
+          {
+            "label": "D"
+          }
+        ],
+        "ratio": [
+          2,
+          1,
+          3
+        ],
+        "given": {
+          "from": "B",
+          "to": "D",
+          "length": 20
+        },
+        "measures": [
+          {
+            "from": "A",
+            "to": "B",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "unit": "cm",
+        "spacing": "even"
+      }
+    },
+    {
+      "label": "Algebraic parts — AB = 3x, BC = 2x, AC = 40 (label overrides, no given)",
+      "params": {
+        "points": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "ratio": [
+          3,
+          2
+        ],
+        "measures": [
+          {
+            "from": "A",
+            "to": "B",
+            "label": "3x"
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "label": "2x"
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "label": "40"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Given a part, find the total — AB = 12 cm, AB:BC = 3:2, AC highlighted, ratio spacing",
+      "params": {
+        "points": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "ratio": [
+          3,
+          2
+        ],
+        "given": {
+          "from": "A",
+          "to": "B",
+          "length": 12
+        },
+        "measures": [
+          {
+            "from": "A",
+            "to": "C",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "unit": "cm"
+      }
+    }
+  ]
+}

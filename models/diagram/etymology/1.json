@@ -1,0 +1,338 @@
+{
+  "ref": "diagram/etymology@1",
+  "family": "diagram",
+  "name": "etymology",
+  "version": 1,
+  "title": "Etymology breakdown",
+  "tagline": "A word split into morphemes under a bracket, each with its meaning and origin; bracket and columns derived, any meaning occludes for a question.",
+  "description": "One word broken into its morphemes — prefix, root, suffix or combining form — under a bracket. The whole word sits in a pill at the top; a computed bracket fans down to equal columns, one per morpheme, each showing the morpheme, its meaning, and an optional origin tag (e.g. \"Greek\", \"Latin\"). The author supplies only the word and the ordered list of morphemes (text + meaning); the bracket geometry, the columns, the text wrapping and the optional \"part + part = word\" reconstruction row are all derived. Any morpheme's meaning can be occluded (\"?\") for a question, or highlighted to draw the eye.",
+  "whenToUse": "Reach for this whenever a single word is taught by splitting it into its parts that carry meaning — morphemic / etymological decomposition. Ubiquitous in science vocabulary (photosynthesis = photo + synthesis; biology = bio + logy; thermometer = thermo + meter), languages and classics (Greek / Latin roots), RS and history (key terms), and primary / KS3 spelling and vocabulary (prefix + root + suffix, e.g. un + help + ful). Supply `word` (the whole word) and `morphemes` in reading order left→right; each morpheme takes `text` (as written — keep the hyphen that shows an affix's position, \"photo-\", \"-logy\", \"un-\"), an optional `meaning` (a short gloss — \"light\", \"the study of\"), an optional `origin` (the source language or word, \"Greek\", \"Latin porto\", \"Old English\"), and an optional `role` (prefix / root / suffix / combining). Leave every `meaning` blank for an answer-space figure (the word split into labelled-but-empty columns for pupils to define); set `occlude: true` on one morpheme to hide its meaning behind \"?\" as the question (\"what does bio- mean?\"); set `highlight: true` to spotlight the morpheme under discussion. Turn on `showReconstruction` to print a \"photo + synthesis = photosynthesis\" row beneath the figure — use it only when the parts genuinely concatenate back to the word (many do; assimilated spellings like in- → il- do not, so leave it off there). Cross-block convention: when a lesson breaks down several words, keep the same column rhythm so pupils read the parts, not a redrawn diagram. Synonyms a teacher might use: etymology, morphology, word parts, root word, prefix, suffix, affix, combining form, morpheme, breaking down words, word origins, Greek roots, Latin roots, deconstructing a word, building words.",
+  "responseModes": [],
+  "tags": [
+    "etymology",
+    "morphology",
+    "morpheme",
+    "word parts",
+    "root",
+    "root word",
+    "prefix",
+    "suffix",
+    "affix",
+    "combining form",
+    "word origin",
+    "origins",
+    "greek roots",
+    "latin roots",
+    "vocabulary",
+    "spelling",
+    "language",
+    "english",
+    "classics",
+    "word building",
+    "decomposition",
+    "breaking down words"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "word": {
+        "type": "string",
+        "description": "The whole word being broken down, shown in a pill at the top of the figure. The focal element — keep it the dictionary form (\"photosynthesis\", \"unhelpful\"), not a phrase."
+      },
+      "morphemes": {
+        "type": "array",
+        "minItems": 2,
+        "description": "The parts of the word, in reading order left→right. Two or more; the figure lays them out as equal columns under the bracket. Each part concatenates (roughly) back to the word, so order matters: prefix(es), then root(s), then suffix(es).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "The morpheme exactly as it is written in the breakdown — keep the hyphen that marks an affix's position: a prefix trails it (\"un-\", \"photo-\"), a suffix leads it (\"-ful\", \"-logy\"), a free root has none (\"help\", \"port\"). This is what appears in the column's pill."
+            },
+            "meaning": {
+              "type": "string",
+              "description": "A short gloss of what this morpheme means — \"not\", \"light\", \"the study of\", \"carry\". One phrase, not a sentence. Omit (or leave blank) to make this column an answer space the pupil fills in."
+            },
+            "origin": {
+              "type": "string",
+              "description": "Optional source of the morpheme — the language (\"Greek\", \"Latin\", \"Old English\") or the source word (\"Latin porto\", \"Greek phōs\"). Rendered as a small muted tag beneath the meaning. Use it to teach where the part comes from; omit when origin is not the point."
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "prefix",
+                "root",
+                "suffix",
+                "combining"
+              ],
+              "description": "Optional grammatical role of the part: `prefix` (attaches before the root), `root` (the core meaning), `suffix` (attaches after), `combining` (a combining form like photo-/bio- that joins roots). Rendered in the muted tag line (\"Greek · root\"). Omit if the lesson is not naming roles."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this morpheme's meaning as \"?\" instead of its gloss — the question hook (\"what does this part mean?\"). The morpheme itself stays visible. Default false. Pair with `highlight` to point at the part in question."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Spotlight this morpheme — its pill is shaded amber and its meaning drawn in the highlight colour. Use to focus attention on the part under discussion, or to mark the answer. Default false."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override THIS morpheme's colour — its column box and the morpheme text. The figure is single-hue (accent blue) by default, so use this to colour-code the parts (\"make the prefix green, the root blue, the suffix purple\"). Wins over the figure-wide `colors.morphemes`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts this column OUT of brand reskinning. Ignored on a highlighted morpheme (amber is reserved for the answer/focus). Omit to use the default accent."
+            }
+          },
+          "required": [
+            "text"
+          ]
+        }
+      },
+      "showReconstruction": {
+        "type": "boolean",
+        "description": "Draw a \"part + part + … = word\" row beneath the columns, reinforcing that the morphemes build the word (e.g. \"photo + synthesis = photosynthesis\"). The left side joins the morpheme texts (stripped of their position hyphens); the right side is `word`. Default false. Only switch on when the parts really do concatenate back to the spelling — leave off for assimilated forms (in- → il-, con- → com-) where they do not."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title rendered centred above the figure (e.g. \"Breaking down: photosynthesis\"). The top padding grows to clear it."
+      },
+      "colors": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"make the boxes dark green\", \"the bracket should be grey\"). Omit to keep the themeable defaults (accent-blue morphemes and word pill, muted-grey bracket), which follow a brand reskin. A per-morpheme `color` overrides `morphemes` for one column.",
+        "properties": {
+          "morphemes": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of every (non-highlighted) morpheme column — its box and text — replacing the default accent. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the columns OUT of brand reskinning. A single column can still differ via its own `color`."
+          },
+          "word": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of the word pill at the top (its border and tint; the word text stays ink). Same value space as `morphemes`."
+          },
+          "bracket": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of the bracket skeleton (the stem, rail and drop lines fanning from the word to the columns). Defaults to muted grey. Same value space as `morphemes`."
+          }
+        }
+      }
+    },
+    "required": [
+      "word",
+      "morphemes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Answer space — split \"unhelpful\", pupils define the parts",
+      "params": {
+        "word": "unhelpful",
+        "morphemes": [
+          {
+            "text": "un-",
+            "role": "prefix"
+          },
+          {
+            "text": "help",
+            "role": "root"
+          },
+          {
+            "text": "-ful",
+            "role": "suffix"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Worked — photosynthesis = photo + synthesis (Greek)",
+      "params": {
+        "word": "photosynthesis",
+        "morphemes": [
+          {
+            "text": "photo-",
+            "meaning": "light",
+            "origin": "Greek",
+            "role": "combining"
+          },
+          {
+            "text": "synthesis",
+            "meaning": "putting together",
+            "origin": "Greek",
+            "role": "root"
+          }
+        ],
+        "showReconstruction": true
+      }
+    },
+    {
+      "label": "Occluded question — what does \"bio-\" mean?",
+      "params": {
+        "word": "biology",
+        "morphemes": [
+          {
+            "text": "bio-",
+            "meaning": "life",
+            "origin": "Greek",
+            "role": "combining",
+            "occlude": true,
+            "highlight": true
+          },
+          {
+            "text": "-logy",
+            "meaning": "the study of",
+            "origin": "Greek",
+            "role": "suffix"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Prefix · root · suffix with roles and reconstruction — transportation",
+      "params": {
+        "word": "transportation",
+        "morphemes": [
+          {
+            "text": "trans-",
+            "meaning": "across",
+            "origin": "Latin",
+            "role": "prefix"
+          },
+          {
+            "text": "port",
+            "meaning": "carry",
+            "origin": "Latin porto",
+            "role": "root"
+          },
+          {
+            "text": "-ation",
+            "meaning": "the process of",
+            "origin": "Latin",
+            "role": "suffix"
+          }
+        ],
+        "showReconstruction": true,
+        "header": "Breaking down: transportation"
+      }
+    },
+    {
+      "label": "Wrapping meanings — telephone (two roots, longer glosses)",
+      "params": {
+        "word": "telephone",
+        "morphemes": [
+          {
+            "text": "tele-",
+            "meaning": "far off, at a distance",
+            "origin": "Greek",
+            "role": "combining"
+          },
+          {
+            "text": "phone",
+            "meaning": "sound or voice",
+            "origin": "Greek phōnē",
+            "role": "root"
+          }
+        ],
+        "showReconstruction": true
+      }
+    },
+    {
+      "label": "Four parts (the dense case) — unselfishness",
+      "params": {
+        "word": "unselfishness",
+        "morphemes": [
+          {
+            "text": "un-",
+            "meaning": "not",
+            "role": "prefix"
+          },
+          {
+            "text": "self",
+            "meaning": "one's own person",
+            "origin": "Old English",
+            "role": "root"
+          },
+          {
+            "text": "-ish",
+            "meaning": "having the quality of",
+            "role": "suffix"
+          },
+          {
+            "text": "-ness",
+            "meaning": "the state of being",
+            "role": "suffix"
+          }
+        ],
+        "header": "Etymology: unselfishness"
+      }
+    },
+    {
+      "label": "Optional detail varies — geography (geo- fully tagged, -graphy meaning-only)",
+      "params": {
+        "word": "geography",
+        "morphemes": [
+          {
+            "text": "geo-",
+            "meaning": "earth",
+            "origin": "Greek",
+            "role": "combining"
+          },
+          {
+            "text": "-graphy",
+            "meaning": "writing or describing"
+          }
+        ],
+        "showReconstruction": true
+      }
+    },
+    {
+      "label": "Meanings only — rewrite (no origin or role tags)",
+      "params": {
+        "word": "rewrite",
+        "morphemes": [
+          {
+            "text": "re-",
+            "meaning": "again"
+          },
+          {
+            "text": "write",
+            "meaning": "put words down"
+          }
+        ],
+        "showReconstruction": true
+      }
+    },
+    {
+      "label": "Colour-coded parts — prefix / root / suffix each a different colour",
+      "params": {
+        "word": "unhelpful",
+        "header": "Colour-coded: un · help · ful",
+        "colors": {
+          "bracket": "muted"
+        },
+        "morphemes": [
+          {
+            "text": "un-",
+            "meaning": "not",
+            "role": "prefix",
+            "color": "forestgreen"
+          },
+          {
+            "text": "help",
+            "meaning": "to assist",
+            "role": "root",
+            "color": "accent"
+          },
+          {
+            "text": "-ful",
+            "meaning": "full of",
+            "role": "suffix",
+            "color": "accent-3"
+          }
+        ]
+      }
+    }
+  ]
+}

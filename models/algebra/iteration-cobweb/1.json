@@ -1,0 +1,321 @@
+{
+  "ref": "algebra/iteration-cobweb@1",
+  "family": "algebra",
+  "name": "iteration-cobweb",
+  "version": 1,
+  "title": "Iteration (staircase / cobweb) diagram",
+  "tagline": "Staircase/cobweb diagram for xₙ₊₁=g(xₙ): y=x, the curve and a zig-zag walking toward or away from the fixed point; every iterate derived.",
+  "description": "A staircase or cobweb diagram for a first-order iteration xₙ₊₁ = g(xₙ): the line y = x and the curve y = g(x) on one set of axes, with the iteration drawn as a zig-zag — vertical from the start up to the curve, horizontal across to y = x, repeat — walking from a start value x₀ toward (a staircase / cobweb that converges) or away from (one that diverges) the fixed point where g(x) = x. You give the function as an expression string (\"(x+2)^0.5\", \"cos(x)\", \"1.5x-1\", \"1/(x+1)\"), the start x₀, how many steps to draw and the window; the curve, the diagonal, the whole iterate sequence, every step, the fixed point and the numeric readout are all derived by iterating g. Mark the iterates on the x-axis (x₀, x₁, x₂, …), list their values (and occlude them for a \"read them off\" question), mark and label the fixed point (or occlude it — \"what does it converge to?\"), or set iterations 0 for a draw-the-staircase answer space. Set draggable to let pupils slide x₀ and watch the sequence converge or diverge live.",
+  "whenToUse": "Reach for this to teach iterative methods and the behaviour of a recurrence xₙ₊₁ = g(xₙ): staircase and cobweb diagrams, convergence and divergence, fixed points, and \"use the diagram to estimate the root\". Give the iteration as fn — a linear or non-linear expression in x: \"(x+2)^0.5\" for x = √(x+2), \"1/(x+1)\", \"cos(x)\", \"1.5x-1\", \"0.2x^2+1\". Set start to x₀ and iterations to how many steps to walk (3–5 reads cleanly; 0 draws just y = x and y = g(x) with x₀ marked, the answer space where pupils draw the staircase themselves). The curve, the diagonal y = x, every iterate xₖ₊₁ = g(xₖ), every step, and the fixed point (where g(x) = x) are derived — you never place a point. Keep the window square: choose axes.x and axes.y to the same range and leave equalAspect true so y = x is a true 45° diagonal (a cobweb only reads correctly then) and frame it so the start, the steps and the fixed point all fit. Common configurations: worked example — iterations 4, values.show true to list x₀ … xₙ; answer space — iterations 0 (draw the staircase) or a full diagram with values.show true and values.occlude true (\"read x₁, x₂, x₃ off the diagram to 3 d.p.\"); find the limit — fixedPoint.label \"α\" with fixedPoint.occlude true (\"what does the sequence converge to?\"); converging vs diverging — a staircase (0 < g′ < 1 converges, g′ > 1 diverges) when the gradient at the fixed point is positive, a cobweb spiral (−1 < g′ < 0 converges, g′ < −1 diverges) when it is negative. A staged build reads beautifully — keep fn, start and axes identical and step iterations 0 → 1 → 2 → 3 → 4 so the staircase grows one step per stage. Set draggable to let pupils drag x₀ along the x-axis and watch the sequence. Keep the same window and the same fn across the blocks of one lesson so pupils track one diagram. Switch primitive when the teaching changes — to plot or read a single curve y = f(x) use graphing/function-graph; for shaded regions of inequalities use graphing/inequality-region. Synonyms a teacher might use: iteration, iterative method, staircase diagram, cobweb diagram, recurrence relation, recurrence, fixed point, convergence, diverge, converges to, limit of a sequence, xn+1 = g(xn), estimate the root.",
+  "responseModes": [],
+  "tags": [
+    "iteration",
+    "iterative method",
+    "staircase",
+    "cobweb",
+    "recurrence",
+    "recurrence relation",
+    "fixed point",
+    "convergence",
+    "converge",
+    "diverge",
+    "limit",
+    "sequence",
+    "xn+1",
+    "numerical methods",
+    "estimate the root",
+    "algebra",
+    "graphing",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "fn": {
+        "type": "string",
+        "description": "The iteration function g(x) as an expression in x — the recurrence is xₙ₊₁ = g(xₙ). Linear or non-linear: \"(x+2)^0.5\" (i.e. x = √(x+2)), \"1/(x+1)\", \"1.5x-1\", \"0.2x^2+1\", \"cos(x)\". Supports + − * / ^, brackets, and sqrt, cbrt, abs, sin, cos, tan, exp, ln, log, plus pi and e (trig in radians). Implicit multiplication is allowed (\"2x\", \"3(x+1)\"). The curve y = g(x), the whole iterate sequence and the fixed point are all derived from this."
+      },
+      "start": {
+        "type": "number",
+        "description": "The starting value x₀ — the first term the iteration walks from. Must lie inside axes.x. The first step goes vertically from (x₀, 0) up to the curve."
+      },
+      "iterations": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 12,
+        "description": "How many steps of the iteration to draw — each step is one vertical move to the curve plus one horizontal move to y = x, producing one new iterate. 4 draws x₁ … x₄ and reads cleanly; 3–5 is usual. 0 draws only y = x, y = g(x) and the x₀ mark — the answer space where pupils draw the staircase themselves. Default 4."
+      },
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The window — the rectangle of the plane shown. Frame the start, the steps and the fixed point so they all fit; keep x and y the SAME range so y = x is a true 45° diagonal.",
+        "properties": {
+          "x": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the x-axis. Default [0, 6]."
+          },
+          "y": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the y-axis. Use the same range as x. Default [0, 6]."
+          },
+          "xStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value."
+          },
+          "yStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value."
+          },
+          "equalAspect": {
+            "type": "boolean",
+            "description": "Force a TRUE square scale (1 x-unit = 1 y-unit in pixels) so y = x is drawn at 45° and the cobweb reads correctly. Default true — leave it on for iteration diagrams."
+          }
+        }
+      },
+      "functionLabel": {
+        "type": "string",
+        "description": "Label drawn along the curve. Default \"y = g(x)\" (the standard form, matching xₙ₊₁ = g(xₙ)). Set it to the actual formula, e.g. \"y = √(x + 2)\", to show the function. Set \"\" to hide the curve label. The y = x line is always labelled \"y = x\" when shown."
+      },
+      "fixedPoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The fixed point(s) where g(x) = x — the intersection of the curve and the line, found numerically inside the window and marked in amber (the result colour). Omit to use defaults (shown, unlabelled).",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Mark the fixed point(s) with an amber dot. Default true."
+          },
+          "label": {
+            "type": "string",
+            "description": "Text placed by the fixed point, e.g. \"α\" or \"x = g(x)\". Omit for an unlabelled dot. With several fixed points the same label is reused."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the fixed-point label as \"?\" — the \"what does the sequence converge to?\" hook. The dot stays visible. Default false."
+          }
+        }
+      },
+      "iterateLabels": {
+        "type": "boolean",
+        "description": "Mark each iterate on the x-axis with a small tick and a subscript label (x₀, x₁, x₂, …) and a dashed guide dropping from the staircase to the axis, so the order of the walk is visible. Labels that would collide (a convergent sequence bunches near the fixed point) are thinned automatically. Default true."
+      },
+      "values": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A numeric readout of the iterates listed below the figure: \"x₀ = 0, x₁ = 1.414, x₂ = 1.848, …\". Omit for no readout.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "List the iterate values below the figure. Default false."
+          },
+          "decimals": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6,
+            "description": "Decimal places the iterate values are rounded to (x₀, the given start, shows as written). Default 3."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render x₁ … xₙ as \"?\" while x₀ stays shown — the \"read the iterates off the diagram\" question. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "line": {
+            "type": "boolean",
+            "description": "Draw the reference line y = x (teal). Default true — needed for the cobweb construction; turn off only for a bare curve."
+          },
+          "grid": {
+            "type": "boolean",
+            "description": "Draw the background grid. Default true."
+          },
+          "arrows": {
+            "type": "boolean",
+            "description": "Draw a small arrowhead at the end of each cobweb segment showing the direction of the walk. Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. the recurrence \"xₙ₊₁ = √(xₙ + 2)\". Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Give x₀ a handle on the x-axis that pupils can drag; the whole cobweb — every iterate, every step, the labels and the values — recomputes live, so pupils can explore how the starting value changes whether the sequence converges or diverges. Default false."
+      }
+    },
+    "required": [
+      "fn",
+      "start"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — converging staircase x = √(x + 2), four steps with values",
+      "params": {
+        "header": "Iteration x = √(x + 2)",
+        "fn": "(x+2)^0.5",
+        "start": 0,
+        "iterations": 4,
+        "axes": {
+          "x": [
+            0,
+            3
+          ],
+          "y": [
+            0,
+            3
+          ]
+        },
+        "functionLabel": "y = √(x + 2)",
+        "fixedPoint": {
+          "show": true,
+          "label": "α"
+        },
+        "values": {
+          "show": true,
+          "decimals": 3
+        },
+        "caption": "The staircase climbs to the fixed point α = 2"
+      }
+    },
+    {
+      "label": "Answer space — draw the staircase from x₀ = 0 (no steps drawn)",
+      "params": {
+        "fn": "(x+2)^0.5",
+        "start": 0,
+        "iterations": 0,
+        "axes": {
+          "x": [
+            0,
+            3
+          ],
+          "y": [
+            0,
+            3
+          ]
+        },
+        "functionLabel": "y = √(x + 2)"
+      }
+    },
+    {
+      "label": "Occluded question — read the iterates off the diagram",
+      "params": {
+        "fn": "(x+2)^0.5",
+        "start": 0,
+        "iterations": 4,
+        "axes": {
+          "x": [
+            0,
+            3
+          ],
+          "y": [
+            0,
+            3
+          ]
+        },
+        "functionLabel": "y = √(x + 2)",
+        "values": {
+          "show": true,
+          "decimals": 3,
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — converging cobweb (spiral) for x = 3 − x/2",
+      "params": {
+        "header": "Iteration x = 3 − x/2",
+        "fn": "3-x/2",
+        "start": 3.6,
+        "iterations": 6,
+        "axes": {
+          "x": [
+            0,
+            4
+          ],
+          "y": [
+            0,
+            4
+          ]
+        },
+        "functionLabel": "y = 3 − x/2",
+        "fixedPoint": {
+          "show": true,
+          "label": "α"
+        },
+        "caption": "A cobweb that spirals in to α = 2"
+      }
+    },
+    {
+      "label": "Hard case — diverging staircase for x = 1.5x − 1",
+      "params": {
+        "header": "Iteration x = 1.5x − 1",
+        "fn": "1.5x-1",
+        "start": 2.4,
+        "iterations": 4,
+        "axes": {
+          "x": [
+            0,
+            8
+          ],
+          "y": [
+            0,
+            8
+          ]
+        },
+        "functionLabel": "y = 1.5x − 1",
+        "fixedPoint": {
+          "show": true,
+          "label": "α"
+        },
+        "caption": "The staircase marches away from α = 2 — the iteration diverges"
+      }
+    },
+    {
+      "label": "Explore — drag x₀ and watch the sequence (cobweb x = 1/(x + 1))",
+      "params": {
+        "fn": "1/(x+1)",
+        "start": 1.6,
+        "iterations": 6,
+        "axes": {
+          "x": [
+            0,
+            2
+          ],
+          "y": [
+            0,
+            2
+          ]
+        },
+        "functionLabel": "y = 1/(x + 1)",
+        "fixedPoint": {
+          "show": true,
+          "label": "α"
+        },
+        "draggable": true
+      }
+    }
+  ]
+}

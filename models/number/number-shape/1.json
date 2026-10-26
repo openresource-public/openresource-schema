@@ -1,0 +1,278 @@
+{
+  "ref": "number/number-shape@1",
+  "family": "number",
+  "name": "number-shape",
+  "version": 1,
+  "title": "Number shape",
+  "tagline": "Numicon-style pegged number shapes 1–10 (2-wide, odd numbers protrude a peg) as plates, cubes or counters; derives parity, number bonds and the stem sentence.",
+  "description": "Numicon-style number shapes for the numbers 1 to 10: each value laid out two units wide, filling in pairs from the bottom, so an even number is a flat-topped rectangle and an odd number has a single peg sticking out on top. You write only the value of each shape; the model derives the layout, the plate outline, the holes, the parity (odd / even), and — when two or more shapes are added — the total and an optional result shape. Render a shape as a Numicon-style coloured plate with holes (the default), or as discrete cubes or counters (the odd-even pairs column: even tops are level, the odd one sticks out). Each value carries its canonical Numicon colour. A fill-in stem sentence beneath the shapes — count, parity, or number bond — states the maths in words, with any occluded number shown as \"?\". Occlude a shape's numeral to ask \"which number is this?\", or occlude a bond total for a missing-number question. Serves recognising number shapes, odd and even, number bonds and composition by shape, and \"five and a bit\".",
+  "whenToUse": "Reach for this for early-number work with Numicon-style number shapes (1–10): recognising the shapes, odd and even numbers, number bonds and composition by shape, doubles, and \"five and a bit\". Write shapes[] — one entry per shape, each just a value 1–10, laid out left to right and aligned along the bottom. Numbers are derived: never write a total or a parity word. Common configurations: recognise — one shape, show.values true (and show.parity to tag odd / even); odd and even — several shapes in a row (often piece \"cubes\" or \"counters\" — the odd-even pairs column), show.parity true, so the flat-topped evens and the bumpy odds line up for sorting; number bond by shape — operation \"add\", two (or more) shapes, result.show true → \"6 and 4 make 10\"; set result.shape true to also draw the sum as its own shape (only when the total is ≤ 10); missing number — operation \"add\" with one shape occluded (6 + ? = 10) or result.occlude true (6 + 4 = ?); five and a bit — a 5-shape plus a small shape (5 + 3) as a bond; composition — three or more addends (2 + 3 + 5). \"Which number?\" answer space — one shape with occlude true, caption asking for the number. Choose the stem sentence with stem (auto picks bond for an addition, else parity if show.parity, else a count) or turn it off with stem \"none\". Use piece \"plate\" for the holistic Numicon piece; \"cubes\" / \"counters\" for discrete units when the parity protrusion is the focus. Keep piece and stem steady across a lesson so pupils compare like with like. A staged build reads beautifully: open a bond on the first addend with the second blank, fill it a stage later, then reveal the total last. Switch model when the teaching changes: for a 2×5 ten-frame fill with two-colour counters use number/ten-frame; for a rows×columns multiplication picture use number/array; for the part-whole \"cherry\" use number/part-whole; for partitioning one whole into fractional parts use number/fraction-shape. Synonyms a teacher might use: Numicon, number shape, number shapes, pegged shapes, odd and even, odd or even, parity, number bond, bonds to ten, make ten, composition, partition, five and a bit, doubles.",
+  "responseModes": [],
+  "tags": [
+    "number shape",
+    "number shapes",
+    "numicon",
+    "pegged shapes",
+    "pegboard",
+    "odd",
+    "even",
+    "odd and even",
+    "parity",
+    "number bond",
+    "number bonds",
+    "bonds to ten",
+    "make ten",
+    "composition",
+    "compose",
+    "partition",
+    "five and a bit",
+    "doubles",
+    "subitise",
+    "counters",
+    "cubes",
+    "KS1",
+    "KS2",
+    "primary",
+    "EYFS",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "shapes": {
+        "type": "array",
+        "description": "The number shapes, laid out left to right and aligned along the bottom — the only quantities you author. One entry per shape; each is a value 1–10 (plus optional occlude / highlight / blank flags). Two or more shapes with operation \"add\" read as the addends of a number bond.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "description": "The number this shape shows, 1–10 — the ONLY quantity you author. The model lays the units 2-wide, filling in pairs from the bottom, so an even value is a flat-topped rectangle and an odd value has a single peg protruding on top. Rows, holes, the outline, the parity and the colour are all derived from this. No shape exists above ten (no canonical number-shape beyond it)."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this shape's numeral as \"?\" — the question hook (\"which number is this shape?\" or a missing addend in a bond). The shape itself stays fully visible and correct, and the value is hidden as \"?\" in the stem sentence too, so it cannot leak. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this shape — an emphasis ring round the plate and an amber numeral. Use for the answer / the part being drawn attention to. Amber is never used as a plate colour. Default false."
+            },
+            "blank": {
+              "type": "boolean",
+              "description": "Draw this shape as a faint dashed GHOST outline of its value — no colour, no holes, no numeral — reserving its slot without filling it. For staged builds: a bond opens with the second addend blank, then a later stage fills it, so the figure never reflows. Different from occlude (\"?\" poses a question; blank poses nothing yet). Default false."
+            }
+          },
+          "required": [
+            "value"
+          ]
+        }
+      },
+      "piece": {
+        "type": "string",
+        "enum": [
+          "plate",
+          "cubes",
+          "counters"
+        ],
+        "description": "How each shape is drawn. \"plate\" (default): the holistic Numicon-style coloured plate with circular holes and a rounded outline. \"cubes\": discrete stacked square cubes (the odd-even pairs column — even tops level, the odd cube sticking out). \"counters\": discrete round counters laid the same way. Use \"plate\" to recognise the piece; \"cubes\" / \"counters\" when the parity protrusion and the discrete units are the focus. The 2-wide pair-filling layout and the colours are identical — only the glyph changes."
+      },
+      "operation": {
+        "type": "string",
+        "enum": [
+          "none",
+          "add"
+        ],
+        "description": "\"none\" (default): just display the shape(s) — recognise, compare, sort odd / even. \"add\": join consecutive shapes with \"+\" and show the derived total — a number bond or composition (6 + 4 = 10, 2 + 3 + 5 = 10). The total is always computed from the values; you never write it."
+      },
+      "result": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The derived sum line, used only when operation is \"add\". Both the number and (optionally) the result shape are computed from the addends — there is nowhere to write a wrong total.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Draw \"= total\" after the addends. Default true when operation is \"add\". Set false to leave the bond open (just the addends, e.g. for a \"what do these make?\" discussion)."
+          },
+          "shape": {
+            "type": "boolean",
+            "description": "Also draw the total as its own number shape after the \"=\" (6 + 4 = the 10-shape). Only drawn when the total is ≤ 10 (no shape exists above ten); ignored otherwise. Default false."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the total as \"?\" — \"6 + 4 = ?\". The addends stay visible; the result shape (if any) is suppressed so the answer cannot leak. The stem sentence hides the total too. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the total — answer emphasis. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout toggles.",
+        "properties": {
+          "values": {
+            "type": "boolean",
+            "description": "Show each shape's numeral below it. Default true. An occluded shape shows \"?\" here regardless; a blank shape shows nothing."
+          },
+          "parity": {
+            "type": "boolean",
+            "description": "Tag each shape \"odd\" or \"even\" below its numeral — derived from the shape (the protruding peg). Default false. For sorting and odd / even teaching."
+          }
+        }
+      },
+      "stem": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "count",
+          "parity",
+          "bond",
+          "none"
+        ],
+        "description": "Which fill-in sentence to state beneath the shapes (the verbal twin of the figure); its numbers are always derived. \"auto\" (default): a bond sentence for an addition, else parity if show.parity is on, else a count. \"count\" → \"This number shape shows __.\" (a single shape). \"parity\" → \"__ is an odd / even number.\" (a single shape). \"bond\" → \"__ and __ make __.\" (the addends and the total of an addition). \"none\" → no sentence band. An occluded number appears as \"?\" in the sentence."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the stem sentence, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "shapes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Recognise — the 7 shape, numeral and parity (the protruding peg)",
+      "params": {
+        "header": "The number shape for 7",
+        "shapes": [
+          {
+            "value": 7
+          }
+        ],
+        "show": {
+          "values": true,
+          "parity": true
+        },
+        "stem": "parity",
+        "caption": "Seven is odd — one peg is left without a partner."
+      }
+    },
+    {
+      "label": "\"Which number?\" answer space — single shape, numeral occluded",
+      "params": {
+        "shapes": [
+          {
+            "value": 6,
+            "occlude": true
+          }
+        ],
+        "show": {
+          "values": true
+        },
+        "stem": "none"
+      }
+    },
+    {
+      "label": "Worked number bond to ten — 6 and 4 make 10, with the result shape",
+      "params": {
+        "shapes": [
+          {
+            "value": 6
+          },
+          {
+            "value": 4
+          }
+        ],
+        "operation": "add",
+        "result": {
+          "show": true,
+          "shape": true
+        },
+        "stem": "bond",
+        "caption": "The 6-shape and the 4-shape fit together to make the 10-shape."
+      }
+    },
+    {
+      "label": "Hard case — missing addend bond: 6 + ? = 10 (second shape occluded)",
+      "params": {
+        "shapes": [
+          {
+            "value": 6
+          },
+          {
+            "value": 4,
+            "occlude": true
+          }
+        ],
+        "operation": "add",
+        "result": {
+          "show": true
+        },
+        "stem": "bond"
+      }
+    },
+    {
+      "label": "Odd and even — the cubes pairs column, 1 to 5 tagged odd / even",
+      "params": {
+        "header": "Odd and even",
+        "shapes": [
+          {
+            "value": 1
+          },
+          {
+            "value": 2
+          },
+          {
+            "value": 3
+          },
+          {
+            "value": 4
+          },
+          {
+            "value": 5
+          }
+        ],
+        "piece": "cubes",
+        "show": {
+          "values": true,
+          "parity": true
+        },
+        "stem": "none",
+        "caption": "Even numbers are flat on top; odd numbers have one cube sticking out."
+      }
+    },
+    {
+      "label": "Five and a bit — 5 + 3 = 8 as a bond",
+      "params": {
+        "shapes": [
+          {
+            "value": 5
+          },
+          {
+            "value": 3
+          }
+        ],
+        "operation": "add",
+        "result": {
+          "show": true,
+          "shape": true,
+          "highlight": true
+        },
+        "stem": "bond",
+        "caption": "Eight is \"five and a bit\": the 5-shape and 3 more."
+      }
+    }
+  ]
+}

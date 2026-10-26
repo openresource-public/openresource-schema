@@ -1,0 +1,311 @@
+{
+  "ref": "algebra/balance-hanger@1",
+  "family": "algebra",
+  "name": "balance-hanger",
+  "version": 1,
+  "title": "Balance hanger",
+  "tagline": "Equation as a hanger diagram: labelled shapes hang either side of a pivoted beam; equation, solution and numeric tilt derived; shapes occlude, strike and highlight.",
+  "description": "A balance hanger (Illustrative Mathematics' \"hanger diagram\"): a beam hangs from a central string with labelled shapes hanging on strings either side, and the beam hanging level asserts the two sides weigh the same — the picture of an equation. Each side is a list of shapes; a label is a number (known weight) or a single letter (unknown), so left [x, x, x, 1, 1] against right [11] encodes 3x + 2 = 11, and different letters encode different unknowns in one figure (a circle balancing two triangles). Identical kind+label shapes render identically; each distinct letter takes its own colour while numbers stay neutral grey. Derived, never authored: the equation readout above the hanger (letter terms collected, numbers summed, occluded shapes as \"?\", and the relation symbol =, > or < following the tilt), the solution line beneath (single unknown, reduced to a fraction when not whole, forced to \"?\" while any shape is occluded), and — whenever the shapes determine the truth (all-numeric sides, or the same unknown shapes on both sides) — the tilt itself, from the constants. Only when the two sides carry different unknown shapes does the authored tilt state the assertion: balanced (an equation) or tips-left / tips-right (an inequality or a misconception check). Per-shape occlude hides a weight (\"what does the pentagon weigh?\"), strike crosses out shapes being removed from both sides, highlight marks the answer or one equal share per side.",
+  "whenToUse": "Reach for this to teach solving linear equations the Illustrative Mathematics way — hanger diagrams / balanced mobiles — or to recreate IM-style lessons: representing 2x = 10, 3x + 2 = 11 or unknowns on both sides (3y + 2 = y + 8) as shapes on a hanger, and solving by removing the same shapes from both sides or sharing both sides into equal groups. Write each side as its shapes in reading order: 3x + 2 = 11 is left [{label:\"x\"},{label:\"x\"},{label:\"x\"},{label:1},{label:1}], right [{label:11}]. Prefer a single labelled square for a large constant (11) and individual unit squares (1s) when pupils will remove them one by one. The equation is hidden by default — \"write an equation for this hanger\" is the canonical task; set show.equation true for worked examples and solving practice. Common configurations: pose a solve (no solution line; \"Solve for x\" goes in the block text); reveal the answer (solution with highlight); ask for it (solution.occlude → \"x = ?\"); hide one weight (occlude on that shape — the equation and solution show \"?\" so nothing leaks); a remove step (strike the matching shapes on BOTH sides, narrate in the block text, then author the NEXT frame as the simplified hanger); a share step (highlight one equal share of shapes on each side). Misconception checks: whenever the shapes determine the truth (all-numeric sides, or the same unknown shapes on both sides) the tilt is DERIVED (the hanger cannot lie) — ask \"is it balanced?\" or \"explain why it tips\"; when the sides carry different unknown shapes, author tilt tips-left/tips-right and ask \"what does this tell you about x?\". Multi-unknown relationships (one circle balances two triangles and a 1) work by using two letters — no solution line renders. Staging: this model is naturally staged — sequence frames (pose → strike → simplified → shares → answer); every frame must stand alone. Cross-block conventions: keep the same letter, the same kind per label and the same shape sizes across a lesson so pupils track one hanger; keep sides to at most ~6 shapes (stacks of 3 form automatically beyond that). Switch model when the teaching changes: the UK two-pan balance with x-boxes, unit cubes and derived remove/divide overlay tags is algebra/balance-scales; the same equation as a segmented bar (tape diagram) is number/bar-model; comparing MASSES of objects is measures/balance-scale; force × distance moments are physics/moments. Synonyms teachers use: hanger diagram, balance hanger, balanced hanger, mobile, balance puzzle, shapes balance, do the same to both sides, solve for x, unknowns on both sides.",
+  "responseModes": [],
+  "tags": [
+    "hanger",
+    "hanger diagram",
+    "balance hanger",
+    "balanced hanger",
+    "mobile",
+    "balance puzzle",
+    "illustrative mathematics",
+    "solve equations",
+    "linear equation",
+    "one-step equation",
+    "two-step equation",
+    "unknowns on both sides",
+    "inverse operations",
+    "do the same to both sides",
+    "equality",
+    "inequality",
+    "algebra",
+    "maths",
+    "math"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "shape": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "pattern": "^[a-z]$"
+              }
+            ],
+            "description": "What the shape weighs: a non-negative number (a known weight — 1 for a unit, 11 for an eleven-unit weight) or a single lowercase letter (an unknown, e.g. \"x\"). Shapes with the same kind and label are identical weights and render identically. Three shapes labelled \"x\" read as 3x; numbers on one side sum."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "circle",
+              "square",
+              "triangle",
+              "pentagon"
+            ],
+            "description": "The shape drawn. Omit to derive the convention: numbers are squares; the 1st, 2nd, 3rd distinct letters take circle, triangle, pentagon. Set it only to match a source figure. Use ONE kind per label throughout a figure — the shape is the weight's identity."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this shape's label as \"?\" — the \"what does this shape weigh?\" hook. The shape stays visible; the derived equation shows \"?\" for it, and any solution line renders \"?\" so nothing leaks. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber this shape — draw the eye to it: the answer shape, or one equal share on each side when teaching the divide step. Default false."
+          },
+          "strike": {
+            "type": "boolean",
+            "description": "Cross this shape out (dashed, faded, amber slash) — \"we remove these\". Mark matching shapes on BOTH sides for the remove-from-both-sides step; the next frame is the simplified hanger. Annotation only: the derived equation and tilt still count struck shapes. Default false."
+          }
+        },
+        "required": [
+          "label"
+        ]
+      }
+    },
+    "properties": {
+      "left": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 12,
+        "items": {
+          "$ref": "#/$defs/shape"
+        },
+        "description": "The shapes hanging on the LEFT of the pivot, in reading order. left [x, x, 1, 1, 1] reads 2x + 3. Runs of identical shapes stack up to 3 per string automatically."
+      },
+      "right": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 12,
+        "items": {
+          "$ref": "#/$defs/shape"
+        },
+        "description": "The shapes hanging on the RIGHT of the pivot, in reading order. Same shape grammar as left."
+      },
+      "tilt": {
+        "type": "string",
+        "enum": [
+          "balanced",
+          "tips-left",
+          "tips-right"
+        ],
+        "description": "How the beam hangs when the truth is unknowable — i.e. the two sides carry DIFFERENT unknown shapes: \"balanced\" (default — the sides are asserted equal, an equation), \"tips-left\" (left side heavier, hangs lower) or \"tips-right\". IGNORED whenever the shapes determine the truth (all-numeric sides, or the same unknown shapes on both sides, e.g. x + 3 vs x + 5): there the tilt is derived from the constants, so the hanger cannot lie."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "equation": {
+            "type": "boolean",
+            "description": "Show the derived readout above the hanger — e.g. \"3x + 2 = 11\", or \"8 > 7\" when it tips. Default FALSE: the bare hanger is the IM idiom, and \"write an equation for this hanger\" is the canonical task. Set true for worked examples and solving practice. Occluded shapes appear as \"?\" in it."
+          }
+        }
+      },
+      "solution": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this to print the solved value beneath the hanger (e.g. \"x = 3\", reduced to a fraction when not whole). Only renders when the hanger is balanced with exactly ONE distinct letter; the value is computed from the shapes — you never type it. Renders \"?\" while any shape is occluded (anti-leak) or when the equation has no unique solution.",
+        "properties": {
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the value as \"?\" (\"x = ?\") — the \"what is the unknown?\" hook. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the solved value — answer emphasis. Default false."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "left",
+      "right"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked one-step — two circles balance 10, answer shown",
+      "params": {
+        "left": [
+          {
+            "label": "m"
+          },
+          {
+            "label": "m"
+          }
+        ],
+        "right": [
+          {
+            "label": 10
+          }
+        ],
+        "show": {
+          "equation": true
+        },
+        "solution": {
+          "highlight": true
+        },
+        "caption": "Two identical circles balance a 10 — so each circle is half of it."
+      }
+    },
+    {
+      "label": "Blank answer space — write the equation, then solve (4p + 3 = 15)",
+      "params": {
+        "header": "A balanced hanger",
+        "left": [
+          {
+            "label": "p"
+          },
+          {
+            "label": "p"
+          },
+          {
+            "label": "p"
+          },
+          {
+            "label": "p"
+          },
+          {
+            "label": 1
+          },
+          {
+            "label": 1
+          },
+          {
+            "label": 1
+          }
+        ],
+        "right": [
+          {
+            "label": 15
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — hidden pentagon weight, \"3 + ? = 9\"",
+      "params": {
+        "left": [
+          {
+            "label": 3
+          },
+          {
+            "label": 6,
+            "kind": "pentagon",
+            "occlude": true
+          }
+        ],
+        "right": [
+          {
+            "label": 9
+          }
+        ],
+        "show": {
+          "equation": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — unknowns on both sides, 3y + 2 = y + 8, solution asked",
+      "params": {
+        "left": [
+          {
+            "label": "y"
+          },
+          {
+            "label": "y"
+          },
+          {
+            "label": "y"
+          },
+          {
+            "label": 1
+          },
+          {
+            "label": 1
+          }
+        ],
+        "right": [
+          {
+            "label": "y"
+          },
+          {
+            "label": 8
+          }
+        ],
+        "show": {
+          "equation": true
+        },
+        "solution": {
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Two unknowns — one circle balances two triangles and a unit",
+      "params": {
+        "left": [
+          {
+            "label": "w"
+          }
+        ],
+        "right": [
+          {
+            "label": "v"
+          },
+          {
+            "label": "v"
+          },
+          {
+            "label": 1
+          }
+        ]
+      }
+    },
+    {
+      "label": "Numeric misconception — derived tilt, 5 + 3 against 6 + 1",
+      "params": {
+        "left": [
+          {
+            "label": 5
+          },
+          {
+            "label": 3
+          }
+        ],
+        "right": [
+          {
+            "label": 6
+          },
+          {
+            "label": 1
+          }
+        ]
+      }
+    }
+  ]
+}

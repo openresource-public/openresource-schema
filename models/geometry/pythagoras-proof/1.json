@@ -1,0 +1,222 @@
+{
+  "ref": "geometry/pythagoras-proof@1",
+  "family": "geometry",
+  "name": "pythagoras-proof",
+  "version": 1,
+  "title": "Pythagoras' theorem (squares)",
+  "tagline": "Right triangle with a square on each side and its area shown — the a²+b²=c² visual proof; hypotenuse and areas derived, square areas occlude.",
+  "description": "A right-angled triangle with a square drawn outward on each of its three sides, each square's area shown — the visual proof that the square on the hypotenuse equals the sum of the squares on the two legs (a² + b² = c²). You give only the two leg lengths; the hypotenuse, all three squares (including the tilted one on the hypotenuse), the right-angle mark and every area are derived and stay correct, so dragging a corner reshapes the triangle while the areas update and the relationship holds. Per-square area occlusion (\"find the missing area / side\"), highlighting, an optional unit, and toggles for the area numbers, the side lengths and the a² + b² = c² sum readout.",
+  "whenToUse": "Reach for this to prove or visualise Pythagoras through areas — the classic squares-on-the-sides figure — rather than just compute a side (for plain \"find the hypotenuse\" with a right-angle mark and side labels, use geometry/triangle instead). Give the two legs as legs: { a, b } (any positive numbers, the same units); the right angle sits between them, the hypotenuse c = √(a²+b²) and the three square areas a², b², c² are all derived. By default each square shows its area and a \"9 + 16 = 25\" readout appears below — the punchline. Common configurations: prove it — legs 3 and 4, show every area and the sum, so pupils see 9 + 16 = 25. Find the big square — occlude the hypotenuse square (squares: [{ on: 'c', occlude: true, highlight: true }]) so pupils add the two leg areas. Find a missing leg — occlude a leg square (on: 'a') given the other leg and the hypotenuse. Answer space — show.areas: false with show.sideLengths: true draws the three empty squares with the side lengths, for pupils to fill in each area. Add unit: \"cm\" to read \"3 cm\" and \"9 cm²\". draggablePoints lets pupils drag a corner to resize the triangle and watch the areas change while a² + b² always equals c². Cross-block convention: keep the same legs across the blocks of one lesson so pupils track one figure; change only what is shown, occluded or highlighted. A staged build reads well: start with the bare triangle, grow the square on each side, then reveal the sum. Address the three squares by 'a' and 'b' (the legs) and 'c' (the hypotenuse). Synonyms a teacher might use: Pythagoras, Pythagoras' theorem, square on the hypotenuse, area of the squares, a squared plus b squared, proof, right-angled triangle, hypotenuse.",
+  "responseModes": [],
+  "tags": [
+    "pythagoras",
+    "pythagoras' theorem",
+    "pythagorean",
+    "hypotenuse",
+    "square on the hypotenuse",
+    "squares on the sides",
+    "area",
+    "proof",
+    "right-angled",
+    "right angle",
+    "a squared plus b squared",
+    "a2 b2 c2",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "legs": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The two legs (the sides that meet at the right angle). The whole figure — hypotenuse, the three squares and their areas — is derived from these.",
+        "properties": {
+          "a": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Length of leg a (drawn up the left side). Any positive number in your chosen unit."
+          },
+          "b": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Length of leg b (drawn along the bottom). Any positive number in the same unit."
+          }
+        },
+        "required": [
+          "a",
+          "b"
+        ]
+      },
+      "unit": {
+        "type": "string",
+        "description": "Optional unit shown on the readouts, e.g. \"cm\" → lengths read \"3 cm\" and areas \"9 cm²\". Omit for bare numbers (9, 16, 25)."
+      },
+      "rotation": {
+        "type": "number",
+        "description": "Rotate the whole figure anticlockwise by this many degrees, so the right angle and hypotenuse sit at a realistic exam-figure orientation instead of always flat. The triangle and its three squares rotate together; the area numbers and the right-angle mark stay upright/readable. Use it — real questions are rarely drawn with a flat base. Default 0 (right angle bottom-left, legs horizontal and vertical) reads as the textbook proof."
+      },
+      "squares": {
+        "type": "array",
+        "description": "Per-square overrides for the area shown on each square. Address a square by the side it sits on: 'a' and 'b' are the legs, 'c' is the hypotenuse. Omit a square to leave its area shown normally (derived).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "on": {
+              "type": "string",
+              "enum": [
+                "a",
+                "b",
+                "c"
+              ],
+              "description": "Which square: 'a' (square on leg a), 'b' (square on leg b), 'c' (square on the hypotenuse)."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the area text in this square — e.g. a name, or a value with units the derived number would not carry. Omit to show the derived area."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this square's area as \"?\" — the \"find the missing area / side\" hook. The square stays drawn. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Shade this square amber — the result, or the square in question. Default false."
+            }
+          },
+          "required": [
+            "on"
+          ]
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Toggle the readouts.",
+        "properties": {
+          "areas": {
+            "type": "boolean",
+            "description": "Show the area number inside each square. Default true. Set false for an answer space (empty squares)."
+          },
+          "sideLengths": {
+            "type": "boolean",
+            "description": "Label the triangle's three sides with their lengths (a, b, c). Default false."
+          },
+          "sum": {
+            "type": "boolean",
+            "description": "Show the derived \"a² + b² = c²\" line below the figure (e.g. \"9 + 16 = 25\"); it reflects occlusion, so an occluded area shows as \"?\". Default true."
+          }
+        }
+      },
+      "caption": {
+        "type": "string",
+        "description": "An optional line of text centred below the figure, e.g. \"The square on the hypotenuse equals the sum of the squares on the other two sides\". Omit for none."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "draggablePoints": {
+        "type": "boolean",
+        "description": "Web-only. Let pupils drag a free corner to resize the triangle; the legs stay perpendicular (the right angle is preserved) and the side lengths and three square areas recompute live while a² + b² stays equal to c². Default false."
+      }
+    },
+    "required": [
+      "legs"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Prove it (3, 4, 5) — flat textbook layout, every area and the sum",
+      "params": {
+        "legs": {
+          "a": 3,
+          "b": 4
+        },
+        "caption": "The square on the hypotenuse equals the sum of the other two squares"
+      }
+    },
+    {
+      "label": "Find the area of the largest square (occluded hypotenuse, tilted)",
+      "params": {
+        "legs": {
+          "a": 6,
+          "b": 8
+        },
+        "rotation": 28,
+        "squares": [
+          {
+            "on": "c",
+            "occlude": true,
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer space — side lengths given, fill in the areas (tilted)",
+      "params": {
+        "legs": {
+          "a": 5,
+          "b": 12
+        },
+        "rotation": -22,
+        "show": {
+          "areas": false,
+          "sideLengths": true,
+          "sum": false
+        }
+      }
+    },
+    {
+      "label": "The hard case — very unequal legs (2 and 9), rotated",
+      "params": {
+        "legs": {
+          "a": 2,
+          "b": 9
+        },
+        "rotation": 52
+      }
+    },
+    {
+      "label": "With units (3 cm, 4 cm) — lengths and areas, gently rotated",
+      "params": {
+        "legs": {
+          "a": 3,
+          "b": 4
+        },
+        "rotation": 15,
+        "unit": "cm",
+        "show": {
+          "areas": true,
+          "sideLengths": true,
+          "sum": true
+        }
+      }
+    },
+    {
+      "label": "Find the missing leg area (occluded leg, exam orientation)",
+      "params": {
+        "legs": {
+          "a": 8,
+          "b": 15
+        },
+        "rotation": -68,
+        "squares": [
+          {
+            "on": "a",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "show": {
+          "areas": true,
+          "sideLengths": false,
+          "sum": true
+        }
+      }
+    }
+  ]
+}

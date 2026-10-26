@@ -1,0 +1,428 @@
+{
+  "ref": "measures/balance-scale@1",
+  "family": "measures",
+  "name": "balance-scale",
+  "version": 1,
+  "title": "Balance scale",
+  "tagline": "Tilting beam / pan balance for comparing and ordering mass; the tilt, verdict and order are derived from authored masses, occlude for \"which is heavier?\".",
+  "description": "A concrete beam / pan balance: a fulcrum stand with a beam pivoted at its centre and a pan hanging from each end, the beam tilting so the heavier pan drops and the lighter rises (level when they match). You write a set of named objects each with a mass, and which objects sit on each pan; the model derives every pan's total mass, the tilt direction of each beam, the verdict (heavier / lighter / balanced), and — across several balances — the order of the objects from lightest to heaviest. One balance compares two things (or two groups — \"3 apples balance 1 melon\"); several stacked balances plus the ordered strip put a whole set in order transitively. Masses are off by default (a balance shows heavier / lighter by its tilt, not by numbers); turn them on for a quantitative lesson. Occlude a mass (\"how heavy?\"), a verdict (\"which is heavier?\") or the order strip (\"put these in order\") — the tilt stays visible because it is what the pupil reads. A warm stem sentence echoes the comparison. Built as a primary (KS1/KS2) manipulative: chunky, tactile, colourful.",
+  "whenToUse": "Reach for this whenever mass / weight is compared or ordered by balancing: \"which is heavier, the apple or the orange?\", \"how many cubes balance the book?\", equivalence of mass (\"3 apples balance 1 melon\"), and putting several objects in order of mass from the evidence of a few balances. Write objects once (each a name + its mass — the mass is the truth and drives everything; keep the same unit across the lesson) and then comparisons that reference those objects by name on each pan. Repeat a name to load several copies (\"apple\",\"apple\",\"apple\"). Common configurations: which is heavier — one comparison, show.masses off, comparison.occlude true so the verdict is \"?\" and the pupil reads the tilt; reveal by turning occlude off and highlighting the heavier object. How heavy / how many balance it — show.masses true (or occlude one object's mass) for a quantitative read; a balanced beam with unequal counts teaches equivalence. Put these in order — give two or three balances as evidence and set order.show true with order.occlude true for the blank answer space, then reveal the sorted strip (order.highlight to amber it). Use show.stem true for Oak's verbal twin (\"The melon is heavier than the apple\", \"3 apples balance 1 melon\"). Staged builds read very well: open on an empty or single-object balance and add an object per stage, watching the beam tip; or open on the balances with the order strip occluded and reveal the order last — the base state (a sensible balance) always stands alone. Cross-block conventions: keep the same objects, unit and show.masses setting across one lesson so pupils track one set; keep each pan to a few objects so a staged build does not resize between frames. Switch model when the teaching changes: to read a mass off a dial / jug / ruler use measures/measuring-scale; to solve an equation on a level balance of x-boxes and units use algebra/balance-scales; for part-whole mass bonds use number/bar-model or number/part-whole. Synonyms a teacher might use: balance, balance scales, scales, weighing scales, pan balance, bucket balance, see-saw, heavier, lighter, heaviest, lightest, balances, mass, weight, compare mass, order by weight, equal weight, how many balance.",
+  "responseModes": [],
+  "tags": [
+    "balance",
+    "balance scale",
+    "balance scales",
+    "scales",
+    "weighing scales",
+    "pan balance",
+    "bucket balance",
+    "beam balance",
+    "see-saw",
+    "mass",
+    "weight",
+    "heavier",
+    "lighter",
+    "heaviest",
+    "lightest",
+    "balances",
+    "compare mass",
+    "order by mass",
+    "order by weight",
+    "equal weight",
+    "equivalence",
+    "measures",
+    "measurement",
+    "primary",
+    "KS1",
+    "KS2",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "objects": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Display name AND reference key — must be unique within objects. e.g. \"apple\", \"A\", \"book\". The pans in comparisons reference an object by this name; its mass is summed wherever it appears, so one object can never carry two masses."
+            },
+            "mass": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The object's mass — the single source of truth that drives every tilt, verdict and the order. Authored once here (ORIGINAL value); never drawn unless show.masses is on (a balance is qualitative by default). Same unit for every object."
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "blue",
+                "teal",
+                "purple",
+                "coral",
+                "green"
+              ],
+              "description": "Categorical tactile colour of the object tile (bold border, light fill). Default cycles by position so different objects read apart. Amber is reserved for highlight, so it is not an option here."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this object's mass as \"?\" wherever it shows (its tile, the order strip, the stem) — the \"how heavy is it?\" hook. The tile and the tilt stay visible. Only has an effect when show.masses is on. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this object — draw the eye to it (e.g. the answer object once revealed). Default false."
+            }
+          },
+          "required": [
+            "name",
+            "mass"
+          ]
+        },
+        "description": "The universe of objects, each a name + its mass. The mass is authored ONCE here and is the single source of truth — every pan total, tilt, verdict and the order are computed from it, so the picture cannot contradict itself. Reference these objects by name from the pans."
+      },
+      "comparisons": {
+        "type": "array",
+        "maxItems": 5,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "type": "array",
+              "maxItems": 6,
+              "items": {
+                "type": "string"
+              },
+              "description": "Names of the objects on the LEFT pan (each must be an object name). Repeat a name to put several of it on the pan — [\"apple\",\"apple\",\"apple\"] is three apples. The pan's total mass is the sum; an empty list is an empty pan (mass 0)."
+            },
+            "right": {
+              "type": "array",
+              "maxItems": 6,
+              "items": {
+                "type": "string"
+              },
+              "description": "Names of the objects on the RIGHT pan. Same shape as left; repeat a name for several copies."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this balance's verdict (heavier / lighter / balanced) as \"?\" — the \"which side is heavier?\" hook. The beam still tilts (it is what the pupil reads). Default false."
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional short caption beneath THIS balance (e.g. \"A and B\"). Useful when several balances are stacked for an ordering task."
+            }
+          },
+          "required": [
+            "left",
+            "right"
+          ]
+        },
+        "description": "The balances. ONE comparison draws a single large balance (the usual \"which is heavier?\"); SEVERAL draw a stacked column of compact balances (the evidence for an ordering task). Each pan references objects by name; the tilt and verdict are derived from the pan totals."
+      },
+      "order": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Show the derived ordered strip of objects sorted by mass — the transitive conclusion of the balances. Omit for no strip.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Draw the ordered strip. Default false."
+          },
+          "of": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Which object names to include in the strip. Default: every object in objects. Use to order a subset."
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "lightest-first",
+              "heaviest-first"
+            ],
+            "description": "Reading direction. \"lightest-first\" (default) reads lightest → heaviest, left to right; \"heaviest-first\" reverses it."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the strip as blank \"?\" slots with the direction arrow — the \"put these in order\" answer space (the objects to place are the ones on the balances). Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the ordered strip — answer emphasis once revealed. Default false."
+          }
+        }
+      },
+      "unit": {
+        "type": "string",
+        "description": "Mass unit shown beside every printed mass, e.g. \"g\", \"kg\". Free text — the model does not convert units. Default \"g\"."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "masses": {
+            "type": "boolean",
+            "description": "Print each object's mass (e.g. \"150 g\") on its tile and in the order strip. Default false — a balance shows heavier / lighter by its TILT, so numbers are usually off; turn on for a quantitative lesson."
+          },
+          "verdict": {
+            "type": "boolean",
+            "description": "Show the derived conclusion beneath each balance — \"heavier\" / \"lighter\" on the pans, or \"balanced\" when level. Default true. (comparison.occlude renders it as \"?\".)"
+          },
+          "stem": {
+            "type": "boolean",
+            "description": "Show a warm derived stem sentence below the figure — Oak's verbal twin (\"The melon is heavier than the apple\", \"3 apples balance 1 melon\"). Occlusion-aware (shows \"?\" when the verdict is occluded). Only for a single balance. Default false."
+          }
+        }
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line in a warm band below the figure, e.g. a short context note. Distinct from the auto stem sentence. Never the question or an instruction: that wording is the block's text."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "objects",
+      "comparisons"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — the melon is heavier than the apple (verdict + stem)",
+      "params": {
+        "objects": [
+          {
+            "name": "apple",
+            "mass": 150,
+            "color": "green"
+          },
+          {
+            "name": "melon",
+            "mass": 900,
+            "color": "coral",
+            "highlight": true
+          }
+        ],
+        "comparisons": [
+          {
+            "left": [
+              "apple"
+            ],
+            "right": [
+              "melon"
+            ]
+          }
+        ],
+        "show": {
+          "stem": true
+        }
+      }
+    },
+    {
+      "label": "Occluded question — which is heavier, the book or the ball? (verdict hidden)",
+      "params": {
+        "objects": [
+          {
+            "name": "book",
+            "mass": 600,
+            "color": "blue"
+          },
+          {
+            "name": "ball",
+            "mass": 250,
+            "color": "purple"
+          }
+        ],
+        "comparisons": [
+          {
+            "left": [
+              "book"
+            ],
+            "right": [
+              "ball"
+            ],
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Equivalence (balanced beam, unequal counts) — 3 apples balance 1 melon",
+      "params": {
+        "objects": [
+          {
+            "name": "apple",
+            "mass": 300,
+            "color": "green"
+          },
+          {
+            "name": "melon",
+            "mass": 900,
+            "color": "coral"
+          }
+        ],
+        "comparisons": [
+          {
+            "left": [
+              "apple",
+              "apple",
+              "apple"
+            ],
+            "right": [
+              "melon"
+            ]
+          }
+        ],
+        "show": {
+          "masses": true,
+          "stem": true
+        },
+        "unit": "g"
+      }
+    },
+    {
+      "label": "Hard case — transitive ordering from two balances, order strip occluded",
+      "params": {
+        "header": "Put them in order, lightest first",
+        "objects": [
+          {
+            "name": "A",
+            "mass": 200,
+            "color": "blue"
+          },
+          {
+            "name": "B",
+            "mass": 500,
+            "color": "teal"
+          },
+          {
+            "name": "C",
+            "mass": 800,
+            "color": "purple"
+          }
+        ],
+        "comparisons": [
+          {
+            "left": [
+              "A"
+            ],
+            "right": [
+              "B"
+            ],
+            "label": "A and B"
+          },
+          {
+            "left": [
+              "B"
+            ],
+            "right": [
+              "C"
+            ],
+            "label": "B and C"
+          }
+        ],
+        "order": {
+          "show": true,
+          "occlude": true,
+          "direction": "lightest-first"
+        }
+      }
+    },
+    {
+      "label": "How heavy? — one mass occluded, the balance gives it away",
+      "params": {
+        "objects": [
+          {
+            "name": "pear",
+            "mass": 200,
+            "color": "green"
+          },
+          {
+            "name": "weights",
+            "mass": 200,
+            "color": "blue"
+          }
+        ],
+        "comparisons": [
+          {
+            "left": [
+              "pear"
+            ],
+            "right": [
+              "weights"
+            ]
+          }
+        ],
+        "show": {
+          "masses": true
+        },
+        "unit": "g"
+      }
+    },
+    {
+      "label": "Blank answer space — order four parcels by mass (lightest first)",
+      "params": {
+        "objects": [
+          {
+            "name": "red",
+            "mass": 400,
+            "color": "coral"
+          },
+          {
+            "name": "blue",
+            "mass": 250,
+            "color": "blue"
+          },
+          {
+            "name": "green",
+            "mass": 650,
+            "color": "green"
+          },
+          {
+            "name": "purple",
+            "mass": 500,
+            "color": "purple"
+          }
+        ],
+        "comparisons": [
+          {
+            "left": [
+              "blue"
+            ],
+            "right": [
+              "red"
+            ]
+          },
+          {
+            "left": [
+              "red"
+            ],
+            "right": [
+              "purple"
+            ]
+          },
+          {
+            "left": [
+              "purple"
+            ],
+            "right": [
+              "green"
+            ]
+          }
+        ],
+        "order": {
+          "show": true,
+          "occlude": true
+        }
+      }
+    }
+  ]
+}

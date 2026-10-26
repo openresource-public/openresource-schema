@@ -1,0 +1,1092 @@
+{
+  "ref": "geometry/similar-shapes@3",
+  "family": "geometry",
+  "name": "similar-shapes",
+  "version": 3,
+  "title": "Similar shapes",
+  "tagline": "Two similar triangles — disjoint, nested (parallel line in a triangle) or bowtie (shared apex); derives every missing length + the area/volume factors; occlude the unknown.",
+  "description": "Two similar figures with corresponding sides marked and every derived length, area scale factor (k²) and volume scale factor (k³) computed — in three connection configurations. config:\"disjoint\" (default) draws two SEPARATE outlines side by side — Shape A (blue) and Shape B (teal) — joined by a × k scale-factor arrow (the @1 figure). config:\"nested\" draws ONE triangle with a line parallel to one side cutting the other two, forming a smaller similar triangle at the shared apex (the intercept-theorem figure). config:\"bowtie\" draws two triangles sharing an apex through two intersecting straight lines, with the far ends joined by a parallel pair. In every config you author one not-to-scale outline sketch, the given lengths, and the scale factor as an explicit value k or a corresponding pair (k = b ÷ a); the model derives the linear scale factor, every partner length (given a length on one shape it computes the other), the remainder segments of a nested split side, the k² and k³ factors, and the connection geometry (nested inner points at t = 1/k so the line is genuinely parallel; bowtie big points reflected through the apex so the ends stay collinear). Occlude a side to ask for the missing length (\"?\" in amber), occlude the arrow to ask for the scale factor, or occlude a readout for the area / volume factor. Independent per-shape labels (shape.labelsB, or the connected configs' labels) name the second shape with its own letters, and a length can be given on either shape (side.lengthB) with the unknown occluded on the other. Because no partner length is ever authored freely, the figure cannot contradict the maths.",
+  "whenToUse": "Reach for this for similar shapes / similar triangles and scale-factor work — \"find the missing side\" via the linear scale factor, the area scale factor (k²), the volume scale factor (k³), and similar-vs-congruent (k = 1) — in whichever way the two shapes are drawn. Pick the config to match the figure: config:\"disjoint\" (default) for two SEPARATE shapes side by side with a × k arrow; config:\"nested\" for a triangle with an internal line parallel to one side (a smaller triangle sitting inside a bigger one at a shared corner — the classic AB∥CD intercept figure, including a perpendicular-height right-triangle version); config:\"bowtie\" for two triangles meeting at a shared vertex through two crossing straight lines (the AB∥XY hourglass, \"lines AY and BX cross at P\"). In every config the scale factor is set once with scale.factor (k given directly) or scale.known { a, b } (the corresponding pair the question states, k = b ÷ a), and you author ONE given length per corresponding family — the model derives the partner. DISJOINT: author shape.vertices (a representative outline in x,y with y up), put Shape A's given lengths on the sides via `sides`, and mark the missing side with occludeB. New in @2: shape.labelsB gives Shape B its own vertex letters ([\"P\",\"Q\",\"R\"] instead of the primed A′B′C′) — use it when the source names the second shape and the parts reference PR / PQ; side.lengthB puts a GIVEN length on Shape B (deriving Shape A) so a stated length and an occluded unknown can sit on either shape (e.g. AC given on A and QR given on B, asking BC on A and PR on B — set length on one edge, lengthB + occludeA / occludeB across the pair). NESTED: author nested.outline as [apex, base0, base1] (a not-to-scale triangle sketch, y up), nested.labels { apex, base:[..], inner:[..] } (the inner points split apex→base0 and apex→base1 and are joined by the parallel line), and nested.segments marking the given sub-lengths by label pair (\"A-B\", \"B-C\", \"C-D\", …); set nested.rightAngles for the perpendicular-height figure (author the outline as a right triangle with the right angle at base1). BOWTIE: author bowtie.small { labels:[..], points:[[x,y],[x,y]] } (the near triangle's two far points as a sketch, apex at the origin), bowtie.big.labels (the far triangle's two vertices, small_i corresponding to big_i through the apex — read the collinear pairs off \"lines AY and BX cross at P\" ⇒ A↔Y, B↔X), and bowtie.segments marking the given lengths. Readouts: readouts.linear / area / volume state the factors beneath the figure (with readouts.working to expand the derivation); scaleArrow.occlude (\"× ?\") asks for the scale factor in the disjoint config. Keep the same config, outline and orientation across a lesson so pupils track one pair of shapes; introduce the linear factor before area/volume. UNITS — set unit: \"cm\" once per figure to append it to every bare-number length label (derived or authored \"12\"); a label carrying its own text (\"12 cm\", \"x\") stays verbatim. Switch primitive when the teaching changes — for an enlargement about a centre on a grid use geometry/transformations; for a single triangle's sides/angles use geometry/triangle; for the length/area/volume measurement TABLE of similar shapes use geometry/similar-shapes-table; for a 3D solid's volume/surface area use geometry/solid. Synonyms a teacher might use: similar shapes, similar triangles, similar figures, scale factor, linear scale factor, missing side, missing length, corresponding sides, ratio of sides, intercept theorem, parallel line in a triangle, triangle within a triangle, nested triangles, bowtie, hourglass, X shape, crossing lines, shared vertex, area scale factor, volume scale factor, enlargement, similar and congruent, LSF ASF VSF, k squared k cubed.",
+  "responseModes": [],
+  "tags": [
+    "similar shapes",
+    "similar triangles",
+    "similar figures",
+    "similarity",
+    "scale factor",
+    "linear scale factor",
+    "missing side",
+    "missing length",
+    "corresponding sides",
+    "ratio of sides",
+    "area scale factor",
+    "volume scale factor",
+    "ratio of areas",
+    "ratio of volumes",
+    "enlargement",
+    "congruent",
+    "similar and congruent",
+    "k squared",
+    "k cubed",
+    "nested triangles",
+    "intercept theorem",
+    "parallel line in triangle",
+    "triangle within a triangle",
+    "bowtie",
+    "hourglass",
+    "crossing lines",
+    "shared vertex",
+    "shared apex",
+    "transversal",
+    "scalene triangle",
+    "irregular polygon",
+    "rotated",
+    "tilted",
+    "orientation",
+    "parallelogram",
+    "trapezium",
+    "L-shape",
+    "arrow",
+    "pentagon",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "segment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "edge": {
+            "type": "string",
+            "description": "The two point labels this segment joins, hyphenated, e.g. \"A-B\" or \"C-D\" (order does not matter). Must be a real drawn sub-segment: apex→inner or inner→base (a ray split), or the parallel pair (inner0–inner1 / base0–base1) for nested; apex→far or the parallel pair (small0–small1 / big0–big1) for bowtie."
+          },
+          "length": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The GIVEN length of this segment (the stimulus number). Author ONE length per corresponding family (a ray, or the parallel pair) — it fixes the absolute scale and every other length in that family is DERIVED from it and k. Omit for a segment drawn but not measured."
+          },
+          "label": {
+            "type": "string",
+            "description": "Override the displayed text on this segment (e.g. \"x\"). Omit to show the derived number. Does not change the maths."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this segment's length as \"?\" (amber) — the missing-length hook. The value stays computed. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber emphasis on this segment's label (e.g. the pair that gives k, or the answer). Default false."
+          }
+        },
+        "required": [
+          "edge"
+        ]
+      }
+    },
+    "properties": {
+      "config": {
+        "type": "string",
+        "enum": [
+          "disjoint",
+          "nested",
+          "bowtie"
+        ],
+        "description": "How the two similar shapes are connected. \"disjoint\" (default): two SEPARATE outlines side by side joined by a × k arrow — author `shape` + `sides` + `scaleArrow`. \"nested\": a triangle with a line parallel to one side cutting the other two (smaller similar triangle at the shared apex) — author `nested`. \"bowtie\": two triangles sharing an apex through two crossing straight lines — author `bowtie`. `scale`, `readouts`, `show`, `header`, `caption` apply to all three."
+      },
+      "shape": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "[disjoint config] The common outline both shapes share (so similarity is guaranteed): Shape A is drawn at it, Shape B is the same outline scaled by the scale factor. A representative \"not to scale\" sketch.",
+        "properties": {
+          "vertices": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 8,
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number"
+              },
+              "description": "A vertex [x, y], y pointing UP. Order the vertices around the outline (consecutive vertices are joined; the last joins back to the first)."
+            },
+            "description": "The outline vertices in order around the polygon (3–8). Consecutive vertices are joined and the last closes back to the first. Use a clear sketch — the drawing is \"not to scale\"."
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Vertex labels for Shape A, in vertex order (e.g. [\"A\",\"B\",\"C\"]). Default A, B, C, … Only meaningful with show.vertexLabels."
+          },
+          "labelsB": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Independent vertex labels for Shape B, in the SAME vertex order as `vertices` (e.g. [\"P\",\"Q\",\"R\"]). Omit to label Shape B with the primed forms of Shape A's labels (A′, B′, C′). Use when the source names the second shape with its own letters and the question references them (parts ask for PR, PQ, …)."
+          },
+          "rotate": {
+            "type": "number",
+            "description": "Optional rotation of the WHOLE shared outline, in degrees anticlockwise, applied identically to BOTH shapes (they stay genuinely similar). Use it so the figures are not always flat-bottomed. Default 0."
+          }
+        },
+        "required": [
+          "vertices"
+        ]
+      },
+      "sides": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "between": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "description": "The two VERTEX INDICES (0-based, into shape.vertices) this edge joins — the SAME corresponding edge on both shapes. Order does not matter. e.g. [0, 1] is the edge from vertex 0 to vertex 1."
+            },
+            "length": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Shape A's given length on this edge (the question's stimulus number). Shape B's length on this edge is DERIVED as k × length — never authored. Omit for an edge you draw but do not measure. Use `length` (given on A) OR `lengthB` (given on B), not both."
+            },
+            "lengthB": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Shape B's GIVEN length on this edge (a question that states a length on the SECOND shape). When set, Shape A's length here is DERIVED as lengthB ÷ k — the mirror of `length`. Use for the given-on-either-shape case (e.g. QR = 45 given on Shape B while its Shape-A partner BC is the occluded unknown): set lengthB and occludeA on that edge. Use `length` OR `lengthB`, not both."
+            },
+            "labelA": {
+              "type": "string",
+              "description": "Override Shape A's displayed text on this edge (e.g. \"x\", \"6 cm\"). Omit to show the plain number. Does not change the maths."
+            },
+            "occludeA": {
+              "type": "boolean",
+              "description": "Render Shape A's length on this edge as \"?\" (amber) — ask for a side on the first shape (its value may be given directly via `length`, or derived from `lengthB`). Default false."
+            },
+            "showB": {
+              "type": "boolean",
+              "description": "Show Shape B's length (derived, or given via `lengthB`) on this edge. Set false to leave Shape B's edge unlabelled (a blank answer space). Default true (when the edge carries a length)."
+            },
+            "labelB": {
+              "type": "string",
+              "description": "Override Shape B's displayed text on this edge (e.g. \"y\"). Omit to show the derived / given value. Does not change the maths."
+            },
+            "occludeB": {
+              "type": "boolean",
+              "description": "Render Shape B's length on this edge as \"?\" (amber) — THE MISSING SIDE hook. The value stays computed (nothing leaks) but is hidden. Default false."
+            },
+            "highlight": {
+              "type": "string",
+              "enum": [
+                "a",
+                "b",
+                "both"
+              ],
+              "description": "Amber emphasis on this edge's label: 'a' (Shape A), 'b' (Shape B), or 'both' — e.g. the corresponding pair that gives the scale factor, or the answer. Omit for no emphasis."
+            }
+          },
+          "required": [
+            "between"
+          ]
+        },
+        "description": "[disjoint config] Per-edge marks addressed by vertex indices. Shape A shows its given `length` (Shape B derived), or Shape B shows its given `lengthB` (Shape A derived). List only the edges you want to mark."
+      },
+      "scale": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The scale factor SOURCE (all configs) — exactly ONE of `factor` (k stated directly) or `known` (derive k = b ÷ a from a corresponding pair). Everything about the second shape follows from this.",
+        "properties": {
+          "factor": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The linear scale factor k stated directly (small → big). > 1 enlarges, < 1 reduces, 1 means congruent. Use this OR `known`, not both."
+          },
+          "known": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Derive k from one corresponding pair of lengths: k = b ÷ a. These are the two numbers a \"find the scale factor / missing side\" question gives. Mark the same pair on a side/segment so the figure shows a and the derived b.",
+            "properties": {
+              "a": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "The SMALL shape's length on the corresponding edge."
+              },
+              "b": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "The BIG shape's length on the same corresponding edge."
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ]
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "factor"
+            ]
+          },
+          {
+            "required": [
+              "known"
+            ]
+          }
+        ]
+      },
+      "scaleArrow": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "[disjoint config] The × k arrow drawn between the two separate shapes (A → B).",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Draw the arrow and its \"× k\" label. Default true."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the label as \"× ?\" (amber) — the \"what is the scale factor?\" hook. Default false."
+          }
+        }
+      },
+      "nested": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "[nested config] A triangle with a line parallel to one side cutting the other two, forming a smaller similar triangle at the shared apex (the intercept-theorem figure). The small triangle (apex + the two inner points) is similar to the big triangle (apex + the two base vertices); the parallel line joins the inner points. Inner-point positions are DERIVED at t = 1/k so the line is genuinely parallel.",
+        "properties": {
+          "outline": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number"
+              },
+              "description": "A vertex [x, y], y UP."
+            },
+            "description": "The big triangle as a not-to-scale sketch: [apex, base0, base1]. The apex is the SHARED vertex; base0 / base1 are the two far vertices. For the perpendicular-height figure (rightAngles), author a right triangle with the right angle at base1 so the parallel line and the far side sit perpendicular to the base."
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The point labels. Defaults: apex \"A\", base [\"C\",\"D\"], inner [\"B\",\"E\"].",
+            "properties": {
+              "apex": {
+                "type": "string",
+                "description": "Label of the shared apex vertex."
+              },
+              "base": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "string"
+                },
+                "description": "Labels of the two far vertices [base0, base1]."
+              },
+              "inner": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "string"
+                },
+                "description": "Labels of the two interior points [inner0, inner1]: inner0 splits apex→base0, inner1 splits apex→base1. The parallel line joins them."
+              }
+            }
+          },
+          "segments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/segment"
+            },
+            "description": "Marks on the named sub-segments (apex→inner, inner→base, or the parallel pair), addressed by label pair. Author one given length per corresponding family; the rest are derived."
+          },
+          "rightAngles": {
+            "type": "boolean",
+            "description": "Draw right-angle squares where the parallel line and the far side meet the base ray (at inner1 and base1) — the perpendicular-height figure (e.g. two nested right triangles). Default false."
+          },
+          "parallelMark": {
+            "type": "boolean",
+            "description": "Draw ∥ arrowheads on the parallel pair (the inner line and the far side) to mark them parallel. Default true."
+          }
+        },
+        "required": [
+          "outline"
+        ]
+      },
+      "bowtie": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "[bowtie config] Two triangles sharing a single apex through two intersecting straight lines, their far ends joined by a parallel pair (the hourglass / X figure). The near (small) triangle apex+small0+small1 is similar to the far (big) triangle apex+big0+big1; small_i is collinear with big_i through the apex, and small0–small1 ∥ big0–big1. The big triangle's points are DERIVED (reflected through the apex, scaled by the display ratio).",
+        "properties": {
+          "apex": {
+            "type": "string",
+            "description": "Label of the shared apex where the two lines cross. Default \"P\"."
+          },
+          "small": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The near (small) triangle.",
+            "properties": {
+              "labels": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "string"
+                },
+                "description": "Labels of the small triangle's two far vertices [small0, small1]."
+              },
+              "points": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "number"
+                  },
+                  "description": "A far point [x, y], y UP, positioned around the apex (taken to be at the origin)."
+                },
+                "description": "A not-to-scale sketch of the two far points. The parallel pair is small0→small1."
+              }
+            },
+            "required": [
+              "labels",
+              "points"
+            ]
+          },
+          "big": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The far (big) triangle.",
+            "properties": {
+              "labels": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "string"
+                },
+                "description": "Labels of the big triangle's two far vertices [big0, big1]. big_i corresponds to small_i (same ray through the apex): small0↔big0, small1↔big1. Read the collinear pairs off the source (\"lines AY and BX cross at P\" ⇒ A↔Y, B↔X, so small [\"A\",\"B\"] ↔ big [\"Y\",\"X\"])."
+              }
+            },
+            "required": [
+              "labels"
+            ]
+          },
+          "segments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/segment"
+            },
+            "description": "Marks on the named sub-segments (apex→far, or the parallel pair), addressed by label pair. Author one given length per corresponding family; the rest are derived."
+          },
+          "parallelMark": {
+            "type": "boolean",
+            "description": "Draw ∥ arrowheads on the parallel pair (small0–small1 and big0–big1). Default true."
+          }
+        },
+        "required": [
+          "small",
+          "big"
+        ]
+      },
+      "readouts": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A strip beneath the figure stating the scale factors (all configs). Each is \"show\" (display the value), \"occlude\" (state the factor name but hide the value as \"?\"), or omitted.",
+        "properties": {
+          "linear": {
+            "type": "string",
+            "enum": [
+              "show",
+              "occlude"
+            ],
+            "description": "The linear scale factor line, e.g. \"Scale factor = 1.5\" (with `working`, \"= 9 ÷ 6 = 1.5\" when derived from a pair)."
+          },
+          "area": {
+            "type": "string",
+            "enum": [
+              "show",
+              "occlude"
+            ],
+            "description": "The area scale factor line, e.g. \"Area scale factor = 2.25\" (with `working`, \"= 1.5² = 2.25\")."
+          },
+          "volume": {
+            "type": "string",
+            "enum": [
+              "show",
+              "occlude"
+            ],
+            "description": "The volume scale factor line, e.g. \"Volume scale factor = 3.375\" (with `working`, \"= 1.5³ = 3.375\")."
+          },
+          "working": {
+            "type": "boolean",
+            "description": "Expand each shown line to its derivation. Default false (value only)."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "vertexLabels": {
+            "type": "boolean",
+            "description": "Label the vertices. Default true."
+          },
+          "notToScale": {
+            "type": "boolean",
+            "description": "Show the \"Not to scale\" note under the figure. Default true."
+          }
+        }
+      },
+      "unit": {
+        "type": "string",
+        "description": "The figure's length unit, e.g. \"cm\", \"m\", \"mm\". Appended to every length label that is a BARE NUMBER — a derived length or a purely numeric authored label (\"12\" → \"12 cm\"). A label with any other text (\"12 cm\", \"x\", \"2x + 1\") is shown verbatim — an authored override always wins. The scale-factor readouts and the × k arrow are ratios and never take it. Default \"\" (labels stay bare). Set it once per figure and keep it consistent across a lesson. @3."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "scale"
+    ],
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "config": {
+              "const": "nested"
+            }
+          },
+          "required": [
+            "config"
+          ]
+        },
+        "then": {
+          "required": [
+            "nested"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "config": {
+              "const": "bowtie"
+            }
+          },
+          "required": [
+            "config"
+          ]
+        },
+        "then": {
+          "required": [
+            "bowtie"
+          ]
+        }
+      }
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank answer space — find the scale factor and the missing sides (disjoint)",
+      "params": {
+        "header": "Similar triangles",
+        "shape": {
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              4
+            ]
+          ],
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "sides": [
+          {
+            "between": [
+              0,
+              1
+            ],
+            "length": 6,
+            "occludeB": true
+          },
+          {
+            "between": [
+              1,
+              2
+            ],
+            "length": 4,
+            "occludeB": true
+          }
+        ],
+        "scale": {
+          "factor": 2
+        },
+        "scaleArrow": {
+          "occlude": true
+        },
+        "caption": "Shapes A and B are similar. Find the scale factor and the missing lengths."
+      }
+    },
+    {
+      "label": "Worked example — two similar rectangles, area scale factor k² = 4 (disjoint)",
+      "params": {
+        "header": "Area scale factor",
+        "shape": {
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "labels": [
+            "P",
+            "Q",
+            "R",
+            "S"
+          ]
+        },
+        "sides": [
+          {
+            "between": [
+              0,
+              1
+            ],
+            "length": 8
+          },
+          {
+            "between": [
+              1,
+              2
+            ],
+            "length": 5
+          }
+        ],
+        "scale": {
+          "factor": 2
+        },
+        "readouts": {
+          "linear": "show",
+          "area": "show",
+          "working": true
+        },
+        "unit": "cm",
+        "caption": "The lengths double, so the area scale factor is 2² = 4."
+      }
+    },
+    {
+      "label": "Independent labels + given on either shape (the disjoint hard case) — find PR and BC",
+      "params": {
+        "header": "Similar triangles ABC and PQR",
+        "shape": {
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              2,
+              8
+            ]
+          ],
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "labelsB": [
+            "P",
+            "Q",
+            "R"
+          ]
+        },
+        "sides": [
+          {
+            "between": [
+              0,
+              1
+            ],
+            "length": 8
+          },
+          {
+            "between": [
+              2,
+              0
+            ],
+            "length": 26,
+            "occludeB": true
+          },
+          {
+            "between": [
+              1,
+              2
+            ],
+            "lengthB": 45,
+            "occludeA": true
+          }
+        ],
+        "scale": {
+          "known": {
+            "a": 8,
+            "b": 12
+          }
+        }
+      }
+    },
+    {
+      "label": "Nested — a line parallel to a side cuts the triangle (find ED and BE)",
+      "params": {
+        "config": "nested",
+        "header": "BE is parallel to CD",
+        "nested": {
+          "outline": [
+            [
+              3.2,
+              6
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ]
+          ],
+          "labels": {
+            "apex": "A",
+            "base": [
+              "C",
+              "D"
+            ],
+            "inner": [
+              "B",
+              "E"
+            ]
+          },
+          "segments": [
+            {
+              "edge": "A-B",
+              "length": 9
+            },
+            {
+              "edge": "B-C",
+              "length": 3
+            },
+            {
+              "edge": "A-E",
+              "length": 6
+            },
+            {
+              "edge": "E-D",
+              "occlude": true
+            },
+            {
+              "edge": "C-D",
+              "length": 7
+            },
+            {
+              "edge": "B-E",
+              "occlude": true
+            }
+          ]
+        },
+        "scale": {
+          "known": {
+            "a": 9,
+            "b": 12
+          }
+        }
+      }
+    },
+    {
+      "label": "Nested right triangles — perpendicular heights (find CD and BC)",
+      "params": {
+        "config": "nested",
+        "nested": {
+          "outline": [
+            [
+              0,
+              0
+            ],
+            [
+              9,
+              5.4
+            ],
+            [
+              9,
+              0
+            ]
+          ],
+          "labels": {
+            "apex": "A",
+            "base": [
+              "C",
+              "D"
+            ],
+            "inner": [
+              "B",
+              "E"
+            ]
+          },
+          "segments": [
+            {
+              "edge": "A-B",
+              "length": 5
+            },
+            {
+              "edge": "B-E",
+              "length": 4
+            },
+            {
+              "edge": "C-D",
+              "occlude": true
+            },
+            {
+              "edge": "B-C",
+              "occlude": true
+            }
+          ],
+          "rightAngles": true
+        },
+        "scale": {
+          "factor": 3
+        },
+        "header": "AB : AC = 1 : 3"
+      }
+    },
+    {
+      "label": "Bowtie — two triangles sharing an apex (find BP)",
+      "params": {
+        "config": "bowtie",
+        "header": "AB is parallel to XY",
+        "bowtie": {
+          "apex": "P",
+          "small": {
+            "labels": [
+              "A",
+              "B"
+            ],
+            "points": [
+              [
+                -1.1,
+                1.3
+              ],
+              [
+                -1,
+                -1.2
+              ]
+            ]
+          },
+          "big": {
+            "labels": [
+              "Y",
+              "X"
+            ]
+          },
+          "segments": [
+            {
+              "edge": "A-B",
+              "length": 6
+            },
+            {
+              "edge": "X-Y",
+              "length": 15
+            },
+            {
+              "edge": "P-X",
+              "length": 12.5
+            },
+            {
+              "edge": "B-P",
+              "occlude": true
+            }
+          ]
+        },
+        "scale": {
+          "known": {
+            "a": 6,
+            "b": 15
+          }
+        },
+        "caption": "Lines AY and BX cross at P. Find BP."
+      }
+    },
+    {
+      "label": "Bowtie — crossing straight lines ACE and BCD (find CE and BC)",
+      "params": {
+        "config": "bowtie",
+        "header": "AB is parallel to DE",
+        "bowtie": {
+          "apex": "C",
+          "small": {
+            "labels": [
+              "A",
+              "B"
+            ],
+            "points": [
+              [
+                -1.55,
+                0.2
+              ],
+              [
+                -0.5,
+                1.35
+              ]
+            ]
+          },
+          "big": {
+            "labels": [
+              "E",
+              "D"
+            ]
+          },
+          "segments": [
+            {
+              "edge": "A-B",
+              "length": 6
+            },
+            {
+              "edge": "D-E",
+              "length": 9
+            },
+            {
+              "edge": "A-C",
+              "length": 8
+            },
+            {
+              "edge": "C-D",
+              "length": 13.5
+            },
+            {
+              "edge": "C-E",
+              "occlude": true
+            },
+            {
+              "edge": "B-C",
+              "occlude": true
+            }
+          ]
+        },
+        "scale": {
+          "known": {
+            "a": 6,
+            "b": 9
+          }
+        },
+        "caption": "ACE and BCD are straight lines. Find CE and BC."
+      }
+    },
+    {
+      "label": "Toward volume — length, area (k²) and volume (k³) scale factors (disjoint)",
+      "params": {
+        "header": "Length, area and volume",
+        "shape": {
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              2,
+              4
+            ]
+          ],
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "sides": [
+          {
+            "between": [
+              0,
+              1
+            ],
+            "length": 5
+          }
+        ],
+        "scale": {
+          "factor": 3
+        },
+        "readouts": {
+          "linear": "show",
+          "area": "show",
+          "volume": "show",
+          "working": true
+        },
+        "caption": "When lengths scale by 3, areas scale by 3² and volumes by 3³."
+      }
+    },
+    {
+      "label": "Similar and congruent — scale factor 1 (disjoint)",
+      "params": {
+        "header": "Similar and congruent",
+        "shape": {
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              4,
+              5
+            ]
+          ],
+          "labels": [
+            "X",
+            "Y",
+            "Z"
+          ]
+        },
+        "sides": [
+          {
+            "between": [
+              0,
+              1
+            ],
+            "length": 7
+          },
+          {
+            "between": [
+              1,
+              2
+            ],
+            "length": 6
+          }
+        ],
+        "scale": {
+          "factor": 1
+        },
+        "readouts": {
+          "linear": "show"
+        },
+        "caption": "Scale factor 1: the shapes are congruent — every length is unchanged."
+      }
+    },
+    {
+      "label": "Tilted similar pair (not flat-based) — find the missing side (disjoint)",
+      "params": {
+        "header": "Similar shapes",
+        "shape": {
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              0,
+              4
+            ]
+          ],
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "rotate": 22
+        },
+        "sides": [
+          {
+            "between": [
+              0,
+              1
+            ],
+            "length": 6,
+            "highlight": "both"
+          },
+          {
+            "between": [
+              1,
+              2
+            ],
+            "length": 4,
+            "occludeB": true
+          }
+        ],
+        "scale": {
+          "known": {
+            "a": 6,
+            "b": 9
+          }
+        },
+        "readouts": {
+          "linear": "show"
+        },
+        "caption": "The rectangles are similar but drawn at an angle. Find B′C′."
+      }
+    }
+  ]
+}

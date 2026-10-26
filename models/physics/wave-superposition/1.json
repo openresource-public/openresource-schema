@@ -1,0 +1,335 @@
+{
+  "ref": "physics/wave-superposition@1",
+  "family": "physics",
+  "name": "wave-superposition",
+  "version": 1,
+  "title": "Wave superposition",
+  "tagline": "Two sine waves and their derived point-by-point sum on one axis; constructive / destructive interference, phase difference, standing-wave nodes; sum occludable to \"sketch it\".",
+  "description": "An oscilloscope-style plot carrying up to two component sine waves and their superposition — the resultant found by ADDING the two displacements at every point — on a shared displacement-vs-position (or displacement-vs-time) axis. You write only each wave's physics: its amplitude, its wavelength (or period), and its phase in fractions of π. Everything else is derived: each curve is sampled y = A·sin(2πx/λ + φ); the sum curve is the point-by-point total; the phase-difference readout (in π and degrees) and the constructive / destructive / partial classification come from the phase gap; the path difference is Δφ·λ/2π; and when the two waves have equal amplitude and wavelength but travel in opposite directions the model derives the standing wave and marks its fixed nodes and antinodes. The resultant is coloured as the result (amber); occluding it hides the sum curve and its readouts together (nothing leaks) for a \"sketch the resultant\" question while the components stay drawn. The static frame stands alone; on the web a draggable handle on the second wave sweeps its phase so constructive interference is seen collapsing to destructive.",
+  "whenToUse": "Reach for this whenever two waves are added together: the superposition principle, constructive interference (waves in phase — crests aligned, the sum is a bigger wave), destructive interference (antiphase, φ = π — crests meet troughs, the sum flatlines), partial phase offsets, phase difference and path difference, and standing / stationary waves with their nodes and antinodes (two equal waves travelling in opposite directions). Author only the physics of each wave — amplitude, wavelength (distance axis) or period (time axis), and phase in fractions of π (phase 1 = π = antiphase, phase 0.5 = a quarter-cycle shift). The sum, the phase-difference and path-difference readouts, the interference classification and the node/antinode markers are all derived — you never draw the resultant. Common configurations: constructive — two identical waves (same amplitude, same wavelength, phase 0), the sum is double height; destructive — the same two but the second at phase 1 (π), the sum is a flat line on the axis; partial — a phase of 0.5 or 0.25 shows a shifted, reduced resultant; standing wave — set both amplitudes and wavelengths equal, one wave travelling \"left\", the other \"right\", and turn on showNodes to mark the fixed points. Question hook: occlude \"sum\" to hide the resultant curve (\"sketch the wave that results when these two are added\") — the components stay visible, and the sum readouts hide with it. Use axis.variable \"time\" (and each wave's period) for a displacement–time picture, \"position\" (and wavelength) for a displacement–distance snapshot. Keep the two waves on the SAME wavelength and the SAME x-range across the blocks of one lesson so pupils compare like with like. On the web the second wave carries a draggable phase handle — pose \"Drag wave 2. For what phase difference does the resultant vanish?\" and let them find antiphase. Synonyms a teacher might use: superposition, interference, constructive, destructive, in phase, out of phase, antiphase, phase difference, path difference, resultant wave, adding waves, standing wave, stationary wave, node, antinode, oscilloscope trace.",
+  "responseModes": [],
+  "tags": [
+    "wave",
+    "waves",
+    "superposition",
+    "interference",
+    "constructive",
+    "destructive",
+    "in phase",
+    "out of phase",
+    "antiphase",
+    "phase difference",
+    "path difference",
+    "resultant",
+    "standing wave",
+    "stationary wave",
+    "node",
+    "antinode",
+    "sine wave",
+    "oscilloscope",
+    "amplitude",
+    "wavelength",
+    "physics",
+    "science",
+    "gcse",
+    "a-level"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "waves": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 2,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "amplitude": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Peak displacement A of this wave, in the same (arbitrary) displacement units as the other wave — 1, 2, 1.5. The curve is y = A·sin(2πx/λ + φ). Equal amplitudes give a clean interference picture; unequal amplitudes give a partial cancellation. Required."
+            },
+            "wavelength": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The wavelength λ in the axis's x-units — the distance for one full cycle. Give EITHER wavelength OR period (they are the same number on this single axis, just named for a distance-axis vs a time-axis). For interference and standing waves the two waves normally share a wavelength; different wavelengths draw but the classification degrades to \"partial\"."
+            },
+            "period": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The period T — an alias for wavelength when the x-axis is time rather than distance. Give EITHER wavelength OR period, not both; if both are given, wavelength wins. Use period with axis.variable \"time\"."
+            },
+            "phase": {
+              "type": "number",
+              "description": "The phase offset φ, in FRACTIONS OF π (the classroom unit): phase 0 = in phase, phase 1 = π (antiphase / half a cycle shift), phase 0.5 = π/2 (a quarter cycle), phase -0.5 = −π/2. The phase-difference readout is computed from the two waves' phases. Default 0."
+            },
+            "travelling": {
+              "type": "string",
+              "enum": [
+                "right",
+                "left"
+              ],
+              "description": "The direction this wave travels, used ONLY for the standing-wave case: two waves of equal amplitude and wavelength travelling in OPPOSITE directions (one \"right\", one \"left\") superpose to a standing wave, so the model derives and marks the fixed nodes and antinodes. Default \"right\". Irrelevant to a plain two-wave sum (leave both \"right\")."
+            },
+            "label": {
+              "type": "string",
+              "description": "Short name drawn at this wave's right-hand end, e.g. \"Wave 1\", \"Incident\". Omit to leave the wave unlabelled."
+            }
+          },
+          "required": [
+            "amplitude"
+          ],
+          "anyOf": [
+            {
+              "required": [
+                "wavelength"
+              ]
+            },
+            {
+              "required": [
+                "period"
+              ]
+            }
+          ]
+        },
+        "description": "The one or two component waves to superpose, each written as its physics (amplitude, wavelength/period, phase in fractions of π, optional travelling direction). Two waves are the usual case (interference, standing waves); a single wave draws just that wave with a trivial \"sum\". Every curve and the resultant are derived — you never author a sum."
+      },
+      "axis": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The horizontal axis: what it measures and how far it runs. Omit for a position axis spanning two wavelengths.",
+        "properties": {
+          "variable": {
+            "type": "string",
+            "enum": [
+              "position",
+              "time"
+            ],
+            "description": "\"position\" — a snapshot in space, x measured in distance, cycle length = wavelength (the default). \"time\" — the displacement of one point over time, x measured in time, cycle length = period. Chooses the axis title and which wave field (wavelength vs period) reads naturally."
+          },
+          "span": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "How far the x-axis runs, in x-units, from 0. Omit to span two of the (first) wave's wavelengths, which frames the interference cleanly. Set it to show more or fewer cycles."
+          },
+          "showTicks": {
+            "type": "boolean",
+            "description": "Number the x-axis at wavelength/period intervals. Default true."
+          }
+        }
+      },
+      "occlude": {
+        "type": "string",
+        "enum": [
+          "sum"
+        ],
+        "description": "Render the resultant (sum) curve as hidden — the \"sketch the resultant\" question hook. The two component waves stay drawn; the sum curve and every sum-derived readout (there is no leak) are withheld. Omit to show the resultant."
+      },
+      "highlight": {
+        "type": "string",
+        "enum": [
+          "sum",
+          "nodes",
+          "antinodes"
+        ],
+        "description": "Draw the eye to one feature. \"sum\" brightens the resultant curve and thickens it (emphasis on the answer). \"nodes\" / \"antinodes\" ring the derived node or antinode points of a standing wave in amber. Omit for no emphasis. (The resultant is already the amber result colour; highlight is for picking out these specific features.)"
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Staged-build control: draw only the first N curves in the order wave 1, wave 2, then the sum. reveal 1 = just wave 1; reveal 2 = both components, no sum yet; reveal 3 (or omitted) = the full figure with the resultant. The axes and full x-range always draw, so the figure never resizes between stages. reveal 2 with a following \"now add them\" beat is the classic superposition build."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web only: put a draggable handle on wave 2 so dragging left/right sweeps its phase and the resultant recomputes live — for exploring how the interference changes with phase difference. Ignored in print/slides (the static frame stands alone). Default false."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles. All default true unless stated.",
+        "properties": {
+          "components": {
+            "type": "boolean",
+            "description": "Draw the two component waves. false shows only the resultant (rare — for \"here is the result, what two waves made it?\"). Default true."
+          },
+          "sum": {
+            "type": "boolean",
+            "description": "Draw the resultant curve. false leaves an answer space showing only the components (the same as occlude \"sum\" but without the \"?\" marker). Default true."
+          },
+          "grid": {
+            "type": "boolean",
+            "description": "Draw the faint background gridlines. Default true."
+          },
+          "phase": {
+            "type": "boolean",
+            "description": "Show the phase-difference readout (Δφ in π and degrees) with the in-phase / antiphase / partial classification, below the figure. Default true when there are two waves."
+          },
+          "pathDifference": {
+            "type": "boolean",
+            "description": "Show the path-difference readout (Δφ·λ/2π, e.g. \"λ/2\") beside the phase readout. Only meaningful when the two waves share a wavelength. Default false."
+          },
+          "nodes": {
+            "type": "boolean",
+            "description": "Mark the nodes (always-zero points) and antinodes (maximum-swing points) of a standing wave — only drawn when the two waves form one (equal amplitude and wavelength, opposite travelling directions). Default false; turn on for standing-wave teaching."
+          },
+          "axes": {
+            "type": "boolean",
+            "description": "Draw the x-axis (zero displacement line) and the y-axis with its arrowheads. Default true."
+          }
+        }
+      },
+      "caption": {
+        "type": "string",
+        "description": "An optional caption drawn beneath the figure, e.g. a short context note. Omit to let the figure speak for itself. Never the question or an instruction: that wording is the block's text."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "waves"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Constructive interference — two identical waves in phase, the sum doubles",
+      "params": {
+        "header": "Constructive interference",
+        "waves": [
+          {
+            "amplitude": 1,
+            "wavelength": 4,
+            "phase": 0,
+            "label": "Wave 1"
+          },
+          {
+            "amplitude": 1,
+            "wavelength": 4,
+            "phase": 0,
+            "label": "Wave 2"
+          }
+        ],
+        "show": {
+          "pathDifference": true
+        }
+      }
+    },
+    {
+      "label": "Destructive interference — antiphase (φ = π), the resultant flatlines",
+      "params": {
+        "header": "Destructive interference",
+        "waves": [
+          {
+            "amplitude": 1,
+            "wavelength": 4,
+            "phase": 0,
+            "label": "Wave 1"
+          },
+          {
+            "amplitude": 1,
+            "wavelength": 4,
+            "phase": 1,
+            "label": "Wave 2"
+          }
+        ],
+        "highlight": "sum",
+        "show": {
+          "pathDifference": true
+        }
+      }
+    },
+    {
+      "label": "Partial phase offset — a quarter-cycle shift (φ = π/2), a reduced shifted resultant",
+      "params": {
+        "waves": [
+          {
+            "amplitude": 1.2,
+            "wavelength": 5,
+            "phase": 0,
+            "label": "Wave 1"
+          },
+          {
+            "amplitude": 1.2,
+            "wavelength": 5,
+            "phase": 0.5,
+            "label": "Wave 2"
+          }
+        ],
+        "show": {
+          "pathDifference": true
+        },
+        "caption": "Two waves a quarter of a cycle out of step."
+      }
+    },
+    {
+      "label": "Occluded question — sketch the resultant of these two waves",
+      "params": {
+        "waves": [
+          {
+            "amplitude": 1,
+            "wavelength": 6,
+            "phase": 0
+          },
+          {
+            "amplitude": 0.6,
+            "wavelength": 6,
+            "phase": 0.5
+          }
+        ],
+        "occlude": "sum"
+      }
+    },
+    {
+      "label": "The hard case — a standing wave from two opposite-travelling waves, nodes and antinodes marked",
+      "params": {
+        "header": "Standing wave",
+        "waves": [
+          {
+            "amplitude": 1,
+            "wavelength": 4,
+            "phase": 0,
+            "travelling": "right",
+            "label": "Incident"
+          },
+          {
+            "amplitude": 1,
+            "wavelength": 4,
+            "phase": 0,
+            "travelling": "left",
+            "label": "Reflected"
+          }
+        ],
+        "highlight": "nodes",
+        "show": {
+          "nodes": true,
+          "phase": false
+        },
+        "caption": "Where the two waves always cancel are the nodes; the points of biggest swing are the antinodes."
+      }
+    },
+    {
+      "label": "Explore — drag wave 2 to change the phase difference (web)",
+      "params": {
+        "header": "Change the phase difference",
+        "waves": [
+          {
+            "amplitude": 1,
+            "wavelength": 5,
+            "phase": 0,
+            "label": "Wave 1"
+          },
+          {
+            "amplitude": 1,
+            "wavelength": 5,
+            "phase": 0.3,
+            "label": "Wave 2"
+          }
+        ],
+        "draggable": true
+      }
+    }
+  ]
+}

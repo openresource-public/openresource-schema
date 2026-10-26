@@ -1,0 +1,448 @@
+{
+  "ref": "geometry/tiling-manipulative@1",
+  "family": "geometry",
+  "name": "tiling-manipulative",
+  "version": 1,
+  "title": "Tangram & pattern blocks",
+  "tagline": "A fixed canonical piece-set — the 7-piece tangram or the pattern blocks — placed to compose a figure; total area, fractions and the piece-equivalence relations all derived.",
+  "description": "A composing manipulative built from a fixed set of canonical pieces: the 7-piece tangram (two small, one medium and two large right-isosceles triangles, a square and a parallelogram, which always reassemble into a square of fixed area) or the pattern blocks (the green triangle, blue rhombus, red trapezoid and yellow hexagon, where a hexagon = 2 trapezoids = 3 rhombi = 6 triangles). You list which pieces to place and where — each piece by its kind, anchor [x, y], rotation and optional flip; the shapes themselves are built in. Everything numeric is derived: each piece's area in unit pieces (tangram: small triangles; pattern blocks: triangles), its fraction of the whole, the total area, the equivalence chain between the named pieces, and a stem sentence. Pieces draw in the sanctioned real manipulative colours, occlude a piece's area/fraction as \"?\" for a question, highlight one in amber, or ghost a piece as an empty slot for an answer space or a staged build. v1 is static (with host-driven staged builds); composition serves area, fraction equivalence and compose/decompose work.",
+  "whenToUse": "Reach for this to compose and decompose shapes with the classic classroom manipulatives — the tangram and pattern blocks — and to teach area by equivalent pieces and fraction equivalence by tiling. Set set to \"tangram\" or \"pattern-blocks\", then list pieces. Each piece is { kind, at, rotation, flip }: kind names the piece, at is where it sits, rotation turns it, flip mirrors it (needed for the tangram parallelogram). Tangram coordinates are a square grid (x right, y up, the assembled square spans 0..4) and pieces turn in multiples of 45°/90°; pattern-block coordinates are a triangular lattice [a, b] (a right, b up-and-right) and pieces turn in multiples of 60° (triangle/rhombus also 30°). Copy and adapt the example arrangements — the assembled tangram square, the same seven pieces rearranged into a big triangle (showing the area is unchanged), and the hexagon covered by 6 triangles / 3 rhombi / 2 trapezoids. Turn on show.pieceAreas to label each piece with its area, show.fractions to give those areas as fractions of the whole (the square for tangram, one hexagon for pattern blocks), show.total for a total-area readout, show.equivalence for the \"1 hexagon = 2 trapezoids = 3 rhombi = 6 triangles\" line, show.names to name each piece. Common configurations: compose a figure — list the pieces of the figure (the assembled square, a rearrangement, a picture); area by pieces — show.total and show.pieceAreas, \"how many triangles does this cover?\"; fraction by tiling — highlight one piece, show.fractions, occlude its fraction (\"what fraction of the hexagon is the blue rhombus?\"); equivalence — show.equivalence with a hexagon filled three different ways; answer space / staged — ghost the target with blank pieces and fill them in (one blank cleared per stage; keep the full piece list every stage so the figure does not resize). Occlude a piece's area as \"?\" for a question; highlight in amber to point at one piece. Switch model when the teaching changes: to cut an arbitrary shape into pieces and rearrange (deriving the parallelogram/triangle area formulae) use geometry/shape-dissection; to partition one shape into fractions use number/fraction-shape; to build a polygon on a peg board use geometry/geoboard; for area by counting squares use a squared-grid area model. Synonyms a teacher might use: tangram, tans, pattern blocks, shape tiles, attribute blocks, compose shapes, decompose shapes, make a shape from smaller shapes, cover the shape, fraction of a shape, equivalent fractions, area in triangles, fit the pieces, hexagon trapezoid rhombus triangle.",
+  "responseModes": [],
+  "tags": [
+    "tangram",
+    "tans",
+    "pattern blocks",
+    "pattern-block",
+    "shape tiles",
+    "compose shapes",
+    "decompose shapes",
+    "composing shapes",
+    "cover the shape",
+    "tiling",
+    "tile",
+    "fit the pieces",
+    "area by pieces",
+    "area in triangles",
+    "fraction of a shape",
+    "fraction equivalence",
+    "equivalent fractions",
+    "unit fraction",
+    "hexagon",
+    "trapezoid",
+    "trapezium",
+    "rhombus",
+    "triangle",
+    "parallelogram",
+    "square",
+    "manipulative",
+    "primary",
+    "KS1",
+    "KS2",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "set": {
+        "type": "string",
+        "enum": [
+          "tangram",
+          "pattern-blocks"
+        ],
+        "description": "Which fixed piece-set to use. \"tangram\": the 7-piece tangram (small/medium/large triangles, square, parallelogram) — the unit of area is the small triangle, and the whole set always makes a square of 16 small triangles. \"pattern-blocks\": the green triangle, blue rhombus, red trapezoid and yellow hexagon — the unit of area is the triangle, and one hexagon = 6 triangles. Pieces must come from the chosen set."
+      },
+      "pieces": {
+        "type": "array",
+        "maxItems": 14,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "small-triangle",
+                "medium-triangle",
+                "large-triangle",
+                "square",
+                "parallelogram",
+                "triangle",
+                "rhombus",
+                "trapezoid",
+                "hexagon"
+              ],
+              "description": "Which piece. TANGRAM pieces: \"small-triangle\", \"medium-triangle\", \"large-triangle\" (right-isosceles triangles), \"square\", \"parallelogram\". PATTERN-BLOCK pieces: \"triangle\" (equilateral), \"rhombus\" (the blue 60°/120° rhombus), \"trapezoid\" (the red half-hexagon), \"hexagon\" (the yellow regular hexagon). Use kinds from the chosen set only — a kind from the other set is ignored."
+            },
+            "at": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Where the piece sits, as [x, y]. TANGRAM: a square-grid coordinate, x right, y UP, the assembled square spanning 0..4 (the small triangle's short legs are one grid diagonal). PATTERN BLOCKS: a TRIANGULAR-lattice coordinate [a, b] — the position is a steps right plus b steps up-and-right (one triangle side each), so neighbouring pieces share whole-number coordinates. Pieces snap exactly when their coordinates and rotations line up; see the examples."
+            },
+            "rotation": {
+              "type": "number",
+              "description": "Rotation in degrees, anticlockwise, about the piece's anchor. TANGRAM pieces turn in multiples of 45° (usually 90°); PATTERN BLOCKS turn in multiples of 60° (the triangle/rhombus also 30°). Default 0."
+            },
+            "flip": {
+              "type": "boolean",
+              "description": "Reflect the piece left-to-right before rotating. Needed for the tangram PARALLELOGRAM (it is chiral — its mirror image cannot be made by rotation) and for mirrored figures. Default false."
+            },
+            "label": {
+              "type": "string",
+              "description": "A short name drawn at the piece's centre — e.g. \"A\", or a word. The TEXT is authored (a label cannot be derived); its POSITION is computed. Overrides the auto area/name label for this piece. Omit for none."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Hide this piece's readout (its area / fraction / name) as \"?\" — the question hook (\"what is this piece's area / fraction?\"). The piece itself stays visible and correctly shaped. To stop the total giving the answer away, the total also shows \"?\" while any piece is occluded. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this piece in amber — emphasis / \"this is the one we mean\". Reserved colour; use sparingly (e.g. the piece a fraction question is about). Default false."
+            },
+            "blank": {
+              "type": "boolean",
+              "description": "Draw only a faint dashed GHOST of the piece (an empty slot) and EXCLUDE it from the totals and equivalences. Use for an answer space (\"which piece fills this gap?\") and for the not-yet-placed pieces of a staged build — keep every stage's full piece list and clear one blank per stage, so the figure never resizes between stages. Default false."
+            }
+          },
+          "required": [
+            "kind",
+            "at"
+          ]
+        },
+        "description": "The pieces placed on the board, in draw order. Omit (or pass an empty array) for an EMPTY tray — an answer space for pupils to build on. Each piece is a canonical shape from the set positioned by { at, rotation, flip }."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Which derived readouts to draw. All default false.",
+        "properties": {
+          "pieceAreas": {
+            "type": "boolean",
+            "description": "Label each placed piece at its centre with its area — a number of unit pieces (tangram: small triangles; pattern blocks: triangles), or a fraction of the whole if show.fractions is on. A custom label on a piece wins over this. Default false."
+          },
+          "fractions": {
+            "type": "boolean",
+            "description": "Express areas as FRACTIONS of the whole rather than counts: of the assembled square (16 small triangles) for tangram, of one hexagon (6 triangles) for pattern blocks. Affects the piece labels (with pieceAreas) and the total readout. Default false."
+          },
+          "total": {
+            "type": "boolean",
+            "description": "Draw a total-area readout below the figure — the sum of the placed (non-ghost) pieces, as a count or a fraction (with fractions). Shows \"?\" while any piece is occluded, or with occludeTotal. Default false."
+          },
+          "equivalence": {
+            "type": "boolean",
+            "description": "Draw the set's equivalence chain below the figure: for pattern blocks \"1 hexagon = 2 trapezoids = 3 rhombi = 6 triangles\"; for tangram the small/medium/large/square/parallelogram relations and \"the whole square = 16 small triangles\". A fixed teaching fact, derived from the piece areas. Default false."
+          },
+          "names": {
+            "type": "boolean",
+            "description": "Label each placed piece with its kind name (e.g. \"trapezoid\"). Used only where the piece has no custom label and pieceAreas is off. Default false."
+          }
+        }
+      },
+      "occludeTotal": {
+        "type": "boolean",
+        "description": "Render the total-area readout as \"?\" — the \"what is the total area?\" hook. Only meaningful with show.total. Default false."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure (wraps), e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "set"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — a hexagon covered by 6 triangles (pattern blocks), areas and equivalence shown",
+      "params": {
+        "set": "pattern-blocks",
+        "pieces": [
+          {
+            "kind": "triangle",
+            "at": [
+              -1,
+              1
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "triangle",
+            "at": [
+              0,
+              0
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "triangle",
+            "at": [
+              0,
+              1
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "triangle",
+            "at": [
+              0,
+              0
+            ],
+            "rotation": 60
+          },
+          {
+            "kind": "triangle",
+            "at": [
+              0,
+              1
+            ],
+            "rotation": 60
+          },
+          {
+            "kind": "triangle",
+            "at": [
+              1,
+              0
+            ],
+            "rotation": 60
+          }
+        ],
+        "show": {
+          "pieceAreas": true,
+          "total": true,
+          "equivalence": true
+        },
+        "header": "Six triangles make a hexagon"
+      }
+    },
+    {
+      "label": "Blank answer space — a ghost hexagon to cover with pieces",
+      "params": {
+        "set": "pattern-blocks",
+        "pieces": [
+          {
+            "kind": "hexagon",
+            "at": [
+              0,
+              0
+            ],
+            "blank": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded fraction question — what fraction of the hexagon is one rhombus?",
+      "params": {
+        "set": "pattern-blocks",
+        "pieces": [
+          {
+            "kind": "rhombus",
+            "at": [
+              -1,
+              1
+            ],
+            "rotation": 0,
+            "highlight": true,
+            "occlude": true
+          },
+          {
+            "kind": "rhombus",
+            "at": [
+              1,
+              0
+            ],
+            "rotation": 60
+          },
+          {
+            "kind": "rhombus",
+            "at": [
+              1,
+              0
+            ],
+            "rotation": 120
+          }
+        ],
+        "show": {
+          "pieceAreas": true,
+          "fractions": true
+        }
+      }
+    },
+    {
+      "label": "The hard case — the assembled 7-piece tangram square, areas and total in small triangles",
+      "params": {
+        "set": "tangram",
+        "pieces": [
+          {
+            "kind": "large-triangle",
+            "at": [
+              0,
+              0
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "large-triangle",
+            "at": [
+              4,
+              0
+            ],
+            "rotation": 90
+          },
+          {
+            "kind": "medium-triangle",
+            "at": [
+              0,
+              4
+            ],
+            "rotation": 270
+          },
+          {
+            "kind": "square",
+            "at": [
+              0,
+              2
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "parallelogram",
+            "at": [
+              1,
+              3
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "small-triangle",
+            "at": [
+              3,
+              3
+            ],
+            "rotation": 180
+          },
+          {
+            "kind": "small-triangle",
+            "at": [
+              0,
+              2
+            ],
+            "rotation": 270
+          }
+        ],
+        "show": {
+          "pieceAreas": true,
+          "total": true,
+          "equivalence": true
+        },
+        "header": "The tangram square"
+      }
+    },
+    {
+      "label": "Rearrangement — the same 7 tangram pieces make a big triangle (area unchanged)",
+      "params": {
+        "set": "tangram",
+        "pieces": [
+          {
+            "kind": "large-triangle",
+            "at": [
+              0,
+              0
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "large-triangle",
+            "at": [
+              4,
+              0
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "medium-triangle",
+            "at": [
+              4,
+              2
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "square",
+            "at": [
+              2,
+              2
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "parallelogram",
+            "at": [
+              3,
+              1
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "small-triangle",
+            "at": [
+              4,
+              2
+            ],
+            "rotation": 90
+          },
+          {
+            "kind": "small-triangle",
+            "at": [
+              5,
+              1
+            ],
+            "rotation": 180
+          }
+        ],
+        "show": {
+          "total": true
+        },
+        "caption": "The same seven pieces, rearranged. The total area is still 16 small triangles."
+      }
+    },
+    {
+      "label": "Equivalence — a hexagon made of 2 trapezoids, named",
+      "params": {
+        "set": "pattern-blocks",
+        "pieces": [
+          {
+            "kind": "trapezoid",
+            "at": [
+              -1,
+              1
+            ],
+            "rotation": 0
+          },
+          {
+            "kind": "trapezoid",
+            "at": [
+              1,
+              1
+            ],
+            "rotation": 180
+          }
+        ],
+        "show": {
+          "names": true,
+          "equivalence": true
+        },
+        "header": "Two trapezoids make a hexagon"
+      }
+    }
+  ]
+}

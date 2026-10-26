@@ -1,0 +1,342 @@
+{
+  "ref": "number/fdp-table@1",
+  "family": "number",
+  "name": "fdp-table",
+  "version": 1,
+  "title": "Fraction, decimal & percentage table",
+  "tagline": "Fraction–decimal–percentage equivalence table; write one form per row and the other two derive string-exact (recurring dots); cells occlude and rows sort by value.",
+  "description": "An equivalence table whose rows are numbers and whose columns are the Fraction, Decimal and Percentage forms of each. Every row writes exactly one form; the other two cells are computed string-exact — fractions reduce, decimals come from exact long division with recurring-digit dots (one third → 0.3̇, one sixth → 0.16̇), percentages are the value × 100 with a \"%\". Cells occlude to \"?\" (complete the table), blank for staged fills, or amber for the answer; an order:\"ascending\"|\"descending\" mode sorts the rows by their exact value (ties — 0.3 and 30% are equal — sit together). Use it to complete an FDP table, convert one value between forms, order or compare a mixed list, or drill the equivalences. percentage-square shows one percentage on a hundred-grid and fraction-shape shades a single shape — this is the multi-row equivalence grid neither draws.",
+  "whenToUse": "Reach for this whenever fractions, decimals and percentages are taught as the same number in three forms: complete-the-table (give one column, find the others), convert a single value between forms, order a mixed list of fractions/decimals/percentages, compare two values, or recall the common equivalences (1/2, 1/4, 3/4, 1/5, 1/10, 1/3, 1/8 …). Author each row with exactly one of fraction / decimal / percent; the rest is computed — you never write a conversion. Common configurations: complete the table — occludeDerived: true turns every non-authored cell into \"?\", so a column of authored fractions becomes a fill-in decimal and percentage grid; convert one value — a single row with occlude on the target column (and columns to drop the form you do not want); order a list — give each number in its own form, set order: \"ascending\" (rows sort by value), and show the Decimal column as the common comparison form; compare — two rows + order. Recurring values (thirds, sixths, ninths, sevenths) must be authored as the fraction, never as a truncated decimal — the engine renders the recurring decimal with the dot. Keep the same columns across the blocks of one lesson so pupils track one layout. Staged builds: open on the authored forms with the rest occluded or blank, reveal the conversions, then bring order in last — the base (authored column, others \"?\") stands alone as a sensible \"complete this\" figure. Synonyms teachers use: FDP, fractions decimals percentages, equivalent, convert, ordering FDP, comparing fractions and decimals, percentage of, recurring decimal.",
+  "responseModes": [],
+  "tags": [
+    "fdp",
+    "fraction",
+    "decimal",
+    "percentage",
+    "percent",
+    "equivalence",
+    "equivalent",
+    "convert",
+    "conversion",
+    "ordering",
+    "order",
+    "compare",
+    "comparing",
+    "recurring decimal",
+    "recurring",
+    "mixed numbers",
+    "table",
+    "fraction to decimal",
+    "decimal to percentage",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "rows": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One number, shown across the equivalence columns. Author EXACTLY ONE of fraction / decimal / percent — that is the given form; the other two cells are derived. occlude / blank / highlight name which columns of THIS row are hidden, emptied or emphasised.",
+          "properties": {
+            "fraction": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Give this row as a fraction num/den. Shown in the Fraction column AS WRITTEN (6/8 stays 6/8 — author 3/4 if you want it reduced); the derived Decimal and Percentage use its exact value. den must be ≥ 1.",
+              "properties": {
+                "num": {
+                  "type": "integer",
+                  "description": "Numerator (top). May be 0; negative is allowed but FDP work is normally non-negative."
+                },
+                "den": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Denominator (bottom), a positive integer. den 1 renders as the whole number."
+                }
+              },
+              "required": [
+                "num",
+                "den"
+              ]
+            },
+            "decimal": {
+              "type": "number",
+              "description": "Give this row as a decimal, e.g. 0.35 (→ 7/20, 35%) or 1.5 (→ 3/2, 150%). Author a TERMINATING decimal only: a recurring value like one third must be authored as the fraction 1/3, not a truncated 0.333 (which is exactly 333/1000)."
+            },
+            "percent": {
+              "type": "number",
+              "description": "Give this row as a percentage, e.g. 35 means 35% (→ 7/20, 0.35); 12.5 means 12.5% (→ 1/8, 0.125). May exceed 100 (150 → 3/2). For a recurring percentage (one third → 33.3̇%) author the fraction instead."
+            },
+            "occlude": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "fraction",
+                  "decimal",
+                  "percent"
+                ]
+              },
+              "description": "Columns of this row to render as \"?\" — the question hook (\"what goes here?\"). The cell stays in place; its value appears NOWHERE (anti-leak). Use to hide the cells a pupil must work out."
+            },
+            "blank": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "fraction",
+                  "decimal",
+                  "percent"
+                ]
+              },
+              "description": "Columns of this row to render EMPTY (nothing at all) — for a staged build that fills cells in one stage at a time. Different from occlude: \"?\" poses a question, blank poses nothing yet. blank wins over occlude."
+            },
+            "highlight": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "fraction",
+                  "decimal",
+                  "percent"
+                ]
+              },
+              "description": "Columns of this row to amber (light fill + bold border, amber text) — the answer or the cell to draw the eye to."
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "fraction"
+              ]
+            },
+            {
+              "required": [
+                "decimal"
+              ]
+            },
+            {
+              "required": [
+                "percent"
+              ]
+            }
+          ]
+        },
+        "description": "The numbers in the table, one per row, top to bottom. Each row authors exactly one form (fraction / decimal / percent); the other columns derive. When order is set the rows are sorted by value, so author order only matters as the un-sorted \"question\" arrangement."
+      },
+      "columns": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 1,
+        "maxItems": 3,
+        "items": {
+          "type": "string",
+          "enum": [
+            "fraction",
+            "decimal",
+            "percent"
+          ]
+        },
+        "description": "Which equivalence columns to show, in this left-to-right order. Default [\"fraction\",\"decimal\",\"percent\"]. Drop one for a two-column lesson (e.g. [\"fraction\",\"decimal\"] for fraction↔decimal only). A row may author a form whose column is hidden — its value still feeds the others."
+      },
+      "order": {
+        "type": "string",
+        "enum": [
+          "ascending",
+          "descending"
+        ],
+        "description": "Sort the rows by their exact value — \"ascending\" smallest first, \"descending\" largest first. This is the ordering answer: give the mixed list, set order, and the rows rearrange. Equal values (0.3 and 30%) keep their authored order, sitting together. Omit to keep the authored row order (the un-ordered question)."
+      },
+      "occludeDerived": {
+        "type": "boolean",
+        "description": "Render every DERIVED (non-authored) cell as \"?\" in one go — the \"complete the table\" answer space. A row that authored its fraction shows the fraction and hides the decimal and percentage. Per-row occlude still adds more. Default false."
+      },
+      "blankDerived": {
+        "type": "boolean",
+        "description": "Render every DERIVED (non-authored) cell EMPTY (nothing) — a blank answer space or the base of a staged \"fill it in\" build. Like occludeDerived but with no \"?\". blank wins over \"?\". Default false."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the table; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional italic line below the table, e.g. a short context note. Clears the table by a full line-height. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "rows"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — common equivalences (1/2, 1/4, 3/4, 1/5) in all three forms",
+      "params": {
+        "header": "Fractions, decimals and percentages",
+        "rows": [
+          {
+            "fraction": {
+              "num": 1,
+              "den": 2
+            }
+          },
+          {
+            "fraction": {
+              "num": 1,
+              "den": 4
+            }
+          },
+          {
+            "fraction": {
+              "num": 3,
+              "den": 4
+            }
+          },
+          {
+            "fraction": {
+              "num": 1,
+              "den": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Complete the table (occluded question) — given the fractions, find decimal and percentage",
+      "params": {
+        "rows": [
+          {
+            "fraction": {
+              "num": 3,
+              "den": 5
+            }
+          },
+          {
+            "fraction": {
+              "num": 7,
+              "den": 20
+            }
+          },
+          {
+            "fraction": {
+              "num": 9,
+              "den": 10
+            }
+          },
+          {
+            "fraction": {
+              "num": 1,
+              "den": 8
+            }
+          }
+        ],
+        "occludeDerived": true
+      }
+    },
+    {
+      "label": "Blank answer space — mixed given forms, the rest empty to fill in",
+      "params": {
+        "rows": [
+          {
+            "fraction": {
+              "num": 2,
+              "den": 5
+            }
+          },
+          {
+            "decimal": 0.45
+          },
+          {
+            "percent": 24
+          },
+          {
+            "decimal": 1.25
+          }
+        ],
+        "blankDerived": true
+      }
+    },
+    {
+      "label": "Convert one value — write 7/8 as a decimal and a percentage (target cells amber)",
+      "params": {
+        "rows": [
+          {
+            "fraction": {
+              "num": 7,
+              "den": 8
+            },
+            "occlude": [
+              "decimal",
+              "percent"
+            ],
+            "highlight": [
+              "decimal",
+              "percent"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Order a mixed list (ascending) — fractions, decimals and percentages sorted by value",
+      "params": {
+        "header": "Put these in ascending order",
+        "rows": [
+          {
+            "decimal": 0.6
+          },
+          {
+            "percent": 65
+          },
+          {
+            "fraction": {
+              "num": 3,
+              "den": 5
+            }
+          },
+          {
+            "fraction": {
+              "num": 11,
+              "den": 20
+            }
+          },
+          {
+            "percent": 58
+          }
+        ],
+        "order": "ascending",
+        "caption": "Converting each to a decimal makes the order clear."
+      }
+    },
+    {
+      "label": "Hard case — order ⅓, 0.3, 30%, 0.35 (a recurring decimal and an equal pair)",
+      "params": {
+        "rows": [
+          {
+            "fraction": {
+              "num": 1,
+              "den": 3
+            }
+          },
+          {
+            "decimal": 0.3
+          },
+          {
+            "percent": 30
+          },
+          {
+            "decimal": 0.35
+          }
+        ],
+        "order": "ascending",
+        "caption": "Watch the recurring decimal — and notice two of these are equal."
+      }
+    }
+  ]
+}

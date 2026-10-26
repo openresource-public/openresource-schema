@@ -1,0 +1,666 @@
+{
+  "ref": "geometry/scale-map@1",
+  "family": "geometry",
+  "name": "scale-map",
+  "version": 1,
+  "title": "Scale map",
+  "tagline": "Gridded map with a compass rose, landmark icons, a scale bar and a double number line; distances and 8-point directions between places are derived from the scale and occludable.",
+  "description": "A gridded map (a square grid with North up) carrying named landmarks, with measured-distance arrows between them, a graphical scale bar, a compass rose, and an optional double number line pairing map squares to real distance — the primary \"read a map with a scale\" model. You author the map: the grid size, where each landmark sits (at grid coordinates [col, row]), the scale (\"1 square represents 2 km\"), and which landmarks each arrow joins. The model derives every measured quantity — each arrow's real distance (its grid length × the real distance per square; exact for straight-across and right-angled-route legs), its eight-point compass direction (N, NE, E, …), the scale statement, the scale-bar label and every number-line value. An arrow can run straight between two landmarks (\"as the crow flies\") or follow a right-angled route through waypoints (\"along the roads\"). Each arrow can show its distance, its direction, both or neither, and occlude the readout for a \"how far / which way?\" question. Occlude a landmark's name, or the compass points, for labelling questions. The grid is the measuring tool, so the scale bar drawn under it is true to the squares on screen.",
+  "whenToUse": "Reach for this for primary map-and-scale work: reading a map, counting squares to measure a distance, \"how far is the school from the park?\", \"which direction is the pond from the well?\", and using a scale or a double number line to convert squares to real distance. Author the map and let everything measured derive. Set the grid (grid: { cols, rows }) and the scale (scale: { real, realUnit } reads \"1 square represents <real> <realUnit>\"; add square to say \"<square> squares represent <real> <realUnit>\" — e.g. square 2, real 1, realUnit \"km\"). Place landmarks at grid coordinates ([col, row], measured from the bottom-left corner, so North is +row / up): each takes an id, a label (the place name), and an icon from the set (pin, home, school, tree, church, shop, pond, mountain, flag, star — use pin for anything else; the label carries the meaning, the icon is decoration). Draw arrows between landmarks (arrows: [{ from, to }]); each arrow's real distance and compass direction are derived — set show to \"distance\", \"direction\", \"both\" or \"none\". For a route along the roads rather than straight across, give via: a list of [col, row] corner points the arrow bends through (its distance is the sum of the legs). Common configurations: worked — arrows show \"both\" so the distance and direction both read; question — occlude an arrow (\"?\") and pose it in the caption (\"how far is it?\"); answer space — occlude every arrow and show the number line so pupils convert for themselves; directions — arrows show \"direction\" and the compass occluded (\"label the compass; which way is each place?\"); conversion — give a numberLine to make the square↔real proportion explicit, marking and occluding one value. The scale bar (scaleBar) shows by default and is true to the squares; the compass rose (compass, default 4-point top-right) shows by default — turn either off with show:false, or set compass.points to 8. Put the rose in a corner with no landmark (compass.position), so the two do not overlap. Keep the same scale and the same grid across the blocks of one lesson so pupils read one map. A staged build reads well: open on the labelled map, add an arrow per stage, reveal the worked distance last (the base map stands alone). Synonyms a teacher might use: map, scale, map scale, scale & maps, read a map, distance on a map, how far, compass, compass directions, north east south west, points of the compass, grid, squares, double number line, key, treasure map, route.",
+  "responseModes": [],
+  "tags": [
+    "scale map",
+    "map",
+    "map scale",
+    "scale",
+    "scale and maps",
+    "read a map",
+    "distance on a map",
+    "how far",
+    "compass",
+    "compass directions",
+    "north east south west",
+    "points of the compass",
+    "grid",
+    "squares",
+    "double number line",
+    "route",
+    "landmarks",
+    "treasure map",
+    "position and direction",
+    "geometry",
+    "maths",
+    "primary"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "grid": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The map's square grid — the measuring tool. Landmarks sit at grid coordinates [col, row]; arrow distances are counted in these squares. Keep the same grid across the blocks of one lesson.",
+        "properties": {
+          "cols": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 12,
+            "description": "Number of columns of squares (the grid is cols wide). The map is drawn to a fixed pixel width whatever cols is, so the squares shrink as cols grows."
+          },
+          "rows": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 12,
+            "description": "Number of rows of squares (the grid is rows tall, North at the top)."
+          },
+          "showLines": {
+            "type": "boolean",
+            "description": "Draw the faint square gridlines. Default true — pupils count the squares, so usually keep them on."
+          }
+        },
+        "required": [
+          "cols",
+          "rows"
+        ]
+      },
+      "scale": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The scale — what one square of the grid represents in the real world. Every distance, the scale statement, the scale bar and the number line derive from it. \"1 square represents <real> <realUnit>\" by default; set square for \"<square> squares represent <real> <realUnit>\".",
+        "properties": {
+          "real": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The real-world distance that `square` square(s) represent, in `realUnit`. With square 1, realUnit \"km\": real 2 reads \"1 square represents 2 km\"."
+          },
+          "realUnit": {
+            "type": "string",
+            "enum": [
+              "mm",
+              "cm",
+              "m",
+              "km"
+            ],
+            "description": "Unit of `real`, and the unit every derived distance is shown in."
+          },
+          "square": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "How many grid squares represent `real`. Default 1 (the usual \"1 square represents …\"). Set to e.g. 2 for \"2 squares represent 1 km\" (each square is then half a km)."
+          },
+          "statement": {
+            "type": "boolean",
+            "description": "Show the scale statement in words (\"1 square represents 2 km\") above the scale bar. Default true."
+          }
+        },
+        "required": [
+          "real",
+          "realUnit"
+        ]
+      },
+      "landmarks": {
+        "type": "array",
+        "maxItems": 12,
+        "description": "The named places on the map. Each sits at a grid coordinate; the position is the only authored geometry (a map's layout is original content — there is nowhere to author a distance). Arrows reference landmarks by id.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Short unique identifier used by arrows to reference this landmark (e.g. \"school\", \"park\"). Kebab-case."
+            },
+            "at": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Grid coordinate [col, row] of the landmark, from the BOTTOM-LEFT corner: col 0 is the left edge, row 0 the bottom edge, and row increases UPWARDS (North). [3, 4] is 3 squares right and 4 squares up. Must lie within the grid (0..cols, 0..rows)."
+            },
+            "label": {
+              "type": "string",
+              "description": "The place name drawn beside the icon (e.g. \"School\", \"Harbour\"). The label carries the meaning; the icon is decoration."
+            },
+            "icon": {
+              "type": "string",
+              "enum": [
+                "pin",
+                "home",
+                "school",
+                "tree",
+                "church",
+                "shop",
+                "pond",
+                "mountain",
+                "flag",
+                "star"
+              ],
+              "description": "Which map symbol to draw. \"tree\" reads as a park/wood, \"pond\" as water, \"mountain\" as a hill, \"flag\"/\"star\"/\"pin\" as a generic marker. Use \"pin\" for anything not in the set — the label names it. Default \"pin\"."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this landmark's label as \"?\" — the \"name this place\" hook. The icon stays drawn. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this landmark in amber — the place in focus or the answer. Default false."
+            }
+          },
+          "required": [
+            "id",
+            "at"
+          ]
+        }
+      },
+      "arrows": {
+        "type": "array",
+        "maxItems": 8,
+        "description": "Measured-distance arrows between landmarks. Each arrow's real distance (grid length × the real distance per square) and its 8-point compass direction are DERIVED — never authored. Straight from→to by default; give `via` for a right-angled route along the roads.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "id of the landmark the arrow starts at."
+            },
+            "to": {
+              "type": "string",
+              "description": "id of the landmark the arrow ends at."
+            },
+            "via": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "description": "Optional corner points [col, row] the arrow bends through — a route \"along the roads\" instead of straight across. The distance becomes the sum of the legs (from → via[0] → … → to). Use right-angled corners so the legs count whole squares. Omit for a straight \"as the crow flies\" arrow."
+            },
+            "show": {
+              "type": "string",
+              "enum": [
+                "distance",
+                "direction",
+                "both",
+                "none"
+              ],
+              "description": "What to label on the arrow: \"distance\" (\"6 km\"), \"direction\" (the compass direction \"East\"), \"both\" (\"6 km, East\"), or \"none\". Default \"distance\"."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the arrow's readout as \"?\" — the \"how far / which way?\" hook. The arrow stays drawn. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the arrow and its readout in amber — the answer or the leg in focus. Default false."
+            },
+            "style": {
+              "type": "string",
+              "enum": [
+                "solid",
+                "dashed"
+              ],
+              "description": "\"solid\" (default) for a measured/travelled leg; \"dashed\" for a route or reference shown alongside a straight one (e.g. the along-the-roads route next to the straight distance)."
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        }
+      },
+      "compass": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The compass rose drawn in a corner of the map. Shown by default (4-point). Set show:false to hide it.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Draw the compass rose. Default true."
+          },
+          "points": {
+            "type": "integer",
+            "enum": [
+              4,
+              8
+            ],
+            "description": "4 for N E S W, or 8 to add NE SE SW NW. Default 4."
+          },
+          "position": {
+            "type": "string",
+            "enum": [
+              "top-right",
+              "top-left",
+              "bottom-right",
+              "bottom-left"
+            ],
+            "description": "Which corner of the map the rose sits in. Default \"top-right\"."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the compass labels other than N as \"?\" — the \"label the compass\" hook (North is always shown as the map's orientation). Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Draw the rose in amber emphasis. Default false."
+          }
+        }
+      },
+      "scaleBar": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The graphical scale bar drawn under the map (a segmented ruler labelled with the real distance). True to the squares on screen — the grid is the measuring tool. Shown by default.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Draw the scale bar. Default true."
+          },
+          "squares": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many grid squares long the bar is (its end label is squares × the real distance per square). Default: a sensible fraction of the map width."
+          }
+        }
+      },
+      "numberLine": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional double number line beneath the map making the square↔real conversion explicit: a top line ticked in squares (0, 1, 2, …) over a bottom line ticked in the real distance. Omit for no number line; include it for conversion-focused teaching.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Draw the number line. Default true when the object is present."
+          },
+          "upTo": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The largest number of squares on the line (it runs 0..upTo). Default: enough to cover the longest arrow."
+          },
+          "mark": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Ring one conversion on the line to focus on it.",
+            "properties": {
+              "squares": {
+                "type": "number",
+                "minimum": 0,
+                "description": "The squares value to ring (its real partner is shown beneath)."
+              },
+              "occlude": {
+                "type": "boolean",
+                "description": "Hide the real value at the mark as \"?\" — \"how many <unit> is this?\". Default false."
+              },
+              "highlight": {
+                "type": "boolean",
+                "description": "Draw the mark in amber. Default false."
+              }
+            },
+            "required": [
+              "squares"
+            ]
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the map; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. the fact being taught. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "grid",
+      "scale"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — Hillside village, 1 square = 2 km, distance + direction",
+      "params": {
+        "header": "Hillside village",
+        "grid": {
+          "cols": 6,
+          "rows": 6
+        },
+        "scale": {
+          "real": 2,
+          "realUnit": "km"
+        },
+        "landmarks": [
+          {
+            "id": "school",
+            "at": [
+              1,
+              4
+            ],
+            "label": "School",
+            "icon": "school"
+          },
+          {
+            "id": "park",
+            "at": [
+              4,
+              4
+            ],
+            "label": "Park",
+            "icon": "tree"
+          },
+          {
+            "id": "shop",
+            "at": [
+              4,
+              1
+            ],
+            "label": "Shop",
+            "icon": "shop"
+          },
+          {
+            "id": "pond",
+            "at": [
+              1,
+              1
+            ],
+            "label": "Pond",
+            "icon": "pond"
+          }
+        ],
+        "arrows": [
+          {
+            "from": "school",
+            "to": "park",
+            "show": "both"
+          },
+          {
+            "from": "park",
+            "to": "shop",
+            "show": "distance"
+          }
+        ],
+        "caption": "Each square is 2 km. The park is 6 km East of the school."
+      }
+    },
+    {
+      "label": "Answer space — count the squares, use the number line to find each distance",
+      "params": {
+        "grid": {
+          "cols": 7,
+          "rows": 5
+        },
+        "scale": {
+          "real": 1,
+          "realUnit": "km"
+        },
+        "landmarks": [
+          {
+            "id": "home",
+            "at": [
+              1,
+              1
+            ],
+            "label": "Home",
+            "icon": "home"
+          },
+          {
+            "id": "school",
+            "at": [
+              1,
+              4
+            ],
+            "label": "School",
+            "icon": "school"
+          },
+          {
+            "id": "shop",
+            "at": [
+              5,
+              4
+            ],
+            "label": "Shop",
+            "icon": "shop"
+          }
+        ],
+        "arrows": [
+          {
+            "from": "home",
+            "to": "school",
+            "show": "distance",
+            "occlude": true
+          },
+          {
+            "from": "school",
+            "to": "shop",
+            "show": "distance",
+            "occlude": true
+          }
+        ],
+        "numberLine": {
+          "upTo": 5
+        }
+      }
+    },
+    {
+      "label": "Occluded question — how far is the farm from the church? (1 square = 5 km)",
+      "params": {
+        "grid": {
+          "cols": 6,
+          "rows": 5
+        },
+        "scale": {
+          "real": 5,
+          "realUnit": "km"
+        },
+        "landmarks": [
+          {
+            "id": "church",
+            "at": [
+              1,
+              3
+            ],
+            "label": "Church",
+            "icon": "church"
+          },
+          {
+            "id": "farm",
+            "at": [
+              5,
+              3
+            ],
+            "label": "Farm",
+            "icon": "home"
+          }
+        ],
+        "arrows": [
+          {
+            "from": "church",
+            "to": "farm",
+            "show": "distance",
+            "occlude": true,
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — as the crow flies (5 squares) vs along the roads (7 squares) on a 3-4-5",
+      "params": {
+        "grid": {
+          "cols": 6,
+          "rows": 6
+        },
+        "scale": {
+          "real": 2,
+          "realUnit": "km"
+        },
+        "landmarks": [
+          {
+            "id": "harbour",
+            "at": [
+              1,
+              1
+            ],
+            "label": "Harbour",
+            "icon": "pin"
+          },
+          {
+            "id": "light",
+            "at": [
+              4,
+              5
+            ],
+            "label": "Lighthouse",
+            "icon": "flag"
+          }
+        ],
+        "arrows": [
+          {
+            "from": "harbour",
+            "to": "light",
+            "show": "distance",
+            "highlight": true
+          },
+          {
+            "from": "harbour",
+            "to": "light",
+            "via": [
+              [
+                4,
+                1
+              ]
+            ],
+            "show": "distance",
+            "style": "dashed"
+          }
+        ],
+        "caption": "Straight across it is 10 km; along the roads (dashed) it is 14 km."
+      }
+    },
+    {
+      "label": "Conversion — the scale as a double number line (4 squares = ? metres)",
+      "params": {
+        "header": "The scale as a number line",
+        "grid": {
+          "cols": 5,
+          "rows": 4
+        },
+        "scale": {
+          "real": 10,
+          "realUnit": "m"
+        },
+        "landmarks": [
+          {
+            "id": "gate",
+            "at": [
+              0,
+              0
+            ],
+            "label": "Gate",
+            "icon": "pin"
+          },
+          {
+            "id": "oak",
+            "at": [
+              4,
+              0
+            ],
+            "label": "Oak",
+            "icon": "tree"
+          }
+        ],
+        "arrows": [
+          {
+            "from": "gate",
+            "to": "oak",
+            "show": "distance",
+            "occlude": true
+          }
+        ],
+        "numberLine": {
+          "upTo": 5,
+          "mark": {
+            "squares": 4,
+            "occlude": true,
+            "highlight": true
+          }
+        }
+      }
+    },
+    {
+      "label": "Compass directions — label the compass, which way is each place from the well?",
+      "params": {
+        "grid": {
+          "cols": 6,
+          "rows": 6
+        },
+        "scale": {
+          "real": 1,
+          "realUnit": "km"
+        },
+        "landmarks": [
+          {
+            "id": "well",
+            "at": [
+              3,
+              3
+            ],
+            "label": "Well",
+            "icon": "pin"
+          },
+          {
+            "id": "mill",
+            "at": [
+              3,
+              5
+            ],
+            "label": "Windmill",
+            "icon": "flag"
+          },
+          {
+            "id": "pond",
+            "at": [
+              5,
+              3
+            ],
+            "label": "Pond",
+            "icon": "pond"
+          },
+          {
+            "id": "wood",
+            "at": [
+              3,
+              1
+            ],
+            "label": "Wood",
+            "icon": "tree"
+          }
+        ],
+        "arrows": [
+          {
+            "from": "well",
+            "to": "mill",
+            "show": "direction"
+          },
+          {
+            "from": "well",
+            "to": "pond",
+            "show": "direction"
+          }
+        ],
+        "compass": {
+          "points": 8,
+          "occlude": true
+        },
+        "caption": "North is shown. Label the other points, then say which way each place is from the well."
+      }
+    }
+  ]
+}

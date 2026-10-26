@@ -1,0 +1,437 @@
+{
+  "ref": "geometry/symmetric-pattern@1",
+  "family": "geometry",
+  "name": "symmetric-pattern",
+  "version": 1,
+  "title": "Symmetric pattern",
+  "tagline": "Squared-paper grid: colour one half, the other reflects across a central vertical/horizontal/diagonal mirror; mirror cells derived, leave blank or tap to complete.",
+  "description": "A discrete squared-paper grid in which you colour cells on one side of a central line of symmetry and the model reflects them across a vertical, horizontal or diagonal mirror to build a symmetrical pattern. You author only the given cells (column, row and an optional colour); the model derives each reflected cell — the same number of squares the other side of the line — copying its colour, so the pattern cannot be asymmetrical. The mirror line is drawn dashed through the grid centre. Show the whole pattern (worked), leave the mirror half blank for \"complete the symmetrical pattern\" (an answer space), or host the grid in a question so a pupil taps the empty squares to colour them. Cells render as chunky coloured squares, discs or diamonds; staged builds can reveal the reflection one distance-ring at a time.",
+  "whenToUse": "Reach for this for complete-the-symmetrical-pattern and reflecting discrete coloured squares on squared paper (KS1/KS2): \"shade the squares so the dashed line is a line of symmetry\", pixel/glyph symmetry, reflecting a pattern in a mirror line on a grid. Give grid: { cols, rows } and axis: { type } where type is \"vertical\" (mirror down the middle, left reflects to right), \"horizontal\" (mirror across the middle, top reflects to bottom) or \"diagonal\" with direction \"main\" (the \"\\\" line, top-left to bottom-right, cell (col,row) reflects to (row,col)) or \"anti\" (the \"/\" line); diagonal needs a square grid. The mirror line is always the grid's central axis. Then colour the given half with cells: [{ col, row, colour }] — col is 0 at the left, row is 0 at the top, colour is one of blue / teal / purple / coral / green (themeable categorical hues; omit for blue). The model reflects every given cell and copies its colour. Common configurations: worked / finished pattern — reveal \"pattern\" (default) shows the whole symmetrical pattern; set highlightMirror true to amber the reflected cells so pupils see which squares are the reflections. Complete it (answer space) — reveal \"given\" colours only the authored half and leaves the mirror half as blank squares to fill in; pair with a caption like \"Complete the pattern so the dashed line is a line of symmetry\". Make your own — an empty grid (no cells) with reveal \"given\" for pupils to invent a symmetric pattern. Staged — open on the given half (mirrorReveal 0) and raise mirrorReveal one ring at a time so the reflection sweeps outward from the line, square by square at equal distances. Keep the same grid size and axis across the blocks of one lesson so pupils track one pattern. Choose glyph \"square\" (default coloured cell), \"disc\" or \"diamond\" — all symmetric shapes, so position is the only thing reflected. Switch primitive when the teaching is about one shape's own lines of symmetry or its order of rotational symmetry (a polygon that folds onto itself) — that is geometry/symmetry; reflecting a whole shape to a separate image on a coordinate grid is geometry/transformations. Synonyms a teacher might use: symmetry, line of symmetry, mirror line, axis of symmetry, reflect, reflection, symmetrical pattern, complete the pattern, shade the squares, pixel symmetry, squared paper, vertical/horizontal/diagonal line of symmetry.",
+  "responseModes": [
+    "select-region"
+  ],
+  "tags": [
+    "symmetry",
+    "symmetrical pattern",
+    "line of symmetry",
+    "mirror line",
+    "axis of symmetry",
+    "reflect",
+    "reflection",
+    "complete the pattern",
+    "shade the squares",
+    "squared paper",
+    "pixel symmetry",
+    "grid",
+    "cells",
+    "vertical line of symmetry",
+    "horizontal line of symmetry",
+    "diagonal line of symmetry",
+    "geometry",
+    "maths",
+    "primary",
+    "ks1",
+    "ks2"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "grid": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The squared-paper grid the pattern lives on. The mirror line is the central axis of this grid, so size it to hold BOTH halves (e.g. an 8-wide grid for a vertical line down the middle with a 4-wide given half).",
+        "properties": {
+          "cols": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "description": "Number of columns (cells across). For a diagonal mirror use a square grid (cols = rows)."
+          },
+          "rows": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "description": "Number of rows (cells down)."
+          }
+        },
+        "required": [
+          "cols",
+          "rows"
+        ]
+      },
+      "axis": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The line of symmetry — always drawn through the centre of the grid. Cells reflect across it; distance from the line is preserved (a square 2 cells from the line reflects to a square 2 cells the other side).",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "vertical",
+              "horizontal",
+              "diagonal"
+            ],
+            "description": "\"vertical\" = a vertical mirror down the middle (left reflects to right); \"horizontal\" = a horizontal mirror across the middle (top reflects to bottom); \"diagonal\" = a corner-to-corner mirror (needs a square grid) — see direction."
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "main",
+              "anti"
+            ],
+            "description": "Only for a diagonal axis. \"main\" = the \"\\\" diagonal from top-left to bottom-right (cell (col,row) reflects to (row,col)); \"anti\" = the \"/\" diagonal from top-right to bottom-left. Default \"main\". Ignored for vertical/horizontal."
+          },
+          "show": {
+            "type": "boolean",
+            "description": "Draw the dashed mirror line. Default true. Set false to hide the line (e.g. \"where could a line of symmetry go?\")."
+          },
+          "label": {
+            "type": "string",
+            "description": "Optional short text beside the mirror line, e.g. \"line of symmetry\". Omit for none."
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "cells": {
+        "type": "array",
+        "description": "The GIVEN coloured cells — author the half on ONE side of the line (conventionally the left or the top); the model reflects them across the mirror and copies each colour to build the symmetrical pattern. Omit (or give an empty list) for an empty grid — a \"make your own symmetric pattern\" answer space. Cells outside the grid, or already given, are ignored.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "col": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Column of this cell, 0 at the LEFT edge."
+            },
+            "row": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Row of this cell, 0 at the TOP edge."
+            },
+            "colour": {
+              "type": "string",
+              "enum": [
+                "blue",
+                "teal",
+                "purple",
+                "coral",
+                "green"
+              ],
+              "description": "Fill colour of this cell — a themeable categorical hue (blue = the default accent, then teal, purple, coral, green). The reflected cell takes the SAME colour. Omit for blue. Amber is reserved for the reflection-reveal/response emphasis, so it is not a choice here."
+            }
+          },
+          "required": [
+            "col",
+            "row"
+          ]
+        }
+      },
+      "glyph": {
+        "type": "string",
+        "enum": [
+          "square",
+          "disc",
+          "diamond"
+        ],
+        "description": "The shape drawn in each coloured cell. \"square\" (default) = a chunky rounded coloured square (the squared-paper colouring look); \"disc\" = a filled circle (a counter / pixel dot); \"diamond\" = a filled diamond. All three are symmetric, so only POSITION is reflected."
+      },
+      "reveal": {
+        "type": "string",
+        "enum": [
+          "pattern",
+          "given"
+        ],
+        "description": "\"pattern\" (default) = show the WHOLE symmetrical pattern (given cells and their reflections) — the worked / finished figure. \"given\" = colour ONLY the authored half and leave the mirror half as blank squares — the \"complete the symmetrical pattern\" answer space (the derived half is the hidden answer). Ignored when the grid is hosted as a select-region question (the pupil's taps are shown instead)."
+      },
+      "mirrorReveal": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Staging aid: reveal only the reflected cells within this many squares of the mirror line (the given half is always shown in full). 0 = no reflections yet (just the given half); raise it stage by stage so the reflection sweeps outward from the line, square by square at equal distances. Omit to let reveal decide (all reflections shown for \"pattern\", none for \"given\")."
+      },
+      "highlightMirror": {
+        "type": "boolean",
+        "description": "Draw the reflected (derived) cells in amber instead of their copied colour — a worked-reveal cue that says \"these squares are the reflections of the given ones\". Default false (reflections show in their true colours, as a finished pattern). Only meaningful when the reflections are shown."
+      },
+      "showGrid": {
+        "type": "boolean",
+        "description": "Draw the squared-paper lattice. Default true. Set false for coloured cells with no gridlines."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "grid",
+      "axis"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — a finished pattern reflected in a vertical line",
+      "params": {
+        "header": "A symmetrical pattern",
+        "grid": {
+          "cols": 8,
+          "rows": 6
+        },
+        "axis": {
+          "type": "vertical",
+          "label": "line of symmetry"
+        },
+        "cells": [
+          {
+            "col": 0,
+            "row": 1
+          },
+          {
+            "col": 1,
+            "row": 1
+          },
+          {
+            "col": 1,
+            "row": 2
+          },
+          {
+            "col": 2,
+            "row": 2
+          },
+          {
+            "col": 2,
+            "row": 3
+          },
+          {
+            "col": 3,
+            "row": 3
+          },
+          {
+            "col": 0,
+            "row": 4,
+            "colour": "coral"
+          },
+          {
+            "col": 1,
+            "row": 4,
+            "colour": "coral"
+          }
+        ],
+        "caption": "The dashed line is a line of symmetry"
+      }
+    },
+    {
+      "label": "Occluded question — complete the pattern across a vertical line (mirror half blank)",
+      "params": {
+        "grid": {
+          "cols": 8,
+          "rows": 6
+        },
+        "axis": {
+          "type": "vertical"
+        },
+        "cells": [
+          {
+            "col": 0,
+            "row": 0
+          },
+          {
+            "col": 1,
+            "row": 1
+          },
+          {
+            "col": 2,
+            "row": 1
+          },
+          {
+            "col": 0,
+            "row": 2
+          },
+          {
+            "col": 3,
+            "row": 2
+          },
+          {
+            "col": 0,
+            "row": 4,
+            "colour": "green"
+          },
+          {
+            "col": 1,
+            "row": 4,
+            "colour": "green"
+          },
+          {
+            "col": 2,
+            "row": 5,
+            "colour": "green"
+          }
+        ],
+        "reveal": "given",
+        "caption": "Colour the squares so the dashed line is a line of symmetry"
+      }
+    },
+    {
+      "label": "Blank answer space — an empty grid to invent a symmetric pattern",
+      "params": {
+        "header": "Make your own symmetrical pattern",
+        "grid": {
+          "cols": 6,
+          "rows": 6
+        },
+        "axis": {
+          "type": "horizontal",
+          "label": "mirror line"
+        },
+        "reveal": "given",
+        "caption": "Colour some squares, then reflect them in the mirror line"
+      }
+    },
+    {
+      "label": "The hard case — a two-colour pattern reflected in the main diagonal",
+      "params": {
+        "header": "Symmetry in a diagonal mirror",
+        "grid": {
+          "cols": 7,
+          "rows": 7
+        },
+        "axis": {
+          "type": "diagonal",
+          "direction": "main",
+          "label": "line of symmetry"
+        },
+        "cells": [
+          {
+            "col": 1,
+            "row": 0
+          },
+          {
+            "col": 2,
+            "row": 0
+          },
+          {
+            "col": 3,
+            "row": 1
+          },
+          {
+            "col": 0,
+            "row": 3,
+            "colour": "purple"
+          },
+          {
+            "col": 1,
+            "row": 4,
+            "colour": "purple"
+          },
+          {
+            "col": 2,
+            "row": 2,
+            "colour": "coral"
+          },
+          {
+            "col": 5,
+            "row": 0,
+            "colour": "teal"
+          }
+        ],
+        "caption": "Each square reflects across the diagonal to its partner"
+      }
+    },
+    {
+      "label": "Worked — reflections highlighted in amber (which squares are the mirror image?)",
+      "params": {
+        "grid": {
+          "cols": 6,
+          "rows": 6
+        },
+        "axis": {
+          "type": "vertical",
+          "label": "line of symmetry"
+        },
+        "glyph": "disc",
+        "cells": [
+          {
+            "col": 0,
+            "row": 0
+          },
+          {
+            "col": 1,
+            "row": 0
+          },
+          {
+            "col": 0,
+            "row": 1
+          },
+          {
+            "col": 2,
+            "row": 2
+          },
+          {
+            "col": 1,
+            "row": 3
+          },
+          {
+            "col": 0,
+            "row": 4
+          },
+          {
+            "col": 2,
+            "row": 5
+          }
+        ],
+        "highlightMirror": true,
+        "caption": "The amber discs are the reflections of the blue ones"
+      }
+    },
+    {
+      "label": "Horizontal mirror, diamonds — a finished pattern reflected top to bottom",
+      "params": {
+        "header": "A horizontal line of symmetry",
+        "grid": {
+          "cols": 7,
+          "rows": 8
+        },
+        "axis": {
+          "type": "horizontal",
+          "label": "line of symmetry"
+        },
+        "glyph": "diamond",
+        "cells": [
+          {
+            "col": 1,
+            "row": 0,
+            "colour": "teal"
+          },
+          {
+            "col": 2,
+            "row": 1,
+            "colour": "teal"
+          },
+          {
+            "col": 3,
+            "row": 1
+          },
+          {
+            "col": 4,
+            "row": 2
+          },
+          {
+            "col": 5,
+            "row": 0,
+            "colour": "coral"
+          },
+          {
+            "col": 3,
+            "row": 3
+          }
+        ]
+      }
+    }
+  ]
+}

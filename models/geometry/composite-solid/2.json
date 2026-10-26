@@ -1,0 +1,636 @@
+{
+  "ref": "geometry/composite-solid@2",
+  "family": "geometry",
+  "name": "composite-solid",
+  "version": 2,
+  "title": "Composite solid (isometric)",
+  "tagline": "Coaxial composite of 2–3 solids (now incl. the frustum) — stacked, flipped, drilled or scooped; combined volume & surface area derived; optional assembled+exploded twin view.",
+  "description": "A composite (compound) 3-D solid: two or three primitive solids — cuboid, cylinder, cone, pyramid and the new hemisphere — stacked coaxially into one isometric figure, with its combined volume and combined surface area derived. You write an ordered parts list, each part a shape plus its raw dimensions, sitting on the previous part's top face (cone-on-hemisphere \"ice cream\", cylinder topped by a cone, a cuboid \"house\" with a pyramid roof, a cylinder capped by a hemisphere \"dome\", a capsule). The model draws each part in isometric (visible edges solid, hidden edges dashed) and labels every dimension; where two unequal cross-sections meet it draws the hidden contact as a dashed seam, so the exposed ring (annulus) is visible on the figure itself. The figure is a diagram, not a worked solution: it shows the labelled solid and — if you ask for one — a single combined result value beneath it (\"V = 240π cm³\", \"SA = 132π cm²\"), each occludable to \"?\" for a question. The full derivation (each part's volume, the formula = substitution = total chain, the surface-area face-by-face bookkeeping that removes the hidden join faces) belongs in the lesson's block text beside the figure, not on the canvas. The maths it derives behind the result: combined volume = Σ parts (cuboid lwh, cylinder πr²h, cone ⅓πr²h, pyramid ⅓lwh, hemisphere ⅔πr³); combined surface area = every part's curved/side surface + the base part's flat bottom + the last part's flat top + any exposed annulus, with equal cross-sections cancelling both flats; π results exact and decimal. The hemisphere contributes V = ⅔πr³, a curved surface 2πr² and a flat face πr²; it sits dome-up where it caps a part and dome-down (flat up) as a base. Beyond the ordinary stack, each part can be flipped (orient:\"down\" points a cone or pyramid apex-down, so its flat base faces up and a scoop can sit on it — a real ice-cream cone, an hourglass of two cones apex-to-apex, a diamond of two pyramids base-to-base) or subtracted (op:\"subtract\" drills a coaxial cavity into the part below: a cylinder bore → a pipe/tube, a cone bore → \"find the remaining volume\", a cylinder or hemisphere scoop → a cup / beaker / bowl / open container), with the volume taken away and the cavity's inner wall + rim handled in the surface area. Occlude a dimension for a reverse \"find the missing length\" problem, occlude the combined result to pose \"find it\", highlight or shade individual parts, and stage the build part-by-part then reveal the answer — nothing derived is ever authored, so the figure and its result can never lie. A part can also be a conical FRUSTUM (a truncated cone, baseRadius > topRadius, joined by a slant; volume ⅓πh(R²+Rr+r²)) — its flat top is where a cone or cylinder of the same radius sits cleanly, so a \"large cone made of a small cone on a frustum\" is one figure. The whole composite can be drawn assembled (default), EXPLODED (parts pulled apart along the axis) or as a \"both\" twin (assembled beside exploded, sharing scale and baseline) — the exam \"made by placing A on B\" presentation. Give a part a letter (\"A\", \"B\") to name it on the figure, and set diameter (per part or show.diameter) to annotate round cross-sections by DIAMETER as horizontal double-arrows with the heights as vertical double-arrows on the right. (Off-axis / side-by-side joins and extruded L/T/cross prisms are out of scope — use geometry/prism; a single frustum on its own is geometry/frustum.)",
+  "whenToUse": "Reach for this whenever a lesson shows a solid made of two or three simpler solids and asks for the volume or the surface area of the whole shape: cone-on-hemisphere (\"ice cream\"), cylinder + cone (a pencil, a rocket, a silo), a cuboid with a pyramid roof (a \"house\"), a cylinder capped by a hemisphere (a dome / silo / tank end), or a capsule (hemisphere + cylinder + hemisphere). Write parts as an ordered list from the bottom up — each part sits on the one before it. Give each part its shape and the dims it needs: cuboid & pyramid use width, depth, height; cylinder & cone use radius, height; hemisphere uses radius only. For a clean coaxial join give touching round parts the same radius (and a cuboid + pyramid the same base) — the flat faces then cancel exactly. Include a volume object to show the combined volume as a single result value (\"V = 240π cm³\"), or surfaceArea for the combined surface area; set occlude on either to hide that value as \"?\" for a \"find it\" question, highlight to amber it. The figure is a diagram, not a worked solution — write the actual working (the formula = substitution = total chain, the face-by-face surface-area bookkeeping, each part's own volume) as prose in the host block's text beside the figure; the model deliberately keeps the canvas to the labelled diagram + the single answer, because a clean figure with the working in the block text composes far better (web stacks figure-over-text, slides put them side by side). The hard case — unequal cross-sections: put a narrow part on a wide one (a cylinder of radius 3 on a 10-by-10 cuboid) and the wider top keeps an exposed ring; the model draws that ring as a dashed seam on the figure, and your block text does the area \"10×10 − π×3²\". A hemisphere's flat face meeting a cylinder is hidden at the join while its curved 2πr² stays exposed. Pose a reverse problem by occluding a part's dimension (\"the volume is 240π, find the cone height\" → occlude:[\"height\"] on the cone) and showing the combined volume as the datum; the cone's height label reads \"?\" and the working in your block text solves for it. Use shade on the parts to colour the pieces distinctly when teaching the decomposition; highlight one part to draw the eye; show.joinSeam (default on) draws the hidden interface. Flip a part with orient:\"down\" for the everyday shapes a plain stack cannot make: a real ice-cream cone (a cone orient:\"down\" with a hemisphere scoop on its upturned base), an hourglass / sand-timer (two cones, one \"up\" then one \"down\", meeting apex-to-apex), a bicone or spinning-top (cone \"down\" then cone \"up\", base-to-base), a diamond / gemstone (two pyramids). Drill or scoop a part with op:\"subtract\" for hollow solids: a pipe or tube (a cylinder with a same-height cylinder subtracted → a hole right through), \"find the remaining volume\" (a cone or cylinder bored out of a block — volume = block − hole), a cup / beaker / open tank (a cylinder with a shallower cylinder subtracted from the top), a bowl (a hemisphere with a smaller hemisphere scooped out), a font or trough; the model subtracts the cavity volume and, for surface area, removes the covered top, adds the inner wall, and keeps a rim annulus — write that bookkeeping in your block text. Keep the unit consistent across a lesson (default \"cm\"; the model writes cm² and cm³ itself). A part can be a conical FRUSTUM (truncated cone): give it dims baseRadius (the larger bottom), topRadius (the smaller top) and height — a cone or cylinder of the same radius as topRadius sits cleanly on its flat top, so a large cone = a small cone on a frustum, or a lidded pot. Draw the composite assembled (default), view:\"exploded\" (parts pulled apart up the axis, each piece separately visible) or view:\"both\" (assembled on the left, exploded on the right, one scale and baseline) — reach for \"both\" for the exam figure \"the large shape is made by placing A on B\" shown whole then taken apart. Give a part letter:\"A\" (or \"B\", \"1\"…) to name it ON the figure so a question can ask for \"the volume of B\"; set diameter:true on a round part (or show.diameter for all of them) to label its cross-section(s) by DIAMETER — a horizontal double-arrow \"⟷ 18 cm\" across the base and cut — with the heights drawn as vertical double-arrows stacked on the right (the exam dimension style; a frustum labels both its base 2·baseRadius and its top 2·topRadius). Switch primitive when the teaching changes: for a single solid's volume or surface area use geometry/solid; for a single truncated cone on its own (with the slant, apex-extension and similar-triangles machinery) use geometry/frustum; for the unfolded net use geometry/net; for a 2-D compound area use geometry/compound-area; for an L/T/cross prism or any off-axis / side-by-side join use geometry/prism (composite-solid is coaxial only). Synonyms a teacher might use: composite solid, compound solid, combined solid, volume of the whole shape, surface area of the whole shape, remaining volume, cone on a hemisphere, ice cream cone, cylinder and cone, hemisphere, dome, silo, capsule, house shape, hourglass, sand timer, bicone, diamond, pipe, tube, hollow cylinder, drilled, bored hole, cup, beaker, bowl, open container, frustum, truncated cone, conical frustum, large cone made of a small cone and a frustum, exploded diagram, exploded view, expanded solid, made by placing A on B, assembled and exploded, base diameter, letters A and B, 3D shape, mensuration.",
+  "responseModes": [],
+  "tags": [
+    "composite solid",
+    "compound solid",
+    "combined solid",
+    "composite shape 3d",
+    "volume",
+    "surface area",
+    "total surface area",
+    "curved surface area",
+    "remaining volume",
+    "cone on a hemisphere",
+    "ice cream cone",
+    "cylinder and cone",
+    "hemisphere",
+    "dome",
+    "silo",
+    "capsule",
+    "house shape",
+    "pyramid roof",
+    "hourglass",
+    "sand timer",
+    "bicone",
+    "diamond",
+    "gemstone",
+    "pipe",
+    "tube",
+    "hollow cylinder",
+    "drilled",
+    "bored hole",
+    "cup",
+    "beaker",
+    "bowl",
+    "open container",
+    "cuboid",
+    "cylinder",
+    "cone",
+    "pyramid",
+    "join face",
+    "hidden face",
+    "annulus",
+    "isometric",
+    "3d shape",
+    "frustum",
+    "truncated cone",
+    "conical frustum",
+    "large cone",
+    "exploded view",
+    "exploded diagram",
+    "expanded solid",
+    "assembled and exploded",
+    "made by placing a on b",
+    "diameter",
+    "base diameter",
+    "mensuration",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "parts"
+    ],
+    "properties": {
+      "parts": {
+        "type": "array",
+        "description": "The ordered stack, from the BOTTOM up — 2 or 3 parts for v1. Each part is a shape plus its dimensions and sits on the previous part's top face, sharing the vertical axis. Order matters: the first part is the base, the last part is the top. A part with an apex top (cone, pyramid) or a hemisphere-dome top is terminal — put it LAST. (One part draws a single solid with no joins; this model is for two or three.)",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "shape",
+            "dims"
+          ],
+          "properties": {
+            "shape": {
+              "type": "string",
+              "enum": [
+                "cuboid",
+                "cylinder",
+                "cone",
+                "pyramid",
+                "hemisphere",
+                "frustum"
+              ],
+              "description": "Which primitive solid this part is. \"cuboid\" = a rectangular box (a cube when width = depth = height). \"cylinder\" = a circular column. \"cone\" = a circular cone; by default apex UP (point on top), or apex DOWN via orient:\"down\" (point at the bottom, flat base on top — so a scoop can sit on it, as in a real ice-cream cone or a funnel). \"pyramid\" = a rectangular-based pyramid, apex up by default or down via orient. \"hemisphere\" = half a sphere; by default it orients itself from its position (dome-DOWN / flat-up as the base so the next part rests on the flat face; dome-UP / flat-down when it caps a part), or set orient explicitly. \"frustum\" = a conical frustum (a truncated cone): a LARGER bottom circle (baseRadius) and a SMALLER top circle (topRadius) joined by a slant, height apart. Its flat top (topRadius) is a place a cone or cylinder of the SAME radius can sit cleanly — a large cone made of a small cone on a frustum, a plant-pot with a lid. Use orient to flip a cone/pyramid/hemisphere; use op:\"subtract\" to drill a part INTO the part below instead of stacking it on top."
+            },
+            "dims": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "The raw measurements for this part, in the figure's unit. Supply only the ones the shape needs; the rest are ignored. cuboid & pyramid use width, depth, height; cylinder & cone use radius, height; hemisphere uses radius; frustum uses baseRadius (larger, bottom), topRadius (smaller, top) and height. All are plain numbers — every volume, face area and total is derived from them.",
+              "properties": {
+                "width": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "Left-right base dimension. cuboid & pyramid only (the base width). Ignored by cylinder, cone, hemisphere."
+                },
+                "depth": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "Front-to-back base dimension. cuboid & pyramid only (the base depth). Ignored by cylinder, cone, hemisphere."
+                },
+                "height": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "Vertical height of this part. cuboid & cylinder: the height of the solid. cone & pyramid: the PERPENDICULAR height (apex straight up above the base centre) — the slant height is derived. Ignored by hemisphere (whose height equals its radius)."
+                },
+                "radius": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "Base / sphere radius. cylinder, cone & hemisphere only. Ignored by cuboid, pyramid, frustum. For a clean coaxial join give touching round parts the SAME radius (cone-on-hemisphere, cylinder+cone); a DIFFERENT radius on touching parts is the unequal-cross-section case and leaves an exposed annulus."
+                },
+                "baseRadius": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "The LARGER, BOTTOM radius of a frustum (truncated cone). frustum only. Must be greater than topRadius. A cone/cylinder placed BELOW a frustum with the same radius as baseRadius joins cleanly."
+                },
+                "topRadius": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "The SMALLER, TOP radius of a frustum. frustum only. Must be less than baseRadius. A cone or cylinder of this same radius sits cleanly on the frustum's flat top (a small cone on a frustum = a large cone; a lidded pot)."
+                }
+              }
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional short name for this part, used in the aria description (e.g. \"Cone\", \"Hemisphere\", \"Tank\"). Omit to fall back to the shape name. To draw a short identifier ON the part (A, B, …) use \"letter\" instead — \"label\" is aria/future only."
+            },
+            "letter": {
+              "type": "string",
+              "description": "A SHORT identifier drawn ON this part in the figure (e.g. \"A\", \"B\", \"1\"). Use it for the exam idiom \"a small cone A on a frustum B\" — the letter sits inside the part so a question can refer to \"the volume of B\". Keep it to one or two characters. Omit for no letter (the @1 default)."
+            },
+            "occlude": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "width",
+                  "depth",
+                  "height",
+                  "radius",
+                  "baseRadius",
+                  "topRadius"
+                ]
+              },
+              "description": "Dimension labels on THIS part to hide as \"?\" — the reverse-problem hook (\"the volume of the whole shape is 240π, find the cone's height\" → occlude:[\"height\"] on the cone, and show the combined volume as the datum). Keys: width, depth, height, radius, and for a frustum baseRadius / topRadius. The dimension stays drawn; only its number is hidden (shown as \"?\"). To hide a combined ANSWER instead, use volume.occlude / surfaceArea.occlude."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this part in amber (bold border + light fill) — emphasis, e.g. to pick out the part a question is about. Default false. Amber is reserved for emphasis; use shade for neutral part-colouring."
+            },
+            "shade": {
+              "type": "boolean",
+              "description": "Give this part its OWN categorical colour (blue / teal / purple / green, cycled by stack position) instead of the default uniform accent, so the composite reads as separate parts — use it when teaching that the shape is MADE OF these pieces. Default false (the whole figure is one accent colour, reading as a single solid). Ignored if highlight is set."
+            },
+            "diameter": {
+              "type": "boolean",
+              "description": "Label THIS round part's circular cross-section(s) by DIAMETER (a horizontal double-headed arrow across the full width, value = 2 × radius) instead of by radius, and draw its height as a vertical double-arrow on the RIGHT — the exam \"18 cm across the base, 6 cm across the cut\" style. Applies to cylinder, cone, hemisphere and frustum (a frustum labels BOTH its base 2·baseRadius and its top 2·topRadius). Default false = the @1 radius annotation (a single \"r = …\" line). Ignored for cuboid/pyramid. (Or set show.diameter to turn this on for every round part at once.)"
+            },
+            "orient": {
+              "type": "string",
+              "enum": [
+                "up",
+                "down"
+              ],
+              "description": "Which way this part points. cone & pyramid: \"up\" (default) = apex on top; \"down\" = apex at the bottom, so the flat base faces UP and another part can sit on it (real ice-cream cone = cone \"down\" + a hemisphere; funnel, sand-timer / double-cone apex-to-apex, conical cup, diamond = two pyramids base-to-base). hemisphere: \"up\" = dome up / flat down, \"down\" = dome down / flat up; omit to let it choose from its position (flat face toward the join). Ignored by cuboid & cylinder (symmetric)."
+            },
+            "op": {
+              "type": "string",
+              "enum": [
+                "add",
+                "subtract"
+              ],
+              "description": "Whether this part is ADDED or REMOVED. \"add\" (default) = the part is stacked on top of the part below (the ordinary composite). \"subtract\" = the part is a CAVITY drilled coaxially into the part below, from its top face, to a depth of this part's height (or radius, for a hemisphere scoop); if that depth reaches through the host it becomes a hole right through. Its volume is taken AWAY (cylinder hole → pipe/tube; cone hole → \"find the remaining volume\"; cylinder/hemisphere scoop → a cup/beaker/bowl/open container) and the surface area swaps the covered top for the cavity's inner wall + its rim. A subtracted part should be NARROWER than its host and is drawn as a cut-away (the mouth solid, the hidden inner outline dashed)."
+            }
+          }
+        }
+      },
+      "unit": {
+        "type": "string",
+        "description": "The linear unit for all dimensions, e.g. \"cm\", \"m\", \"mm\". Dimension labels read \"6 cm\"; the model writes the area unit (cm²) and volume unit (cm³) itself. Default \"cm\". Keep one unit for the whole figure."
+      },
+      "view": {
+        "type": "string",
+        "enum": [
+          "assembled",
+          "exploded",
+          "both"
+        ],
+        "description": "How the composite is drawn. \"assembled\" (default) = the parts touching, coaxial — the ordinary single figure. \"exploded\" = the parts pulled APART vertically along the axis with a gap between them, so each part is separately visible (an exploded/expanded diagram). \"both\" = the figure drawn TWICE side by side, assembled on the left and exploded on the right, sharing one scale and baseline — the exam idiom \"the large shape is made by placing A on B\", shown assembled then taken apart. Use \"both\" for a \"made by placing … on …\" figure; use \"exploded\" to focus on the separate pieces. Default \"assembled\" (unchanged from @1)."
+      },
+      "volume": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to show the COMBINED volume as a single result value beneath the figure (\"V = 240π cm³\", the sum of every part's volume, exact and as a decimal); omit it for no volume value. The model shows only the answer — write the working (per-part volumes, the formula = substitution = total chain) as prose in the block text. occlude hides the value as \"?\".",
+        "properties": {
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the combined RESULT as \"?\" — the \"find the volume / surface area of the whole shape\" hook. The figure and its dimensions stay visible and correct; only the answer value is hidden. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the combined result value — answer emphasis. Default false."
+          }
+        }
+      },
+      "surfaceArea": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to show the COMBINED surface area as a single result value beneath the figure (\"SA = 132π cm²\"); omit it for none. The value already has the hidden join faces removed (equal cross-sections cancel both flats; an unequal join keeps the larger face's annulus, drawn on the figure as a dashed seam). The model shows only the answer — write the face-by-face working in the block text. occlude hides the value as \"?\".",
+        "properties": {
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the combined RESULT as \"?\" — the \"find the volume / surface area of the whole shape\" hook. The figure and its dimensions stay visible and correct; only the answer value is hidden. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the combined result value — answer emphasis. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Figure furniture toggles.",
+        "properties": {
+          "dimensions": {
+            "type": "boolean",
+            "description": "Label each part's dimensions (\"6 cm\" etc.). false draws the bare composite with no measurements. Default true."
+          },
+          "joinSeam": {
+            "type": "boolean",
+            "description": "Draw the internal interface where two unequal parts meet as a dashed seam (the hidden contact circle / rectangle) so the exposed annulus is visible on the figure. Default true."
+          },
+          "hiddenEdges": {
+            "type": "boolean",
+            "description": "Draw the edges hidden behind the solid as dashed construction lines. false omits them for a cleaner figure. Default true."
+          },
+          "diameter": {
+            "type": "boolean",
+            "description": "Turn on DIAMETER labelling for EVERY round part at once (cylinder / cone / hemisphere / frustum) — each cross-section gets a horizontal double-arrow \"⟷ 18 cm\" and each height a vertical double-arrow on the right, the exam dimension style. Equivalent to setting diameter:true on each round part. Default false (radius labelling, the @1 behaviour). Per-part diameter:true still works for mixing."
+          }
+        }
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "STAGED builds only: a storyboard index for constructing the composite then revealing the answer. reveal:1 draws just the base part, reveal:2 the base + next, … up to reveal:N (= number of parts) for the assembled composite WITHOUT the result value; reveal:N+1 (or higher — the default when omitted) additionally shows the combined volume / surface-area RESULT value (the \"answer\" beat). The figure is always sized from the FULL stack and its result, so stepping reveal never moves, resizes or reflows the figure — only the answer value appears below. Omit it for an ordinary figure with its result shown."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure (e.g. \"Find the volume of the whole shape\"). The top padding grows to clear it."
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Worked example — cone-on-hemisphere \"ice cream\" (r = 6, cone h = 8): combined volume and surface area shown as results (do the working in the block text)",
+      "params": {
+        "header": "Cone on a hemisphere",
+        "parts": [
+          {
+            "shape": "hemisphere",
+            "dims": {
+              "radius": 6
+            },
+            "label": "Hemisphere",
+            "shade": true
+          },
+          {
+            "shape": "cone",
+            "dims": {
+              "radius": 6,
+              "height": 8
+            },
+            "label": "Cone",
+            "shade": true
+          }
+        ],
+        "unit": "cm",
+        "volume": {},
+        "surfaceArea": {}
+      }
+    },
+    {
+      "label": "Answer space — cylinder topped by a cone (silo), labelled: find the volume and surface area yourself",
+      "params": {
+        "parts": [
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 5,
+              "height": 9
+            }
+          },
+          {
+            "shape": "cone",
+            "dims": {
+              "radius": 5,
+              "height": 6
+            }
+          }
+        ],
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Occluded question — cylinder capped by a hemisphere (dome), find the combined volume (answer hidden)",
+      "params": {
+        "header": "Volume of the whole shape",
+        "parts": [
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 3,
+              "height": 10
+            },
+            "label": "Tank"
+          },
+          {
+            "shape": "hemisphere",
+            "dims": {
+              "radius": 3
+            },
+            "label": "Dome"
+          }
+        ],
+        "unit": "m",
+        "volume": {
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — cylinder chimney on a cuboid (UNEQUAL cross-sections): the cuboid top keeps an exposed annulus",
+      "params": {
+        "header": "Surface area of the whole shape",
+        "parts": [
+          {
+            "shape": "cuboid",
+            "dims": {
+              "width": 10,
+              "depth": 10,
+              "height": 4
+            },
+            "label": "Base",
+            "shade": true
+          },
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 3,
+              "height": 8
+            },
+            "label": "Chimney",
+            "shade": true
+          }
+        ],
+        "unit": "cm",
+        "surfaceArea": {
+          "highlight": true
+        }
+      }
+    },
+    {
+      "label": "House — cuboid with a pyramid roof (same 8×8 base): combined volume and surface area, parts shaded",
+      "params": {
+        "parts": [
+          {
+            "shape": "cuboid",
+            "dims": {
+              "width": 8,
+              "depth": 8,
+              "height": 6
+            },
+            "label": "Walls",
+            "shade": true
+          },
+          {
+            "shape": "pyramid",
+            "dims": {
+              "width": 8,
+              "depth": 8,
+              "height": 3
+            },
+            "label": "Roof",
+            "shade": true
+          }
+        ],
+        "unit": "m",
+        "volume": {},
+        "surfaceArea": {}
+      }
+    },
+    {
+      "label": "Capsule — hemisphere + cylinder + hemisphere (all r = 4): every flat face is internal, surface area = 4πr² + 2πrh",
+      "params": {
+        "header": "Surface area of a capsule",
+        "parts": [
+          {
+            "shape": "hemisphere",
+            "dims": {
+              "radius": 4
+            }
+          },
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 4,
+              "height": 11
+            }
+          },
+          {
+            "shape": "hemisphere",
+            "dims": {
+              "radius": 4
+            }
+          }
+        ],
+        "unit": "cm",
+        "surfaceArea": {},
+        "show": {
+          "joinSeam": true
+        }
+      }
+    },
+    {
+      "label": "Flipped — a REAL ice-cream cone: a cone pointing DOWN (orient down) with a hemisphere scoop on its upturned base",
+      "params": {
+        "header": "Ice-cream cone",
+        "parts": [
+          {
+            "shape": "cone",
+            "dims": {
+              "radius": 4,
+              "height": 9
+            },
+            "orient": "down",
+            "label": "Cone",
+            "shade": true
+          },
+          {
+            "shape": "hemisphere",
+            "dims": {
+              "radius": 4
+            },
+            "label": "Scoop",
+            "shade": true
+          }
+        ],
+        "unit": "cm",
+        "volume": {}
+      }
+    },
+    {
+      "label": "Hollow — a pipe / tube: a cylinder with a coaxial cylinder of the same height SUBTRACTED, leaving a hole right through",
+      "params": {
+        "header": "Volume of a pipe",
+        "parts": [
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 5,
+              "height": 12
+            },
+            "label": "Pipe"
+          },
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 3,
+              "height": 12
+            },
+            "op": "subtract",
+            "label": "Bore"
+          }
+        ],
+        "unit": "cm",
+        "volume": {},
+        "surfaceArea": {}
+      }
+    },
+    {
+      "label": "Remaining volume — a cone bored out of a cylinder (op subtract): volume of the solid that is left",
+      "params": {
+        "parts": [
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 5,
+              "height": 10
+            },
+            "label": "Block"
+          },
+          {
+            "shape": "cone",
+            "dims": {
+              "radius": 3,
+              "height": 4
+            },
+            "op": "subtract",
+            "label": "Hole"
+          }
+        ],
+        "unit": "cm",
+        "volume": {
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Hollow — a bowl: a hemisphere with a smaller hemisphere scooped from its top (op subtract), surface area 124π",
+      "params": {
+        "header": "Surface area of a bowl",
+        "parts": [
+          {
+            "shape": "hemisphere",
+            "dims": {
+              "radius": 6
+            },
+            "label": "Bowl"
+          },
+          {
+            "shape": "hemisphere",
+            "dims": {
+              "radius": 4
+            },
+            "op": "subtract",
+            "label": "Hollow"
+          }
+        ],
+        "unit": "cm",
+        "surfaceArea": {}
+      }
+    },
+    {
+      "label": "Frustum part — a large cone made of a small cone on a frustum (assembled), diameters and letters shown",
+      "params": {
+        "header": "A large cone",
+        "parts": [
+          {
+            "shape": "frustum",
+            "dims": {
+              "baseRadius": 6,
+              "topRadius": 2,
+              "height": 5
+            },
+            "letter": "B",
+            "diameter": true,
+            "shade": true
+          },
+          {
+            "shape": "cone",
+            "dims": {
+              "radius": 2,
+              "height": 3
+            },
+            "letter": "A",
+            "diameter": true,
+            "shade": true
+          }
+        ],
+        "unit": "cm",
+        "volume": {}
+      }
+    },
+    {
+      "label": "Exploded — a cylinder + cone silo taken apart along the axis so each piece is separately visible",
+      "params": {
+        "header": "The parts of the silo",
+        "parts": [
+          {
+            "shape": "cylinder",
+            "dims": {
+              "radius": 4,
+              "height": 9
+            },
+            "letter": "P",
+            "shade": true
+          },
+          {
+            "shape": "cone",
+            "dims": {
+              "radius": 4,
+              "height": 6
+            },
+            "letter": "Q",
+            "shade": true
+          }
+        ],
+        "unit": "cm",
+        "view": "exploded"
+      }
+    },
+    {
+      "label": "Hard case — cone A on frustum B, drawn assembled AND exploded (view \"both\"): the \"made by placing A on B\" figure",
+      "params": {
+        "parts": [
+          {
+            "shape": "frustum",
+            "dims": {
+              "baseRadius": 12,
+              "topRadius": 4,
+              "height": 6
+            },
+            "letter": "B",
+            "diameter": true,
+            "shade": true
+          },
+          {
+            "shape": "cone",
+            "dims": {
+              "radius": 4,
+              "height": 3
+            },
+            "letter": "A",
+            "diameter": true,
+            "shade": true
+          }
+        ],
+        "unit": "cm",
+        "view": "both"
+      }
+    }
+  ]
+}

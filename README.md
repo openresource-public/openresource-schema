@@ -12,7 +12,7 @@ JSON schemas for the structured resource format used by Open Resource. The same 
 - `conformance/` — valid and invalid documents with the rule each breaks, and a runner to prove a validator against them.
 - `blocks/bento.md` — the block: tile catalogue and content shape.
 - `MODELS.md` — computed models (parameterised coded figures): the concept and where they appear.
-- `models/<name>.md` — per-model parameter interface (one published example).
+- `models/catalogue.json` — every published model and version with status; `models/<family>/<name>/<version>.json` is the interface a pin resolves to; `models/coordinate-grid.md` is one interface written up in prose.
 - `examples/` — real lessons in the schema, stripped of platform internals.
 - `schemas/` — machine-readable JSON Schemas: `resource.schema.json` (the envelope), `bento-content.schema.json` (block content) and `tiptap-doc-schema.json` (the rich-text document every text field carries). `schemas/<version>/` holds each published version, never changed once published; the files at `schemas/` are the current version; `schemas/index.json` lists every file's SHA-256. Each file's `$id` is its versioned URL.
 

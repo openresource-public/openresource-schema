@@ -1,0 +1,495 @@
+{
+  "ref": "geometry/plan-elevation@1",
+  "family": "geometry",
+  "name": "plan-elevation",
+  "version": 1,
+  "title": "Plans and elevations",
+  "tagline": "Cube solid in isometric beside its plan, front and side elevations, all derived from a height map; occlude a panel to question the others.",
+  "description": "A solid built from unit cubes, drawn in isometric projection beside its three orthographic 2D views — the plan, the front elevation and the side elevation. You author only a height map (a grid of stack heights, one number per footprint cell, depth rows by width columns); the model derives the isometric drawing, the plan (the footprint cells where a column has any cube), the front elevation (the column-wise maximum stack height seen across the depth) and the side elevation (the maximum seen across the width). Choose which of the four panels to show, occlude any panel to \"?\" for a question (the others stay truthful), highlight a panel for emphasis, write the stack heights onto the plan, or view the side elevation from the left or right. Zero-height cells let the footprint be L-shaped or stepped, so the three views can be three genuinely different shapes. Static plus staged (build the solid cube by cube, or reveal the views one at a time).",
+  "whenToUse": "Reach for this for plans and elevations of a solid made of cubes: \"draw the plan and the front and side elevations of this solid\", reading views off a stepped or L-shaped solid, and the two reverse tasks — isometric → 2D views and 2D views → \"which solid is it?\". Author the solid as solid.heights: a grid of stack heights, outer array = depth rows from front (first row) to back, inner array = width columns from left to right, each value the number of cubes stacked on that cell (0 = no cube there, which makes L-shaped and stepped footprints). Everything else is derived: plan = the footprint (cells with height ≥ 1), front elevation = the tallest stack in each width column looking from the front, side elevation = the tallest stack in each depth row looking from the side. Pick the panels with views: include a key (isometric, plan, front, side) to show that panel, omit it to hide it; omit the whole views object to show all four. For a \"draw the …\" question, show the solid and set that view's occlude true (it renders as \"?\", the others stay correct). For \"which solid has these views?\", show plan + front + side and omit isometric. Set plan.showHeights true to print the stack height in each plan cell (the numbered-plan representation). Set side.from \"left\" (default — the front of the solid is then on the right of the side elevation) or \"right\" (front on the left). highlight a panel to amber it (the answer). Whenever the isometric panel is shown the figure automatically draws a front viewing-direction arrow (the \"looking in this direction\" mark, labelled \"front\") so pupils can see which face the front elevation looks at — you need set nothing; pass arrows: { side: true } to add the side-view arrow too, arrows: false to drop the arrow, or arrows: { frontLabel: \"F\" } to relabel it. Use header for a title; the question goes in the block text, never on the figure. For a staged build (add cubes / reveal stages across frames), set solid.extent to the final solid's { width, depth, height } on every frame so all stages render at the same scale and size — without it each frame tight-fits and the figure visibly grows as you build. Keep the same solid across the blocks of one lesson so pupils track one shape. Conventions: the front elevation and the plan share the left–right (width) axis; the side elevation and the plan share the depth axis. Switch primitive when the teaching changes — for a single labelled 3D solid with dimensions, volume and surface area use geometry/solid; for an unfolded net use geometry/net; for a 2D compound shape and its area use geometry/compound-area. Synonyms a teacher might use: plan, elevation, elevations, front elevation, side elevation, end elevation, plan view, bird's eye view, isometric, isometric drawing, orthographic, projection, views of a solid, cubes, made of cubes, multilink, stepped solid, L-shape.",
+  "responseModes": [],
+  "tags": [
+    "plan",
+    "elevation",
+    "elevations",
+    "front elevation",
+    "side elevation",
+    "plan view",
+    "isometric",
+    "orthographic",
+    "projection",
+    "views",
+    "solid",
+    "cubes",
+    "unit cubes",
+    "multilink",
+    "stepped solid",
+    "L-shape",
+    "geometry",
+    "3D",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "solid": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The solid, as a height map. The isometric drawing and all three views are computed from it.",
+        "properties": {
+          "heights": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "description": "A grid of stack heights. The OUTER array is the depth rows, FIRST row = the FRONT of the solid, last row = the back. Each INNER array is the width columns, left to right. Each value is the whole number of unit cubes stacked on that footprint cell: 0 means no cube there (use 0s to make an L-shaped or stepped footprint). Example: [[1,2,3]] is a single row three wide, a three-step staircase rising to the right; [[2,2],[1,1]] is two rows deep, the front pair two cubes tall, the back pair one cube tall. Rows may be different lengths — short rows are padded with 0 on the right. Heights are clamped to 0..8.",
+            "items": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 8,
+                "description": "Cubes stacked on this cell (0 = none)."
+              }
+            }
+          },
+          "extent": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "STAGED-BUILD STABILITY HINT (optional). The bounding dimensions of the FINAL solid, so every frame of a staged build reserves the same panel sizes, isometric scale and viewBox and the figure NEVER changes size between stages. Set it to the final solid's width × depth × height on EVERY frame of the build (early frames have a smaller solid but the same reserved box). Omit it for a single, non-staged figure — the model then tight-fits to the one solid. Each component only ever GROWS the box (it is max-ed with this frame's own bound), so a too-small hint can never clip the current solid.",
+            "properties": {
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8,
+                "description": "Number of width columns in the final solid (left-to-right). Reserves the plan/front-elevation width."
+              },
+              "depth": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8,
+                "description": "Number of depth rows in the final solid (front-to-back). Reserves the plan height and the side-elevation width."
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8,
+                "description": "Tallest stack in the final solid. Reserves the elevation heights and the isometric box."
+              }
+            }
+          }
+        },
+        "required": [
+          "heights"
+        ]
+      },
+      "views": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Which of the four panels to draw and how. INCLUDE a key to show that panel; OMIT it to hide it. Omit this whole object to show all four (isometric, plan, front, side) — the full reference figure. Panels are always drawn in the order isometric, plan, front, side.",
+        "properties": {
+          "isometric": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The 3D isometric drawing of the solid. Occlude it (\"?\") for a \"which solid is it?\" question that shows only the 2D views.",
+            "properties": {
+              "occlude": {
+                "type": "boolean",
+                "description": "Render this view as a \"?\" placeholder instead of the real drawing — the question hook (\"draw the front elevation\", \"which view is the plan?\"). The other views stay visible and correct, and the \"?\" box does not reveal the hidden view's size. Default false."
+              },
+              "highlight": {
+                "type": "boolean",
+                "description": "Draw the eye to this view: its caption and its filled cells (or, for the isometric, its frame) go amber — result/emphasis, e.g. the answer view in a worked example. Default false."
+              },
+              "label": {
+                "type": "string",
+                "description": "Override the default caption under this panel (\"Isometric view\" / \"Plan\" / \"Front elevation\" / \"Side elevation\"). Omit to use the default. Only shown when showLabels is true."
+              }
+            }
+          },
+          "plan": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The plan — the view looking straight down. A grid of the footprint cells (those with height ≥ 1).",
+            "properties": {
+              "occlude": {
+                "type": "boolean",
+                "description": "Render this view as a \"?\" placeholder instead of the real drawing — the question hook (\"draw the front elevation\", \"which view is the plan?\"). The other views stay visible and correct, and the \"?\" box does not reveal the hidden view's size. Default false."
+              },
+              "highlight": {
+                "type": "boolean",
+                "description": "Draw the eye to this view: its caption and its filled cells (or, for the isometric, its frame) go amber — result/emphasis, e.g. the answer view in a worked example. Default false."
+              },
+              "label": {
+                "type": "string",
+                "description": "Override the default caption under this panel (\"Isometric view\" / \"Plan\" / \"Front elevation\" / \"Side elevation\"). Omit to use the default. Only shown when showLabels is true."
+              },
+              "showHeights": {
+                "type": "boolean",
+                "description": "Print the stack height (the number of cubes) inside each plan cell — the numbered-plan representation that lets the plan alone define the whole solid. Default false."
+              }
+            }
+          },
+          "front": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The front elevation — the silhouette looking from the front: each width column drawn as tall as its tallest stack over the depth.",
+            "properties": {
+              "occlude": {
+                "type": "boolean",
+                "description": "Render this view as a \"?\" placeholder instead of the real drawing — the question hook (\"draw the front elevation\", \"which view is the plan?\"). The other views stay visible and correct, and the \"?\" box does not reveal the hidden view's size. Default false."
+              },
+              "highlight": {
+                "type": "boolean",
+                "description": "Draw the eye to this view: its caption and its filled cells (or, for the isometric, its frame) go amber — result/emphasis, e.g. the answer view in a worked example. Default false."
+              },
+              "label": {
+                "type": "string",
+                "description": "Override the default caption under this panel (\"Isometric view\" / \"Plan\" / \"Front elevation\" / \"Side elevation\"). Omit to use the default. Only shown when showLabels is true."
+              }
+            }
+          },
+          "side": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The side elevation — the silhouette looking from the side: each depth row drawn as tall as its tallest stack over the width.",
+            "properties": {
+              "occlude": {
+                "type": "boolean",
+                "description": "Render this view as a \"?\" placeholder instead of the real drawing — the question hook (\"draw the front elevation\", \"which view is the plan?\"). The other views stay visible and correct, and the \"?\" box does not reveal the hidden view's size. Default false."
+              },
+              "highlight": {
+                "type": "boolean",
+                "description": "Draw the eye to this view: its caption and its filled cells (or, for the isometric, its frame) go amber — result/emphasis, e.g. the answer view in a worked example. Default false."
+              },
+              "label": {
+                "type": "string",
+                "description": "Override the default caption under this panel (\"Isometric view\" / \"Plan\" / \"Front elevation\" / \"Side elevation\"). Omit to use the default. Only shown when showLabels is true."
+              },
+              "from": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "right"
+                ],
+                "description": "Which side you look from. \"left\" (default): the front of the solid is on the RIGHT of the elevation. \"right\": the front is on the LEFT (the depth columns are drawn in the reverse order). The heights are identical either way — only the left-to-right order flips."
+              }
+            }
+          }
+        }
+      },
+      "arrows": {
+        "description": "The viewing-direction arrows on the isometric drawing. The FRONT arrow — the standard \"looking in this direction\" mark that tells the pupil which face is the front elevation — is shown by DEFAULT on every figure that draws the isometric panel (you don't need to set anything). Pass false to remove it. Pass an object to control it: { side: true } also draws the SIDE-view arrow (pointing into the side faces), { front: false } removes just the front arrow, and frontLabel / sideLabel override the \"front\" / \"side\" wording (e.g. \"F\", \"S\"). Ignored when the isometric panel is not shown.",
+        "oneOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "front": {
+                "type": "boolean",
+                "description": "Show the front-elevation viewing arrow. Default true (on whenever the isometric is shown)."
+              },
+              "side": {
+                "type": "boolean",
+                "description": "Also draw the side-elevation viewing arrow. Default false."
+              },
+              "frontLabel": {
+                "type": "string",
+                "description": "Override the front-arrow label (default \"front\"; e.g. \"F\")."
+              },
+              "sideLabel": {
+                "type": "string",
+                "description": "Override the side-arrow label (default \"side\"; e.g. \"S\")."
+              }
+            }
+          }
+        ]
+      },
+      "showLabels": {
+        "type": "boolean",
+        "description": "Show the caption under each panel (\"Plan\", \"Front elevation\", …). Default true. Set false for an unlabelled answer figure."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the whole figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "solid"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — stepped solid, all four panels, plan numbered",
+      "params": {
+        "header": "A solid made of cubes",
+        "solid": {
+          "heights": [
+            [
+              2,
+              2,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ]
+        },
+        "views": {
+          "isometric": {},
+          "plan": {
+            "showHeights": true
+          },
+          "front": {},
+          "side": {}
+        },
+        "caption": "The solid and its plan, front and side elevations"
+      }
+    },
+    {
+      "label": "Answer space — isometric only, draw the three views",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              1,
+              1,
+              2
+            ],
+            [
+              1,
+              0,
+              2
+            ]
+          ]
+        },
+        "views": {
+          "isometric": {}
+        }
+      }
+    },
+    {
+      "label": "Occluded question — front elevation hidden",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              3,
+              2,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ]
+        },
+        "views": {
+          "isometric": {},
+          "plan": {},
+          "front": {
+            "occlude": true
+          },
+          "side": {}
+        }
+      }
+    },
+    {
+      "label": "Hard case — stepped solid, three different views, answer highlighted",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              3,
+              2,
+              2
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ]
+        },
+        "views": {
+          "isometric": {},
+          "plan": {
+            "showHeights": true
+          },
+          "front": {
+            "highlight": true
+          },
+          "side": {}
+        },
+        "caption": "Plan, front elevation and side elevation all differ"
+      }
+    },
+    {
+      "label": "Which solid? — three views only, no isometric",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "views": {
+          "plan": {},
+          "front": {},
+          "side": {}
+        }
+      }
+    },
+    {
+      "label": "L-shaped prism — plan is the L, elevations are rectangles, side from the right",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              2,
+              2,
+              2
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ]
+          ]
+        },
+        "views": {
+          "isometric": {},
+          "plan": {},
+          "front": {},
+          "side": {
+            "from": "right"
+          }
+        },
+        "caption": "An L-shaped prism: only the plan shows the L"
+      }
+    },
+    {
+      "label": "Both viewing arrows — front and side directions marked",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              3,
+              2,
+              2
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ]
+        },
+        "views": {
+          "isometric": {},
+          "plan": {},
+          "front": {},
+          "side": {}
+        },
+        "arrows": {
+          "side": true
+        },
+        "caption": "The front and side viewing directions"
+      }
+    },
+    {
+      "label": "Staged build, frame 1 of 3 — one cube, final extent reserved",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              1
+            ]
+          ],
+          "extent": {
+            "width": 3,
+            "depth": 2,
+            "height": 3
+          }
+        },
+        "views": {
+          "isometric": {},
+          "plan": {},
+          "front": {},
+          "side": {}
+        },
+        "caption": "Start with a single cube"
+      }
+    },
+    {
+      "label": "Staged build, frame 3 of 3 — finished solid, same extent → same size/scale",
+      "params": {
+        "solid": {
+          "heights": [
+            [
+              3,
+              2,
+              1
+            ],
+            [
+              2,
+              1,
+              1
+            ]
+          ],
+          "extent": {
+            "width": 3,
+            "depth": 2,
+            "height": 3
+          }
+        },
+        "views": {
+          "isometric": {},
+          "plan": {
+            "showHeights": true
+          },
+          "front": {},
+          "side": {}
+        },
+        "caption": "The finished solid and its three views"
+      }
+    }
+  ]
+}

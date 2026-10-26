@@ -1,0 +1,513 @@
+{
+  "ref": "statistics/histogram@3",
+  "family": "statistics",
+  "name": "histogram",
+  "version": 3,
+  "title": "Histogram",
+  "tagline": "Histogram of grouped continuous data — height is frequency density, area is frequency; derives densities and sub-range frequency; can be drawn ON to answer \"draw the histogram\".",
+  "description": "A histogram of grouped continuous data — the model for frequency density and unequal class widths. You give the class intervals and their frequencies; the model draws touching bars whose height is the frequency density (frequency ÷ class width) and whose area is the frequency, so unequal widths come out right. It derives every density, the y-axis scale, and the frequency in any sub-range (area, including partial bars). Occlude a class's frequency to ask pupils to read it from the bar, or shade a range and ask how many fall in it. Web: drag the range edges to read different ranges live. Set drawHistogram: true to turn the grid into a \"draw the histogram for the information in the table\" answer surface — the pupil drags each bar's top to its frequency density and the model marks each height against the density it derives; mark bars given: true to pre-print them (a \"complete the histogram\" task). The answer surface's furniture is tunable to match a source paper: axes.xMinor/fdMinor set the squared-paper minor-grid steps, axes.fdNumbers: false leaves the frequency-density axis titled but unnumbered (the pupil derives the scale from a given bar), drawHistogramGuides: false drops the dashed class-boundary guides, and boundaryLabels controls whether class boundaries join the x-axis numbering — 'auto' (default) de-collides half-integer boundaries (\"to the nearest whole number\" classes) from the step ticks, 'never' prints step ticks only. (Categorical bar charts — gapped bars, height = frequency — are a separate model.)",
+  "whenToUse": "Reach for this for histograms of grouped continuous data: frequency density, unequal class widths, and estimating a frequency over a range. Give classes as [{ from, to, frequency }] covering touching intervals (the to of one is the from of the next); the bar height is the derived frequency density = frequency ÷ (to − from), and the bar area is the frequency — so a wide class with a big frequency can still be a short bar. Set axes.xLabel to the variable (\"Height (cm)\"); the y-axis is automatically \"Frequency density\". Use showFrequencies to print each bar's frequency on it, occludeFrequency on a class to hide it as a \"work out the frequency from the bar\" question, and estimate: { from, to } to shade a sub-range and read the frequency in it (set estimate.occlude for \"how many between … and …?\") — the count is the area, including partial bars. Omit classes for an empty frequency-density grid to draw a histogram on. The pupil drags each bar's top to its frequency density; the model marks each placed height against the density it derives, within half a small square. correctAnswer is the { derived: true } sentinel — author no heights. For \"complete the histogram\" questions where some bars are already printed, mark those classes given: true (they render at their true density as context and are not marked); the remaining classes are the ones the pupil draws. Keep the same axes across a lesson. To reproduce a source paper's answer grid exactly (common at A Level, where classes are stated \"to the nearest whole number\" and boundaries are half-integers): set axes.xMinor/fdMinor to the source's own small-square steps, axes.fdNumbers: false when the source's frequency-density axis is titled but unnumbered (deriving the scale from a given: true bar becomes part of the task — set axes.fdMax so the grid fits every bar), drawHistogramGuides: false when the source prints no dashed boundary guides, and boundaryLabels: 'never' when its x-axis numbers only the step ticks. Left alone, boundaryLabels 'auto' still prints boundaries but drops any that would collide with a step tick number — @2's colliding \"00.5 44.5\" text cannot recur; use 'always' only to preserve a figure that depends on the old literal union. A staged build reads well for TEACHING (not the answer surface): work out each class's frequency density, then draw the bars one at a time; or build the table → bars → read a range. The key teaching point: on a histogram you read frequency from area, not height. Switch primitive when the teaching changes — for a categorical bar chart (separate categories, gaps between bars, height = frequency) use statistics/bar-chart; for a scatter of bivariate data use statistics/scatter; for a cumulative-frequency curve or box plot use statistics/box-cf. Synonyms a teacher might use: histogram, frequency density, grouped data, class interval, class width, unequal widths, frequency, area, estimate the frequency, grouped frequency, draw a histogram, complete the histogram, to the nearest whole number, class boundaries.",
+  "responseModes": [
+    "draw-histogram"
+  ],
+  "tags": [
+    "histogram",
+    "frequency density",
+    "grouped data",
+    "class interval",
+    "class width",
+    "unequal widths",
+    "frequency",
+    "grouped frequency",
+    "area",
+    "estimate",
+    "draw a histogram",
+    "complete the histogram",
+    "class boundaries",
+    "nearest whole number",
+    "statistics",
+    "data",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional window + axis titles. The x-range defaults to span the classes; the y-axis is frequency density, scaled to the data.",
+        "properties": {
+          "x": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the x-axis. Default: spans the classes."
+          },
+          "xStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between x gridlines / numbers. Default: a sensible round value (often the class width)."
+          },
+          "fdMax": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Top of the frequency-density (y) axis. Default: just above the tallest bar. Set this on a draw-histogram answer surface so the blank grid is tall enough for every bar the pupil must draw."
+          },
+          "fdStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between frequency-density gridlines / numbers. Default: a sensible round value."
+          },
+          "xMinor": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Draw-histogram answer surface only: the minor-gridline step across the x-axis of the squared grid. Default xStep ÷ 5. Set it to reproduce a source's own squared paper — e.g. 1 against an xStep of 2."
+          },
+          "fdMinor": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Draw-histogram answer surface only: the minor-gridline step up the frequency-density axis. Default fdStep ÷ 5."
+          },
+          "fdNumbers": {
+            "type": "boolean",
+            "description": "Print the frequency-density tick numbers up the y-axis. Default true. Set false to reproduce a source whose fd axis is titled but UNNUMBERED — the gridlines still render, so the pupil derives the scale from a given bar (pair with a given: true class on a draw surface, and set fdMax so the grid fits every bar)."
+          },
+          "xLabel": {
+            "type": "string",
+            "description": "The x-axis title — the variable and its unit, e.g. \"Height (cm)\", \"Time (minutes)\"."
+          },
+          "yLabel": {
+            "type": "string",
+            "description": "The y-axis title. Default \"Frequency density\"."
+          }
+        }
+      },
+      "grid": {
+        "type": "boolean",
+        "description": "Show the background grid. Default true (helps read densities and areas)."
+      },
+      "classes": {
+        "type": "array",
+        "description": "The grouped data — the class intervals and their frequencies. Touching intervals (the to of one is the from of the next) make a proper histogram. Omit/empty for a blank frequency-density grid. For a draw-histogram answer surface, keep the full table here (the model derives the answer heights from it and never draws them on a posed surface).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "number",
+              "description": "The lower class boundary."
+            },
+            "to": {
+              "type": "number",
+              "description": "The upper class boundary. The bar spans [from, to]; its height is frequency ÷ (to − from)."
+            },
+            "frequency": {
+              "type": "number",
+              "minimum": 0,
+              "description": "The frequency (count) in this class. The bar AREA equals this; the height (frequency density) is derived."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this bar in amber. Default false."
+            },
+            "occludeFrequency": {
+              "type": "boolean",
+              "description": "Hide this class's frequency (shown as \"?\" where the value would be) — the \"work out the frequency from the bar\" hook. The bar still shows at its correct density. Default false."
+            },
+            "given": {
+              "type": "boolean",
+              "description": "Draw-histogram only: this bar is PRE-PRINTED in the question (a \"complete the histogram\" task). A given bar renders at its true density on every surface (posed included) as context, is not draggable, and is not marked. The classes WITHOUT given are the ones the pupil draws and the model marks. Default false."
+            }
+          },
+          "required": [
+            "from",
+            "to",
+            "frequency"
+          ]
+        }
+      },
+      "showFrequencies": {
+        "type": "boolean",
+        "description": "Print each bar's frequency on it (the count, i.e. the area). Default false — show a clean histogram, or set true for a worked/labelled version. Ignored on a draw-histogram answer surface (a printed frequency would leak the answer)."
+      },
+      "estimate": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Shade a sub-range and read the frequency in it (the area over [from, to], including partial bars). Use for \"how many between … and …?\".",
+        "properties": {
+          "from": {
+            "type": "number",
+            "description": "Lower end of the range."
+          },
+          "to": {
+            "type": "number",
+            "description": "Upper end of the range."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the frequency as \"?\" — the question hook. Default false."
+          },
+          "label": {
+            "type": "string",
+            "description": "Override the read-off text. Omit to show the derived frequency."
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ]
+      },
+      "drawHistogram": {
+        "type": "boolean",
+        "description": "A proper squared grid is drawn with the class intervals fixed on the x-axis; on a posed/print surface (no response ctx) the bars the pupil must draw are NOT drawn — only bars marked given: true render (pre-printed context). Armed, the pupil drags each to-draw bar's top to its frequency density and the model self-checks each height against the derived density (frequency ÷ class width) within half a small square — correctAnswer { derived: true }, author no heights. Never combined with estimate or a staged build. Default false (a normal render-only histogram)."
+      },
+      "drawHistogramGuides": {
+        "type": "boolean",
+        "description": "Draw-histogram answer surface only: the dashed class-boundary guide lines down the grid. Default true. Set false for a source that prints none — the class intervals stay fixed by the marking, and the boundary numbering (see boundaryLabels) or the minor grid still locates them."
+      },
+      "boundaryLabels": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "always",
+          "never"
+        ],
+        "description": "Draw-histogram answer surface only: whether the class boundaries join the x-axis numbering. 'auto' (default) prints each boundary EXCEPT any whose label would collide with an xStep tick number — so \"to the nearest whole number\" classes (half-integer boundaries) keep a clean stepped axis. 'always' prints every boundary unconditionally (@2's literal behaviour, collisions and all — only for a figure that depends on it). 'never' prints only the xStep ticks — use for a source whose answer grid numbers only the step ticks."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Drag the estimate range's two edges along the x-axis; the shaded range and its frequency (area) update live. Requires estimate. Never combined with drawHistogram. Default false."
+      }
+    },
+    "required": [
+      "classes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Equal class widths (worked, frequencies shown)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            50
+          ],
+          "xStep": 10,
+          "xLabel": "Time (minutes)"
+        },
+        "classes": [
+          {
+            "from": 0,
+            "to": 10,
+            "frequency": 5
+          },
+          {
+            "from": 10,
+            "to": 20,
+            "frequency": 12
+          },
+          {
+            "from": 20,
+            "to": 30,
+            "frequency": 18
+          },
+          {
+            "from": 30,
+            "to": 40,
+            "frequency": 9
+          },
+          {
+            "from": 40,
+            "to": 50,
+            "frequency": 3
+          }
+        ],
+        "showFrequencies": true,
+        "caption": "Equal widths: the bar heights are in the same ratio as the frequencies"
+      }
+    },
+    {
+      "label": "The hard case — unequal class widths (frequency density)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            70
+          ],
+          "xStep": 10,
+          "xLabel": "Mass (kg)"
+        },
+        "classes": [
+          {
+            "from": 0,
+            "to": 10,
+            "frequency": 20
+          },
+          {
+            "from": 10,
+            "to": 20,
+            "frequency": 30
+          },
+          {
+            "from": 20,
+            "to": 40,
+            "frequency": 40
+          },
+          {
+            "from": 40,
+            "to": 70,
+            "frequency": 15
+          }
+        ],
+        "showFrequencies": true,
+        "caption": "Unequal widths: height is frequency density, so the area is the frequency"
+      }
+    },
+    {
+      "label": "Estimate over a range (occluded question)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            70
+          ],
+          "xStep": 10,
+          "xLabel": "Mass (kg)"
+        },
+        "classes": [
+          {
+            "from": 0,
+            "to": 10,
+            "frequency": 20
+          },
+          {
+            "from": 10,
+            "to": 20,
+            "frequency": 30
+          },
+          {
+            "from": 20,
+            "to": 40,
+            "frequency": 40
+          },
+          {
+            "from": 40,
+            "to": 70,
+            "frequency": 15
+          }
+        ],
+        "estimate": {
+          "from": 25,
+          "to": 35,
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Find a class frequency from its bar (occluded)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            40
+          ],
+          "xStep": 5,
+          "xLabel": "Length (cm)"
+        },
+        "classes": [
+          {
+            "from": 0,
+            "to": 10,
+            "frequency": 16
+          },
+          {
+            "from": 10,
+            "to": 15,
+            "frequency": 20,
+            "occludeFrequency": true,
+            "highlight": true
+          },
+          {
+            "from": 15,
+            "to": 25,
+            "frequency": 14
+          },
+          {
+            "from": 25,
+            "to": 40,
+            "frequency": 9
+          }
+        ]
+      }
+    },
+    {
+      "label": "Draw the histogram — answer surface (posed shows a blank grid)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            60
+          ],
+          "xStep": 10,
+          "fdMax": 5,
+          "fdStep": 1,
+          "xLabel": "Speed (mph)"
+        },
+        "drawHistogram": true,
+        "classes": [
+          {
+            "from": 0,
+            "to": 20,
+            "frequency": 24
+          },
+          {
+            "from": 20,
+            "to": 30,
+            "frequency": 26
+          },
+          {
+            "from": 30,
+            "to": 35,
+            "frequency": 21
+          },
+          {
+            "from": 35,
+            "to": 60,
+            "frequency": 15
+          }
+        ],
+        "caption": "On the grid, draw a histogram for the information in the table"
+      }
+    },
+    {
+      "label": "Complete the histogram — two bars given (the hard case)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            20
+          ],
+          "xStep": 5,
+          "fdMax": 12,
+          "fdStep": 2,
+          "xLabel": "Time (s)"
+        },
+        "drawHistogram": true,
+        "classes": [
+          {
+            "from": 0,
+            "to": 5,
+            "frequency": 10
+          },
+          {
+            "from": 5,
+            "to": 10,
+            "frequency": 40,
+            "given": true
+          },
+          {
+            "from": 10,
+            "to": 12,
+            "frequency": 20
+          },
+          {
+            "from": 12,
+            "to": 20,
+            "frequency": 8,
+            "given": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Nearest-whole-number classes — source-faithful A Level answer grid (@3 hard case)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            21
+          ],
+          "xStep": 2,
+          "fdMax": 5,
+          "fdStep": 1,
+          "xMinor": 1,
+          "fdNumbers": false,
+          "xLabel": "Reaction time (s)"
+        },
+        "drawHistogram": true,
+        "drawHistogramGuides": false,
+        "boundaryLabels": "never",
+        "classes": [
+          {
+            "from": 0.5,
+            "to": 5.5,
+            "frequency": 10
+          },
+          {
+            "from": 5.5,
+            "to": 10.5,
+            "frequency": 20,
+            "given": true
+          },
+          {
+            "from": 10.5,
+            "to": 14.5,
+            "frequency": 14
+          },
+          {
+            "from": 14.5,
+            "to": 20.5,
+            "frequency": 9
+          }
+        ],
+        "caption": "The times are to the nearest second. Use the table to complete the histogram"
+      }
+    },
+    {
+      "label": "Half-integer boundaries with defaults — 'auto' keeps the axis numbering clean",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            31
+          ],
+          "xStep": 5,
+          "fdMax": 4,
+          "fdStep": 1,
+          "xLabel": "Mass (g)"
+        },
+        "drawHistogram": true,
+        "classes": [
+          {
+            "from": 0.5,
+            "to": 10.5,
+            "frequency": 20
+          },
+          {
+            "from": 10.5,
+            "to": 20.5,
+            "frequency": 35
+          },
+          {
+            "from": 20.5,
+            "to": 30.5,
+            "frequency": 15
+          }
+        ],
+        "caption": "On the grid, draw a histogram for the information in the table"
+      }
+    }
+  ]
+}

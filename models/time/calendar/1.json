@@ -1,0 +1,235 @@
+{
+  "ref": "time/calendar@1",
+  "family": "time",
+  "name": "calendar",
+  "version": 1,
+  "title": "Calendar",
+  "tagline": "A one-month calendar grid whose day-count (leap rule) and the weekday of the 1st (derived) lay out the dates; mark dates and step this/next/last with wrap.",
+  "description": "One month laid out as a seven-column day-of-week grid: the dates 1 to the end of the month in week rows, with the right number of leading blanks before the 1st. The author writes the month and year and everything is derived — the number of days (28 or 29 for February by the leap-year rule) and the weekday the 1st falls on (Zeller's congruence), so the grid is computed from the date and cannot be laid out wrong; an abstract month (a chosen number of days starting on a chosen weekday) is available when no real year is wanted. Dates can be labelled, highlighted or hidden as \"?\" for a question. A relation steps one date on — the next or previous day, the same day next or previous week, or a number of days — and the target and whether it stays in the month or wraps into the next or previous month are derived, drawn as a connector to the target cell or annotated when it spills over. A warm stem sentence restates the figure in words. (The periodic ring of months / days / seasons is the separate time/cycle-wheel model.)",
+  "whenToUse": "Reach for this to read a calendar month and reason across its dates: find a date, work out which day of the week a date falls on, the same day next week (+7), the day after the last day of the month, and leap years. Give month + year for a real month (the day-count and the weekday of the 1st are derived — author nothing about the layout); give days + startDay for an abstract teaching month with no particular year. Common configurations: read a month — month + year with marks on the dates that matter (label / highlight); which date? — a mark with occlude true (\"the trip is the last Friday — which date?\"); this/next/last — a relation from a date (nextDay / prevDay / nextWeek / prevWeek, or by ± a number of days), relation.occlude to ask for the answer; the relation draws a connector to the target when it stays in the month, or annotates the date in the next/previous month when it wraps. weekStart defaults to monday (the UK convention); set sunday for a Sunday-first calendar. Keep the same month + weekStart across a lesson. Staged builds suit it: open on the plain month and reveal a relation's answer, accumulate the marked events one per stage, or work a month-end wrap. For naming the months / days / seasons as a repeating cycle, or \"3 months after November\", use the time/cycle-wheel model instead. Synonyms teachers use: calendar, month, date, day of the week, weekday, the 14th, next week, leap year, days in a month.",
+  "responseModes": [],
+  "tags": [
+    "time",
+    "calendar",
+    "month",
+    "date",
+    "day of the week",
+    "weekday",
+    "week",
+    "next week",
+    "last week",
+    "leap year",
+    "days in a month",
+    "days in the month",
+    "this next last",
+    "reading a calendar",
+    "primary",
+    "ks1",
+    "ks2",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "month": {
+        "type": [
+          "string",
+          "integer"
+        ],
+        "description": "The month, as a name (\"June\") or number (1–12). With year, the number of days and the weekday of the 1st are both derived — a real calendar month. Default 1 (January)."
+      },
+      "year": {
+        "type": "integer",
+        "description": "The four-digit year. Enables the real calendar: the number of days (28/29 for February by the leap-year rule) and the weekday the 1st falls on are computed from month + year. Omit only for an abstract month (then give days / startDay)."
+      },
+      "days": {
+        "type": "integer",
+        "minimum": 28,
+        "maximum": 31,
+        "description": "Override the number of days in the month (28–31), for an abstract month when no year is given. Ignored when month + year already derive the day count."
+      },
+      "startDay": {
+        "type": [
+          "string",
+          "integer"
+        ],
+        "description": "Override the weekday the 1st falls on — a day name (\"Thursday\") or 0–6 counting from the configured week start. For an abstract month; ignored when month + year derive it."
+      },
+      "weekStart": {
+        "type": "string",
+        "enum": [
+          "monday",
+          "sunday"
+        ],
+        "description": "Which day heads the week columns. Default \"monday\" (the UK convention)."
+      },
+      "marks": {
+        "type": "array",
+        "description": "Dates to label, highlight or occlude.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31,
+              "description": "The date (1–31). A date past the end of the month is ignored."
+            },
+            "label": {
+              "type": "string",
+              "description": "A short caption under the date (e.g. \"Trip\"). Keep it brief — it sits inside the cell. Optional."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber-ring this date. Default false."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Hide the date number as \"?\" — \"which day is the trip on?\". Default false."
+            }
+          },
+          "required": [
+            "day"
+          ]
+        }
+      },
+      "relation": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Step one date on to another and show the link — this/next/last on the calendar. The target date and whether it stays in-month or wraps into the next / previous month are derived.",
+        "properties": {
+          "from": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 31,
+            "description": "The starting date (1–31)."
+          },
+          "op": {
+            "type": "string",
+            "enum": [
+              "nextDay",
+              "prevDay",
+              "nextWeek",
+              "prevWeek"
+            ],
+            "description": "The step: nextDay (+1), prevDay (−1), nextWeek (+7, the same weekday next week), prevWeek (−7). Use by instead for another number of days."
+          },
+          "by": {
+            "type": "integer",
+            "description": "Signed number of days to step, as an alternative to op (e.g. 7, −1, 10). Overrides op if both are given."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the target date — \"what is the date a week later?\". Default false."
+          },
+          "label": {
+            "type": "string",
+            "description": "Override the derived readout text. Omit for the computed one."
+          }
+        },
+        "required": [
+          "from"
+        ]
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "weekdayHeader": {
+            "type": "boolean",
+            "description": "Show the day-of-week column headings (Mon, Tue …). Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional terse line below the figure, e.g. a short context note. Distinct from stem. Never the question or an instruction: that wording is the block's text."
+      },
+      "stem": {
+        "type": "string",
+        "description": "Optional stem sentence in a warm band below the figure — the verbal twin of the model, in a child's reading voice. Use \"?\" where the figure occludes the answer so the sentence never leaks it."
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Worked — June 2024 with a marked date (real month, fully derived)",
+      "params": {
+        "month": "June",
+        "year": 2024,
+        "marks": [
+          {
+            "day": 14,
+            "label": "Sports",
+            "highlight": true
+          }
+        ],
+        "header": "June 2024",
+        "stem": "Sports day is on Friday 14th June."
+      }
+    },
+    {
+      "label": "Blank / answer space — read September 2025",
+      "params": {
+        "month": "September",
+        "year": 2025
+      }
+    },
+    {
+      "label": "Occluded question — which date is the last day of the month?",
+      "params": {
+        "month": "October",
+        "year": 2024,
+        "marks": [
+          {
+            "day": 31,
+            "label": "Party",
+            "occlude": true,
+            "highlight": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "This / next / last — the same day next week (relation shown)",
+      "params": {
+        "month": "June",
+        "year": 2024,
+        "relation": {
+          "from": 10,
+          "op": "nextWeek"
+        },
+        "stem": "A week after Monday the 10th is Monday the 17th."
+      }
+    },
+    {
+      "label": "Hard case — leap February: one week after the 29th wraps into March",
+      "params": {
+        "month": "February",
+        "year": 2024,
+        "relation": {
+          "from": 29,
+          "op": "nextWeek",
+          "occlude": true
+        },
+        "stem": "One week after the 29th of February is ? (it is in March)."
+      }
+    },
+    {
+      "label": "Abstract month — 30 days starting on a Wednesday (no year)",
+      "params": {
+        "days": 30,
+        "startDay": "Wednesday",
+        "header": "A 30-day month",
+        "caption": "This month has 30 days and starts on a Wednesday."
+      }
+    }
+  ]
+}

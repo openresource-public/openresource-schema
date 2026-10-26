@@ -1,0 +1,378 @@
+{
+  "ref": "diagram/mind-map@1",
+  "family": "diagram",
+  "name": "mind-map",
+  "version": 1,
+  "title": "Mind map",
+  "tagline": "Hub-and-spoke mind map — a central idea ringed by labelled branch boxes on spokes; even radial auto-layout, branches occludable, reveal them one at a time.",
+  "description": "A mind map: one central concept box with a ring of branch boxes radiating around it, each joined to the hub by a spoke. You author only the hub label and the branch labels; the model derives every branch's angle (evenly spaced), the ring radius (grown from the branch count and box sizes so the boxes never overlap), each spoke (trimmed to both boxes) and the branch colours (a cycled categorical palette). Any branch — or the hub — occludes to \"?\" for \"what belongs here?\", branches highlight in amber, and `reveal` draws the branches one at a time for a build-it-up sequence (positions are fixed from the full count, so revealing never shifts a branch). It is deliberately one level — a hub and a single ring. For a multi-level hierarchy use diagram/tree; for a process with decisions and arrows use diagram/flowchart.",
+  "whenToUse": "Reach for this to brainstorm or organise one central idea into related sub-ideas fanning out around it — a topic and its themes, a word and associated ideas, a character and their traits, the causes of an event, revision spider-diagrams. Author the centre (the hub label) and a list of branches (each an id + a label); the model places them evenly around the hub, sizes the ring so nothing overlaps, draws the spokes and colours the branches. Conventions: keep branches short (a word or short phrase reads best on a ring); it is one level only — a hub with one ring of branches. Questions: occlude a branch (or the hub) to ask \"what belongs here?\" (the rest stays visible); highlight a branch to mark an answer or the one in focus. Staged build: set reveal to add the branches one at a time (the hub shows first), or move a highlight around the ring — branches never move as they appear. Synonyms a teacher might use: mind map, spider diagram, spider gram, brainstorm, concept map, web, hub and spoke, themes, associations. Switch model when the shape changes: if the sub-ideas split again (a second ring / levels) it is a hierarchy — use diagram/tree; if the boxes are joined by directed arrows into a process or decision flow use diagram/flowchart; a single word split into prefix·root·suffix is diagram/etymology.",
+  "responseModes": [],
+  "tags": [
+    "mind map",
+    "mindmap",
+    "spider diagram",
+    "spider gram",
+    "brainstorm",
+    "concept map",
+    "web",
+    "hub and spoke",
+    "themes",
+    "associations",
+    "revision",
+    "diagram"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "image": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An optional photo shown above the label inside the box (the diagram/cycle image-node pattern). The model reserves a fixed slot and crops the photo to fill it; the box grows to fit. Photos display on the live web/slide; a static PNG/print/PPTX export shows a labelled placeholder frame until asset-rasterisation lands.",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute image URL — e.g. a Wikimedia Commons upload.wikimedia.org thumbnail. Must be a real, reachable image."
+          },
+          "alt": {
+            "type": "string",
+            "description": "A short description of the photo, for accessibility and the figure aria."
+          },
+          "aspect": {
+            "type": "string",
+            "enum": [
+              "square",
+              "landscape",
+              "portrait"
+            ],
+            "description": "Shape of the image slot the photo is cropped to fill. Default \"landscape\" (4:3). Keep one aspect across a map so the boxes match."
+          }
+        },
+        "required": [
+          "url"
+        ]
+      }
+    },
+    "properties": {
+      "center": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The central hub of the mind map.",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "The hub text — the central idea."
+          },
+          "image": {
+            "$ref": "#/$defs/image"
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the hub label as \"?\" (\"what is the central idea?\"). Default false."
+          },
+          "occludeImage": {
+            "type": "boolean",
+            "description": "Blank the hub photo to a \"?\" placeholder. Ignored when the hub has no image. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the hub. Default false."
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Override the hub box's colour (default neutral grey). Wins over the figure-wide `colors.hub`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the hub OUT of brand reskinning. Ignored when the hub is highlighted. Omit for the neutral default."
+          }
+        },
+        "required": [
+          "label"
+        ]
+      },
+      "branches": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 10,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+              "description": "Unique kebab-case id for the branch (not shown to pupils — a stable handle)."
+            },
+            "label": {
+              "type": "string",
+              "description": "The text in this branch box, wrapped to fit."
+            },
+            "image": {
+              "$ref": "#/$defs/image"
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this branch's label as \"?\" — \"what belongs here?\". The box and spoke stay drawn; the hidden word never leaks into the aria. Default false."
+            },
+            "occludeImage": {
+              "type": "boolean",
+              "description": "Blank this branch's photo to a \"?\" placeholder (the photo would otherwise give the answer away). Ignored when there is no image. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this branch — the answer, or the branch in focus. Default false."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override THIS branch's colour (an explicit author/teacher request — \"make this branch dark green\"). Branches default to a single neutral grey; `color` recolours this one. Wins over the figure-wide `colors.branches`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\" or \"aquamarine\") is honoured exactly and opts this branch OUT of brand reskinning. Ignored on a highlighted branch (amber is reserved for the answer). Omit to use the neutral default."
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "description": "The ring of branches around the hub, placed evenly. Order sets the going-clockwise sequence from the top."
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Draw only the first N branches (the hub always shows). Omit to show all. Use across staged steps (0, 1, 2, …) to add branches one at a time — branches never move as they appear."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "colors": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"make the branches dark green\", \"the spokes should be grey\"). Omit to keep the themeable defaults (the categorical palette for branches, accent-blue hub, construction-grey spokes), which follow a brand reskin. A per-branch `color` (or the hub's own `color`) overrides this for one box.",
+        "properties": {
+          "branches": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of every (non-highlighted) branch box, replacing the position-cycled categorical palette. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the branches OUT of brand reskinning. A single branch can still differ via its own `color`."
+          },
+          "hub": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of the central hub box, replacing the default accent blue. Same value space as `branches`. The hub's own `color` overrides this."
+          },
+          "spokes": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of every spoke line, replacing the default construction grey. Same value space as `branches`."
+          }
+        }
+      }
+    },
+    "required": [
+      "center",
+      "branches"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked — themes in a novel (six branches)",
+      "params": {
+        "header": "Themes in the novel",
+        "center": {
+          "label": "Themes"
+        },
+        "branches": [
+          {
+            "id": "prejudice",
+            "label": "Prejudice"
+          },
+          {
+            "id": "innocence",
+            "label": "Innocence"
+          },
+          {
+            "id": "courage",
+            "label": "Moral courage"
+          },
+          {
+            "id": "family",
+            "label": "Family"
+          },
+          {
+            "id": "justice",
+            "label": "Justice"
+          },
+          {
+            "id": "growing-up",
+            "label": "Growing up"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — one branch hidden",
+      "params": {
+        "center": {
+          "label": "Healthy diet"
+        },
+        "branches": [
+          {
+            "id": "protein",
+            "label": "Protein"
+          },
+          {
+            "id": "carbs",
+            "label": "Carbohydrates"
+          },
+          {
+            "id": "fats",
+            "label": "Fats"
+          },
+          {
+            "id": "vitamins",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "water",
+            "label": "Water"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Worked with one branch highlighted (the focus)",
+      "params": {
+        "header": "States of matter",
+        "center": {
+          "label": "Matter"
+        },
+        "branches": [
+          {
+            "id": "solid",
+            "label": "Solid"
+          },
+          {
+            "id": "liquid",
+            "label": "Liquid",
+            "highlight": true
+          },
+          {
+            "id": "gas",
+            "label": "Gas"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer space — hub given, branches to fill in",
+      "params": {
+        "header": "Brainstorm: uses of water",
+        "center": {
+          "label": "Uses of water"
+        },
+        "branches": [
+          {
+            "id": "b1",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "b2",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "b3",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "b4",
+            "label": "?",
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — eight branches, mixed label lengths",
+      "params": {
+        "header": "Causes of World War One",
+        "center": {
+          "label": "Causes of WW1"
+        },
+        "branches": [
+          {
+            "id": "alliances",
+            "label": "Alliances"
+          },
+          {
+            "id": "imperialism",
+            "label": "Imperialism"
+          },
+          {
+            "id": "militarism",
+            "label": "Militarism"
+          },
+          {
+            "id": "nationalism",
+            "label": "Nationalism"
+          },
+          {
+            "id": "assassination",
+            "label": "Assassination of Franz Ferdinand"
+          },
+          {
+            "id": "crises",
+            "label": "Balkan crises"
+          },
+          {
+            "id": "arms",
+            "label": "Arms race"
+          },
+          {
+            "id": "empires",
+            "label": "Rival empires"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Author-set colours — colour-coded branches + grey spokes + dark-green hub",
+      "params": {
+        "header": "Food groups",
+        "colors": {
+          "spokes": "muted"
+        },
+        "center": {
+          "label": "Healthy plate",
+          "color": "darkgreen"
+        },
+        "branches": [
+          {
+            "id": "protein",
+            "label": "Protein",
+            "color": "#d6453c"
+          },
+          {
+            "id": "carbs",
+            "label": "Carbohydrates",
+            "color": "orange"
+          },
+          {
+            "id": "dairy",
+            "label": "Dairy",
+            "color": "accent-3"
+          },
+          {
+            "id": "fruit",
+            "label": "Fruit & veg"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1410 @@
+{
+  "ref": "graphing/function-graph@6",
+  "family": "graphing",
+  "name": "function-graph",
+  "version": 6,
+  "title": "Function graph",
+  "tagline": "Curves y=f(x), parametric or anonymous sketches; numbered or bare axes; derives roots, turning points, asymptotes; sketch-curve auto-marks \"sketch y = f(x)\" from recall.",
+  "description": "One or more curves drawn on shared axes — the model for sketching and reading curves. A curve is defined in one of three ways: an expression y = f(x) (\"x^2 - 3x + 2\", \"sin(x)\", \"1/(x-2)\"); a PARAMETRIC pair x = x(t), y = y(t) over a t-range (\"5cos(t)\" / \"3sin(2t)\"); or an ANONYMOUS sketch named only by its turning points (shape \"cubic\" with max [-2, 5] and min [3, -4]) for the exam figure that shows \"the graph of y = f(x)\" with no equation at all. Whichever you use, the model plots the curve and derives its key features — roots, turning points, the y-intercept, vertical/horizontal asymptotes and the intersections between curves — which you can mark, name, label, occlude (for \"find the …\" questions) or highlight, with optional coordinate readouts and guide lines. You can also mark author-chosen points at a given x (or a given t on a parametric curve). Axes come two ways: NUMBERED plotting axes (the GCSE default — grid, ticks, numbers) or BARE sketching axes (axes.bare — arrowhead axes with no grid, ticks or numbers, bare x and y letters, an optional O at the origin, and axes.marks for the one or two values a sketch does label), which is the A Level Pure idiom; monochrome draws the whole figure in the axis ink rather than accent blue. Curves with a vertical asymptote break cleanly across the discontinuity. Web: drag a marked point along its curve and the readouts update. Answer on the model (@2): set plotCurve ({ fn, xs }) and host with responseMode \"plot-curve\" to turn a blank grid into a \"draw the graph of y = f(x)\" answer surface — the pupil plots one point per tabulated x-value (a handle parked on the x-axis, dragged up), a smooth curve forms through the placed points (broken cleanly at a reciprocal/tan discontinuity), and the model self-checks each placed y against f(x) within half a small square; correctAnswer is the { derived: true } sentinel and the target curve is NEVER drawn on a posed surface. Axis titles (@4): axes.labels { x, y } prints a quantity + unit title on each axis (\"time (s)\", \"volume of gas (cm³)\") so experimental/science curves carry honest labelled axes. Sketch from recall ON the model (@6): set sketchCurve ({ fns: [{ fn }, …] }) and host with responseMode \"sketch-curve\" for the A Level \"Sketch y = f(x)\" task where NO base curve and NO table is given — the pupil picks a parent shape from an unnamed-glyph palette (wave, tan branches, reciprocal wave, parabola, cubic, reciprocal, modulus, exponential), places it with the transform-curve drag/reflect/stretch grammar, and the model self-checks each placed curve against the derived target features — branch count, vertical-asymptote positions (within asymptoteTolerance) and turning points — never pointwise y; several targets on one figure mark \"both on the same axes\" as one gesture; correctAnswer is the { derived: true } sentinel and no target curve is ever drawn on a posed surface. (Tangents/derivatives, areas, inequality regions and motion graphs are separate sibling models — see whenToUse.)",
+  "whenToUse": "Reach for this to sketch and read any curve: linear, quadratic, cubic, reciprocal, exponential, log, trig and modulus graphs, simultaneous equations (as the intersection of two curves), graph transformations, and A Level parametric curves. Give each curve ONE definition and set axes to a window that frames the interesting part. THREE WAYS TO DEFINE A CURVE. (a) fn — an expression in x: + - * / and ^ for powers, unary minus, parentheses, the functions sin cos tan asin acos atan sqrt cbrt abs exp ln log (base 10), the constants pi (or π) and e, and implicit multiplication so \"2x\", \"3sin(x)\" and \"(x+1)(x-1)\" all work; trig is in radians (for degrees write sin(x*pi/180) or set axes.degrees). (b) xt + yt + tRange — a PARAMETRIC curve, same expression syntax but in the parameter t: { xt: \"5cos(t)\", yt: \"3sin(2t)\", tRange: [0, 1.5708] }. Use it whenever the curve has no closed form in x; roots (where the curve meets the x-axis) and turning points are still derived, by scanning t. (c) shape + max/min/through — an ANONYMOUS curve, for the exam figure that shows a curve with NO equation: { shape: \"cubic\", max: [-2, 5], min: [3, -4] } draws a plausible smooth cubic with exactly those turning points, its tails running off the plot. shape is \"quadratic\" | \"cubic\" | \"quartic\" and sets the family and how steeply the tails leave; max and min are the turning points the question names; through is a list of extra [x, y] points the curve must pass through (use it for a stated root or intercept). This is the definition to use for the whole transformations family — \"the diagram shows y = f(x) with a maximum at A(-2, 5) …, sketch y = f(x) + 2 / y = -f(x) / y = f(x - 3) / y = f(-x) / y = 2f(x) / y = f(2x)\". NUMBERED vs BARE AXES. Default axes are numbered plotting axes with a grid — right for GCSE \"draw the graph\", reading values, and anything plotted from a table. Set axes.bare: true for a SKETCH: arrowhead axes with no grid, no ticks and no numbers, bare italic x and y letters at the arrow tips, and axes.showOrigin: true for an O at the origin. That is the A Level Pure convention — only the NAMED features are labelled. When a sketch does name a value on an axis, add it with axes.marks: [{ axis: \"x\", at: 0.693, label: \"ln 2\" }] (a short tick plus the label; guide: true adds a dashed line across the plot). Pair bare axes with monochrome: true so the figure draws in plain black ink like the printed source. MARKING FEATURES. features: [{ type: 'root' | 'turning-point' | 'y-intercept' | 'intersection' | 'asymptote' }] — omit which to mark every one of that type, or set which (0-based) to pick one; add occlude to hide its coordinates (\"find the turning point\"), highlight to draw the eye, guides for dashed lines to the axes, name to print an exam point letter before the derived coordinates (\"A (-2, 5)\"), and showDot: false for a label with NO marker dot (the sketch convention — the printed source labels the turning point but draws no blob). Mark an author-chosen point with points: [{ x }] (its coordinates are computed), or on a parametric curve points: [{ t }]. Common configurations: sketch & label — one curve, features for the roots, turning point and y-intercept. Find a feature — show the curve, occlude+highlight the turning point or a root. Solve simultaneously — two curves with features: [{ type: 'intersection' }]. Transformations — the original and the transformed expression as two curves (a worked/display figure). Sketch a transformation ON the model (auto-marked, @3): responseMode \"transform-curve\" with the source curve drawn and transformCurve: { target: { dx, dy, sx, sy } } — the pupil manipulates an amber copy of the curve (drag = translate, two reflect buttons = flip about an axis, edge grips = stretch) instead of re-plotting points; marking is by final curve, so it is discrete and never fiddly. The source curve may be an ANONYMOUS one, which is how an A Level \"sketch y = f(x) + 2 given this diagram\" question auto-marks. Use it for every \"sketch y = -f(x) / f(x + a) / f(x) + b\" question with a given curve; keep plot-curve for \"complete the table then draw\". Sketch from RECALL on the model (auto-marked, @6): responseMode \"sketch-curve\" with sketchCurve: { fns: [{ fn: \"1/cos(x)\" }] } is for the A Level \"Sketch y = sec θ / y = sin(x − 30°) / the curve you found in part (a)\" task where NOTHING is drawn and NO table is printed — the pupil picks a parent shape from a palette of unnamed shape glyphs and drags/reflects/stretches it into place, so the recall of the SHAPE and where its asymptotes and turning points sit is what marks (branch count + asymptote positions + extremes, to sketch precision — never pointwise plotting). Give one entry per required curve — fns: [{ fn: \"cos(x)\" }, { fn: \"1/cos(x)\" }] marks \"sketch cos θ and sec θ on the same axes\" as one figure — and leave curves EMPTY unless the question genuinely SHOWS a curve as given context. Scope the palette when the question names the family (palette: [\"wave\"] for \"sketch y = sin(x − 30°)\" — the wave shape is given by the question; the translation is the assessed content); leave the default full palette when recalling the shape IS the content (\"sketch sec θ\"). Set sketchCurve.snap to the value lattice the mark scheme reads against (π/4 ≈ 0.7854 for a radians trig window, 30 for a degrees one, 0.5 on plain axes) and pair with axes.bare + monochrome + axes.marks naming the axis values (π/2, π …), exactly like the printed answer axes. correctAnswer: { derived: true }; the target is never drawn armed or posed — reveal the completed sketch in the worked solution as ordinary curves. Where an asymptote coincides with a labelled axes.marks value (the sec asymptote at a marked π/2), nudge the label off the dashed line with marks[].anchor: \"start\" | \"end\" (@6). Asymptotes — a reciprocal or tan curve with features: [{ type: 'asymptote' }]. Switch primitive when the teaching changes — this model only sketches and reads curves; for a tangent, the gradient function, or differentiation from first principles use graphing/first-principles; for the area under a curve or the trapezium/Riemann rule use graphing/area-under-curve; for graphical inequalities or shaded feasible regions use graphing/inequality-region; for distance-time or speed-time (motion) graphs use graphing/journey-graph; for plotting discrete points or shapes on a grid use graphing/coordinate-grid. Cross-block convention: keep the same window across the blocks of one lesson so pupils compare curves on a fixed frame, and keep axes.bare + monochrome consistent within a lesson — do not mix a numbered plot and a bare sketch of the same curve. A staged build reads well: empty axes → the curve appears → features are marked → the answer is revealed. Answer on the model — \"complete the table of values, then draw the graph of y = f(x)\": pair a marked table tile (the pupil types the y-row) with a marked model tile that hosts this model with responseMode \"plot-curve\" and params plotCurve: { fn: the same f(x), xs: the table's x-row }. Leave curves EMPTY (the target is in plotCurve, never drawn on the posed grid); set the axes window to the one the printed grid uses. The pupil drags one handle per x up from the axis; each placed y self-marks against f(x) to half a small square. Use the SAME window for the table, the answer grid and any worked-solution reveal. Science / experimental graphs (@4): give the axes quantity + unit titles with axes.labels: { x: \"time (s)\", y: \"volume of gas (cm³)\" } — use it on every science curve (a rates-of-reaction gas curve, a cooling curve) and on its plot-curve answer surface, keeping the labels identical across a lesson's blocks; a plain maths sketch normally leaves labels off (the model then renders exactly as before). Synonyms a teacher might use: graph, curve, plot, sketch, function, y =, quadratic, parabola, cubic, reciprocal, exponential, gradient, roots, x-intercepts, turning point, stationary point, maximum, minimum, vertex, asymptote, intersection, simultaneous equations, tangent, area under the curve, transformation, parametric equations, parameter t, sketch the curve, bare axes, sketch from recall, sec, cosec, cot, reciprocal trig graphs, draw the graph from its equation.",
+  "responseModes": [
+    "plot-curve",
+    "transform-curve",
+    "sketch-curve"
+  ],
+  "tags": [
+    "graph",
+    "curve",
+    "plot",
+    "sketch",
+    "function",
+    "quadratic",
+    "parabola",
+    "cubic",
+    "quartic",
+    "reciprocal",
+    "exponential",
+    "logarithm",
+    "trig",
+    "sine",
+    "cosine",
+    "modulus",
+    "roots",
+    "x-intercept",
+    "turning point",
+    "stationary point",
+    "maximum",
+    "minimum",
+    "vertex",
+    "asymptote",
+    "intersection",
+    "simultaneous equations",
+    "tangent",
+    "normal",
+    "gradient",
+    "area under the curve",
+    "transformation",
+    "graphing",
+    "maths",
+    "axis labels",
+    "axis titles",
+    "units",
+    "science graph",
+    "rate of reaction",
+    "experimental data",
+    "parametric",
+    "parametric equations",
+    "parameter",
+    "sketch the curve",
+    "bare axes",
+    "A Level",
+    "anonymous curve",
+    "y = f(x)",
+    "monochrome",
+    "sketch from recall",
+    "sec",
+    "cosec",
+    "cot",
+    "secant",
+    "cosecant",
+    "cotangent",
+    "reciprocal trig",
+    "sketch-curve"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The window — the rectangle of the plane that is shown. Frame it so the curve's interesting features (roots, turning points) are visible with a little room.",
+        "properties": {
+          "x": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the x-axis. Default [-10, 10]."
+          },
+          "y": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the y-axis. Default [-10, 10]. Choose it to fit the curve's height over the x-range."
+          },
+          "xStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value for the range. Ignored when bare is true."
+          },
+          "yStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value for the range. Ignored when bare is true."
+          },
+          "equalAspect": {
+            "type": "boolean",
+            "description": "Force TRUE square scale (1 unit of x = 1 unit of y in pixels) so slopes, circles and transformations are geometrically accurate. Default false: x and y are scaled independently to fill a consistent plot box, so a tall or flat window still looks well-proportioned (use the default for ordinary sketching; set true when the exact shape/gradient matters)."
+          },
+          "degrees": {
+            "type": "boolean",
+            "description": "Evaluate trig functions in DEGREES rather than radians, so sin(x) means sin of x degrees (sin(90) = 1). Pair with an x-window in degrees, e.g. x: [0, 360], xStep: 90. Default false (radians)."
+          },
+          "bare": {
+            "type": "boolean",
+            "description": "SKETCH axes instead of plotting axes: arrowhead axes with NO grid, NO ticks and NO numbers, and bare italic \"x\" and \"y\" letters at the arrow tips. This is the A Level Pure convention — only the features the question names are labelled. Default false (numbered plotting axes with a grid, the GCSE default). Pair with monochrome: true to match a printed black-ink sketch, axes.showOrigin for the O, and axes.marks for any value the sketch does name. Set axes.labels to override the bare x / y letters with your own (e.g. \"t\" and \"v\")."
+          },
+          "showOrigin": {
+            "type": "boolean",
+            "description": "Print an italic \"O\" at the origin, just below and left of it — the sketch convention when the axes carry no numbers. Default false. Only drawn when the origin is inside the window."
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Axis titles — the quantity and unit each axis measures, e.g. { x: \"time (s)\", y: \"volume of gas (cm³)\" }. A bare variable letter (up to 3 characters, e.g. \"t\") prints in the house axis-name style (x just past the x-arrow tip, y above the y-arrow tip); a quantity + unit title prints in the exam-paper position (x centred below the plot, y at the top-left canvas edge) so the figure keeps its size. Use on science/experimental curves and their plot-curve answer surfaces, keeping the titles identical across a lesson's blocks. Omit for a plain maths sketch (default: no titles, except that axes.bare supplies \"x\" and \"y\").",
+            "properties": {
+              "x": {
+                "type": "string",
+                "description": "Title for the horizontal axis, quantity then unit in brackets: \"time (s)\". A bare variable letter (\"t\") also works."
+              },
+              "y": {
+                "type": "string",
+                "description": "Title for the vertical axis: \"volume of gas (cm³)\", \"mass (g)\"."
+              }
+            }
+          },
+          "marks": {
+            "type": "array",
+            "maxItems": 8,
+            "description": "Named values ON an axis — the one or two positions a sketch does label (\"ln 2\", \"ln 4\", \"π\", \"2a\"). Each draws a short tick across the axis with the label beside it (below the x-axis, left of the y-axis). Use on bare axes, where there are no numbers; on numbered axes they add a named position alongside the numbering.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y"
+                  ],
+                  "description": "Which axis the value sits on. Default \"x\"."
+                },
+                "at": {
+                  "type": "number",
+                  "description": "The position on that axis, in graph units. For a named constant give its value (ln 2 → 0.693)."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "The text printed beside the tick, e.g. \"ln 2\", \"π\", \"2a\". Omit to print the number itself."
+                },
+                "guide": {
+                  "type": "boolean",
+                  "description": "Draw a dashed construction line right across the plot at this value (the \"bounded by x = ln 2\" line). Default false."
+                },
+                "anchor": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "middle",
+                    "end"
+                  ],
+                  "description": "X-AXIS marks only (@6): where the label sits relative to its tick. Default \"middle\" (centred under the tick — unchanged). Use \"start\" (label begins just right of the tick) or \"end\" (label ends just left of it) to nudge the text off a full-height dashed asymptote drawn at the same value — sec's asymptote at a marked π/2 would otherwise strike through the label. Ignored on y-axis marks."
+                }
+              },
+              "required": [
+                "at"
+              ]
+            }
+          }
+        }
+      },
+      "grid": {
+        "type": "boolean",
+        "description": "Show the background grid. Default true. Ignored when axes.bare is true (a bare sketch never has a grid)."
+      },
+      "monochrome": {
+        "type": "boolean",
+        "description": "Draw the curves, marks and readouts in the plain axis ink instead of accent blue — the printed-textbook look, and the right pairing for axes.bare. Default false. A curve or feature with highlight: true still goes amber: highlight means \"this is the result\", not \"this is a colour\"."
+      },
+      "curves": {
+        "type": "array",
+        "maxItems": 4,
+        "description": "The curves to draw. Two or more share the axes — that is how transformations (plot the transformed expression) and simultaneous equations (the curves' intersection) are shown. Define each curve exactly ONE way: fn (an expression in x), xt + yt + tRange (parametric), or shape + max/min/through (an anonymous sketch).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fn": {
+              "type": "string",
+              "description": "The function f(x) as an expression: + - * / ^, parentheses, sin cos tan asin acos atan sqrt cbrt abs exp ln log, pi and e, implicit multiplication (\"2x\", \"3sin(x)\"). Trig in radians. Examples: \"x^2 - 3x + 2\", \"1/(x-2)\", \"2^x\", \"sin(x)\", \"abs(x) - 1\"."
+            },
+            "xt": {
+              "type": "string",
+              "description": "PARAMETRIC: x as an expression in the parameter t, e.g. \"5cos(t)\", \"ln(t + 2)\", \"t^2 - 1\". Same syntax as fn but the variable is t. Give yt and tRange too."
+            },
+            "yt": {
+              "type": "string",
+              "description": "PARAMETRIC: y as an expression in t, e.g. \"3sin(2t)\", \"1/(t + 1)\". Give xt and tRange too."
+            },
+            "tRange": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "PARAMETRIC: [t0, t1], the range of the parameter the curve is drawn over — exactly the range the question states (0 ≤ t ≤ π/2 → [0, 1.5708]). Keep clear of a value where x(t) or y(t) is undefined (for t > -1 with y = 1/(t+1), start at -0.9, not -1). Default [0, 6.2832]."
+            },
+            "shape": {
+              "type": "string",
+              "enum": [
+                "quadratic",
+                "cubic",
+                "quartic"
+              ],
+              "description": "ANONYMOUS curve: the family of the curve the diagram shows, when the question gives NO equation (\"the diagram shows the graph of y = f(x)\"). It sets how steeply the tails leave the outermost turning point (a quartic leaves faster than a cubic, a cubic faster than a quadratic). Give the turning points with max / min and any stated points with through; the model fits a plausible smooth curve through exactly those and runs the tails off the plot. Use for the whole transformations family."
+            },
+            "max": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "ANONYMOUS curve: the [x, y] of the MAXIMUM turning point the question names, e.g. [-2, 5]. The fitted curve is stationary there and lower on both sides."
+            },
+            "min": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "ANONYMOUS curve: the [x, y] of the MINIMUM turning point, e.g. [3, -4]. Give max and min together for a cubic; either alone for a quadratic."
+            },
+            "through": {
+              "type": "array",
+              "maxItems": 6,
+              "description": "ANONYMOUS curve: extra [x, y] points the curve must pass through — a stated root ([1, 0]), a y-intercept ([0, 2]), or a point that fixes the shape between turning points. The curve is fitted smoothly through these and the turning points, in x order.",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "label": {
+              "type": "string",
+              "description": "Equation label drawn near the curve, e.g. \"y = x² − 3x + 2\" or \"y = f(x)\". Use proper maths typography (², −). Omit for an unlabelled curve."
+            },
+            "domain": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Restrict the plotted x-range to [min, max] (e.g. a piecewise piece, or only the positive branch). Default: the whole window. Ignored on a parametric curve — use tRange there."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this curve in the amber emphasis colour (the one the lesson is about). Default false."
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "fn"
+              ]
+            },
+            {
+              "required": [
+                "xt",
+                "yt"
+              ]
+            },
+            {
+              "required": [
+                "shape"
+              ]
+            }
+          ]
+        }
+      },
+      "features": {
+        "type": "array",
+        "description": "Derived features to MARK on the curves. Each feature's position and coordinates are computed from the curve(s); you only choose the type and how to display it.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "root",
+                "turning-point",
+                "y-intercept",
+                "intersection",
+                "asymptote"
+              ],
+              "description": "'root' = where a curve crosses the x-axis; 'turning-point' = a maximum or minimum; 'y-intercept' = where it crosses the y-axis; 'intersection' = where two curves cross; 'asymptote' = a vertical/horizontal asymptote (drawn as a dashed line). On a PARAMETRIC curve only 'root' and 'turning-point' are found (by scanning t)."
+            },
+            "curve": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Which curve (0-based index into curves) the feature belongs to. Default 0. Ignored for 'intersection' (which spans curves)."
+            },
+            "which": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "When there are several of this type (two roots, two intersections), pick one by 0-based index in left-to-right order. Omit to mark every one of the type."
+            },
+            "name": {
+              "type": "string",
+              "description": "A point letter printed BEFORE the derived coordinates, the exam convention: name \"A\" gives \"A (-2, 5)\", and occluded gives \"A (?, ?)\". Omit for bare coordinates."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the displayed coordinate text entirely (e.g. a name on its own). Omit to show the derived coordinates."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Hide this feature's coordinates as \"?\" — the \"find the root / turning point\" hook. The marker still shows. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the eye to this feature (amber). Default false."
+            },
+            "guides": {
+              "type": "boolean",
+              "description": "Draw dashed guide lines from the point to each axis. Default false."
+            },
+            "showDot": {
+              "type": "boolean",
+              "description": "Draw the marker dot at the feature. Default true. Set false for the SKETCH convention — the printed A Level figure labels a turning point \"A (-2, 5)\" with no blob on the curve."
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      },
+      "points": {
+        "type": "array",
+        "description": "Author-chosen points to mark ON a curve. You give the x-value (or t on a parametric curve); the point sits on the curve there and its coordinates are computed.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "The x-value; the point is (x, f(x)) on the chosen curve."
+            },
+            "t": {
+              "type": "number",
+              "description": "PARAMETRIC alternative to x: the parameter value; the point is (x(t), y(t)) on the chosen curve."
+            },
+            "curve": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Which curve (0-based). Default 0."
+            },
+            "name": {
+              "type": "string",
+              "description": "A point letter printed BEFORE the derived coordinates: name \"P\" gives \"P (2, 6)\". Omit for bare coordinates."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the coordinate text entirely (e.g. \"P\"). Omit to show the derived coordinates."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Show the coordinates as \"?\". Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber emphasis. Default false."
+            },
+            "guides": {
+              "type": "boolean",
+              "description": "Dashed guide lines to the axes. Default false."
+            },
+            "showDot": {
+              "type": "boolean",
+              "description": "Draw the marker dot. Default true; set false for a label-only annotation on a sketch."
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "x"
+              ]
+            },
+            {
+              "required": [
+                "t"
+              ]
+            }
+          ]
+        }
+      },
+      "sliders": {
+        "type": "array",
+        "maxItems": 4,
+        "description": "Interactive parameter sliders (like Desmos). Each declares a single-letter name you can use in the curve expressions (e.g. name \"a\" with fn \"a*x^2\"); a slider is drawn below the graph and dragging it (web) re-plots the curve live. Use sliders to explore how a parameter changes a family of curves — \"drag a: what does it do to y = a·x²?\". Write a × between a slider and x (\"a*x^2\" or \"a x^2\"), not \"ax\".",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The single-letter parameter, e.g. \"a\", \"b\", \"k\", \"m\". Use it in any curve's fn (\"a*x + b\")."
+            },
+            "min": {
+              "type": "number",
+              "description": "Minimum value of the slider."
+            },
+            "max": {
+              "type": "number",
+              "description": "Maximum value of the slider."
+            },
+            "value": {
+              "type": "number",
+              "description": "Starting value. Default: the midpoint of min and max."
+            },
+            "step": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Snap the slider to multiples of this. Omit for a continuous slider."
+            },
+            "label": {
+              "type": "string",
+              "description": "Text shown beside the slider instead of the bare letter (e.g. \"gradient m\"). Omit to show the name."
+            }
+          },
+          "required": [
+            "name",
+            "min",
+            "max"
+          ]
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line of text centred below the figure, e.g. the equation being sketched. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Drag a marked point (from points) along its curve; x snaps to a fine grid and the (x, f(x)) coordinates update live. Default false."
+      },
+      "plotCurve": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The \"draw the graph of y = f(x)\" ANSWER surface (@2, responseMode \"plot-curve\"). The pupil plots one point per tabulated x-value and a smooth curve forms through them; the model self-checks the placed heights against the derived f(x). The target function lives HERE, never in curves — so a posed/print surface (no response ctx) draws a BLANK grid, never the answer. Leave curves EMPTY when using plotCurve. Give the same axes window as the printed table expects.",
+        "properties": {
+          "fn": {
+            "type": "string",
+            "description": "The target function f(x) as an expression (same syntax as a curve's fn: + - * / ^, parentheses, sin cos tan … pi e, implicit multiplication; radians unless axes.degrees). The pupil's plotted heights are checked against this. It is NEVER drawn on any surface — the enhance closure evaluates it only to mark. Example: \"1/x\", \"x^3 - 3x + 2\", \"2^x\"."
+          },
+          "xs": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "description": "The x-values the pupil plots at — exactly the x-row of the question's table of values, in order. One draggable handle is parked on the x-axis at each. Give every tabulated x (skip only x-values where f is undefined, e.g. x = 0 for a reciprocal). CRITICAL: the axes.y window MUST contain f(x) at every one of these x-values — a point whose true height falls outside the window can never be plotted, so widen y (and set yStep) to fit the biggest and smallest table value."
+          },
+          "tolerance": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Half-band (in y-units) a placed point may miss f(x) by and still be correct. Default: yStep / 4 (half a small square — the mark-scheme allowance). Widen only for a coarse grid."
+          }
+        },
+        "required": [
+          "fn",
+          "xs"
+        ]
+      },
+      "transformCurve": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The \"sketch the transformed graph\" ANSWER surface (@3, responseMode \"transform-curve\"). The SOURCE curve y = f(x) is drawn as usual in curves — an expression curve OR an anonymous one (@5), which is how an A Level \"the diagram shows y = f(x) with a maximum at A …, sketch y = f(x) + 2\" question auto-marks. An amber draggable COPY of it starts as the identity. The pupil drags the copy to translate it (snapping to half a grid step), taps a reflect icon-button to flip it about an axis (one tap = f(-x) or -f(x)), or drags an edge grip to stretch it — the translate/reflect/stretch vocabulary as direct manipulation, with no per-point accuracy demand. The target transform lives HERE, never drawn; the model marks by comparing the pupil's final curve against the target's curve by sampling, so any equivalent composition (including symmetries of f) is accepted.",
+        "properties": {
+          "curve": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Index into curves of the source y = f(x) the copy transforms. Default 0."
+          },
+          "target": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The required transform of the source: the copy must land as y = sy·f(sx·(x − dx)) + dy. Examples: -f(x) → { sy: -1 }; f(x - 3) → { dx: 3 }; f(x) + 2 → { dy: 2 }; f(-x) → { sx: -1 }; -f(x + 2) → { sx: 1, sy: -1, dx: -2 }.",
+            "properties": {
+              "dx": {
+                "type": "number",
+                "description": "Horizontal translation (units right). Default 0."
+              },
+              "dy": {
+                "type": "number",
+                "description": "Vertical translation (units up). Default 0."
+              },
+              "sx": {
+                "type": "number",
+                "enum": [
+                  1,
+                  -1
+                ],
+                "description": "-1 reflects in the y-direction axis line x = dx (i.e. f(-x) when dx = 0). Default 1."
+              },
+              "sy": {
+                "type": "number",
+                "enum": [
+                  1,
+                  -1
+                ],
+                "description": "-1 reflects vertically (i.e. -f(x) composed with the translation). Default 1."
+              }
+            }
+          }
+        },
+        "required": [
+          "target"
+        ]
+      },
+      "sketchCurve": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The \"sketch y = f(x) from recall\" ANSWER surface (@6, responseMode \"sketch-curve\"). For the A Level sketch task where NO base curve is drawn and NO table is given — so neither plot-curve (needs a table; cannot express unbounded reciprocal branches) nor transform-curve (needs a drawn source curve, which would hand over the shape) fits. The pupil picks a parent SHAPE from a palette of unnamed shape glyphs and places it with the transform grammar (drag to translate, reflect buttons, edge grips to stretch); the model self-checks each placed curve against the target — branch count, vertical-asymptote positions and turning points (position AND max/min kind), plus a generous sampled shape-agreement band — never pointwise y. The targets live HERE, never in curves, and are never drawn on any surface (only the enhance closure evaluates them, to mark); a posed/print surface draws blank answer axes. Leave curves EMPTY unless the question genuinely shows a curve as given context. correctAnswer is the { derived: true } sentinel.",
+        "properties": {
+          "fns": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "The required curve(s), one entry per curve the question asks for — two entries mark \"sketch cos θ and sec θ on the same set of axes\" as one figure (matching is order-independent: any placed curve may satisfy any target, each at most one). Each target is an expression in x (same syntax as a curve's fn; radians unless axes.degrees).",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "fn": {
+                  "type": "string",
+                  "description": "The target function as an expression: \"cos(x)\", \"1/cos(x)\" (sec), \"1/sin(x)\" (cosec), \"1/tan(x)\" (cot), \"sin(x - 30)\" with axes.degrees, \"(x-2)^2 + 3\". NEVER drawn on any surface — the enhance closure evaluates it only to mark."
+                }
+              },
+              "required": [
+                "fn"
+              ]
+            }
+          },
+          "palette": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "string",
+              "enum": [
+                "wave",
+                "tan-branches",
+                "reciprocal-wave",
+                "parabola",
+                "cubic",
+                "reciprocal",
+                "modulus",
+                "exponential"
+              ]
+            },
+            "description": "Which parent shapes the palette offers, as unnamed mini-glyph chips: \"wave\" (the sine shape — covers sin AND cos by translation), \"tan-branches\" (tan; cot is this reflected), \"reciprocal-wave\" (the sec U-branches — covers cosec by translation), \"parabola\" (x²), \"cubic\" (x³), \"reciprocal\" (1/x), \"modulus\" (|x|), \"exponential\" (eˣ). Default: all eight. Scope it when the question GIVES the family (\"sketch y = sin(x − 30°)\" → [\"wave\"] — the translation is the assessed content, the shape is stated); leave the full palette when recalling the shape is the content. Keep at least one distractor whenever the shape choice is assessed."
+          },
+          "snap": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The x-translation snap lattice, in graph units — set it to the value grid the mark scheme reads against: π/4 (0.7854) for a radians trig window, 30 or 45 for a degrees one, 0.5 or 1 on plain axes. Default: half the x grid step (axes.xStep / 2, or the derived step on bare axes). Vertical translation snaps to half the y step independently."
+          },
+          "asymptoteTolerance": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "How far (in x-units) a placed curve's vertical asymptote may sit from the target's and still be correct — the sketch-precision band. Default: a 25th of the x-window width (and never tighter than the snap lattice). Turning-point positions are checked to the same band."
+          }
+        },
+        "required": [
+          "fns"
+        ]
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Example 1",
+      "params": {
+        "axes": {
+          "x": [
+            -0.5,
+            7.4
+          ],
+          "y": [
+            -3,
+            3
+          ],
+          "bare": true,
+          "showOrigin": true,
+          "marks": [
+            {
+              "axis": "x",
+              "at": 1.5708,
+              "label": "π/2"
+            },
+            {
+              "axis": "x",
+              "at": 3.1416,
+              "label": "π"
+            },
+            {
+              "axis": "x",
+              "at": 4.7124,
+              "label": "3π/2"
+            },
+            {
+              "axis": "x",
+              "at": 6.2832,
+              "label": "2π"
+            },
+            {
+              "axis": "y",
+              "at": 1,
+              "label": "1"
+            },
+            {
+              "axis": "y",
+              "at": -1,
+              "label": "−1"
+            }
+          ]
+        },
+        "monochrome": true,
+        "sketchCurve": {
+          "fns": [
+            {
+              "fn": "cos(x)"
+            },
+            {
+              "fn": "1/cos(x)"
+            }
+          ],
+          "snap": 0.7854
+        }
+      }
+    },
+    {
+      "label": "Example 2",
+      "params": {
+        "axes": {
+          "x": [
+            -0.5,
+            7.4
+          ],
+          "y": [
+            -3,
+            3
+          ],
+          "bare": true,
+          "showOrigin": true,
+          "marks": [
+            {
+              "axis": "x",
+              "at": 1.5708,
+              "label": "π/2"
+            },
+            {
+              "axis": "x",
+              "at": 3.1416,
+              "label": "π"
+            },
+            {
+              "axis": "x",
+              "at": 4.7124,
+              "label": "3π/2"
+            },
+            {
+              "axis": "x",
+              "at": 6.2832,
+              "label": "2π"
+            },
+            {
+              "axis": "y",
+              "at": 1,
+              "label": "1"
+            },
+            {
+              "axis": "y",
+              "at": -1,
+              "label": "−1"
+            }
+          ]
+        },
+        "monochrome": true,
+        "sketchCurve": {
+          "fns": [
+            {
+              "fn": "1/sin(x)"
+            }
+          ],
+          "snap": 0.7854
+        }
+      }
+    },
+    {
+      "label": "Worked reveal — the completed reciprocal-trig sketch, asymptote labels nudged clear (@6 marks.anchor)",
+      "params": {
+        "axes": {
+          "x": [
+            -0.5,
+            7.4
+          ],
+          "y": [
+            -3,
+            3
+          ],
+          "bare": true,
+          "showOrigin": true,
+          "marks": [
+            {
+              "axis": "x",
+              "at": 1.5708,
+              "label": "π/2",
+              "anchor": "end"
+            },
+            {
+              "axis": "x",
+              "at": 3.1416,
+              "label": "π"
+            },
+            {
+              "axis": "x",
+              "at": 4.7124,
+              "label": "3π/2",
+              "anchor": "end"
+            },
+            {
+              "axis": "x",
+              "at": 6.2832,
+              "label": "2π"
+            },
+            {
+              "axis": "y",
+              "at": 1,
+              "label": "1"
+            },
+            {
+              "axis": "y",
+              "at": -1,
+              "label": "−1"
+            }
+          ]
+        },
+        "monochrome": true,
+        "curves": [
+          {
+            "fn": "cos(x)",
+            "domain": [
+              0,
+              6.2832
+            ]
+          },
+          {
+            "fn": "1/cos(x)",
+            "domain": [
+              0,
+              6.2832
+            ]
+          }
+        ],
+        "features": [
+          {
+            "type": "asymptote",
+            "curve": 1
+          }
+        ],
+        "points": [
+          {
+            "curve": 0,
+            "x": 2.2,
+            "label": "y = cos θ",
+            "showDot": false
+          },
+          {
+            "curve": 1,
+            "x": 0.75,
+            "label": "y = sec θ",
+            "showDot": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "Example 4",
+      "params": {
+        "axes": {
+          "x": [
+            -30,
+            400
+          ],
+          "y": [
+            -1.6,
+            1.6
+          ],
+          "degrees": true,
+          "bare": true,
+          "showOrigin": true,
+          "marks": [
+            {
+              "axis": "x",
+              "at": 90,
+              "label": "90"
+            },
+            {
+              "axis": "x",
+              "at": 180,
+              "label": "180"
+            },
+            {
+              "axis": "x",
+              "at": 270,
+              "label": "270"
+            },
+            {
+              "axis": "x",
+              "at": 360,
+              "label": "360"
+            },
+            {
+              "axis": "y",
+              "at": 1,
+              "label": "1"
+            },
+            {
+              "axis": "y",
+              "at": -1,
+              "label": "−1"
+            }
+          ]
+        },
+        "monochrome": true,
+        "sketchCurve": {
+          "fns": [
+            {
+              "fn": "sin(x - 45)"
+            }
+          ],
+          "palette": [
+            "wave"
+          ],
+          "snap": 45
+        }
+      }
+    },
+    {
+      "label": "Example 5",
+      "params": {
+        "axes": {
+          "x": [
+            -2,
+            7
+          ],
+          "y": [
+            -2,
+            10
+          ],
+          "bare": true,
+          "showOrigin": true
+        },
+        "monochrome": true,
+        "sketchCurve": {
+          "fns": [
+            {
+              "fn": "(x-3)^2 + 2"
+            }
+          ],
+          "snap": 0.5
+        }
+      }
+    },
+    {
+      "label": "The hard case (@5) — an anonymous y = f(x) on bare axes, turning points named, no equation",
+      "params": {
+        "axes": {
+          "x": [
+            -6,
+            7
+          ],
+          "y": [
+            -8,
+            9
+          ],
+          "bare": true,
+          "showOrigin": true
+        },
+        "monochrome": true,
+        "curves": [
+          {
+            "shape": "cubic",
+            "max": [
+              -2,
+              5
+            ],
+            "min": [
+              3,
+              -4
+            ],
+            "label": "y = f(x)"
+          }
+        ],
+        "features": [
+          {
+            "type": "turning-point",
+            "which": 0,
+            "name": "A",
+            "showDot": false
+          },
+          {
+            "type": "turning-point",
+            "which": 1,
+            "name": "B",
+            "showDot": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "The second hard case (@5) — a parametric arch on bare axes, its x-axis crossings derived",
+      "params": {
+        "axes": {
+          "x": [
+            -0.6,
+            6.4
+          ],
+          "y": [
+            -1,
+            4.4
+          ],
+          "bare": true
+        },
+        "monochrome": true,
+        "curves": [
+          {
+            "xt": "6cos(t)",
+            "yt": "4sin(2t)",
+            "tRange": [
+              0,
+              1.5708
+            ],
+            "label": "C"
+          }
+        ],
+        "features": [
+          {
+            "type": "root",
+            "highlight": true
+          }
+        ],
+        "caption": "x = 6 cos t, y = 4 sin 2t for 0 ≤ t ≤ π/2"
+      }
+    },
+    {
+      "label": "Bare-axes sketch of a named curve (@5) — a restricted domain, monochrome",
+      "params": {
+        "axes": {
+          "x": [
+            -0.7,
+            3.9
+          ],
+          "y": [
+            -4.5,
+            2.6
+          ],
+          "bare": true,
+          "showOrigin": true
+        },
+        "monochrome": true,
+        "curves": [
+          {
+            "fn": "3 - 2/sin(x)",
+            "domain": [
+              0.36,
+              2.78
+            ],
+            "label": "y = 3 − 2 cosec x"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Parametric decay with named x-values on the axis (@5) — axes.marks with guides",
+      "params": {
+        "axes": {
+          "x": [
+            -0.3,
+            2.6
+          ],
+          "y": [
+            -0.3,
+            3.4
+          ],
+          "bare": true,
+          "marks": [
+            {
+              "axis": "x",
+              "at": 0.693,
+              "label": "ln 2",
+              "guide": true
+            },
+            {
+              "axis": "x",
+              "at": 1.386,
+              "label": "ln 4",
+              "guide": true
+            }
+          ]
+        },
+        "monochrome": true,
+        "curves": [
+          {
+            "xt": "ln(t + 2)",
+            "yt": "1/(t + 1)",
+            "tRange": [
+              -0.65,
+              11
+            ]
+          }
+        ],
+        "caption": "The region under C between x = ln 2 and x = ln 4"
+      }
+    },
+    {
+      "label": "Example 10",
+      "params": {
+        "axes": {
+          "x": [
+            -6,
+            7
+          ],
+          "y": [
+            -8,
+            10
+          ],
+          "xStep": 1,
+          "yStep": 1
+        },
+        "curves": [
+          {
+            "shape": "cubic",
+            "max": [
+              -2,
+              4
+            ],
+            "min": [
+              3,
+              -3
+            ],
+            "label": "y = f(x)"
+          }
+        ],
+        "transformCurve": {
+          "curve": 0,
+          "target": {
+            "dy": 3
+          }
+        },
+        "caption": "Drag the copy to where y = f(x) + 3 belongs."
+      }
+    },
+    {
+      "label": "Example 11",
+      "params": {
+        "axes": {
+          "x": [
+            -4,
+            4
+          ],
+          "y": [
+            -5,
+            5
+          ],
+          "xStep": 1,
+          "yStep": 1
+        },
+        "curves": [
+          {
+            "fn": "5*(x-1)^2",
+            "label": "y = f(x)"
+          }
+        ],
+        "transformCurve": {
+          "curve": 0,
+          "target": {
+            "sy": -1
+          }
+        },
+        "caption": "Drag the copy to move it, or use the reflect buttons to flip it."
+      }
+    },
+    {
+      "label": "Sketch & label a quadratic — roots, turning point, y-intercept",
+      "params": {
+        "axes": {
+          "x": [
+            -4,
+            5
+          ],
+          "y": [
+            -6,
+            4
+          ]
+        },
+        "curves": [
+          {
+            "fn": "x^2 - 2x - 3",
+            "label": "y = x² − 2x − 3"
+          }
+        ],
+        "features": [
+          {
+            "type": "root"
+          },
+          {
+            "type": "turning-point",
+            "guides": true
+          },
+          {
+            "type": "y-intercept"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Find the turning point (occluded question)",
+      "params": {
+        "axes": {
+          "x": [
+            -1,
+            7
+          ],
+          "y": [
+            -6,
+            8
+          ]
+        },
+        "curves": [
+          {
+            "fn": "x^2 - 6x + 5",
+            "label": "y = x² − 6x + 5"
+          }
+        ],
+        "features": [
+          {
+            "type": "root"
+          },
+          {
+            "type": "turning-point",
+            "occlude": true,
+            "highlight": true,
+            "guides": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer space — blank axes to sketch on",
+      "params": {
+        "axes": {
+          "x": [
+            -5,
+            5
+          ],
+          "y": [
+            -10,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "label": "Simultaneous equations — line meets curve (intersections)",
+      "params": {
+        "axes": {
+          "x": [
+            -3,
+            3
+          ],
+          "y": [
+            -1,
+            9
+          ]
+        },
+        "curves": [
+          {
+            "fn": "x^2",
+            "label": "y = x²"
+          },
+          {
+            "fn": "x + 2",
+            "label": "y = x + 2",
+            "highlight": true
+          }
+        ],
+        "features": [
+          {
+            "type": "intersection",
+            "guides": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "The hard case — a reciprocal with a vertical asymptote",
+      "params": {
+        "axes": {
+          "x": [
+            -3,
+            7
+          ],
+          "y": [
+            -6,
+            6
+          ]
+        },
+        "curves": [
+          {
+            "fn": "1/(x-2)",
+            "label": "y = 1 ÷ (x − 2)"
+          }
+        ],
+        "features": [
+          {
+            "type": "asymptote"
+          }
+        ]
+      }
+    },
+    {
+      "label": "A trig curve — sine over two periods, roots marked",
+      "params": {
+        "axes": {
+          "x": [
+            -6.5,
+            6.5
+          ],
+          "y": [
+            -1.5,
+            1.5
+          ],
+          "xStep": 1.5707963,
+          "yStep": 0.5
+        },
+        "curves": [
+          {
+            "fn": "sin(x)",
+            "label": "y = sin x"
+          }
+        ],
+        "features": [
+          {
+            "type": "root"
+          }
+        ],
+        "caption": "y = sin x (x in radians)"
+      }
+    },
+    {
+      "label": "Draw the graph (answer surface) — plot the cubic y = x³ − 4x",
+      "params": {
+        "axes": {
+          "x": [
+            -3,
+            3
+          ],
+          "y": [
+            -16,
+            16
+          ],
+          "xStep": 1,
+          "yStep": 2
+        },
+        "plotCurve": {
+          "fn": "x^3 - 4x",
+          "xs": [
+            -3,
+            -2,
+            -1,
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "caption": "On the grid, draw the graph of y = x³ − 4x for −3 ≤ x ≤ 3"
+      }
+    },
+    {
+      "label": "Draw the graph (answer surface) — the reciprocal y = 4 ÷ x (two branches)",
+      "params": {
+        "axes": {
+          "x": [
+            -4,
+            4
+          ],
+          "y": [
+            -8,
+            8
+          ],
+          "xStep": 1,
+          "yStep": 2
+        },
+        "plotCurve": {
+          "fn": "4/x",
+          "xs": [
+            -4,
+            -2,
+            -1,
+            -0.5,
+            0.5,
+            1,
+            2,
+            4
+          ]
+        },
+        "caption": "On the grid, draw the graph of y = 4 ÷ x"
+      }
+    },
+    {
+      "label": "Science axes (@4, the hard case) — a reaction gas curve with quantity + unit titles",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            60
+          ],
+          "y": [
+            0,
+            55
+          ],
+          "xStep": 10,
+          "yStep": 5,
+          "labels": {
+            "x": "time (s)",
+            "y": "volume of gas (cm³)"
+          }
+        },
+        "curves": [
+          {
+            "fn": "50(1 - exp(-0.1x))"
+          }
+        ],
+        "caption": "The volume of gas collected levels off as the reactant is used up"
+      }
+    },
+    {
+      "label": "Draw the graph on labelled science axes (@4) — plot the gas-volume curve",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            60
+          ],
+          "y": [
+            0,
+            55
+          ],
+          "xStep": 10,
+          "yStep": 5,
+          "labels": {
+            "x": "time (s)",
+            "y": "volume of gas (cm³)"
+          }
+        },
+        "plotCurve": {
+          "fn": "50(1 - exp(-0.1x))",
+          "xs": [
+            0,
+            10,
+            20,
+            30,
+            40,
+            50,
+            60
+          ]
+        }
+      }
+    }
+  ]
+}

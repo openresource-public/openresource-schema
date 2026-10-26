@@ -1,0 +1,737 @@
+{
+  "ref": "algebra/sequence-pattern@2",
+  "family": "algebra",
+  "name": "sequence-pattern",
+  "version": 2,
+  "title": "Sequence pattern",
+  "tagline": "Pictorial growing sequence of dots/squares with counts and the nth-term link; linear, square, triangular or a shaped two-colour motif; predicts far terms, occludes for questions.",
+  "description": "A pictorial growing sequence — the first few terms of a number pattern drawn side by side as arrangements of dots or unit squares, with the count beneath each term and the nth-term rule linked. You give one growth rule (or a shaped motif) and the term numbers to show; the model derives every dot, each cell's colour, each term's count (always exactly the number of cells drawn), the \"Term k\" labels, the constant or growing differences between counts, the highlighted increment each term adds (the gnomon — e.g. the 2n + 1 L of square numbers), the nth-term expression, and predicted counts for far-off terms (\"term 10 = 21\"). Three rule kinds: linear a·n + b (the matchstick / pictorial pattern builders), square n² (the 2-D growing pattern), and triangular n(n + 1)/2 (the staircase). For the shaped exam patterns a plain rule cannot draw — a two-colour T-block or square frame of tiles, a grey cross of counters — use motif instead: a set of parts, each a rectangular lattice region whose edges grow with the term number, in named colour classes; the model derives the cells, the total count, each colour's sub-count (e.g. white = n + 1) and the nth-term the same way. Terms occlude their count, blank to an answer frame, or highlight independently, and predict generalises to term 10 or term n — so one figure asks \"how many dots?\", \"draw the next pattern\", \"how many in the 10th?\" or \"find the nth term\".",
+  "whenToUse": "Reach for this for pictorial growing patterns and sequences shown term by term: square numbers as growing grids, triangular numbers as growing staircases, linear \"matchstick\" / dot pattern builders (2n + 1, 4n − 3, 3n + 1 …), and the shaped two-colour exam patterns (a T / cross / square-frame of tiles or counters where a colour sub-count matters). Author one rule OR one motif and the terms to draw — never a dot or a count. RULE kinds: \"linear\" with a (cells added per term — the common difference) and b (the constant), optionally rows (how many rows tall the strip packs into, default 1) — count is a·n + b; \"square\" — an n × n grid, count n²; \"triangular\" — a staircase of rows 1, 2, …, n, count n(n + 1)/2. MOTIF: a list of parts, each a rectangular lattice region { cols: {from, to, step}, rows: {from, to, step}, colour } whose edges are constants or { a, b } = a·n + b, painted in order (later part wins on overlap); colours[] names each class ({ label, fill }) with fill \"categorical\" (default palette hue) or \"neutral\" (outline-only \"white\" tiles). Use motif for: a two-colour block with a constant stem/foot (outer columns one colour, centre another, an appendage below — total 3n + 1, white n + 1); a grey cross of counters (a central row 2n + 1 with strided arms above and below — total 4n + 1); a square frame (a full block over-painted with a smaller centre block). Common configurations: worked example — show counts and differences, set predict.nthTerm to reveal the rule, and show.increment to highlight what each term adds; square / quadratic sequence — also set show.secondDifferences; count the dots — occlude each term so its count shows \"?\"; draw the next pattern — list the next term with blank true; two-colour sub-count — set show.subCounts to print the split (\"6 + 4\") beneath each total; find the nth term / how many in term 10 — predict: { terms: [10], nthTerm: true, occlude: true }. Use glyph \"squares\" for tiles / area numbers and \"dots\" (default) for counting patterns. termWord renames \"Term\" to \"Pattern\" or \"Diagram\". Keep the same rule/motif, glyph and term spread across the blocks of one lesson so pupils track one growing pattern. Staged builds read very well: open on the first term (or a row of empty labelled frames), reveal one term per stage, then the counts, then the differences, then the nth-term rule last — the base state stands alone as a sensible figure. Synonyms teachers use: sequence, pattern, picture pattern, growing pattern, term-to-term, position-to-term, nth term, general term, square numbers, triangular numbers, figurate numbers, matchstick pattern, dot pattern, tile pattern, two-colour pattern, common difference, how many in the next/10th/nth.",
+  "responseModes": [],
+  "tags": [
+    "sequence",
+    "sequences",
+    "pattern",
+    "patterns",
+    "growing pattern",
+    "pictorial pattern",
+    "dot pattern",
+    "tile pattern",
+    "two-colour pattern",
+    "matchstick",
+    "nth term",
+    "general term",
+    "term to term",
+    "position to term",
+    "linear sequence",
+    "arithmetic sequence",
+    "square numbers",
+    "triangular numbers",
+    "figurate numbers",
+    "common difference",
+    "gnomon",
+    "algebra",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "motifRange": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An inclusive lattice range whose two edges each grow with n.",
+        "properties": {
+          "from": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "description": "A constant lattice coordinate — the same for every term."
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "An edge that moves with the term number: value = a·n + b.",
+                "properties": {
+                  "a": {
+                    "type": "integer",
+                    "description": "Coefficient of the term number n. Default 0."
+                  },
+                  "b": {
+                    "type": "integer",
+                    "description": "Constant offset. Default 0."
+                  }
+                }
+              }
+            ],
+            "description": "The low edge (inclusive): leftmost column, or bottom row."
+          },
+          "to": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "description": "A constant lattice coordinate — the same for every term."
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "An edge that moves with the term number: value = a·n + b.",
+                "properties": {
+                  "a": {
+                    "type": "integer",
+                    "description": "Coefficient of the term number n. Default 0."
+                  },
+                  "b": {
+                    "type": "integer",
+                    "description": "Constant offset. Default 0."
+                  }
+                }
+              }
+            ],
+            "description": "The high edge (inclusive): rightmost column, or top row. Must be ≥ from at every term you draw."
+          },
+          "step": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Place a cell every `step` positions from `from` (default 1). Use 2 to fill every OTHER column/row — a strided row of counters (the grey-cross arms)."
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ]
+      }
+    },
+    "description": "Supply EITHER `rule` (a scalar growth law — linear / square / triangular, single colour) OR `motif` (a shaped, multi-colour construction), plus the `terms` to draw. Everything else is derived.",
+    "properties": {
+      "rule": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The single growth law for the whole sequence (single colour). Its kind fixes how a term's picture and count are derived from the term number. Omit when you use `motif`.",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "linear",
+              "square",
+              "triangular"
+            ],
+            "description": "\"linear\": count a·n + b, cells packed into a strip (the matchstick / dot pattern builders). \"square\": an n × n grid, count n² (the 2-D growing pattern). \"triangular\": a staircase of rows 1, 2, …, n, count n(n + 1)/2."
+          },
+          "a": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "LINEAR only — the common difference: how many cells are added from one term to the next. Default 1. (Ignored by square / triangular.)"
+          },
+          "b": {
+            "type": "integer",
+            "description": "LINEAR only — the constant term: count is a·n + b. Default 0. May be negative (e.g. a 4, b −3 → 4n − 3 → 1, 5, 9, 13); choose a and b so every term you draw has at least one cell. (Ignored by square / triangular.)"
+          },
+          "rows": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "description": "LINEAR only — how many rows tall the a·n + b cells pack into (filled column by column). Default 1 (a single growing row). Use 2 for a two-row strip. (Ignored by square / triangular.)"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "motif": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An ALTERNATIVE to `rule`: build each term as a SHAPED, multi-colour pattern from parts, for exam pictorial patterns that aren't a plain strip / grid / staircase (a cross of counters, a two-colour T-block or square frame) or where a sub-count of one colour matters. When present, motif REPLACES rule — provide one or the other, never both. Every cell, its colour, the total count, each colour's sub-count and the nth-term are still DERIVED from the parts at each term number, so the picture cannot lie.",
+        "properties": {
+          "parts": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "One piece of the pattern: a rectangular lattice region, tiled with cells, in a single colour class. Its column and row ranges each grow with the term number.",
+              "properties": {
+                "colour": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4,
+                  "description": "0-based index into motif.colours picking this part's fill. Where parts overlap, a LATER part's colour wins (paint order). Default 0."
+                },
+                "cols": {
+                  "$ref": "#/$defs/motifRange",
+                  "description": "Columns this part fills, left→right (column 0 at the left). Each edge is an Extent, so the width can grow with n."
+                },
+                "rows": {
+                  "$ref": "#/$defs/motifRange",
+                  "description": "Rows this part fills, bottom→top (row 0 at the baseline). Negative rows sit BELOW the baseline — use them for a stem / foot appendage. Each edge is an Extent."
+                }
+              },
+              "required": [
+                "cols",
+                "rows"
+              ]
+            },
+            "description": "The pieces the pattern is built from, painted in order (a later part's cells override an earlier part's colour where they coincide). Each part tiles a rectangular lattice region whose edges grow with the term number. Example — the two-colour T-block: an outer-left grey column, an outer-right grey column, a centre white column (all rows 0..n−1), and a one-tile white stem at row −1."
+          },
+          "colours": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "A colour class parts reference by index.",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "description": "Name of this colour as the QUESTION refers to it (\"grey\", \"white\", \"border\", \"centre\") — shown in the legend and the sub-count readout. Optional; omit for a single-colour motif."
+                },
+                "fill": {
+                  "type": "string",
+                  "enum": [
+                    "categorical",
+                    "neutral"
+                  ],
+                  "description": "\"categorical\" (default) fills with the next categorical palette hue by class index (blue, teal, purple, coral, green). \"neutral\" draws an outline-only cell with no fill — use for tiles the question calls \"white\" / \"empty\"."
+                }
+              }
+            },
+            "description": "The colour classes parts reference by index. Class 0 is the default. Rendered with the categorical palette by index unless a class sets fill \"neutral\"."
+          }
+        },
+        "required": [
+          "parts"
+        ]
+      },
+      "terms": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "n": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "description": "The term number (position) to draw — 1 is the first pattern, 2 the second, and so on. The picture and its dot-count are derived from n by the rule or motif. Keep n small (drawn patterns of more than ~36 cells render tiny); use predict for large terms like 10 or 50 instead of drawing them."
+            },
+            "blank": {
+              "type": "boolean",
+              "description": "Draw this term as an EMPTY slot — a dashed answer-frame with the \"Term k\" label but no dots — for \"draw the next pattern\" answer spaces and for staged builds that reveal one term per stage. Different from occlude: blank shows nothing to draw yet; occlude shows the picture but hides its count. Default false."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this term's COUNT as \"?\" — the \"how many dots?\" question hook. The picture itself stays visible and correct. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this term (its cells and count) — draw the eye to the term under discussion. Default false."
+            }
+          },
+          "required": [
+            "n"
+          ]
+        },
+        "description": "The term numbers to draw, left to right — the filmstrip of patterns, e.g. [{ \"n\": 1 }, { \"n\": 2 }, { \"n\": 3 }, { \"n\": 4 }]. Every slot is the same footprint (sized to the largest term listed) so a staged reveal never resizes the figure. List a term with blank / occlude / highlight to turn it into an answer frame, a hidden-count question, or an emphasis."
+      },
+      "glyph": {
+        "type": "string",
+        "enum": [
+          "dots",
+          "squares"
+        ],
+        "description": "How each unit of the pattern is drawn: \"dots\" (default) for counting patterns and triangular numbers; \"squares\" (unit tiles) for square / area numbers and tile patterns where the grid structure matters."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "counts": {
+            "type": "boolean",
+            "description": "Show the dot-count beneath each drawn term. Default true. (A term's own occlude flag still renders its count as \"?\".)"
+          },
+          "termLabels": {
+            "type": "boolean",
+            "description": "Show the \"Term 1\", \"Term 2\" … label above each pattern (word set by termWord). Default true."
+          },
+          "differences": {
+            "type": "boolean",
+            "description": "Annotate the difference between consecutive counts with a \"+d\" bracket — constant for a linear rule (the common difference), growing for square (+3, +5, +7 …) and triangular (+2, +3, +4 …). Default false."
+          },
+          "secondDifferences": {
+            "type": "boolean",
+            "description": "Add a SECOND row of brackets below the first differences, showing the difference between consecutive first differences — the constant 2nd difference that identifies a quadratic sequence (square +2, +2 …; triangular +1, +1 …; a linear rule has 2nd difference 0). Requires differences true and at least three consecutive drawn terms. Default false."
+          },
+          "increment": {
+            "type": "boolean",
+            "description": "Highlight in amber the cells each term ADDS relative to the one before (the gnomon) — the new dots of a linear pattern, the L of a square number, the new diagonal of a triangular number, the new cells of a motif. Shows WHY the difference is what it is. Default false."
+          },
+          "subCounts": {
+            "type": "boolean",
+            "description": "MOTIF only — beneath each term's total, show the split by colour class (\"6 + 4\", coloured to match the legend), so a colour sub-count (e.g. white = n + 1) can be read and compared term to term. A term's occlude flag hides the split as \"?\" too. Default false. (Ignored by the rule path.)"
+          }
+        }
+      },
+      "predict": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Link the pictures to the nth-term rule, beneath the filmstrip. Use it to pose / answer \"how many in the 10th term?\" and \"find the nth term\" without drawing huge patterns.",
+        "properties": {
+          "terms": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "description": "Far-off term numbers to evaluate and show as a prediction row, e.g. [10, 50] → \"Term 10 = 21\", \"Term 50 = 101\". The counts are derived; these terms are NOT drawn."
+          },
+          "nthTerm": {
+            "type": "boolean",
+            "description": "Show the derived general rule, e.g. \"nth term = 2n + 1\", \"nth term = n²\", \"nth term = n(n + 1)/2\". For a motif it is fitted from the counts (a clean linear or integer-quadratic form, else omitted). Default false."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the predicted counts and the nth-term expression as \"?\" — the \"find the nth term / how many in term 10?\" question. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the prediction row — answer emphasis. Default false."
+          }
+        }
+      },
+      "termWord": {
+        "type": "string",
+        "description": "The word used in the per-term labels and the prediction row. Default \"Term\"; set \"Pattern\" or \"Diagram\" to match the question wording."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Keep it short. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "terms"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — linear 2n + 1, counts, differences and the increment, rule revealed",
+      "params": {
+        "header": "A growing dot pattern",
+        "rule": {
+          "kind": "linear",
+          "a": 2,
+          "b": 1
+        },
+        "terms": [
+          {
+            "n": 1
+          },
+          {
+            "n": 2
+          },
+          {
+            "n": 3
+          },
+          {
+            "n": 4
+          }
+        ],
+        "show": {
+          "counts": true,
+          "differences": true,
+          "increment": true
+        },
+        "predict": {
+          "nthTerm": true
+        }
+      }
+    },
+    {
+      "label": "Square numbers — n × n tiles, the 2n + 1 gnomon, first AND second differences, rule n²",
+      "params": {
+        "rule": {
+          "kind": "square"
+        },
+        "terms": [
+          {
+            "n": 1
+          },
+          {
+            "n": 2
+          },
+          {
+            "n": 3
+          },
+          {
+            "n": 4
+          }
+        ],
+        "glyph": "squares",
+        "show": {
+          "counts": true,
+          "differences": true,
+          "secondDifferences": true,
+          "increment": true
+        },
+        "predict": {
+          "nthTerm": true
+        },
+        "caption": "The square numbers"
+      }
+    },
+    {
+      "label": "Triangular numbers — the staircase, counts and growing differences",
+      "params": {
+        "rule": {
+          "kind": "triangular"
+        },
+        "terms": [
+          {
+            "n": 1
+          },
+          {
+            "n": 2
+          },
+          {
+            "n": 3
+          },
+          {
+            "n": 4
+          },
+          {
+            "n": 5
+          }
+        ],
+        "show": {
+          "counts": true,
+          "differences": true
+        },
+        "predict": {
+          "nthTerm": true
+        },
+        "caption": "The triangular numbers"
+      }
+    },
+    {
+      "label": "Answer space — draw the next pattern (term 4 a blank frame)",
+      "params": {
+        "termWord": "Pattern",
+        "rule": {
+          "kind": "linear",
+          "a": 3,
+          "b": 1
+        },
+        "terms": [
+          {
+            "n": 1
+          },
+          {
+            "n": 2
+          },
+          {
+            "n": 3
+          },
+          {
+            "n": 4,
+            "blank": true,
+            "occlude": true
+          }
+        ],
+        "show": {
+          "counts": true
+        }
+      }
+    },
+    {
+      "label": "Occluded question — how many dots are in each pattern?",
+      "params": {
+        "rule": {
+          "kind": "linear",
+          "a": 5,
+          "b": 2
+        },
+        "terms": [
+          {
+            "n": 1,
+            "occlude": true
+          },
+          {
+            "n": 2,
+            "occlude": true
+          },
+          {
+            "n": 3,
+            "occlude": true
+          },
+          {
+            "n": 4,
+            "occlude": true
+          }
+        ],
+        "show": {
+          "counts": true
+        }
+      }
+    },
+    {
+      "label": "Motif worked example — two-colour square frames, sub-counts and the quadratic rule",
+      "params": {
+        "header": "Square frames",
+        "termWord": "Pattern",
+        "glyph": "squares",
+        "motif": {
+          "colours": [
+            {
+              "label": "border",
+              "fill": "categorical"
+            },
+            {
+              "label": "centre",
+              "fill": "neutral"
+            }
+          ],
+          "parts": [
+            {
+              "colour": 0,
+              "cols": {
+                "from": 0,
+                "to": {
+                  "a": 1,
+                  "b": 1
+                }
+              },
+              "rows": {
+                "from": 0,
+                "to": {
+                  "a": 1,
+                  "b": 1
+                }
+              }
+            },
+            {
+              "colour": 1,
+              "cols": {
+                "from": 1,
+                "to": {
+                  "a": 1,
+                  "b": 0
+                }
+              },
+              "rows": {
+                "from": 1,
+                "to": {
+                  "a": 1,
+                  "b": 0
+                }
+              }
+            }
+          ]
+        },
+        "terms": [
+          {
+            "n": 1
+          },
+          {
+            "n": 2
+          },
+          {
+            "n": 3
+          }
+        ],
+        "show": {
+          "counts": true,
+          "subCounts": true,
+          "differences": true
+        },
+        "predict": {
+          "nthTerm": true
+        },
+        "caption": "A grey border around a white centre"
+      }
+    },
+    {
+      "label": "Motif occluded question — a growing U of counters, how many each pattern?",
+      "params": {
+        "termWord": "Pattern",
+        "glyph": "dots",
+        "motif": {
+          "colours": [
+            {
+              "fill": "categorical"
+            }
+          ],
+          "parts": [
+            {
+              "colour": 0,
+              "cols": {
+                "from": 0,
+                "to": 0
+              },
+              "rows": {
+                "from": 0,
+                "to": {
+                  "a": 1,
+                  "b": 0
+                }
+              }
+            },
+            {
+              "colour": 0,
+              "cols": {
+                "from": 2,
+                "to": 2
+              },
+              "rows": {
+                "from": 0,
+                "to": {
+                  "a": 1,
+                  "b": 0
+                }
+              }
+            },
+            {
+              "colour": 0,
+              "cols": {
+                "from": 1,
+                "to": 1
+              },
+              "rows": {
+                "from": 0,
+                "to": 0
+              }
+            }
+          ]
+        },
+        "terms": [
+          {
+            "n": 1,
+            "occlude": true
+          },
+          {
+            "n": 2,
+            "occlude": true
+          },
+          {
+            "n": 3,
+            "occlude": true
+          }
+        ],
+        "show": {
+          "counts": true
+        }
+      }
+    },
+    {
+      "label": "Motif hard case — two-colour badge (block + constant foot), sub-counts, draw the 4th, find term 10 and the nth term",
+      "params": {
+        "header": "Growing badge",
+        "termWord": "Pattern",
+        "glyph": "squares",
+        "motif": {
+          "colours": [
+            {
+              "label": "dark",
+              "fill": "categorical"
+            },
+            {
+              "label": "light",
+              "fill": "neutral"
+            }
+          ],
+          "parts": [
+            {
+              "colour": 0,
+              "cols": {
+                "from": 0,
+                "to": 0
+              },
+              "rows": {
+                "from": 0,
+                "to": {
+                  "a": 1,
+                  "b": -1
+                }
+              }
+            },
+            {
+              "colour": 0,
+              "cols": {
+                "from": 3,
+                "to": 3
+              },
+              "rows": {
+                "from": 0,
+                "to": {
+                  "a": 1,
+                  "b": -1
+                }
+              }
+            },
+            {
+              "colour": 1,
+              "cols": {
+                "from": 1,
+                "to": 2
+              },
+              "rows": {
+                "from": 0,
+                "to": {
+                  "a": 1,
+                  "b": -1
+                }
+              }
+            },
+            {
+              "colour": 0,
+              "cols": {
+                "from": 1,
+                "to": 2
+              },
+              "rows": {
+                "from": -1,
+                "to": -1
+              }
+            }
+          ]
+        },
+        "terms": [
+          {
+            "n": 1
+          },
+          {
+            "n": 2
+          },
+          {
+            "n": 3
+          },
+          {
+            "n": 4,
+            "blank": true,
+            "occlude": true
+          }
+        ],
+        "show": {
+          "counts": true,
+          "subCounts": true,
+          "differences": true
+        },
+        "predict": {
+          "terms": [
+            10
+          ],
+          "nthTerm": true,
+          "occlude": true
+        }
+      }
+    }
+  ]
+}

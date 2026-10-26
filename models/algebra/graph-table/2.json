@@ -1,0 +1,366 @@
+{
+  "ref": "algebra/graph-table@2",
+  "family": "algebra",
+  "name": "graph-table",
+  "version": 2,
+  "title": "Table of values & graph",
+  "tagline": "Table of values for y=f(x) above a mini grid plotting the same points; y-values, joining curve and a differences row derived; occlude a column to question.",
+  "description": "A table of values for y = f(x) — an x-row and a derived y-row — stacked above a mini coordinate grid that plots the same (x, y) pairs as points, optionally joined by straight segments or the smooth curve of f. You give one function as an expression string (\"2x + 1\", \"x^2 - 2x - 3\") and the x-values to tabulate; every y-value, every plotted point, the joining curve, and an optional differences row (first and second differences, centred on the gaps between columns) are all derived — there is nowhere to author a y. Occlude a column to hide its y-value as \"?\" (and, when the table is the source, its point too — the answer never leaks); highlight a column to amber its cell and its point together with read-off guides. dataFrom switches the question direction between \"complete the table / plot the points\" and \"read the graph into the table\". The differences row is the linear-vs-quadratic test: constant first differences mean a straight line, constant second differences mean a quadratic.",
+  "whenToUse": "Reach for this whenever a table of values is part of the teaching — generating a table from a rule, plotting a graph from a table, reading a value off a table or off a graph, or spotting linear vs quadratic from a differences row. Give one fn as an expression in x (syntax shared with function-graph: + - * / ^, parentheses, unary minus, sin cos tan asin acos atan sqrt cbrt abs exp ln log, pi and e, implicit multiplication so \"2x\" and \"(x+1)(x-1)\" work; trig in radians) and a columns list of equally-spaced x-values — every y is computed, so a table can never contradict its graph. Common configurations: plot from a table — full table, plot.points false so the grid is a blank answer space to plot on (\"plot these points, then join them\"). Complete the table — occlude the columns whose y is asked for (their points hide automatically when dataFrom is \"table\"); set fnLabel to the equation so pupils know the rule. Read off the graph — set dataFrom \"graph\", show the points (and the curve), and occlude the table cells: now the point is the given and the table is the answer space. Spot the type — set differences 1 to show the first differences, or 2 to show first and second; constant first differences ⇒ linear, constant second ⇒ quadratic (use equal x-steps or the test is not valid). Link a point to its value — highlight one column to glow its cell and its point amber with read-off guides. Connect the points with plot.connect: \"segments\" (the pupil's straight \"join the dots\", natural for a line) or \"curve\" (the true smooth curve sampled from f, for a parabola). Keep the same x-values and grid window across the blocks of one lesson so the representation stays stable. Switch primitive when the teaching changes — for a continuous curve and its roots / turning points (no table) use graphing/function-graph; for plotting discrete points or shapes with no table use graphing/coordinate-grid; for a sequence's term-to-term / position-to-term rule use algebra/sequence-pattern. Synonyms a teacher might use: table of values, complete the table, plot the graph, plotting from a table, coordinates, read off the graph, substitute, first differences, second differences, constant difference, linear, quadratic, straight line, parabola.",
+  "responseModes": [],
+  "tags": [
+    "table of values",
+    "complete the table",
+    "plot the graph",
+    "plotting",
+    "graph",
+    "coordinates",
+    "read off the graph",
+    "substitute",
+    "function",
+    "differences",
+    "first differences",
+    "second differences",
+    "linear",
+    "quadratic",
+    "straight line",
+    "parabola",
+    "y = f(x)",
+    "algebra",
+    "graphs",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "fn": {
+        "type": "string",
+        "description": "The function f(x) as an expression: + - * / ^, parentheses, unary minus, sin cos tan asin acos atan sqrt cbrt abs exp ln log, pi and e, implicit multiplication (\"2x\", \"3sin(x)\", \"(x+1)(x-1)\"). Trig in radians. Examples: \"2x + 1\", \"x^2 - 2x - 3\", \"0.5x^2\", \"10 - x^2\". Every y-value and plotted point is f evaluated at the column x-values."
+      },
+      "columns": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 10,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "One column of the table — a single x-value. Its y-value (f(x)) and its plotted point are computed; you only choose the x and, optionally, whether to occlude or highlight it. One column is BOTH a table column and one plotted point.",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "The x-value for this column. The table shows x in the top row and the derived y = f(x) beneath it, and the grid plots the point (x, f(x)). Use EQUALLY-SPACED x-values (e.g. −2, −1, 0, 1, 2) so the differences row is meaningful."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this column's y-value as \"?\" — the question hook (\"complete the table\"). Anti-leak: when dataFrom is \"table\" the plotted point is hidden too (and any joining curve is suppressed) so the answer never shows; any difference that depends on this value also shows \"?\". When dataFrom is \"graph\" the point STAYS visible (it is the thing being read). Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this column's y-cell AND its plotted point together — the \"this point ↔ this table value\" link — and draw dashed read-off guides from the point to the axes. Use to spotlight one correspondence. Default false."
+            }
+          },
+          "required": [
+            "x"
+          ]
+        },
+        "description": "The x-values to tabulate, left to right — one entry is one table column AND one plotted point. Use equally-spaced values (e.g. [{ \"x\": -2 }, { \"x\": -1 }, { \"x\": 0 }, { \"x\": 1 }, { \"x\": 2 }]) so the differences row is meaningful. Per-column occlude / highlight flags pose questions and draw links."
+      },
+      "differences": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "description": "How many difference rows to draw beneath the y-row, each value centred on the gap between the two cells it comes from. 0 = none (default). 1 = first differences (constant ⇒ the graph is a straight line). 2 = first AND second differences (constant second differences ⇒ a quadratic). A difference that depends on an occluded y is shown as \"?\" — and so are both differences beside it, so a hidden value never falls out of one subtraction. Rows are drawn for any x-values, but the constant-difference test is only valid on equally-spaced ones: use equal steps. In a STAGED build start at 1 and step to 2 (the table is measured against both rows, so that holds one steady figure); going from 0 adds the row labels and reflows it."
+      },
+      "dataFrom": {
+        "type": "string",
+        "enum": [
+          "table",
+          "graph"
+        ],
+        "description": "Which representation is the GIVEN one, controlling the direction of occlusion. \"table\" (default): the table is the source — occluding a column hides its y-cell AND its plotted point AND suppresses any answer curve, so \"complete the table / plot the points\" never leaks. \"graph\": the graph is the source — occluding a column hides only the table cell and KEEPS the point visible, so pupils \"read the point off the graph into the table\"."
+      },
+      "plot": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The mini coordinate grid beneath the table.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Draw the mini grid at all. Default true. Set false for a table-only figure (e.g. a pure differences exercise, or a staged base that shows the table before the grid appears)."
+          },
+          "points": {
+            "type": "boolean",
+            "description": "Plot the (x, f(x)) points. Default true. Set false for a blank answer space — numbered axes with no points, for \"plot the values from the table yourself\"."
+          },
+          "connect": {
+            "type": "string",
+            "enum": [
+              "none",
+              "segments",
+              "curve"
+            ],
+            "description": "\"none\" (default) = points only. \"segments\" = join consecutive shown points with straight lines (the pupil's \"join the dots\", natural for a linear graph). \"curve\" = draw the true smooth curve of f sampled densely (the parabola the points lie on). With dataFrom \"table\", a curve is suppressed when any column is occluded so it cannot reveal a hidden point."
+          },
+          "gridLines": {
+            "type": "boolean",
+            "description": "Show the background grid squares on the mini grid. Default true. Set false for a sparse axes-only sketch."
+          }
+        }
+      },
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Override the mini grid's window. Omit any field to derive it — by default the window is computed to fit every plotted point (and the sampled curve) with a little room, on nice round bounds.",
+        "properties": {
+          "x": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the x-axis. Default: derived to span the column x-values with padding."
+          },
+          "y": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the y-axis. Default: derived to span the y-values (and curve) with padding, on round bounds."
+          },
+          "xStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value (often 1)."
+          },
+          "yStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value for the range."
+          }
+        }
+      },
+      "fnLabel": {
+        "type": "string",
+        "description": "The equation written above the table, e.g. \"y = x² − 2x − 3\". Use proper maths typography (², −). Omit for no equation label. Set it for \"complete the table\" so the rule is visible."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "fn",
+      "columns"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank answer space — full table, empty grid to plot on (y = x²)",
+      "params": {
+        "fn": "x^2",
+        "columns": [
+          {
+            "x": -2
+          },
+          {
+            "x": -1
+          },
+          {
+            "x": 0
+          },
+          {
+            "x": 1
+          },
+          {
+            "x": 2
+          }
+        ],
+        "fnLabel": "y = x²",
+        "plot": {
+          "points": false
+        }
+      }
+    },
+    {
+      "label": "Worked example — table, plotted points and the smooth curve (y = x² − 4)",
+      "params": {
+        "fn": "x^2 - 4",
+        "columns": [
+          {
+            "x": -3
+          },
+          {
+            "x": -2
+          },
+          {
+            "x": -1
+          },
+          {
+            "x": 0
+          },
+          {
+            "x": 1
+          },
+          {
+            "x": 2
+          },
+          {
+            "x": 3
+          }
+        ],
+        "fnLabel": "y = x² − 4",
+        "plot": {
+          "connect": "curve"
+        },
+        "caption": "Every value in the table is a point on the curve."
+      }
+    },
+    {
+      "label": "Occluded question — complete the table (y = x² − 1, two values hidden)",
+      "params": {
+        "fn": "x^2 - 1",
+        "columns": [
+          {
+            "x": -3
+          },
+          {
+            "x": -2,
+            "occlude": true
+          },
+          {
+            "x": -1
+          },
+          {
+            "x": 0
+          },
+          {
+            "x": 1
+          },
+          {
+            "x": 2,
+            "occlude": true
+          },
+          {
+            "x": 3
+          }
+        ],
+        "fnLabel": "y = x² − 1",
+        "plot": {
+          "points": false
+        }
+      }
+    },
+    {
+      "label": "Hard case — quadratic with second differences and a linked highlight (y = x² + 2x − 1)",
+      "params": {
+        "fn": "x^2 + 2x - 1",
+        "columns": [
+          {
+            "x": -4
+          },
+          {
+            "x": -3
+          },
+          {
+            "x": -2
+          },
+          {
+            "x": -1
+          },
+          {
+            "x": 0
+          },
+          {
+            "x": 1,
+            "highlight": true
+          },
+          {
+            "x": 2
+          }
+        ],
+        "differences": 2,
+        "fnLabel": "y = x² + 2x − 1",
+        "plot": {
+          "connect": "curve"
+        },
+        "caption": "The second differences are constant (2), so this is a quadratic."
+      }
+    },
+    {
+      "label": "Read off the graph — points given, table cells to fill (y = 2x − 1)",
+      "params": {
+        "fn": "2x - 1",
+        "columns": [
+          {
+            "x": -1,
+            "occlude": true
+          },
+          {
+            "x": 0,
+            "occlude": true
+          },
+          {
+            "x": 1,
+            "occlude": true
+          },
+          {
+            "x": 2,
+            "occlude": true
+          },
+          {
+            "x": 3,
+            "occlude": true
+          }
+        ],
+        "dataFrom": "graph",
+        "fnLabel": "y = 2x − 1",
+        "plot": {
+          "connect": "segments"
+        }
+      }
+    },
+    {
+      "label": "Linear — first differences constant (y = 3x + 2)",
+      "params": {
+        "fn": "3x + 2",
+        "columns": [
+          {
+            "x": -2
+          },
+          {
+            "x": -1
+          },
+          {
+            "x": 0
+          },
+          {
+            "x": 1
+          },
+          {
+            "x": 2
+          },
+          {
+            "x": 3
+          }
+        ],
+        "differences": 1,
+        "fnLabel": "y = 3x + 2",
+        "plot": {
+          "connect": "segments"
+        },
+        "caption": "The first differences are all the same, so the graph is a straight line."
+      }
+    }
+  ]
+}

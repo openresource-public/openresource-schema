@@ -1,0 +1,879 @@
+{
+  "ref": "cs/spreadsheet@2",
+  "family": "cs",
+  "name": "spreadsheet",
+  "version": 2,
+  "title": "Spreadsheet",
+  "tagline": "Interactive spreadsheet with a real recalc engine: $ refs with fill and copy/paste, COUNTIF/SUMIF, VLOOKUP, pupil formatting — it cannot show a value its formulas would not give.",
+  "description": "An interactive spreadsheet in the app's coding window: one header row with three coloured window circles, the title, a Values / Formulas switch and full screen; inside, the familiar web spreadsheet — a format bar (bold, highlight, currency, percent, 1 and 2 decimal places) wherever the sheet takes a write, a formula bar with the name box and fx button, lettered column headers and numbered row headers, gridlines, a green selected-cell border with a fill handle, the selected formula's input cells washed and outlined, and a Sheet1 tab — and a footer naming the language (with show.formulaBar false it also names the selected cell, what it holds and what it shows: \"D6 · =SUM(D2:D4) · £332.20\"). Authors write cell contents — literal text, numbers, and formulas as strings starting with \"=\" — and every formula cell's displayed value is produced by a real recalculation engine (cell references incl. $-anchored absolute/mixed refs, ranges, arithmetic, SUM, AVERAGE, MEDIAN, MODE, MIN, MAX, COUNT, COUNTA, COUNTIF, SUMIF, AVERAGEIF, VLOOKUP, ROUND, IF, AND, OR, NOT, IFERROR, ABS, SQRT), never authored. Errors are the real ones (#DIV/0!, #NAME?, #VALUE!, #NUM!, #REF!, #N/A) and a circular reference shows 0 with a warning in the footer. Pupils click cells (the formula bar shows the formula while the grid shows the value — the core teaching duality), navigate with arrow keys, and edit in the cell or the formula bar; every commit recalculates the whole sheet. Pupils also FILL — drag the green fill handle, or Ctrl+D/Ctrl+R — and COPY/PASTE (Ctrl+C/Ctrl+V): relative references shift with the destination while $-anchored axes hold, which is the entire A-level-of-effort reason $ exists; a formula pushed off the sheet edge writes the literal #REF!, exactly as the real tool does. Right-clicking a cell or a column header opens a quiet formatting menu — Bold, currency, percent, 1/2 decimal places — so \"format this column as currency\" is a gesture pupils actually perform, not authoring. Those gestures are MARKABLE: a run-sheet question (`markSheet`) marks a fill on the cells' CONTENT — each must hold a formula whose references adjust row by row like the seed's, with $ anchors holding — so typing the answers as literals fails while any correct route, dragged or hand-typed, passes; a formatting task is marked on the resulting format, which is exactly what it asked for. Use it as a worked sheet to explore, a read-only sheet to trace, a partially built sheet where pupils write and fill the formulas, or a predict-the-value activity with occluded result cells.",
+  "whenToUse": "Reach for this whenever a lesson needs a live spreadsheet rather than a screenshot of one: spreadsheet-skills lessons (cell references incl. absolute $ references and fill-down, formulas, functions, what recalculation does), modelling with formulas (budgets, price × quantity, compound interest tables), lookups and conditional counts (VLOOKUP price lists, COUNTIF/SUMIF on categories), statistics on a data column (AVERAGE, MEDIAN, MODE, MAX on real data), formatting skills (\"format this column as currency\" — right-click gesture), and predict-check activities (\"what will D6 show when I press Enter?\"). Author cell contents in `cells` keyed by A1-style references; strings starting \"=\" are formulas — you never write a formula's result, the engine computes it. Formulas may use $-anchored refs ($B$1, B$1, $B1): they evaluate like plain refs but hold their anchored axis when the pupil FILLS (drag the green fill handle, or Ctrl+D/Ctrl+R) or copies and pastes (Ctrl+C/Ctrl+V) — author a fill-down lesson by seeding the first formula (e.g. \"=A2*$B$1\") and asking pupils to fill the column, then change B1 and watch every filled cell move. Set `selected` to the cell whose formula the class should read in the formula bar on load. Set `editable:false` for a read-only sheet to trace (selection and the formula bar still work; fill, paste and formatting are protection-refused by name in the footer). Set show.formulas:true for the \"show formulas\" view (every formula cell displays its formula text, values suppressed — the reveal-the-workings view). Occlude a result cell for predict-the-value; the occluded cell cannot be copied or filled from (that would leak the hidden formula). Keep sheets small and legible (the default grid is 6–10 columns); real lessons rarely need more than a dozen filled rows. Keep the window roughly landscape while you are at it — every surface scales the whole widget to fit, so a 12-column sheet only 8 rows deep becomes an unreadable ribbon and a 40-row sheet 2 columns wide becomes a thin strip; a good rule is one row for every column beyond six, and widen a short sheet with `colWidths` rather than with empty columns. Formulas support + − × ÷ (typed as * and /), ^, %, parentheses, comparisons, cell refs, ranges (B2:B10), error literals (#N/A …) and the functions SUM, AVERAGE, MEDIAN, MODE, MIN, MAX, COUNT, COUNTA, COUNTIF, SUMIF, AVERAGEIF (Excel criteria strings: \">10\", \"<>0\", \"apple\", wildcards * ?), VLOOKUP (exact with FALSE, approximate banded lookup by default — Excel's own default), ROUND, IF, AND, OR, NOT, IFERROR, ABS, SQRT; text functions, dates, multi-cell range selection, cut (refused by name) and sort are not in v2. To mark a write-the-formula task, set `responseCell` and host in a marked model tile with responseMode \"run-value\" — the pupil's commit is graded on its computed value (and that it is a formula), not its spelling; filling or pasting into the response cell commits it too. To mark a FILL or FORMATTING task — the skills the gestures made performable — set `markSheet` and host with responseMode \"run-sheet\" and correctAnswer { derived: true }: `markSheet.fill` names the range and the pattern it must carry (`from` a seeded cell, or an authored `pattern` for a range the pupil writes from scratch), `markSheet.format` names a range and the format (`is`) or `bold` it must end up with. Every marked cell is tinted and stays writable on an editable:false sheet, so lock the data and open exactly the answer region. Synonyms teachers use: spreadsheet, Excel, Google Sheets, workbook, worksheet, cells, formula, formula bar, SUM, AVERAGE, COUNTIF, VLOOKUP, absolute reference, dollar sign, fill down, fill handle, autofill, cell reference, recalculate, model with a spreadsheet, budget sheet. Note this model owns its own mutable state (selection + edits), so it does not support staged `steps` or draggable params — build predict → check → discuss flows by SEQUENCING blocks, not by staging one.",
+  "responseModes": [
+    "run-value",
+    "run-sheet"
+  ],
+  "tags": [
+    "spreadsheet",
+    "excel",
+    "google sheets",
+    "workbook",
+    "worksheet",
+    "cells",
+    "cell reference",
+    "absolute reference",
+    "dollar sign",
+    "fill down",
+    "fill handle",
+    "autofill",
+    "copy paste",
+    "formula",
+    "formula bar",
+    "sum",
+    "average",
+    "countif",
+    "sumif",
+    "vlookup",
+    "lookup",
+    "iferror",
+    "currency format",
+    "functions",
+    "recalculate",
+    "budget",
+    "modelling",
+    "data",
+    "table",
+    "computing",
+    "computer science",
+    "cs",
+    "ict"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "fillCheck": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "range": {
+            "type": "string",
+            "description": "The cells being marked, as an A1 range (\"C5:C7\") or a single cell (\"D2\"). Required."
+          },
+          "from": {
+            "type": "string",
+            "description": "The SEED cell whose formula the range must carry, e.g. \"C4\" — the fill-down lesson, where the first formula is authored on the visible sheet and the pupil fills the rest. Must sit outside `range`. Use this OR `pattern`."
+          },
+          "pattern": {
+            "type": "string",
+            "description": "The formula the range must carry, written as it would appear in the range's TOP-LEFT cell (e.g. \"=B2*C2\") — for a task where the pupil writes the first formula too. Never rendered on any surface; the visible sheet stays the question. Use this OR `from`."
+          }
+        },
+        "required": [
+          "range"
+        ]
+      },
+      "formatCheck": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "range": {
+            "type": "string",
+            "description": "The cells being marked, as an A1 range (\"B2:B6\") or a single cell. Required."
+          },
+          "is": {
+            "type": "string",
+            "enum": [
+              "general",
+              "currency",
+              "percent",
+              "1dp",
+              "2dp"
+            ],
+            "description": "The number format every non-empty cell in the range must carry (\"currency\" is the currency symbol to 2dp). Set `is`, `bold`, or both."
+          },
+          "bold": {
+            "type": "boolean",
+            "description": "Whether every non-empty cell in the range must be bold (or must not be)."
+          }
+        },
+        "required": [
+          "range"
+        ]
+      }
+    },
+    "properties": {
+      "cells": {
+        "type": "object",
+        "additionalProperties": false,
+        "patternProperties": {
+          "^[A-Z][1-9][0-9]?$": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "The cell content. A string starting with \"=\" is a formula (\"=B2*C2\", \"=SUM(B2:B5)\", \"=A2*$B$1\" — $ anchors an axis against fill/copy); anything else is literal text."
+              },
+              {
+                "type": "number",
+                "description": "A literal numeric value."
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "value": {
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ],
+                    "description": "The cell content — same rules as the shorthand: a number, literal text, or a formula string starting with \"=\". Required."
+                  },
+                  "occlude": {
+                    "type": "boolean",
+                    "description": "Render this cell's computed value as \"?\" — the question hook (\"what will D6 show?\"). The formula bar still shows the FORMULA when the cell is selected (the formula is the question; the value is the answer), and the cell is not editable while occluded. Default false."
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Amber cell fill — draw the eye to the answer or the cell under discussion (the spreadsheet-classroom \"yellow fill\" idiom). Default false."
+                  },
+                  "bold": {
+                    "type": "boolean",
+                    "description": "Bold the cell text — headings and total rows. Default false."
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": [
+                      "general",
+                      "currency",
+                      "percent",
+                      "1dp",
+                      "2dp"
+                    ],
+                    "description": "Number format applied to the computed value: \"general\" (default — trimmed, as typed), \"currency\" (currency symbol + thousands separators + 2 decimal places, e.g. £1,234.50), \"percent\" (×100 with a % sign, e.g. 0.2 → 20%), \"1dp\" / \"2dp\" (fixed decimal places). Ignored for text."
+                  }
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        "description": "The sheet contents, keyed by A1-style cell reference (single-letter columns A–Z, rows 1–99): { \"A1\": \"Price\", \"B2\": 4.5, \"D6\": \"=SUM(D2:D5)\", \"B7\": { \"value\": \"=AVERAGE(B2:B6)\", \"occlude\": true } }. Values are literal text, numbers, or formula strings starting with \"=\". Formula results are ALWAYS computed by the engine — there is nowhere to author one. Required."
+      },
+      "selected": {
+        "type": "string",
+        "pattern": "^[A-Z][1-9][0-9]?$",
+        "description": "The initially selected cell (green border + name box + formula bar). Select a formula cell so the class sees the value in the grid and the formula in the bar — the core teaching duality. Default \"A1\" (or responseCell when set)."
+      },
+      "responseCell": {
+        "type": "string",
+        "pattern": "^[A-Z][1-9][0-9]?$",
+        "description": "run-value questions only (a marked model tile with responseMode \"run-value\"): the one answer cell. Rendered empty with the amber tint and editable even on an editable:false sheet — lock the sheet and leave this cell as the pupil's. Committing to it reports the observation the question marks. Leave the cell unauthored in `cells`."
+      },
+      "markSheet": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "run-sheet questions only (a marked model tile with responseMode \"run-sheet\" and correctAnswer { derived: true }): the key for a SKILL task over a region of the sheet — filling a column with a formula, formatting one. Every marked cell is tinted amber (the \"this region is yours\" affordance, which print and slides pose from) and stays writable even on an editable:false sheet, so a task can lock the data and open exactly the answer region. Set `fill`, `format`, or both (a mixed task); each takes one check or an array of them.",
+        "properties": {
+          "fill": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/fillCheck"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/fillCheck"
+                }
+              }
+            ],
+            "description": "Fill/formula checks. Each cell in `range` must HOLD A FORMULA that reads the same references as the pattern WITH THE SAME $ ANCHORING, translated to its own position, and computes what that translated formula computes — so a typed literal fails at once, a copy that lost its $ fails on the second row, and a pupil who hand-types every formula correctly passes (the reference semantics is the objective; the drag is ergonomics). Anchoring is part of the answer, not a detail: against the pattern \"=B2*C2\", \"=$B2*C2\" is marked wrong even though it computes the same number down this column, because it would not survive a fill sideways. Author the pattern with exactly the anchoring you want taught."
+          },
+          "format": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/formatCheck"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/formatCheck"
+                }
+              }
+            ],
+            "description": "Formatting checks — \"format column B as currency\", \"bold the total row\". State-marked, because the resulting format IS what was asked for. Empty cells in the range ask nothing and are skipped."
+          }
+        }
+      },
+      "editable": {
+        "type": "boolean",
+        "description": "Whether pupils can edit cells. true (default) is a live sheet they can change — every commit recalculates; false is a read-only sheet they can still click around and read formulas from the bar — use false for \"trace this spreadsheet\" or a fixed worked example."
+      },
+      "header": {
+        "type": "string",
+        "description": "The title in the window's header row (e.g. \"Trip budget\" or \"trip-budget.xlsx\"). Omit it for a plain window. Purely cosmetic."
+      },
+      "theme": {
+        "type": "string",
+        "enum": [
+          "platinum",
+          "paper",
+          "contrast",
+          "chalkboard",
+          "terminal",
+          "aubergine",
+          "amber"
+        ],
+        "description": "The window's colour theme. A spreadsheet takes the LIGHT themes only — \"platinum\" (default, warm grey), \"paper\" (white chrome) or \"contrast\" (black on white) — because its grid is white by nature; a dark theme falls back to platinum. Use ONE theme for every coding window in a lesson, and VARY it between lessons rather than leaving every lesson on platinum."
+      },
+      "cols": {
+        "type": "integer",
+        "minimum": 2,
+        "maximum": 12,
+        "description": "Number of columns shown (A onwards). The maximum here is a legibility cap on what you may ASK for; leave it unset and the grid follows the content — one past the rightmost authored cell, at least 6, and up to column Z if you author that far."
+      },
+      "rows": {
+        "type": "integer",
+        "minimum": 2,
+        "maximum": 40,
+        "description": "Number of rows shown. As with `cols`, the maximum caps what you may ASK for; the default follows the content — two past the lowest authored cell, at least 8, and up to row 99 if you author that far. A sheet taller than it is wide reads as a narrow column once a slide scales it down, so keep the filled rows near the guidance in whenToUse rather than relying on this ceiling."
+      },
+      "colWidths": {
+        "type": "object",
+        "additionalProperties": false,
+        "patternProperties": {
+          "^[A-Z]$": {
+            "type": "number",
+            "minimum": 40,
+            "maximum": 240
+          }
+        },
+        "description": "Per-column width overrides in pixels, keyed by column letter (e.g. { \"A\": 140 } for a wide label column). Columns default to 96px."
+      },
+      "currency": {
+        "type": "string",
+        "maxLength": 3,
+        "description": "Currency symbol used by cells with format \"currency\". Default \"£\"."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "formulaBar": {
+            "type": "boolean",
+            "description": "Show the formula bar (name box + fx + content strip) above the grid. Default true. Set false only when the sheet is pure data and the bar would be noise."
+          },
+          "formulas": {
+            "type": "boolean",
+            "description": "Open in the \"show formulas\" view (Excel's Ctrl+`): every formula cell displays its formula TEXT instead of its computed value. Use to reveal the workings of a finished sheet. Default false. Pupils can switch views themselves with the Values / Formulas switch in the header."
+          }
+        }
+      }
+    },
+    "required": [
+      "cells"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — school trip budget with row totals and a grand total",
+      "params": {
+        "header": "trip-budget.xlsx",
+        "selected": "D6",
+        "cells": {
+          "A1": {
+            "value": "Item",
+            "bold": true
+          },
+          "B1": {
+            "value": "Cost",
+            "bold": true
+          },
+          "C1": {
+            "value": "Pupils",
+            "bold": true
+          },
+          "D1": {
+            "value": "Total",
+            "bold": true
+          },
+          "A2": "Coach seat",
+          "B2": {
+            "value": 6.5,
+            "format": "currency"
+          },
+          "C2": 28,
+          "D2": {
+            "value": "=B2*C2",
+            "format": "currency"
+          },
+          "A3": "Museum entry",
+          "B3": {
+            "value": 4.25,
+            "format": "currency"
+          },
+          "C3": 28,
+          "D3": {
+            "value": "=B3*C3",
+            "format": "currency"
+          },
+          "A4": "Packed lunch",
+          "B4": {
+            "value": 2.4,
+            "format": "currency"
+          },
+          "C4": 13,
+          "D4": {
+            "value": "=B4*C4",
+            "format": "currency"
+          },
+          "A6": {
+            "value": "Grand total",
+            "bold": true
+          },
+          "D6": {
+            "value": "=SUM(D2:D4)",
+            "format": "currency",
+            "highlight": true
+          }
+        },
+        "colWidths": {
+          "A": 120
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — data given, pupils write the formulas",
+      "params": {
+        "header": "heights.xlsx",
+        "selected": "B8",
+        "cells": {
+          "A1": {
+            "value": "Pupil",
+            "bold": true
+          },
+          "B1": {
+            "value": "Height (cm)",
+            "bold": true
+          },
+          "A2": "Amir",
+          "B2": 148,
+          "A3": "Beth",
+          "B3": 153,
+          "A4": "Cai",
+          "B4": 145,
+          "A5": "Dina",
+          "B5": 160,
+          "A6": "Ezra",
+          "B6": 151,
+          "A8": {
+            "value": "Tallest",
+            "bold": true
+          },
+          "A9": {
+            "value": "Mean",
+            "bold": true
+          }
+        },
+        "colWidths": {
+          "A": 100,
+          "B": 110
+        }
+      }
+    },
+    {
+      "label": "Predict the value — occluded results over visible formulas",
+      "params": {
+        "header": "predict.xlsx",
+        "selected": "B6",
+        "cells": {
+          "A1": {
+            "value": "Scores",
+            "bold": true
+          },
+          "A2": 12,
+          "A3": 7,
+          "A4": 9,
+          "A6": {
+            "value": "Sum",
+            "bold": true
+          },
+          "B6": {
+            "value": "=SUM(A2:A4)",
+            "occlude": true
+          },
+          "A7": {
+            "value": "Biggest",
+            "bold": true
+          },
+          "B7": {
+            "value": "=MAX(A2:A4)",
+            "occlude": true
+          },
+          "A8": {
+            "value": "Double the sum",
+            "bold": true
+          },
+          "B8": {
+            "value": "=B6*2",
+            "occlude": true
+          }
+        },
+        "colWidths": {
+          "A": 120
+        }
+      }
+    },
+    {
+      "label": "Read-only trace — sequences built by relative formulas (editable false)",
+      "params": {
+        "header": "sequences.xlsx",
+        "editable": false,
+        "selected": "A3",
+        "cells": {
+          "A1": {
+            "value": "Add 3",
+            "bold": true
+          },
+          "B1": {
+            "value": "Double",
+            "bold": true
+          },
+          "A2": 5,
+          "B2": 2,
+          "A3": "=A2+3",
+          "B3": "=B2*2",
+          "A4": "=A3+3",
+          "B4": "=B3*2",
+          "A5": "=A4+3",
+          "B5": "=B4*2",
+          "A6": "=A5+3",
+          "B6": "=B5*2"
+        }
+      }
+    },
+    {
+      "label": "Hard case — test scores: AVERAGE, MEDIAN, IF pass/fail, and a real #DIV/0!",
+      "params": {
+        "header": "test-scores.xlsx",
+        "selected": "B9",
+        "cells": {
+          "A1": {
+            "value": "Test",
+            "bold": true
+          },
+          "B1": {
+            "value": "Score (%)",
+            "bold": true
+          },
+          "A2": "Autumn 1",
+          "B2": 64,
+          "A3": "Autumn 2",
+          "B3": 71,
+          "A4": "Spring 1",
+          "B4": 58,
+          "A5": "Spring 2",
+          "B5": 79,
+          "A8": {
+            "value": "Mean",
+            "bold": true
+          },
+          "B8": "=AVERAGE(B2:B5)",
+          "A9": {
+            "value": "Median",
+            "bold": true
+          },
+          "B9": "=MEDIAN(B2:B5)",
+          "A10": {
+            "value": "Result",
+            "bold": true
+          },
+          "B10": "=IF(B8>=60,\"Pass\",\"Fail\")",
+          "A11": {
+            "value": "Summer mean",
+            "bold": true
+          },
+          "B11": "=AVERAGE(C2:C5)"
+        },
+        "colWidths": {
+          "A": 110,
+          "B": 110
+        }
+      }
+    },
+    {
+      "label": "run-value question — locked sheet, pupil writes the total formula in B7",
+      "params": {
+        "header": "shopping.xlsx",
+        "editable": false,
+        "responseCell": "B7",
+        "cells": {
+          "A1": {
+            "value": "Item",
+            "bold": true
+          },
+          "B1": {
+            "value": "Cost",
+            "bold": true
+          },
+          "A2": "Bread",
+          "B2": {
+            "value": 1.1,
+            "format": "currency"
+          },
+          "A3": "Milk",
+          "B3": {
+            "value": 1.45,
+            "format": "currency"
+          },
+          "A4": "Eggs",
+          "B4": {
+            "value": 2.8,
+            "format": "currency"
+          },
+          "A5": "Apples",
+          "B5": {
+            "value": 1.65,
+            "format": "currency"
+          },
+          "A7": {
+            "value": "Total",
+            "bold": true
+          }
+        },
+        "colWidths": {
+          "A": 100
+        }
+      }
+    },
+    {
+      "label": "Show-formulas view — the workings of a finished sheet revealed",
+      "params": {
+        "header": "workings.xlsx",
+        "editable": false,
+        "show": {
+          "formulas": true
+        },
+        "selected": "C2",
+        "cells": {
+          "A1": {
+            "value": "Width",
+            "bold": true
+          },
+          "B1": {
+            "value": "Height",
+            "bold": true
+          },
+          "C1": {
+            "value": "Area",
+            "bold": true
+          },
+          "A2": 8,
+          "B2": 5,
+          "C2": "=A2*B2",
+          "A3": 12,
+          "B3": 7,
+          "C3": "=A3*B3",
+          "A4": 9,
+          "B4": 9,
+          "C4": "=A4*B4",
+          "A6": {
+            "value": "Total area",
+            "bold": true
+          },
+          "C6": "=SUM(C2:C4)"
+        },
+        "colWidths": {
+          "C": 110
+        }
+      }
+    },
+    {
+      "label": "Absolute reference + fill-down — one exchange rate in $B$1, first formula seeded, pupils fill the column",
+      "params": {
+        "header": "currency.xlsx",
+        "selected": "C4",
+        "cells": {
+          "A1": {
+            "value": "Exchange rate",
+            "bold": true
+          },
+          "B1": 1.15,
+          "A3": {
+            "value": "Item",
+            "bold": true
+          },
+          "B3": {
+            "value": "Price (£)",
+            "bold": true
+          },
+          "C3": {
+            "value": "Price (€)",
+            "bold": true
+          },
+          "A4": "T-shirt",
+          "B4": {
+            "value": 12,
+            "format": "currency"
+          },
+          "C4": {
+            "value": "=B4*$B$1",
+            "format": "2dp"
+          },
+          "A5": "Cap",
+          "B5": {
+            "value": 9.5,
+            "format": "currency"
+          },
+          "A6": "Poster",
+          "B6": {
+            "value": 4,
+            "format": "currency"
+          },
+          "A7": "Mug",
+          "B7": {
+            "value": 7.25,
+            "format": "currency"
+          }
+        },
+        "colWidths": {
+          "A": 110
+        }
+      }
+    },
+    {
+      "label": "run-sheet question — fill the column ($B$1 must hold), sheet locked around C5:C7",
+      "params": {
+        "header": "currency.xlsx",
+        "editable": false,
+        "selected": "C4",
+        "markSheet": {
+          "fill": {
+            "range": "C5:C7",
+            "from": "C4"
+          }
+        },
+        "cells": {
+          "A1": {
+            "value": "Exchange rate",
+            "bold": true
+          },
+          "B1": 1.15,
+          "A3": {
+            "value": "Item",
+            "bold": true
+          },
+          "B3": {
+            "value": "Price (£)",
+            "bold": true
+          },
+          "C3": {
+            "value": "Price (€)",
+            "bold": true
+          },
+          "A4": "T-shirt",
+          "B4": {
+            "value": 12,
+            "format": "currency"
+          },
+          "C4": {
+            "value": "=B4*$B$1",
+            "format": "2dp"
+          },
+          "A5": "Cap",
+          "B5": {
+            "value": 9.5,
+            "format": "currency"
+          },
+          "A6": "Poster",
+          "B6": {
+            "value": 4,
+            "format": "currency"
+          },
+          "A7": "Mug",
+          "B7": {
+            "value": 7.25,
+            "format": "currency"
+          }
+        },
+        "colWidths": {
+          "A": 110
+        }
+      }
+    },
+    {
+      "label": "run-sheet question — format the price column as currency",
+      "params": {
+        "header": "bake-sale.xlsx",
+        "selected": "B2",
+        "markSheet": {
+          "format": {
+            "range": "B2:B6",
+            "is": "currency"
+          }
+        },
+        "cells": {
+          "A1": {
+            "value": "Item",
+            "bold": true
+          },
+          "B1": {
+            "value": "Price",
+            "bold": true
+          },
+          "A2": "Brownie",
+          "B2": 1.2,
+          "A3": "Cookie",
+          "B3": 0.75,
+          "A4": "Flapjack",
+          "B4": 1,
+          "A6": {
+            "value": "Total",
+            "bold": true
+          },
+          "B6": "=SUM(B2:B4)"
+        },
+        "colWidths": {
+          "A": 110
+        }
+      }
+    },
+    {
+      "label": "COUNTIF and SUMIF — conditional counts and totals over a category column",
+      "params": {
+        "header": "sports-day.xlsx",
+        "selected": "E2",
+        "cells": {
+          "A1": {
+            "value": "Pupil",
+            "bold": true
+          },
+          "B1": {
+            "value": "Team",
+            "bold": true
+          },
+          "C1": {
+            "value": "Points",
+            "bold": true
+          },
+          "A2": "Amir",
+          "B2": "Red",
+          "C2": 8,
+          "A3": "Beth",
+          "B3": "Blue",
+          "C3": 5,
+          "A4": "Cai",
+          "B4": "Red",
+          "C4": 6,
+          "A5": "Dina",
+          "B5": "Blue",
+          "C5": 9,
+          "A6": "Ezra",
+          "B6": "Red",
+          "C6": 4,
+          "D1": {
+            "value": "Reds",
+            "bold": true
+          },
+          "E1": "=COUNTIF(B2:B6,\"Red\")",
+          "D2": {
+            "value": "Red points",
+            "bold": true
+          },
+          "E2": "=SUMIF(B2:B6,\"Red\",C2:C6)",
+          "D3": {
+            "value": "Scores over 5",
+            "bold": true
+          },
+          "E3": "=COUNTIF(C2:C6,\">5\")"
+        },
+        "colWidths": {
+          "D": 110
+        }
+      }
+    },
+    {
+      "label": "VLOOKUP — exact-match price lookup and a banded grade lookup (approximate, the default)",
+      "params": {
+        "header": "lookups.xlsx",
+        "selected": "E2",
+        "cells": {
+          "A1": {
+            "value": "Item",
+            "bold": true
+          },
+          "B1": {
+            "value": "Price",
+            "bold": true
+          },
+          "A2": "Pencil",
+          "B2": {
+            "value": 0.3,
+            "format": "currency"
+          },
+          "A3": "Ruler",
+          "B3": {
+            "value": 0.85,
+            "format": "currency"
+          },
+          "A4": "Compass",
+          "B4": {
+            "value": 2.1,
+            "format": "currency"
+          },
+          "D1": {
+            "value": "Buying",
+            "bold": true
+          },
+          "E1": "Ruler",
+          "D2": {
+            "value": "Costs",
+            "bold": true
+          },
+          "E2": {
+            "value": "=VLOOKUP(E1,A2:B4,2,FALSE)",
+            "format": "currency",
+            "highlight": true
+          },
+          "A6": {
+            "value": "Mark",
+            "bold": true
+          },
+          "B6": {
+            "value": "Grade",
+            "bold": true
+          },
+          "A7": 0,
+          "B7": "U",
+          "A8": 50,
+          "B8": "C",
+          "A9": 70,
+          "B9": "B",
+          "A10": 85,
+          "B10": "A",
+          "D6": {
+            "value": "Scored",
+            "bold": true
+          },
+          "E6": 72,
+          "D7": {
+            "value": "Grade",
+            "bold": true
+          },
+          "E7": {
+            "value": "=VLOOKUP(E6,A7:B10,2)",
+            "highlight": true
+          }
+        },
+        "colWidths": {
+          "A": 100,
+          "D": 90
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1031 @@
+{
+  "ref": "probability/venn@4",
+  "family": "probability",
+  "name": "venn",
+  "version": 4,
+  "title": "Venn diagram",
+  "tagline": "2- or 3-set Venn in a universal rectangle, circles standard/chain/disjoint/apart; regions carry values, stacked \"a/b\" fraction labels or member lists; ξ total suppressible.",
+  "description": "A 2- or 3-set Venn diagram: circles inside a rectangular universal set (ξ), where every distinct region — A-only, B-only, the intersections that exist, and the area outside all circles — carries a value, a label, or a list of members you supply. You name the sets and say which of them MEET (layout: the standard full overlap, a chain where A and C never meet, one set standing apart, or all of them mutually exclusive); the circle radius, the order along the row, every centre, the universal rectangle and each region's anchor point are then computed, so you never position anything in pixels — and the set of addressable regions follows the layout, so a chain simply has no 'AC' region to fill. Regions are addressed by the set keys that contain them ('A', 'AB', 'ABC', 'none'). In members mode you give each set its actual elements (and optionally the universal's) and the code partitions them into the regions — the member list in every region, the element counts, the ξ total and a count-based probability all fall out automatically. Supports per-region highlighting and occlusion, an optional universal total, a set-notation caption, and an optional derived readout (HCF/LCM from prime-factor circles, the union total, or P(event) from element counts). A region label written \"a/b\" (e.g. \"3/16\") renders as a STACKED fraction — the exam register for probability Venns — displayed verbatim, never simplified or converted to a decimal. universal.showTotal: false suppresses the ξ total readout for figures whose source prints none (probabilities summing to 1) or where the total is itself the thing being asked for.",
+  "whenToUse": "Reach for this whenever the teaching lives ON a Venn diagram. Pick sets: two entries for a 2-set diagram or three for a 3-set. Then pick layout — this is what decides which regions exist. layout: 'standard' (the default) is the familiar picture: a 2-set has the regions A, B, AB, none; a 3-set has all eight (A, B, C, AB, AC, BC, ABC, none). layout: 'chain' draws the three circles in a row with B overlapping both neighbours and A and C not touching: use it whenever the question says two of the three events are mutually exclusive but the middle one overlaps both — the regions are A, B, C, AB, BC, none (there is no AC and no ABC). layout: 'disjoint' overlaps A and B and stands C completely apart — regions A, B, C, AB, none. layout: 'apart' draws every circle separate, the picture for three mutually exclusive events — regions A, B, C, none. For any other configuration, give layout as the explicit list of intersecting PAIRS, e.g. ['AB','AC'] for a chain with A in the middle, or ['BC'] to stand A apart instead of C; the empty list [] is the same as 'apart', and listing all three pairs is 'standard' (with equal circles, three pairwise overlaps always produce a common centre). Address a region by the sorted set keys that contain it — 'AB' is A-and-B-but-not-C, 'ABC' is the centre, 'none' is inside ξ but outside every circle. Common configurations: Venn probability — a count or frequency in each region, sets labelled with the event names, universal.total set (or left to auto-sum when every region is numeric); occlude one region and highlight it for \"find the missing frequency / read P(A∩B)\". A Level probability questions often mix known decimals with algebraic unknowns — put 0.25 in one region with value and p in another with label, and the diagram reads exactly like the exam paper (no total is auto-summed once a label is present, so add universal.total yourself if you want ξ shown). When a paper states each region as a FRACTION, put the fraction in label exactly as printed (\"3/8\", unsimplified) — it renders as a stacked fraction, matching the hand-written exam figure; never convert the source's fractions to decimals, and keep value for plain counts. A worked probability Venn whose regions are decimals or fractions summing to 1 shows no total on the paper — the auto-sum would print \"ξ = 1\" whenever every region is plain numeric, so set universal: { showTotal: false } to suppress it; also use showTotal: false when the total is what the question asks pupils to find. HCF and LCM by prime factors — label the sets with the two/three numbers, put each shared prime in the intersection region and each unique prime in its own circle, then compute: 'hcf-lcm' to show HCF = product of the intersection and LCM = product of the union below the figure (this needs the standard layout, where a shared region exists). Set notation — highlight the region(s) an expression names (A∩B is region 'AB'; A∪B is A, B and AB; A′ is everything except A, i.e. B and none for a 2-set; (A∩B)′ is everything except AB) and put the expression in caption; this is how pupils learn which area a notation picks out. A non-standard layout teaches notation too: on a chain, shading nothing for A∩C IS the answer to \"are A and C mutually exclusive?\". Populate from sets (members) — the GCSE \"complete the Venn diagram from the sets\" question. Give each set its actual elements with members (sets: [{ label: 'A', members: [1,2,3,4,5] }, { label: 'B', members: [4,5,6,7,8] }]) and ξ's elements with universal.members ([1,2,…,10]); the code partitions them so each region shows its own members (A-only [1,2,3], A∩B [4,5], B-only [6,7,8], outside [9,10]) and the ξ total becomes the size of the universal. Keep members mode on the standard layout: an element that lands in an intersection the layout does not draw has nowhere to go. Then: to ask \"list the members of A∩B\", occlude (and usually highlight) region 'AB' so its list shows \"?\"; to find P(A∪B), set compute: 'probability' and highlight the regions the event names (A, AB, B for A∪B) — the readout is (count in the highlighted regions) / (ξ total), simplified, e.g. P = 8 / 10 = 4 / 5. With nothing highlighted, compute: 'probability' defaults to P of the union of all circles. You can also list a single region directly without giving whole sets: regions: [{ id: 'AB', members: [2, 4] }]. Members are best for a 2-set (the lobes have room); for a busy 3-set prefer counts. Cross-block convention: keep the same set count, set labels AND layout across the blocks of one lesson so pupils track the regions, not a redrawn diagram — change only what is filled, highlighted or occluded. A staged build reads well: start with empty circles, fill regions one at a time, then highlight the answer region. Synonyms a teacher might use: Venn diagram, set diagram, intersection, union, complement, universal set, sample space, ξ / epsilon, A and B, A or B, not A, mutually exclusive, disjoint sets, no overlap, HCF, LCM, highest common factor, lowest common multiple, prime factors, overlapping circles, members, elements, list the members, complete the Venn diagram, populate from the sets, set-builder, P(A∪B), P(A∩B).",
+  "responseModes": [
+    "select-region",
+    "fill-derived"
+  ],
+  "tags": [
+    "venn",
+    "venn diagram",
+    "set",
+    "sets",
+    "set notation",
+    "intersection",
+    "union",
+    "complement",
+    "universal set",
+    "epsilon",
+    "sample space",
+    "probability",
+    "frequency",
+    "two-way",
+    "hcf",
+    "lcm",
+    "highest common factor",
+    "lowest common multiple",
+    "prime factors",
+    "overlap",
+    "overlapping circles",
+    "maths",
+    "probability",
+    "members",
+    "elements",
+    "list the members",
+    "complete the venn",
+    "populate from sets",
+    "set builder",
+    "element count",
+    "mutually exclusive",
+    "disjoint",
+    "disjoint sets",
+    "chain",
+    "non-overlapping",
+    "three events",
+    "a level probability",
+    "fraction",
+    "fractions",
+    "stacked fraction",
+    "unsimplified fraction",
+    "no total",
+    "hide the total"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "sets": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 3,
+        "description": "The circles. Two entries → a 2-set Venn; three entries → a 3-set Venn. The order fixes the keys: the first set is A, the second B, the third C. Which of them OVERLAP is set by layout (default: all of them), and the circle sizes, positions and the universal rectangle are derived from that — you only name the sets.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "Display name for this circle, drawn outside it near the top. The event name for probability (\"Maths\", \"P\"), or the original number for an HCF/LCM-by-prime-factors diagram (\"24\"). Omit for an unlabelled circle."
+            },
+            "members": {
+              "type": "array",
+              "description": "MEMBERS mode — this set's actual elements, e.g. [1, 2, 3, 4, 5]. When any set has members, the code PARTITIONS them into the regions (A-only = A minus B, the intersection = A and B, the outside region = the universal minus every set) and draws each region's own member list — you never list a region directly. The element COUNT of each region is then derived (members.length), so the ξ total and a count-based probability fall out automatically. Numbers or short strings (names). Duplicates within a set are ignored; display is sorted. Use members with the default 'standard' layout: on a chain or disjoint layout an element that falls in an intersection the picture does not draw has no region to sit in.",
+              "items": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "layout": {
+        "description": "WHICH SETS MEET — the circle configuration, and with it the set of regions that exist. 'standard' (default): every pair overlaps, and a 3-set also has the central ABC region — the familiar picture. 'chain': the three circles sit in a row with B overlapping A on its left and C on its right, while A and C never touch — regions A, B, C, AB, BC, none (use this when the question makes A and C mutually exclusive but B overlaps both). 'disjoint': A and B overlap and C stands completely apart — regions A, B, C, AB, none. 'apart': no circle touches any other, the picture for mutually exclusive events — regions A, B, C, none (with two sets, 'disjoint' and 'apart' both mean the two circles stand apart). For anything else, give the explicit list of the PAIRS that intersect, e.g. ['AB','AC'] to put A in the middle of a chain, or ['BC'] to stand A apart instead of C; [] is the same as 'apart' and ['AB','AC','BC'] is 'standard' (with equal circles, three pairwise overlaps always create a common centre, so the ABC region comes with them). Nothing is positioned in pixels: the radius, the left-to-right order and every centre are derived from this. Addressing a region the layout does not have is rejected.",
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "standard",
+              "chain",
+              "disjoint",
+              "apart"
+            ]
+          },
+          {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "string",
+              "enum": [
+                "AB",
+                "AC",
+                "BC"
+              ]
+            }
+          }
+        ]
+      },
+      "regions": {
+        "type": "array",
+        "description": "The value or label placed inside each region. Address a region by the sorted set keys that contain it: 'A'/'B'/'C' = inside that one circle only; 'AB'/'AC'/'BC' = inside exactly those two; 'ABC' = the three-way centre; 'none' = inside the universal rectangle but outside every circle. Only the regions the LAYOUT creates can be addressed (a chain has no 'AC'). Omit a region to leave it blank (an answer space). Each region's anchor point is the computed centroid of its area — you never give a position.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "A",
+                "B",
+                "C",
+                "AB",
+                "AC",
+                "BC",
+                "ABC",
+                "none"
+              ],
+              "description": "Which region this entry fills. Use only ids that exist for your set count AND layout: a 2-set has A, B, AB, none; a standard 3-set adds C, AC, BC, ABC; a chain drops AC and ABC; a disjoint layout keeps only AB; an apart layout has no intersections at all. Keys are always in alphabetical order ('AB', never 'BA')."
+            },
+            "value": {
+              "type": "number",
+              "description": "A numeric value to show in the region — a count or frequency for probability, or (with several primes) use label instead. When every filled region carries a number, the universal total and the union readout can auto-sum from these. Ignored when the diagram is in MEMBERS mode (any set has members): there the region content is derived from the sets, and a region entry only carries occlude / highlight."
+            },
+            "label": {
+              "type": "string",
+              "description": "A text value to show in the region instead of a number — e.g. a prime factor or product \"2 × 3\" for an HCF/LCM diagram, a decimal string, or an algebraic unknown \"p\" in an A Level probability Venn. A label of the shape \"a/b\" (an integer over an integer, e.g. \"3/16\") renders as a STACKED fraction — numerator over vinculum over denominator, as the exam paper hand-writes region probabilities — and is displayed verbatim: never simplified and never converted to a decimal, so author it exactly as the source prints it. Use value for plain counts; use label when the content is not a single number. Ignored in MEMBERS mode (see value)."
+            },
+            "members": {
+              "type": "array",
+              "description": "List THIS region's members directly, e.g. [2, 4] in region 'AB'. The simplest set-listing path when you are not giving whole sets — the region shows the comma list and its element count (members.length) feeds the ξ total and probability. When the SETS carry members the partition is derived instead and this is ignored. Numbers or short strings; duplicates ignored; display sorted.",
+              "items": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              }
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this region's content as \"?\" instead of its value / member list — the question hook for \"find the missing frequency\" or \"list the members of A∩B\" with the answer hidden. The region itself stays visible. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Shade this region amber — result/answer emphasis, or to show which area a set expression names (highlight 'AB' for A∩B). Several regions can be highlighted together (A∪B = highlight A, B and AB) and shade as one uniform area. With compute: 'probability' the highlighted regions ALSO define the event whose probability is read out, so the shaded area and P(event) teach together. Default false."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      },
+      "universal": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The universal set ξ (epsilon) — the rectangle the circles sit inside.",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Symbol shown at a corner of the rectangle naming the universal set. Default \"ξ\". Set to \"\" to draw the rectangle with no symbol."
+          },
+          "total": {
+            "type": "number",
+            "description": "The total size of the universal set, shown beside ξ (e.g. \"ξ = 30\"). Omit to let it auto-sum when every filled region is numeric; omit and leave regions non-numeric to show no total."
+          },
+          "showTotal": {
+            "type": "boolean",
+            "description": "Show the ξ total beside the symbol (\"ξ = 30\"). Default true. Set false to draw the universal set with NO total readout — the A Level register, where a probability Venn's regions sum to 1 and the paper prints no \"ξ = 1\" (the auto-sum would otherwise print one whenever every region is plain numeric) — or when the total is itself what the question asks for. Suppresses both an authored total and the auto-sum, in the figure and its aria; compute readouts are unaffected (they are a separate opt-in)."
+          },
+          "members": {
+            "type": "array",
+            "description": "MEMBERS mode — the universal set's actual elements, e.g. [1,2,3,4,5,6,7,8,9,10]. Drives two derived things: the OUTSIDE region ('none') is filled with the universal's elements that are in no set, and the ξ total becomes members.length. Give this alongside set members for a complete \"complete the Venn from the sets\" figure. Numbers or short strings; duplicates ignored.",
+            "items": {
+              "type": [
+                "number",
+                "string"
+              ]
+            }
+          }
+        }
+      },
+      "showUniverse": {
+        "type": "boolean",
+        "description": "Draw the universal-set rectangle around the circles. Default true. Set false for a bare overlapping-circles diagram with no ξ box (e.g. an HCF/LCM diagram where the universe is not meaningful)."
+      },
+      "compute": {
+        "type": "string",
+        "enum": [
+          "none",
+          "hcf-lcm",
+          "union",
+          "probability"
+        ],
+        "description": "An optional derived readout shown below the figure, computed from the region element counts. 'hcf-lcm' (for prime-factor circles) shows HCF = the product of the values in the all-sets-shared region (AB for a 2-set, ABC for a 3-set) and LCM = the product of every value placed — use it to reveal the answer after the primes are placed, and only on the standard layout, which is the one that has an all-sets region. 'union' shows the total of every filled region (the size of A∪B…). 'probability' shows P = (total count in the HIGHLIGHTED regions) / (ξ total), simplified — highlight the regions the event names (A, AB and B for A∪B) and pair with a caption like \"P(A ∪ B)\"; with no region highlighted it defaults to P of the union of all circles. It reads counts from members.length in members mode or from the numeric values in counts mode, so it is the answer-reveal for \"find P(...)\". 'none' (default) shows nothing."
+      },
+      "caption": {
+        "type": "string",
+        "description": "A set-notation expression rendered centred below the figure, e.g. \"A ∩ B\", \"A ∪ B\", \"A′\", \"(A ∩ B)′\". Pair it with highlight on the matching region(s) so the notation and the shaded area teach together. Omit for no caption."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title rendered centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "sets"
+    ],
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "layout": {
+              "const": "chain"
+            }
+          },
+          "required": [
+            "layout"
+          ]
+        },
+        "then": {
+          "properties": {
+            "regions": {
+              "items": {
+                "properties": {
+                  "id": {
+                    "enum": [
+                      "A",
+                      "B",
+                      "C",
+                      "AB",
+                      "BC",
+                      "none"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "layout": {
+              "const": "disjoint"
+            },
+            "sets": {
+              "minItems": 3
+            }
+          },
+          "required": [
+            "layout",
+            "sets"
+          ]
+        },
+        "then": {
+          "properties": {
+            "regions": {
+              "items": {
+                "properties": {
+                  "id": {
+                    "enum": [
+                      "A",
+                      "B",
+                      "C",
+                      "AB",
+                      "none"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "layout": {
+              "const": "disjoint"
+            },
+            "sets": {
+              "maxItems": 2
+            }
+          },
+          "required": [
+            "layout",
+            "sets"
+          ]
+        },
+        "then": {
+          "properties": {
+            "regions": {
+              "items": {
+                "properties": {
+                  "id": {
+                    "enum": [
+                      "A",
+                      "B",
+                      "none"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "layout": {
+              "const": "apart"
+            }
+          },
+          "required": [
+            "layout"
+          ]
+        },
+        "then": {
+          "properties": {
+            "regions": {
+              "items": {
+                "properties": {
+                  "id": {
+                    "enum": [
+                      "A",
+                      "B",
+                      "C",
+                      "none"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "layout": {
+              "enum": [
+                "chain",
+                "disjoint",
+                "apart"
+              ]
+            }
+          },
+          "required": [
+            "layout"
+          ]
+        },
+        "then": {
+          "properties": {
+            "sets": {
+              "items": {
+                "not": {
+                  "required": [
+                    "members"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "sets": {
+              "maxItems": 2
+            },
+            "layout": {
+              "type": "array"
+            }
+          },
+          "required": [
+            "layout",
+            "sets"
+          ]
+        },
+        "then": {
+          "properties": {
+            "layout": {
+              "items": {
+                "const": "AB"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank 2-set frame (answer space) — fill in the regions",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "universal": {
+          "total": 30
+        }
+      }
+    },
+    {
+      "label": "Venn probability (worked) — frequencies in every region, ξ = 30",
+      "params": {
+        "sets": [
+          {
+            "label": "Football"
+          },
+          {
+            "label": "Netball"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "value": 11
+          },
+          {
+            "id": "AB",
+            "value": 6
+          },
+          {
+            "id": "B",
+            "value": 9
+          },
+          {
+            "id": "none",
+            "value": 4
+          }
+        ],
+        "universal": {
+          "total": 30
+        }
+      }
+    },
+    {
+      "label": "Occluded region (question) — find the missing frequency",
+      "params": {
+        "sets": [
+          {
+            "label": "Cycle"
+          },
+          {
+            "label": "Swim"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "value": 7
+          },
+          {
+            "id": "AB",
+            "value": 5,
+            "occlude": true,
+            "highlight": true
+          },
+          {
+            "id": "B",
+            "value": 8
+          },
+          {
+            "id": "none",
+            "value": 5
+          }
+        ],
+        "universal": {
+          "total": 25
+        }
+      }
+    },
+    {
+      "label": "Set notation — shade A ∩ B′ (in A but not B)",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "highlight": true
+          }
+        ],
+        "caption": "A ∩ B′",
+        "showUniverse": true
+      }
+    },
+    {
+      "label": "HCF & LCM by prime factors — 24 and 36, derived readout",
+      "params": {
+        "sets": [
+          {
+            "label": "24"
+          },
+          {
+            "label": "36"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "value": 2
+          },
+          {
+            "id": "AB",
+            "value": 2
+          },
+          {
+            "id": "AB",
+            "value": 2
+          },
+          {
+            "id": "AB",
+            "value": 3
+          },
+          {
+            "id": "B",
+            "value": 3
+          }
+        ],
+        "showUniverse": false,
+        "compute": "hcf-lcm"
+      }
+    },
+    {
+      "label": "3-set probability with ξ total, occluded + highlighted answer (the hard case)",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "value": 8
+          },
+          {
+            "id": "B",
+            "value": 5
+          },
+          {
+            "id": "C",
+            "value": 7
+          },
+          {
+            "id": "AB",
+            "value": 4,
+            "occlude": true,
+            "highlight": true
+          },
+          {
+            "id": "AC",
+            "value": 3
+          },
+          {
+            "id": "BC",
+            "value": 2
+          },
+          {
+            "id": "ABC",
+            "value": 1
+          },
+          {
+            "id": "none",
+            "value": 6
+          }
+        ],
+        "universal": {
+          "total": 36
+        },
+        "caption": "(A ∩ B) ∩ C′"
+      }
+    },
+    {
+      "label": "Members — populate the Venn from the sets (worked, 2-set)",
+      "params": {
+        "sets": [
+          {
+            "label": "Even",
+            "members": [
+              2,
+              4,
+              6,
+              8,
+              10
+            ]
+          },
+          {
+            "label": "Multiple of 3",
+            "members": [
+              3,
+              6,
+              9
+            ]
+          }
+        ],
+        "universal": {
+          "label": "ξ",
+          "members": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        "header": "Whole numbers 1 to 10"
+      }
+    },
+    {
+      "label": "Members — list the members of A ∩ B (occluded question)",
+      "params": {
+        "sets": [
+          {
+            "label": "Odd",
+            "members": [
+              1,
+              3,
+              5,
+              7,
+              9
+            ]
+          },
+          {
+            "label": "Square",
+            "members": [
+              1,
+              4,
+              9
+            ]
+          }
+        ],
+        "universal": {
+          "members": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        "regions": [
+          {
+            "id": "AB",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "caption": "A ∩ B"
+      }
+    },
+    {
+      "label": "Members — P(A ∪ B) from element counts (the members hard case)",
+      "params": {
+        "sets": [
+          {
+            "label": "A",
+            "members": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "label": "B",
+            "members": [
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        ],
+        "universal": {
+          "members": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        "regions": [
+          {
+            "id": "A",
+            "highlight": true
+          },
+          {
+            "id": "AB",
+            "highlight": true
+          },
+          {
+            "id": "B",
+            "highlight": true
+          }
+        ],
+        "compute": "probability",
+        "caption": "P(A ∪ B)"
+      }
+    },
+    {
+      "label": "Chain layout (worked) — B overlaps both, A and C never meet (the layout hard case)",
+      "params": {
+        "sets": [
+          {
+            "label": "French"
+          },
+          {
+            "label": "German"
+          },
+          {
+            "label": "Spanish"
+          }
+        ],
+        "layout": "chain",
+        "regions": [
+          {
+            "id": "A",
+            "value": 18
+          },
+          {
+            "id": "AB",
+            "value": 7
+          },
+          {
+            "id": "B",
+            "value": 12
+          },
+          {
+            "id": "BC",
+            "value": 5
+          },
+          {
+            "id": "C",
+            "value": 14
+          },
+          {
+            "id": "none",
+            "value": 4
+          }
+        ],
+        "universal": {
+          "total": 60
+        }
+      }
+    },
+    {
+      "label": "Chain layout (question) — occluded B ∩ C, probabilities summing to 1",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "layout": "chain",
+        "regions": [
+          {
+            "id": "A",
+            "value": 0.3
+          },
+          {
+            "id": "AB",
+            "value": 0.12
+          },
+          {
+            "id": "B",
+            "value": 0.18
+          },
+          {
+            "id": "BC",
+            "value": 0.08,
+            "occlude": true,
+            "highlight": true
+          },
+          {
+            "id": "C",
+            "value": 0.22
+          },
+          {
+            "id": "none",
+            "value": 0.1
+          }
+        ],
+        "universal": {
+          "total": 1
+        },
+        "caption": "P(B ∩ C)"
+      }
+    },
+    {
+      "label": "Disjoint layout — A and B overlap, C stands apart (mutually exclusive)",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "layout": "disjoint",
+        "regions": [
+          {
+            "id": "A",
+            "value": 0.35
+          },
+          {
+            "id": "AB",
+            "label": "p"
+          },
+          {
+            "id": "B",
+            "label": "q"
+          },
+          {
+            "id": "C",
+            "label": "r"
+          },
+          {
+            "id": "none",
+            "value": 0.05
+          }
+        ],
+        "universal": {
+          "total": 1
+        }
+      }
+    },
+    {
+      "label": "Stacked fractions (worked) — region probabilities as the paper prints them",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "label": "5/24"
+          },
+          {
+            "id": "AB",
+            "label": "1/6"
+          },
+          {
+            "id": "B",
+            "label": "3/8"
+          },
+          {
+            "id": "none",
+            "label": "1/4"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded stacked-fraction question — find P(A ∩ B), probabilities sum to 1 (the fractions hard case)",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "label": "7/40"
+          },
+          {
+            "id": "AB",
+            "label": "3/20",
+            "occlude": true,
+            "highlight": true
+          },
+          {
+            "id": "B",
+            "label": "9/40"
+          },
+          {
+            "id": "none",
+            "label": "9/20"
+          }
+        ],
+        "caption": "P(A ∩ B)"
+      }
+    },
+    {
+      "label": "Suppressed ξ total — decimal probabilities summing to 1, no total printed",
+      "params": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "regions": [
+          {
+            "id": "A",
+            "value": 0.45
+          },
+          {
+            "id": "AB",
+            "value": 0.2
+          },
+          {
+            "id": "B",
+            "value": 0.25
+          },
+          {
+            "id": "none",
+            "value": 0.1
+          }
+        ],
+        "universal": {
+          "showTotal": false
+        }
+      }
+    },
+    {
+      "label": "Apart layout — three mutually exclusive events, no circle touching",
+      "params": {
+        "sets": [
+          {
+            "label": "Red"
+          },
+          {
+            "label": "Blue"
+          },
+          {
+            "label": "Green"
+          }
+        ],
+        "layout": "apart",
+        "regions": [
+          {
+            "id": "A",
+            "value": 14
+          },
+          {
+            "id": "B",
+            "value": 9
+          },
+          {
+            "id": "C",
+            "value": 11
+          },
+          {
+            "id": "none",
+            "value": 6
+          }
+        ],
+        "universal": {
+          "total": 40
+        },
+        "caption": "A ∩ B = A ∩ C = B ∩ C = ∅"
+      }
+    }
+  ]
+}

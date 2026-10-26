@@ -1,0 +1,907 @@
+{
+  "ref": "statistics/scatter@2",
+  "family": "statistics",
+  "name": "scatter",
+  "version": 2,
+  "title": "Scatter graph",
+  "tagline": "Scatter graph of bivariate data; derives line of best fit, correlation, outliers, estimates. @2 answer modes: plot-the-points, draw a line of best fit, read off an estimate.",
+  "description": "A scatter graph of bivariate data — the model for correlation, the line of best fit, outliers and estimation. You give the data as [x, y] points and the axis titles; the model plots them and derives the line of best fit (least-squares, or you can author a by-eye line through two points), the correlation description (strong/weak, positive/negative/none), the outlier (the point furthest from the line) and any estimate read off the line with projection guides. Occlude an estimate for a \"use the line to estimate …\" question; highlight the answer. Web: drag the by-eye line's ends to fit it to the data. Answer on the model (@2): set plotPoints and host with responseMode \"place-derived\" to turn the graph into a \"plot these points\" answer surface (the pupil drags a cross per point onto the grid; each self-marks within half a small square; any given `points` stay as context); or host with responseMode \"line-of-best-fit\" to turn the scatter into a \"draw a line of best fit\" answer surface (the pupil drags a straight line to fit; it is marked with a tolerance — passing through the mean point within a band, gradient near the true best-fit). Its READ-OFF VARIANT (same responseMode) adds estimate: { x (or y), acceptRange: [lo, hi] } with no bestFit, for the GCSE \"use a line of best fit to estimate\" question: the pupil draws the line and then reads off an estimate (up-and-across from a given x to read y, or across-and-down from a given y to read x); it is marked when the line is a plausible best-fit AND the read-off lands in acceptRange, read off the pupil's own line (follow-through). All use correctAnswer { derived: true } and never reveal the answer on a posed surface.",
+  "whenToUse": "Reach for this for scatter graphs and bivariate data: correlation (positive / negative / none, strong / weak), the line of best fit, outliers, and estimating one variable from another. Give points as [[x, y], …] and set axes.xLabel / axes.yLabel to the variables with units (\"Height (cm)\", \"Mass (kg)\"). For the line of best fit, the usual GCSE approach is a by-eye line: bestFit: { points: [[x1, y1], [x2, y2]] } through two points you choose (or that pupils drag into place) — there is no single \"correct\" by-eye line. For an A-level regression line use bestFit: {} — the derived least-squares line (auto-labelled \"least-squares line of best fit\" so it is not read as the one right answer). Add bestFit.extend to extend the line for extrapolation. Set showCorrelation to print the derived description, markOutliers to ring the point furthest from the line, and estimate: { x } (or { y }) to draw projection guides and read off the predicted value — set estimate.occlude for a \"use your line to estimate\" question. Leave bestFit off (just the points + axis titles) for a \"draw the line of best fit\" answer space, or with bestFit draggable to let pupils fit it. Keep the same window and axis titles across a lesson. A staged build reads well: plot the points → describe the correlation → draw the line of best fit → estimate from it (and a second staged build: spot the outlier). Answer on the model (auto-marked, @2): (1) \"Plot these points on the scatter graph\" — a MARKED model tile with responseMode \"place-derived\", marking { mode: \"auto\", correctAnswer: { derived: true } } and plotPoints listing the [x, y] points to plot; leave `points` empty for a blank-axes plot, or set `points` to the already-given scatter when the task is \"plot two MORE\" (they stay drawn as context, plotPoints are the answer and never leak). The pupil drags one cross per point onto the grid; each self-marks within half a small square in both axes; binary (every point placed correctly). (2) \"Draw a line of best fit\" — a MARKED model tile with responseMode \"line-of-best-fit\", marking { mode: \"auto\", correctAnswer: { derived: true } }, the `points` given and NO bestFit (so the posed surface shows the scatter with no line — nothing leaks). The pupil drags a straight line to fit; it is accepted with a tolerance (through the mean point within a band AND a gradient near the true least-squares gradient — a by-eye line has no single exact answer), tune with lobfTolerance if needed. (3) \"Use a line of best fit to estimate …\" — the read-off VARIANT of \"line-of-best-fit\": a MARKED model tile with responseMode \"line-of-best-fit\", marking { mode: \"auto\", correctAnswer: { derived: true } }, the `points` given, NO bestFit, and estimate: { x: <given>, acceptRange: [lo, hi] } to read UP from a given x (target axis y), or estimate: { y: <given>, acceptRange: [lo, hi] } to read ACROSS from a given y (target axis x). The pupil draws the line of best fit, then — with the line in place — moves the pointer over the graph and a dashed read-off guide FOLLOWS THE POINTER to the line and across (or down) to the target axis, the estimate reading out live; lining the guide up with the given value and clicking records the read-off. It is marked when the line is a plausible best-fit AND the recorded read-off was taken at the given value and lands in acceptRange (read off the pupil's own line — follow-through). acceptRange is the mark-scheme range the typed answer would have used; put the given value in the question text too. A figure can host only ONE mode; when a question both plots points and draws a line, pick the part the mark scheme credits. Switch primitive when the teaching changes — for plotting general points or shapes on a grid use graphing/coordinate-grid; for a curve y = f(x) use graphing/function-graph; for grouped data as bars use statistics/histogram; for a time series or conversion line use a line graph. Synonyms a teacher might use: scatter graph, scatter plot, scatter diagram, correlation, positive correlation, negative correlation, line of best fit, trend line, outlier, anomaly, bivariate, estimate, predict, extrapolate, interpolate.",
+  "responseModes": [
+    "place-derived",
+    "line-of-best-fit"
+  ],
+  "tags": [
+    "scatter",
+    "scatter graph",
+    "scatter plot",
+    "scatter diagram",
+    "correlation",
+    "positive correlation",
+    "negative correlation",
+    "line of best fit",
+    "trend line",
+    "outlier",
+    "anomaly",
+    "bivariate",
+    "estimate",
+    "predict",
+    "extrapolate",
+    "statistics",
+    "data",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional window + axis titles. The window defaults to fit the data with a margin; set it to FIX the frame across a lesson.",
+        "properties": {
+          "x": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the x-axis. Default: fits the data."
+          },
+          "y": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the y-axis. Default: fits the data."
+          },
+          "xStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between x gridlines / numbers. Default: a sensible round value."
+          },
+          "yStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between y gridlines / numbers. Default: a sensible round value."
+          },
+          "xLabel": {
+            "type": "string",
+            "description": "The x-axis title, e.g. \"Height (cm)\". Important for stats — name the variable and its unit."
+          },
+          "yLabel": {
+            "type": "string",
+            "description": "The y-axis title, e.g. \"Mass (kg)\"."
+          }
+        }
+      },
+      "grid": {
+        "type": "boolean",
+        "description": "Show the background grid. Default true."
+      },
+      "points": {
+        "type": "array",
+        "description": "The bivariate data as [x, y] pairs, e.g. [[1, 30], [2, 42], [3, 38]]. Each is one plotted cross/dot. May be empty ONLY for a plot-the-points answer surface on blank axes (points to plot go in plotPoints).",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "bestFit": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Draw a line of best fit. The usual GCSE choice is a BY-EYE line — give points for a line through two chosen points (no single right answer). For an A-level regression line OMIT points to get the DERIVED least-squares line (auto-labelled \"least-squares line of best fit\"). Omit bestFit entirely for no line (e.g. an answer space).",
+        "properties": {
+          "points": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "Two points [[x1, y1], [x2, y2]] the by-eye line passes through — the usual GCSE line. Omit to derive the least-squares regression line instead.",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "label": {
+            "type": "string",
+            "description": "A label drawn by the line, e.g. \"line of best fit\". Omit for none."
+          },
+          "extend": {
+            "type": "boolean",
+            "description": "Extend the line across the whole window (for extrapolation). Default: spans the data range."
+          }
+        }
+      },
+      "showCorrelation": {
+        "type": "boolean",
+        "description": "Print the derived correlation description (e.g. \"strong positive correlation\") — sign from the fitted line, strength from how tightly the points hug it. Default false. Needs enough points to be meaningful."
+      },
+      "markOutliers": {
+        "type": "boolean",
+        "description": "Ring the outlier — the point with the largest residual from the line of best fit (an anomaly off the trend). Default false. Leave off to ask pupils to spot it."
+      },
+      "estimate": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Read a value off a line of best fit. TWO uses: (1) a WORKED/occluded read-off — give x (or y) WITH bestFit to draw dashed projection guides and read the predicted value off the drawn line; (2) an ANSWER surface (@2, responseMode \"line-of-best-fit\", read-off VARIANT) — give x (or y) as the GIVEN value plus acceptRange and NO bestFit, so the pupil first draws the line of best fit and then reads off the estimate themselves (the mark-scheme range in acceptRange). Orientation is derived from which you give: x → up-and-across (read y); y → across-and-down (read x).",
+        "properties": {
+          "x": {
+            "type": "number",
+            "description": "The given x. Worked: estimate the predicted y at this x (guide up to the line, across to the y-axis). Answer variant: the given x-value the pupil reads UP from (up-and-across)."
+          },
+          "y": {
+            "type": "number",
+            "description": "The given y instead. Worked: estimate the x at this y (guide across to the line, down to the x-axis). Answer variant: the given y-value the pupil reads ACROSS from (across-and-down). Give x OR y, not both."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Worked read-off only: hide the read-off value as \"?\" — the \"use the line to estimate\" hook. Default false. (Ignored on the answer variant, which never shows the answer.)"
+          },
+          "label": {
+            "type": "string",
+            "description": "Worked read-off only: override the read-off text. Omit to show the derived value."
+          },
+          "acceptRange": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "ANSWER surface (@2, read-off variant) — arms the read-off. The mark-scheme accepted range [lo, hi] for the estimate on the TARGET axis (the axis the given x/y is NOT on) — e.g. estimate.x with acceptRange [58, 66] means \"read up from the given x; a Physics estimate of 58–66 is correct\". The band is NEVER drawn on a posed surface; the model self-checks the pupil's read-off against it (follow-through: read off the pupil's OWN line). Omit bestFit (the pupil draws the line). correctAnswer stays { derived: true }."
+          },
+          "readTolerance": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "ANSWER surface (@2, read-off variant) — optional. How far (in SOURCE-axis units — the axis the given value is on) the recorded read-off may sit from the given value and still count as read AT it (the read-off guide rides the pupil's line, so the estimate itself is always taken off the line). Default: the source-axis reading grain (a tenth of its step)."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Drag the by-eye line's two ends to fit it to the data (needs bestFit.points). Use for a \"draw the line of best fit\" activity. Default false."
+      },
+      "plotPoints": {
+        "type": "array",
+        "minItems": 1,
+        "description": "ANSWER surface (@2, responseMode \"place-derived\"). The bivariate points the pupil must PLOT, as [x, y] pairs — the answer. They are NEVER drawn on a posed/print surface (only when the tile is armed); any `points` you also give stay drawn as CONTEXT (so \"plot two more students\" keeps the given ones visible; leave `points` empty for a blank-axes \"plot all these points\"). Armed, one cross per target parks above the plot and the pupil drags it onto the grid; each self-checks against these targets within half a small square in both axes. correctAnswer is the { derived: true } sentinel.",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "lobfTolerance": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "ANSWER surface (@2, responseMode \"line-of-best-fit\"). Optional acceptance band for a drawn line of best fit — a by-eye line has no single exact answer. Both default sensibly from the window (the mark-scheme allowance), so you rarely set this; tighten or widen only if a class needs it.",
+        "properties": {
+          "mean": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "How far (in y-units) the drawn line may miss the mean point (x̄, ȳ) and still be accepted. Default: max(yStep, 8% of the y-range)."
+          },
+          "gradient": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "How far the drawn gradient may differ from the true least-squares gradient and still be accepted (absolute, in y-units per x-unit; the sign must also match). Default: 35% of the true gradient plus a shallow-slope floor."
+          }
+        }
+      }
+    },
+    "required": [
+      "points"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Positive correlation with a by-eye line of best fit (worked)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            9
+          ],
+          "y": [
+            0,
+            100
+          ],
+          "xLabel": "Revision (hours)",
+          "yLabel": "Test score (%)",
+          "xStep": 1,
+          "yStep": 10
+        },
+        "points": [
+          [
+            1,
+            30
+          ],
+          [
+            2,
+            42
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            55
+          ],
+          [
+            5,
+            60
+          ],
+          [
+            6,
+            68
+          ],
+          [
+            7,
+            75
+          ],
+          [
+            8,
+            82
+          ]
+        ],
+        "bestFit": {
+          "points": [
+            [
+              0,
+              24
+            ],
+            [
+              9,
+              87
+            ]
+          ],
+          "label": "line of best fit"
+        },
+        "showCorrelation": true,
+        "caption": "More revision tends to mean a higher score"
+      }
+    },
+    {
+      "label": "A by-eye line used to estimate (worked)",
+      "params": {
+        "axes": {
+          "x": [
+            140,
+            190
+          ],
+          "y": [
+            40,
+            90
+          ],
+          "xLabel": "Height (cm)",
+          "yLabel": "Mass (kg)",
+          "xStep": 10,
+          "yStep": 10
+        },
+        "points": [
+          [
+            150,
+            50
+          ],
+          [
+            155,
+            54
+          ],
+          [
+            160,
+            58
+          ],
+          [
+            165,
+            60
+          ],
+          [
+            170,
+            66
+          ],
+          [
+            175,
+            70
+          ],
+          [
+            180,
+            76
+          ],
+          [
+            185,
+            80
+          ]
+        ],
+        "bestFit": {
+          "points": [
+            [
+              145,
+              46
+            ],
+            [
+              188,
+              82
+            ]
+          ],
+          "label": "line of best fit"
+        },
+        "estimate": {
+          "x": 168
+        }
+      }
+    },
+    {
+      "label": "The least-squares line, used to estimate (A-level, occluded)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            9
+          ],
+          "y": [
+            0,
+            100
+          ],
+          "xLabel": "Revision (hours)",
+          "yLabel": "Test score (%)",
+          "xStep": 1,
+          "yStep": 10
+        },
+        "points": [
+          [
+            1,
+            30
+          ],
+          [
+            2,
+            42
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            4,
+            55
+          ],
+          [
+            5,
+            60
+          ],
+          [
+            6,
+            68
+          ],
+          [
+            7,
+            75
+          ],
+          [
+            8,
+            82
+          ]
+        ],
+        "bestFit": {},
+        "estimate": {
+          "x": 5.5,
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "The hard case — negative correlation with an outlier + estimate",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            7
+          ],
+          "y": [
+            0,
+            20
+          ],
+          "xLabel": "Age (years)",
+          "yLabel": "Value (£1000s)",
+          "xStep": 1,
+          "yStep": 5
+        },
+        "points": [
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            15
+          ],
+          [
+            3,
+            14
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "bestFit": {
+          "points": [
+            [
+              0,
+              19
+            ],
+            [
+              7,
+              5
+            ]
+          ]
+        },
+        "markOutliers": true,
+        "showCorrelation": true,
+        "estimate": {
+          "x": 4.5,
+          "occlude": true
+        },
+        "caption": "Ignore the outlier; use the line to estimate the value at 4.5 years"
+      }
+    },
+    {
+      "label": "Spot the outlier",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            9
+          ],
+          "y": [
+            0,
+            60
+          ],
+          "xLabel": "Hours practised",
+          "yLabel": "Errors made",
+          "xStep": 1,
+          "yStep": 10
+        },
+        "points": [
+          [
+            1,
+            48
+          ],
+          [
+            2,
+            42
+          ],
+          [
+            3,
+            40
+          ],
+          [
+            4,
+            34
+          ],
+          [
+            5,
+            50
+          ],
+          [
+            5,
+            28
+          ],
+          [
+            6,
+            24
+          ],
+          [
+            7,
+            18
+          ],
+          [
+            8,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "label": "Answer space — draw the line of best fit",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            10
+          ],
+          "y": [
+            0,
+            50
+          ],
+          "xLabel": "Temperature (°C)",
+          "yLabel": "Ice creams sold",
+          "xStep": 1,
+          "yStep": 10
+        },
+        "points": [
+          [
+            2,
+            8
+          ],
+          [
+            3,
+            12
+          ],
+          [
+            4,
+            14
+          ],
+          [
+            5,
+            20
+          ],
+          [
+            6,
+            26
+          ],
+          [
+            7,
+            30
+          ],
+          [
+            8,
+            38
+          ],
+          [
+            9,
+            44
+          ]
+        ]
+      }
+    },
+    {
+      "label": "Answer on the model — plot two more points (place-derived; the given scatter is context)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            100
+          ],
+          "y": [
+            0,
+            100
+          ],
+          "xLabel": "English Test Score",
+          "yLabel": "Maths Test Score",
+          "xStep": 20,
+          "yStep": 20
+        },
+        "points": [
+          [
+            22,
+            50
+          ],
+          [
+            26,
+            44
+          ],
+          [
+            35,
+            60
+          ],
+          [
+            41,
+            70
+          ],
+          [
+            46,
+            49
+          ],
+          [
+            55,
+            64
+          ],
+          [
+            56,
+            54
+          ],
+          [
+            60,
+            76
+          ],
+          [
+            68,
+            62
+          ],
+          [
+            76,
+            90
+          ],
+          [
+            80,
+            76
+          ],
+          [
+            84,
+            86
+          ]
+        ],
+        "plotPoints": [
+          [
+            64,
+            70
+          ],
+          [
+            68,
+            84
+          ]
+        ]
+      }
+    },
+    {
+      "label": "Answer on the model — plot the points on blank axes (place-derived)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            10
+          ],
+          "y": [
+            0,
+            50
+          ],
+          "xLabel": "Temperature (°C)",
+          "yLabel": "Ice creams sold",
+          "xStep": 1,
+          "yStep": 10
+        },
+        "points": [],
+        "plotPoints": [
+          [
+            2,
+            8
+          ],
+          [
+            4,
+            15
+          ],
+          [
+            5,
+            21
+          ],
+          [
+            7,
+            31
+          ],
+          [
+            8,
+            38
+          ]
+        ]
+      }
+    },
+    {
+      "label": "Answer on the model — draw a line of best fit (line-of-best-fit, tolerance-marked)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            100
+          ],
+          "y": [
+            0,
+            100
+          ],
+          "xLabel": "Biology score",
+          "yLabel": "Physics score",
+          "xStep": 20,
+          "yStep": 20
+        },
+        "points": [
+          [
+            15,
+            22
+          ],
+          [
+            24,
+            30
+          ],
+          [
+            30,
+            41
+          ],
+          [
+            38,
+            44
+          ],
+          [
+            46,
+            55
+          ],
+          [
+            52,
+            50
+          ],
+          [
+            60,
+            66
+          ],
+          [
+            68,
+            61
+          ],
+          [
+            76,
+            78
+          ],
+          [
+            84,
+            80
+          ]
+        ]
+      }
+    },
+    {
+      "label": "Answer on the model — read off an estimate, up & across (line-of-best-fit read-off variant, given x)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            40
+          ],
+          "y": [
+            0,
+            100
+          ],
+          "xLabel": "Rainfall (mm)",
+          "yLabel": "Umbrellas sold",
+          "xStep": 5,
+          "yStep": 20
+        },
+        "points": [
+          [
+            4,
+            18
+          ],
+          [
+            8,
+            26
+          ],
+          [
+            11,
+            34
+          ],
+          [
+            15,
+            40
+          ],
+          [
+            18,
+            52
+          ],
+          [
+            22,
+            55
+          ],
+          [
+            26,
+            68
+          ],
+          [
+            30,
+            74
+          ],
+          [
+            34,
+            82
+          ],
+          [
+            37,
+            90
+          ]
+        ],
+        "estimate": {
+          "x": 20,
+          "acceptRange": [
+            52,
+            64
+          ]
+        }
+      }
+    },
+    {
+      "label": "Answer on the model — read off an estimate, across & down (line-of-best-fit read-off variant, given y)",
+      "params": {
+        "axes": {
+          "x": [
+            0,
+            60
+          ],
+          "y": [
+            0,
+            30
+          ],
+          "xLabel": "Age of car (months)",
+          "yLabel": "Value (£1000s)",
+          "xStep": 10,
+          "yStep": 5
+        },
+        "points": [
+          [
+            6,
+            24
+          ],
+          [
+            12,
+            21
+          ],
+          [
+            18,
+            20
+          ],
+          [
+            24,
+            17
+          ],
+          [
+            30,
+            15
+          ],
+          [
+            36,
+            13
+          ],
+          [
+            42,
+            11
+          ],
+          [
+            48,
+            9
+          ],
+          [
+            54,
+            7
+          ]
+        ],
+        "estimate": {
+          "y": 14,
+          "acceptRange": [
+            30,
+            36
+          ]
+        }
+      }
+    }
+  ]
+}

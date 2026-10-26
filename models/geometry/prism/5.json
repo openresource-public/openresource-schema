@@ -1,0 +1,992 @@
+{
+  "ref": "geometry/prism@5",
+  "family": "geometry",
+  "name": "prism",
+  "version": 5,
+  "title": "Prism (isometric)",
+  "tagline": "Isometric prism — extrude any cross-section (regular, circle, sector, L-shape, arch) along a length; area/SA/volume derived; symbolic labels, vertex letters, drag to rotate.",
+  "description": "A prism drawn in isometric projection: one 2-D cross-section extruded perpendicular along a length, with its volume and surface area derived. Choose the cross-section kind — a regular polygon (pentagon, hexagon, octagon…), a rectangle, a triangle, a parallelogram, a trapezium, an arbitrary straight-sided polygon (an L-shape, a cross, an arrowhead — convex OR concave/re-entrant), a circle (a cylinder), a semicircle (a half-cylinder), a sector (a slice) or an arch (a rectangle topped by a semicircle — a tunnel / Nissen hut / arched window) — give it its defining dimensions and the length, and the model draws the solid (visible edges solid, hidden edges dashed), labels the edge lengths and the length, and computes the cross-section area (exact: shoelace over the straight edges plus the circular-segment correction for an arc), the perimeter, the lateral surface area (perimeter × length), the total surface area (2 × area + lateral) and the volume (cross-section area × length) — π answers exact and as a decimal. Shade the cross-section face to make the \"volume = area of the cross-section × length\" idea concrete. Each readout occludes independently (hide the answer for a question) or highlights (answer emphasis); any edge label, the length, the perpendicular-height guide (\"h\") or the radius guide (\"r\") can be occluded for a reverse \"find the missing length\" problem, or overridden with a literal symbol (labels: [{ target, text }]) so a NAMED unknown — \"x cm\" on the perpendicular height of a right-angled triangular prism, \"x\" on a cuboid depth — reads on the figure while its right-angle mark and true proportions stay, and every working that would substitute the number is suppressed so it never leaks. Set rotatable:true to let a pupil drag the figure and turn the solid in 3-D (web only; the static labelled diagram is the default and returns on release). Optionally letter the vertices (vertexLabels) with the GCSE \"cuboid ABCDEFGH\" convention — a small letter at each corner of the near cross-section face and its extruded far face, positions all derived — for a figure that names the solid by its vertices and gives the dimensions in the surrounding text rather than on the edges. Nothing derived is ever authored, so the figure cannot contradict the maths.",
+  "whenToUse": "Reach for this whenever a lesson shows a prism whose cross-section is anything other than the handful geometry/solid presets cover, or whenever you want to label edges and areas freely, shade the cross-section, or teach \"volume = area of cross-section × length\". Set crossSection.kind and its dimensions: \"regular\" (a regular polygon — give n and either side or circumradius), \"rectangle\" (width, height — a cuboid), \"triangle\" (base, height, optional apexOffset), \"parallelogram\" (base, height, optional slant), \"trapezium\" (parallel sides a and b, perpendicular height, optional offset of the top), \"polygon\" (your own vertices, in maths coordinates with y upward — an L-shape, a cross, an arrowhead, any straight-sided convex or concave section), \"circle\" (radius — a cylinder), \"semicircle\" (radius — a half-cylinder), \"sector\" (radius and angle in degrees — a slice) or \"arch\" (width and wallHeight — a rectangle of that width and wall height topped by a semicircle of radius width/2; the tunnel / Nissen-hut / arched-window profile, total height = wallHeight + width/2; set heightMode:\"total\" to DIMENSION the base-to-crown total height instead of the walls — the figure that gives the total height and makes the pupil derive the wall height and radius, so pair it with edgeLabels:[0] to label only the width). Always give length (the extrusion) and a unit (default \"cm\"; the model writes cm² and cm³ itself). Include a volume object to show the volume line, a surfaceArea object for total surface area, and a crossSectionArea object for the cross-section area on its own — each defaults to showing the working; set working:false and occlude:true for a clean \"find it\" question, or leave working on for a worked example. shadeCrossSection:true ambers the defining end face — use it when teaching the cross-section-area idea. edgeLabels selects which cross-section edges show their length (\"all\" by default, \"none\", or a list of 0-based edge indices counted in vertex order); occlude / highlight take edge indices, the literal \"length\", \"h\" (the perpendicular-height guide) or \"r\" (the radius guide) to hide a value as \"?\" (a reverse problem) or draw the eye to it; to print a NAMED unknown instead of \"?\" — the GCSE \"calculate the value of x\" figure — set labels: [{ target, text }] to stamp a literal string (e.g. \"x cm\") on a chosen edge index, \"length\", \"h\" or \"r\": the number is replaced, the drawn proportions and any right-angle mark stay true, and every working that would substitute it is suppressed so it never leaks. show.faceAreas writes each visible face's area on the face (the net pattern); show.hiddenEdges toggles the dashed back edges. Set rotatable:true for a draggable 3-D figure a pupil can turn to picture the solid (web only — the static diagram is what prints and what slides open on; rotation returns to it on release); use it when seeing the shape turn is the lesson (spatial reasoning), not for a routine volume calculation. To NAME the solid by its corners — the GCSE \"cuboid ABCDEFGH\" figure — set vertexLabels: give front as the letters of the near cross-section face in vertex order (front:[\"A\",\"B\",\"C\",\"D\"] letters corners 0,1,2,3) and back as the matching far face (back:[\"E\",\"F\",\"G\",\"H\"], so back[i] sits directly behind front[i] and the four length edges are AE, BF, CG, DH). Use it exactly when a question gives the dimensions in the TEXT and refers to the solid by its letters (e.g. \"ABCD is a square of area 25 cm², CG = 12 cm\") — pair it with edgeLabels:\"none\" and showLength:false so the figure shows the letters but not the numbers the pupil must deduce. Intended for the straight-sided kinds (rectangle/cuboid, regular, triangle, parallelogram, trapezium, polygon); the round/arc kinds have no natural vertices. A staged build reads well: open on the labelled section, extrude it, bring in the area, then the volume; or shade the cross-section, then ×length. Keep the unit and the cross-section kind steady across a lesson. Synonyms a teacher might use: prism, cross-section, uniform cross-section, volume of a prism, surface area of a prism, hexagonal/pentagonal/octagonal prism, triangular prism, parallelogram prism, L-shaped prism, trapezoidal prism, cylinder, circular prism, half cylinder, semicircular prism, sector / quarter cylinder, arch, arched prism, tunnel, arched tunnel, Nissen hut, arched window, arched doorway, D-shape / D-section, semicircle on a rectangle, extrude, rotate / spin / 3D view, area of cross-section times length, lateral surface area. Switch primitive: use geometry/solid for a whole cone, sphere or pyramid, or for the two-solids comparison; geometry/net for the unfolded net; geometry/compound-area for a 2-D compound area; geometry/plan-elevation for plans and elevations.",
+  "responseModes": [],
+  "tags": [
+    "prism",
+    "cross-section",
+    "uniform cross-section",
+    "volume",
+    "surface area",
+    "lateral surface area",
+    "volume of a prism",
+    "hexagonal prism",
+    "pentagonal prism",
+    "octagonal prism",
+    "regular polygon prism",
+    "triangular prism",
+    "parallelogram prism",
+    "l-shaped prism",
+    "trapezoidal prism",
+    "trapezium",
+    "cylinder",
+    "circular prism",
+    "semicircular prism",
+    "half cylinder",
+    "sector",
+    "quarter cylinder",
+    "arch",
+    "arched prism",
+    "tunnel",
+    "arched tunnel",
+    "nissen hut",
+    "arched window",
+    "d-shape",
+    "d-section",
+    "extrude",
+    "rotate",
+    "3d",
+    "interactive",
+    "isometric",
+    "3d shape",
+    "solid",
+    "mensuration",
+    "geometry",
+    "maths",
+    "find the value of x",
+    "value of x",
+    "reverse problem",
+    "symbolic label",
+    "algebraic",
+    "in terms of x",
+    "unknown length",
+    "unknown height",
+    "find x",
+    "occludable height",
+    "vertex labels",
+    "vertices",
+    "lettered vertices",
+    "named vertices",
+    "cuboid ABCDEFGH",
+    "labelled corners",
+    "ABCDEF"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "crossSection",
+      "length"
+    ],
+    "properties": {
+      "header": {
+        "type": "string",
+        "description": "Optional short caption centred above the figure (e.g. \"Find the volume of this prism\"). The top padding grows to clear it."
+      },
+      "crossSection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind"
+        ],
+        "description": "The 2-D shape that is extruded — the defining cross-section. A flat object: set kind, then supply the dimensions that kind needs (others are ignored). Vertices, edges, area and perimeter are all derived from these. The cross-section is auto-centred; you never position it.",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "regular",
+              "rectangle",
+              "triangle",
+              "parallelogram",
+              "trapezium",
+              "polygon",
+              "circle",
+              "semicircle",
+              "sector",
+              "arch"
+            ],
+            "description": "\"regular\" = a regular polygon (give n and side OR circumradius). \"rectangle\" = width × height (a cuboid). \"triangle\" = base × height with an optional apexOffset (a triangular prism). \"parallelogram\" = base × height leaning by slant. \"trapezium\" = parallel sides a (bottom) and b (top) at perpendicular height (optional offset). \"polygon\" = your own vertices (an L-shape, cross, arrowhead — convex or concave). \"circle\" = a full disc of the given radius (a cylinder). \"semicircle\" = a half-disc (a half-cylinder). \"sector\" = a pie slice of the given radius and angle. \"arch\" = a rectangle of the given width and wallHeight topped by a semicircle of radius width/2 (a tunnel / Nissen hut / arched window; the extruded solid is an arched tunnel)."
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 3,
+            "description": "regular only: number of sides (5 = pentagon, 6 = hexagon, 8 = octagon). Default 6."
+          },
+          "side": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "regular only: the length of one side. Give this OR circumradius; if both, side wins. Default 4."
+          },
+          "circumradius": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "regular only: the distance from the centre to a vertex. An alternative to side."
+          },
+          "width": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "rectangle: the horizontal side of the rectangular cross-section. arch: the width of the tunnel — the rectangle's width AND the diameter of the semicircular top (so the semicircle radius = width / 2). (Ignored by other kinds.)"
+          },
+          "wallHeight": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "arch only: the height of the straight vertical wall below the springing line (where the semicircle begins). The total height of the arch is wallHeight + width/2. (Ignored by other kinds.)"
+          },
+          "heightMode": {
+            "type": "string",
+            "enum": [
+              "wall",
+              "total"
+            ],
+            "description": "arch or polygon: which height the figure DIMENSIONS. arch — \"wall\" (default) leaves the two straight walls to carry their length (wallHeight) as ordinary edge labels — the wall height is GIVEN. \"total\" instead draws a single dimension guide up the centre from the base to the crown and labels it with the TOTAL height (wallHeight + width/2) — the base-to-top height is GIVEN and the pupil derives the wall height and radius. Pair \"total\" with edgeLabels:[0] so only the width is labelled (the walls stay unlabelled, so their length can't reveal the wall height). polygon (@5) — \"total\" draws a dimension guide from the HIGHEST vertex down to the base level and labels it with the derived base-to-top height (max y − min y): the house-pentagon \"height of the building\" figure, where the apex height is not an edge so edge labels alone cannot state it (e.g. vertices [[0,0],[4,0],[4,2],[2,3.5],[0,2]] print \"3.5 m\" up the ridge line). In both kinds the label is targeted by \"h\" for occlude / highlight / labels (a reverse \"the volume is …, find the height\" or a named \"x m\" unknown). Volume and surface area are unchanged. (Ignored by other kinds.)"
+          },
+          "height": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "rectangle: the vertical side. triangle & parallelogram: the PERPENDICULAR height. trapezium: the PERPENDICULAR height between the two parallel sides (NOT a slant). (Ignored by other kinds.)"
+          },
+          "base": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "triangle & parallelogram only: the length of the base (the bottom side)."
+          },
+          "apexOffset": {
+            "type": "number",
+            "minimum": 0,
+            "description": "triangle only: where the apex sits, measured from the LEFT end of the base. Default base / 2 (isosceles); 0 makes a right-angled triangle with the right angle on the left. (Ignored by other kinds.)"
+          },
+          "slant": {
+            "type": "number",
+            "description": "parallelogram only: how far the top side leans right of the bottom (the horizontal offset). Default ½ × height. The two sloping sides are derived."
+          },
+          "a": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "trapezium only: the length of the BOTTOM parallel side."
+          },
+          "b": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "trapezium only: the length of the TOP parallel side."
+          },
+          "offset": {
+            "type": "number",
+            "description": "trapezium only: how far the top side is shifted right from the bottom-left corner. Default (a − b) / 2, i.e. a symmetric (isosceles) trapezium. The two slant sides are derived."
+          },
+          "vertices": {
+            "type": "array",
+            "minItems": 3,
+            "description": "polygon only: the corners as [x, y] pairs in order around the outline, in maths coordinates with y pointing UP. Straight edges only (v1). Convex or concave (re-entrant) — an L-shape, cross or arrowhead. Edge i runs from vertex i to vertex i+1; the last edge closes back to vertex 0.",
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "radius": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "circle, semicircle & sector only: the radius. Default 4."
+          },
+          "angle": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 359,
+            "description": "sector only: the central angle in DEGREES (90 = a quarter, 60 = a sixth). Default 90."
+          }
+        }
+      },
+      "length": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "description": "The length the cross-section is extruded through (how \"long\" the prism is). Volume = cross-section area × length."
+      },
+      "unit": {
+        "type": "string",
+        "description": "The linear unit for all dimensions, e.g. \"cm\", \"m\", \"mm\". Labels read \"5 cm\"; the model writes cm² (areas) and cm³ (volume) itself. Default \"cm\"."
+      },
+      "edgeLabels": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "all",
+              "none"
+            ]
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "description": "Which cross-section edges show their derived length. \"all\" (default) labels every edge; \"none\" labels none; a list of 0-based edge indices (counted in vertex order — edge 0 = vertex 0 → vertex 1) labels just those. For arc kinds the radius is drawn separately as a construction line; an arc edge is labelled (with its arc length) only if its index is selected."
+      },
+      "showLength": {
+        "type": "boolean",
+        "description": "Label the extrusion length along one depth edge (\"length = 8 cm\"). Default true. Occlude it via occlude:[\"length\"] for a reverse problem."
+      },
+      "occlude": {
+        "type": "array",
+        "description": "Edge lengths to hide as \"?\" — the reverse-problem hook (\"the volume is 300, find the length\" → occlude:[\"length\"]). Each item is a 0-based cross-section edge index, the literal \"length\" for the extrusion length, \"h\" for the perpendicular-height guide (triangle / parallelogram / trapezium — or the arch/polygon total-height guide when crossSection.heightMode is \"total\") or \"r\" for the radius guide (circle / semicircle / sector). The dimension stays drawn (a right-angled triangle keeps its right-angle mark); only its number is hidden, and any cross-section-area working that would substitute it is suppressed so it cannot leak. To hide a derived ANSWER instead, use volume.occlude / surfaceArea.occlude / crossSectionArea.occlude.",
+        "items": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "string",
+              "enum": [
+                "length",
+                "h",
+                "r"
+              ]
+            }
+          ]
+        }
+      },
+      "highlight": {
+        "type": "array",
+        "description": "Edge lengths to draw in amber for emphasis. Same item shape as occlude: a 0-based edge index, \"length\", \"h\" (the perpendicular-height guide, or the arch total-height guide under heightMode \"total\") or \"r\" (radius guide).",
+        "items": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "string",
+              "enum": [
+                "length",
+                "h",
+                "r"
+              ]
+            }
+          ]
+        }
+      },
+      "labels": {
+        "type": "array",
+        "description": "Symbolic / literal label overrides — print an author-supplied STRING on a chosen dimension instead of its derived \"value + unit\". The reverse-question hook when the unknown has a NAME: a right-angled triangular prism whose perpendicular height reads \"x cm\", a cuboid whose depth reads \"x\", an edge in terms of \"2x\". Each entry targets one label; the string is printed VERBATIM (no \"= \" prefix, no unit — write \"x cm\" yourself if you want the unit) and REPLACES the whole label, winning over occlude (there is no number to hide). The dimension keeps its true drawn proportions from the params (a right-angled triangle still draws its right-angle mark), and any cross-section-area / volume / surface-area working that would substitute the hidden number is suppressed, so nothing leaks. Pose \"the volume is 198 cm³, find x\" by labelling the unknown and stating the given volume in the block text (or a shown readout). Mirrors geometry/solid's labels: { radius: \"r\" }.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target",
+            "text"
+          ],
+          "properties": {
+            "target": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "length",
+                    "h",
+                    "r"
+                  ]
+                }
+              ],
+              "description": "Which label to override: a 0-based cross-section edge index (edge 0 = vertex 0 → vertex 1), \"length\" (the extrusion length), \"h\" (the triangle / parallelogram / trapezium perpendicular-height guide, or the arch total-height guide under heightMode \"total\") or \"r\" (the circle / semicircle / sector radius guide)."
+            },
+            "text": {
+              "type": "string",
+              "description": "The exact string to print, e.g. \"x\", \"2x\", \"x cm\". Printed verbatim in place of the derived value — include the unit yourself if you want one."
+            }
+          }
+        }
+      },
+      "shadeCrossSection": {
+        "type": "boolean",
+        "description": "Fill the defining end (cross-section) face in amber to make the \"volume = area of the cross-section × length\" idea concrete. Default false."
+      },
+      "rotatable": {
+        "type": "boolean",
+        "description": "Let the pupil DRAG the figure to rotate it and see the solid from any angle — a 3-D spatial-reasoning aid (web only). The static figure (the labelled isometric diagram) is what shows by default and in slides/print, and it returns when the drag is released; the rotation never changes the answer. Use it when seeing the shape turn IS the lesson (visualising the solid, hidden faces). Default false."
+      },
+      "view": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "turn",
+          "tilt"
+        ],
+        "description": "Look at the prism from a chosen angle instead of standard isometric, to match a source figure. turn: degrees the camera swings round the vertical from square-on to the cross-section (45 = isometric, the cross-section end on the right and the length receding up-left; a NEGATIVE turn puts the cross-section end on the LEFT with the length receding up-right; nearer 0 is more front-on). tilt: degrees it looks down (isometric 35; 20 reads flatter). The textbook view on many GCSE plans-and-elevations figures is about { turn: -32, tilt: 21 }. Omit for isometric.",
+        "properties": {
+          "turn": {
+            "type": "number",
+            "minimum": -80,
+            "maximum": 80,
+            "description": "Degrees round the vertical from square-on to the cross-section; negative puts the cross-section end on the left."
+          },
+          "tilt": {
+            "type": "number",
+            "minimum": 5,
+            "maximum": 60,
+            "description": "Degrees the camera looks down."
+          }
+        }
+      },
+      "arrows": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Viewing-direction arrows, the plans-and-elevations \"front\" / \"side\" marks. front:true draws an arrow labelled \"front\" looking along the length at the cross-section end; side:true one labelled \"side\" looking across at the lateral side in view. Use them whenever a question asks for a named elevation, so the pupil knows which way \"front\" is.",
+        "properties": {
+          "front": {
+            "type": "boolean",
+            "description": "Draw the \"front\" arrow (looking at the cross-section end)."
+          },
+          "side": {
+            "type": "boolean",
+            "description": "Draw the \"side\" arrow (looking at the side in view)."
+          }
+        }
+      },
+      "vertexLabels": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Letter the CORNERS of the prism — the GCSE \"cuboid ABCDEFGH\" convention. A small letter is drawn just outside each vertex; every position is DERIVED from the isometric projection (you supply only the letters). Use it when a question names the solid by its vertices and gives the dimensions in the surrounding TEXT rather than on the figure (so the figure must show the letters but not the edge numbers the pupil must deduce — pair with edgeLabels:\"none\" and showLength:false). Intended for the straight-sided cross-sections (rectangle/cuboid, regular, triangle, parallelogram, trapezium, polygon); the round/arc kinds (circle, semicircle, sector, arch) have no natural vertices. Omit for an unlettered figure.",
+        "properties": {
+          "front": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Letters for the NEAR (front) cross-section corners, in vertex order: front[0] labels corner 0, front[1] corner 1, and so on (the SAME 0-based order as edgeLabels / occlude). E.g. [\"A\",\"B\",\"C\",\"D\"] on a rectangle labels bottom-left, bottom-right, top-right, top-left. An empty string \"\" (or an index past the corner count) skips that corner."
+          },
+          "back": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Letters for the FAR (back) extruded corners, matched by index to front: back[i] sits directly behind front[i], so the depth (length) edge runs front[i]→back[i]. E.g. [\"E\",\"F\",\"G\",\"H\"] paired with [\"A\",\"B\",\"C\",\"D\"] makes AE, BF, CG, DH the four length edges. Omit to letter only the near face; \"\" skips a single corner."
+          }
+        }
+      },
+      "crossSectionArea": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to show the cross-section AREA (as a working line below the figure, or — with onFace — ON the end face). The area is exact: shoelace over the straight edges plus the exact circular-segment correction for an arc (semicircle ½πr², sector (angle/360)πr²); π answers are given exactly and as a decimal. For a rectilinear polygon (an L-shape) with working:true the working shows the rectangle decomposition (\"A = 6×2 + 2×2 = 12 + 4 = 16\"); other kinds show their formula or, when there is no single formula, the result only.",
+        "properties": {
+          "working": {
+            "type": "boolean",
+            "description": "Show the full chain \"formula = substitution = result\" (e.g. \"V = A × ℓ = 30 × 10 = 300 cm³\"). false shows only \"V = result\" — use it for a clean find-the-answer question (pair with occlude). Default true."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the RESULT as \"?\" — the \"find the area / surface area / volume\" hook. The figure and its labels stay visible; only the answer is hidden, and the working is suppressed so it cannot give the answer away. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the result line — answer emphasis. Default false."
+          },
+          "onFace": {
+            "type": "boolean",
+            "description": "Draw the area as a label ON the cross-section face (e.g. \"A = 30 cm²\") instead of as a working line below — so it sits next to the length label and reads as \"volume = area × length\". occlude → \"A = ?\" on the face (find the area); highlight → amber. When onFace is set the area is NOT also shown below. Default false."
+          }
+        }
+      },
+      "surfaceArea": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "working": {
+            "type": "boolean",
+            "description": "Show the full chain \"formula = substitution = result\" (e.g. \"V = A × ℓ = 30 × 10 = 300 cm³\"). false shows only \"V = result\" — use it for a clean find-the-answer question (pair with occlude). Default true."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the RESULT as \"?\" — the \"find the area / surface area / volume\" hook. The figure and its labels stay visible; only the answer is hidden, and the working is suppressed so it cannot give the answer away. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the result line — answer emphasis. Default false."
+          }
+        },
+        "description": "Include this object to show the total SURFACE AREA line (omit for none). SA = 2 × cross-section area + perimeter × length; the working shows \"2A + Pℓ\" so an occluded individual edge never leaks through it. π answers exact and as a decimal."
+      },
+      "volume": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "working": {
+            "type": "boolean",
+            "description": "Show the full chain \"formula = substitution = result\" (e.g. \"V = A × ℓ = 30 × 10 = 300 cm³\"). false shows only \"V = result\" — use it for a clean find-the-answer question (pair with occlude). Default true."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the RESULT as \"?\" — the \"find the area / surface area / volume\" hook. The figure and its labels stay visible; only the answer is hidden, and the working is suppressed so it cannot give the answer away. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the result line — answer emphasis. Default false."
+          }
+        },
+        "description": "Include this object to show the VOLUME line (omit for none). V = cross-section area × length — the headline relationship; the working shows \"A × ℓ\". π answers exact and as a decimal."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Figure furniture toggles.",
+        "properties": {
+          "hiddenEdges": {
+            "type": "boolean",
+            "description": "Draw the edges hidden behind the solid as dashed construction lines. false omits them for a cleaner figure. Default true."
+          },
+          "faceAreas": {
+            "type": "boolean",
+            "description": "Write each visible face's area on the face (the net pattern): the cross-section area on the end face, length × edge on each rectangular side, arc-length × length on a curved face. Cramped faces are skipped (the surface-area total still carries them). Default false."
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "House-pentagon prism with the derived total height dimensioned (@5 polygon heightMode \"total\") — the \"height of the building\" figure",
+      "params": {
+        "crossSection": {
+          "kind": "polygon",
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              2,
+              3.5
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "heightMode": "total"
+        },
+        "length": 3,
+        "unit": "m"
+      }
+    },
+    {
+      "label": "Worked example — hexagonal prism (side 4, length 10): area ON the face, volume = area × length",
+      "params": {
+        "header": "Hexagonal prism",
+        "crossSection": {
+          "kind": "regular",
+          "n": 6,
+          "side": 4
+        },
+        "length": 10,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "crossSectionArea": {
+          "onFace": true
+        },
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — trapezoidal prism, labelled, find the volume yourself",
+      "params": {
+        "crossSection": {
+          "kind": "trapezium",
+          "a": 9,
+          "b": 5,
+          "height": 4
+        },
+        "length": 12,
+        "unit": "cm"
+      }
+    },
+    {
+      "label": "Occluded question — L-shaped prism, find the volume (answer hidden, working off)",
+      "params": {
+        "crossSection": {
+          "kind": "polygon",
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              0,
+              5
+            ]
+          ]
+        },
+        "length": 8,
+        "unit": "cm",
+        "volume": {
+          "working": false,
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Hard case (a) — concave L-shaped prism: cross-section shaded, area by decomposition, then volume",
+      "params": {
+        "header": "Volume of an L-shaped prism",
+        "crossSection": {
+          "kind": "polygon",
+          "vertices": [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              0,
+              5
+            ]
+          ]
+        },
+        "length": 9,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "crossSectionArea": {
+          "working": true
+        },
+        "volume": {
+          "working": true,
+          "highlight": true
+        }
+      }
+    },
+    {
+      "label": "Hard case (b) — semicircular prism (half-cylinder, r = 6, length 14): curved + total SA and volume, π exact",
+      "params": {
+        "header": "Semicircular prism",
+        "crossSection": {
+          "kind": "semicircle",
+          "radius": 6
+        },
+        "length": 14,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "crossSectionArea": {
+          "working": true
+        },
+        "surfaceArea": {
+          "working": true
+        },
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Reverse problem — rectangular prism: volume given, find the missing length (length occluded)",
+      "params": {
+        "crossSection": {
+          "kind": "rectangle",
+          "width": 5,
+          "height": 3
+        },
+        "length": 8,
+        "unit": "cm",
+        "occlude": [
+          "length"
+        ],
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Cylinder (circular cross-section) — area πr² on the face, volume π exact",
+      "params": {
+        "header": "Cylinder",
+        "crossSection": {
+          "kind": "circle",
+          "radius": 5
+        },
+        "length": 12,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "crossSectionArea": {
+          "working": true
+        },
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Interactive — hexagonal prism the pupil can drag to rotate and see in 3-D",
+      "params": {
+        "header": "Drag to rotate the prism",
+        "crossSection": {
+          "kind": "regular",
+          "n": 6,
+          "side": 5
+        },
+        "length": 11,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "rotatable": true,
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Arch / tunnel — worked: rectangle + semicircle area on the face, volume = area × length",
+      "params": {
+        "header": "Arched prism",
+        "crossSection": {
+          "kind": "arch",
+          "width": 6,
+          "wallHeight": 4
+        },
+        "length": 12,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "crossSectionArea": {
+          "onFace": true
+        },
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Arch / tunnel — blank answer space (width + wall height + length labelled, find the volume)",
+      "params": {
+        "crossSection": {
+          "kind": "arch",
+          "width": 3,
+          "wallHeight": 5
+        },
+        "length": 10,
+        "unit": "m"
+      }
+    },
+    {
+      "label": "Arch / tunnel — hard case: full surface area and volume, π exact (r = width/2)",
+      "params": {
+        "header": "Surface area of an arched prism",
+        "crossSection": {
+          "kind": "arch",
+          "width": 4,
+          "wallHeight": 3
+        },
+        "length": 10,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "crossSectionArea": {
+          "working": true
+        },
+        "surfaceArea": {
+          "working": true
+        },
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Arch / tunnel — occluded question: find the volume (answer hidden, working off)",
+      "params": {
+        "crossSection": {
+          "kind": "arch",
+          "width": 5,
+          "wallHeight": 3
+        },
+        "length": 9,
+        "unit": "cm",
+        "shadeCrossSection": true,
+        "volume": {
+          "working": false,
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "Arch / tunnel — TOTAL height given: base-to-crown dimensioned, only the width labelled (wall height & radius derived), find the volume",
+      "params": {
+        "crossSection": {
+          "kind": "arch",
+          "width": 4,
+          "wallHeight": 5,
+          "heightMode": "total"
+        },
+        "length": 10,
+        "unit": "m",
+        "edgeLabels": [
+          0
+        ]
+      }
+    },
+    {
+      "label": "Arch / tunnel — total height given, volume worked (wall height = total − radius, then area × length)",
+      "params": {
+        "header": "Volume of an arched tunnel",
+        "crossSection": {
+          "kind": "arch",
+          "width": 6,
+          "wallHeight": 4,
+          "heightMode": "total"
+        },
+        "length": 8,
+        "unit": "m",
+        "edgeLabels": [
+          0
+        ],
+        "shadeCrossSection": true,
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Arch / tunnel — reverse, total height as \"x m\": the volume is given in the text, find x (no leak, wall & radius unlabelled)",
+      "params": {
+        "header": "The volume of the tunnel is 260 m³. Find x.",
+        "crossSection": {
+          "kind": "arch",
+          "width": 4,
+          "wallHeight": 6,
+          "heightMode": "total"
+        },
+        "length": 12,
+        "unit": "m",
+        "edgeLabels": [
+          0
+        ],
+        "labels": [
+          {
+            "target": "h",
+            "text": "x m"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Symbolic label — reverse right-triangular prism: perpendicular height reads \"x cm\", volume given, find x",
+      "params": {
+        "header": "The volume of the prism is 120 cm³. Find x.",
+        "crossSection": {
+          "kind": "triangle",
+          "base": 8,
+          "height": 6,
+          "apexOffset": 0
+        },
+        "length": 5,
+        "unit": "cm",
+        "edgeLabels": [
+          0
+        ],
+        "labels": [
+          {
+            "target": "h",
+            "text": "x cm"
+          }
+        ],
+        "volume": {
+          "working": false
+        }
+      }
+    },
+    {
+      "label": "Symbolic label — cuboid with the depth labelled \"x cm\" (the extrusion length is the unknown)",
+      "params": {
+        "header": "The volume of the cuboid is 120 cm³. Find x.",
+        "crossSection": {
+          "kind": "rectangle",
+          "width": 10,
+          "height": 3
+        },
+        "length": 4,
+        "unit": "cm",
+        "edgeLabels": [
+          0,
+          1
+        ],
+        "labels": [
+          {
+            "target": "length",
+            "text": "x cm"
+          }
+        ],
+        "volume": {
+          "working": false
+        }
+      }
+    },
+    {
+      "label": "Hard case — Pythagoras right-triangular prism: base and hypotenuse given, perpendicular height \"x\" unknown (no leak, right-angle mark kept)",
+      "params": {
+        "crossSection": {
+          "kind": "triangle",
+          "base": 8,
+          "height": 6,
+          "apexOffset": 0
+        },
+        "length": 7,
+        "unit": "cm",
+        "edgeLabels": [
+          0,
+          1
+        ],
+        "labels": [
+          {
+            "target": "h",
+            "text": "x"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded height guide — isosceles triangular prism, perpendicular height hidden as \"?\", volume given (find the height)",
+      "params": {
+        "header": "The volume is 120 cm³. Find the perpendicular height.",
+        "crossSection": {
+          "kind": "triangle",
+          "base": 10,
+          "height": 4
+        },
+        "length": 6,
+        "unit": "cm",
+        "edgeLabels": [
+          0
+        ],
+        "occlude": [
+          "h"
+        ],
+        "volume": {
+          "working": false
+        }
+      }
+    },
+    {
+      "label": "Vertex labels — cuboid ABCDEFGH, dimensions given in the TEXT, edges unlabelled (name the solid by its corners)",
+      "params": {
+        "header": "ABCD is a rectangle. Find the volume of the cuboid.",
+        "crossSection": {
+          "kind": "rectangle",
+          "width": 6,
+          "height": 4
+        },
+        "length": 9,
+        "unit": "cm",
+        "edgeLabels": "none",
+        "showLength": false,
+        "vertexLabels": {
+          "front": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "back": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        }
+      }
+    },
+    {
+      "label": "Vertex labels — triangular prism ABCDEF: corners lettered alongside the edge lengths, volume worked",
+      "params": {
+        "header": "Triangular prism ABCDEF",
+        "crossSection": {
+          "kind": "triangle",
+          "base": 8,
+          "height": 6
+        },
+        "length": 12,
+        "unit": "cm",
+        "vertexLabels": {
+          "front": [
+            "A",
+            "B",
+            "C"
+          ],
+          "back": [
+            "D",
+            "E",
+            "F"
+          ]
+        },
+        "shadeCrossSection": true,
+        "volume": {
+          "working": true
+        }
+      }
+    },
+    {
+      "label": "Vertex labels — hexagonal prism, near face only (front ABCDEF): letter just the end you can see",
+      "params": {
+        "header": "Hexagonal prism ABCDEF",
+        "crossSection": {
+          "kind": "regular",
+          "n": 6,
+          "side": 5
+        },
+        "length": 11,
+        "unit": "cm",
+        "edgeLabels": "none",
+        "showLength": false,
+        "vertexLabels": {
+          "front": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,635 @@
+{
+  "ref": "graphing/conversion-graph@2",
+  "family": "graphing",
+  "name": "conversion-graph",
+  "version": 2,
+  "title": "Conversion graph",
+  "tagline": "straight-line unit-conversion graph on a numbered grid; line from a rate or two points; dashed read-off guides with derived, occludable values, or arm read-off to read one off.",
+  "description": "A straight-line conversion graph between two units on a numbered grid with unit-labelled axes — the classic \"use the graph to convert X\" read-off figure (miles↔kilometres, pounds↔dollars, litres↔pints, °C↔°F). You give the two axis labels (with units) and ranges, and the line as EITHER a rate (y = rate·x, a line through the origin) OR two points (the gradient and intercept are derived, for an offset line such as °C↔°F). The model draws the line clipped to the window and derives every read-off: a read-off gives a value on one axis and a direction (from the x-axis or the y-axis), and the model draws the dashed guide L-shape up/across to the line and back to the other axis, marks the meeting point, and computes the converted value on the destination axis — which you can occlude as \"?\" for a \"use the graph to convert…\" question or highlight as the answer. Read-offs work in BOTH directions on the same graph. Extra scaffold points can be plotted for a \"the line passes through … , draw it\" answer space. ANSWER ON THE MODEL (@2, responseMode \"read-off\"): give readOff { from, value } (singular — the given amount, public) and the figure becomes a \"use the graph to read off a value\" answer surface: the line is SHOWN and the pupil drags the dashed construction line from the given value to the line and back to the other axis; the endpoint self-checks against the DERIVED converted value within a tolerance ({ derived: true } sentinel, never drawn on a posed surface). The static readOffs (plural) stay the worked/occluded teaching guide.",
+  "whenToUse": "Reach for this for any straight-line unit-conversion graph and the \"use the graph to convert…\" read-off: miles↔kilometres, pounds↔dollars (or any currency), litres↔pints/gallons, kilograms↔pounds, inches↔centimetres, and the offset °C↔°F line. Give axes.x and axes.y each a label (INCLUDING the unit, e.g. \"Distance (miles)\" or just \"Miles\"), a range [min,max] and optionally a step (grid spacing) and labelStep (how often to number). Define the line ONE of two ways: line.rate for a line through the origin (rate = how many y-units per x-unit — e.g. rate 1.6 for miles→km, rate 1.75 for litres→pints), OR line.points as two [x,y] anchor pairs for a line that may not pass through the origin (the offset °C↔°F line is line.points [[0,32],[100,212]]; a through-origin line can also be given this way, e.g. [[0,0],[5,8]] for 5 miles = 8 km). Never author the plotted line's pixel coordinates — give the rate or the anchor points and the model derives the line. Add read-offs to pose or work \"convert N units\" tasks: readOffs [{ from: \"x\", value: 30 }] reads UP from 30 on the x-axis to the line and ACROSS to the y-axis (convert 30 x-units to y-units); from \"y\" reads across from the y-axis and DOWN to the x-axis (convert back). Set occlude:true on a read-off to hide the converted value as \"?\" (the question — the guides still draw so the pupil reads it off the graph); the input value always shows (it is the given). Read-offs default to the amber result colour (they ARE the answer); set highlight:false to keep one neutral. IMPORTANT — a read-off is only as precise as the gridlines: choose a step so the answer lands on or near a gridline, and when you key the answer in a question give a tolerance sized to the grid (roughly half a grid square), not the exact decimal. For a blank answer space (\"draw the conversion line\"), omit line (labelled axes only) and optionally plot the given anchor points with points. Common configurations: worked read-off — the line + one read-off shown with its value; question — the line + an occluded read-off + a caption; answer space — labelled axes, no line. Keep the same axes across the blocks of one lesson. ANSWER ON THE MODEL — \"use the graph to read off …\" (auto-marked, @2): a MARKED model tile with responseMode \"read-off\", marking { mode: \"auto\", correctAnswer: { derived: true } }, the line given, and readOff { from, value } (singular) naming the GIVEN axis + amount (NOT the static readOffs plural, which would draw the answer — that fails validation). The pupil drags the dashed construction line to the line and back to the other axis; the endpoint self-checks against the derived converted value within readOff.tolerance (default a quarter of the target axis step — half a small square; carry over the question's existing answer tolerance). A y-intercept read (\"the fixed charge\" / \"the value at 0\") is a read-off with from \"x\", value 0. Switch primitive when the teaching changes: for a curve y=f(x) use graphing/function-graph, for distance/speed–time use graphing/journey-graph, for the numeric single-step conversion as a ruler use number/double-number-line, for the metric ×10/÷10 staircase use number/metric-ladder. Synonyms a teacher might use: conversion graph, convert, unit conversion, read off, read-off, use the graph to, miles to km, kilometres, pounds to dollars, exchange rate, litres to pints, gallons, stones, kilograms, Celsius to Fahrenheit, temperature conversion, proportion line, straight-line graph.",
+  "responseModes": [
+    "read-off"
+  ],
+  "tags": [
+    "conversion graph",
+    "convert",
+    "unit conversion",
+    "read off",
+    "read-off",
+    "miles",
+    "kilometres",
+    "km",
+    "currency",
+    "exchange rate",
+    "pounds",
+    "dollars",
+    "litres",
+    "pints",
+    "gallons",
+    "kilograms",
+    "stones",
+    "inches",
+    "centimetres",
+    "celsius",
+    "fahrenheit",
+    "temperature",
+    "proportion line",
+    "straight line graph",
+    "gradient",
+    "rate",
+    "graphing",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The two axes. x is the horizontal unit, y the vertical unit; the read-off converts between them.",
+        "properties": {
+          "x": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The horizontal axis (the first unit).",
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Axis name, INCLUDING the unit, e.g. \"Miles\", \"Distance (miles)\", \"Pounds (£)\"."
+              },
+              "range": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "[min, max] in x-units, e.g. [0, 80]. May start below 0 (e.g. [-10, 40] for °C)."
+              },
+              "step": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Grid spacing in x-units. Default: a sensible round value for the range. Choose it so read-off answers land on gridlines."
+              },
+              "labelStep": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Number the axis every this many units (a multiple of step) to keep wide ranges uncrowded. Default: every gridline."
+              }
+            },
+            "required": [
+              "label",
+              "range"
+            ]
+          },
+          "y": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "The vertical axis (the second unit).",
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Axis name, INCLUDING the unit, e.g. \"Kilometres\", \"Dollars ($)\"."
+              },
+              "range": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "[min, max] in y-units. Frame it so the line spans the plot."
+              },
+              "step": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Grid spacing in y-units. Default: a sensible round value."
+              },
+              "labelStep": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Number the axis every this many units. Default: every gridline."
+              }
+            },
+            "required": [
+              "label",
+              "range"
+            ]
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ]
+      },
+      "line": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The conversion line, given as SEMANTICS (never pixel coords). Provide EITHER rate (a line through the origin) OR points (two anchor pairs, for a line that may not pass through the origin). Omit the whole line for a blank answer space (labelled axes only).",
+        "oneOf": [
+          {
+            "required": [
+              "rate"
+            ]
+          },
+          {
+            "required": [
+              "points"
+            ]
+          }
+        ],
+        "properties": {
+          "rate": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The conversion rate: y = rate · x, a line THROUGH THE ORIGIN. E.g. 1.6 for miles→km, 1.75 for litres→pints, 2.2 for kg→pounds. Use points instead for a line with a non-zero intercept."
+          },
+          "points": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "description": "Two [x, y] anchor points the line passes through; the gradient and intercept are derived. Use for an OFFSET line (°C↔°F is [[0,32],[100,212]]) or to give a through-origin line by its anchor pair ([[0,0],[5,8]] = 5 miles is 8 km). The two x-values must differ."
+          },
+          "label": {
+            "type": "string",
+            "description": "Optional short label drawn near the line (an equation or a name). Conversion lines are usually UNLABELLED — omit unless the equation is the point."
+          },
+          "showLabel": {
+            "type": "boolean",
+            "description": "Show the line label. Default false (conversion lines read as a bare line)."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the line label as \"?\" (for \"what is the equation of this line?\"). Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Draw the line in the amber emphasis colour. Default false (the line is accent blue; amber is reserved for read-off results)."
+          }
+        }
+      },
+      "readOffs": {
+        "type": "array",
+        "description": "Read-off guide constructions. Each takes a value on one axis and draws the dashed guide L-shape to the line and back to the other axis, computing the converted value. Read-offs work in both directions on the same graph.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "enum": [
+                "x",
+                "y"
+              ],
+              "description": "\"x\" reads UP from value on the x-axis to the line, then ACROSS to the y-axis (convert an x-unit amount to y-units). \"y\" reads ACROSS from the y-axis to the line, then DOWN to the x-axis (convert back)."
+            },
+            "value": {
+              "type": "number",
+              "description": "The GIVEN amount on the \"from\" axis (the question input). Always shown (it is not the answer). Must lie within that axis range."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Hide the converted value as \"?\" — the \"use the graph to convert…\" question hook. The guides still draw. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the guides + converted value in amber (it is the result). Default TRUE. Set false to keep a read-off neutral (e.g. a second worked one)."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the converted-value readout text (rarely needed). Omit to show the derived value."
+            }
+          },
+          "required": [
+            "from",
+            "value"
+          ]
+        }
+      },
+      "readOff": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The \"use the graph to read off a value\" ANSWER surface (@2, responseMode \"read-off\"). SINGULAR — the interactive answer twin of the static readOffs (plural). Names a GIVEN value on one axis; the line stays SHOWN and the pupil drags the dashed construction line to it and back to the OTHER axis (from x → UP then ACROSS; from y → ACROSS then DOWN). The endpoint self-checks against the DERIVED converted value within tolerance. The given value is public (it IS the question); the converted value is NEVER drawn on a posed / print surface. Do NOT also give the static readOffs (plural) on the same tile — that would draw the answer (leak).",
+        "properties": {
+          "from": {
+            "type": "string",
+            "enum": [
+              "x",
+              "y"
+            ],
+            "description": "\"x\" — the given value is on the x-axis; read UP to the line then ACROSS to the y-axis (convert an x-amount to y). \"y\" — the given value is on the y-axis; read ACROSS to the line then DOWN to the x-axis (convert back). A y-intercept read (\"the value at 0\") is from \"x\", value 0."
+          },
+          "value": {
+            "type": "number",
+            "description": "The GIVEN amount on the \"from\" axis (the question input — public, always marked). Must lie within that axis range and meet the line inside the window."
+          },
+          "tolerance": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Acceptance band on the TARGET (read) axis, in that axis's units. Default: a quarter of the target axis step (half a small square). Set it to carry over the question's existing answer tolerance."
+          }
+        },
+        "required": [
+          "from",
+          "value"
+        ]
+      },
+      "points": {
+        "type": "array",
+        "description": "Extra scaffold points to plot as marker dots — for a \"the line passes through these points, draw the line\" answer space. Each is an authored [x, y] with an optional label; not part of the line derivation.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional label beside the dot."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Show the coordinate readout as \"(?, ?)\". Default false."
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ]
+        }
+      },
+      "showGrid": {
+        "type": "boolean",
+        "description": "Show background gridlines. Default true (pupils read off the grid)."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      }
+    },
+    "required": [
+      "axes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked read-off — miles to km (rate line through origin)",
+      "params": {
+        "header": "Converting miles and kilometres",
+        "axes": {
+          "x": {
+            "label": "Miles",
+            "range": [
+              0,
+              50
+            ],
+            "step": 5,
+            "labelStep": 10
+          },
+          "y": {
+            "label": "Kilometres",
+            "range": [
+              0,
+              80
+            ],
+            "step": 10
+          }
+        },
+        "line": {
+          "rate": 1.6
+        },
+        "readOffs": [
+          {
+            "from": "x",
+            "value": 30
+          }
+        ]
+      }
+    },
+    {
+      "label": "Question — occluded read-off (convert 40 km to miles, reads back)",
+      "params": {
+        "axes": {
+          "x": {
+            "label": "Miles",
+            "range": [
+              0,
+              50
+            ],
+            "step": 5,
+            "labelStep": 10
+          },
+          "y": {
+            "label": "Kilometres",
+            "range": [
+              0,
+              80
+            ],
+            "step": 10
+          }
+        },
+        "line": {
+          "rate": 1.6
+        },
+        "readOffs": [
+          {
+            "from": "y",
+            "value": 40,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Currency — £ to $ (anchor pair) with two read-offs both ways",
+      "params": {
+        "header": "Pounds and dollars",
+        "axes": {
+          "x": {
+            "label": "Pounds (£)",
+            "range": [
+              0,
+              100
+            ],
+            "step": 10,
+            "labelStep": 20
+          },
+          "y": {
+            "label": "Dollars ($)",
+            "range": [
+              0,
+              130
+            ],
+            "step": 10,
+            "labelStep": 20
+          }
+        },
+        "line": {
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              50,
+              65
+            ]
+          ]
+        },
+        "readOffs": [
+          {
+            "from": "x",
+            "value": 40
+          },
+          {
+            "from": "y",
+            "value": 91,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — °C↔°F offset line, negative range, occluded read-off",
+      "params": {
+        "header": "Temperature: °C and °F",
+        "axes": {
+          "x": {
+            "label": "Celsius (°C)",
+            "range": [
+              -10,
+              40
+            ],
+            "step": 5,
+            "labelStep": 10
+          },
+          "y": {
+            "label": "Fahrenheit (°F)",
+            "range": [
+              0,
+              110
+            ],
+            "step": 10,
+            "labelStep": 20
+          }
+        },
+        "line": {
+          "points": [
+            [
+              0,
+              32
+            ],
+            [
+              40,
+              104
+            ]
+          ]
+        },
+        "readOffs": [
+          {
+            "from": "x",
+            "value": 20,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer space — draw the line through the plotted points",
+      "params": {
+        "axes": {
+          "x": {
+            "label": "Litres",
+            "range": [
+              0,
+              10
+            ],
+            "step": 1,
+            "labelStep": 2
+          },
+          "y": {
+            "label": "Pints",
+            "range": [
+              0,
+              18
+            ],
+            "step": 2
+          }
+        },
+        "points": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 14,
+            "label": "A"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Worked — litres to pints with the line labelled",
+      "params": {
+        "axes": {
+          "x": {
+            "label": "Litres",
+            "range": [
+              0,
+              10
+            ],
+            "step": 1,
+            "labelStep": 2
+          },
+          "y": {
+            "label": "Pints",
+            "range": [
+              0,
+              18
+            ],
+            "step": 2
+          }
+        },
+        "line": {
+          "rate": 1.75,
+          "showLabel": true,
+          "label": "pints = 1.75 × litres"
+        },
+        "readOffs": [
+          {
+            "from": "x",
+            "value": 6
+          }
+        ]
+      }
+    },
+    {
+      "label": "Answer on the model — read off (responseMode \"read-off\", up-and-across)",
+      "params": {
+        "axes": {
+          "x": {
+            "label": "Miles",
+            "range": [
+              0,
+              50
+            ],
+            "step": 5,
+            "labelStep": 10
+          },
+          "y": {
+            "label": "Kilometres",
+            "range": [
+              0,
+              80
+            ],
+            "step": 10
+          }
+        },
+        "line": {
+          "rate": 1.6
+        },
+        "readOff": {
+          "from": "x",
+          "value": 30
+        }
+      }
+    },
+    {
+      "label": "Answer on the model — read back (responseMode \"read-off\", across-and-down)",
+      "params": {
+        "axes": {
+          "x": {
+            "label": "Pounds (£)",
+            "range": [
+              0,
+              100
+            ],
+            "step": 10,
+            "labelStep": 20
+          },
+          "y": {
+            "label": "Dollars ($)",
+            "range": [
+              0,
+              130
+            ],
+            "step": 10,
+            "labelStep": 20
+          }
+        },
+        "line": {
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              50,
+              65
+            ]
+          ]
+        },
+        "readOff": {
+          "from": "y",
+          "value": 91,
+          "tolerance": 2
+        }
+      }
+    },
+    {
+      "label": "Answer on the model — read the y-intercept (fixed charge; from \"x\", value 0)",
+      "params": {
+        "axes": {
+          "x": {
+            "label": "Distance (miles)",
+            "range": [
+              0,
+              25
+            ],
+            "step": 5
+          },
+          "y": {
+            "label": "Cost (£)",
+            "range": [
+              0,
+              50
+            ],
+            "step": 5,
+            "labelStep": 10
+          }
+        },
+        "line": {
+          "points": [
+            [
+              0,
+              5
+            ],
+            [
+              25,
+              42.5
+            ]
+          ]
+        },
+        "readOff": {
+          "from": "x",
+          "value": 0,
+          "tolerance": 0.5
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,458 @@
+{
+  "ref": "statistics/climate-graph@1",
+  "family": "statistics",
+  "name": "climate-graph",
+  "version": 1,
+  "title": "Climate graph",
+  "tagline": "Climate graph (climograph): monthly rainfall bars on a left axis, a temperature line on a right axis; totals, means, ranges, wettest/hottest month all derived; readings occlude.",
+  "description": "A climate graph (climograph) — the geography dual-axis figure for monthly climate data. You give the 12 monthly rainfall values (mm) and the 12 monthly temperature values (°C); the model draws rainfall as bars against a LEFT y-axis and temperature as a line with markers against a separate RIGHT y-axis, over the months Jan–Dec, and derives every summary reading: the total and mean annual rainfall, the mean and range of temperature, the wettest and driest month, the hottest and coldest month, and the annual temperature range. The two axes are clearly labelled and the bars (teal) and the line (coral) use distinct colours so the two scales never confuse. Occlude any reading, or a single month read-off (\"read the July temperature\"), to turn the figure into a question; highlight a month to draw the eye. The temperature axis spans negatives with a zero line when a climate freezes in winter (e.g. a continental or southern-hemisphere pattern).",
+  "whenToUse": "Reach for this for climate graphs / climographs in GCSE geography and cross-curricular statistics: showing a place's monthly climate, comparing seasonal rainfall against temperature, describing seasonal variation and the annual temperature range, and reading values off a dual-axis graph. Give rainfall as 12 numbers (mm, Jan→Dec) and temperature as 12 numbers (°C, Jan→Dec); the bars use the left axis, the line the right axis. Set axes.rainfallLabel / axes.tempLabel for the units (defaults \"Rainfall (mm)\" / \"Temperature (°C)\"), and fix axes.rainfallMax / axes.tempMin / axes.tempMax across a lesson so two climographs compare. show.readings prints the derived summary row (total & mean rainfall, mean & range temperature, wettest/driest, hottest/coldest); occlude any of them with readings.occlude (e.g. [\"annualRainfall\"] for \"what is the total annual rainfall?\", [\"wettestMonth\"] for \"which is the wettest month?\"). Use readMonth: { index, quantity } with readMonth.occlude to draw a read-off guide to one month's value and ask pupils to read it off (\"read the temperature in July\"). highlightMonths marks chosen months in amber (the answer month, the wettest bar). Leave show.readings off and occlude nothing for a plain worked climate graph, or set show.temperature false / show.bars false to build the two series one at a time. Choose an ORIGINAL, realistic climate pattern (a temperate maritime one peaks in summer with steady rain; a hot desert is hot and near-dry; a monsoon has a huge summer rain spike; a southern-hemisphere or continental pattern peaks in Dec–Feb and can dip below 0 °C) — never copy exact figures from an atlas. A staged build reads well: draw the rainfall bars, add the temperature line, reveal the readings. Switch primitive when the data is not a climograph: for single-series categorical bars use statistics/bar-chart, for one quantity over time (trend / moving average) use statistics/time-series, for parts of a whole use statistics/pie-chart. Synonyms a teacher might use: climate graph, climograph, climate data, precipitation, rainfall, temperature, dual axis, two axes, seasonal variation, annual range, wettest month, driest month, hottest month, coldest month, maritime, continental, monsoon, desert climate.",
+  "responseModes": [],
+  "tags": [
+    "climate graph",
+    "climograph",
+    "climate",
+    "geography",
+    "precipitation",
+    "rainfall",
+    "temperature",
+    "dual axis",
+    "two axes",
+    "seasonal variation",
+    "annual range",
+    "wettest month",
+    "driest month",
+    "monsoon",
+    "maritime",
+    "continental",
+    "desert climate",
+    "statistics",
+    "data",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "rainfall": {
+        "type": "array",
+        "minItems": 12,
+        "maxItems": 12,
+        "items": {
+          "type": "number",
+          "minimum": 0
+        },
+        "description": "The 12 monthly rainfall / precipitation totals in millimetres, in calendar order January → December. Non-negative. Drawn as bars against the LEFT axis; the total, mean, wettest and driest month are all derived from these — never author a reading."
+      },
+      "temperature": {
+        "type": "array",
+        "minItems": 12,
+        "maxItems": 12,
+        "items": {
+          "type": "number"
+        },
+        "description": "The 12 monthly mean temperatures in degrees Celsius, in calendar order January → December. May be negative (winter freeze). Drawn as a line with markers against the RIGHT axis; the mean, range, hottest and coldest month are all derived from these."
+      },
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Axis titles and optional fixed scales. Both y-axis scales default to a sensible round range that fits the data; fix them to compare two climographs across a lesson.",
+        "properties": {
+          "rainfallLabel": {
+            "type": "string",
+            "description": "Title of the LEFT (rainfall) axis. Default \"Rainfall (mm)\"."
+          },
+          "tempLabel": {
+            "type": "string",
+            "description": "Title of the RIGHT (temperature) axis. Default \"Temperature (°C)\"."
+          },
+          "rainfallMax": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Top of the rainfall axis (mm). Default: a round value just above the wettest month. Fix it across a lesson so bars compare."
+          },
+          "rainfallStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between rainfall gridlines / numbers (mm). Default: a sensible round value."
+          },
+          "tempMin": {
+            "type": "number",
+            "description": "Bottom of the temperature axis (°C). Default: a round value below the coldest month (0 or lower). Set negative for a freezing climate."
+          },
+          "tempMax": {
+            "type": "number",
+            "description": "Top of the temperature axis (°C). Default: a round value above the hottest month."
+          },
+          "tempStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between temperature gridlines / numbers (°C). Default: a sensible round value."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "bars": {
+            "type": "boolean",
+            "description": "Draw the rainfall bars. Default true. Set false to show only the temperature line (a staged build, or an answer space for pupils to add the bars)."
+          },
+          "temperature": {
+            "type": "boolean",
+            "description": "Draw the temperature line. Default true. Set false to show only the rainfall bars (a staged build, or a \"add the temperature line\" answer space)."
+          },
+          "grid": {
+            "type": "boolean",
+            "description": "Show horizontal gridlines (aligned to the rainfall axis; help read values). Default true."
+          },
+          "readings": {
+            "type": "boolean",
+            "description": "Show the derived summary readings below the graph — total & mean annual rainfall, mean & range of temperature, wettest & driest month, hottest & coldest month. Default false. Occlude individual readings with readings.occlude."
+          }
+        }
+      },
+      "readings": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Which of the derived summary readings to hide as \"?\" (the question hook). Only meaningful with show.readings true; the readings themselves are always computed.",
+        "properties": {
+          "occlude": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "annualRainfall",
+                "meanRainfall",
+                "meanTemp",
+                "tempRange",
+                "wettestMonth",
+                "driestMonth",
+                "hottestMonth",
+                "coldestMonth"
+              ]
+            },
+            "description": "Names of the readings to render as \"?\" — e.g. [\"annualRainfall\"] for \"what is the total annual rainfall?\", [\"wettestMonth\"] for \"which month is wettest?\". Default none."
+          },
+          "highlight": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "annualRainfall",
+                "meanRainfall",
+                "meanTemp",
+                "tempRange",
+                "wettestMonth",
+                "driestMonth",
+                "hottestMonth",
+                "coldestMonth"
+              ]
+            },
+            "description": "Names of the readings to draw in amber (answer emphasis). Default none."
+          }
+        }
+      },
+      "readMonth": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Draw a dashed read-off guide to ONE month's value and read it off the matching axis — the \"read the value in <month>\" hook.",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "1-based month (1 = January … 12 = December) to read off."
+          },
+          "quantity": {
+            "type": "string",
+            "enum": [
+              "rainfall",
+              "temperature"
+            ],
+            "description": "Which series to read — the rainfall bar (left axis) or the temperature point (right axis)."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the read-off value as \"?\" (ask pupils to read it off the axis). Default false."
+          }
+        },
+        "required": [
+          "index",
+          "quantity"
+        ]
+      },
+      "highlightMonths": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "description": "1-based months to emphasise in amber (the answer month, the wettest bar, the coldest point). Default none."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure, e.g. the place name."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "rainfall",
+      "temperature"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked — a temperate maritime climate, readings shown",
+      "params": {
+        "header": "Oakhaven — a temperate maritime climate",
+        "rainfall": [
+          82,
+          60,
+          58,
+          50,
+          54,
+          48,
+          52,
+          62,
+          70,
+          88,
+          92,
+          90
+        ],
+        "temperature": [
+          5,
+          5,
+          7,
+          9,
+          12,
+          15,
+          17,
+          17,
+          14,
+          11,
+          8,
+          6
+        ],
+        "show": {
+          "readings": true
+        }
+      }
+    },
+    {
+      "label": "Read the graph (occluded question) — read July's temperature off the right axis",
+      "params": {
+        "rainfall": [
+          82,
+          60,
+          58,
+          50,
+          54,
+          48,
+          52,
+          62,
+          70,
+          88,
+          92,
+          90
+        ],
+        "temperature": [
+          5,
+          5,
+          7,
+          9,
+          12,
+          15,
+          17,
+          17,
+          14,
+          11,
+          8,
+          6
+        ],
+        "readMonth": {
+          "index": 7,
+          "quantity": "temperature",
+          "occlude": true
+        },
+        "highlightMonths": [
+          7
+        ]
+      }
+    },
+    {
+      "label": "A contrasting climate — a monsoon (huge summer rainfall spike), wettest month asked",
+      "params": {
+        "header": "Monsoon City",
+        "rainfall": [
+          8,
+          10,
+          14,
+          25,
+          90,
+          260,
+          340,
+          300,
+          190,
+          70,
+          20,
+          6
+        ],
+        "temperature": [
+          22,
+          24,
+          28,
+          31,
+          32,
+          30,
+          28,
+          28,
+          28,
+          27,
+          24,
+          22
+        ],
+        "show": {
+          "readings": true
+        },
+        "readings": {
+          "occlude": [
+            "wettestMonth",
+            "annualRainfall"
+          ]
+        }
+      }
+    },
+    {
+      "label": "The hard case — a southern-hemisphere continental climate: temperature peaks Dec–Feb and dips below 0 °C",
+      "params": {
+        "header": "Southport (southern hemisphere)",
+        "rainfall": [
+          30,
+          34,
+          42,
+          55,
+          68,
+          74,
+          70,
+          62,
+          50,
+          44,
+          36,
+          28
+        ],
+        "temperature": [
+          19,
+          18,
+          14,
+          8,
+          3,
+          -2,
+          -3,
+          -1,
+          4,
+          9,
+          14,
+          18
+        ],
+        "axes": {
+          "tempMin": -5,
+          "tempMax": 25
+        },
+        "show": {
+          "readings": true
+        },
+        "readings": {
+          "highlight": [
+            "tempRange",
+            "coldestMonth"
+          ]
+        }
+      }
+    },
+    {
+      "label": "A hot desert climate — hot all year, almost no rain",
+      "params": {
+        "header": "Dune Wells — a hot desert climate",
+        "rainfall": [
+          4,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3,
+          5
+        ],
+        "temperature": [
+          18,
+          21,
+          26,
+          31,
+          36,
+          40,
+          41,
+          40,
+          37,
+          30,
+          24,
+          19
+        ],
+        "show": {
+          "readings": true
+        }
+      }
+    },
+    {
+      "label": "Answer space — rainfall bars only, add the temperature line",
+      "params": {
+        "rainfall": [
+          70,
+          55,
+          60,
+          48,
+          45,
+          40,
+          38,
+          44,
+          58,
+          72,
+          80,
+          78
+        ],
+        "temperature": [
+          4,
+          4,
+          6,
+          9,
+          13,
+          16,
+          18,
+          18,
+          15,
+          11,
+          7,
+          5
+        ],
+        "show": {
+          "temperature": false
+        },
+        "axes": {
+          "tempMin": 0,
+          "tempMax": 20
+        },
+        "caption": "The rainfall is plotted. Add the temperature line using the data table"
+      }
+    }
+  ]
+}

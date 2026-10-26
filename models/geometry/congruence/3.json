@@ -1,0 +1,1083 @@
+{
+  "ref": "geometry/congruence@3",
+  "family": "geometry",
+  "name": "congruence",
+  "version": 3,
+  "title": "Congruent triangles",
+  "tagline": "Two named triangles with SSS/SAS/ASA/RHS marks — in a parent figure, on a circle, or free-standing; derives the matched pairs and criterion (the proof is block text).",
+  "description": "A composite geometric figure containing two named triangles to be proved congruent — a parallelogram split by a diagonal, two triangles sharing a common side, a kite, a midpoint \"X\", an isosceles triangle split by its altitude, or two free-standing triangles — with correspondence marks (equal-length ticks in single / double / triple, equal-angle arcs, right-angle squares, and a common side) pointing at the four criteria SSS / SAS / ASA / RHS. You author the points, the two triangles (vertices in corresponding order) and the given marks (which sides are equal, which angles are equal, which are right angles); the model draws the whole figure from the union of the two triangles, then derives the matched pairs, detects the common side/angle, classifies the criterion (or \"not necessarily congruent\" for SSA / AAA). Because the criterion and every matched pair are computed from the marks, the figure can never claim a congruence the marks do not support. The proof itself — the matched-pair statements and the △ ≅ △ conclusion — is NOT drawn on the figure: a multi-line derivation is working, which belongs in the host block's TEXT beside the clean diagram. An optional criteria-reference strip names the four rules with the applicable one highlighted (occlude it for \"which criterion?\"). The two triangles are often only PART of a larger figure: contextEdges draws parent-figure edges outside the two triangles' union (the closing sides of a parallelogram around its diagonals, the half-sides and midsegments of a medially-subdivided triangle) as plain outline, and circle draws a circle backdrop (points on a circle, tangents from an external point) with its radius derived from a named on-circle point — both are context that never touches the derived criterion.",
+  "whenToUse": "Reach for this for congruent triangles: prove two triangles congruent, identify the criterion (SSS / SAS / ASA / RHS), and congruence-vs-similarity. The figures are almost always composite — author the construction and let the model find the two triangles inside it. Author vertices once (name → [x,y], y up, a representative \"not to scale\" sketch); list the two triangles in triangles, each as three vertex letters in corresponding order — the i-th vertex of the first triangle matches the i-th of the second (this is exactly how a proof is written: \"prove △ABC ≅ △CDA\" means A↔C, B↔D, C↔A). Then state the givens as marks: equalSides is a list of groups of equal edges (the first group gets a single tick, the second a double, the third a triple — you never write the tick count); equalAngles is a list of groups of equal angles (named by three letters, vertex in the middle), arcs assigned the same way; rightAngles lists angles drawn with a right-angle square. A side shared by both triangles is detected automatically and shown as the common side (dark, not ticked); a shared angle likewise. Everything else follows: the matched pairs and the criterion (write the proof — \"AC = BD (given) … △ABC ≅ △CDA (SSS)\" — as the block's TEXT beside the figure, never on the diagram). Common configurations — parallelogram split by a diagonal: vertices A B C D round the parallelogram, triangles [\"A\",\"B\",\"C\"] and [\"C\",\"D\",\"A\"], equalSides [[\"AB\",\"CD\"],[\"BC\",\"DA\"]] → SSS (AC common). Midpoint \"X\": a centre M with A,M,B collinear and C,M,D collinear, triangles [\"A\",\"M\",\"C\"] and [\"B\",\"M\",\"D\"], equalSides [[\"AM\",\"BM\"],[\"CM\",\"DM\"]], equalAngles [[\"AMC\",\"BMD\"]] (vertically opposite) → SAS. Kite / two triangles sharing a side: triangles [\"A\",\"B\",\"D\"] and [\"A\",\"C\",\"D\"] sharing AD, equalAngles [[\"BAD\",\"CAD\"],[\"ADB\",\"ADC\"]] → ASA (AD common, the included side). RHS: an isosceles triangle split by its altitude — apex A, base B…C, foot M — triangles [\"A\",\"B\",\"M\"] and [\"A\",\"C\",\"M\"], equalSides [[\"AB\",\"AC\"]], rightAngles [\"AMB\",\"AMC\"] → RHS (AB the hypotenuse, AM the common leg); or two free-standing right triangles with equal hypotenuse and one equal leg. Identify the criterion: show criteriaReference { show: true, occlude: true } and ask which rule the marks satisfy (a normal multiple-choice question — the figure is the stimulus). Prove it / answer space: the model draws only the marked figure — write the proof, or leave the blank \"write the proof\" space, in the block's TEXT beside it. Congruence vs similarity: mark only AAA (three equal angles, no sides) or SSA (two sides + a non-included, non-right angle) — the marks are not sufficient, so say \"not necessarily congruent\" in the block text. Composite parent figures (the two triangles are only PART of the whole): add contextEdges for the edges outside the two triangles' union — a parallelogram cut by BOTH diagonals meeting at E (triangles [\"A\",\"C\",\"E\"] and [\"D\",\"B\",\"E\"], contextEdges the two sides that miss E, ASA via alternate angles); a medially-subdivided triangle ABC with midpoints D,E,F and inner parallelogram CDEF (the two named half-triangles plus contextEdges for the half-sides and third midsegment, SAS via a midpoint side + corresponding angle). Circle backdrops: points on a circle with tangents from an external point — vertices O (centre), A/C on the circle, B outside; triangles [\"A\",\"B\",\"O\"] and [\"C\",\"B\",\"O\"], circle { centre: \"O\", through: \"A\" }, rightAngles the two tangent-radius angles, equalSides the two radii → RHS with OB the common hypotenuse. A lone given angle (a 75° at an apex that is in no equal-angle group) shows via an angles[] label. Author the same figure across a lesson so pupils track one diagram; introduce the marks before the criterion. UNITS — set unit: \"cm\" once per figure and any bare-number side label (\"13\") reads \"13 cm\"; a label carrying its own text (\"13 cm\", \"x\") stays verbatim. Switch primitive: for similar (not congruent) shapes and scale factors use geometry/similar-shapes; for a single triangle's sides/angles (Pythagoras, trig) use geometry/triangle; for transformations use geometry/transformations. Synonyms a teacher might use: congruent triangles, congruence, prove congruent, congruence criteria, SSS SAS ASA RHS, AAS, included angle, common side, hypotenuse, identify the criterion, are these triangles congruent, congruent or similar, vertically opposite angles, isosceles altitude, kite diagonal, parallelogram diagonal proof.",
+  "responseModes": [],
+  "tags": [
+    "congruence",
+    "congruent triangles",
+    "congruent",
+    "prove congruent",
+    "congruence criteria",
+    "criterion",
+    "SSS",
+    "SAS",
+    "ASA",
+    "AAS",
+    "RHS",
+    "included angle",
+    "common side",
+    "shared side",
+    "hypotenuse",
+    "right angle",
+    "equal sides",
+    "equal angles",
+    "tick marks",
+    "identify the criterion",
+    "congruence vs similarity",
+    "congruent or similar",
+    "SSA",
+    "AAA ambiguous",
+    "parallelogram diagonal",
+    "kite",
+    "midpoint",
+    "vertically opposite angles",
+    "isosceles",
+    "altitude",
+    "composite figure",
+    "geometry",
+    "maths",
+    "circle",
+    "tangent",
+    "tangent to a circle",
+    "radius",
+    "points on a circle",
+    "parallelogram diagonals",
+    "medial triangle",
+    "midpoint triangle",
+    "midsegment",
+    "context edges",
+    "parent figure"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "vertices": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 12,
+        "description": "The named points of the WHOLE composite figure — a representative \"not to scale\" sketch. Each is { name, at }; list every vertex the two triangles use (and any extra figure point). The drawing auto-fits, so use clear coordinates; the marks, not the drawing, carry the maths.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^[A-Za-z]$",
+              "description": "A single-letter vertex name (A, B, C, … M, P, Q …). Use the same letters throughout one figure."
+            },
+            "at": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number"
+              },
+              "description": "The point [x, y], y pointing UP."
+            }
+          },
+          "required": [
+            "name",
+            "at"
+          ]
+        }
+      },
+      "triangles": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "EXACTLY TWO triangles to be proved congruent, each three vertex letters IN CORRESPONDING ORDER (the i-th vertex of the first triangle matches the i-th of the second — the correspondence the proof is written in, e.g. [\"A\",\"B\",\"C\"] and [\"C\",\"D\",\"A\"] for △ABC ≅ △CDA). The figure drawn is the union of both triangles' edges; an edge or angle shared by both is detected as the common one.",
+        "items": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z]$",
+            "description": "A single-letter vertex name (A, B, C, … M, P, Q …). Use the same letters throughout one figure."
+          },
+          "description": "One triangle as three vertex letters, in correspondence order."
+        }
+      },
+      "equalSides": {
+        "type": "array",
+        "maxItems": 3,
+        "description": "GROUPS of edges marked equal. Each group is a list of edge strings (two letters, e.g. \"AB\") that all carry the SAME tick: the FIRST group gets a single tick, the second a double, the third a triple — you never write the count. A pair of corresponding sides (one from each triangle) in the same group is an established side-match. The shared/common side need not be listed; it is detected and shown distinctly.",
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][ -]?[A-Za-z]$",
+            "description": "An edge as its two vertex letters, e.g. \"AB\" (or \"A-B\")."
+          },
+          "description": "One group of mutually-equal edges (single/double/triple tick by group order)."
+        }
+      },
+      "equalAngles": {
+        "type": "array",
+        "maxItems": 3,
+        "description": "GROUPS of angles marked equal. Each group is a list of angle strings (three letters, vertex in the MIDDLE, e.g. \"ABC\" = the angle at B) that all carry the SAME arc: the FIRST group gets a single arc, the second a double, the third a triple. A pair of corresponding angles in the same group is an established angle-match — used for SAS (included angle) and ASA. Vertically-opposite angles at a shared point are just an equal-angle group (e.g. [\"AMC\",\"BMD\"]).",
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z]{3}$",
+            "description": "An angle as three vertex letters with the vertex in the middle, e.g. \"ABC\"."
+          },
+          "description": "One group of mutually-equal angles (single/double/triple arc by group order)."
+        }
+      },
+      "rightAngles": {
+        "type": "array",
+        "description": "Angles drawn with a right-angle square, named by three letters (vertex in the middle), e.g. \"AMB\". Two corresponding right angles count as an established (equal) angle-match — the basis of RHS.",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{3}$",
+          "description": "A right angle as three vertex letters, vertex in the middle."
+        }
+      },
+      "contextEdges": {
+        "type": "array",
+        "description": "Optional PARENT-FIGURE edges that lie OUTSIDE the two triangles' union — the rest of the composite the two triangles are only a part of. Each is an edge string (two vertex letters, e.g. \"AB\" or \"A-B\") between two named vertices; it is drawn as a plain neutral outline (no tick, no fill, no hue) and NEVER affects the derived criterion or proof — it is context, not a mark. Use it to close a parallelogram around a diagonal-\"X\" (the two sides that do not pass through the crossing point), or to complete a medially-subdivided triangle (the half-sides and third midsegment around the two named triangles). A vertex used only by a context edge (e.g. the far corner of the parent triangle) is still labelled. @3.",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Za-z][ -]?[A-Za-z]$",
+          "description": "A parent-figure edge as its two vertex letters, e.g. \"AB\" (or \"A-B\"). Both vertices must be named in `vertices`."
+        }
+      },
+      "hiddenEdges": {
+        "type": "array",
+        "description": "Optional triangle edges NOT drawn on this figure — the posed question where the pupil must add the line themselves (\"ABCD is a parallelogram. Prove triangle ABC is congruent to triangle BCD\" printed without the diagonal BC; a kite with no diagonal where drawing AC is the proof idea). The edge still counts in the derived criterion. Any hidden edge draws the figure as the plain parent outline (neutral ink, no tint), so colour does not give the split away; keep the solution figure without it to show the diagonal.",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Za-z][ -]?[A-Za-z]$",
+          "description": "An edge as its two vertex letters, e.g. \"BC\". Both vertices must be named in `vertices`."
+        }
+      },
+      "circle": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional circle backdrop — a circle the figure sits on/inside (points on a circle, tangents from an external point, an inscribed configuration). Drawn behind the triangles as a plain neutral outline; pure context, it never affects the derived criterion. The radius is DERIVED as the distance from `centre` to `through`, so a point named on the circle genuinely lies on it. @3.",
+        "properties": {
+          "centre": {
+            "type": "string",
+            "pattern": "^[A-Za-z]$",
+            "description": "The circle's centre — a single vertex letter (usually O), named in `vertices`."
+          },
+          "through": {
+            "type": "string",
+            "pattern": "^[A-Za-z]$",
+            "description": "A vertex the circle passes through — a single letter named in `vertices`. The radius is the distance centre→through; place every on-circle point at that distance so the sketch is consistent."
+          }
+        },
+        "required": [
+          "centre",
+          "through"
+        ]
+      },
+      "sides": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "edge": {
+              "type": "string",
+              "pattern": "^[A-Za-z][ -]?[A-Za-z]$",
+              "description": "The edge to label, as its two vertex letters, e.g. \"AB\" (or \"A-B\"). Must be an edge of one of the triangles."
+            },
+            "label": {
+              "type": "string",
+              "description": "Text shown beside the edge — a given length (\"8 cm\"), an unknown (\"x\"), or any note. Display only: it never affects the derived criterion (the marks do). Omit to show nothing."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this edge's label as \"?\" (amber) — ask for the length. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this edge's label — draw the eye to it (e.g. the answer side). Default false."
+            }
+          },
+          "required": [
+            "edge"
+          ]
+        },
+        "description": "Optional per-edge DISPLAY labels (a given length, \"x\", a note). These are shown beside the edge and never change the derived criterion — the ticks do. Use for RHS measurements (\"13 cm\" on a hypotenuse) or to ask for a length (occlude). A bare-number label (\"13\") takes the figure's `unit` automatically; a label with any other text (\"13 cm\", \"x\") is shown verbatim."
+      },
+      "angles": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "angle": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{3}$",
+              "description": "The angle to label, as three vertex letters with the VERTEX in the middle, e.g. \"ABC\" is the angle at B. The three letters must be the three vertices of one triangle."
+            },
+            "label": {
+              "type": "string",
+              "description": "Text shown by the angle (\"50°\", \"x\"). Display only — it never affects the derived criterion. Omit to show nothing."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this angle's label as \"?\" (amber). Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this angle's label. Default false."
+            }
+          },
+          "required": [
+            "angle"
+          ]
+        },
+        "description": "Optional per-angle DISPLAY labels (\"50°\", \"x\"). Shown by the angle; display only, never the maths. @3: a label renders whether or not the angle carries an equality arc or a right-angle square — so a lone given angle (e.g. 75° at an apex that is in no equal-angle group) shows too."
+      },
+      "criteriaReference": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this to render the four-criteria reference strip ( SSS · SAS · ASA · RHS ) beneath the figure, with the applicable criterion highlighted. Omit for no strip.",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Show the strip. Default true when the object is present."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Highlight none — the \"which criterion does this figure satisfy?\" question. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "vertexLabels": {
+            "type": "boolean",
+            "description": "Label the vertices (A, B, C …). Default true."
+          },
+          "fill": {
+            "type": "boolean",
+            "description": "Tint the two triangles in distinct hues (blue / teal, bold-border + light-fill) so the two triangles read apart. Default true. Set false for a plain outline figure."
+          },
+          "notToScale": {
+            "type": "boolean",
+            "description": "Show the \"Not to scale\" note (these are stimulus sketches). Default true."
+          }
+        }
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "unit": {
+        "type": "string",
+        "description": "The figure's length unit, e.g. \"cm\", \"m\", \"mm\". Appended to every per-side display label (sides[].label) that is a BARE NUMBER (\"13\" → \"13 cm\"). A label with any other text (\"13 cm\", \"x\") is shown verbatim — an authored override always wins. Ticks, arcs and angle labels never take it. Default \"\" (labels stay bare). @2."
+      }
+    },
+    "required": [
+      "vertices",
+      "triangles"
+    ]
+  },
+  "examples": [
+    {
+      "label": "The hard case — parallelogram split by a diagonal, SSS (proof is block text)",
+      "params": {
+        "vertices": [
+          {
+            "name": "A",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              6,
+              0
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              8,
+              3
+            ]
+          },
+          {
+            "name": "D",
+            "at": [
+              2,
+              3
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "C",
+            "D",
+            "A"
+          ]
+        ],
+        "equalSides": [
+          [
+            "AB",
+            "CD"
+          ],
+          [
+            "BC",
+            "DA"
+          ]
+        ],
+        "caption": "ABCD is a parallelogram. Prove the two triangles are congruent."
+      }
+    },
+    {
+      "label": "Midpoint \"X\" — SAS via vertically-opposite angles (proof is block text)",
+      "params": {
+        "vertices": [
+          {
+            "name": "A",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              6,
+              4
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              0,
+              4
+            ]
+          },
+          {
+            "name": "D",
+            "at": [
+              6,
+              0
+            ]
+          },
+          {
+            "name": "M",
+            "at": [
+              3,
+              2
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "A",
+            "M",
+            "C"
+          ],
+          [
+            "B",
+            "M",
+            "D"
+          ]
+        ],
+        "equalSides": [
+          [
+            "AM",
+            "BM"
+          ],
+          [
+            "CM",
+            "DM"
+          ]
+        ],
+        "equalAngles": [
+          [
+            "AMC",
+            "BMD"
+          ]
+        ],
+        "caption": "M is the midpoint of both AB and CD. Prove △AMC ≅ △BMD."
+      }
+    },
+    {
+      "label": "Identify the criterion — kite / two triangles sharing a side, ASA (strip occluded)",
+      "params": {
+        "vertices": [
+          {
+            "name": "A",
+            "at": [
+              3,
+              5
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              0,
+              2.5
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              6,
+              2.5
+            ]
+          },
+          {
+            "name": "D",
+            "at": [
+              3,
+              0
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "A",
+            "B",
+            "D"
+          ],
+          [
+            "A",
+            "C",
+            "D"
+          ]
+        ],
+        "equalAngles": [
+          [
+            "BAD",
+            "CAD"
+          ],
+          [
+            "ADB",
+            "ADC"
+          ]
+        ],
+        "criteriaReference": {
+          "show": true,
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "RHS — isosceles triangle split by its altitude, with the criteria strip",
+      "params": {
+        "vertices": [
+          {
+            "name": "A",
+            "at": [
+              3,
+              5
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              6,
+              0
+            ]
+          },
+          {
+            "name": "M",
+            "at": [
+              3,
+              0
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "A",
+            "B",
+            "M"
+          ],
+          [
+            "A",
+            "C",
+            "M"
+          ]
+        ],
+        "equalSides": [
+          [
+            "AB",
+            "AC"
+          ]
+        ],
+        "rightAngles": [
+          "AMB",
+          "AMC"
+        ],
+        "criteriaReference": {
+          "show": true
+        },
+        "caption": "Triangle ABC is isosceles with AM perpendicular to BC. Prove the halves are congruent."
+      }
+    },
+    {
+      "label": "Answer space — two free-standing right triangles, criteria strip occluded (which rule?)",
+      "params": {
+        "vertices": [
+          {
+            "name": "P",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Q",
+            "at": [
+              0,
+              3
+            ]
+          },
+          {
+            "name": "R",
+            "at": [
+              4,
+              0
+            ]
+          },
+          {
+            "name": "S",
+            "at": [
+              8,
+              0
+            ]
+          },
+          {
+            "name": "T",
+            "at": [
+              8,
+              3
+            ]
+          },
+          {
+            "name": "U",
+            "at": [
+              12,
+              0
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "P",
+            "Q",
+            "R"
+          ],
+          [
+            "S",
+            "T",
+            "U"
+          ]
+        ],
+        "equalSides": [
+          [
+            "QR",
+            "TU"
+          ],
+          [
+            "PQ",
+            "ST"
+          ]
+        ],
+        "rightAngles": [
+          "QPR",
+          "TSU"
+        ],
+        "criteriaReference": {
+          "show": true,
+          "occlude": true
+        },
+        "caption": "The hypotenuses are equal and one pair of sides is equal. Prove the triangles are congruent and state the criterion."
+      }
+    },
+    {
+      "label": "Congruence vs similarity — AAA is not sufficient (the contrast case)",
+      "params": {
+        "vertices": [
+          {
+            "name": "A",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              5,
+              0
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              1.5,
+              3
+            ]
+          },
+          {
+            "name": "D",
+            "at": [
+              8,
+              0
+            ]
+          },
+          {
+            "name": "E",
+            "at": [
+              15,
+              0
+            ]
+          },
+          {
+            "name": "F",
+            "at": [
+              9.1,
+              4.2
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "D",
+            "E",
+            "F"
+          ]
+        ],
+        "equalAngles": [
+          [
+            "CAB",
+            "FDE"
+          ],
+          [
+            "ABC",
+            "DEF"
+          ],
+          [
+            "BCA",
+            "EFD"
+          ]
+        ],
+        "criteriaReference": {
+          "show": true
+        },
+        "show": {
+          "notToScale": true
+        }
+      }
+    },
+    {
+      "label": "RHS with given lengths + a unit — bare-number side labels take \"cm\"",
+      "params": {
+        "vertices": [
+          {
+            "name": "P",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Q",
+            "at": [
+              0,
+              3
+            ]
+          },
+          {
+            "name": "R",
+            "at": [
+              4,
+              0
+            ]
+          },
+          {
+            "name": "S",
+            "at": [
+              8,
+              0
+            ]
+          },
+          {
+            "name": "T",
+            "at": [
+              8,
+              3
+            ]
+          },
+          {
+            "name": "U",
+            "at": [
+              12,
+              0
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "P",
+            "Q",
+            "R"
+          ],
+          [
+            "S",
+            "T",
+            "U"
+          ]
+        ],
+        "equalSides": [
+          [
+            "QR",
+            "TU"
+          ],
+          [
+            "PQ",
+            "ST"
+          ]
+        ],
+        "rightAngles": [
+          "QPR",
+          "TSU"
+        ],
+        "sides": [
+          {
+            "edge": "QR",
+            "label": "13"
+          },
+          {
+            "edge": "PQ",
+            "label": "5"
+          }
+        ],
+        "unit": "cm",
+        "caption": "The hypotenuses are equal (13 cm) and one pair of sides is equal (5 cm). Prove the triangles are congruent."
+      }
+    },
+    {
+      "label": "Angle label without an arc — two triangles across a diagonal, ASA (@3)",
+      "params": {
+        "vertices": [
+          {
+            "name": "W",
+            "at": [
+              0,
+              4
+            ]
+          },
+          {
+            "name": "X",
+            "at": [
+              5,
+              4
+            ]
+          },
+          {
+            "name": "Z",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Y",
+            "at": [
+              5,
+              0
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "W",
+            "X",
+            "Z"
+          ],
+          [
+            "Y",
+            "Z",
+            "X"
+          ]
+        ],
+        "equalAngles": [
+          [
+            "WXZ",
+            "YZX"
+          ],
+          [
+            "WZX",
+            "YXZ"
+          ]
+        ],
+        "angles": [
+          {
+            "angle": "XWZ",
+            "label": "68°"
+          }
+        ],
+        "caption": "WX is parallel to ZY and WZ to XY; the diagonal XZ is common. The 68° at W is given."
+      }
+    },
+    {
+      "label": "Context edges — parallelogram cut by both diagonals, ASA (@3)",
+      "params": {
+        "vertices": [
+          {
+            "name": "P",
+            "at": [
+              0,
+              3
+            ]
+          },
+          {
+            "name": "R",
+            "at": [
+              5,
+              4
+            ]
+          },
+          {
+            "name": "S",
+            "at": [
+              7,
+              1
+            ]
+          },
+          {
+            "name": "Q",
+            "at": [
+              2,
+              0
+            ]
+          },
+          {
+            "name": "M",
+            "at": [
+              3.5,
+              2
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "P",
+            "R",
+            "M"
+          ],
+          [
+            "S",
+            "Q",
+            "M"
+          ]
+        ],
+        "equalSides": [
+          [
+            "PR",
+            "SQ"
+          ]
+        ],
+        "equalAngles": [
+          [
+            "RPM",
+            "QSM"
+          ],
+          [
+            "PRM",
+            "SQM"
+          ]
+        ],
+        "contextEdges": [
+          "RS",
+          "QP"
+        ],
+        "caption": "PRSQ is a parallelogram; the diagonals PS and RQ meet at M."
+      }
+    },
+    {
+      "label": "Circle backdrop — tangents from an external point, RHS (@3)",
+      "params": {
+        "vertices": [
+          {
+            "name": "O",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "X",
+            "at": [
+              0.8,
+              1.833
+            ]
+          },
+          {
+            "name": "Y",
+            "at": [
+              0.8,
+              -1.833
+            ]
+          },
+          {
+            "name": "P",
+            "at": [
+              5,
+              0
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "X",
+            "P",
+            "O"
+          ],
+          [
+            "Y",
+            "P",
+            "O"
+          ]
+        ],
+        "equalSides": [
+          [
+            "OX",
+            "OY"
+          ]
+        ],
+        "rightAngles": [
+          "OXP",
+          "OYP"
+        ],
+        "circle": {
+          "centre": "O",
+          "through": "X"
+        },
+        "caption": "X and Y lie on the circle centre O; PX and PY are tangents."
+      }
+    },
+    {
+      "label": "Context edges (hard case) — medial triangle, SAS (@3)",
+      "params": {
+        "vertices": [
+          {
+            "name": "A",
+            "at": [
+              4,
+              6
+            ]
+          },
+          {
+            "name": "B",
+            "at": [
+              0,
+              0
+            ]
+          },
+          {
+            "name": "C",
+            "at": [
+              8,
+              0
+            ]
+          },
+          {
+            "name": "D",
+            "at": [
+              6,
+              3
+            ]
+          },
+          {
+            "name": "E",
+            "at": [
+              2,
+              3
+            ]
+          },
+          {
+            "name": "F",
+            "at": [
+              4,
+              0
+            ]
+          }
+        ],
+        "triangles": [
+          [
+            "E",
+            "A",
+            "D"
+          ],
+          [
+            "B",
+            "E",
+            "F"
+          ]
+        ],
+        "equalSides": [
+          [
+            "AE",
+            "BE"
+          ],
+          [
+            "DE",
+            "BF"
+          ]
+        ],
+        "equalAngles": [
+          [
+            "AED",
+            "EBF"
+          ]
+        ],
+        "contextEdges": [
+          "CD",
+          "CF",
+          "DF"
+        ],
+        "caption": "D, E, F are the midpoints of AC, AB, BC; CDEF is a parallelogram."
+      }
+    }
+  ]
+}

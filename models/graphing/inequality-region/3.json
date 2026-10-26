@@ -1,0 +1,445 @@
+{
+  "ref": "graphing/inequality-region@3",
+  "family": "graphing",
+  "name": "inequality-region",
+  "version": 3,
+  "title": "Graphical inequalities (regions)",
+  "tagline": "Linear inequalities as boundary lines with the feasible region shaded; solid/dashed edges and integer solutions derived; pupils can shade, mark crosses or draw-then-shade.",
+  "description": "Linear inequalities drawn as boundary lines with the feasible region shaded — the model for graphical inequalities and linear-programming regions. You give each inequality as a string (\"y > 2x + 1\", \"2x + 3y <= 12\", \"x >= 1\", \"y < 4\"); the model derives each boundary line (solid for ≤ / ≥, dashed for < / >), shades the correct side, and shades the feasible region where all of them hold — either the region itself or, exam-style, the unwanted half-planes (leaving the region clear). Optionally mark the integer coordinate solutions in the region and the corner points of the feasible polygon. Label a region \"R\", occlude it for a \"which region satisfies these?\" question, or highlight a boundary. v1 covers linear inequalities (straight-line boundaries). Three answer-on-the-model modes: shade-region (tap faces between pre-drawn lines), mark-cross (tap the integer solutions), and construct-region (the full task — the posed grid is BLANK; the pupil drags each boundary line into place by its endpoint handles, toggles it solid or dashed, then shades; placement, dash style and the shaded region are all marked).",
+  "whenToUse": "Reach for this for graphical inequalities and shaded regions: \"shade the region satisfied by y > 2x + 1\", a system of inequalities, and linear-programming feasible regions. Give inequalities as strings, each a linear expression in x and/or y with a relation: \"y > 2x + 1\", \"2x + 3y <= 12\", \"x >= 1\", \"y < 4\", \"y <= x + 3\". The boundary is drawn solid when the relation is ≤ or ≥ (the line is included) and dashed when it is < or > (excluded); the correct side is shaded automatically. Add region to shade where all inequalities hold: region.shade \"wanted\" fills the feasible region (clearest for teaching), \"unwanted\" shades out each unwanted half-plane and leaves the feasible region clear (the usual UK exam convention — use this when the question says \"shade the region not required\" or \"leave R unshaded\"). Set region.label \"R\", region.occlude to ask which region it is, region.integerPoints to mark the whole-number coordinate solutions, region.vertices to mark the feasible polygon's corners (for linear programming). OMIT region entirely to draw just the boundary lines as an answer space for pupils to shade. Set draggable to let pupils slide each boundary line by its handle and watch the feasible region (and its integer points and vertices) update live. Keep the same window across a lesson. A staged build reads well: add one inequality (and its line) per stage and watch the region shrink. Answer ON the model (auto-marked model tiles): to make \"shade the region that satisfies all these inequalities\" markable when the source PRE-DRAWS the boundary lines, host a marked model tile with responseMode \"shade-region\", marking { mode: \"auto\", correctAnswer: { derived: true } }, and params carrying the inequalities but NO region (the boundary lines pose as a blank answer space; the pupil taps the faces between them to shade, and the model self-checks the shaded set against the feasible region it derives). When the source poses a BLANK grid and drawing the lines is part of the task (the usual GCSE \"on the grid shade the region that satisfies all these inequalities\" with nothing pre-drawn), use responseMode \"construct-region\" instead, with correctAnswer { derived: true } and params carrying the inequalities, NO region, and constructRegion (an object; {} for defaults). Posed and print surfaces then render a blank grid exactly like the source; on web the boundary lines appear in deliberately wrong places (authorable via constructRegion.starts — one pair of [x, y] points per inequality; a start that coincides with a correct boundary is ignored) and the pupil drags each line's endpoint handles into place (snapping to the grid), taps a line to switch it solid/dashed (the dash must match the relation — it is marked), and finally taps the region between their lines to shade it. Set shadeConvention \"unwanted\" when the question is the exam \"shade the region not required, leave R clear\" (works with both shade-region and construct-region). To make \"mark with a cross all the integer points that satisfy the inequalities\" markable, host responseMode \"mark-cross\" with correctAnswer { derived: true } and params carrying the inequalities and no region.integerPoints (the pupil taps lattice points; the model derives and marks the integer solutions internally). Neither the region nor the integer dots nor the true boundary lines (under construct-region) are ever drawn on the posed or armed figure, so nothing leaks. Switch primitive when the teaching changes — to sketch or read a single curve y = f(x) (roots, turning points) use graphing/function-graph; for the area under a curve use graphing/area-under-curve; for the tangent / gradient use graphing/first-principles; for a distance-time or speed-time graph use graphing/journey-graph. Synonyms a teacher might use: inequality, inequalities, region, shade the region, graphical inequalities, feasible region, linear programming, constraints, satisfies, unshaded region, integer solutions, half-plane, draw the lines, blank grid.",
+  "responseModes": [
+    "shade-region",
+    "mark-cross",
+    "construct-region"
+  ],
+  "tags": [
+    "inequality",
+    "inequalities",
+    "region",
+    "shade the region",
+    "graphical inequalities",
+    "feasible region",
+    "linear programming",
+    "constraints",
+    "half-plane",
+    "integer solutions",
+    "boundary line",
+    "draw the boundary lines",
+    "blank grid",
+    "graphing",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The window — the rectangle of the plane shown. Frame it so the feasible region and the relevant boundary crossings are visible.",
+        "properties": {
+          "x": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the x-axis. Default [-10, 10]."
+          },
+          "y": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[min, max] for the y-axis. Default [-10, 10]."
+          },
+          "xStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value."
+          },
+          "yStep": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value."
+          },
+          "equalAspect": {
+            "type": "boolean",
+            "description": "Force TRUE square scale (1 x-unit = 1 y-unit in pixels) so the boundary gradients look accurate. Default false (x and y scaled independently to fill the box). Set true when slope accuracy matters."
+          }
+        }
+      },
+      "grid": {
+        "type": "boolean",
+        "description": "Show the background grid. Default true (helps read integer solutions)."
+      },
+      "inequalities": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 5,
+        "description": "The inequalities, each a string. v1 is LINEAR (straight-line boundaries).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "expr": {
+              "type": "string",
+              "description": "A linear inequality: a linear expression in x and/or y, a relation (<, <=, >, >=), and a linear expression. The boundary is solid for <= / >= and dashed for < / >. Examples: \"y > 2x + 1\", \"2x + 3y <= 12\", \"x >= 1\", \"y < 4\", \"y <= x + 3\"."
+            },
+            "label": {
+              "type": "string",
+              "description": "Text drawn along this boundary line (e.g. \"y = 2x + 1\" or \"x + y = 6\"). Omit for an unlabelled line."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this boundary line in amber. Default false."
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "Do not draw this boundary line; the inequality still bounds the region and the mark-cross answer. For the exam figure that pre-draws only some of the lines (\"the lines y = 2x + 1 and 3y + 2x = 12 have been drawn … satisfying y > 1\"), so the pupil applies the undrawn one themselves. Not for shade-region or construct-region, where the pupil works from the drawn lines. Default false."
+            }
+          },
+          "required": [
+            "expr"
+          ]
+        }
+      },
+      "region": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "How to shade the region satisfying ALL the inequalities. OMIT this to draw only the boundary lines (an answer space for pupils to shade themselves).",
+        "properties": {
+          "shade": {
+            "type": "string",
+            "enum": [
+              "wanted",
+              "unwanted"
+            ],
+            "description": "'wanted' = shade the feasible region itself (clearest for teaching); 'unwanted' = shade OUT the unwanted half-planes, leaving the feasible region clear (the usual UK exam convention). Default 'wanted'."
+          },
+          "label": {
+            "type": "string",
+            "description": "A name placed in the feasible region, e.g. \"R\". Omit for none."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the region label as \"?\" — the \"which region is it?\" hook. Default false."
+          },
+          "integerPoints": {
+            "type": "boolean",
+            "description": "Mark the integer (whole-number) coordinate solutions inside the region (on the boundary too when the relation is ≤ / ≥). Default false."
+          },
+          "vertices": {
+            "type": "boolean",
+            "description": "Mark the corner points of the feasible polygon (where active boundaries cross) — for linear programming. Default false."
+          },
+          "showVertexCoords": {
+            "type": "boolean",
+            "description": "Label each marked vertex with its coordinates. Default false. Only meaningful with vertices."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Shade the feasible region in amber emphasis (only with shade \"wanted\"). Default false."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Each boundary line gets a handle pupils can drag to SLIDE the line (parallel to itself); the shaded feasible region, the integer solutions and the vertices all recompute live — so pupils can explore how moving a constraint reshapes the region. The line slides only (its gradient is fixed). Default false."
+      },
+      "shadeConvention": {
+        "type": "string",
+        "enum": [
+          "wanted",
+          "unwanted"
+        ],
+        "description": "Answer-on-the-model (responseModes 'shade-region' / 'construct-region') only: which faces count as the correct shading. 'wanted' (default) = the feasible region itself (\"shade the region that satisfies all these inequalities\"); 'unwanted' = every other face (the UK exam \"shade the region NOT required, leave R clear\" convention). Marking only — it never draws anything on a posed surface."
+      },
+      "constructRegion": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Answer-on-the-model 'construct-region' only — the params-keyed marker for the full draw-then-shade task. When present, posed/print surfaces render a BLANK grid (no boundary lines — the source-faithful answer space) and the armed web figure poses each boundary line in a deliberately WRONG place for the pupil to drag into position (two endpoint handles, grid snap), toggle solid/dashed by tapping the line, then shade by tapping faces. Use {} for default wrong starts. Never combine with region (the answer would leak) or draggable.",
+        "properties": {
+          "starts": {
+            "type": "array",
+            "maxItems": 5,
+            "description": "Optional authored wrong-start placements, index-aligned with inequalities — each entry two [x, y] points the start line passes through (distinct, ideally grid points inside the window). Author them to park lines near a misconception, or omit for deterministic defaults. A start that coincides with a CORRECT boundary line is ignored (a default is used instead — fail-closed, nothing pre-answers). Lines always start SOLID regardless of the relation (toggling to dashed is part of the task).",
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "required": [
+      "inequalities"
+    ]
+  },
+  "examples": [
+    {
+      "label": "One inequality — shade the region (dashed boundary, strict)",
+      "params": {
+        "axes": {
+          "x": [
+            -5,
+            5
+          ],
+          "y": [
+            -5,
+            5
+          ]
+        },
+        "inequalities": [
+          {
+            "expr": "y > 2x + 1",
+            "label": "y = 2x + 1"
+          }
+        ],
+        "region": {
+          "shade": "wanted",
+          "highlight": true
+        }
+      }
+    },
+    {
+      "label": "The hard case — three inequalities, exam convention (shade unwanted), R left clear",
+      "params": {
+        "axes": {
+          "x": [
+            -1,
+            8
+          ],
+          "y": [
+            -1,
+            6
+          ]
+        },
+        "inequalities": [
+          {
+            "expr": "y >= 1",
+            "label": "y = 1"
+          },
+          {
+            "expr": "y <= x + 1",
+            "label": "y = x + 1"
+          },
+          {
+            "expr": "x + y <= 7",
+            "label": "x + y = 7"
+          }
+        ],
+        "region": {
+          "shade": "unwanted",
+          "label": "R",
+          "integerPoints": true
+        }
+      }
+    },
+    {
+      "label": "Linear programming — feasible region with its vertices",
+      "params": {
+        "axes": {
+          "x": [
+            -1,
+            8
+          ],
+          "y": [
+            -1,
+            8
+          ]
+        },
+        "inequalities": [
+          {
+            "expr": "x >= 0"
+          },
+          {
+            "expr": "y >= 0"
+          },
+          {
+            "expr": "x + y <= 6",
+            "label": "x + y = 6"
+          },
+          {
+            "expr": "y <= 2x",
+            "label": "y = 2x"
+          }
+        ],
+        "region": {
+          "shade": "wanted",
+          "label": "R",
+          "vertices": true,
+          "showVertexCoords": true
+        },
+        "caption": "The feasible region and its corner points"
+      }
+    },
+    {
+      "label": "Integer solutions inside a region",
+      "params": {
+        "axes": {
+          "x": [
+            -1,
+            6
+          ],
+          "y": [
+            -1,
+            6
+          ]
+        },
+        "inequalities": [
+          {
+            "expr": "y < x"
+          },
+          {
+            "expr": "y > 0"
+          },
+          {
+            "expr": "x < 5"
+          }
+        ],
+        "region": {
+          "shade": "wanted",
+          "integerPoints": true
+        }
+      }
+    },
+    {
+      "label": "A non-strict boundary — solid line, region includes the line",
+      "params": {
+        "axes": {
+          "x": [
+            -5,
+            5
+          ],
+          "y": [
+            -5,
+            5
+          ]
+        },
+        "inequalities": [
+          {
+            "expr": "2x + 3y <= 6",
+            "label": "2x + 3y = 6"
+          }
+        ],
+        "region": {
+          "shade": "wanted"
+        },
+        "caption": "y on or below the line: the boundary is solid because of ≤"
+      }
+    },
+    {
+      "label": "Answer space — boundary lines only, shade it yourself",
+      "params": {
+        "axes": {
+          "x": [
+            -1,
+            7
+          ],
+          "y": [
+            -1,
+            7
+          ]
+        },
+        "inequalities": [
+          {
+            "expr": "y <= 5",
+            "label": "y = 5"
+          },
+          {
+            "expr": "y >= x",
+            "label": "y = x"
+          },
+          {
+            "expr": "x >= 1",
+            "label": "x = 1"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Construct-region answer space — blank grid, draw the lines then shade (authored wrong starts)",
+      "params": {
+        "axes": {
+          "x": [
+            -6,
+            6
+          ],
+          "y": [
+            -6,
+            6
+          ],
+          "xStep": 1,
+          "yStep": 1,
+          "equalAspect": true
+        },
+        "inequalities": [
+          {
+            "expr": "x + y < 5"
+          },
+          {
+            "expr": "y > x - 2"
+          },
+          {
+            "expr": "y >= -1"
+          }
+        ],
+        "constructRegion": {
+          "starts": [
+            [
+              [
+                -4,
+                4
+              ],
+              [
+                4,
+                4
+              ]
+            ],
+            [
+              [
+                -3,
+                -5
+              ],
+              [
+                -3,
+                5
+              ]
+            ],
+            [
+              [
+                -5,
+                -4
+              ],
+              [
+                5,
+                3
+              ]
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

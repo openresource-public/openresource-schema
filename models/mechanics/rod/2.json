@@ -1,0 +1,814 @@
+{
+  "ref": "mechanics/rod@2",
+  "family": "mechanics",
+  "name": "rod",
+  "version": 2,
+  "title": "Rod (loaded beam and leaning ladder)",
+  "tagline": "Rigid rod AB with named points, two or more supports (pivots, strings, pegs, a wall hinge), loads and dimension arrows from an end; horizontal beam or ladder leaning at θ.",
+  "description": "A rigid rod AB drawn as a plain labelled statics diagram — horizontal as a loaded beam, or leaning at an angle to the ground as a ladder. You write the rod's length and the positions of its named interior points (C, D, …) in the question's own unit; the model derives every attachment's place on the rod, every dimension label, how the dimension arrows stack into levels above and below, the wall's position and extent, the ground line, the string tops, the angle arc at the foot, and the centre of mass of a uniform rod. Supports may be pivots (the triangle under the rod), light strings hanging vertically or tied to a point on a wall, a smooth peg, or a smooth hinge at a wall — and there may be two or more of them, which is what makes the moments question worth asking. Loads sit on the rod as point masses. Dimension arrows are measured between two named points, so \"AC = 0.5 m\" and \"AB = 5 m\" stack over each other correctly. Optional force arrows annotate an attachment when a free-body reading is wanted; besides the four axis directions an arrow can run along an anchored string (the tension in BC, direction derived from the anchor's position) or normal to the rod (the reaction at a smooth peg, derived from the rod's line). A peg can be inked as the default outline ring or, matching papers that fill it, a solid disc — same physics, different ink. Nothing is derived that the pupil is meant to work out: there is no reaction, no tension, no centre-of-mass calculation, no balance verdict and no tilt anywhere in this model — the diagram poses the question, and the derivation is the answer.",
+  "whenToUse": "Reach for this for A Level Mechanics (M1) statics of a rigid body, and for any figure that is \"a rod / beam / plank / ladder AB with things attached to it\". Two shapes. HORIZONTAL (leave incline out) — the loaded beam: a plank on TWO supports C and D with the distances measured from A; a rod hung from light strings at A and C; a see-saw on a single central pivot; a non-uniform rod whose centre of mass is unknown; a point mass placed on the rod. LEANING (add incline: { degrees }) — the ladder: a uniform ladder resting on rough ground with its top against a smooth vertical wall, the angle theta marked at the foot; a rod on the ground resting over a smooth peg part way up; a rod hinged to a wall and held by a string. Author the geometry once: rod: { length, unit }, then points: [{ id: \"C\", at: 0.5 }] for each named interior point, and refer to those ids everywhere else — supports: [{ at: \"C\", type: \"pivot\" }], loads: [{ at: \"C\", label: \"10 kg\" }], dimensions: [{ from: \"A\", to: \"C\" }]. Dimension labels are DERIVED from the positions, so they can never disagree with the picture; give a dimension a label only when the distance is symbolic (\"x m\"), and occlude: true when the distance is what the pupil must find. Common configurations: two supports — supports C and D, dimensions A to D then A to C (list the longer one first and it takes the level nearest the rod, as the exam papers draw it); two strings — supports at A and B of type \"string\", dimensions below the rod; non-uniform rod — rod: { uniform: false } plus centreOfMass: { unknown: true } and an occluded dimension from A to G, which draws G at a deliberately schematic position with a dashed leader so the figure never pretends to give the answer away; ladder — incline: { degrees: 62 }, scene: { ground: true, wall: \"right\" }; hinged rod — scene: { wall: \"left\", wallPoints: [{ id: \"C\", at: 1.5 }] } and supports: [{ at: \"A\", type: \"hinge\" }, { at: \"B\", type: \"string\", anchor: \"C\" }]. Keep force arrows OFF for the question figure (the source exam diagrams have none) and turn them on for the worked-solution figure, where naming R and T is the point. On the solution figure the interesting forces are often NOT axis-aligned: give the tension in an anchored string direction: \"along-string\" (the arrow runs up the string itself) and a smooth peg or contact reaction direction: \"normal-to-rod\" (perpendicular to an inclined rod) — both derived, never an authored angle. If the source paper inks its peg solid, add glyph: \"disc\" to that support rather than faking it with a load. A paper that writes a bare theta in the wedge with no arc is showArc: false, showLabel: true. Staged builds read very well: open on the bare labelled rod, add the supports, then the load, then the dimensions; or open on the question figure and bring in the centre of mass and the weight arrow as the solution develops. Do NOT use physics/moments for any of this — that model is a GCSE single-pivot see-saw that takes { side, force, distance } about that one pivot and DERIVES the balance verdict and the tilt, so it has no named points, no second support, no strings, no dimension arrows from an end, no leaning orientation, and it prints the answer. For a free-body diagram of a BODY rather than a rod — a block on an inclined plane, a particle on a string, connected particles — use the force-diagram and pulley models. Synonyms a teacher might use: rod, uniform rod, non-uniform rod, beam, plank, seesaw, see-saw, ladder, light rod, rigid body, statics, moments, principle of moments, taking moments, reaction, reactions at the supports, tension in the string, point of tilting, on the point of tilting, centre of mass, centre of gravity, resting on two supports, leaning against a wall.",
+  "responseModes": [],
+  "tags": [
+    "rod",
+    "uniform rod",
+    "non-uniform rod",
+    "beam",
+    "loaded beam",
+    "plank",
+    "ladder",
+    "seesaw",
+    "see-saw",
+    "rigid body",
+    "statics",
+    "moments",
+    "principle of moments",
+    "taking moments",
+    "turning effect",
+    "reaction",
+    "reactions",
+    "support",
+    "two supports",
+    "pivot",
+    "peg",
+    "tension",
+    "string",
+    "strings",
+    "hinge",
+    "tilting",
+    "point of tilting",
+    "centre of mass",
+    "centre of gravity",
+    "equilibrium",
+    "mechanics",
+    "M1",
+    "A level",
+    "maths",
+    "physics"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "at": {
+        "description": "Position along the rod. Either a NUMBER — the distance from the START end (A) in rod.unit, between 0 and rod.length — or a STRING naming a point: an id from points[], or an end label (\"A\", \"B\"). Referencing a point by id keeps one figure consistent when a distance changes.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "string",
+            "minLength": 1
+          }
+        ]
+      },
+      "force": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Draw a force arrow at this position. Supports get an UPWARD arrow (a reaction or tension), loads and the centre of mass a DOWNWARD one (a weight). Leave the whole object out for a bare diagram — the source exam figures carry no arrows, and adding them turns the question figure into a free-body diagram.",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Short name written at the arrow tip — \"R\", \"R_C\", \"T\", \"W\", \"25g\". Omit for an unlabelled arrow."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render this force's label as \"?\" — the arrow stays drawn, its value is the question (\"find the tension in the string at A\"). Default false."
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "up",
+              "down",
+              "left",
+              "right",
+              "along-string",
+              "normal-to-rod"
+            ],
+            "description": "Which way the arrow points. Defaults to the obvious one — up for a support, down for a load or the weight — so you only set this when the physics differs. Three cases matter. A SMOOTH VERTICAL WALL: its reaction is HORIZONTAL, pushing the rod away from the wall (\"left\" for a wall on the right), and an upward arrow there would be plain wrong. \"along-string\" — for a STRING support tied to a wall point (anchor set): the tension is drawn from the rod along the string toward the anchor, the direction DERIVED from the two positions; on a vertical string it is simply up, and on anything that is not a string it falls back to the default. \"normal-to-rod\" — for a smooth PEG or contact the rod rests on: the reaction is perpendicular to the rod on its upper side, the direction DERIVED from the rod's own line; on a horizontal rod it equals up."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber this arrow and its label — the force just found. Default false."
+          }
+        }
+      }
+    },
+    "properties": {
+      "rod": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The rod itself. Its drawn length on the canvas is FIXED, so a 2 m rod and a 200 cm rod render the same size — length sets the scale for every position, never the picture's width.",
+        "properties": {
+          "length": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Length of the rod in unit. Every at value is a distance in the same unit, measured from the START end."
+          },
+          "unit": {
+            "type": "string",
+            "description": "Distance unit written on the dimension labels — \"m\" or \"cm\". Free text; the model never converts, so keep one unit across a figure. Default \"m\"."
+          },
+          "start": {
+            "type": "string",
+            "description": "Label of the START end — the end every at is measured from, drawn at the left of a horizontal rod and at the FOOT of a leaning one. Default \"A\"."
+          },
+          "end": {
+            "type": "string",
+            "description": "Label of the FAR end, drawn at the right of a horizontal rod and at the TOP of a leaning one. Default \"B\"."
+          },
+          "uniform": {
+            "type": "boolean",
+            "description": "Whether the rod is uniform. Only effect: a uniform rod's centre of mass defaults to the midpoint, so centreOfMass: {} is enough to mark it. Set false for a non-uniform rod and give centreOfMass an at, or unknown: true. Default true."
+          }
+        },
+        "required": [
+          "length"
+        ]
+      },
+      "incline": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this to make the rod LEAN — the ladder orientation. The rod rises from its start end (the foot, on the ground) to its far end at this angle above the horizontal. Leave the whole object out for a horizontal beam.",
+        "properties": {
+          "degrees": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "exclusiveMaximum": 90,
+            "description": "Angle between the rod and the horizontal ground, at the foot. Typical ladder figures use 55 to 70."
+          },
+          "label": {
+            "type": "string",
+            "description": "Text written inside the angle arc at the foot. Default \"θ\". Use a name, not a value — the figure poses the angle, it does not measure it."
+          },
+          "showArc": {
+            "type": "boolean",
+            "description": "Draw the arc of the marked angle at the foot (between the ground and the rod). Default true. The two arms are the real ground and rod lines, so no construction arms are added."
+          },
+          "showLabel": {
+            "type": "boolean",
+            "description": "Draw the angle label at the foot. Defaults to the showArc value, so by default arc and label appear together. Set showArc: false, showLabel: true for the bare \"θ\" written in the wedge with no arc — how some papers print it; the label sits where the arc's label would."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the angle label as \"?\" — the angle is what the pupil must find. Default false."
+          }
+        },
+        "required": [
+          "degrees"
+        ]
+      },
+      "points": {
+        "type": "array",
+        "maxItems": 8,
+        "description": "Named interior points on the rod — C, D, the peg, the place the mass sits. The two ends are registered automatically under rod.start / rod.end, so do NOT list them here; everything else in the figure can then refer to any of these ids.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Short id, normally the letter shown on the figure (\"C\", \"D\", \"G\"). Referred to by supports, loads and dimensions. Must be unique and must not repeat an end label."
+            },
+            "at": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Distance of this point from the START end, in rod.unit. 0 to rod.length."
+            },
+            "label": {
+              "type": "string",
+              "description": "Text drawn beside the point. Defaults to the id."
+            },
+            "side": {
+              "type": "string",
+              "enum": [
+                "above",
+                "below"
+              ],
+              "description": "Which side of the rod the label sits on — \"above\" is the upper side for a horizontal rod and the upper-left side for a leaning one. Default \"above\". Move a label to \"below\" when a dimension arrow or a support is crowding it."
+            },
+            "showLabel": {
+              "type": "boolean",
+              "description": "Draw the label. false marks a position that other elements can refer to without printing a letter on the figure. Default true."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the label as \"?\" — \"which point is this?\". Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber the point and its label. Default false."
+            }
+          },
+          "required": [
+            "id",
+            "at"
+          ]
+        }
+      },
+      "supports": {
+        "type": "array",
+        "maxItems": 6,
+        "description": "What holds the rod up. TWO or more supports is the A Level case — a plank on supports C and D, or a rod on strings at A and C — and is exactly what makes the moments question worth asking; one central pivot is the GCSE see-saw.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "$ref": "#/$defs/at"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "pivot",
+                "string",
+                "peg",
+                "hinge",
+                "contact"
+              ],
+              "description": "\"pivot\" — the solid triangle under the rod (a support, a fulcrum, a trestle). \"string\" — a light string rising vertically from the rod, or, with anchor set, running to a named point on the wall. \"peg\" — a small smooth peg the rod rests over, drawn as a disc at that point. \"hinge\" — a smooth hinge where the rod meets a wall, drawn as a small open circle. \"contact\" — a bare touching point with NO symbol drawn, for the foot of a ladder on the ground or its top against a wall, where the exam figure draws nothing and the force arrow is the whole point. Default \"pivot\"."
+            },
+            "anchor": {
+              "type": "string",
+              "description": "For type \"string\" only: the id of a scene.wallPoints entry the string is tied to, so the string runs from the rod to that point on the wall instead of straight up. Omit for a vertical string."
+            },
+            "glyph": {
+              "type": "string",
+              "enum": [
+                "ring",
+                "disc"
+              ],
+              "description": "How a PEG is inked. \"ring\" (default) is the light-filled outline circle; \"disc\" fills it solid, which is how some exam papers draw the same smooth peg. Pure ink — the physics and the spoken description are identical. Ignored for other support types. Never reach for a \"load\" to get a solid disc at a peg: a load's weight acts vertically while a peg's reaction is normal to the rod."
+            },
+            "label": {
+              "type": "string",
+              "description": "Short text beside the support (rarely needed — the point's own letter usually names it). Omit for a bare support."
+            },
+            "force": {
+              "$ref": "#/$defs/force"
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the support's label as \"?\". Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this support — the one being taken moments about. Default false."
+            }
+          },
+          "required": [
+            "at"
+          ]
+        }
+      },
+      "loads": {
+        "type": "array",
+        "maxItems": 6,
+        "description": "Point masses and weights carried BY the rod — a mass placed at C, a child sitting at the end, a block on the plank. Drawn as a filled disc on the rod with its label beside it.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "$ref": "#/$defs/at"
+            },
+            "label": {
+              "type": "string",
+              "description": "What the load is, written beside it — \"10 kg\", \"25 kg\", \"W\". A mass is not derivable from the geometry, so it is authored. Omit for an unlabelled mass."
+            },
+            "side": {
+              "type": "string",
+              "enum": [
+                "above",
+                "below"
+              ],
+              "description": "Which side of the rod the load's label sits on. Default \"above\". Put it opposite the point label when both sit at the same place."
+            },
+            "glyph": {
+              "type": "string",
+              "enum": [
+                "disc",
+                "none"
+              ],
+              "description": "\"disc\" (default) draws the filled circle the exam figures use. \"none\" draws no marker — use it when only the force arrow should show."
+            },
+            "force": {
+              "$ref": "#/$defs/force"
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the load's label as \"?\" — \"what mass is at C?\". Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this load. Default false."
+            }
+          },
+          "required": [
+            "at"
+          ]
+        }
+      },
+      "centreOfMass": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Mark the rod's centre of mass. Include the object to draw it; leave it out for a figure that does not show it (the source exam figures do not). For a uniform rod the position is DERIVED as the midpoint, so an empty object is enough.",
+        "properties": {
+          "at": {
+            "$ref": "#/$defs/at"
+          },
+          "unknown": {
+            "type": "boolean",
+            "description": "The non-uniform case where the distance from A is what the pupil must find. The marker is drawn at a FIXED schematic position — the same fraction of every rod, never computed from anything — with a dashed leader that says \"not to scale\", so the figure poses the question without hinting at the answer. Pair it with a dimension from the end to this point carrying occlude: true. Overrides at. Default false."
+          },
+          "label": {
+            "type": "string",
+            "description": "Letter beside the marker. Default \"G\"."
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "above",
+              "below"
+            ],
+            "description": "Which side of the rod the label sits on. Default \"below\"."
+          },
+          "weight": {
+            "$ref": "#/$defs/force"
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the marker and its label. Default false."
+          }
+        }
+      },
+      "dimensions": {
+        "type": "array",
+        "maxItems": 6,
+        "description": "Measured distances, drawn as double-headed arrows parallel to the rod with dashed witness lines down to the two points. The label is DERIVED from the positions, so it can never disagree with the picture. Arrows on the same side that overlap are stacked into levels automatically — the FIRST in this array takes the level nearest the rod, which is how a paper draws \"0.5 m\" above \"2 m\".",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "$ref": "#/$defs/at",
+              "description": "Where the measurement starts — a point id (\"A\", \"C\") or a distance from the start end. Exam figures measure from an END, so this is usually \"A\"."
+            },
+            "to": {
+              "$ref": "#/$defs/at",
+              "description": "Where the measurement ends — a point id or a distance from the start end."
+            },
+            "side": {
+              "type": "string",
+              "enum": [
+                "above",
+                "below"
+              ],
+              "description": "Which side of the rod this arrow sits on. Default \"above\". Split a crowded figure across both sides."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the derived label. Use ONLY for a distance that is symbolic rather than numeric (\"x m\", \"d\"); a numeric label must always be left derived so it cannot lie."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the label as \"?\" — this distance is the answer. The arrow itself stays drawn, and the figure's spoken description says \"unknown\" instead of naming the value. Two derived consequences: occluding a dimension that measures to the centre of mass also moves that marker to its schematic seat (the figure is drawn to scale, so a true-position marker would give the answer away to a ruler), and occluding the whole span A to B stops the rod's length being stated anywhere. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this dimension. Default false."
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        }
+      },
+      "scene": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The world the rod rests in — the ground it stands on and the wall it leans against or is hinged to.",
+        "properties": {
+          "ground": {
+            "type": "boolean",
+            "description": "Draw the horizontal ground line, hatched underneath. For a leaning rod the ground passes through the foot; for a horizontal rod it sits below the figure. Default true when incline is set, false otherwise."
+          },
+          "wall": {
+            "type": "string",
+            "enum": [
+              "none",
+              "left",
+              "right"
+            ],
+            "description": "Draw a vertical wall, hatched on its outside. \"right\" puts it at the far end — the ladder resting against it. \"left\" puts it at the start end — the rod hinged to it. Default \"none\"."
+          },
+          "wallPoints": {
+            "type": "array",
+            "maxItems": 4,
+            "description": "Named points ON the wall, so a string can be tied to one (supports: [{ at: \"B\", type: \"string\", anchor: \"C\" }]). Requires wall.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Short id, normally the letter on the figure (\"C\"). Referred to by a string support's anchor."
+                },
+                "at": {
+                  "type": "number",
+                  "description": "Height of this point up the wall from where the rod meets it, in rod.unit. Negative puts it below."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Text drawn beside the point. Defaults to the id."
+                },
+                "occlude": {
+                  "type": "boolean",
+                  "description": "Render the label as \"?\". Default false."
+                },
+                "highlight": {
+                  "type": "boolean",
+                  "description": "Amber this point. Default false."
+                }
+              },
+              "required": [
+                "id",
+                "at"
+              ]
+            }
+          },
+          "ceiling": {
+            "type": "boolean",
+            "description": "Draw a horizontal hatched ceiling across the tops of the vertical strings. Default false — the exam figures leave the strings hanging free."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "rod"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — uniform plank on two supports, reactions and weight named",
+      "params": {
+        "header": "A plank on two supports",
+        "rod": {
+          "length": 6,
+          "unit": "m"
+        },
+        "points": [
+          {
+            "id": "C",
+            "at": 1
+          },
+          {
+            "id": "D",
+            "at": 4.5
+          }
+        ],
+        "supports": [
+          {
+            "at": "C",
+            "type": "pivot",
+            "force": {
+              "label": "R_C"
+            }
+          },
+          {
+            "at": "D",
+            "type": "pivot",
+            "force": {
+              "label": "R_D"
+            }
+          }
+        ],
+        "centreOfMass": {
+          "weight": {
+            "label": "W"
+          }
+        },
+        "dimensions": [
+          {
+            "from": "A",
+            "to": "D"
+          },
+          {
+            "from": "A",
+            "to": "C"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blank answer space — a see-saw on a central pivot, span only",
+      "params": {
+        "header": "A see-saw on a central pivot",
+        "rod": {
+          "length": 3.6,
+          "unit": "m"
+        },
+        "supports": [
+          {
+            "at": 1.8,
+            "type": "pivot"
+          }
+        ],
+        "dimensions": [
+          {
+            "from": "A",
+            "to": "B"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — rod on two strings, distance to the centre of mass hidden",
+      "params": {
+        "rod": {
+          "length": 8,
+          "unit": "m",
+          "uniform": false
+        },
+        "points": [
+          {
+            "id": "C",
+            "at": 6
+          }
+        ],
+        "supports": [
+          {
+            "at": "A",
+            "type": "string",
+            "force": {
+              "label": "T_A"
+            }
+          },
+          {
+            "at": "C",
+            "type": "string",
+            "force": {
+              "label": "T_C"
+            }
+          }
+        ],
+        "centreOfMass": {
+          "unknown": true,
+          "weight": {}
+        },
+        "dimensions": [
+          {
+            "from": "A",
+            "to": "C",
+            "side": "below"
+          },
+          {
+            "from": "A",
+            "to": "B",
+            "side": "below"
+          },
+          {
+            "from": "A",
+            "to": "G",
+            "side": "above",
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — non-uniform rod, point mass at C, two strings, arrows stacked both sides",
+      "params": {
+        "header": "A non-uniform rod on two strings",
+        "rod": {
+          "length": 240,
+          "unit": "cm",
+          "uniform": false
+        },
+        "points": [
+          {
+            "id": "C",
+            "at": 60,
+            "side": "below"
+          }
+        ],
+        "supports": [
+          {
+            "at": "A",
+            "type": "string",
+            "force": {
+              "label": "T_A"
+            }
+          },
+          {
+            "at": "B",
+            "type": "string",
+            "force": {
+              "label": "T_B"
+            }
+          }
+        ],
+        "loads": [
+          {
+            "at": "C",
+            "label": "9 kg"
+          }
+        ],
+        "centreOfMass": {
+          "unknown": true,
+          "weight": {
+            "label": "18g"
+          }
+        },
+        "dimensions": [
+          {
+            "from": "A",
+            "to": "C"
+          },
+          {
+            "from": "A",
+            "to": "B"
+          },
+          {
+            "from": "A",
+            "to": "G",
+            "side": "below",
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Ladder — uniform ladder against a smooth wall, angle θ at the foot",
+      "params": {
+        "rod": {
+          "length": 4.2,
+          "unit": "m"
+        },
+        "incline": {
+          "degrees": 62
+        },
+        "scene": {
+          "ground": true,
+          "wall": "right"
+        },
+        "centreOfMass": {}
+      }
+    },
+    {
+      "label": "Hinged rod — horizontal rod on a wall hinge, held by a string to wall point C",
+      "params": {
+        "rod": {
+          "length": 2.4,
+          "unit": "m"
+        },
+        "scene": {
+          "wall": "left",
+          "wallPoints": [
+            {
+              "id": "C",
+              "at": 1.8
+            }
+          ]
+        },
+        "supports": [
+          {
+            "at": "A",
+            "type": "hinge"
+          },
+          {
+            "at": "B",
+            "type": "string",
+            "anchor": "C"
+          }
+        ],
+        "centreOfMass": {
+          "weight": {
+            "label": "W"
+          }
+        },
+        "dimensions": [
+          {
+            "from": "A",
+            "to": "B",
+            "side": "below"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Solution figure — hinged rod, the tension drawn ALONG the string to its wall anchor",
+      "params": {
+        "rod": {
+          "length": 3.6,
+          "unit": "m"
+        },
+        "scene": {
+          "wall": "left",
+          "wallPoints": [
+            {
+              "id": "D",
+              "at": 2.7
+            }
+          ]
+        },
+        "supports": [
+          {
+            "at": "A",
+            "type": "hinge"
+          },
+          {
+            "at": "B",
+            "type": "string",
+            "anchor": "D",
+            "force": {
+              "label": "T",
+              "direction": "along-string"
+            }
+          }
+        ],
+        "centreOfMass": {
+          "weight": {
+            "label": "W"
+          }
+        },
+        "dimensions": [
+          {
+            "from": "A",
+            "to": "B",
+            "side": "below"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Solution figure — rod over a solid-inked peg, the reaction drawn NORMAL to the rod",
+      "params": {
+        "header": "Reaction at a smooth peg",
+        "rod": {
+          "length": 8,
+          "unit": "m"
+        },
+        "incline": {
+          "degrees": 28
+        },
+        "scene": {
+          "ground": true
+        },
+        "points": [
+          {
+            "id": "C",
+            "at": 5.5
+          }
+        ],
+        "supports": [
+          {
+            "at": "C",
+            "type": "peg",
+            "glyph": "disc",
+            "force": {
+              "label": "R_C",
+              "direction": "normal-to-rod"
+            }
+          }
+        ],
+        "centreOfMass": {
+          "weight": {
+            "label": "12g"
+          }
+        },
+        "dimensions": [
+          {
+            "from": "A",
+            "to": "C"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Ladder with the bare angle label written in the wedge — no arc",
+      "params": {
+        "rod": {
+          "length": 5,
+          "unit": "m"
+        },
+        "incline": {
+          "degrees": 55,
+          "showArc": false,
+          "showLabel": true
+        },
+        "scene": {
+          "ground": true,
+          "wall": "right"
+        }
+      }
+    }
+  ]
+}

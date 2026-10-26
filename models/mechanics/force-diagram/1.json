@@ -1,0 +1,453 @@
+{
+  "ref": "mechanics/force-diagram@1",
+  "family": "mechanics",
+  "name": "force-diagram",
+  "version": 1,
+  "title": "Force diagram (statics and dynamics)",
+  "tagline": "A Level free-body figure: a particle or block on a level, inclined, wall or ceiling scene with labelled force arrows and derived angle arcs; magnitudes optional, nothing resolved.",
+  "description": "The A Level Mechanics (M1) free-body diagram: one body — a particle dot or a shaded block — placed in a scene (plain, on a horizontal surface, on an inclined plane at a labelled angle, against a vertical wall, or hanging from a horizontal support), carrying labelled force arrows at authored angles plus labelled angle arcs to the horizontal, to the vertical or to the plane, and an optional rough-surface hatching with a coefficient-of-friction annotation. The author writes only the scene and the directions; every position, rotation, intersection, arc and arc VALUE is derived — where the body sits on its surface and how it rotates to lie flush on it, where each string meets the wall or ceiling, where an arrow leaves the body's edge, and each marked angle's size in degrees. Two things are deliberately different from the KS3 free-body model: arrow LENGTH is constant and never derived from newtons, because magnitudes are optional (the usual ask is \"find the tension\"); and nothing is resolved, summed or judged — there is no resultant, no component breakdown and no balanced/unbalanced verdict, because the derivation is the question and drawing it would leak the answer. Force magnitudes, angle values and the body's mass label each occlude to \"?\" independently, and `reveal` builds the free-body diagram one force per stage.",
+  "whenToUse": "Reach for this for A Level Mechanics statics and dynamics figures: resolving forces in equilibrium, a particle held by one or two light inextensible strings, a particle attached to a wall, F = ma on a slope, a block or brick on a rough inclined plane, a block pulled or pushed at an angle to the horizontal, limiting friction and \"on the point of sliding\" questions. Set `scene.kind` to the physical setup — \"incline\" with its `angle` is by far the commonest, and its slope, horizontal reference line and angle arc are all drawn for you. Write each force as a direction plus a name and (optionally) a size: `angle` is degrees anticlockwise from the horizontal (0 right, 90 up, 180 left, 270 down), so weight is 270 and the normal on a flat floor is 90. On an incline use `frame: \"plane\"` instead of adding the slope angle by hand: { angle: 0, frame: \"plane\" } is up the slope, 180 is down it, and 90 is the normal contact force — re-pitch the plane and they all stay right. Use `arrow: \"in\"` for an applied push, so the arrowhead lands on the body (the usual worksheet drawing for \"a force of 12 N acts on the brick\"); leave it \"out\" for weight, normal, friction, tension and pulls. Mark the given angles with `angleMark`: { to: \"horizontal\" } for \"35° to the horizontal\", { to: \"vertical\", at: \"anchor\" } for \"the string makes 25° with the vertical\" (the arc is then drawn up at the wall, as worksheets draw it), { to: \"plane\" } for a force at an angle to the slope. The value on every arc is computed from the geometry — set `label` only for a symbolic angle (\"θ°\"). Common configurations: EQUILIBRIUM ON TWO STRINGS — scene \"ceiling\", two strings with anchorLabels A and B and an angleMark { to: \"horizontal\" } on each, plus a weight force at 270; PARTICLE ON A WALL — scene \"wall\", one string up and left with angleMark { to: \"vertical\", at: \"anchor\" }, a horizontal force, and the tension left unnamed as the unknown; BLOCK ON A ROUGH SLOPE — scene \"incline\" with `angle`, `rough: true` and `friction`, body shape \"block\"; FIND THE FORCE — give the force a label and set occlude so it reads \"F = ?\"; ANSWER SPACE — the scene and body with NO forces at all, for \"draw and label the forces acting on the block\". Set `scene.friction` only when the coefficient is given; leave it out when finding µ is the question. Staged builds read very well here: base = the scene and body alone (a sensible figure on its own — \"a block at rest on a rough plane inclined at 22°\"), then `reveal` one force per stage as the free-body diagram is assembled, weight first, the force being asked about last and highlighted. Keep the same scene and the same slope angle across the blocks of one lesson so pupils track one picture. This model draws ONE body: a rigid rod on two supports is mechanics/rod, and connected particles over a pulley are mechanics/pulley-system. It deliberately does NOT compute a resultant or state whether the forces balance — use it to pose the diagram, and put the resolving in the block's text. Synonyms a teacher might use: free-body diagram, force diagram, resolving forces, equilibrium, statics, inclined plane, slope, rough plane, limiting friction, coefficient of friction, on the point of sliding, tension, normal reaction, light inextensible string, F = ma, particle, Newton's laws, M1, mechanics.",
+  "responseModes": [],
+  "tags": [
+    "force diagram",
+    "free-body diagram",
+    "free body",
+    "resolving forces",
+    "equilibrium",
+    "statics",
+    "dynamics",
+    "inclined plane",
+    "slope",
+    "rough plane",
+    "friction",
+    "coefficient of friction",
+    "limiting friction",
+    "point of sliding",
+    "tension",
+    "string",
+    "normal reaction",
+    "normal contact force",
+    "weight",
+    "particle",
+    "F = ma",
+    "newtons laws",
+    "mechanics",
+    "M1",
+    "A Level",
+    "maths",
+    "physics"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "angleMark": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Mark the angle this element makes with a reference direction, as a labelled arc — the \"25° to the vertical\" / \"50° to the horizontal\" / \"20° to the plane\" of the question. The arc, its radius and its VALUE are all derived from the geometry.",
+        "properties": {
+          "to": {
+            "type": "string",
+            "enum": [
+              "horizontal",
+              "vertical",
+              "plane"
+            ],
+            "description": "Which reference the angle is measured from. \"horizontal\" — the angle to the horizontal; the SIDE (leftward or rightward) is derived from the element's own direction, so a string running up-left is marked against the leftward horizontal and one running up-right against the rightward one. \"vertical\" — the angle to the vertical, up or down derived the same way. \"plane\" — the angle to the inclined plane's slope; only meaningful when the scene is an incline (it falls back to \"horizontal\" otherwise)."
+          },
+          "at": {
+            "type": "string",
+            "enum": [
+              "body",
+              "anchor"
+            ],
+            "description": "Where the arc sits. \"body\" (default) puts it at the body, with the reference direction drawn as a dashed arm through the body. \"anchor\" puts it where a STRING meets the wall or ceiling, using that surface itself as the reference arm — the convention for \"the string makes 25° with the vertical\", where the arc is drawn up at the wall rather than down at the particle. Ignored on a force, which has no anchor."
+          },
+          "label": {
+            "type": "string",
+            "description": "Override the text printed on the arc. The angle's value is ALWAYS derived from the geometry — set this only when the figure names the angle symbolically instead of giving its size (\"θ°\", \"α\", as in \"inclined at θ° where tan θ = 0.75\"). Include the degree sign yourself."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the arc's text as \"?\" — the \"find the angle\" hook. The arc itself still draws. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Draw this arc and its text in amber emphasis. Default false."
+          }
+        },
+        "required": [
+          "to"
+        ]
+      }
+    },
+    "properties": {
+      "scene": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The physical setup. It draws the surface furniture and fixes where the body sits — you never position the body yourself.",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "plain",
+              "ground",
+              "incline",
+              "wall",
+              "ceiling"
+            ],
+            "description": "\"plain\" — the body alone with no furniture: the pure free-body diagram, every force drawn from the body. \"ground\" — a horizontal surface with the body resting on it. \"incline\" — a plane rising to the right at `angle` from a vertex, with a horizontal reference line from that vertex and the angle marked between them; the body sits partway up and is rotated flush to the slope. \"wall\" — a vertical wall on the left with the body out to its right; pair it with a `strings` entry running up and left to the wall. \"ceiling\" — a horizontal support above with the body hanging below; pair it with one or two `strings` running up to it."
+          },
+          "angle": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 80,
+            "description": "The angle of the inclined plane to the horizontal, in degrees. Required when kind is \"incline\", ignored otherwise. Forces with frame \"plane\" are measured from this slope, so changing it re-aims them correctly."
+          },
+          "angleLabel": {
+            "type": "string",
+            "description": "Override the text on the incline's angle arc. The value is derived from `angle`; set this only for a symbolic angle — \"θ°\", as in \"inclined at θ° where tan θ = 0.75\". Include the degree sign yourself. Pick an `angle` that looks like the symbolic one so the picture stays honest (tan θ = 0.75 → angle 37)."
+          },
+          "occludeAngle": {
+            "type": "boolean",
+            "description": "Render the incline's angle as \"?\" — \"find the angle of the plane\". The arc still draws. Default false."
+          },
+          "showAngle": {
+            "type": "boolean",
+            "description": "Draw the incline's angle arc and its horizontal reference line. Default true; set false for a slope whose angle is not part of the question."
+          },
+          "rough": {
+            "type": "boolean",
+            "description": "Hatch the underside of the ground or plane — the \"rough surface\" of the question. Default false (a smooth surface is a plain line). Giving `friction` turns this on unless you explicitly set it false."
+          },
+          "friction": {
+            "type": "number",
+            "minimum": 0,
+            "description": "The coefficient of friction between the body and the surface, printed beside it as \"µ = 0.4\". Give it only when the question states it — leave it out when finding µ is what the question asks."
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "incline"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "angle"
+              ]
+            }
+          }
+        ]
+      },
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The object the forces act on. Its position and (on a slope) its rotation are derived from the scene.",
+        "properties": {
+          "shape": {
+            "type": "string",
+            "enum": [
+              "particle",
+              "block"
+            ],
+            "description": "\"particle\" (default) — a filled dot, for \"a particle P of mass 10 kg\". \"block\" — a shaded rectangle lying flush on its surface, for \"a block\", \"a brick\", \"a crate\"."
+          },
+          "label": {
+            "type": "string",
+            "description": "Short text naming the body — its mass or its letter: \"25 kg\", \"P\", \"2 kg\". Printed inside a block, or beside a particle."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the body's label as \"?\" — \"find the mass\". Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Draw the body in amber emphasis. Default false."
+          }
+        }
+      },
+      "forces": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "angle": {
+              "type": "number",
+              "description": "The direction the force acts, in degrees ANTICLOCKWISE from the positive horizontal — the standard maths convention, NOT a compass bearing: 0 = right, 90 = straight up, 180 = left, 270 = straight down. Weight is 270; the normal contact force on a horizontal floor is 90; a rope pulling up and to the right at 20° above the horizontal is 20. On an inclined plane, set frame \"plane\" instead of adding the slope angle yourself."
+            },
+            "frame": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "plane"
+              ],
+              "description": "Which direction `angle` is measured from. \"horizontal\" (default) is the convention above. \"plane\" measures it from the UP-SLOPE direction of the inclined plane, so on ANY incline { angle: 0, frame: \"plane\" } acts up the slope, { angle: 180, frame: \"plane\" } down the slope (friction on a body sliding up), and { angle: 90, frame: \"plane\" } is the normal contact force perpendicular to the plane — the slope angle is added for you, so re-pitching the plane keeps every plane-frame force correct. Ignored (treated as \"horizontal\") when the scene is not an incline."
+            },
+            "arrow": {
+              "type": "string",
+              "enum": [
+                "out",
+                "in"
+              ],
+              "description": "Which end of the arrow touches the body. \"out\" (default) draws the arrow FROM the body pointing away — the free-body convention for weight, normal contact, tension, friction and a pull. \"in\" draws it pointing AT the body with the arrowhead landing on the body's surface — how a worksheet draws an applied push (a 12 N force pushing a block up a slope). The force acts on the body either way; this is a drawing convention only, and the arrow is the same LENGTH in both cases."
+            },
+            "label": {
+              "type": "string",
+              "description": "The force's name, printed at the far end of its arrow — \"T\", \"F\", \"R\", \"W\", \"Friction\". Combined with `magnitude` when both are given (\"T = 20 N\"). Omit for an arrow labelled by its magnitude alone, or for an unlabelled arrow."
+            },
+            "magnitude": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The size of the force in newtons, printed as \"20 N\" (or \"T = 20 N\" with a label). OPTIONAL and frequently omitted — most A Level questions ask you to FIND the tension or the applied force, so the arrow is drawn and named with no size. Arrow length is the same for every force whatever you put here: length never encodes magnitude."
+            },
+            "angleMark": {
+              "$ref": "#/$defs/angleMark"
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this force's magnitude as \"?\" — the \"find this force\" hook (\"F = ?\", or just \"?\" with no label). The arrow still draws at full length. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this arrow and its label in amber emphasis — the force the question is about, or the one a staged build has just added. Default false."
+            }
+          },
+          "required": [
+            "angle"
+          ]
+        },
+        "description": "The forces acting on the body, each drawn as an arrow of the SAME derived length at its authored angle. Order matters only for `reveal`, which draws the first N — list them in the order a staged build should add them (weight first reads well)."
+      },
+      "strings": {
+        "type": "array",
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "angle": {
+              "type": "number",
+              "description": "The direction FROM THE BODY TOWARDS the string's anchor, in degrees anticlockwise from the positive horizontal (the same convention as a force's `angle`). A string running up and to the left to a wall, 25° from the vertical, is 115 (= 90 + 25); a string running up and to the right to a ceiling at 35° above the horizontal is 35. The string's LENGTH and its anchor point are derived by extending this ray until it meets the wall or ceiling, so the ray must point at that surface."
+            },
+            "label": {
+              "type": "string",
+              "description": "Short text printed beside the middle of the string — usually its tension (\"T\", \"T₁\"). Omit for a plain unlabelled string."
+            },
+            "anchorLabel": {
+              "type": "string",
+              "description": "Short name printed at the point where the string meets the wall or ceiling — the convention for naming two strings holding one particle (\"A\", \"B\"). Omit for an unnamed anchor."
+            },
+            "angleMark": {
+              "$ref": "#/$defs/angleMark"
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this string and its labels in amber emphasis. Default false."
+            }
+          },
+          "required": [
+            "angle"
+          ]
+        },
+        "description": "Light inextensible strings from the body to the wall or ceiling, drawn as plain lines (no arrowhead — a string is not a force arrow; if you also want the tension shown as an arrow, add a `forces` entry along the same angle). Each string's length and anchor point are derived. Only meaningful with scene kind \"wall\" or \"ceiling\"."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Staged build: draw only the first N forces (with their angle marks). The scene, the body and any strings always draw, so `reveal: 0` is a complete, sensible opening frame — the setup with no forces on it yet. Omit to draw everything. The figure keeps exactly the same size at every stage."
+      }
+    },
+    "required": [
+      "scene"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — block in equilibrium on a rough 22° incline (weight, normal, friction)",
+      "params": {
+        "header": "A block at rest on a rough plane",
+        "scene": {
+          "kind": "incline",
+          "angle": 22,
+          "rough": true,
+          "friction": 0.35
+        },
+        "body": {
+          "shape": "block",
+          "label": "6 kg"
+        },
+        "forces": [
+          {
+            "angle": 270,
+            "label": "W",
+            "magnitude": 58.8
+          },
+          {
+            "angle": 90,
+            "frame": "plane",
+            "label": "R"
+          },
+          {
+            "angle": 0,
+            "frame": "plane",
+            "label": "F"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blank answer space — a particle on a smooth 18° plane, no forces drawn",
+      "params": {
+        "scene": {
+          "kind": "incline",
+          "angle": 18
+        },
+        "body": {
+          "shape": "particle",
+          "label": "P"
+        }
+      }
+    },
+    {
+      "label": "Occluded question — block pulled at 35° on a rough floor, F unknown",
+      "params": {
+        "scene": {
+          "kind": "ground",
+          "rough": true,
+          "friction": 0.3
+        },
+        "body": {
+          "shape": "block",
+          "label": "8 kg"
+        },
+        "forces": [
+          {
+            "angle": 35,
+            "label": "F",
+            "occlude": true,
+            "highlight": true,
+            "angleMark": {
+              "to": "horizontal"
+            }
+          },
+          {
+            "angle": 270,
+            "label": "W"
+          },
+          {
+            "angle": 90,
+            "label": "R"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — particle on a wall string at 40° to the vertical, held by a 15 N horizontal force",
+      "params": {
+        "scene": {
+          "kind": "wall"
+        },
+        "body": {
+          "shape": "particle",
+          "label": "P"
+        },
+        "strings": [
+          {
+            "angle": 130,
+            "label": "T",
+            "angleMark": {
+              "to": "vertical",
+              "at": "anchor"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "angle": 0,
+            "magnitude": 15
+          },
+          {
+            "angle": 270,
+            "label": "W"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Particle in equilibrium on two strings, 55° and 25° to the horizontal",
+      "params": {
+        "header": "A particle held by two strings",
+        "scene": {
+          "kind": "ceiling"
+        },
+        "body": {
+          "shape": "particle",
+          "label": "P"
+        },
+        "strings": [
+          {
+            "angle": 125,
+            "anchorLabel": "A",
+            "angleMark": {
+              "to": "horizontal"
+            }
+          },
+          {
+            "angle": 25,
+            "anchorLabel": "B",
+            "angleMark": {
+              "to": "horizontal"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "angle": 270,
+            "label": "W",
+            "magnitude": 40
+          }
+        ]
+      }
+    },
+    {
+      "label": "Symbolic slope — a 9 N push up a plane inclined at θ°, arrow drawn into the block",
+      "params": {
+        "scene": {
+          "kind": "incline",
+          "angle": 37,
+          "angleLabel": "θ°",
+          "rough": true
+        },
+        "body": {
+          "shape": "block",
+          "label": "2 kg"
+        },
+        "forces": [
+          {
+            "angle": 0,
+            "frame": "plane",
+            "magnitude": 9,
+            "arrow": "in",
+            "highlight": true
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,464 @@
+{
+  "ref": "diagram/tree@1",
+  "family": "diagram",
+  "name": "tree",
+  "version": 1,
+  "title": "Tree (hierarchy)",
+  "tagline": "Top-down hierarchy tree — a root and its branching children as labelled boxes joined by connectors; tidy auto-layout, optional Yes/No edge labels, every box occludable.",
+  "description": "A top-down hierarchical tree: a root box at the top, its children below, their children below them — the picture for any multi-level hierarchy (taxonomy and classification, decision trees, family trees, syntax-parse trees, concept hierarchies). You author only the hierarchy — a flat list of boxes, each naming its parent, with exactly one root — and the model derives every box position from a tidy-tree layout (a parent centres over its children; disjoint branches never overlap), sizes each box to its wrapped label, and draws and trims every connector. Connectors can carry an edge label (\"Yes\"/\"No\") for a decision tree. Any box occludes to \"?\" for \"name this group\", boxes highlight in amber to mark an answer or trace a path, and `reveal` shows the tree one level at a time for a grow-it staged build. For a process with loops and merging arrows use diagram/flowchart; for a single hub with one ring of branches use diagram/mind-map.",
+  "whenToUse": "Reach for this for a hierarchy drawn top-down: a root that splits into children, which split again — a taxonomy or classification (kingdom → phylum → class; quadrilaterals → rhombus / kite), a decision / sorting tree (use edgeLabel \"Yes\"/\"No\" on each branch), a family or dynasty tree, a syntax-parse tree, or a concept hierarchy. Author the nodes as a flat list: give each a unique id and a label, and set parentId to the box it hangs under — leave parentId off the one root. The layout, box sizes and connectors are all derived, so you never position anything. Conventions: exactly one node omits parentId; on a decision tree put the branch wording in each child's edgeLabel. Questions: set a box's occlude to ask \"name this group / what belongs here?\" (the rest of the tree stays visible); highlight a box to mark the answer or to light up a classification path. Staged builds: set reveal to grow the tree one level per stage (root first), or move a highlight down a path stage by stage — the tree never reflows. Keep the same tree across the blocks of one lesson. Synonyms a teacher might use: tree diagram, hierarchy, taxonomy, classification, classify, sorting tree, decision tree, family tree, branching diagram, parse tree, concept hierarchy. Switch model when the picture changes: a step-by-step process with yes/no decisions, loops or arrows that merge is diagram/flowchart; a single central idea with one ring of related branches (no deeper nesting) is diagram/mind-map; a word split into prefix·root·suffix is diagram/etymology.",
+  "responseModes": [],
+  "tags": [
+    "tree",
+    "tree diagram",
+    "hierarchy",
+    "taxonomy",
+    "classification",
+    "classify",
+    "sorting tree",
+    "decision tree",
+    "family tree",
+    "parse tree",
+    "syntax tree",
+    "concept hierarchy",
+    "branching",
+    "diagram"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "nodes": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 16,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+              "description": "Unique kebab-case id for this box, referenced by other nodes' parentId (e.g. \"animals\", \"vertebrates\"). Not shown to pupils — the wiring handle."
+            },
+            "parentId": {
+              "type": "string",
+              "description": "Id of this node's parent box. Omit on EXACTLY ONE node — that node is the root. Every other parentId must name a node in this list (no cycles)."
+            },
+            "label": {
+              "type": "string",
+              "description": "The text inside the box, wrapped to fit."
+            },
+            "image": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "An optional photo shown above the label inside the box (the diagram/cycle image-node pattern) — e.g. a specimen on a classification tree. The model reserves a fixed slot and crops the photo to fill it; the box grows to fit. Photos display on the live web/slide; a static PNG/print/PPTX export shows a labelled placeholder frame until asset-rasterisation lands.",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "Absolute image URL — e.g. a Wikimedia Commons upload.wikimedia.org thumbnail. Must be a real, reachable image."
+                },
+                "alt": {
+                  "type": "string",
+                  "description": "A short description of the photo, for accessibility and the figure aria."
+                },
+                "aspect": {
+                  "type": "string",
+                  "enum": [
+                    "square",
+                    "landscape",
+                    "portrait"
+                  ],
+                  "description": "Shape of the image slot the photo is cropped to fill. Default \"landscape\" (4:3). Keep one aspect across the tree so the boxes match."
+                }
+              },
+              "required": [
+                "url"
+              ]
+            },
+            "edgeLabel": {
+              "type": "string",
+              "description": "Optional label drawn on the connector from this node UP to its parent — the branch outcome on a decision tree, e.g. \"Yes\" / \"No\". Omit on a plain hierarchy edge."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this box's label as \"?\" — the question hook (\"name this group / what goes here?\"). The box and connectors stay drawn and the hidden word never leaks into the aria. Default false."
+            },
+            "occludeImage": {
+              "type": "boolean",
+              "description": "Blank this box's photo to a \"?\" placeholder (the photo would otherwise give the answer away). Ignored when there is no image. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this box — the answer, or a box on a traced classification path. Default false."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+              "description": "Override THIS box's colour (an explicit author/teacher request — \"make this box dark green\"). Every box is a single neutral grey by default, so set this to COLOUR-CODE a subtree — e.g. give each top-level branch and its descendants a different colour. Wins over the figure-wide `colors.nodes`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\" or \"darkgreen\") is honoured exactly and opts this box OUT of brand reskinning. Ignored on a highlighted box (amber is reserved for the answer). Omit for the neutral default."
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "description": "The boxes of the tree as a flat list. Exactly one node omits parentId (the root); every other node names its parent. Order does not matter — positions are derived."
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "Draw only the top N levels (the root is level 1). Omit to show the whole tree. Use across staged steps (1, 2, 3, …) to grow the tree one level at a time — boxes never move as levels appear."
+      },
+      "orientation": {
+        "type": "string",
+        "enum": [
+          "down",
+          "right"
+        ],
+        "description": "Growth direction: \"down\" (default) puts the root at the top and grows downward; \"right\" puts the root on the left and grows rightward (handy for a deep, narrow tree). Keep it consistent across a lesson."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "colors": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"make the boxes dark green\", \"the connectors should be grey\"). Omit to keep the themeable defaults (accent-blue boxes, neutral-grey connectors), which follow a brand reskin. A per-node `color` overrides this for one box.",
+        "properties": {
+          "nodes": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of every (non-highlighted) box, replacing the default accent blue. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the boxes OUT of brand reskinning. A single box can still differ via its own `color`."
+          },
+          "connectors": {
+            "type": "string",
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
+            "description": "Colour of every parent→child connector line. Same value space as `nodes`. Connectors are one shared group per parent, so this is figure-wide — there is no per-edge connector colour."
+          }
+        }
+      }
+    },
+    "required": [
+      "nodes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked taxonomy — classifying living things (three levels)",
+      "params": {
+        "header": "Classifying living things",
+        "nodes": [
+          {
+            "id": "life",
+            "label": "Living things"
+          },
+          {
+            "id": "animals",
+            "parentId": "life",
+            "label": "Animals"
+          },
+          {
+            "id": "plants",
+            "parentId": "life",
+            "label": "Plants"
+          },
+          {
+            "id": "verts",
+            "parentId": "animals",
+            "label": "Vertebrates"
+          },
+          {
+            "id": "inverts",
+            "parentId": "animals",
+            "label": "Invertebrates"
+          },
+          {
+            "id": "flowering",
+            "parentId": "plants",
+            "label": "Flowering"
+          },
+          {
+            "id": "nonflowering",
+            "parentId": "plants",
+            "label": "Non-flowering"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Decision tree — sorting a quadrilateral (edge labels Yes/No)",
+      "params": {
+        "header": "Which quadrilateral?",
+        "nodes": [
+          {
+            "id": "q",
+            "label": "All sides equal?"
+          },
+          {
+            "id": "eq",
+            "parentId": "q",
+            "label": "All angles 90°?",
+            "edgeLabel": "Yes"
+          },
+          {
+            "id": "neq",
+            "parentId": "q",
+            "label": "One pair parallel?",
+            "edgeLabel": "No"
+          },
+          {
+            "id": "square",
+            "parentId": "eq",
+            "label": "Square",
+            "edgeLabel": "Yes"
+          },
+          {
+            "id": "rhombus",
+            "parentId": "eq",
+            "label": "Rhombus",
+            "edgeLabel": "No"
+          },
+          {
+            "id": "trap",
+            "parentId": "neq",
+            "label": "Trapezium",
+            "edgeLabel": "Yes"
+          },
+          {
+            "id": "kite",
+            "parentId": "neq",
+            "label": "Kite",
+            "edgeLabel": "No"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — name the hidden group",
+      "params": {
+        "nodes": [
+          {
+            "id": "num",
+            "label": "Numbers"
+          },
+          {
+            "id": "real",
+            "parentId": "num",
+            "label": "Real"
+          },
+          {
+            "id": "rational",
+            "parentId": "real",
+            "label": "Rational",
+            "occlude": true
+          },
+          {
+            "id": "irrational",
+            "parentId": "real",
+            "label": "Irrational"
+          },
+          {
+            "id": "int",
+            "parentId": "rational",
+            "label": "Integers"
+          },
+          {
+            "id": "frac",
+            "parentId": "rational",
+            "label": "Fractions"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blank answer space — complete the bottom row",
+      "params": {
+        "nodes": [
+          {
+            "id": "poly",
+            "label": "Polygons"
+          },
+          {
+            "id": "tri",
+            "parentId": "poly",
+            "label": "Triangles"
+          },
+          {
+            "id": "quad",
+            "parentId": "poly",
+            "label": "Quadrilaterals"
+          },
+          {
+            "id": "eq",
+            "parentId": "tri",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "iso",
+            "parentId": "tri",
+            "label": "?",
+            "occlude": true
+          },
+          {
+            "id": "sca",
+            "parentId": "tri",
+            "label": "?",
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Family tree — three generations",
+      "params": {
+        "header": "A family tree",
+        "nodes": [
+          {
+            "id": "grandma",
+            "label": "Mary"
+          },
+          {
+            "id": "mum",
+            "parentId": "grandma",
+            "label": "Sarah"
+          },
+          {
+            "id": "uncle",
+            "parentId": "grandma",
+            "label": "Tom"
+          },
+          {
+            "id": "me",
+            "parentId": "mum",
+            "label": "Alex"
+          },
+          {
+            "id": "sister",
+            "parentId": "mum",
+            "label": "Jo"
+          },
+          {
+            "id": "cousin",
+            "parentId": "uncle",
+            "label": "Sam"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — deep, unbalanced taxonomy with a wide level",
+      "params": {
+        "header": "Animal kingdom",
+        "nodes": [
+          {
+            "id": "animals",
+            "label": "Animals"
+          },
+          {
+            "id": "verts",
+            "parentId": "animals",
+            "label": "Vertebrates"
+          },
+          {
+            "id": "inverts",
+            "parentId": "animals",
+            "label": "Invertebrates"
+          },
+          {
+            "id": "fish",
+            "parentId": "verts",
+            "label": "Fish"
+          },
+          {
+            "id": "amph",
+            "parentId": "verts",
+            "label": "Amphibians"
+          },
+          {
+            "id": "reptiles",
+            "parentId": "verts",
+            "label": "Reptiles"
+          },
+          {
+            "id": "birds",
+            "parentId": "verts",
+            "label": "Birds"
+          },
+          {
+            "id": "mammals",
+            "parentId": "verts",
+            "label": "Mammals"
+          },
+          {
+            "id": "insects",
+            "parentId": "inverts",
+            "label": "Insects"
+          },
+          {
+            "id": "molluscs",
+            "parentId": "inverts",
+            "label": "Molluscs"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Author-set colours — colour-code the branches + figure-wide connectors",
+      "params": {
+        "header": "Classifying living things",
+        "colors": {
+          "connectors": "muted"
+        },
+        "nodes": [
+          {
+            "id": "life",
+            "label": "Living things"
+          },
+          {
+            "id": "animals",
+            "parentId": "life",
+            "label": "Animals",
+            "color": "darkgreen"
+          },
+          {
+            "id": "plants",
+            "parentId": "life",
+            "label": "Plants",
+            "color": "accent-3"
+          },
+          {
+            "id": "verts",
+            "parentId": "animals",
+            "label": "Vertebrates",
+            "color": "darkgreen"
+          },
+          {
+            "id": "inverts",
+            "parentId": "animals",
+            "label": "Invertebrates",
+            "color": "darkgreen"
+          },
+          {
+            "id": "flowering",
+            "parentId": "plants",
+            "label": "Flowering",
+            "color": "accent-3"
+          },
+          {
+            "id": "nonflowering",
+            "parentId": "plants",
+            "label": "Non-flowering",
+            "color": "accent-3"
+          }
+        ]
+      }
+    }
+  ]
+}

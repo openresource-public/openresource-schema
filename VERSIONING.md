@@ -59,6 +59,7 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 - **OR-VER-062.** A pin never changes on its own.
 - **OR-VER-063.** A retired version keeps rendering where pinned and is not offered for new slots.
 - **OR-VER-064.** An improvement for everyone pinning a version lands in that version with no bump: a marker that accepts a correct answer it used to refuse, a fixed rendering fault, clearer text, a faster engine. The test is whether every lesson pinning the version would want the change; if any would not, it is a new version.
+- **OR-VER-065.** `models/catalogue.json` lists every published model and every version it has had, with status; `models/<family>/<name>/<version>.json` is the interface a pin resolves to. A resolve for a superseded version says so and names the current one.
 
 ## History
 

@@ -1,0 +1,329 @@
+{
+  "ref": "physics/sankey@1",
+  "family": "physics",
+  "name": "sankey",
+  "version": 1,
+  "title": "Sankey diagram",
+  "tagline": "Energy-transfer Sankey diagram: input bar splits into useful/wasted branches, widths and efficiency derived from value; values occludable, useful branch highlightable.",
+  "description": "An energy-transfer Sankey diagram. A full-height input bar on the left carries the total energy supplied; it fans out into output branches whose vertical width is proportional to each branch's value. Useful outputs run straight across to the right edge; wasted outputs (heat, sound) bend downward by convention. Band widths, the stacking order (useful on top, wasted below), the downward bends, the efficiency (sum of useful values ÷ input, as a percentage) and the per-branch percentage readouts are all computed from the input and the branch values — none is authored, so the diagram cannot contradict its own arithmetic. The branch values must sum to the input; a shortfall is drawn as a clear mismatch note rather than being hidden. Values are occludable per branch (rendered \"?\"), the efficiency is occludable, or every value can be hidden for a label-only diagram; anti-leak blanking keeps a hidden value from surfacing in the efficiency or in a complementary readout. Highlight draws the eye to the useful branch. Works in joules (J) or watts (W).",
+  "whenToUse": "Reach for this for GCSE/KS3 energy transfers and efficiency: a light bulb (a filament bulb wasting most energy as heat vs an LED transferring most to light — author the two as separate blocks to compare), a kettle heating water with some heat lost to the surroundings, an electric motor (useful kinetic + wasted heat + wasted sound), a car engine, a power station. Author the input energy and each output branch as a value plus a useful/wasted flag; the widths, the wasted bends, the efficiency and the percentages are all derived — you never draw a band or write an efficiency. Ensure the branch values sum to the input (100 J in → branches totalling 100 J); a mismatch is flagged, not absorbed. Common configurations: worked example — all values shown, show.efficiency true, highlight the useful branch; answer space — occlude the efficiency (or a branch value) for \"calculate the efficiency\" / \"how much is wasted?\"; label-only — occlude \"values\" to name the transfers before any numbers; comparison — two blocks with the SAME input, one filament one LED, so the efficiency contrast is the lesson. Staged build: set reveal to 0 for the input bar alone, then one branch per stage, efficiency last (the base bar stands alone as a sensible opening figure). Keep the unit and the input value consistent across the blocks of one comparison. Synonyms teachers use: Sankey diagram, energy flow diagram, energy transfer diagram, useful and wasted energy, dissipation, efficiency, energy losses.",
+  "responseModes": [],
+  "tags": [
+    "sankey",
+    "sankey diagram",
+    "energy",
+    "energy transfer",
+    "energy flow",
+    "useful energy",
+    "wasted energy",
+    "dissipation",
+    "efficiency",
+    "power",
+    "light bulb",
+    "filament",
+    "LED",
+    "kettle",
+    "motor",
+    "car engine",
+    "conservation of energy",
+    "physics",
+    "GCSE",
+    "KS3",
+    "science"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "input": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The total energy supplied — the full-height bar on the left that the branches split out of.",
+        "properties": {
+          "value": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Total energy in, in the chosen unit (J or W). Positive. Every branch width is a fraction of this, and the branch values must sum to it."
+          },
+          "label": {
+            "type": "string",
+            "description": "Display name for the input, e.g. \"Electrical energy in\", \"Chemical energy\". Rendered beside the input bar."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the input value as \"?\" — e.g. \"the branches are 80 J and 20 J: what was the input?\". The bar stays full height. Default false."
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "branches": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 5,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "Display name for this energy output, e.g. \"Light\", \"Heat\", \"Kinetic energy\", \"Sound\". Rendered beside the band."
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Energy carried by this branch, in the same unit as the input (J or W). Non-negative. Band width is derived value ÷ input; the branch values must sum to the input."
+            },
+            "useful": {
+              "type": "boolean",
+              "description": "true = a USEFUL output (the intended transfer), drawn running straight to the right edge and counted in the efficiency; false = WASTED (usually as heat/sound), drawn bending downward away from the useful path. This classification is the physics — it drives the geometry and the derived efficiency, so it is authored, not the shape."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this branch's value as \"?\" — the question hook (\"how much energy is transferred here?\"). The band stays visible at its true width. Anti-leak: if hiding this value would let it be recovered from a shown efficiency or from the other branches (only one unknown left), those readouts blank to \"?\" too. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this band and its label — draw the eye to one branch (typically the useful output). Default false. (show.highlightUseful ambers every useful branch at once instead.)"
+            }
+          },
+          "required": [
+            "value",
+            "useful"
+          ]
+        },
+        "description": "The output branches, each a value plus a useful/wasted flag. Order is free — the diagram stacks useful branches above wasted ones regardless. Values must sum to input.value."
+      },
+      "unit": {
+        "type": "string",
+        "enum": [
+          "J",
+          "W"
+        ],
+        "description": "Energy unit shown after every value: \"J\" (joules, energy) or \"W\" (watts, power). Default \"J\". Affects display only — the maths is identical."
+      },
+      "occlude": {
+        "type": "string",
+        "enum": [
+          "efficiency",
+          "values"
+        ],
+        "description": "A figure-level occlusion. \"efficiency\" renders the efficiency readout as \"?\" (\"calculate the efficiency\"); anti-leak then also hides any single branch value the efficiency would otherwise pin down. \"values\" renders EVERY value (input and all branches) as \"?\" — a label-only diagram for naming the transfers first. Per-branch and input occlude flags compose with this. Omit for none."
+      },
+      "highlight": {
+        "type": "string",
+        "enum": [
+          "useful",
+          "wasted",
+          "efficiency"
+        ],
+        "description": "A figure-level highlight in amber: \"useful\" ambers every useful branch, \"wasted\" every wasted branch, \"efficiency\" the efficiency readout. Per-branch highlight flags compose with this. Omit for none."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles (all default true unless stated).",
+        "properties": {
+          "efficiency": {
+            "type": "boolean",
+            "description": "Show the derived efficiency readout (Σ useful ÷ input as a %). Default true."
+          },
+          "values": {
+            "type": "boolean",
+            "description": "Show the numeric value on the input bar and each branch. false hides them all (like occlude \"values\" but without the \"?\" — a clean answer space). Default true."
+          },
+          "percentages": {
+            "type": "boolean",
+            "description": "Show each branch's percentage of the input beneath its value. Default false."
+          }
+        }
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Staged-build gate. 0 draws the input bar alone; N draws the input plus the first N branches (stacked useful-first); at or beyond the branch count the efficiency also appears. Widths and the viewBox are sized from the FULL branch set at every stage, so the figure never grows as stages reveal. Omit for the complete figure."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "input",
+      "branches"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — electric motor, 100 J in, useful highlighted, efficiency shown",
+      "params": {
+        "header": "Electric motor",
+        "input": {
+          "value": 100,
+          "label": "Electrical energy in"
+        },
+        "branches": [
+          {
+            "label": "Kinetic energy",
+            "value": 70,
+            "useful": true
+          },
+          {
+            "label": "Heat",
+            "value": 25,
+            "useful": false
+          },
+          {
+            "label": "Sound",
+            "value": 5,
+            "useful": false
+          }
+        ],
+        "highlight": "useful",
+        "show": {
+          "efficiency": true,
+          "percentages": true
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — kettle, calculate the efficiency (efficiency occluded)",
+      "params": {
+        "header": "Electric kettle",
+        "input": {
+          "value": 2000,
+          "label": "Electrical energy in"
+        },
+        "branches": [
+          {
+            "label": "Heat to water",
+            "value": 1680,
+            "useful": true
+          },
+          {
+            "label": "Heat to surroundings",
+            "value": 320,
+            "useful": false
+          }
+        ],
+        "occlude": "efficiency",
+        "show": {
+          "efficiency": true
+        }
+      }
+    },
+    {
+      "label": "Occluded question — find the wasted branch (one branch value hidden, efficiency hidden too)",
+      "params": {
+        "input": {
+          "value": 60,
+          "label": "Chemical energy in"
+        },
+        "branches": [
+          {
+            "label": "Useful output",
+            "value": 18,
+            "useful": true
+          },
+          {
+            "label": "Wasted as heat",
+            "value": 42,
+            "useful": false,
+            "occlude": true
+          }
+        ],
+        "show": {
+          "efficiency": true,
+          "percentages": false
+        }
+      }
+    },
+    {
+      "label": "Hard case — three-way split with a small 10 W sound branch that stays legible",
+      "params": {
+        "header": "Power drill",
+        "input": {
+          "value": 400,
+          "label": "Power in"
+        },
+        "unit": "W",
+        "branches": [
+          {
+            "label": "Useful (rotating drill bit)",
+            "value": 240,
+            "useful": true
+          },
+          {
+            "label": "Heat",
+            "value": 150,
+            "useful": false
+          },
+          {
+            "label": "Sound",
+            "value": 10,
+            "useful": false
+          }
+        ],
+        "highlight": "useful",
+        "show": {
+          "efficiency": true,
+          "percentages": true
+        }
+      }
+    },
+    {
+      "label": "Comparison A — filament bulb, mostly wasted (pair with the LED block, same input)",
+      "params": {
+        "header": "Filament bulb",
+        "input": {
+          "value": 60,
+          "label": "Electrical energy in"
+        },
+        "branches": [
+          {
+            "label": "Light",
+            "value": 6,
+            "useful": true
+          },
+          {
+            "label": "Heat",
+            "value": 54,
+            "useful": false
+          }
+        ],
+        "highlight": "useful",
+        "show": {
+          "efficiency": true,
+          "percentages": true
+        }
+      }
+    },
+    {
+      "label": "Label-only diagram — name the transfers before any numbers (all values occluded)",
+      "params": {
+        "header": "Name each energy transfer",
+        "input": {
+          "value": 100,
+          "label": "Electrical energy in"
+        },
+        "branches": [
+          {
+            "label": "Light",
+            "value": 25,
+            "useful": true
+          },
+          {
+            "label": "Heat",
+            "value": 75,
+            "useful": false
+          }
+        ],
+        "occlude": "values",
+        "show": {
+          "efficiency": false
+        }
+      }
+    }
+  ]
+}

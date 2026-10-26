@@ -1,0 +1,587 @@
+{
+  "ref": "geometry/isometric-cubes@2",
+  "family": "geometry",
+  "name": "isometric-cubes",
+  "version": 2,
+  "title": "Isometric cubes",
+  "tagline": "Solid of unit cubes in isometric projection from a list of filled cells; faces tone-shaded, hidden cubes dropped; the cube or volume count occludes.",
+  "description": "A solid made of unit cubes drawn in isometric projection. You list which lattice cells [x, y, z] are filled; the model derives the whole drawing — each cube projected isometrically, its three visible faces (top, right and left) tone-shaded so the solid reads as 3D, cubes correctly occluding the ones behind them (so hidden cubes are not drawn), and the unit-cube edges. Optionally show a faint footprint floor, a readout of the number of cubes (or the volume in cm³ — the same number, since each cube is 1 cm³), and view-direction arrows (\"front\", \"side\", \"plan\") that pair the solid with a plan-and-elevation question. Highlight a chosen set of cubes in amber, and occlude the readout to pose \"how many cubes?\" or \"find the volume\". v1 draws polycubes (any arrangement of unit cubes) in a fixed isometric view.",
+  "whenToUse": "Reach for this for any \"solid made from centimetre cubes\" drawn in 3D: count the cubes (including the ones hidden behind others), volume by counting unit cubes, isometric drawing, and as the 3D stimulus for plan-and-elevation questions (\"the diagram shows a solid; draw its plan and elevations\"). Author the solid as cubes: a list of filled lattice cells [x, y, z] — x to the lower-right, y to the lower-left, z up — e.g. a 2 by 2 base with one cube on top is [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1]]; build a tower by stacking cells up in z, a staircase by raising the height as x increases. Every position, face, edge and the count are computed from the cells, so you never place a face or write a number. Common configurations: worked — readout: { kind: \"cubes\" } (or \"volume\") shows the count; occluded question — readout: { kind: \"cubes\", occlude: true } poses \"how many cubes?\" while leaving the solid fully visible to be counted (its hidden cubes are the point); highlight — highlight: a list of cells to amber (the new layer, the cubes added, the top of the tower); plan/elevation stimulus — viewArrows: [{ direction: \"front\" }, { direction: \"side\" }] with a caption like \"draw the plan and the front and side elevations\" (the views are drawn elsewhere); showFloor: true draws a faint footprint grid that helps the 3D read. The hidden-cube case is the classic trap — a 2 by 2 by 2 block looks like 7 cubes but is 8 (one is hidden) — so prefer counting questions on solids that actually hide a cube. Staged builds read very well: open on the floor or the first cube and add one cube or one layer per stage, the count rising, the rule or total last — the base state (an empty floor, or a single cube) stands alone as a sensible figure. Cross-block: keep the same cells and view across the blocks of one lesson so pupils track one solid. UNITS — the volume readout defaults to cm³; set unit: \"m\" (etc.) once per figure to change the cube-edge unit and the model writes the cubed unit itself (\"N m³\"). Switch model when the teaching changes: for a named smooth solid with labelled dimensions (cuboid, prism, cylinder, cone, sphere, pyramid) and derived volume / surface area use geometry/solid; to draw or read the plan and the front/side elevations as 2D views use geometry/plan-elevation; for the unfolded net use geometry/net. Synonyms a teacher might use: isometric, isometric drawing, centimetre cubes, unit cubes, multilink, solid made from cubes, count the cubes, hidden cubes, plan and elevation, plans and elevations, 3D shape, cuboid, volume by counting cubes.",
+  "responseModes": [],
+  "tags": [
+    "isometric",
+    "isometric drawing",
+    "cubes",
+    "unit cubes",
+    "centimetre cubes",
+    "multilink",
+    "solid",
+    "3d shape",
+    "count the cubes",
+    "hidden cubes",
+    "volume",
+    "plan and elevation",
+    "plans and elevations",
+    "cuboid",
+    "polycube",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "cubes": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "description": "A unit cube at lattice cell [x, y, z] (integers 0–9). x increases to the lower-RIGHT, y to the lower-LEFT (the two floor directions), z straight UP. The cube fills the unit space from [x,y,z] to [x+1,y+1,z+1]."
+        },
+        "description": "The unit cubes that make up the solid — a list of filled lattice cells [x, y, z]. This is the whole construction language: the projection, faces, edges, occlusion and the cube count are all derived from this list. Cells may stack (raise z), spread on the floor (vary x, y), overhang or bridge. Duplicate cells are ignored. An empty list draws an empty figure (the floor only, if shown) — useful as the base of a staged build. Example — a 2 by 2 by 2 block (8 cubes, one hidden): [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,0,1],[0,1,1],[1,1,1]]."
+      },
+      "highlight": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "description": "A unit cube at lattice cell [x, y, z] (integers 0–9). x increases to the lower-RIGHT, y to the lower-LEFT (the two floor directions), z straight UP. The cube fills the unit space from [x,y,z] to [x+1,y+1,z+1]."
+        },
+        "description": "Cells to draw in amber emphasis — e.g. the new layer in a staged build, the cubes just added, or the top of a tower. Must be cells that appear in \"cubes\" (others are ignored). Note: a cube that is fully hidden behind others cannot show its highlight — highlight visible cubes, and use the caption / readout to talk about hidden ones."
+      },
+      "readout": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to show a readout line beneath the solid; omit it for none. The value is DERIVED from the cube count — you never write the number.",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "cubes",
+              "volume"
+            ],
+            "description": "\"cubes\" renders \"12 cubes\"; \"volume\" renders \"Volume = 12 cm³\" (each unit cube is 1 unit³, so the number is the same — choose the framing the question uses). The cubed unit follows `unit` (default cm). Default \"cubes\"."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Render the value as \"?\" — the question hook (\"how many cubes?\" / \"find the volume\"). The solid itself stays fully visible so it can be counted; the hidden cubes are part of the challenge. Default false."
+          },
+          "highlight": {
+            "type": "boolean",
+            "description": "Amber the readout value — answer emphasis. Default false."
+          }
+        }
+      },
+      "viewArrows": {
+        "type": "array",
+        "maxItems": 3,
+        "description": "Optional viewing-direction arrows that pair the solid with a plan-and-elevation question. Each arrow points at the solid from a named viewpoint and is labelled: \"front\" arrives from the lower right (you look at the right-hand faces), \"side\" from the lower left (the left-hand faces), \"plan\" from straight above. List at most one arrow per direction. The arrows are annotations only — the elevations themselves are drawn with geometry/plan-elevation.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "direction": {
+              "type": "string",
+              "enum": [
+                "front",
+                "side",
+                "plan"
+              ],
+              "description": "Which view the arrow marks: \"front\" (from the lower right, at the right-hand faces), \"side\" (from the lower left, at the left-hand faces), or \"plan\" (from directly above)."
+            },
+            "label": {
+              "type": "string",
+              "description": "Text at the tail of the arrow. Default: the capitalised direction — \"Front\", \"Side\", \"Plan\"."
+            }
+          },
+          "required": [
+            "direction"
+          ]
+        }
+      },
+      "unit": {
+        "type": "string",
+        "description": "The LINEAR unit of a cube edge, e.g. \"cm\", \"m\", \"mm\". A volume readout writes the derived cubed unit itself — \"N cm³\", \"N m³\" (the model owns the ³, mirroring geometry/solid). The count readout (\"N cubes\") is unitless and never takes it. Default \"\" keeps the historical centimetre volume readout (\"cm³\"). Set it once per figure and keep it consistent across a lesson. @2."
+      },
+      "showFloor": {
+        "type": "boolean",
+        "description": "Draw a faint isometric floor grid under the solid, spanning its footprint — furniture that strengthens the 3D read and shows the base outline (helpful when pairing with a plan view). Default false."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "cubes"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked — a solid of 5 centimetre cubes (2×2 base, one on top), count shown",
+      "params": {
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "readout": {
+          "kind": "cubes"
+        },
+        "showFloor": true,
+        "caption": "A solid made from 5 centimetre cubes."
+      }
+    },
+    {
+      "label": "Answer space — draw the plan and elevations (front + side arrows)",
+      "params": {
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            2,
+            1,
+            0
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            2,
+            1,
+            2
+          ]
+        ],
+        "viewArrows": [
+          {
+            "direction": "front"
+          },
+          {
+            "direction": "side"
+          }
+        ],
+        "caption": "On squared paper, draw the plan, the front elevation and the side elevation."
+      }
+    },
+    {
+      "label": "Occluded question — how many cubes make this solid?",
+      "params": {
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ],
+        "readout": {
+          "kind": "cubes",
+          "occlude": true
+        },
+        "showFloor": true
+      }
+    },
+    {
+      "label": "Hard case — a 2×2×2 block: find the volume (one cube is hidden)",
+      "params": {
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "readout": {
+          "kind": "volume",
+          "occlude": true
+        },
+        "viewArrows": [
+          {
+            "direction": "front"
+          }
+        ],
+        "caption": "The solid is made of centimetre cubes. Work out its volume."
+      }
+    },
+    {
+      "label": "Highlight — a 2×2 second layer (4 cubes) on a 3×3 base",
+      "params": {
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ],
+          [
+            1,
+            2,
+            0
+          ],
+          [
+            2,
+            2,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            2,
+            1
+          ]
+        ],
+        "highlight": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            2,
+            1
+          ]
+        ],
+        "readout": {
+          "kind": "cubes"
+        },
+        "caption": "A second layer of 4 cubes sits on a 3 by 3 base."
+      }
+    },
+    {
+      "label": "Volume of a cuboid by counting cubes (3×2×2 = 12)",
+      "params": {
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ],
+        "readout": {
+          "kind": "volume"
+        },
+        "showFloor": true,
+        "caption": "A 3 by 2 by 2 cuboid: 12 centimetre cubes, so the volume is 12 cm³."
+      }
+    },
+    {
+      "label": "Volume in metre cubes (unit: \"m\") — the model writes m³",
+      "params": {
+        "cubes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "readout": {
+          "kind": "volume"
+        },
+        "unit": "m",
+        "showFloor": true,
+        "caption": "A 2 by 2 by 2 cube of metre cubes: the volume is 8 m³."
+      }
+    }
+  ]
+}

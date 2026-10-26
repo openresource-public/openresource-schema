@@ -1,0 +1,326 @@
+{
+  "ref": "number/number-grid@1",
+  "family": "number",
+  "name": "number-grid",
+  "version": 1,
+  "title": "Number grid",
+  "tagline": "Hundred-square shaded by value rules — multiples, primes, sequences, remainders — with common-multiple overlap in amber; shaded sets derived, cells ring.",
+  "description": "A number grid (hundred-square): the consecutive integers from start to end laid out in rows of `width` columns, reading left-to-right and top-to-bottom, with cells shaded by rules on each cell's value. Each rule shades a derived set in its own colour — the first blue, the second teal-green, the third violet — and any cell satisfying two or more rules is shaded amber, so the common multiples of two times-tables appear automatically. Rules cover multiples (a times table), primes (the sieve of Eratosthenes), an arithmetic sequence a + d·n, and a remainder pattern n ≡ r (mod m); the columns and diagonals a sequence traces depend on the width, so changing it from 10 reshapes the pattern. Which cells shade, the colours, the common-multiple overlap and every legend label are all computed from the rules — you never list a shaded cell. Per-cell flags occlude a value as \"?\" for a question, or ring chosen cells (a T-shape, an L-shape, one number to point at) that no number-rule can express.",
+  "whenToUse": "Reach for this whenever numbers are arranged on a grid to expose a property by position: multiples and times-tables, common multiples (and the LCM), the sieve of Eratosthenes for primes, counting in steps and arithmetic sequences, the column and diagonal patterns those trace, modular / remainder patterns, and grid investigations (T-shapes, L-shapes, diagonals). Author the grid (start, end, width) and the rules; never list shaded cells. width is the key choice — the default 10 is the hundred square, but the vertical patterns pupils memorise are an artefact of base ten, so use a width that is not 10 (try 6 or 7) to break them and make pupils look again. Common configurations: single pattern — one rule (multiples of 5, or { type: \"primes\" }) shades blue; common multiples — two multiples rules, e.g. of 4 and of 6, where the cells in both shade amber (the common multiples, smallest = the LCM); columns and diagonals — a sequence rule with step = width (a column), width+1 (a leading diagonal) or width−1 (an anti-diagonal); blank answer space — omit rules for a plain numbered grid, or set show.numbers false to leave only the shading; occluded question — flag a shaded cell with occlude to ask \"which number is this?\"; shape investigation — highlight the cells of a T- or L-shape and ask about their sum. Keep start, end and width identical across the blocks of one lesson so pupils track one grid. Staged builds read very well: open on the plain grid, then add one rule per stage and let the pattern (or the common-multiple overlap) appear last. Sibling: for pictorial growing patterns built from dots or shapes (square / triangular numbers drawn as figures) use algebra/sequence-pattern — this model is the numeric grid for number properties. Synonyms a teacher might use: hundred square, hundred grid, number square, number grid, times tables, multiples, common multiples, lowest common multiple, LCM, factors, primes, prime numbers, sieve of Eratosthenes, counting in, sequences, nth term, remainders, modular, T-shape, diagonal.",
+  "responseModes": [],
+  "tags": [
+    "number grid",
+    "hundred square",
+    "hundred grid",
+    "number square",
+    "multiples",
+    "times tables",
+    "common multiples",
+    "lcm",
+    "lowest common multiple",
+    "factors",
+    "primes",
+    "prime numbers",
+    "sieve of eratosthenes",
+    "sequence",
+    "arithmetic sequence",
+    "nth term",
+    "counting in",
+    "modular",
+    "remainder",
+    "diagonal",
+    "t-shape",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "start": {
+        "type": "integer",
+        "description": "The first number — the value in the TOP-LEFT cell. Default 1. The classic hundred square is start 1, end 100."
+      },
+      "end": {
+        "type": "integer",
+        "description": "The last number — cells fill left-to-right then top-to-bottom in reading order. Default 100. Must be ≥ start. The final row may be partial when (end − start + 1) is not a multiple of width."
+      },
+      "width": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 30,
+        "description": "Cells per ROW — the key structural choice. Default 10 (the hundred square). Vertical and diagonal patterns depend on it: on a width-10 grid the multiples of 5 sit in two columns and the multiples of 9 run down a diagonal, but a different width shifts them. Use a width that is NOT 10 to break the base-ten column patterns."
+      },
+      "rules": {
+        "type": "array",
+        "maxItems": 3,
+        "description": "The shading rules — each shades the cells whose VALUE satisfies it. Omit for a plain numbered grid. The FIRST rule shades blue, the second teal-green, the third violet; any cell satisfying TWO OR MORE rules is shaded amber instead — which is how common multiples appear (multiples of 4 blue, multiples of 6 green, the cells in both — 12, 24, … — amber). One rule for a single pattern, two to compare sets.",
+        "items": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "multiples",
+                  "description": "Shade every multiple of `of` that falls in range (… 4, 8, 12 …). 0, if it is in range, counts as a multiple of every number."
+                },
+                "of": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Shade the multiples of this number — the times table. `of` 5 shades 5, 10, 15, 20, …"
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Override the legend text for this set. Default is the derived \"Multiples of <of>\"."
+                }
+              },
+              "required": [
+                "type",
+                "of"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "primes",
+                  "description": "Shade the prime numbers in range — the result of the sieve of Eratosthenes (2, 3, 5, 7, 11, …). 1 is not prime; 0 and negatives are not prime."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Override the legend text. Default \"Primes\"."
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "sequence",
+                  "description": "Shade the terms of the arithmetic sequence a + d·n (n = 0, 1, 2, …) that fall in range — for counting in steps, nth-term patterns, and the columns/diagonals they trace."
+                },
+                "first": {
+                  "type": "integer",
+                  "description": "The first term a — where the sequence starts (need not be `start`; only terms inside start…end are shaded)."
+                },
+                "step": {
+                  "type": "integer",
+                  "description": "The common difference d — non-zero, may be negative (counting back). Tip on a width-w grid: step = w gives a vertical column, step = w+1 a leading diagonal, step = w−1 an anti-diagonal — the same rule draws columns and diagonals as the width changes."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Override the legend text. Default is the first few terms, e.g. \"3, 13, 23, …\"."
+                }
+              },
+              "required": [
+                "type",
+                "first",
+                "step"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "modular",
+                  "description": "Shade every number leaving remainder `residue` when divided by `mod` — n ≡ residue (mod m). residue 0 is the multiples of m; other residues shade the sibling column/diagonal families."
+                },
+                "mod": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "The divisor m (≥ 1)."
+                },
+                "residue": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "The remainder r (0 ≤ r < m; a larger value is reduced mod m)."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Override the legend text. Default \"Remainder <r> (mod <m>)\"."
+                }
+              },
+              "required": [
+                "type",
+                "mod",
+                "residue"
+              ]
+            }
+          ]
+        }
+      },
+      "cells": {
+        "type": "array",
+        "description": "Per-cell question and emphasis flags, addressed by the cell's NUMBER. Rule-shading is unaffected unless you set a flag here. Use to occlude a value for a question, or to ring specific cells — the five cells of a T-shape, an L-shape, a chosen run, or one number to point at — that no number-rule can express.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "n": {
+              "type": "integer",
+              "description": "The number of the cell to flag. Must lie between start and end; a value outside the grid is ignored."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render this cell's number as \"?\" — the \"which number is this?\" hook. The cell and any shading stay visible. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw an amber ring around this cell to draw the eye — point at one number, or list several to outline a shape (T-shape, L-shape, a run). Default false."
+            }
+          },
+          "required": [
+            "n"
+          ]
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "numbers": {
+            "type": "boolean",
+            "description": "Show the number inside every cell. false leaves the cells blank so only the shading shows — a \"shade the positions\" answer space. Default true."
+          },
+          "legend": {
+            "type": "boolean",
+            "description": "Show the colour key beneath the grid, naming each rule's set (and the amber common set). Default true; it renders nothing when there are no rules."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the grid; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the grid, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "start",
+      "end"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Blank answer space — a plain 1–100 hundred square",
+      "params": {
+        "header": "Number grid",
+        "start": 1,
+        "end": 100,
+        "width": 10
+      }
+    },
+    {
+      "label": "Worked example — multiples of 5 shaded (the two columns)",
+      "params": {
+        "start": 1,
+        "end": 100,
+        "width": 10,
+        "rules": [
+          {
+            "type": "multiples",
+            "of": 5
+          }
+        ]
+      }
+    },
+    {
+      "label": "The sieve of Eratosthenes — the primes to 100",
+      "params": {
+        "header": "The prime numbers to 100",
+        "start": 1,
+        "end": 100,
+        "width": 10,
+        "rules": [
+          {
+            "type": "primes"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Hard case — common multiples of 4 and 6 on a width-7 grid",
+      "params": {
+        "header": "Common multiples of 4 and 6",
+        "start": 1,
+        "end": 60,
+        "width": 7,
+        "rules": [
+          {
+            "type": "multiples",
+            "of": 4
+          },
+          {
+            "type": "multiples",
+            "of": 6
+          }
+        ],
+        "caption": "The amber numbers are multiples of both — the smallest is the LCM."
+      }
+    },
+    {
+      "label": "Occluded question — which multiples of 9 are hidden?",
+      "params": {
+        "start": 1,
+        "end": 100,
+        "width": 10,
+        "rules": [
+          {
+            "type": "multiples",
+            "of": 9
+          }
+        ],
+        "cells": [
+          {
+            "n": 36,
+            "occlude": true
+          },
+          {
+            "n": 72,
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Grid investigation — the sum of a T-shape",
+      "params": {
+        "start": 1,
+        "end": 100,
+        "width": 10,
+        "cells": [
+          {
+            "n": 23,
+            "highlight": true
+          },
+          {
+            "n": 24,
+            "highlight": true
+          },
+          {
+            "n": 25,
+            "highlight": true
+          },
+          {
+            "n": 34,
+            "highlight": true
+          },
+          {
+            "n": 44,
+            "highlight": true
+          }
+        ]
+      }
+    }
+  ]
+}

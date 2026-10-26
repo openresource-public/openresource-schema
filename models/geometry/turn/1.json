@@ -1,0 +1,326 @@
+{
+  "ref": "geometry/turn@1",
+  "family": "geometry",
+  "name": "turn",
+  "version": 1,
+  "title": "Turn (amount of turn)",
+  "tagline": "Amount of turn about a centre (quarter/half/three-quarter/full, clockwise or anticlockwise) as a sweep arrow, turn-dial or landmarks rosette; angle and fraction derived.",
+  "description": "The amount of turn (a rotation) about a centre, for KS1/KS2 \"position and direction\": a start heading sweeps to an end heading by a given amount, drawn as a bold curved arrow with the swept fraction of a turn and the angle in degrees read off. Choose a scene: \"arrow\" (an abstract start pointer, a ghost end pointer and the sweep arrow), \"dial\" (a turn-dial — a face with a hand turning and a rim arc, the turn cousin of an analogue clock), or \"rosette\" (a ring of labelled landmarks with a little person at the centre turning to face a new one). The author writes the turn — a fraction (\"quarter\", \"half\", \"three-quarter\", \"full\", or an a/b form) or degrees — and its direction (clockwise / anticlockwise), or a start and a target heading; the swept angle, the reduced fraction of a turn, the end heading, the sweep arc (the short way or, for three-quarter turns, the reflex way round) and the person's new facing are all derived. A friendly stem sentence (\"A quarter turn clockwise\"; \"Facing the school, turn a quarter turn clockwise to face the park\") restates the figure. Occlude the turn amount for \"how much is the turn?\" or the end for \"where do you end up facing?\"; on the web, pupils can drag to make the turn, snapping to the scene's natural positions.",
+  "whenToUse": "Reach for this for amount of turn and position-and-direction (KS1/KS2): quarter / half / three-quarter / whole turns, clockwise vs anticlockwise, fractions of a turn, and \"turn to face\" landmark problems. Pick a scene: scene \"arrow\" (default) for the pure amount of turn — a pointer turns and a curved arrow shows the sweep; scene \"dial\" for fractions of a turn on a face (a single hand turning, the turn version of a clock — set show.numerals true for a clock face, false for a quarter-marked dial); scene \"rosette\" for \"facing the ___, turn ___ to face the ___\" — give landmarks, each with an at heading and a label, and reference them by id in start/to. Specify the turn in one of two ways: (1) turn: { fraction: \"quarter\" } (or \"half\" / \"three-quarter\" / \"full\", or \"1/3\", \"3/4\", \"5/8\") OR turn: { degrees: 90 } PLUS a top-level direction (\"clockwise\" or \"anticlockwise\") — the end heading is derived; or (2) to: a target heading (with direction to say which way round) — the fraction and degrees are derived, the natural form for \"turn to face the park\" and \"from 12 to 6\". start sets the heading you begin from (default straight up / 12 / north). Watch the hard case: a three-quarter turn clockwise and a quarter turn anticlockwise end the same way but sweep differently — the model draws the correct reflex (long-way-round) arc and honours direction, so always state the direction. show toggles the furniture: degrees / fraction (the two readouts), startPointer / endPointer, arc, marks, person (rosette), numerals & compass. occlude \"turn\" hides the amount as \"?\" (\"how big is this turn?\"); occlude \"end\" hides where you finish (\"after this turn, which way / which landmark do you face?\"). Keep stem.show true for the verbal twin in primary; set it false with a caption for an answer space. Keep the same scene, start and direction across one lesson so pupils compare like with like. Switch model when the teaching changes: to rotate a shape about a point on a coordinate grid use geometry/transformations; to tell the time or read the angle between two clock hands use geometry/clock. Synonyms a teacher might use: turn, amount of turn, quarter turn, half turn, three-quarter turn, whole turn, full turn, clockwise, anticlockwise, fraction of a turn, rotate, rotation, right angle, direction, compass, position and direction, face, facing.",
+  "responseModes": [],
+  "tags": [
+    "turn",
+    "amount of turn",
+    "quarter turn",
+    "half turn",
+    "three-quarter turn",
+    "whole turn",
+    "full turn",
+    "clockwise",
+    "anticlockwise",
+    "fraction of a turn",
+    "rotation",
+    "rotate",
+    "direction",
+    "position and direction",
+    "compass",
+    "right angle",
+    "facing",
+    "landmarks",
+    "clock",
+    "dial",
+    "primary",
+    "KS1",
+    "KS2",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "$defs": {
+      "direction": {
+        "oneOf": [
+          {
+            "type": "number",
+            "description": "Degrees clockwise from straight up (north / 12 o'clock): 0 = up, 90 = right, 180 = down, 270 = left."
+          },
+          {
+            "type": "string",
+            "description": "A named heading: a compass point (\"N\", \"NE\", \"E\", \"SE\", \"S\", \"SW\", \"W\", \"NW\"); a cardinal word (\"up\", \"down\", \"left\", \"right\"); a clock hour as a string (\"12\", \"3\", \"6\", \"9\", … → that hour's position); or the id of one of the landmarks (rosette). Resolved in that order, so give landmarks descriptive ids (park, school), not compass letters."
+          }
+        ]
+      }
+    },
+    "properties": {
+      "scene": {
+        "type": "string",
+        "enum": [
+          "arrow",
+          "dial",
+          "rosette"
+        ],
+        "description": "Which backdrop the turn is drawn on. \"arrow\" (default): an abstract turn — a start pointer, a ghost end pointer and the curved sweep arrow. \"dial\": a turn-dial — a circular face with one hand turning and a rim arc (set show.numerals for a clock-style face). \"rosette\": a ring of labelled landmarks with a little person at the centre turning to face a new one. All three share the same turn engine and derived readouts."
+      },
+      "start": {
+        "$ref": "#/$defs/direction",
+        "description": "The heading you begin from (default straight up — north / 12 o'clock). A number is degrees clockwise from up; a string is a compass point, cardinal word, clock hour, or — in the rosette scene — a landmark id (the person starts facing that landmark)."
+      },
+      "direction": {
+        "type": "string",
+        "enum": [
+          "clockwise",
+          "anticlockwise"
+        ],
+        "description": "The sense of the turn. Default \"clockwise\". With \"to\" it also decides WHICH WAY ROUND the turn goes (the same start and end give a quarter turn one way or a three-quarter turn the other), so always set it deliberately."
+      },
+      "turn": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The amount of turn (the AUTHORED turn). Give EITHER a fraction OR degrees; the other readout and the end heading are derived. Omit \"turn\" and give \"to\" instead to specify the turn by its target heading. With neither, a quarter turn is assumed.",
+        "properties": {
+          "fraction": {
+            "type": "string",
+            "description": "A friendly fraction of a FULL turn: \"quarter\", \"half\", \"three-quarter\", \"full\" (or \"whole\"), or an a/b form like \"1/4\", \"1/3\", \"2/3\", \"3/4\", \"1/8\", \"5/8\". Derived: degrees = fraction × 360 (a quarter turn = 90°)."
+          },
+          "degrees": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "The turn in degrees (e.g. 90, 120, 270) — use for a turn that is not a friendly fraction. Derived: the fraction of a turn = degrees ÷ 360, reduced. If both fraction and degrees are given, fraction wins."
+          }
+        }
+      },
+      "to": {
+        "$ref": "#/$defs/direction",
+        "description": "An alternative to \"turn\": the TARGET heading to turn TO. The turn amount (fraction and degrees) is then derived from start → to, going round in \"direction\". The natural form for \"turn to face the park\" (a landmark id) and \"from 12 to 6\". If both \"turn\" and \"to\" are given, \"turn\" wins."
+      },
+      "landmarks": {
+        "type": "array",
+        "maxItems": 8,
+        "description": "Labelled landmarks placed around the rim — the heart of the rosette scene (also usable as named points on the arrow/dial scenes). Each sits at a bearing \"at\"; reference one as a heading by its id in \"start\" / \"to\".",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "$ref": "#/$defs/direction",
+              "description": "The landmark's bearing from the centre (a number of degrees clockwise from up, or a compass / cardinal / clock-hour string)."
+            },
+            "label": {
+              "type": "string",
+              "description": "The landmark's display name (e.g. \"school\", \"park\", \"shop\")."
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$",
+              "description": "Optional kebab-case id for referencing this landmark in \"start\" / \"to\". Defaults to a slug of the label."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this landmark — the target the person is turning to face. Default false."
+            }
+          },
+          "required": [
+            "at",
+            "label"
+          ]
+        }
+      },
+      "occlude": {
+        "type": "string",
+        "enum": [
+          "none",
+          "turn",
+          "end"
+        ],
+        "description": "\"none\" (default) shows everything. \"turn\" hides the amount of turn (the fraction and degrees) as \"?\" — the \"how big is this turn?\" question (the sweep arc still shows). \"end\" hides where you finish (the end pointer and, on a rosette, which landmark) so pupils work out the end heading from the start and the given turn — \"after this turn, which way / which landmark do you face?\"."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "degrees": {
+            "type": "boolean",
+            "description": "Show the swept angle in degrees (\"90°\"). Default true."
+          },
+          "fraction": {
+            "type": "boolean",
+            "description": "Show the fraction of a turn (\"¼ turn\" / \"a quarter turn\"). Default true."
+          },
+          "startPointer": {
+            "type": "boolean",
+            "description": "Draw the start pointer (the heading you begin from). Default true."
+          },
+          "endPointer": {
+            "type": "boolean",
+            "description": "Draw the end pointer (where you finish). Default true. Forced off by occlude \"end\"."
+          },
+          "arc": {
+            "type": "boolean",
+            "description": "Draw the curved sweep arrow / rim arc showing the turn. Default true."
+          },
+          "marks": {
+            "type": "boolean",
+            "description": "Draw the light tick marks around the rim (the quarter / eighth or clock positions). Default true."
+          },
+          "numerals": {
+            "type": "boolean",
+            "description": "Dial scene: show the 1–12 clock numerals (a clock-style face). Default false (a plain quarter-marked dial)."
+          },
+          "compass": {
+            "type": "boolean",
+            "description": "Arrow / dial scenes: label the four compass points N / E / S / W around the rim. Default false. (The rosette uses its landmarks instead.)"
+          },
+          "person": {
+            "type": "boolean",
+            "description": "Rosette scene: draw the little person at the centre. Default true."
+          }
+        }
+      },
+      "stem": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The derived stem sentence — the verbal twin of the figure (a primary convention).",
+        "properties": {
+          "show": {
+            "type": "boolean",
+            "description": "Show the stem sentence beneath the figure (\"A quarter turn clockwise\"; on a rosette \"Facing the school, turn a quarter turn clockwise to face the park\"). Default true. Set false for a clean answer space (the question goes in the block text)."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. Pupils drag the end pointer / hand / person round the centre to MAKE the turn; it snaps to the scene's natural positions (a clock hour on the dial, a compass point or landmark elsewhere) and the sweep, the fraction, the degrees and the end heading recompute live. Exploratory — never written back. Default false."
+      }
+    }
+  },
+  "examples": [
+    {
+      "label": "Worked example — a quarter turn clockwise (sweep arrow, both readouts, stem)",
+      "params": {
+        "scene": "arrow",
+        "start": "up",
+        "turn": {
+          "fraction": "quarter"
+        },
+        "direction": "clockwise",
+        "stem": {
+          "show": true
+        },
+        "header": "A quarter turn"
+      }
+    },
+    {
+      "label": "Fractions of a turn on a dial — half a turn from 12 to 6 (turn given by its target)",
+      "params": {
+        "scene": "dial",
+        "start": "N",
+        "to": "S",
+        "direction": "clockwise",
+        "show": {
+          "numerals": true
+        },
+        "stem": {
+          "show": true
+        },
+        "caption": "The hand turns half a turn, from 12 round to 6."
+      }
+    },
+    {
+      "label": "Rosette — facing the school, turn to face the park (turn derived from the landmarks)",
+      "params": {
+        "scene": "rosette",
+        "start": "school",
+        "to": "park",
+        "direction": "clockwise",
+        "landmarks": [
+          {
+            "id": "school",
+            "at": "N",
+            "label": "school"
+          },
+          {
+            "id": "park",
+            "at": "E",
+            "label": "park",
+            "highlight": true
+          },
+          {
+            "id": "shop",
+            "at": "S",
+            "label": "shop"
+          },
+          {
+            "id": "home",
+            "at": "W",
+            "label": "home"
+          }
+        ],
+        "stem": {
+          "show": true
+        }
+      }
+    },
+    {
+      "label": "Occluded question — how big is this turn? (the amount hidden as \"?\")",
+      "params": {
+        "scene": "arrow",
+        "start": "up",
+        "turn": {
+          "fraction": "three-quarter"
+        },
+        "direction": "clockwise",
+        "occlude": "turn",
+        "stem": {
+          "show": false
+        }
+      }
+    },
+    {
+      "label": "The hard case — a three-quarter turn anticlockwise (the reflex sweep, long way round)",
+      "params": {
+        "scene": "arrow",
+        "start": "up",
+        "turn": {
+          "fraction": "three-quarter"
+        },
+        "direction": "anticlockwise",
+        "show": {
+          "compass": true
+        },
+        "stem": {
+          "show": true
+        },
+        "caption": "Three-quarters of a turn anticlockwise — the long way round."
+      }
+    },
+    {
+      "label": "Blank answer space — show a quarter turn clockwise from the start pointer",
+      "params": {
+        "scene": "arrow",
+        "start": "up",
+        "turn": {
+          "fraction": "quarter"
+        },
+        "direction": "clockwise",
+        "occlude": "end",
+        "show": {
+          "arc": false,
+          "compass": true
+        },
+        "stem": {
+          "show": false
+        }
+      }
+    }
+  ]
+}

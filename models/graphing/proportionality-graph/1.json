@@ -1,0 +1,235 @@
+{
+  "ref": "graphing/proportionality-graph@1",
+  "family": "graphing",
+  "name": "proportionality-graph",
+  "version": 1,
+  "title": "Proportionality sketch graph",
+  "tagline": "unscaled sketch graphs of the four proportionality shapes (y∝x line, y∝1/x, y∝x², y∝1/x²) on labelled x–y axes with an O origin; one panel or a 2×2 A/B/C/D match grid.",
+  "description": "Unscaled SKETCH graphs of the four standard proportionality relationships on labelled x–y axes with an O origin, drawn by shape and not to scale (no numbers, no grid). The four shapes are: direct — y directly proportional to x, a straight line through the origin; inverse — y inversely proportional to x, a two-branch reciprocal curve (or a single positive-quadrant branch); direct-square — y directly proportional to x², an upward parabola through the origin; inverse-square — y inversely proportional to x², a steeper two-branch reciprocal-squared curve. Author one panel for a single sketch, or two to four panels for a labelled grid tagged A/B/C/D — the classic \"match each graph to a proportionality statement\" exam stimulus. Each panel can carry a corner tag, an occludable caption naming the relationship (render \"?\" for \"name this relationship\"), an amber highlight, and an optional equation label by the curve. The curve, its clipping and the axes are all derived from the chosen relationship; there is nothing to author but the shape.",
+  "whenToUse": "Reach for this to draw the recognisable SKETCH shape of a proportionality relationship — direct (y ∝ x), inverse (y ∝ 1/x), direct square (y ∝ x²) or inverse square (y ∝ 1/x²) — on plain labelled axes with an O origin, NOT to scale. The headline use is the GCSE \"here are four graphs A–D, match each to a proportionality statement\" question (e.g. Maths Genie Direct and Inverse Proportion): author panels with a tag and relationship for each of the four graphs, in a 2×2 grid. For a single teaching sketch use one panel. Set quadrants: \"all\" (default) for the full curves the exam uses — both branches of a reciprocal, both arms of a parabola, the line through the origin in both directions; set quadrants: \"first\" for a positive-context sketch (only the first-quadrant branch/arm), which suits real proportion contexts where the quantities are positive. Use label to caption a panel with its relationship in words (\"y is inversely proportional to x\") and set occlude: true on it to hide the caption as \"?\" for a \"name this relationship\" question. Use highlight: true to draw one panel's curve in amber (the answer, or the one under discussion). Use curveLabel for a small equation by the curve (\"y = kx\") on a worked sketch — leave it off for a match question, which is identified by shape alone. This model is the UNSCALED sketch register only: switch to graphing/function-graph for a numbered curve y = f(x) with real coordinates, roots, turning points or asymptotes, and to graphing/coordinate-grid for plotting discrete points on a numbered grid. Cross-block convention: keep quadrants consistent across the panels of one match grid. Note: this model draws the STIMULUS only; the pupil answer (relationship → letter) is a separate matching question tile — it does not accept a drawn-curve answer on the figure. Staged builds read well: reveal the four curves one at a time on the four tagged axes, or open on the full stimulus and highlight each panel in turn as it is matched. Synonyms a teacher might use: proportion, proportionality, directly proportional, inversely proportional, direct proportion, inverse proportion, sketch graph, reciprocal graph, parabola, hyperbola, y = kx, y = k/x, y = kx^2, y = k/x^2, match the graph.",
+  "responseModes": [],
+  "tags": [
+    "proportion",
+    "proportionality",
+    "directly proportional",
+    "inversely proportional",
+    "direct proportion",
+    "inverse proportion",
+    "sketch graph",
+    "reciprocal",
+    "reciprocal graph",
+    "hyperbola",
+    "parabola",
+    "y = kx",
+    "y = k/x",
+    "y = kx^2",
+    "y = k/x^2",
+    "match the graph",
+    "graph shape",
+    "proportion graphs",
+    "graphing",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "panels": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 4,
+        "description": "The sketch panels. One panel renders a single sketch; two to four render a labelled grid (the A/B/C/D \"match the graph\" stimulus). Order is left-to-right, top-to-bottom.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "relationship": {
+              "type": "string",
+              "enum": [
+                "direct",
+                "inverse",
+                "direct-square",
+                "inverse-square"
+              ],
+              "description": "Which of the four standard proportionality shapes to draw. 'direct' = y directly proportional to x (a straight line through the origin); 'inverse' = y inversely proportional to x (a two-branch reciprocal curve); 'direct-square' = y directly proportional to x² (an upward parabola through the origin); 'inverse-square' = y inversely proportional to x² (a steeper two-branch reciprocal-squared curve). Omit to draw a BLANK panel — labelled axes with no curve (an answer space, or the base frame of a staged reveal)."
+            },
+            "tag": {
+              "type": "string",
+              "description": "A short corner marker drawn at the panel's top-left, e.g. \"A\", \"B\", \"C\", \"D\" — the exam label the matching tile refers to. Omit for an untagged panel."
+            },
+            "label": {
+              "type": "string",
+              "description": "A caption centred below the panel, e.g. \"y is directly proportional to x\" or \"y ∝ 1/x\". Use proper typography (∝, ²). Omit for no caption."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Hide this panel's label caption as \"?\" — the \"name this proportionality relationship\" question hook. The graph still shows. Requires a label. Default false."
+            },
+            "curveLabel": {
+              "type": "string",
+              "description": "A small equation label drawn by the curve on a worked sketch, e.g. \"y = kx\". Leave off for a match question (which is identified by shape). Omit for none."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this panel's curve in the amber emphasis colour — the answer, or the panel currently under discussion. Default false."
+            },
+            "quadrants": {
+              "type": "string",
+              "enum": [
+                "all",
+                "first"
+              ],
+              "description": "'all' (default) draws the full curves the exam uses — both branches of a reciprocal, both arms of a parabola, the line through the origin both ways, origin centred. 'first' draws only the first-quadrant branch/arm with the origin at the lower-left, for a positive-context proportion sketch."
+            }
+          },
+          "required": []
+        }
+      },
+      "columns": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4,
+        "description": "How many panels per row. Default: 1 panel → 1 column; 2–4 panels → 2 columns (so four panels make the standard 2×2 grid)."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles (all default true).",
+        "properties": {
+          "axisLabels": {
+            "type": "boolean",
+            "description": "Draw the \"x\" and \"y\" letters by the axis arrowheads. Default true."
+          },
+          "originLabel": {
+            "type": "boolean",
+            "description": "Draw the \"O\" at the origin. Default true."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the whole figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "panels"
+    ]
+  },
+  "examples": [
+    {
+      "label": "The hard case — 2×2 match grid A–D (one of each relationship)",
+      "params": {
+        "header": "Here are four graphs",
+        "panels": [
+          {
+            "tag": "A",
+            "relationship": "inverse"
+          },
+          {
+            "tag": "B",
+            "relationship": "direct"
+          },
+          {
+            "tag": "C",
+            "relationship": "inverse-square"
+          },
+          {
+            "tag": "D",
+            "relationship": "direct-square"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Single worked sketch — direct proportion, curve labelled",
+      "params": {
+        "panels": [
+          {
+            "relationship": "direct",
+            "label": "y is directly proportional to x",
+            "curveLabel": "y = kx"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Name this relationship (occluded caption question)",
+      "params": {
+        "panels": [
+          {
+            "relationship": "inverse-square",
+            "label": "y is inversely proportional to x²",
+            "occlude": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Blank answer space — four tagged axes to sketch on",
+      "params": {
+        "panels": [
+          {
+            "tag": "A"
+          },
+          {
+            "tag": "B"
+          },
+          {
+            "tag": "C"
+          },
+          {
+            "tag": "D"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Positive-context pair — first-quadrant inverse vs inverse-square",
+      "params": {
+        "header": "Two decreasing relationships",
+        "panels": [
+          {
+            "tag": "A",
+            "relationship": "inverse",
+            "quadrants": "first",
+            "label": "y ∝ 1/x"
+          },
+          {
+            "tag": "B",
+            "relationship": "inverse-square",
+            "quadrants": "first",
+            "label": "y ∝ 1/x²"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Highlighted answer — the parabola is direct-square",
+      "params": {
+        "panels": [
+          {
+            "tag": "A",
+            "relationship": "inverse"
+          },
+          {
+            "tag": "B",
+            "relationship": "direct-square",
+            "highlight": true
+          },
+          {
+            "tag": "C",
+            "relationship": "direct"
+          },
+          {
+            "tag": "D",
+            "relationship": "inverse-square"
+          }
+        ]
+      }
+    }
+  ]
+}

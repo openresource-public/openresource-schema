@@ -1,0 +1,556 @@
+{
+  "ref": "geometry/intersecting-lines@1",
+  "family": "geometry",
+  "name": "intersecting-lines",
+  "version": 1,
+  "title": "Intersecting lines",
+  "tagline": "A web of straight lines through named points with a derived angle at every crossing; occlude, label or tick angles, flag lines parallel, shade the interior triangle.",
+  "description": "A \"web\" of straight lines drawn through named points, for angle chasing. The author places points (a to-scale sketch in any units) and declares each line as an ordered list of the point names on it; the model draws every line, derives every intersection (a point named only inside a line — not given coordinates — is placed at the exact crossing of the two lines carrying it), and derives the angle at any crossing between any two rays. Lines can be flagged into parallel groups (drawn with feather chevrons); a named loop of points can be shaded as the interior triangle three lines make. Every angle is addressed the exam way — {at, from, to} = ∠(from)(at)(to), the angle at the middle point between the rays toward the other two — and its measure is computed, so the figure cannot lie. Annotate each angle to occlude it (\"?\"), label it (a given value or an algebra letter), highlight the answer, tick equal angles, or mark a right angle. Draws what parallel-lines and triangle cannot: several transversals crossing two parallels to form an interior triangle, an X-crossing with vertically-opposite angles, a triangle made by three extended lines, or any multi-line angle-chase.",
+  "whenToUse": "Reach for this for any ANGLE-CHASE where straight lines cross at named points and angles are found by chaining reasons — vertically opposite, angles on a straight line, corresponding/alternate/co-interior across parallels, the exterior-angle and angle-sum of an interior triangle, and forming/solving angle equations. Author POINTS + LINES, never an angle number: give real coordinates to the \"driving\" points (line ends, a shared apex, free points), list which points are collinear, and let the crossings and every angle derive. A point you name ONLY inside a line (never in `points`) is derived at that crossing — the natural way to place F where two transversals meet. Address angles as {at, from, to} exactly like ∠BFH (at F, between the rays to B and to H). Common configurations: two lines crossing — vertically-opposite and angles-on-a-line (highlight the equal pair, or occlude one and give the other); parallel pair + transversals — put the two lines in one `parallel` group and chase corresponding/alternate/co-interior angles; the interior-triangle exam figure (two transversals from a shared point crossing both parallels, `shades` the triangle they enclose, occlude the target angle); a triangle made by three extended lines (list each side as a line through two corners); algebra — label angles x / 2x / x+40 and solve. To ask a question, occlude the target angle (and give the others as `label`); to teach, leave values to derive and highlight the result. Keep the SAME point placement across the blocks of one lesson so pupils track one figure. Prefer this over parallel-lines whenever the transversals do not both cut a fixed horizontal pair, or an interior triangle forms; prefer triangle for a single labelled triangle with side lengths. Synonyms: angle chase, angles in parallel lines, vertically opposite, corresponding angles, alternate angles, co-interior/allied angles, angles on a straight line, transversal, intersecting lines, interior triangle, exterior angle.",
+  "responseModes": [],
+  "tags": [
+    "angles",
+    "angle chase",
+    "intersecting lines",
+    "straight lines",
+    "vertically opposite",
+    "angles on a line",
+    "parallel lines",
+    "corresponding angles",
+    "alternate angles",
+    "co-interior",
+    "allied angles",
+    "transversal",
+    "interior triangle",
+    "exterior angle",
+    "angle sum",
+    "reasons",
+    "proof",
+    "geometry",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "points": {
+        "type": "object",
+        "description": "The named ANCHOR points, each an [x, y] coordinate (y is UP; any units — a to-scale sketch). These are the points whose position you fix: line endpoints, a shared apex, free points. A point named inside a line's `through` but NOT listed here is a DERIVED intersection — placed automatically at the crossing of the two lines carrying it (the honest way to place a point where two lines meet). Point names are the letters shown on the figure.",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "An [x, y] coordinate, y up."
+        }
+      },
+      "lines": {
+        "type": "array",
+        "description": "The straight lines of the web. Each is an ordered list of the point names lying on it; the line is drawn straight through them (with a small overshoot past the end points). A line needs at least two ANCHOR points (points given coordinates in `points`) to fix its direction; any other named points on it are derived where it crosses another line.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "through": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Point names lying on this line, in order along it (one end to the other). e.g. [\"A\", \"G\", \"F\", \"B\"] — a line from A through the crossings G and F to B. The two extreme points should be the line's ends."
+            },
+            "parallel": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Parallel-group id. Lines sharing a group are drawn with matching feather chevrons (group 1 → one chevron, group 2 → two) to assert they are parallel — the mark is your assertion, like equal-side ticks. Omit for a line with no parallel mark."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw this whole line in amber (emphasis). Default false."
+            },
+            "overhang": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Multiplier (default 1) on how far THIS line pokes past its ends, overriding the figure-level `overhang`. A line that stops at a crossing already pokes further than one ending at a free endpoint; raise this (e.g. 1.5) to lengthen just this line's stubs, lower it (e.g. 0.5) to shorten them."
+            }
+          },
+          "required": [
+            "through"
+          ]
+        }
+      },
+      "angles": {
+        "type": "array",
+        "description": "The angles to MARK, each addressed by three point names {at, from, to} = ∠(from)(at)(to): the angle at the crossing `at`, opening between the rays toward `from` and toward `to`. Its measure is derived; annotate to occlude, label, highlight, tick equal, or mark a right angle. List only the angles the figure needs — every crossing is NOT auto-marked.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "type": "string",
+              "description": "The VERTEX point — the crossing (or endpoint) the angle sits at. The middle letter of ∠XYZ. Must be a named point that lies on at least two lines (so two rays leave it)."
+            },
+            "from": {
+              "type": "string",
+              "description": "One point the angle opens toward — the ray runs from `at` toward this point along a line through `at`. The first letter of ∠XYZ."
+            },
+            "to": {
+              "type": "string",
+              "description": "The other point the angle opens toward — the ray from `at` toward this point. The last letter of ∠XYZ. `from` and `to` are interchangeable; their order only nudges which way the arc is drawn, never the measure."
+            },
+            "label": {
+              "type": "string",
+              "description": "Override the derived degree readout with your own text — a given value already known (\"32°\"), or an algebra letter (\"x\", \"2x\") when the angle is an unknown to solve for. Omit to show the computed degrees."
+            },
+            "occlude": {
+              "type": "boolean",
+              "description": "Render the value as \"?\" — the question hook (\"find this angle\"). The arc still marks the angle; only the number is hidden. Default false."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Draw the arc and value in amber — the result/answer, or one angle of an equal pair to draw the eye. Default false."
+            },
+            "bare": {
+              "type": "boolean",
+              "description": "Draw the arc with NO value text (a marked-but-unquantified angle — e.g. an equal pair shown only by ticks). occlude beats bare. Default false."
+            },
+            "rightAngle": {
+              "type": "boolean",
+              "description": "Draw a right-angle square instead of an arc (asserts 90° at this corner). Default false."
+            },
+            "reflex": {
+              "type": "boolean",
+              "description": "Mark the REFLEX angle (the >180° explement) between the two rays instead of the non-reflex angle. Default false — the ≤180° angle is marked."
+            },
+            "mark": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3,
+              "description": "Draw this many equal-angle tick dashes across the arc (1, 2 or 3) — the \"these angles are equal\" notation. Give the same count to angles that are equal (corresponding, alternate, vertically opposite, isosceles). Omit for no ticks."
+            }
+          },
+          "required": [
+            "at",
+            "from",
+            "to"
+          ]
+        }
+      },
+      "shades": {
+        "type": "array",
+        "description": "Regions to shade (a light tint behind the lines) — typically the interior triangle three crossing lines make. Each is a closed loop of point names; the region is filled from the resolved point positions.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "loop": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Point names in order around the region (e.g. [\"E\", \"F\", \"G\"] for the triangle EFG). The polygon closes automatically."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Shade amber instead of the default blue tint (emphasis). Default false."
+            }
+          },
+          "required": [
+            "loop"
+          ]
+        }
+      },
+      "hideLabels": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Point names whose letter should NOT be drawn (e.g. bare construction endpoints). By default every named point shows its letter."
+      },
+      "overhang": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Multiplier (default 1) on how far every line pokes past its ends. Lines that stop AT a crossing (e.g. the sides of a triangle made from three lines) already poke further than lines ending at a free endpoint, so the crossings read as lines passing through — raise this (e.g. 1.5) when a figure needs longer stubs to read as intersecting lines rather than a closed shape, or set it per line with the line's own `overhang`."
+      },
+      "showPointDots": {
+        "type": "boolean",
+        "description": "Draw a small dot at every intersection point (a point lying on two or more lines). Default false — most exam webs show only the crossing lines and the letters."
+      },
+      "notToScale": {
+        "type": "boolean",
+        "description": "Print a small \"Not to scale\" note under the figure (exam convention for a sketch). Default false."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional short italic note centred below the figure (a given fact or a reason). Keep working in the block text, not here."
+      }
+    },
+    "required": [
+      "points",
+      "lines"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked — two lines crossing, vertically opposite angles equal",
+      "params": {
+        "header": "Two straight lines crossing",
+        "points": {
+          "P": [
+            0,
+            0
+          ],
+          "L": [
+            -6,
+            0
+          ],
+          "R": [
+            6,
+            0
+          ],
+          "U": [
+            3.857,
+            4.596
+          ],
+          "V": [
+            -3.857,
+            -4.596
+          ]
+        },
+        "lines": [
+          {
+            "through": [
+              "L",
+              "P",
+              "R"
+            ]
+          },
+          {
+            "through": [
+              "V",
+              "P",
+              "U"
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "P",
+            "from": "R",
+            "to": "U",
+            "highlight": true
+          },
+          {
+            "at": "P",
+            "from": "V",
+            "to": "L",
+            "highlight": true
+          },
+          {
+            "at": "P",
+            "from": "U",
+            "to": "L"
+          },
+          {
+            "at": "P",
+            "from": "R",
+            "to": "V"
+          }
+        ],
+        "caption": "Vertically opposite angles are equal"
+      }
+    },
+    {
+      "label": "Blank answer space — a triangle made by three lines, every angle hidden",
+      "params": {
+        "points": {
+          "X": [
+            1,
+            6
+          ],
+          "Y": [
+            -4,
+            -2
+          ],
+          "Z": [
+            6,
+            -2
+          ]
+        },
+        "lines": [
+          {
+            "through": [
+              "Y",
+              "Z"
+            ]
+          },
+          {
+            "through": [
+              "Y",
+              "X"
+            ]
+          },
+          {
+            "through": [
+              "Z",
+              "X"
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "X",
+            "from": "Y",
+            "to": "Z",
+            "occlude": true
+          },
+          {
+            "at": "Y",
+            "from": "X",
+            "to": "Z",
+            "occlude": true
+          },
+          {
+            "at": "Z",
+            "from": "X",
+            "to": "Y",
+            "occlude": true
+          }
+        ],
+        "shades": [
+          {
+            "loop": [
+              "X",
+              "Y",
+              "Z"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — angles on a straight line (find the marked angle)",
+      "params": {
+        "points": {
+          "P": [
+            0,
+            0
+          ],
+          "L": [
+            -6,
+            0
+          ],
+          "R": [
+            6,
+            0
+          ],
+          "U": [
+            3,
+            5.196
+          ],
+          "V": [
+            -3,
+            -5.196
+          ]
+        },
+        "lines": [
+          {
+            "through": [
+              "L",
+              "P",
+              "R"
+            ]
+          },
+          {
+            "through": [
+              "V",
+              "P",
+              "U"
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "P",
+            "from": "R",
+            "to": "U",
+            "label": "58°"
+          },
+          {
+            "at": "P",
+            "from": "U",
+            "to": "L",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "caption": "Angles on a straight line add to 180°"
+      }
+    },
+    {
+      "label": "Hard case — interior-triangle angle chase across parallels (AB ∥ CD)",
+      "params": {
+        "header": "AB and CD are parallel",
+        "points": {
+          "A": [
+            1.466,
+            -4.93
+          ],
+          "B": [
+            7.561,
+            4.822
+          ],
+          "C": [
+            4.943,
+            -7.855
+          ],
+          "D": [
+            13.953,
+            6.561
+          ],
+          "E": [
+            0,
+            0
+          ],
+          "J": [
+            16.167,
+            5.253
+          ],
+          "K": [
+            9.082,
+            -2.774
+          ]
+        },
+        "lines": [
+          {
+            "through": [
+              "A",
+              "G",
+              "F",
+              "B"
+            ],
+            "parallel": 1
+          },
+          {
+            "through": [
+              "C",
+              "I",
+              "H",
+              "D"
+            ],
+            "parallel": 1
+          },
+          {
+            "through": [
+              "E",
+              "F",
+              "H",
+              "J"
+            ]
+          },
+          {
+            "through": [
+              "E",
+              "G",
+              "I",
+              "K"
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "F",
+            "from": "B",
+            "to": "H",
+            "label": "40°"
+          },
+          {
+            "at": "I",
+            "from": "H",
+            "to": "K",
+            "label": "75°"
+          },
+          {
+            "at": "E",
+            "from": "F",
+            "to": "G",
+            "occlude": true,
+            "highlight": true
+          }
+        ],
+        "shades": [
+          {
+            "loop": [
+              "E",
+              "F",
+              "G"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Algebra — form and solve an equation from a crossing (x and 2x on a line)",
+      "params": {
+        "points": {
+          "P": [
+            0,
+            0
+          ],
+          "L": [
+            -6,
+            0
+          ],
+          "R": [
+            6,
+            0
+          ],
+          "U": [
+            3,
+            5.196
+          ],
+          "V": [
+            -3,
+            -5.196
+          ]
+        },
+        "lines": [
+          {
+            "through": [
+              "L",
+              "P",
+              "R"
+            ]
+          },
+          {
+            "through": [
+              "V",
+              "P",
+              "U"
+            ]
+          }
+        ],
+        "angles": [
+          {
+            "at": "P",
+            "from": "R",
+            "to": "U",
+            "label": "x"
+          },
+          {
+            "at": "P",
+            "from": "U",
+            "to": "L",
+            "label": "2x"
+          }
+        ],
+        "caption": "x + 2x = 180"
+      }
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "ref": "cs/code-editor@4",
+  "family": "cs",
+  "name": "code-editor",
+  "version": 4,
+  "title": "Code editor",
+  "tagline": "Interactive Python or JavaScript editor with a run console, in seven colour themes; output is produced by running the code, so it cannot show a result the code would not.",
+  "description": "An interactive Python or JavaScript code editor with a run console, in the app's coding window: one header row with three coloured window circles, the title and the Run, Reset and full-screen buttons; a file tab over a syntax-highlighted listing with line numbers; a console pane beside it (underneath on a phone); and a footer naming the language on the right (it says more only when the window shows it nowhere else, such as a paced run still going). It comes in seven colour themes (`theme`). Pupils edit the listing and press Run; the code runs on the library's own interpreter for that language (no network, no real file system, a step limit that stops endless loops in the same place every run, an allocation budget, console output captured and capped) and the result appears in the console. The console opens empty, saying \"Press Run to see the output\", until someone runs it; an error that names its line tints that line. The console output is never authored — it is produced by actually running the code — so the figure cannot show a result the code would not produce. Use it as a live worked listing, a read-only code listing to read and trace, a blank editor for pupils to write code in, or a predict-the-output prompt where pupils guess the console output before pressing Run.",
+  "whenToUse": "The console reads like a developer console: a Set prints Set(2) { 1, 2 }, a class instance under its class name, an array hole as <1 empty item>, console.log / info / debug / warn / error / dir / table / group / trace / assert all land in the pane, and an uncaught error is printed in the browser's own wording (\"Uncaught ReferenceError: quantity is not defined\"). Two house conventions differ from Chrome or Node and have since v1, so mark a predict-the-output task against THIS pane rather than against a browser: strings inside objects and arrays are shown in double quotes ({ name: \"Ada\" }, not { name: 'Ada' }), and console.table prints its argument as an ordinary value rather than drawing a table. Reach for this whenever a lesson needs runnable code on the page rather than a static screenshot: a live worked example pupils can edit and re-run, a read-only listing to read and trace (set editable:false), a blank editor as an answer space for \"write a program that…\", or a predict-the-output activity (show a short listing, ask pupils to predict the console output in their books, then press Run to check — carry that instruction in the block text, since the app tier has no built-in predict response mode yet). Author the starter source in `code`; set `title` to what the listing is for (shown in the header, e.g. \"Average of the scores\") and `header` to the filename on its tab (defaults to untitled.js or untitled.py); pick a `theme` (one per lesson, varied between lessons — see the theme param); set `editable:false` for a listing pupils should read but not change; hide the console with show.console:false when you only want the listing. The console output is computed by running the code in a sandbox, so you never write it — and you cannot make it show something the code would not produce. Keep listings short and self-contained: there are no packages and no network (Python may import random, math, time and string, and open the virtual files in `files`; JavaScript imports nothing), and there is no async: timers, Promises and async/await are refused by name rather than silently doing nothing. An infinite loop is safe — the editor counts the steps a program takes and stops it on that limit, in the same place on every run, with \"TimeLimit: this program is taking too long to finish — is a loop never ending?\" — and so is a runaway allocation: about 5 million values (array elements, string characters) is the ceiling, past which the program stops with \"MemoryLimit: this program is using too much memory — is it building something without end?\". Which limit a program hits is worth knowing if you are posing it deliberately: `[0] * 1000000000` is one huge allocation and stops on MEMORY at once, while `while True: a.append(1)` spends a step per element and stops on the STEP limit first. JavaScript runs on the library's own interpreter too, and is a teaching subset in the same way: it covers let/const, functions and arrow functions, closures, classes with extends and getters, destructuring, spread and rest, template literals, for/of/in, try/catch/finally, switch, optional chaining and ??, regular expressions, and the everyday Math / JSON / Object / Array / String / Number methods; generators, BigInt literals, Date, eval, alert and anything touching the page or the network are refused by name. Python 3 is supported alongside JavaScript (`language: 'python'`) and is the right default for GCSE Computer Science. It runs on the library's own interpreter — a teaching subset, so it covers variables, arithmetic (including // and % with Python's sign rules, and arbitrary-precision ints), strings and their common methods, lists, dictionaries, tuples and unpacking, if/elif/else, while, for-in over ranges/strings/lists/dicts, functions with defaults and recursion, closures (a nested function reads its enclosing function's variables), classes with __init__/methods/inheritance, try/except/finally, raise, f-strings (including :.2f and width/alignment), input(), and the everyday built-ins (print, len, range, int, str, float, round with Python's round-half-to-even, sum, min, max, sorted, enumerate, zip, ord, chr, abs, any, all). Python also has the modules random (seeded: randint, randrange, random, choice, shuffle, sample, uniform, seed), math, time (time.sleep paces the console; the clock is a pretend one) and string, and virtual files: open() with modes r, w and a, read, readline, readlines, write, close, for line in f, and with open(…) as f. NOT supported: other modules (datetime is refused by name), list comprehensions, sets, lambda, generators, other with-blocks, async, nonlocal, assert, %-formatting, and starred unpacking (a, *rest = …). Most of those refuse by name (\"list comprehensions are not supported in this editor — use a for-loop with append\"); dict comprehensions and starred unpacking currently report a plain syntax error instead, so avoid posing those as deliberate \"what does this editor refuse\" examples. Errors name the line and read like teaching — note the engine quotes the name in DOUBLE quotes (\"NameError: name \\\"total\\\" is not defined (line 4)\"), unlike CPython — and an endless loop stops on a step limit rather than the clock, so it stops in the same place every time. Synonyms teachers use: code editor, code runner, JavaScript, JS, console, REPL, sandbox, playground, run the code, IDE, programming, computing, computer science. Note this model owns its own mutable state (the editor and its console), so it does not support staged `steps` or draggable params — build a predict→run→discuss flow by SEQUENCING blocks, not by staging one.",
+  "responseModes": [
+    "run-program"
+  ],
+  "tags": [
+    "code",
+    "code editor",
+    "code runner",
+    "javascript",
+    "js",
+    "console",
+    "repl",
+    "sandbox",
+    "playground",
+    "programming",
+    "coding",
+    "computing",
+    "computer science",
+    "cs",
+    "ide",
+    "editor",
+    "run",
+    "output",
+    "predict output",
+    "trace",
+    "algorithm",
+    "function",
+    "loop"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "language": {
+        "type": "string",
+        "enum": [
+          "javascript",
+          "python"
+        ],
+        "description": "Programming language of the listing. Both run on the library's own interpreters — teaching SUBSETS, not the full languages (see the gaps below) — so neither has the browser, the DOM, packages or the network. \"javascript\" is the default; \"python\" is what most GCSE Computer Science classrooms teach, so reach for it unless the lesson is specifically about JavaScript. The filename on the file tab defaults to the right extension for the language, and syntax highlighting follows it."
+      },
+      "stdin": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "The answers to the program's input() calls (Python) or prompt() calls (JavaScript), in order, one string per call, for PAPER: a printed listing has nobody to type, so its console strip shows these as the answers it assumes. On screen the program stops at each input() / prompt() and waits for the pupil to type the answer in the console (the question and the answer then read as one line, as in a terminal), so these are not used there. Leave it out for a program that reads nothing. Marking never reads it: each test brings its own."
+      },
+      "seed": {
+        "type": "integer",
+        "description": "Python only: the seed `random` draws from on the first Run (default 1). The same seed gives the same numbers on every surface, so a listing that rolls dice prints the same rolls on paper as on screen; each later press of Run draws afresh, and Reset returns to the first run's numbers. Marking runs the pupil and the reference on this seed, so both draw the same numbers."
+      },
+      "files": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Python only: the files on the program's virtual disk when it starts, as { \"name.txt\": \"its text\" } (use \\n for new lines). open() reads and writes these and nothing else; each file gets a tab beside Console, and a file the program writes appears there after the run. Every Run starts from these files again. Use it for file-handling lessons: reading scores.txt line by line, writing results.txt, appending to a log."
+      },
+      "code": {
+        "type": "string",
+        "description": "The starter source shown in the editor, as a plain string (use \\n for new lines). This is the only authored content — the console output is NOT written here, it is produced by running this code. Keep it short and self-contained: no packages and no network; Python may import random, math, time and string, and open the files in `files`. console.log / console.warn / console.error are captured; there is nothing asynchronous to capture, because timers and Promises are refused by name rather than deferring. Required."
+      },
+      "markProgram": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Turns the editor into an AUTO-MARKED answer space (\"write a program that…\"). Set it on a marked model tile whose responseMode is run-program; correctAnswer is { derived: true }. The pupil writes code and presses Run; the model executes THEIR code and the reference over every test and reports agreement — so any program that computes the right thing passes, and one that hard-codes the shown case fails on the varied inputs. Two shapes: PROGRAM mode (default; Python only) compares the print()ed lines per stdin test, with input() prompts and echoes excluded so prompt wording never fails a pupil; FUNCTION mode (set `function`) calls the named function per test and compares canonical RETURN values — the only marked shape for JavaScript, and the reference may then be in a different language from the pupil (a Python reference marking JavaScript answers works). Keep the visible `code` param as the TASK (a comment or a stub), never the answer; the reference is never rendered on any surface. With markProgram set, the console is always shown (Run is the pupil's commit).",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "A correct answer to the question, in the language named by referenceLanguage (defaults to the tile's language). It is the KEY, never displayed: marking compares what running it produces, so the pupil may write any equivalent code. Required unless every test carries an authored `out`. A reference that fails to run leaves the tile unmarked with an authoring error — it never marks a pupil wrong. Its numeric literals are planted into generated tests, so a boundary error (>= 50 answered as > 50) is caught."
+          },
+          "referenceLanguage": {
+            "type": "string",
+            "enum": [
+              "javascript",
+              "python"
+            ],
+            "description": "Language of the reference, when it differs from the tile's language. Function mode only (program-mode marking is Python only, so its references must be Python). Lets one Python reference mark a mixed-language cohort."
+          },
+          "function": {
+            "type": "string",
+            "description": "Function-harness mode: the name of the function the question asks the pupil to define (e.g. \"total\"). Per test the harness calls it with that test's `args` and marks the RETURN value — anything the pupil prints while debugging is ignored. Required for JavaScript questions. Omit for whole-program stdin→stdout marking."
+          },
+          "tests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "stdin": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Program mode: the input() lines for this test, in order."
+                },
+                "args": {
+                  "type": "array",
+                  "description": "Function mode: the arguments to call the function with (JSON values; lists arrive as Python lists)."
+                },
+                "out": {
+                  "description": "Optional authored expectation: program mode an array of output lines, function mode the expected return value (JSON). When present the reference is not run for this test; when absent it is derived by running the reference."
+                },
+                "files": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Program mode, Python: the virtual disk this test starts from, replacing the question's `files` — so a test can feed the program a different data file."
+                },
+                "expectFiles": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Program mode, Python, with an authored `out`: the files the program must leave behind, by name and text. Without `out`, the files are derived by running the reference, and every file it leaves is compared."
+                }
+              }
+            },
+            "description": "The test battery (max 8). The FIRST test is conventionally the case the visible stdin param shows; later tests are the hidden ones that catch hard-coding. Every test must either carry `out` or be derivable from `reference`."
+          },
+          "generate": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "How many tests to generate (default 3, max 5)."
+              },
+              "ints": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "description": "One [min, max] range per stdin line the program reads, e.g. [[0, 100]] for a program reading one integer."
+              }
+            },
+            "description": "Program mode only: generate extra integer-input tests deterministically, with the reference's own numeric literals (and their neighbours) planted first — so `mark >= 50` answered as `mark > 50` diverges on the planted 50. Needs `reference`. The same tests are generated on every run, so a re-mark reproduces its verdict."
+          },
+          "require": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Structural facts the pupil's SOURCE must show, asserted alongside the behaviour. Read off the real parse tree in BOTH languages: uses-loop, uses-selection, defines-function, defines-function:<name>, uses-recursion, calls-input. Python adds uses-random (imports random) and uses-files (calls open). JavaScript adds defines-class, defines-class:<name>, uses-try, and calls-method:<name> (e.g. calls-method:reduce — useful when \"must use a loop\" really means \"must not reach for reduce\"). Use sparingly — \"must use a loop\" fails a pupil who reaches for sum(), which is only right when the loop IS the lesson."
+          }
+        }
+      },
+      "editable": {
+        "type": "boolean",
+        "description": "Whether pupils can edit the source. true (default) is a live editor they can change and re-run; false is a read-only listing they can read, select and run but not change — use false for \"read and trace this code\" or a fixed worked example."
+      },
+      "header": {
+        "type": "string",
+        "description": "The filename on the editor's file tab (e.g. \"primes.py\"). Defaults to \"untitled.js\" or \"untitled.py\". Purely cosmetic — it does not affect execution."
+      },
+      "title": {
+        "type": "string",
+        "description": "What the listing is for, shown in the window's header beside the three circles (e.g. \"Average of the scores\", \"Predict the output\"). Sentence case, a few words. Optional: without it the header carries only the circles and the buttons."
+      },
+      "theme": {
+        "type": "string",
+        "enum": [
+          "platinum",
+          "paper",
+          "contrast",
+          "chalkboard",
+          "terminal",
+          "aubergine",
+          "amber"
+        ],
+        "description": "The window's colour theme. Light: \"platinum\" (default, warm grey), \"paper\" (white chrome, ink colours), \"contrast\" (black on white, every colour at least 7:1 — for pupils who need it or a weak projector). Dark: \"chalkboard\" (dark green, chalk colours — suits younger pupils), \"terminal\" (warm dark), \"aubergine\" (deep plum), \"amber\" (an old amber monitor). Use ONE theme for every coding window in a lesson, and VARY it between lessons rather than leaving every lesson on platinum: terminal or aubergine for GCSE Python, chalkboard for KS2/KS3, contrast where it is needed, paper for print-heavy work. Dark themes print as paper automatically."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "console": {
+            "type": "boolean",
+            "description": "Show the console pane beside the editor and the Run button. Default true. Set false to present the listing alone (no run surface) — e.g. a code snippet to read where running is not the point."
+          }
+        }
+      }
+    },
+    "required": [
+      "code"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Auto-marked — write a program that reads a mark and prints pass or fail",
+      "params": {
+        "language": "python",
+        "header": "answer.py",
+        "code": "# Write a program that reads a mark and prints\n# \"pass\" if it is 50 or more, otherwise \"fail\".\n",
+        "stdin": [
+          "62"
+        ],
+        "markProgram": {
+          "reference": "mark = int(input())\nif mark >= 50:\n    print(\"pass\")\nelse:\n    print(\"fail\")",
+          "tests": [
+            {
+              "stdin": [
+                "62"
+              ]
+            },
+            {
+              "stdin": [
+                "3"
+              ]
+            }
+          ],
+          "generate": {
+            "count": 3,
+            "ints": [
+              [
+                0,
+                100
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "label": "Auto-marked — write a function (return value marked, any language)",
+      "params": {
+        "language": "python",
+        "header": "answer.py",
+        "code": "def total(nums):\n    # Return the total of the list.\n    pass\n",
+        "markProgram": {
+          "function": "total",
+          "reference": "def total(nums):\n    t = 0\n    for n in nums:\n        t += n\n    return t",
+          "tests": [
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ]
+            },
+            {
+              "args": [
+                []
+              ]
+            },
+            {
+              "args": [
+                [
+                  -2,
+                  2
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Python — worked listing with a loop (the GCSE default)",
+      "params": {
+        "language": "python",
+        "title": "Add up one to ten",
+        "theme": "terminal",
+        "header": "sum.py",
+        "code": "total = 0\nfor n in range(1, 11):\n    total += n\nprint(\"The sum of 1 to 10 is\", total)"
+      }
+    },
+    {
+      "label": "Python — a program that asks for input (the pupil types the answers; stdin is what paper shows)",
+      "params": {
+        "language": "python",
+        "title": "Ask for a name and an age",
+        "theme": "chalkboard",
+        "header": "greet.py",
+        "code": "name = input(\"What is your name? \")\nage = int(input(\"How old are you? \"))\nprint(f\"Hello {name} — next year you will be {age + 1}.\")",
+        "stdin": [
+          "Ada",
+          "11"
+        ]
+      }
+    },
+    {
+      "label": "Python — read and trace a function (editable false)",
+      "params": {
+        "language": "python",
+        "title": "Read and trace",
+        "theme": "paper",
+        "header": "grades.py",
+        "editable": false,
+        "code": "def grade(mark):\n    if mark >= 70:\n        return \"A\"\n    elif mark >= 50:\n        return \"B\"\n    return \"C\"\n\nfor m in [72, 55, 31]:\n    print(m, grade(m))"
+      }
+    },
+    {
+      "label": "Worked listing — sum the first ten whole numbers with a loop",
+      "params": {
+        "header": "sum.js",
+        "code": "let total = 0;\nfor (let n = 1; n <= 10; n++) {\n  total += n;\n}\nconsole.log(\"The sum of 1 to 10 is\", total);"
+      }
+    },
+    {
+      "label": "Blank answer space — pupils write the program",
+      "params": {
+        "header": "answer.js",
+        "code": "// Write a program that prints the 3 times table\n// from 3 up to 30, one line per multiple.\n"
+      }
+    },
+    {
+      "label": "Read-only listing — a function to read and trace (editable false)",
+      "params": {
+        "header": "double.js",
+        "editable": false,
+        "code": "function doubleIt(x) {\n  return x * 2;\n}\n\nconsole.log(doubleIt(6));\nconsole.log(doubleIt(doubleIt(5)));"
+      }
+    },
+    {
+      "label": "Predict the output — object and array formatting, mixed streams",
+      "params": {
+        "header": "output.js",
+        "code": "const pupil = { name: \"Ada\", marks: [7, 9, 8] };\nconsole.log(pupil);\nconsole.log(\"marks:\", pupil.marks);\nconsole.warn(\"one mark is missing\");"
+      }
+    },
+    {
+      "label": "Error case — an uncaught reference error is shown in red",
+      "params": {
+        "header": "oops.js",
+        "code": "const price = 5;\nconsole.log(\"price is\", price);\nconsole.log(\"total is\", price * quantity);"
+      }
+    },
+    {
+      "label": "Hard case — an endless loop is stopped at a step limit",
+      "params": {
+        "header": "loop.js",
+        "code": "// This never stops on its own — the sandbox\n// stops it on a step limit.\nwhile (true) {}"
+      }
+    }
+  ]
+}

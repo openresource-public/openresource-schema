@@ -1,0 +1,1099 @@
+{
+  "ref": "statistics/population-pyramid@1",
+  "family": "statistics",
+  "name": "population-pyramid",
+  "version": 1,
+  "title": "Population pyramid",
+  "tagline": "Population pyramid: back-to-back male/female age bands; widest cohort, dependency ratio and the youthful/ageing verdict derived; readings occlude, blank bars are drawn and marked.",
+  "description": "A population pyramid — the geography figure for population structure. You give the age bands (youngest first) and each band's male and female value; the model draws the male bars leftwards and the female bars rightwards from a central age-label gutter, on one shared value axis, and derives every reading: each band's total, the total population, the percentages aged under 15, 15–64 and 65 and over, the dependency ratio, the widest cohort, and the shape verdict (youthful / ageing / balanced). Values can be percentages of the total population or absolute counts. Two places can be drawn side by side sharing ONE axis scale, so a compare-two-countries figure can never mislead. Occlude a bar's value to make pupils read it off the axis, leave a band blank as an answer space to draw, occlude a reading to ask for it, or highlight a band or a reading to draw the eye. The top band may be left open-ended (\"85+\").",
+  "whenToUse": "Reach for this for population pyramids / age-sex pyramids in GCSE geography and cross-curricular statistics: describing a country's population structure, comparing an ageing structure with a youthful one, matching a pyramid to a stage of the Demographic Transition Model, calculating a dependency ratio, and reading values off the age axis. Write places as one entry per pyramid — places: [{ label, bands }] — with bands youngest FIRST; each band needs from, male and female, and `to` (omit `to` only on the top band to make it open-ended, \"85+\"). Set unit to \"percent\" (default — the usual GCSE pyramid, where the bars sum to 100) or to \"millions\" / \"thousands\" / \"people\" for absolute counts; keep one unit per figure. axes.max and axes.step fix the scale — set them identically across the blocks of one lesson so two pyramids compare, though a two-place figure already shares one derived scale automatically. show.readings prints the derived structure readings (total, widest cohort, % under 15, % 65 and over, dependency ratio, shape verdict); occlude any of them with readings.occlude — [\"shape\"] for \"is this population youthful or ageing?\", [\"dependency\"] for \"calculate the dependency ratio\", [\"widestBand\"] for \"which is the largest cohort?\". Per band, occlude: \"female\" hides that printed value as \"?\" while the bar stays (read it off the axis), blank: \"both\" empties the row (an answer space to draw), and highlight ambers it. readBand: { index, quantity, occlude } draws a dashed guide from one bar's tip down to the axis for a single read-off (\"read the percentage of males aged 20–24\"); index counts from 1 at the YOUNGEST band, quantity is \"male\", \"female\" or \"total\". show.male / show.female build the two sides one at a time — a staged build reads well as males, then females, then the readings. One pyramid only (a comparison pair is not a response surface). The pupil drags each blank bar's end out from the age axis; the row and the direction are pinned, so only the length is chosen, and each length is checked against the band's value within half a small square. Print, PPTX and any unarmed surface pose the very same blank-bar figure, so the answer never leaks — and the derived readings switch off automatically whenever a band is blank. Bars you leave un-blanked stay drawn as given context and are not marked, which is how you pose \"two bands are already drawn, complete the rest\". Leave axes.dragReadout off unless you deliberately want the scaffold. The shape verdict uses fixed thresholds so you can predict it: youthful when the under-15s are at least 30% AND more than twice the over-65s, ageing when the over-65s reach 18% or outnumber the under-15s, balanced otherwise. Invent ORIGINAL, plausible data — a youthful structure has a very wide base and concave sides, an ageing one a narrow base with a bulge in middle age and a wide top, and a female skew in the oldest bands is realistic everywhere; never copy figures from a real census or atlas. Switch primitive when the data is not a pyramid: for single-direction categorical bars use statistics/bar-chart, for grouped continuous data with touching bars use statistics/histogram, for two data sets back to back as leaf digits use statistics/stem-leaf, for a climate graph use statistics/climate-graph. Synonyms a teacher might use: population pyramid, age-sex pyramid, age structure, population structure, cohort, age band, dependency ratio, dependent population, working age, youthful population, ageing population, birth rate, life expectancy, DTM, demographic transition.",
+  "responseModes": [
+    "place-derived"
+  ],
+  "tags": [
+    "population pyramid",
+    "age-sex pyramid",
+    "population structure",
+    "age structure",
+    "age band",
+    "cohort",
+    "dependency ratio",
+    "dependent population",
+    "working age",
+    "youthful population",
+    "ageing population",
+    "demographic transition",
+    "DTM",
+    "demography",
+    "geography",
+    "back-to-back bar chart",
+    "statistics",
+    "data",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "places": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 2,
+        "description": "The population(s) to draw. ONE entry draws a single pyramid; TWO draw a pair side by side sharing ONE value axis (the same country at two dates, or two contrasting countries) — the shared scale is what makes the comparison honest. Give the two entries the SAME age bands so their rows line up.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "Name shown above this pyramid — the place, or the year (\"Northvale\", \"1960\"). Needed when there are two places; optional for one."
+            },
+            "bands": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 24,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "from": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 120,
+                    "description": "Youngest age in the band, in whole years — 0 for the base band, 65 for a \"65 and over\" band. Bands must be listed youngest first and must not overlap."
+                  },
+                  "to": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 120,
+                    "description": "Oldest age in the band, in whole years (4 for a 0–4 band). OMIT on the TOP band to make it open-ended — it then labels as \"85+\". Must be at least `from`. Open the top band at 65 or above (65+, 85+, 90+) if you want the structure readings: an open band has no upper age, so one that starts below 65 hides an unknown number of over-65s and the model reports the affected readings as \"—\" rather than guessing."
+                  },
+                  "male": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "The male value for this band, drawn as a bar to the LEFT of the age gutter. Non-negative, in the figure's `unit`. Every derived reading comes from these numbers."
+                  },
+                  "female": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "The female value for this band, drawn as a bar to the RIGHT of the age gutter. Non-negative, in the figure's `unit`."
+                  },
+                  "occlude": {
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female",
+                      "both"
+                    ],
+                    "description": "Render this band's value as \"?\" on the named side — the read-it-off-the-axis question hook. The BAR still draws at its true length (that is what the pupil measures); only the printed number is hidden, and it shows as \"?\" even when show.values is off."
+                  },
+                  "blank": {
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female",
+                      "both"
+                    ],
+                    "description": "Draw NOTHING on the named side of this band — an empty answer space for \"complete the pyramid\" / \"draw the missing bar\". Different from occlude: \"?\" poses a question against a drawn bar, blank poses an empty row. The hidden values still set the axis scale, so the completed figure lines up. If both are set on a side, blank wins. Any blank side switches show.readings OFF on every surface, because a printed total or widest-cohort would give the missing bar away."
+                  },
+                  "highlight": {
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female",
+                      "both"
+                    ],
+                    "description": "Draw the named side of this band in amber — the answer band, the widest cohort, the bulge you are describing."
+                  }
+                },
+                "required": [
+                  "from",
+                  "male",
+                  "female"
+                ]
+              },
+              "description": "The age bands, YOUNGEST FIRST (they are drawn bottom-up, so the first band is the base of the pyramid). Bands must not overlap. Conventional schemes are 5-year bands 0–4, 5–9, … with an open top band, or the three dependency groups 0–14, 15–64, 65+."
+            }
+          },
+          "required": [
+            "bands"
+          ]
+        }
+      },
+      "unit": {
+        "type": "string",
+        "enum": [
+          "percent",
+          "millions",
+          "thousands",
+          "people"
+        ],
+        "description": "What the male / female numbers measure. \"percent\" (default) — percentages of the TOTAL population, the usual GCSE pyramid, so all the bars sum to 100. \"millions\" / \"thousands\" / \"people\" — absolute counts. Drives the default axis title and how the readings are written; use ONE unit per figure."
+      },
+      "axes": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Value-axis title and optional fixed scale. The scale defaults to a round value just above the largest single bar across every band of every place; fix it to compare pyramids across a lesson.",
+        "properties": {
+          "max": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Outer end of the value axis on EACH side of the gutter (the axis is symmetric). Default: a round value just above the longest bar. Fix it across a lesson so bar lengths compare between blocks."
+          },
+          "step": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Gap between gridlines / axis numbers. Default: a sensible round value. Numbers thin automatically when they would collide, the gridlines stay."
+          },
+          "label": {
+            "type": "string",
+            "description": "Title of the value axis, centred beneath it. Default follows unit — e.g. \"Percentage of total population (%)\" or \"Population (millions)\"."
+          },
+          "dragReadout": {
+            "type": "boolean",
+            "description": "Answer mode only: SHOW the current dragged length as a number at the end of each blank bar. Default false — the pupil reads the bar end against the gridlines, which is the assessed skill. Set true only as a deliberate scaffold (a first practice), because a live number lets the pupil drag until it matches the given figure instead of reading the scale. Ignored outside the place-derived answer mode."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "male": {
+            "type": "boolean",
+            "description": "Draw the male (left) bars. Default true. Set false for a staged build (females first) or an answer space for pupils to add the male side. The hidden bars still set the axis scale, so the figure never resizes between stages."
+          },
+          "female": {
+            "type": "boolean",
+            "description": "Draw the female (right) bars. Default true. Set false for a staged build (males first) or an \"add the female bars\" answer space."
+          },
+          "values": {
+            "type": "boolean",
+            "description": "Print each bar's value at its tip. Default false — a plain pyramid is read off the axis. An OCCLUDED value shows \"?\" whether or not this is on."
+          },
+          "grid": {
+            "type": "boolean",
+            "description": "Show the vertical gridlines that help read a bar against the axis. Default true."
+          },
+          "readings": {
+            "type": "boolean",
+            "description": "Show the derived structure readings below the figure — total population, widest cohort, % aged under 15, % aged 65 and over, dependency ratio and the shape verdict. Default false. With two places each gets its own column. Hide individual readings with readings.occlude. IGNORED when any band is blank: the total would let a pupil back-compute the missing bar, so an answer-space figure never prints the readings."
+          },
+          "sexLabels": {
+            "type": "boolean",
+            "description": "Show the \"Male\" and \"Female\" headings over the two halves. Default true — without them the figure does not say which side is which."
+          }
+        }
+      },
+      "readings": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Which of the derived readings to hide as \"?\" or amber. Only meaningful with show.readings true; the readings themselves are always computed. With two places a key applies to BOTH columns (\"which of these is ageing?\").",
+        "properties": {
+          "occlude": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "total",
+                "widestBand",
+                "young",
+                "old",
+                "dependency",
+                "shape"
+              ]
+            },
+            "description": "Readings to render as \"?\" — e.g. [\"shape\"] for \"is this population youthful or ageing?\", [\"dependency\"] for \"work out the dependency ratio\", [\"widestBand\"] for \"which age group is the largest?\". Default none."
+          },
+          "highlight": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "total",
+                "widestBand",
+                "young",
+                "old",
+                "dependency",
+                "shape"
+              ]
+            },
+            "description": "Readings to draw in amber (answer emphasis). Default none."
+          }
+        }
+      },
+      "readBand": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Draw a dashed guide from ONE bar's tip down to the value axis and print what it reads — the \"use the pyramid to find …\" hook.",
+        "properties": {
+          "place": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2,
+            "description": "Which pyramid to read, 1-based, when there are two. Default 1."
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 24,
+            "description": "Which band to read, counting from 1 at the YOUNGEST band (the base of the pyramid)."
+          },
+          "quantity": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "total"
+            ],
+            "description": "What to read: the male bar, the female bar, or the band TOTAL — for \"total\" a guide drops from BOTH bar tips (read each off the axis and add them) and the derived sum is printed. The bar(s) being read are ambered automatically, so there is no need to highlight the band as well."
+          },
+          "occlude": {
+            "type": "boolean",
+            "description": "Hide the read value as \"?\" (ask pupils to read it off the axis). Default false."
+          }
+        },
+        "required": [
+          "index",
+          "quantity"
+        ]
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure, e.g. the place name and year. Never the question."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. the data source year. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "places"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked — an ageing population structure, readings shown",
+      "params": {
+        "header": "Northvale — population structure",
+        "places": [
+          {
+            "bands": [
+              {
+                "from": 0,
+                "to": 4,
+                "male": 2.6,
+                "female": 2.4
+              },
+              {
+                "from": 5,
+                "to": 9,
+                "male": 2.7,
+                "female": 2.5
+              },
+              {
+                "from": 10,
+                "to": 14,
+                "male": 2.8,
+                "female": 2.6
+              },
+              {
+                "from": 15,
+                "to": 19,
+                "male": 3,
+                "female": 2.8
+              },
+              {
+                "from": 20,
+                "to": 24,
+                "male": 3.1,
+                "female": 2.9
+              },
+              {
+                "from": 25,
+                "to": 29,
+                "male": 3.2,
+                "female": 3
+              },
+              {
+                "from": 30,
+                "to": 34,
+                "male": 3.2,
+                "female": 3.2
+              },
+              {
+                "from": 35,
+                "to": 39,
+                "male": 3.3,
+                "female": 3.3
+              },
+              {
+                "from": 40,
+                "to": 44,
+                "male": 3.4,
+                "female": 3.4
+              },
+              {
+                "from": 45,
+                "to": 49,
+                "male": 3.7,
+                "female": 3.7
+              },
+              {
+                "from": 50,
+                "to": 54,
+                "male": 3.7,
+                "female": 3.9
+              },
+              {
+                "from": 55,
+                "to": 59,
+                "male": 3.4,
+                "female": 3.6
+              },
+              {
+                "from": 60,
+                "to": 64,
+                "male": 3.1,
+                "female": 3.3
+              },
+              {
+                "from": 65,
+                "to": 69,
+                "male": 2.7,
+                "female": 3.1
+              },
+              {
+                "from": 70,
+                "to": 74,
+                "male": 2.2,
+                "female": 2.6
+              },
+              {
+                "from": 75,
+                "to": 79,
+                "male": 1.5,
+                "female": 1.9
+              },
+              {
+                "from": 80,
+                "to": 84,
+                "male": 0.9,
+                "female": 1.3
+              },
+              {
+                "from": 85,
+                "male": 0.7,
+                "female": 1.3
+              }
+            ]
+          }
+        ],
+        "show": {
+          "readings": true
+        }
+      }
+    },
+    {
+      "label": "Read the pyramid (occluded question) — read one band off the value axis",
+      "params": {
+        "places": [
+          {
+            "bands": [
+              {
+                "from": 0,
+                "to": 4,
+                "male": 2.6,
+                "female": 2.4
+              },
+              {
+                "from": 5,
+                "to": 9,
+                "male": 2.7,
+                "female": 2.5
+              },
+              {
+                "from": 10,
+                "to": 14,
+                "male": 2.8,
+                "female": 2.6
+              },
+              {
+                "from": 15,
+                "to": 19,
+                "male": 3,
+                "female": 2.8
+              },
+              {
+                "from": 20,
+                "to": 24,
+                "male": 3.1,
+                "female": 2.9
+              },
+              {
+                "from": 25,
+                "to": 29,
+                "male": 3.2,
+                "female": 3
+              },
+              {
+                "from": 30,
+                "to": 34,
+                "male": 3.2,
+                "female": 3.2
+              },
+              {
+                "from": 35,
+                "to": 39,
+                "male": 3.3,
+                "female": 3.3
+              },
+              {
+                "from": 40,
+                "to": 44,
+                "male": 3.4,
+                "female": 3.4
+              },
+              {
+                "from": 45,
+                "to": 49,
+                "male": 3.7,
+                "female": 3.7
+              },
+              {
+                "from": 50,
+                "to": 54,
+                "male": 3.7,
+                "female": 3.9
+              },
+              {
+                "from": 55,
+                "to": 59,
+                "male": 3.4,
+                "female": 3.6
+              },
+              {
+                "from": 60,
+                "to": 64,
+                "male": 3.1,
+                "female": 3.3
+              },
+              {
+                "from": 65,
+                "to": 69,
+                "male": 2.7,
+                "female": 3.1
+              },
+              {
+                "from": 70,
+                "to": 74,
+                "male": 2.2,
+                "female": 2.6
+              },
+              {
+                "from": 75,
+                "to": 79,
+                "male": 1.5,
+                "female": 1.9
+              },
+              {
+                "from": 80,
+                "to": 84,
+                "male": 0.9,
+                "female": 1.3
+              },
+              {
+                "from": 85,
+                "male": 0.7,
+                "female": 1.3
+              }
+            ]
+          }
+        ],
+        "readBand": {
+          "index": 7,
+          "quantity": "female",
+          "occlude": true
+        }
+      }
+    },
+    {
+      "label": "A contrasting structure — a youthful population, shape and % under 15 asked",
+      "params": {
+        "header": "Kesari — population structure",
+        "places": [
+          {
+            "bands": [
+              {
+                "from": 0,
+                "to": 4,
+                "male": 7.6,
+                "female": 7.4
+              },
+              {
+                "from": 5,
+                "to": 9,
+                "male": 6.9,
+                "female": 6.7
+              },
+              {
+                "from": 10,
+                "to": 14,
+                "male": 6.2,
+                "female": 6
+              },
+              {
+                "from": 15,
+                "to": 19,
+                "male": 5.5,
+                "female": 5.3
+              },
+              {
+                "from": 20,
+                "to": 24,
+                "male": 4.7,
+                "female": 4.7
+              },
+              {
+                "from": 25,
+                "to": 29,
+                "male": 4,
+                "female": 4
+              },
+              {
+                "from": 30,
+                "to": 34,
+                "male": 3.4,
+                "female": 3.4
+              },
+              {
+                "from": 35,
+                "to": 39,
+                "male": 2.8,
+                "female": 2.8
+              },
+              {
+                "from": 40,
+                "to": 44,
+                "male": 2.3,
+                "female": 2.3
+              },
+              {
+                "from": 45,
+                "to": 49,
+                "male": 1.8,
+                "female": 1.8
+              },
+              {
+                "from": 50,
+                "to": 54,
+                "male": 1.4,
+                "female": 1.4
+              },
+              {
+                "from": 55,
+                "to": 59,
+                "male": 1.1,
+                "female": 1.1
+              },
+              {
+                "from": 60,
+                "to": 64,
+                "male": 0.8,
+                "female": 0.9
+              },
+              {
+                "from": 65,
+                "to": 69,
+                "male": 0.6,
+                "female": 0.7
+              },
+              {
+                "from": 70,
+                "to": 74,
+                "male": 0.5,
+                "female": 0.5
+              },
+              {
+                "from": 75,
+                "to": 79,
+                "male": 0.3,
+                "female": 0.4
+              },
+              {
+                "from": 80,
+                "to": 84,
+                "male": 0.2,
+                "female": 0.2
+              },
+              {
+                "from": 85,
+                "male": 0.1,
+                "female": 0.2
+              }
+            ]
+          }
+        ],
+        "show": {
+          "readings": true
+        },
+        "readings": {
+          "occlude": [
+            "shape",
+            "young"
+          ]
+        }
+      }
+    },
+    {
+      "label": "The hard case — two places side by side on one shared scale, both verdicts hidden",
+      "params": {
+        "places": [
+          {
+            "label": "Northvale",
+            "bands": [
+              {
+                "from": 0,
+                "to": 4,
+                "male": 2.6,
+                "female": 2.4
+              },
+              {
+                "from": 5,
+                "to": 9,
+                "male": 2.7,
+                "female": 2.5
+              },
+              {
+                "from": 10,
+                "to": 14,
+                "male": 2.8,
+                "female": 2.6
+              },
+              {
+                "from": 15,
+                "to": 19,
+                "male": 3,
+                "female": 2.8
+              },
+              {
+                "from": 20,
+                "to": 24,
+                "male": 3.1,
+                "female": 2.9
+              },
+              {
+                "from": 25,
+                "to": 29,
+                "male": 3.2,
+                "female": 3
+              },
+              {
+                "from": 30,
+                "to": 34,
+                "male": 3.2,
+                "female": 3.2
+              },
+              {
+                "from": 35,
+                "to": 39,
+                "male": 3.3,
+                "female": 3.3
+              },
+              {
+                "from": 40,
+                "to": 44,
+                "male": 3.4,
+                "female": 3.4
+              },
+              {
+                "from": 45,
+                "to": 49,
+                "male": 3.7,
+                "female": 3.7
+              },
+              {
+                "from": 50,
+                "to": 54,
+                "male": 3.7,
+                "female": 3.9
+              },
+              {
+                "from": 55,
+                "to": 59,
+                "male": 3.4,
+                "female": 3.6
+              },
+              {
+                "from": 60,
+                "to": 64,
+                "male": 3.1,
+                "female": 3.3
+              },
+              {
+                "from": 65,
+                "to": 69,
+                "male": 2.7,
+                "female": 3.1
+              },
+              {
+                "from": 70,
+                "to": 74,
+                "male": 2.2,
+                "female": 2.6
+              },
+              {
+                "from": 75,
+                "to": 79,
+                "male": 1.5,
+                "female": 1.9
+              },
+              {
+                "from": 80,
+                "to": 84,
+                "male": 0.9,
+                "female": 1.3
+              },
+              {
+                "from": 85,
+                "male": 0.7,
+                "female": 1.3
+              }
+            ]
+          },
+          {
+            "label": "Kesari",
+            "bands": [
+              {
+                "from": 0,
+                "to": 4,
+                "male": 7.6,
+                "female": 7.4
+              },
+              {
+                "from": 5,
+                "to": 9,
+                "male": 6.9,
+                "female": 6.7
+              },
+              {
+                "from": 10,
+                "to": 14,
+                "male": 6.2,
+                "female": 6
+              },
+              {
+                "from": 15,
+                "to": 19,
+                "male": 5.5,
+                "female": 5.3
+              },
+              {
+                "from": 20,
+                "to": 24,
+                "male": 4.7,
+                "female": 4.7
+              },
+              {
+                "from": 25,
+                "to": 29,
+                "male": 4,
+                "female": 4
+              },
+              {
+                "from": 30,
+                "to": 34,
+                "male": 3.4,
+                "female": 3.4
+              },
+              {
+                "from": 35,
+                "to": 39,
+                "male": 2.8,
+                "female": 2.8
+              },
+              {
+                "from": 40,
+                "to": 44,
+                "male": 2.3,
+                "female": 2.3
+              },
+              {
+                "from": 45,
+                "to": 49,
+                "male": 1.8,
+                "female": 1.8
+              },
+              {
+                "from": 50,
+                "to": 54,
+                "male": 1.4,
+                "female": 1.4
+              },
+              {
+                "from": 55,
+                "to": 59,
+                "male": 1.1,
+                "female": 1.1
+              },
+              {
+                "from": 60,
+                "to": 64,
+                "male": 0.8,
+                "female": 0.9
+              },
+              {
+                "from": 65,
+                "to": 69,
+                "male": 0.6,
+                "female": 0.7
+              },
+              {
+                "from": 70,
+                "to": 74,
+                "male": 0.5,
+                "female": 0.5
+              },
+              {
+                "from": 75,
+                "to": 79,
+                "male": 0.3,
+                "female": 0.4
+              },
+              {
+                "from": 80,
+                "to": 84,
+                "male": 0.2,
+                "female": 0.2
+              },
+              {
+                "from": 85,
+                "male": 0.1,
+                "female": 0.2
+              }
+            ]
+          }
+        ],
+        "show": {
+          "readings": true
+        },
+        "readings": {
+          "occlude": [
+            "shape"
+          ]
+        }
+      }
+    },
+    {
+      "label": "Answer space — the four oldest bands are empty, complete the pyramid",
+      "params": {
+        "places": [
+          {
+            "bands": [
+              {
+                "from": 0,
+                "to": 4,
+                "male": 2.6,
+                "female": 2.4
+              },
+              {
+                "from": 5,
+                "to": 9,
+                "male": 2.7,
+                "female": 2.5
+              },
+              {
+                "from": 10,
+                "to": 14,
+                "male": 2.8,
+                "female": 2.6
+              },
+              {
+                "from": 15,
+                "to": 19,
+                "male": 3,
+                "female": 2.8
+              },
+              {
+                "from": 20,
+                "to": 24,
+                "male": 3.1,
+                "female": 2.9
+              },
+              {
+                "from": 25,
+                "to": 29,
+                "male": 3.2,
+                "female": 3
+              },
+              {
+                "from": 30,
+                "to": 34,
+                "male": 3.2,
+                "female": 3.2
+              },
+              {
+                "from": 35,
+                "to": 39,
+                "male": 3.3,
+                "female": 3.3
+              },
+              {
+                "from": 40,
+                "to": 44,
+                "male": 3.4,
+                "female": 3.4
+              },
+              {
+                "from": 45,
+                "to": 49,
+                "male": 3.7,
+                "female": 3.7
+              },
+              {
+                "from": 50,
+                "to": 54,
+                "male": 3.7,
+                "female": 3.9
+              },
+              {
+                "from": 55,
+                "to": 59,
+                "male": 3.4,
+                "female": 3.6
+              },
+              {
+                "from": 60,
+                "to": 64,
+                "male": 3.1,
+                "female": 3.3
+              },
+              {
+                "from": 65,
+                "to": 69,
+                "male": 2.7,
+                "female": 3.1
+              },
+              {
+                "from": 70,
+                "to": 74,
+                "male": 2.2,
+                "female": 2.6,
+                "blank": "both"
+              },
+              {
+                "from": 75,
+                "to": 79,
+                "male": 1.5,
+                "female": 1.9,
+                "blank": "both"
+              },
+              {
+                "from": 80,
+                "to": 84,
+                "male": 0.9,
+                "female": 1.3,
+                "blank": "both"
+              },
+              {
+                "from": 85,
+                "male": 0.7,
+                "female": 1.3,
+                "blank": "both"
+              }
+            ]
+          }
+        ],
+        "caption": "The four oldest bands are missing. Draw them using the figures in the table"
+      }
+    },
+    {
+      "label": "Marked answer surface — host with responseMode \"place-derived\": the top four bands are drawn by the pupil, the rest are given",
+      "params": {
+        "places": [
+          {
+            "bands": [
+              {
+                "from": 0,
+                "to": 14,
+                "male": 9.4,
+                "female": 9
+              },
+              {
+                "from": 15,
+                "to": 29,
+                "male": 9.9,
+                "female": 9.6
+              },
+              {
+                "from": 30,
+                "to": 44,
+                "male": 9.1,
+                "female": 9.2
+              },
+              {
+                "from": 45,
+                "to": 59,
+                "male": 7.6,
+                "female": 8
+              },
+              {
+                "from": 60,
+                "to": 74,
+                "male": 5.4,
+                "female": 6.2,
+                "blank": "both"
+              },
+              {
+                "from": 75,
+                "male": 2.6,
+                "female": 4,
+                "blank": "both"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "The three dependency groups — dependency ratio highlighted",
+      "params": {
+        "header": "Marisol — dependent and working-age population",
+        "places": [
+          {
+            "bands": [
+              {
+                "from": 0,
+                "to": 14,
+                "male": 9.1,
+                "female": 8.7
+              },
+              {
+                "from": 15,
+                "to": 64,
+                "male": 32.4,
+                "female": 32
+              },
+              {
+                "from": 65,
+                "male": 8.2,
+                "female": 9.6
+              }
+            ]
+          }
+        ],
+        "show": {
+          "readings": true,
+          "values": true
+        },
+        "readings": {
+          "highlight": [
+            "dependency"
+          ]
+        },
+        "caption": "The dependency ratio compares the dependent population with the working-age population"
+      }
+    }
+  ]
+}

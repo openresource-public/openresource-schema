@@ -1,0 +1,742 @@
+{
+  "ref": "cs/state-machine@1",
+  "family": "cs",
+  "name": "state-machine",
+  "version": 1,
+  "title": "State machine",
+  "tagline": "States + labelled transitions with the transition table, δ rules, run trace, accept/reject verdict and Turing tape all derived from one authored rule set; every cell occludable.",
+  "description": "A finite state machine drawn as states joined by labelled transitions — start arrow, double-circled accept or halt states, self-loops, and arrows carrying one symbol or several. You author the transition function once (the states, which are accepting or halting, and one rule per transition); the model then projects it as the DIAGRAM, as the TRANSITION TABLE in any of four layouts (wide state × input, long one-row-per-pair in either column order, or transposed with the attributes as rows), and as the δ-rule listing — so \"draw the table from this diagram\" and \"draw the diagram from this table\" are the same figure posed two ways. Feed it an input string and the run is derived too: the traced path highlights on the diagram in step order, the three-row trace strip shows the input, the state sequence and (for a Mealy machine) the output on each transition, and an acceptor reports accepted or rejected. A list of test strings becomes a verdict table. Set machine to \"turing\" and each rule also writes a symbol and moves the head: the model then draws the staged tape trace — one frame per step, each with the tape row, the head marker and the current state, computed by applying the matching rule until a halt state, with the final tape as the answer. Every derived thing occludes: a rule component, a table cell, the state sequence, an output, a verdict, a tape frame or the final result — and an occlusion propagates into every projection and into the aria, so nothing leaks. The table also serves as a fill-derived answer surface for \"complete the transition table\".",
+  "whenToUse": "Reach for this whenever a computing lesson turns on a finite state machine: reading a state transition diagram, completing a state transition table, tracing an input string to an accepted or rejected verdict, describing the language a machine accepts, a Mealy machine's output sequence, or tracing a Turing machine on a tape. Author the transition function and nothing else: `states` (each with an id such as \"S0\", plus accept true on an acceptor's accepting states or halt true on a Turing machine's halting state), `start` (defaults to the first state), and one `rules` entry per transition ({ from, read, to }, plus `output` for a Mealy machine or `write` + `move` for a Turing machine). Give a rule's `read` a LIST to put several symbols on one arrow. Then pick the projection with `view`: \"diagram\" (the picture), \"table\" (the transition table — set table.layout to match the layout your course prints), \"diagram+table\" (both, the way the textbook pairs them), \"delta\" (the rules as δ(S0, 1) = (S1, 0, right) lines), \"trace\" (the three-row run strip), \"verdicts\" (one row per test string in `inputs`) or \"tape\" (a Turing machine's frames). Common configurations: give `input` on the diagram view and the traced path highlights with step numbers; use view \"table\" with `at: 0` for a blank \"complete the transition table\" answer space, or a small `at` to leave the first row(s) worked as the example and the rest blank; occlude one rule's `to` for \"which state does this transition lead to?\"; occlude the `verdict` for \"is this string accepted?\"; occlude `finalTape` for \"what does this Turing machine leave on the tape?\". Staged builds: keep every param identical and step `at` from 0 upwards — it fills derived table cells in reading order, trace steps, verdict rows or tape frames one at a time, and the base state (nothing derived yet) stands alone as the question figure. A `regex` is an ASSERTION you write beside the machine, never a derivation — the model checks the two agree on every short string and says so if they do not, and occlude.regex poses \"write the regular expression for this machine\". Measured limits, so a figure never clips or shrinks: the drawn tape window is 14 cells and the filmstrip 10 frames (a longer run wants `frames: \"one\"` with `at` stepped, which is also the readable form on a slide); the transposed layout stays legible to about ten (state, symbol) pairs; and `layout: \"auto\"` switches to a ring above six states. Cross-block conventions: keep one `layout` and one `table.layout` across a lesson so pupils read one shape, and keep state ids stable when the same machine reappears. Synonyms teachers use: finite state machine, FSM, finite state automaton, FSA, DFA, state transition diagram, state transition table, state diagram, transition function, accept state, accepting state, trap state, dead state, start state, alphabet, string, accepted, rejected, Mealy machine, transducer, output, Turing machine, tape, head, halt, halting state, delta notation, regular language, regular expression, computer science, A level. Switch model when nothing has states: an algorithm drawn to be READ is diagram/flowchart, a program traced variable by variable is cs/trace-table, and a data structure walked through operations is cs/cells. A SYNTAX DIAGRAM (railroad diagram) is not a state machine either, though it looks like one — its boxes are grammar rules, not states, and it transliterates BNF; keep grammars out of this model.",
+  "responseModes": [
+    "fill-derived"
+  ],
+  "tags": [
+    "finite state machine",
+    "FSM",
+    "finite state automaton",
+    "FSA",
+    "DFA",
+    "state transition diagram",
+    "state transition table",
+    "state diagram",
+    "transition function",
+    "transition table",
+    "states",
+    "transitions",
+    "accept state",
+    "accepting state",
+    "start state",
+    "trap state",
+    "dead state",
+    "alphabet",
+    "string",
+    "accepted",
+    "rejected",
+    "language",
+    "Mealy machine",
+    "transducer",
+    "output",
+    "state sequence",
+    "Turing machine",
+    "tape",
+    "head",
+    "halt",
+    "halting state",
+    "delta notation",
+    "regular language",
+    "regular expression",
+    "regex",
+    "automata",
+    "vending machine",
+    "computer science",
+    "computing",
+    "A level",
+    "AQA"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "machine": {
+        "type": "string",
+        "enum": [
+          "acceptor",
+          "mealy",
+          "turing"
+        ],
+        "description": "Which kind of machine the rules describe, which decides what a rule may carry and what a run derives. \"acceptor\" (default): rules are { from, read, to }, states may be accepting, and a run gives an accepted/rejected verdict. \"mealy\": each rule also carries an `output`, there are no accept states, and a run gives an output sequence — the transducer. \"turing\": each rule also carries `write` + `move`, the input is a `tape` the head walks both ways, and a run gives the staged tape trace, stopping at a state marked halt."
+      },
+      "states": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+              "description": "The state's name, e.g. \"S0\", \"q1\", \"30p\", \"halt\" — it may start with a digit, because a state often IS a value (a running total, a remainder). Referenced by every rule and by `start`. Shown in the node unless `label` overrides it — state names are content here, so write the name pupils should read (\"S0\", not \"state-zero\")."
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional display text drawn in the node INSTEAD of the id — for a state whose meaning is worth naming (\"Locked\", \"30p\"). Keep it to a few characters: the node grows to fit, and a long label makes every node grow."
+            },
+            "accept": {
+              "type": "boolean",
+              "description": "ACCEPTOR only: this is an accepting state, drawn as a double circle. A string is accepted when the machine ends in one of these after consuming every symbol. A state may be both the start and an accept state (the empty string is then accepted). Ignored on a Mealy machine, which has no accept states."
+            },
+            "halt": {
+              "type": "boolean",
+              "description": "TURING only: reaching this state halts the computation, drawn as a double circle. The trace stops here and the tape at that moment is the machine's result."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "description": "The states, drawn in the order you author them (with two derived refinements: the start state always comes first, and unreachable states go last). Positions themselves are computed from that order, so you never place a node — but author states in their natural reading sequence. Keep it to about six for a readable row layout — more switches to a ring."
+      },
+      "start": {
+        "type": "string",
+        "description": "Id of the start state, drawn with an unlabelled arrow entering from outside. Defaults to the first entry in `states`."
+      },
+      "rules": {
+        "type": "array",
+        "maxItems": 28,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "Id of the state the transition leaves."
+            },
+            "read": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 8
+                }
+              ],
+              "description": "The symbol read on this transition — one symbol (\"a\", \"1\", \"10\", \"R\"), or a LIST of symbols that all take the same transition ([\"0\", \"1\"], drawn as one arrow labelled \"0,1\", the book's \"0 or 1\" shorthand). Symbols may be more than one character (coin values, \"Reset\"), and the alphabet is derived from every `read` in the rule set — you never list it."
+            },
+            "to": {
+              "type": "string",
+              "description": "Id of the state the transition enters. Point it back at `from` for a self-transition (drawn as a self-loop above the node) — the complete-DFA convention makes those explicit rather than implied."
+            },
+            "output": {
+              "type": "string",
+              "description": "MEALY only: the symbol this transition outputs (\"1\", \"n\", \"00\"). Drawn on the arrow as read/output (\"1/0\") and given its own column in the table. Omit on an acceptor or a Turing machine."
+            },
+            "write": {
+              "type": "string",
+              "description": "TURING only: the symbol written into the cell under the head. Give the blank symbol to erase, or the symbol just read to leave the cell alone. Defaults to the symbol read when omitted."
+            },
+            "move": {
+              "type": "string",
+              "enum": [
+                "left",
+                "right",
+                "stay"
+              ],
+              "description": "TURING only: which way the head moves after writing, drawn as ← / → (or the word, with show.moveWords). Defaults to \"right\" when omitted."
+            },
+            "occlude": {
+              "type": "string",
+              "enum": [
+                "to",
+                "read",
+                "output",
+                "write",
+                "move",
+                "all"
+              ],
+              "description": "Render this component of the rule as \"?\" — the question hook. \"to\" asks where the transition leads, \"output\"/\"write\"/\"move\" ask what it does, \"read\" asks what triggers it, \"all\" hides the whole label. The occlusion follows the rule into EVERY projection (the arrow label, the table cell, the δ line) and poisons anything derived from it: a run that fires an occluded rule hides that step, its verdict and its output. In the wide table layout \"read\" is ignored (the read symbol is a column header shared by every state) and the aria says so."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this transition — its arrow, its label and its table cell. Use for the one rule a question turns on. Default false."
+            }
+          },
+          "required": [
+            "from",
+            "read",
+            "to"
+          ]
+        },
+        "description": "The transition function — one entry per transition. Two rules with the same from and to are BUNDLED onto one arrow with their labels stacked (which is how a Turing machine's arrows are drawn). A (state, symbol) pair with no rule is a hole: the table cell draws as \"—\" and a run that reaches it rejects for want of a transition, which is worth showing when a course teaches the complete-DFA convention."
+      },
+      "blank": {
+        "type": "string",
+        "description": "TURING only: the blank tape symbol, default \"#\". Cells holding it draw lighter, so the written part of the tape reads as the data and the blanks as empty space. Rules read and write it like any other symbol."
+      },
+      "tape": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "TURING only: the tape BEFORE the machine runs. Everything after the first frame is derived.",
+        "properties": {
+          "cells": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 16
+              }
+            ],
+            "description": "The written part of the tape: a string, one character per cell (\"1011\"), or an array for multi-character symbols. The tape is infinite in both directions — cells outside this run hold the blank symbol and appear as the machine reaches them."
+          },
+          "head": {
+            "type": "integer",
+            "description": "Which cell the head starts on, counting the first cell of `cells` as 0. Default 0. May be negative or past the end (the head starts on a blank)."
+          }
+        }
+      },
+      "input": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16
+          }
+        ],
+        "description": "ACCEPTOR / MEALY: the string to run, as a string of single-character symbols (\"1011\") or an array for multi-character ones ([\"10\", \"20\", \"R\"]). Every derived run comes from this: the highlighted path on the diagram, the trace strip and the verdict. Omit for a figure that shows only the machine."
+      },
+      "inputs": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 16
+            }
+          ]
+        },
+        "description": "ACCEPTOR: several test strings for the \"verdicts\" view — one row each, with the derived accepted/rejected verdict. The classic \"write Yes or No to say whether each string would be accepted\" table."
+      },
+      "view": {
+        "type": "string",
+        "enum": [
+          "diagram",
+          "table",
+          "diagram+table",
+          "delta",
+          "trace",
+          "tape",
+          "verdicts"
+        ],
+        "description": "Which projection to draw. \"diagram\" (default for an acceptor or Mealy machine): the states and transitions, with the traced path when `input` is given. \"table\": the transition table alone — a complete standalone figure, so it composes beside another model in one bento row. \"diagram+table\": both, sharing one canvas width, the way the textbook prints them. \"delta\": the rules as δ(state, symbol) = (next state, …) lines. \"trace\": the three-row run strip — input, state sequence and (Mealy) output. \"tape\" (default for a Turing machine): the staged tape frames. \"verdicts\": one row per string in `inputs`. A view that needs something the machine does not have (a Turing verdict table, a trace with no input) falls back to that machine's default view and says so in the aria."
+      },
+      "table": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "How the transition table is laid out. The COLUMNS are derived from `machine` — 3 for an acceptor (state, input, next state), 4 for Mealy (input, state, output, next state), 5 for Turing (state, read, write, move, next state) — so you only choose the arrangement.",
+        "properties": {
+          "layout": {
+            "type": "string",
+            "enum": [
+              "wide",
+              "long",
+              "long-input-first",
+              "transposed"
+            ],
+            "description": "Which of the four printed arrangements to draw. \"wide\": one row per state, one column per input symbol, under a derived \"Next state\" header — the compact form. \"long\" (default): one row per (state, symbol) pair, state column first. \"long-input-first\": the same rows with the input column first — the same information, the column order some courses print. \"transposed\": the attributes as ROWS and one column per (state, symbol) pair, which is how a long trace fits across a page. Keep one layout across a lesson."
+          }
+        }
+      },
+      "layout": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "row",
+          "ring"
+        ],
+        "description": "How the diagram arranges its states. \"auto\" (default): a row up to six states, a ring beyond. \"row\": left to right in derived order, forward arrows arcing above and back arrows below — the common textbook shape. \"ring\": round a circle, for a machine whose transitions cycle. Positions themselves are always derived; this only picks the arrangement."
+      },
+      "at": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "How far the derivation has been carried — the ONE staging knob. On a table it is how many derived cells are filled, in reading order (so `at: 0` is a blank \"complete the table\" answer space and a small `at` leaves the first row worked as the example); on \"trace\" and \"diagram\" it is how many steps of the run are shown; on \"tape\" it is how many frames; on \"verdicts\" it is how many rows. Defaults to everything filled. Step it from 0 upwards for a staged build with every other param identical — the figure never resizes, because it is always sized from the complete derivation."
+      },
+      "frames": {
+        "type": "string",
+        "enum": [
+          "one",
+          "all"
+        ],
+        "description": "TAPE view only: whether to draw every frame up to `at` stacked as a filmstrip (\"all\", the default — how the textbook prints a trace) or just the single frame at `at` (\"one\", for a staged build that replaces the frame each time instead of adding to it)."
+      },
+      "regex": {
+        "type": "string",
+        "description": "ACCEPTOR: the regular expression this machine is claimed to be equivalent to, written beside the figure. It is an ASSERTION, never a derivation — the model does not build the machine from it or read it off the machine, because the specification teaches that conversion by example only. What the model DOES do is check the two agree on every string over the alphabet up to a short length and draw a plain warning line if they disagree, so a figure can never assert a false equivalence. Supports the taught metacharacters: | (or), * (zero or more), + (one or more), ? (optional) and brackets. Use occlude.regex to pose \"write the regular expression which represents this machine\"."
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Hide DERIVED things as \"?\" — the question hooks. Each one also hides everything downstream of it, in every projection and in the aria, so an answer can never be read off another panel. (To hide part of an authored RULE, use that rule's own `occlude`.)",
+        "properties": {
+          "verdict": {
+            "type": "boolean",
+            "description": "ACCEPTOR: hide the accepted/rejected verdict — and with it the traced path and the state sequence, which would otherwise give it away."
+          },
+          "trace": {
+            "type": "boolean",
+            "description": "Hide the whole derived run: the state sequence, the outputs, the path, the verdict and every tape frame after the first. \"Trace it yourself.\""
+          },
+          "outputs": {
+            "type": "boolean",
+            "description": "MEALY: hide the output row / output column only, leaving the state sequence visible (\"what does the machine output for this string?\")."
+          },
+          "finalTape": {
+            "type": "boolean",
+            "description": "TURING: hide the LAST frame's cells — the result — leaving the earlier frames as the working. The \"what does this machine leave on the tape?\" hook."
+          },
+          "frames": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "description": "TURING: frame numbers whose cells, head position and state label are hidden (frame 0 is the starting tape). \"Complete the missing frames.\""
+          },
+          "regex": {
+            "type": "boolean",
+            "description": "Hide the regular expression, leaving the machine — \"write the regular expression which represents this FSM\"."
+          },
+          "alphabet": {
+            "type": "boolean",
+            "description": "Hide the derived alphabet readout (\"what is the alphabet of this machine?\"). Only meaningful with show.alphabet."
+          }
+        }
+      },
+      "highlight": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Draw the eye in amber.",
+        "properties": {
+          "states": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "string"
+            },
+            "description": "State ids to amber — the answer to \"which state is the machine in?\", or the state a question turns on."
+          },
+          "rules": {
+            "type": "array",
+            "maxItems": 28,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "description": "Indices into `rules` (0-based) to amber. A rule's own `highlight` does the same thing; this is the form for highlighting several at once."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "alphabet": {
+            "type": "boolean",
+            "description": "Show the derived alphabet as a line beneath the figure (\"alphabet {a, b}\"). Default false."
+          },
+          "path": {
+            "type": "boolean",
+            "description": "DIAGRAM with an `input`: highlight the transitions the run takes, numbered in step order. Default true — set false for a figure that shows the machine alone while the trace is discussed in the text."
+          },
+          "states": {
+            "type": "boolean",
+            "description": "TRACE view: show the state-sequence row. Default true; false leaves the input row (and the output row) as the answer space."
+          },
+          "outputs": {
+            "type": "boolean",
+            "description": "MEALY: show the output row / column. Default true."
+          },
+          "verdict": {
+            "type": "boolean",
+            "description": "ACCEPTOR with an `input`: show the accepted/rejected line. Default true when there is an input to judge."
+          },
+          "indices": {
+            "type": "boolean",
+            "description": "TAPE view: number the cells along the top of the first frame. Default false — the tape is infinite, so the numbers are a scaffold, not part of the machine."
+          },
+          "key": {
+            "type": "boolean",
+            "description": "Show the notation key — start arrow, double circle, self-loop — as a small legend beneath the diagram. Default false; use it the first time a class meets the notation."
+          },
+          "moveWords": {
+            "type": "boolean",
+            "description": "TURING: write the head movement as \"left\"/\"right\" instead of ← / →. Default false (arrows). Both appear in print; pick the one your course uses and keep it across the lesson."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure, e.g. \"Even number of 1s\" or \"Binary increment\"."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional short line beneath the figure — the machine's job in a few words. Keep the working itself in the block text, not here."
+      }
+    },
+    "required": [
+      "states",
+      "rules"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — an even number of 1s, diagram beside its transition table",
+      "params": {
+        "machine": "acceptor",
+        "header": "An even number of 1s",
+        "states": [
+          {
+            "id": "S0",
+            "accept": true
+          },
+          {
+            "id": "S1"
+          }
+        ],
+        "rules": [
+          {
+            "from": "S0",
+            "read": "0",
+            "to": "S0"
+          },
+          {
+            "from": "S0",
+            "read": "1",
+            "to": "S1"
+          },
+          {
+            "from": "S1",
+            "read": "0",
+            "to": "S1"
+          },
+          {
+            "from": "S1",
+            "read": "1",
+            "to": "S0"
+          }
+        ],
+        "view": "diagram+table",
+        "table": {
+          "layout": "wide"
+        },
+        "show": {
+          "alphabet": true
+        },
+        "caption": "S0 counts an even number of 1s so far"
+      }
+    },
+    {
+      "label": "Occluded question — complete the transition table (first row worked)",
+      "params": {
+        "machine": "acceptor",
+        "states": [
+          {
+            "id": "S0"
+          },
+          {
+            "id": "S1"
+          },
+          {
+            "id": "S2",
+            "accept": true
+          }
+        ],
+        "rules": [
+          {
+            "from": "S0",
+            "read": "a",
+            "to": "S1"
+          },
+          {
+            "from": "S0",
+            "read": "b",
+            "to": "S0"
+          },
+          {
+            "from": "S1",
+            "read": "a",
+            "to": "S1"
+          },
+          {
+            "from": "S1",
+            "read": "b",
+            "to": "S2"
+          },
+          {
+            "from": "S2",
+            "read": "a",
+            "to": "S1"
+          },
+          {
+            "from": "S2",
+            "read": "b",
+            "to": "S0"
+          }
+        ],
+        "view": "table",
+        "table": {
+          "layout": "long"
+        },
+        "at": 1
+      }
+    },
+    {
+      "label": "Blank answer space — the machine is given, draw the table yourself",
+      "params": {
+        "machine": "acceptor",
+        "states": [
+          {
+            "id": "S0",
+            "accept": true
+          },
+          {
+            "id": "S1"
+          },
+          {
+            "id": "S2"
+          }
+        ],
+        "rules": [
+          {
+            "from": "S0",
+            "read": "0",
+            "to": "S1"
+          },
+          {
+            "from": "S0",
+            "read": "1",
+            "to": "S0"
+          },
+          {
+            "from": "S1",
+            "read": "0",
+            "to": "S2"
+          },
+          {
+            "from": "S1",
+            "read": "1",
+            "to": "S0"
+          },
+          {
+            "from": "S2",
+            "read": [
+              "0",
+              "1"
+            ],
+            "to": "S2"
+          }
+        ],
+        "view": "table",
+        "table": {
+          "layout": "wide"
+        },
+        "at": 0
+      }
+    },
+    {
+      "label": "Hard case — Turing binary increment traced to halt, final tape hidden",
+      "params": {
+        "machine": "turing",
+        "header": "Binary increment",
+        "blank": "#",
+        "states": [
+          {
+            "id": "S0"
+          },
+          {
+            "id": "S1"
+          },
+          {
+            "id": "S2",
+            "halt": true
+          }
+        ],
+        "tape": {
+          "cells": "101",
+          "head": 0
+        },
+        "rules": [
+          {
+            "from": "S0",
+            "read": [
+              "0",
+              "1"
+            ],
+            "to": "S0",
+            "move": "right"
+          },
+          {
+            "from": "S0",
+            "read": "#",
+            "to": "S1",
+            "write": "#",
+            "move": "left"
+          },
+          {
+            "from": "S1",
+            "read": "1",
+            "to": "S1",
+            "write": "0",
+            "move": "left"
+          },
+          {
+            "from": "S1",
+            "read": "0",
+            "to": "S2",
+            "write": "1",
+            "move": "right"
+          },
+          {
+            "from": "S1",
+            "read": "#",
+            "to": "S2",
+            "write": "1",
+            "move": "right"
+          }
+        ],
+        "view": "tape",
+        "frames": "all",
+        "occlude": {
+          "finalTape": true
+        }
+      }
+    },
+    {
+      "label": "Mealy machine — the run strip for one input string",
+      "params": {
+        "machine": "mealy",
+        "header": "Output 1 on the second 1 in a row",
+        "states": [
+          {
+            "id": "A"
+          },
+          {
+            "id": "B"
+          }
+        ],
+        "rules": [
+          {
+            "from": "A",
+            "read": "0",
+            "to": "A",
+            "output": "0"
+          },
+          {
+            "from": "A",
+            "read": "1",
+            "to": "B",
+            "output": "0"
+          },
+          {
+            "from": "B",
+            "read": "0",
+            "to": "A",
+            "output": "0"
+          },
+          {
+            "from": "B",
+            "read": "1",
+            "to": "B",
+            "output": "1"
+          }
+        ],
+        "input": "11011",
+        "view": "trace"
+      }
+    },
+    {
+      "label": "Which strings are accepted — and write the regular expression",
+      "params": {
+        "machine": "acceptor",
+        "header": "Strings ending in ab",
+        "states": [
+          {
+            "id": "S0"
+          },
+          {
+            "id": "S1"
+          },
+          {
+            "id": "S2",
+            "accept": true
+          }
+        ],
+        "rules": [
+          {
+            "from": "S0",
+            "read": "a",
+            "to": "S1"
+          },
+          {
+            "from": "S0",
+            "read": "b",
+            "to": "S0"
+          },
+          {
+            "from": "S1",
+            "read": "a",
+            "to": "S1"
+          },
+          {
+            "from": "S1",
+            "read": "b",
+            "to": "S2"
+          },
+          {
+            "from": "S2",
+            "read": "a",
+            "to": "S1"
+          },
+          {
+            "from": "S2",
+            "read": "b",
+            "to": "S0"
+          }
+        ],
+        "inputs": [
+          "ab",
+          "aab",
+          "aba",
+          "babab"
+        ],
+        "view": "verdicts",
+        "regex": "(a|b)*ab",
+        "occlude": {
+          "regex": true
+        }
+      }
+    }
+  ]
+}

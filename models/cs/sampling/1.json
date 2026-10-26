@@ -1,0 +1,422 @@
+{
+  "ref": "cs/sampling@1",
+  "family": "cs",
+  "name": "sampling",
+  "version": 1,
+  "title": "Sampling and quantisation",
+  "tagline": "Analogue curve, its sample instants and the derived quantised staircase against the level grid; sample rate, bit depth, levels and file size derived and occludable.",
+  "description": "Analogue-to-digital conversion drawn as one amplitude-against-time figure: the continuous analogue signal, the instants at which it is sampled, and the quantised staircase a converter actually stores — each step the curve's amplitude at that instant rounded to the nearest representable level, held until the next sample. You write only the signal (as harmonics), the sample rate in hertz and the bit depth in bits; the model derives the amplitude range from the signal's own peak, the 2^bitDepth levels evenly spaced across it, every sample instant (rate x window), every stored value and its level code, the quantisation error at each sample, and the file size (rate x bit depth x channels x length) in bits and bytes. Sample rate and bit depth are independent, so one figure shows either axis of the trade-off: raise either and the staircase closes on the curve while the file grows. Hide the staircase for \"sketch the sampled waveform\", hide the file size for the calculation, or hide the level count for \"how many levels does this give?\". On the web, two compact sliders let a class sweep the rate and the depth and watch both the fit and the size respond.",
+  "whenToUse": "Reach for this for analogue-to-digital conversion and sound representation: how sampling works, what sample rate and bit depth (sampling resolution) each control, quantisation and quantisation error, why a higher rate or depth gives a more faithful recording, and the file-size calculation. Author the signal as one to four harmonics (frequency in hertz, amplitude, optional phase in fractions of pi) plus the window in seconds — two or three harmonics of decreasing amplitude give the lumpy real-world shape a single sine cannot. Then set sampling.rate (hertz) and sampling.bitDepth (bits). Everything else is derived: you never write a stored value, a level, an error or a size. Keep the SIGNAL AND WINDOW IDENTICAL across the blocks of one lesson and vary only one of rate / bitDepth per block — that is what makes the two axes comparable, and it is exactly how the topic is taught (one page varying the depth, the next varying the rate). Common configurations: bit-depth sequence — same rate throughout, bitDepth 1 then 2 then 3 then 4, with show.levels and show.levelNumbers on so the level grid visibly doubles; sample-rate sequence — same bitDepth throughout, rate doubling each block; the trade-off — add a fileSize object to every block in either sequence so the cost of the closer fit is on the figure; sketch it — show.staircase false leaves the curve, the sample instants and the level grid as an answer space; the calculation — give fileSize (with the whole recording's duration and channels) and occlude.fileSize, so the rate, depth, channels and length show as givens and only the answer is hidden; how many levels — occlude.levelCount (this also withdraws the level grid and its numbers, so the answer cannot be counted off the figure); quantisation error — show.quantisationError draws the gap between the curve and the stored value at each sample and reports the greatest one as a percentage of the range. Note that fileSize.duration is the length of the WHOLE recording and is quite separate from the drawn window, so a figure can show a two-millisecond excerpt and size a three-minute track; omit it and the size is for the drawn window. Above five bits the level grid is finer than the figure can draw and is replaced by a plain amplitude grid, and above forty samples in the window the individual sample sticks are dropped — the staircase carries the picture — so keep the window short when you want to see individual samples. Staged builds read well: open on the analogue curve alone (reveal 1), mark the sample instants (reveal 2), then bring in the staircase (reveal 3); or hold reveal at 3 and step the bit depth up stage by stage. Set draggable for the web explorer: two sliders sweep the rate and the depth live. Synonyms a teacher might use: sampling, sample rate, sampling frequency, sampling interval, bit depth, sampling resolution, quantisation, quantising, analogue to digital, ADC, sound representation, audio file size, sampled waveform, staircase, digitising sound.",
+  "responseModes": [],
+  "tags": [
+    "sampling",
+    "sample rate",
+    "sampling frequency",
+    "sampling interval",
+    "bit depth",
+    "sampling resolution",
+    "quantisation",
+    "quantising",
+    "quantisation error",
+    "analogue",
+    "analogue to digital",
+    "ADC",
+    "digitising",
+    "sound",
+    "audio",
+    "sound representation",
+    "waveform",
+    "file size",
+    "levels",
+    "computer science",
+    "computing",
+    "a-level",
+    "gcse"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "signal": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The analogue input — the continuous curve being sampled. Written as the harmonics that add to make it; the curve, its peak amplitude and hence the whole amplitude range are derived.",
+        "properties": {
+          "harmonics": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "frequency": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "Frequency of this component in HERTZ (cycles per second) — the same unit as the sample rate, so the two are directly comparable. With a window of 1 second, frequency 2 draws two cycles; with a window of 0.002 seconds, frequency 440 draws just under one. Required."
+                },
+                "amplitude": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "description": "Peak displacement of this component, in the same arbitrary units as the other components. Relative size is all that matters: a fundamental of 1 with a second harmonic of 0.4 gives the lumpy, real-world shape a pure sine never has. Required."
+                },
+                "phase": {
+                  "type": "number",
+                  "description": "Phase offset in FRACTIONS OF PI (the classroom unit): 0 starts at zero rising, 0.5 is a quarter-cycle shift, 1 is half a cycle. Shift the harmonics against each other to get an asymmetric signal. Default 0."
+                }
+              },
+              "required": [
+                "frequency",
+                "amplitude"
+              ]
+            },
+            "description": "The sine components that add to the analogue signal (y = sum of A.sin(2.pi.f.t + phase.pi)). One harmonic is a pure tone; two or three of decreasing amplitude give the asymmetric shape of a real sound, which is what makes quantisation visible. Required."
+          },
+          "window": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "How long a slice of the signal the figure DRAWS, in seconds. This is the picture, not the recording: use 1 for a classroom figure at a handful of hertz, or 0.002 for a real-audio excerpt at 44100 Hz. The time axis is labelled in s, ms or microseconds to suit. Default 1."
+          },
+          "peak": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Overrides the amplitude the level range spans, so the levels cover [-peak, +peak]. Omit (the normal case) and it is the signal's own peak, so the levels cover exactly the range the signal uses. Set it LARGER than the signal's peak to show a quiet recording wasting most of its levels."
+          }
+        },
+        "required": [
+          "harmonics"
+        ]
+      },
+      "sampling": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "The two independent conversion settings. Vary ONE of them at a time across the blocks of a lesson — that is what makes the trade-off legible.",
+        "properties": {
+          "rate": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Sample rate in HERTZ — samples taken per second. The instants are derived as t = 0, 1/rate, 2/rate, ... across the window, so rate x window is the number of samples drawn (keep that at 40 or below to see the individual sample sticks). Classroom figures use 4-32 Hz with a 1 second window; real audio is 44100 Hz. Required."
+          },
+          "bitDepth": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "description": "Bits stored per sample, so 2^bitDepth representable levels: 1 bit gives 2 levels (a startling picture of why depth matters), 3 bits gives 8, 4 bits gives 16, 16 bits is CD audio's 65536. The levels are spread evenly across the amplitude range and each sample is rounded to the nearest one. Above 5 bits the grid is too fine to draw and is replaced by a plain amplitude grid. Required."
+          }
+        },
+        "required": [
+          "rate",
+          "bitDepth"
+        ]
+      },
+      "fileSize": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Include this object to render the file-size readout; omit it for no size. The size is DERIVED as rate x bitDepth x channels x duration, shown in bits with a byte unit alongside. Use occlude.fileSize to pose it as the calculation.",
+        "properties": {
+          "duration": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Length of the WHOLE recording in seconds — quite separate from the drawn window, so a figure can show a 2 ms excerpt and size a 180 s track. The readout states it, so it is a given for the pupil. Default: the drawn window."
+          },
+          "channels": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2,
+            "description": "1 for mono, 2 for stereo (which doubles the size). The readout names it either way, so mono is never an unstated assumption. Default 1."
+          },
+          "binaryPrefixes": {
+            "type": "boolean",
+            "description": "true reports the byte unit in binary prefixes (1 KiB = 1024 bytes, 1 MiB = 1024 KiB); false uses decimal prefixes (1 kB = 1000 bytes). Match whichever convention the class uses. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture and readout toggles. All default true except sampleCodes and quantisationError.",
+        "properties": {
+          "curve": {
+            "type": "boolean",
+            "description": "Draw the analogue signal. false leaves only the sampled staircase — the reverse question, \"this is what was stored; what did the original sound like?\". Default true."
+          },
+          "samples": {
+            "type": "boolean",
+            "description": "Mark the sample instants: a dashed stalk up from the time axis to a dot on the curve at each instant. Automatically dropped when there are more than 40 samples in the window (they would read as a solid mass). Default true."
+          },
+          "staircase": {
+            "type": "boolean",
+            "description": "Draw the derived quantised staircase — the stored waveform. false leaves the curve, the instants and the level grid as a blank answer space for \"sketch the sampled waveform\" on paper. (Use occlude.staircase instead when you want the figure to say so with a marker.) Default true."
+          },
+          "levels": {
+            "type": "boolean",
+            "description": "Draw the grid of representable amplitude levels — the lines each sample is rounded onto. Only drawn up to 33 levels (5 bits); above that a plain amplitude grid replaces it. Default true."
+          },
+          "levelNumbers": {
+            "type": "boolean",
+            "description": "Number the level lines up the y-axis with their level index, 0 at the bottom to 2^bitDepth - 1 at the top — the value actually stored. Thinned automatically so the numbers never touch. Only meaningful while the level grid is drawn. Default true."
+          },
+          "sampleCodes": {
+            "type": "boolean",
+            "description": "Print each sample's stored level code in a row beneath the time axis — the \"a sound file is just a list of numbers\" reading. Drawn only when the row fits the figure's width, and never when the staircase is hidden (the codes ARE the staircase). Default false."
+          },
+          "quantisationError": {
+            "type": "boolean",
+            "description": "Draw the quantisation error at each sample as a short bar between the curve's true amplitude and the value stored, and report the greatest one as a percentage of the amplitude range. This is the evidence for \"a higher bit depth is more faithful\". Default false."
+          },
+          "rate": {
+            "type": "boolean",
+            "description": "Show the sample-rate readout beneath the figure. Default true."
+          },
+          "bitDepth": {
+            "type": "boolean",
+            "description": "Show the bit-depth readout beneath the figure. Default true."
+          },
+          "levelCount": {
+            "type": "boolean",
+            "description": "Show the \"2^bitDepth levels\" readout beneath the figure. Default true."
+          },
+          "seriesLabels": {
+            "type": "boolean",
+            "description": "Label the two waveforms at their right-hand ends (\"analogue\", \"sampled\") so the figure reads on its own on a slide. Default true."
+          }
+        }
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Which derived values the figure withholds as \"?\" — the question hooks. They combine freely, and each withdraws everything that could leak it.",
+        "properties": {
+          "staircase": {
+            "type": "boolean",
+            "description": "Hide the quantised staircase behind a \"sampled waveform = ?\" marker — \"sketch the waveform that is stored\". The curve, the sample instants and the level grid stay (the pupil rounds onto the grid); the sample codes and the quantisation error go with it. Default false."
+          },
+          "fileSize": {
+            "type": "boolean",
+            "description": "Render the file-size readout as \"?\" — the calculation. The rate, bit depth, channels and recording length all stay visible as the givens. Requires a fileSize object. Default false."
+          },
+          "levelCount": {
+            "type": "boolean",
+            "description": "Render the level-count readout as \"?\" — \"how many levels does this bit depth give?\". The level grid and its numbers are withdrawn with it, since a drawn grid can simply be counted; the bit-depth readout stays as the given. Default false."
+          }
+        }
+      },
+      "highlight": {
+        "type": "string",
+        "enum": [
+          "staircase",
+          "levels",
+          "error",
+          "fileSize"
+        ],
+        "description": "Draw the eye to one feature in amber. \"staircase\" thickens the stored waveform (the answer); \"levels\" ambers the level grid (what the depth controls); \"error\" thickens the quantisation-error bars and ambers their readout (the bars keep their own colour, so they stay distinct from the staircase they are measured against); \"fileSize\" ambers the size readout. Omit for no emphasis."
+      },
+      "reveal": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 3,
+        "description": "Staged-build control: 1 draws the analogue curve alone, 2 adds the sample instants, 3 (or omitted) adds the quantised staircase. The axes, the level grid and the full window always draw, so the figure never resizes between stages. The classic build is 1 then 2 then 3 with \"sample it, then round it\" narration in the block text."
+      },
+      "codeBase": {
+        "type": "string",
+        "enum": [
+          "denary",
+          "binary"
+        ],
+        "description": "How show.sampleCodes writes each stored level: \"denary\" (0, 5, 11) or \"binary\" padded to the bit depth (0000, 0101, 1011) — the binary form is what is actually stored, but it only fits at small bit depths. Default \"denary\"."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web only: two compact sliders above the plot sweep the sample rate and the bit depth, with the staircase, the levels, the error and the file size all recomputing live — the trade-off explored rather than told. The rate slider snaps so the number of samples stays whole. Ignored in print and slides (the static frame stands alone). Default false."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the figure, e.g. a short context note. Omit to let the figure speak for itself. Never the question or an instruction: that wording is the block's text."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      }
+    },
+    "required": [
+      "signal",
+      "sampling"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — 8 Hz, 3-bit: 8 levels, the codes stored, the size of the second",
+      "params": {
+        "header": "Sampling at 8 Hz with 3 bits per sample",
+        "signal": {
+          "harmonics": [
+            {
+              "frequency": 1,
+              "amplitude": 1
+            },
+            {
+              "frequency": 2,
+              "amplitude": 0.42,
+              "phase": 0.35
+            }
+          ],
+          "window": 1
+        },
+        "sampling": {
+          "rate": 8,
+          "bitDepth": 3
+        },
+        "fileSize": {},
+        "show": {
+          "sampleCodes": true
+        },
+        "caption": "Each sample is rounded to the nearest of the 8 levels and stored as that number."
+      }
+    },
+    {
+      "label": "Blank answer space — the curve, the instants and the level grid; sketch the stored waveform",
+      "params": {
+        "signal": {
+          "harmonics": [
+            {
+              "frequency": 1,
+              "amplitude": 1
+            },
+            {
+              "frequency": 3,
+              "amplitude": 0.28,
+              "phase": 0.5
+            }
+          ],
+          "window": 1
+        },
+        "sampling": {
+          "rate": 10,
+          "bitDepth": 3
+        },
+        "show": {
+          "staircase": false,
+          "seriesLabels": false
+        }
+      }
+    },
+    {
+      "label": "Occluded question — work out the file size of a 30-second stereo recording",
+      "params": {
+        "signal": {
+          "harmonics": [
+            {
+              "frequency": 2,
+              "amplitude": 1
+            },
+            {
+              "frequency": 5,
+              "amplitude": 0.3,
+              "phase": 0.6
+            }
+          ],
+          "window": 1
+        },
+        "sampling": {
+          "rate": 16,
+          "bitDepth": 4
+        },
+        "fileSize": {
+          "duration": 30,
+          "channels": 2
+        },
+        "occlude": {
+          "fileSize": true
+        }
+      }
+    },
+    {
+      "label": "Too few samples — the same signal at 4 Hz, with the quantisation error shown",
+      "params": {
+        "header": "Sampling at 4 Hz",
+        "signal": {
+          "harmonics": [
+            {
+              "frequency": 1,
+              "amplitude": 1
+            },
+            {
+              "frequency": 2,
+              "amplitude": 0.42,
+              "phase": 0.35
+            }
+          ],
+          "window": 1
+        },
+        "sampling": {
+          "rate": 4,
+          "bitDepth": 4
+        },
+        "fileSize": {},
+        "show": {
+          "quantisationError": true
+        },
+        "caption": "Between the samples the stored waveform knows nothing about the signal."
+      }
+    },
+    {
+      "label": "The hard case — CD audio: a 2 ms excerpt at 44 100 Hz and 16 bits, sized for a 3-minute stereo track",
+      "params": {
+        "header": "CD audio",
+        "signal": {
+          "harmonics": [
+            {
+              "frequency": 440,
+              "amplitude": 1
+            },
+            {
+              "frequency": 880,
+              "amplitude": 0.35,
+              "phase": 0.4
+            }
+          ],
+          "window": 0.002
+        },
+        "sampling": {
+          "rate": 44100,
+          "bitDepth": 16
+        },
+        "fileSize": {
+          "duration": 180,
+          "channels": 2
+        },
+        "caption": "At this rate and depth the stored waveform sits on the signal — and the file is enormous."
+      }
+    },
+    {
+      "label": "One bit per sample — two levels, and the error that leaves",
+      "params": {
+        "header": "1 bit per sample",
+        "signal": {
+          "harmonics": [
+            {
+              "frequency": 1,
+              "amplitude": 1
+            },
+            {
+              "frequency": 2,
+              "amplitude": 0.42,
+              "phase": 0.35
+            }
+          ],
+          "window": 1
+        },
+        "sampling": {
+          "rate": 16,
+          "bitDepth": 1
+        },
+        "show": {
+          "quantisationError": true,
+          "sampleCodes": true
+        },
+        "highlight": "error",
+        "caption": "With only two levels every sample is stored as loud or quiet, nothing between."
+      }
+    }
+  ]
+}

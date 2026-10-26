@@ -1,0 +1,235 @@
+{
+  "ref": "number/gattegno-chart@1",
+  "family": "number",
+  "name": "gattegno-chart",
+  "version": 1,
+  "title": "Gattegno place-value chart",
+  "tagline": "Powers-of-ten rows × digit columns 1–9; ring one cell per place to build a number (the sum), with ×10/÷10 shown as derived same-column row jumps.",
+  "description": "A Gattegno place-value chart — a reference grid whose rows are powers of ten (… 1000, 100, 10, 1, then a decimal divider, 0.1, 0.01 …) and whose nine columns hold the digits 1–9, so every cell shows the value digit × place (the tens row reads 10, 20, 30 … 90). Give a number and the model rings one cell per place — 342 rings 300, 40 and 2 — and reads out the build \"300 + 40 + 2 = 342\"; a zero place rings nothing, leaving an empty row as the placeholder. Add an operation (multiply or divide by a power of ten) and each ringed digit jumps in its own column — up one row per power for ×, down for ÷ — landing on the result cells (amber) with an arrow per digit and the result number derived (42 × 10 = 420). The grid, which cells are ringed, the sum, the result, the arrows, the row range, the row labels and the stem sentence are all computed — you never author a ring or a value. Ring values stay visible (the chart is a reference), so occlude hides the assembled answer: the built-number sum (\"which number is this?\") or the operation result (\"× 10 = ?\"). Highlight a place to teach the value of a digit; hide the rings for a \"build it yourself\" answer space; turn on a warm stem sentence (\"342 is 3 hundreds, 4 tens and 2 ones\").",
+  "whenToUse": "Reach for this for place value on a Gattegno / place-value chart and for multiplying and dividing by powers of ten: building a number by ringing one cell per row, reading what each digit is worth, ×10 / ÷10 / ×100 shown as the digits jumping up or down rows, and navigating into decimals. Author a `number` (342, 506, 4.7, 0.34) and the cells ring automatically, one per place, a zero place ringing nothing (the empty-row placeholder — good for teaching 506 vs 56). To show × or ÷ by a power of ten add operation { type: \"multiply\" | \"divide\", power: n } (power is the exponent — power 2 means ×100 or ÷100); the model rings the result cells, draws a jump arrow per digit (same column, n rows up for ×, down for ÷ — the \"same digit, new place\" idea) and derives the result. The chart spans exactly the rows the rings need (always including the ones row); pin a fixed frame with rows { from, to } as powers of ten (from = top/highest power, 3 = thousands; to = bottom/lowest, −1 = tenths) — keep the same rows across a lesson and across the stages of one staged build so the chart never resizes. rowLabels \"value\" (1000, 100, 10, 1, 0.1 — best for KS1/2) | \"power\" (10³, 10², 10⁻¹ — compact, links to standard form) | \"none\". For the value of a digit use highlight { power: p } to amber that place (no operation — the result owns amber when an operation is present; do not combine). Questions: occlude { number: true } shows the rings but hides the sum readout — \"what number is this?\"; occlude { result: true } shows the source rings and the operation but hides the result rings, arrows and answer — \"× 10 = ?\". show { selection: false } empties the chart for a \"build it yourself\" answer space; show { sum: false } drops the readout; show { jumps: false } drops the arrows. stem: true adds a warm derived sentence (\"342 is 3 hundreds, 4 tens and 2 ones\"; with an operation, \"multiplying by 10 moves each digit one place to the left\"). Staged builds read beautifully: ring one place per stage by authoring a growing number (300, then 340, then 342) with rows pinned, OR stage an operation (source → arrows → land the result → mark it) — the base state stands alone as a sensible chart. Synonyms a teacher might use: Gattegno chart, place value chart, place value grid, powers of ten, build a number, partition, multiply by 10 100 1000, divide by powers of ten, moving up and down the chart, what is the digit worth, tenths hundredths, decimals. Switch model when the teaching changes: for the digits laid in columns with a fixed decimal point and ×÷ as a digit shift (and for standard form) use number/place-value; for base-ten blocks / counters use number/place-value-blocks; for a hundred square / multiples grid use number/number-grid; for a number on a line use number/number-line.",
+  "responseModes": [],
+  "tags": [
+    "gattegno",
+    "gattegno chart",
+    "place value",
+    "place value chart",
+    "place value grid",
+    "powers of ten",
+    "build a number",
+    "partition",
+    "multiply by 10",
+    "multiply by 100",
+    "divide by 10",
+    "divide by powers of ten",
+    "digit value",
+    "value of a digit",
+    "decimals",
+    "tenths",
+    "hundredths",
+    "primary",
+    "ks1",
+    "ks2",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "number": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 9999999,
+        "description": "The number to BUILD on the chart (positive). Its digits are decomposed into one ringed cell per place — 342 rings 300 (hundreds row, column 3), 40 (tens, column 4) and 2 (ones, column 2); 506 rings 500 and 6 and leaves the tens row empty (the zero placeholder); 4.7 rings 4 and 0.7. Values are read to the nearest thousandth; trailing decimal zeros are not significant (3.40 is the number 3.4)."
+      },
+      "operation": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Multiply or divide `number` by a power of ten. Present this to ring a SECOND set of cells (the result, in amber) and draw a jump arrow per digit; omit it for a single build. The result, where each digit lands (its row ± the power, same column) and the result rings are all computed.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "multiply",
+              "divide"
+            ],
+            "description": "multiply jumps every ringed digit UP (into higher rows); divide jumps every digit DOWN (into lower rows). The digit (column) never changes — only its place."
+          },
+          "power": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "description": "The exponent of ten: power 1 means ×10 / ÷10 (a one-row jump), power 2 means ×100 / ÷100 (two rows), and so on. The number of rows every digit jumps."
+          }
+        },
+        "required": [
+          "type",
+          "power"
+        ]
+      },
+      "rows": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Optional override of the power range of rows shown. By default the chart spans exactly the rows the ringed cells need (source and result), always including the ones row. Set this to PIN a fixed frame — essential across the stages of one staged build and across a lesson so the chart never resizes. The override only EXTENDS the range; it never clips a ringed cell.",
+        "properties": {
+          "from": {
+            "type": "integer",
+            "minimum": -3,
+            "maximum": 6,
+            "description": "Highest-power (TOP) row to show, as a power of ten: 3 = thousands, 2 = hundreds, 0 = ones, −1 = tenths."
+          },
+          "to": {
+            "type": "integer",
+            "minimum": -3,
+            "maximum": 6,
+            "description": "Lowest-power (BOTTOM) row to show: 0 = ones, −1 = tenths, −2 = hundredths, −3 = thousandths."
+          }
+        }
+      },
+      "rowLabels": {
+        "type": "string",
+        "enum": [
+          "value",
+          "power",
+          "none"
+        ],
+        "description": "The left-edge row labels. \"value\" = the place value (1000, 100, 10, 1, 0.1, 0.01) — clearest for KS1/2 (default). \"power\" = powers of ten (10³, 10², 10¹, 10⁰, 10⁻¹ …) — compact, links to standard form. \"none\" drops the labels."
+      },
+      "highlight": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Amber-spotlight ONE place — the \"value of a digit\" hook (the 4 in 342 sits in the tens row, so it is worth 40). Use only WITHOUT an operation; when an operation is present the result rings own amber (do not combine).",
+        "properties": {
+          "power": {
+            "type": "integer",
+            "minimum": -3,
+            "maximum": 6,
+            "description": "Which row to spotlight, as a power of ten (0 = ones, 1 = tens, −1 = tenths). Should be a place the number rings."
+          }
+        },
+        "required": [
+          "power"
+        ]
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Hide an assembled ANSWER as \"?\" — the question hooks. The chart and its cell values stay visible (it is a reference grid); occlusion hides the readout the pupil must work out, not a cell value.",
+        "properties": {
+          "number": {
+            "type": "boolean",
+            "description": "Show the rings but hide the built-number sum readout as \"?\" — \"what number is this?\". The pupil sums the ringed cells. Default false."
+          },
+          "result": {
+            "type": "boolean",
+            "description": "Show the source rings and the operation but hide the result rings, the jump arrows and the result readout as \"?\" — \"× 10 = ?\". The pupil works out where the digits land. Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles (all default true).",
+        "properties": {
+          "selection": {
+            "type": "boolean",
+            "description": "Ring the cells that build the number. false leaves the chart empty — a \"build it yourself\" answer space (pair with a header that says which number to build). Default true."
+          },
+          "sum": {
+            "type": "boolean",
+            "description": "Show the decomposition readout beneath the chart (\"300 + 40 + 2 = 342\"; with an operation, the result statement \"42 × 10 = 420\"). Default true."
+          },
+          "jumps": {
+            "type": "boolean",
+            "description": "Draw the jump arrow from each source cell to its result cell (only with an operation). Default true."
+          }
+        }
+      },
+      "stem": {
+        "type": "boolean",
+        "description": "Add a warm derived stem sentence in its own band (\"342 is 3 hundreds, 4 tens and 2 ones\"; with an operation, \"Multiplying by 10 moves each digit one place to the left\"). Occlusion-aware — a hidden answer reads \"?\". Default false."
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the chart; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the chart, e.g. a short context note. Sits below the sum readout and stem. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "number"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — build 342, with the stem sentence",
+      "params": {
+        "number": 342,
+        "stem": true,
+        "header": "Building 342"
+      }
+    },
+    {
+      "label": "Blank answer space — build 506 (mind the empty tens row)",
+      "params": {
+        "number": 506,
+        "show": {
+          "selection": false
+        },
+        "rows": {
+          "from": 2,
+          "to": 0
+        },
+        "header": "Build 506 on the chart"
+      }
+    },
+    {
+      "label": "Worked example — 42 × 10 = 420, each digit jumps up one row",
+      "params": {
+        "number": 42,
+        "operation": {
+          "type": "multiply",
+          "power": 1
+        },
+        "stem": true
+      }
+    },
+    {
+      "label": "Occluded question — 28 × 100 = ? (result rings, arrows and answer hidden)",
+      "params": {
+        "number": 28,
+        "operation": {
+          "type": "multiply",
+          "power": 2
+        },
+        "occlude": {
+          "result": true
+        }
+      }
+    },
+    {
+      "label": "Hard case — 34 ÷ 100 = 0.34, digits jump two rows down across the decimal divider",
+      "params": {
+        "number": 34,
+        "operation": {
+          "type": "divide",
+          "power": 2
+        },
+        "rowLabels": "value",
+        "stem": true
+      }
+    },
+    {
+      "label": "Value of a digit — the 7 in 4.7 sits in the tenths row",
+      "params": {
+        "number": 4.7,
+        "highlight": {
+          "power": -1
+        },
+        "caption": "The 7 is in the tenths place, so it is worth 0.7."
+      }
+    }
+  ]
+}

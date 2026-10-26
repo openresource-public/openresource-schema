@@ -1,0 +1,289 @@
+{
+  "ref": "physics/moments@1",
+  "family": "physics",
+  "name": "moments",
+  "version": 1,
+  "title": "Moments (levers and see-saws)",
+  "tagline": "Beam on a pivot with weights (force N) at distances either side; moments F×d, side totals, the balance verdict and the tilt are derived; occlude a force or distance to solve.",
+  "description": "A rigid beam on a single pivot — a see-saw or lever — with weights hung at authored distances either side. You write each weight as its force (in newtons) and its distance from the pivot and which side it hangs on; the model derives each weight's position on the beam (from the distance, not a pixel), each weight's moment (force × distance), each side's total moment, the balanced-or-unbalanced verdict, the tipping direction, and the beam's tilt — the beam leans toward the side with the greater total moment (a small honest lean, capped) and sits level when the two sides balance. Turn on per-weight moment tags (F × d), the side totals (Σ), a verdict line and a derived stem sentence for a quantitative lesson; leave them off for a clean lever. Occlude a weight's force or distance (\"what force balances it?\", \"how far out must it sit?\") and the model derives the complement that balances — and renders the beam level so the tilt never leaks the answer. Built for the GCSE principle of moments: see-saws, balancing, spanners and levers, and the two-weights-versus-one solve-for-distance problem.",
+  "whenToUse": "Reach for this whenever turning effect / moments / levers are the lesson: the principle of moments (sum of clockwise moments = sum of anticlockwise moments), balancing a see-saw, why a longer spanner turns a nut more easily, and solve-for problems (what force, or what distance, balances the beam?). Write each weight as { side, force, distance } — force in newtons, distance from the pivot in your chosen unit (set unit \"m\" or \"cm\") — and the moments, side totals, verdict, tilt and any missing value are all derived; you never type a moment. Common configurations: balanced see-saw — two weights whose F×d match, show.moments true so the equal moments are visible; unbalanced — mismatched moments, the beam tips toward the greater and show.verdict names the side; solve for the missing value — give one weight occlude \"force\" or occlude \"distance\" and the model derives the complement that balances (the beam draws level, the \"?\" is the answer space); the hard case — two weights on one side versus one on the other, occlude the single weight's distance. Turn show.moments / show.totals on together for the full \"clockwise = anticlockwise\" calculation, show.stem for a verbal twin (\"the beam is balanced\", \"it tips to the left\"). Staged builds read very well: open on one weight, add the opposing weight (watch it tip), then adjust to balance; or open on the question figure and reveal the moment tags, then the totals, then the verdict. Set draggable to let pupils slide ONE weight along its arm and watch its distance, its moment and the side totals recompute — finding the balance point by feel. Keep the same unit and the same show.* flags across one lesson so pupils track one lever. Switch model when the teaching changes: to COMPARE or ORDER masses on a pan balance (no distances) use measures/balance-scale; to model and SOLVE a linear equation on a level balance of x-boxes and units use algebra/balance-scales; for force diagrams / resultant forces use a vector figure. Synonyms a teacher might use: moment, moments, turning effect, turning force, torque, lever, see-saw, seesaw, balance, balanced, pivot, fulcrum, principle of moments, clockwise and anticlockwise moments, force times distance, spanner, crowbar, wheelbarrow.",
+  "responseModes": [],
+  "tags": [
+    "moment",
+    "moments",
+    "turning effect",
+    "turning force",
+    "torque",
+    "lever",
+    "levers",
+    "see-saw",
+    "seesaw",
+    "pivot",
+    "fulcrum",
+    "principle of moments",
+    "clockwise moment",
+    "anticlockwise moment",
+    "balance",
+    "balanced",
+    "force times distance",
+    "spanner",
+    "crowbar",
+    "physics",
+    "mechanics",
+    "GCSE"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "weights": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "side": {
+              "type": "string",
+              "enum": [
+                "left",
+                "right"
+              ],
+              "description": "Which arm of the beam this weight hangs from, measured from the pivot. left and right totals are each summed; balance is when the two side totals of force × distance are equal."
+            },
+            "force": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The downward force of this weight, in newtons (N) — an ORIGINAL authored value. Its moment about the pivot is force × distance, computed. Forces are vertical; the model uses the horizontal (perpendicular) distance only."
+            },
+            "distance": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The perpendicular distance of this weight from the pivot, in the figure's unit (see unit). Drives the weight's on-beam position (scaled, never a pixel) and its moment (force × distance). Keep the same unit across one figure."
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional short display name beside this weight (e.g. \"A\", \"load\", \"child\"). Omit for an unlabelled hanging weight."
+            },
+            "occlude": {
+              "type": "string",
+              "enum": [
+                "force",
+                "distance"
+              ],
+              "description": "Render this weight's force OR its distance as \"?\" — the \"what balances the beam?\" question hook. The OTHER value stays visible; the missing one is the derived complement that makes the two sides balance. Occluding anything forces the beam into the balanced (level) pose so the tilt cannot leak the answer. Omit for a fully-known weight."
+            },
+            "highlight": {
+              "type": "boolean",
+              "description": "Amber this weight — draw the eye to it (e.g. the load whose value was just found). Default false."
+            }
+          },
+          "required": [
+            "side",
+            "force",
+            "distance"
+          ]
+        },
+        "description": "The weights hanging from the beam, each { side, force, distance }. The moments, side totals, verdict, tilt and any occluded (missing) value are all derived from these — you never author a moment or a position. A side may carry several weights (their moments sum); an empty side is allowed (a lone weight tips the beam)."
+      },
+      "unit": {
+        "type": "string",
+        "description": "Distance unit shown on dimension arrows and in readouts, e.g. \"m\", \"cm\". Free text — the model does not convert units, so keep every distance in the same unit. Default \"m\"."
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Furniture toggles.",
+        "properties": {
+          "distances": {
+            "type": "boolean",
+            "description": "Draw the dimension arrows from the pivot to each weight with the distance labelled. Default true — the distances are usually part of the figure."
+          },
+          "moments": {
+            "type": "boolean",
+            "description": "Show each weight's moment (e.g. \"3 N × 2 m = 6 N·m\") as a tag by the load. An occluded force or distance renders its moment with a \"?\". Default false."
+          },
+          "totals": {
+            "type": "boolean",
+            "description": "Show each side's total moment (Σ of its weights' F×d) beneath that arm — the \"clockwise vs anticlockwise\" comparison. Default false."
+          },
+          "verdict": {
+            "type": "boolean",
+            "description": "Show the derived conclusion beneath the figure — \"balanced\", or \"tips to the left / right\". Hidden automatically when a value is occluded (the balance is the question). Default true."
+          },
+          "stem": {
+            "type": "boolean",
+            "description": "Show a derived stem sentence below the figure — the verbal twin (\"The see-saw is balanced.\", \"It tips to the left.\"). Occlusion-aware. Default false."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line below the figure, e.g. a short context note. Distinct from the auto stem sentence. Never the question or an instruction: that wording is the block's text."
+      },
+      "draggable": {
+        "type": "boolean",
+        "description": "Web-only. ONE weight (the last fully-known weight) gets a handle pupils can drag along its arm; its distance, its moment tag and the side totals recompute live and the beam re-tilts, so pupils find the balance point by feel. The weight slides along the beam only. Default false."
+      }
+    },
+    "required": [
+      "weights"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — a balanced see-saw, equal moments shown",
+      "params": {
+        "header": "A balanced see-saw",
+        "weights": [
+          {
+            "side": "left",
+            "force": 6,
+            "distance": 2,
+            "label": "A"
+          },
+          {
+            "side": "right",
+            "force": 4,
+            "distance": 3,
+            "label": "B"
+          }
+        ],
+        "unit": "m",
+        "show": {
+          "moments": true,
+          "totals": true,
+          "stem": true
+        }
+      }
+    },
+    {
+      "label": "Unbalanced — the beam tips to the side with the greater moment",
+      "params": {
+        "weights": [
+          {
+            "side": "left",
+            "force": 5,
+            "distance": 3,
+            "label": "A"
+          },
+          {
+            "side": "right",
+            "force": 5,
+            "distance": 1.5,
+            "label": "B"
+          }
+        ],
+        "unit": "m",
+        "show": {
+          "moments": true,
+          "totals": true
+        }
+      }
+    },
+    {
+      "label": "Blank answer space — a lever with distances, moments hidden",
+      "params": {
+        "weights": [
+          {
+            "side": "left",
+            "force": 8,
+            "distance": 2.5,
+            "label": "load"
+          },
+          {
+            "side": "right",
+            "force": 20,
+            "distance": 1,
+            "label": "effort"
+          }
+        ],
+        "unit": "m"
+      }
+    },
+    {
+      "label": "Occluded question — what force at B balances the see-saw?",
+      "params": {
+        "weights": [
+          {
+            "side": "left",
+            "force": 30,
+            "distance": 2,
+            "label": "A"
+          },
+          {
+            "side": "right",
+            "force": 30,
+            "distance": 2,
+            "occlude": "force",
+            "label": "B"
+          }
+        ],
+        "unit": "m"
+      }
+    },
+    {
+      "label": "Hard case — two weights one side vs one the other, solve for the distance",
+      "params": {
+        "weights": [
+          {
+            "side": "left",
+            "force": 2,
+            "distance": 3,
+            "label": "A"
+          },
+          {
+            "side": "left",
+            "force": 4,
+            "distance": 1,
+            "label": "B"
+          },
+          {
+            "side": "right",
+            "force": 5,
+            "distance": 2,
+            "occlude": "distance",
+            "label": "C"
+          }
+        ],
+        "unit": "m",
+        "show": {
+          "moments": true,
+          "totals": true
+        }
+      }
+    },
+    {
+      "label": "Spanner / lever — a longer arm needs less force (cm)",
+      "params": {
+        "header": "Loosening a nut",
+        "weights": [
+          {
+            "side": "left",
+            "force": 200,
+            "distance": 4,
+            "label": "nut"
+          },
+          {
+            "side": "right",
+            "force": 40,
+            "distance": 20,
+            "label": "hand",
+            "highlight": true
+          }
+        ],
+        "unit": "cm",
+        "show": {
+          "moments": true,
+          "totals": true,
+          "stem": true
+        }
+      }
+    }
+  ]
+}

@@ -33,8 +33,8 @@ Draw-style response modes accept an error band around the derived target; by con
 
 ## The library
 
-The model library is large and grows over time; it is discovered programmatically rather than enumerated in this repo. This repo publishes **one** model's interface in full as a worked reference:
+[`models/catalogue.json`](models/catalogue.json) lists every published model: its current version and every version it has had, each `current` or `superseded`, and for a superseded one whether a snapshot exists so a pin on it still resolves through Open Resource. The interface a current pin resolves to is at `models/<family>/<name>/<version>.json`: title, description, when to use, response modes, the params JSON Schema and the worked example paramsets. It is generated from the library and never hand-edited; the catalogue carries each file's SHA-256.
 
-- [`graphing/coordinate-grid`](models/coordinate-grid.md) — a labelled coordinate grid with optional plotted points and segments.
+A model version changes only for a breaking change (VERSIONING.md, models), so a superseded version is one a pinning lesson would see differently if moved; the resolve response for such a pin says `superseded: true` and names the current version, as a retired user model says `retired: true`.
 
-Each model's parameters are documented at [`models/<name>.md`](models/). The interface shape (a JSON-schema of `params` with per-property descriptions, plus worked example paramsets) is the same for every model.
+One model is also written up in prose as a worked reference for how every interface reads: [`graphing/coordinate-grid`](models/coordinate-grid.md).

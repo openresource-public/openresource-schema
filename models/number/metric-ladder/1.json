@@ -1,0 +1,319 @@
+{
+  "ref": "number/metric-ladder@1",
+  "family": "number",
+  "name": "metric-ladder",
+  "version": 1,
+  "title": "Metric conversion table",
+  "tagline": "Metric unit conversion as a working table — unit rungs (length / mass / capacity) down the rows with derived ×k / ÷k power-of-ten arrows and the converted value.",
+  "description": "A metric unit conversion drawn as a working table — the proportional-table cousin of number/ratio-table. The unit rungs of one measure family (length: km, m, cm, mm; mass: t, kg, g, mg; capacity: l, cl, ml) run down the rows, largest unit at the top, the amount in the Value column, and ×k / ÷k scale-factor arrows sit outside the table on both edges between consecutive rows — ×k going down to a smaller unit, ÷k going up. Give a quantity (length / mass / capacity), a from unit, a to unit and a value; the model shows the rows between from and to, computes every ×10 / ×100 / ×1000 step factor, the direction, and each row's value (string-exact — 3 km = 3000 m, 250 cm = 2.5 m, never a rounded float), tinting the from row and ambering the to row (the answer). A dimension setting raises every factor to a power for area (×k²: 2 m² = 20000 cm²) and volume (×k³: 0.5 m³ = 500000 cm³) conversions of length, with the unit symbols carrying ² or ³ — mass and capacity have no squared form, so dimension is ignored for them. Occlude the result for \"complete the conversion\" (or the source for the reverse), blank the values for an answer-space table, or hide the factors for \"what do you multiply by?\". Because each row is a named unit with a fixed power of ten, the non-uniform steps real curricula use (m→cm is ×100, m→km is ÷1000) are labelled correctly — which a uniform place-value chart cannot do.",
+  "whenToUse": "Reach for this whenever a metric unit conversion is the lesson, worked as a proportional table with scale-factor arrows: length (km ↔ m ↔ cm ↔ mm), mass (tonnes ↔ kg ↔ g ↔ mg), capacity (litres ↔ cl ↔ ml), and the ×/÷ by 10, 100, 1000 that link them. Author quantity (\"length\" | \"mass\" | \"capacity\"), the from and to unit codes, and the value; the rows, every step factor, the direction and the answer are all derived — you never write a multiplier or a result. The rows shown are the family rungs between from and to (so km→m is a two-row table with one ×1000 arrow; km→mm walks km, m, cm, mm with ×1000, ×100, ×10; l→ml walks l, cl, ml). Common configurations: complete the conversion — occlude: { result: true } for \"3 km = ? m\"; reverse — occlude: { source: true } for \"? km = 3000 m\"; what do you multiply by — show: { factors: false } so the arrows read \"× ?\"; blank answer space — show: { values: false } leaves the given row and blanks the rest (add factors: false too for a fully empty table); area / volume — dimension: 2 (m² ↔ cm², each step ×100) or dimension: 3 (m³ ↔ cm³, each step ×1000), length only; direct jump — rungs: [\"km\",\"mm\"] for a single ×10⁶ arrow with no intermediate rows; full ladder — rungs: [\"km\",\"hm\",\"dam\",\"m\",\"dm\",\"cm\",\"mm\"] for the every-prefix ×10 staircase. dimension is for unit conversion of an area or a volume, not for finding an area — to draw/compute an area use geometry/compound-area; for a value laid out in place-value columns or a ×÷-by-ten point shift on one number use number/place-value; for a generic ratio/proportion table use number/ratio-table; for reading a value off a ruler / jug / dial use measures/measuring-scale. Keep the same quantity and rung set across a lesson so pupils read one table. Strongly staged: open on the table with the given value and the answer blank, bring in the arrows (the steps), then reveal the values — the base (the labelled table with the value placed) stands alone as a sensible figure. Synonyms a teacher might use: metric conversion, convert units, metric staircase, metric ladder, conversion table, units of length / mass / weight / capacity, kilometres metres centimetres millimetres, kilograms grams milligrams, litres millilitres, multiply by 10 100 1000, divide by powers of ten, square / cubic unit conversion, cm² to m², m³ to cm³.",
+  "responseModes": [],
+  "tags": [
+    "metric",
+    "metric conversion",
+    "convert units",
+    "unit conversion",
+    "conversion table",
+    "metric staircase",
+    "metric ladder",
+    "proportion",
+    "units of measure",
+    "measures",
+    "length",
+    "mass",
+    "weight",
+    "capacity",
+    "volume",
+    "area",
+    "km",
+    "m",
+    "cm",
+    "mm",
+    "kilometre",
+    "metre",
+    "centimetre",
+    "millimetre",
+    "tonne",
+    "kg",
+    "g",
+    "mg",
+    "kilogram",
+    "gram",
+    "milligram",
+    "litre",
+    "ml",
+    "millilitre",
+    "centilitre",
+    "multiply by 10",
+    "multiply by 100",
+    "multiply by 1000",
+    "divide by powers of ten",
+    "powers of ten",
+    "square units",
+    "cubic units",
+    "cm2 to m2",
+    "m3 to cm3",
+    "number",
+    "maths"
+  ],
+  "interface": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "quantity": {
+        "type": "string",
+        "enum": [
+          "length",
+          "mass",
+          "capacity"
+        ],
+        "description": "The measure family, which fixes the unit rungs and their powers of ten. \"length\" (base metre): km, hm, dam, m, dm, cm, mm. \"mass\" (base gram): t, kg, hg, dag, g, dg, cg, mg (1 tonne = 1000 kg). \"capacity\" (base litre): kl, hl, dal, l, dl, cl, ml. from, to and rungs must all be codes of THIS family."
+      },
+      "from": {
+        "type": "string",
+        "enum": [
+          "km",
+          "hm",
+          "dam",
+          "m",
+          "dm",
+          "cm",
+          "mm",
+          "t",
+          "kg",
+          "hg",
+          "dag",
+          "g",
+          "dg",
+          "cg",
+          "mg",
+          "kl",
+          "hl",
+          "dal",
+          "l",
+          "dl",
+          "cl",
+          "ml"
+        ],
+        "description": "The unit the value is given in (one end of the conversion). A unit code of the chosen quantity — e.g. \"km\" / \"cm\" (length), \"kg\" / \"g\" (mass), \"l\" / \"ml\" (capacity). For an area or volume conversion give the LINEAR unit code (cm, m, …) and set dimension to 2 or 3 — the model renders it as cm² / m³."
+      },
+      "to": {
+        "type": "string",
+        "enum": [
+          "km",
+          "hm",
+          "dam",
+          "m",
+          "dm",
+          "cm",
+          "mm",
+          "t",
+          "kg",
+          "hg",
+          "dag",
+          "g",
+          "dg",
+          "cg",
+          "mg",
+          "kl",
+          "hl",
+          "dal",
+          "l",
+          "dl",
+          "cl",
+          "ml"
+        ],
+        "description": "The unit to convert into (the other end). A unit code of the chosen quantity. The converted amount lands on this row (ambered). Going from a larger unit to a smaller one multiplies (down the table); smaller to larger divides (up) — derived from the two units' powers of ten."
+      },
+      "value": {
+        "type": "number",
+        "description": "The amount in the from unit — the ONLY authored number, the question's given quantity. Converted string-exact: 3 (km→m) → 3000; 250 (cm→m) → 2.5; 0.5 (m³→cm³, dimension 3) → 500000. May be a decimal; negatives render with a leading minus but measures are normally non-negative."
+      },
+      "dimension": {
+        "type": "integer",
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "description": "Power applied to every step and to the net factor — LENGTH ONLY (mass and capacity have no squared/cubed form, so this is ignored for them; there is no \"square kilogram\"). 1 (default) = a plain length conversion. 2 = AREA: each ×10 length step becomes ×100, units render with ² (2 m² = 20000 cm²). 3 = VOLUME: each step is cubed, units render with ³ (0.5 m³ = 500000 cm³)."
+      },
+      "rungs": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "km",
+            "hm",
+            "dam",
+            "m",
+            "dm",
+            "cm",
+            "mm",
+            "t",
+            "kg",
+            "hg",
+            "dag",
+            "g",
+            "dg",
+            "cg",
+            "mg",
+            "kl",
+            "hl",
+            "dal",
+            "l",
+            "dl",
+            "cl",
+            "ml"
+          ]
+        },
+        "minItems": 2,
+        "maxItems": 7,
+        "description": "Optional override of which unit rungs the family offers, as codes of the chosen quantity in ANY order (sorted largest → smallest). The ROWS actually drawn are the rungs that fall BETWEEN from and to (inclusive), so this controls the intermediate rows. Omit for the curriculum default — length [\"km\",\"m\",\"cm\",\"mm\"], mass [\"t\",\"kg\",\"g\",\"mg\"], capacity [\"l\",\"cl\",\"ml\"]. Set [\"km\",\"mm\"] for a DIRECT single-arrow jump (no intermediate rows), or the full [\"km\",\"hm\",\"dam\",\"m\",\"dm\",\"cm\",\"mm\"] for the every-prefix ×10 staircase. from and to are always included."
+      },
+      "occlude": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Hide a given/answer value as \"?\" — the question hooks. The table and the un-hidden parts stay visible and correct; a hidden value appears nowhere else (cell, arrow, aria) so it cannot leak. The visible arrows are the SCAFFOLD for finding it (set show.factors false to hide them too).",
+        "properties": {
+          "result": {
+            "type": "boolean",
+            "description": "Render the to-unit value (the answer) as \"?\" — \"complete the conversion: 3 km = ? m\". Default false."
+          },
+          "source": {
+            "type": "boolean",
+            "description": "Render the from-unit value as \"?\" — the REVERSE question \"? km = 3000 m, find the original\". Default false."
+          }
+        }
+      },
+      "show": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Readout and furniture toggles (all default true except headers).",
+        "properties": {
+          "arrows": {
+            "type": "boolean",
+            "description": "Draw the ×k / ÷k scale-factor arrows outside both edges between consecutive rows (×k down, ÷k up). Default true."
+          },
+          "factors": {
+            "type": "boolean",
+            "description": "Show the numeric multiplier on each arrow. Default true. Set false to pose \"what do you multiply by?\" — the arrows then read \"× ?\" / \"÷ ?\"."
+          },
+          "values": {
+            "type": "boolean",
+            "description": "Show the derived (non-given) row values. Default true. Set false for a blank answer-space table: the given (from) row and the headers stay, every other value blanks for pupils to fill. Set factors: false too for a fully blank table."
+          },
+          "names": {
+            "type": "boolean",
+            "description": "Print the full unit name under each row's symbol (\"centimetres\"). Default true. false shows the symbol only — a tighter table."
+          },
+          "headers": {
+            "type": "boolean",
+            "description": "Show a \"Unit\" / \"Value\" column-header row. Default false (the columns are self-evident); turn on for an explicitly labelled table."
+          }
+        }
+      },
+      "header": {
+        "type": "string",
+        "description": "Optional short title centred above the table; the top padding grows to clear it."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+      }
+    },
+    "required": [
+      "quantity",
+      "from",
+      "to",
+      "value"
+    ]
+  },
+  "examples": [
+    {
+      "label": "Worked example — 3 km = 3000 m (one step down, × 1000)",
+      "params": {
+        "quantity": "length",
+        "from": "km",
+        "to": "m",
+        "value": 3,
+        "rungs": [
+          "km",
+          "m"
+        ]
+      }
+    },
+    {
+      "label": "Occluded question — 250 cm = ? m (divide up the table)",
+      "params": {
+        "quantity": "length",
+        "from": "cm",
+        "to": "m",
+        "value": 250,
+        "rungs": [
+          "m",
+          "cm"
+        ],
+        "occlude": {
+          "result": true
+        },
+        "header": "Convert to metres"
+      }
+    },
+    {
+      "label": "Blank answer space — 2.5 litres = ? ml, what do you multiply by?",
+      "params": {
+        "quantity": "capacity",
+        "from": "l",
+        "to": "ml",
+        "value": 2.5,
+        "rungs": [
+          "l",
+          "ml"
+        ],
+        "show": {
+          "values": false,
+          "factors": false
+        }
+      }
+    },
+    {
+      "label": "Worked staircase — 3 m = 3000 mm via m, cm, mm (× 100 then × 10)",
+      "params": {
+        "quantity": "length",
+        "from": "m",
+        "to": "mm",
+        "value": 3,
+        "header": "Convert 3 m to mm"
+      }
+    },
+    {
+      "label": "Mass — 4500 g = 4.5 kg (one step up, ÷ 1000)",
+      "params": {
+        "quantity": "mass",
+        "from": "g",
+        "to": "kg",
+        "value": 4500,
+        "rungs": [
+          "kg",
+          "g"
+        ]
+      }
+    },
+    {
+      "label": "Hard case — volume 0.5 m³ = 500000 cm³ (each step × 1000, factor × 10⁶)",
+      "params": {
+        "quantity": "length",
+        "from": "m",
+        "to": "cm",
+        "value": 0.5,
+        "dimension": 3,
+        "rungs": [
+          "m",
+          "cm"
+        ],
+        "header": "Cubic units"
+      }
+    }
+  ]
+}
