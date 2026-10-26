@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.0/resource.schema.json",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.1/resource.schema.json",
   "title": "resource",
   "description": "An educational resource: a flat dictionary of blocks and sections referenced by id, a top-level sequence of section ids, and resource-level registries (objectives, keywords, misconceptions, assumed knowledge). Prose documentation: SCHEMA.md. Unknown fields anywhere in a stored resource are must-ignore, never must-understand.",
   "type": "object",
@@ -76,11 +76,40 @@
         "schemaVersion": {
           "type": "string",
           "pattern": "^0\\.12(\\.\\d+)?$",
-          "description": "The schema version this resource is shaped to: \"0.12.0\", or any patch of the same minor (a patch is additive). A bare major.minor reads as patch 0. See VERSIONING.md."
+          "description": "The schema version this resource is shaped to: \"0.12.1\", or any patch of the same minor (a patch is additive). A bare major.minor reads as patch 0. See VERSIONING.md."
         },
         "credits": {
           "type": "string",
           "description": "Optional human-readable provenance line for the resource as a whole. Finer-grained provenance lives per block at meta.attribution."
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The edition of this resource, counting from 1: which document this is, as schemaVersion says how to read it."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "published",
+            "retired"
+          ],
+          "description": "The edition's status: draft, published or retired."
+        },
+        "supersedes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The id of the edition this one replaces."
+        },
+        "derivedFrom": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The id of the resource this one was adapted from."
+        },
+        "dateModified": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}(T[\\d:.]+(Z|[+-]\\d{2}:\\d{2})?)?$",
+          "description": "When the resource last changed, as an ISO 8601 date or date-time."
         }
       }
     }

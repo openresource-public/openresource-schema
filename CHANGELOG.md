@@ -2,6 +2,12 @@
 
 Every schema version, newest first, with whether it breaks documents of the previous version ([VERSIONING.md](VERSIONING.md), OR-VER-010). The date is when the version became current in Open Resource. The same list is machine-readable in [versions.json](versions.json).
 
+## 0.12.1 (2026-10-26, tagged 2026-10-26)
+
+- The resource's own edition on `meta`: `version`, `status`, `supersedes`, `derivedFrom`, `dateModified`. All optional. Open Resource writes `derivedFrom` for an adaptation and `dateModified` on read.
+- `models/catalogue.json` lists every published model and version; one interface document per current version. A resolve for a superseded version says so.
+- The migration chain under `migrations/` with a fixture per step; the conformance corpus under `conformance/` with a runner.
+
 ## 0.12.0 (2026-08-02, tagged 2026-10-26) · breaking
 
 - Registry content is never duplicated: a block that restated an objective, keyword, misconception or assumed-knowledge entry becomes a projection block with the matching role; `meta.*Ids` are pointers, not copies. Migration from 0.11.

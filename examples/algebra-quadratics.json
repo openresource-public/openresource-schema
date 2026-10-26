@@ -4,7 +4,7 @@
   "title": "Quadratics: graphs and factorising",
   "description": "Quadratic graphs and solving by factorising: reading the parabola, completing a table of values, and factorising to solve.",
   "meta": {
-    "schemaVersion": "0.12.0",
+    "schemaVersion": "0.12.1",
     "credits": "Original content, dedicated to the public domain under CC0 1.0."
   },
   "sequence": ["sec-graphs", "sec-factorise", "sec-apply"],

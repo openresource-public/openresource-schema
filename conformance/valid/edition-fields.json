@@ -1,0 +1,23 @@
+{
+  "reason": "OR-VER-080: the resource's own edition on meta, beside the schema version",
+  "document": {
+    "id": "res-2",
+    "type": "resource",
+    "title": "A resource, second edition",
+    "meta": {
+      "schemaVersion": "0.12.1",
+      "version": 2,
+      "status": "published",
+      "supersedes": "res-1",
+      "derivedFrom": "res-source",
+      "dateModified": "2026-10-26T18:30:00Z"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

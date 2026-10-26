@@ -1,0 +1,22 @@
+{
+  "clause": "OR-VER-080: the edition is an integer from 1",
+  "reason": "version: \"2\" (a string) and a zero edition",
+  "schemaDetectable": true,
+  "path": "meta.version",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0",
+      "version": "2"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

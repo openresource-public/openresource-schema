@@ -1,0 +1,23 @@
+{
+  "clause": "OR-VER-080: status is draft, published or retired",
+  "reason": "status: \"live\"",
+  "schemaDetectable": true,
+  "path": "meta.status",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0",
+      "version": 1,
+      "status": "live"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

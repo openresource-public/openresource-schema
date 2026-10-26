@@ -1,10 +1,10 @@
 {
-  "schemaVersion": "0.12.0",
+  "schemaVersion": "0.12.1",
   "source": "luke-openresource/openresource (private)",
-  "sourceCommit": "c8caf6eeaef20e45041dc5cdc376a3da51293931",
-  "sourceCommitDate": "2026-10-26T19:39:16Z",
+  "sourceCommit": "a6d8a218b604e0a546b109ec9c552337b10a0381",
+  "sourceCommitDate": "2026-10-26T19:52:24Z",
   "sourceClean": true,
-  "exportedAt": "2026-10-26T19:39:21.855Z",
+  "exportedAt": "2026-10-26T19:53:41.463Z",
   "exporter": "api/scripts/export-public-schema.mjs",
   "excluded": []
 }

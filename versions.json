@@ -1,17 +1,29 @@
 {
-  "current": "0.12.0",
+  "current": "0.12.1",
   "policy": "VERSIONING.md",
   "versions": [
     {
+      "version": "0.12.1",
+      "date": "2026-10-26",
+      "status": "current",
+      "breaking": false,
+      "tag": "v0.12.1",
+      "schemas": "schemas/0.12.1/",
+      "migration": null,
+      "summary": "The resource's own edition on meta: version, status, supersedes, derivedFrom, dateModified. The model catalogue, the published migration chain with fixtures, and the conformance corpus join the repository.",
+      "tagged": "2026-10-26"
+    },
+    {
       "version": "0.12.0",
       "date": "2026-08-02",
-      "status": "current",
+      "status": "supported",
       "breaking": true,
       "tag": "v0.12.0",
       "tagged": "2026-10-26",
       "schemas": "schemas/0.12.0/",
       "migration": "0.11 -> 0.12 (projection collapse)",
-      "summary": "Registry content is never duplicated: tagged prose blocks become projection blocks. layered-diagram and labelling tile kinds retired. Declared block roles, multi-block questions, construct-region and run response modes, the version contract."
+      "summary": "Registry content is never duplicated: tagged prose blocks become projection blocks. layered-diagram and labelling tile kinds retired. Declared block roles, multi-block questions, construct-region and run response modes, the version contract.",
+      "supportedUntil": "2027-10-26"
     },
     {
       "version": "0.11.0",

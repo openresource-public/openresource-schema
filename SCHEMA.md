@@ -1,4 +1,4 @@
-# Open Resource schema v0.12.0
+# Open Resource schema v0.12.1
 
 A data model for educational resources.
 
@@ -21,8 +21,13 @@ A data model for educational resources.
   assumedKnowledge: AssumedKnowledge[],
 
   meta: {
-    schemaVersion: '0.12.0',
-    credits?: string     // optional provenance line for the resource as a whole
+    schemaVersion: '0.12.1',
+    credits?: string,       // optional provenance line for the resource as a whole
+    version?: number,       // the resource's own edition, from 1 — see Editions
+    status?: 'draft' | 'published' | 'retired',
+    supersedes?: string,    // id of the edition this one replaces
+    derivedFrom?: string,   // id of the resource this one was adapted from
+    dateModified?: string   // ISO 8601
   }
 }
 ```
@@ -30,6 +35,8 @@ A data model for educational resources.
 A resource is a flat dictionary of blocks and sections referenced by id. The top-level `sequence` carries section ids in order. Resource-level lists (objectives, keywords, misconceptions, prior knowledge) live at the root. `meta.credits` is an optional human-readable source line ("Contains questions from …"); finer-grained provenance lives per block at `meta.attribution` (see [Blocks](#blocks)).
 
 `meta.schemaVersion` names the schema version the document is shaped to. What a version promises, what counts as a breaking change, and what readers and writers must do are set out in [VERSIONING.md](VERSIONING.md).
+
+The other `meta` fields above are the resource's own **edition**: the schema version says how to read a document, the edition says which document it is. `version` counts the author's editions from 1, `status` is the edition's state, `supersedes` names the edition it replaces, `derivedFrom` names the resource it was adapted from, and `dateModified` is when it last changed. All are optional; Open Resource writes `derivedFrom` for an adaptation and `dateModified` on every read (VERSIONING.md, editions).
 
 ## Sections
 

@@ -1,7 +1,7 @@
 {
   "step": "migrate_0_12_projectionCollapse",
   "from": "0.11",
-  "to": "0.12.0",
+  "to": "0.12.1",
   "before": {
     "id": "lesson-1",
     "type": "resource",
@@ -235,7 +235,7 @@
     "type": "resource",
     "title": "Cells",
     "meta": {
-      "schemaVersion": "0.12.0"
+      "schemaVersion": "0.12.1"
     },
     "objectives": [
       {

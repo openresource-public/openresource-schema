@@ -18,7 +18,7 @@
 import { migrateLessonTo010 } from './migrate_0_10_objectiveBlocks.mjs';
 import { migrateLessonTo012 } from './migrate_0_12_projectionCollapse.mjs';
 
-export const CURRENT = '0.12.0';
+export const CURRENT = '0.12.1';
 
 export function parseVersion(value) {
   if (typeof value !== 'string') return null;
@@ -43,6 +43,19 @@ export const MIGRATIONS = [
   { from: '0.10', to: '0.11',   name: 'migrate_0_11_additive',           migrate: migrateLessonTo011 },
   { from: '0.11', to: CURRENT,  name: 'migrate_0_12_projectionCollapse', migrate: migrateLessonTo012 },
 ];
+
+// The chain must reach CURRENT from the minor just before it: a new minor
+// needs a new step (the identity, for an additive change), or a document at
+// the skipped minor would never be walked forward. Checked at load so a
+// release that forgets the step fails before anything ships.
+{
+  const head = MIGRATIONS[MIGRATIONS.length - 1];
+  const from = parseVersion(head.from); const to = parseVersion(CURRENT);
+  const consecutive = from && to && ((to.major === from.major && to.minor === from.minor + 1) || (to.major === from.major + 1 && to.minor === 0));
+  if (!consecutive) {
+    throw new Error(`migrations: the chain ends with a step from ${head.from} but CURRENT is ${CURRENT}; add the ${from ? `${from.major}.${from.minor + 1}` : '?'} -> ${to ? `${to.major}.${to.minor}` : CURRENT} step`);
+  }
+}
 
 /**
  * @param {object} resource
