@@ -63,3 +63,4 @@ Each line bumps only for its own kind of change. A model bump never touches the 
 
 - **OR-VER-070.** The public repository's history is append-only. Each release is tagged `v<version>`, and tags are never moved or deleted.
 - **OR-VER-071.** 0.12.0 is the first tagged version. Versions 0.9, 0.10 and 0.11 existed inside Open Resource before the public repository was versioned, and Open Resource still reads them.
+- **OR-VER-072.** Every version is listed in `versions.json` with its date, status (`current`, `supported` or `retired`), the date support ends, its tag, and whether it was breaking, and described in `CHANGELOG.md`. The newest entry in both is always the current version.
