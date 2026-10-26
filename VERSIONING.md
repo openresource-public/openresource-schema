@@ -55,9 +55,10 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 ## Models
 
 - **OR-VER-060.** A model reference pins an integer version, `family/name@N`. No ranges.
-- **OR-VER-061.** A published model version keeps its interface and marking stable and may improve its rendering. A change that would alter what a pinned lesson shows or accepts is a new version.
+- **OR-VER-061.** Only a breaking change bumps a model version. Breaking means a lesson pinning the version would show or accept something its author did not choose: a parameter removed, renamed or given a new meaning; a default that changes what an existing parameter set draws or asks; a marker that refuses an answer it accepted.
 - **OR-VER-062.** A pin never changes on its own.
 - **OR-VER-063.** A retired version keeps rendering where pinned and is not offered for new slots.
+- **OR-VER-064.** An improvement for everyone pinning a version lands in that version with no bump: a marker that accepts a correct answer it used to refuse, a fixed rendering fault, clearer text, a faster engine. The test is whether every lesson pinning the version would want the change; if any would not, it is a new version.
 
 ## History
 

@@ -149,7 +149,7 @@ The general rule: unknown fields are must-ignore, never must-understand. Both `t
 
 ## Models
 
-Some blocks can carry a **computed model** (also called a primitive) as their figure, instead of or alongside an image. A model is a versioned, parameterised coded visual from the platform library (coordinate grids, area models, geometry constructions, …): the block stores a pinned reference plus parameters, and the platform resolves the reference, runs the published code, and renders the figure. A published version keeps its interface and its marking stable and may improve its rendering; a change that would alter what a pinned lesson shows or accepts ships as a new version, and a pin never changes on its own (see [VERSIONING.md](VERSIONING.md), models).
+Some blocks can carry a **computed model** (also called a primitive) as their figure, instead of or alongside an image. A model is a versioned, parameterised coded visual from the platform library (coordinate grids, area models, geometry constructions, …): the block stores a pinned reference plus parameters, and the platform resolves the reference, runs the published code, and renders the figure. Only a breaking change bumps a model version: one that would alter what a pinned lesson shows or accepts. An improvement for everyone pinning a version lands in that version with no bump. A pin never changes on its own (see [VERSIONING.md](VERSIONING.md), models).
 
 ```ts
 type PrimitiveRef = {

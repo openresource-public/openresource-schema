@@ -1,6 +1,6 @@
 # Models (computed figures)
 
-A **model** (also called a primitive) is a versioned, parameterised coded visual — a coordinate grid, an area model, a geometry construction, and so on. Where an image is a bound asset, a model is *generated*: the block stores only a pinned reference plus parameters, and the platform resolves the reference, runs the published code, and renders the figure. A published version keeps its interface and its marking stable and may improve its rendering, across web, print, and slides; a change that would alter what a pinned lesson shows or accepts ships as a new version, and a pin never changes on its own (see [VERSIONING.md](VERSIONING.md), models).
+A **model** (also called a primitive) is a versioned, parameterised coded visual — a coordinate grid, an area model, a geometry construction, and so on. Where an image is a bound asset, a model is *generated*: the block stores only a pinned reference plus parameters, and the platform resolves the reference, runs the published code, and renders the figure. Only a breaking change bumps a model version: one that would alter what a pinned lesson shows or accepts. An improvement for everyone pinning a version lands in that version with no bump, across web, print, and slides. A pin never changes on its own (see [VERSIONING.md](VERSIONING.md), models).
 
 A model is referenced with a uniform envelope wherever it appears:
 
