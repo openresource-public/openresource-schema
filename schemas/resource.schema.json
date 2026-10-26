@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openresource-public.github.io/openresource-schema/schemas/resource.schema.json",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.0/resource.schema.json",
   "title": "resource",
   "description": "An educational resource: a flat dictionary of blocks and sections referenced by id, a top-level sequence of section ids, and resource-level registries (objectives, keywords, misconceptions, assumed knowledge). Prose documentation: SCHEMA.md. Unknown fields anywhere in a stored resource are must-ignore, never must-understand.",
   "type": "object",

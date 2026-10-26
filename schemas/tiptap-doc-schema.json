@@ -1,19 +1,28 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openresource-public.github.io/openresource-schema/schemas/tiptap-doc-schema.json",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.0/tiptap-doc-schema.json",
   "title": "richText document",
   "description": "TipTap (ProseMirror) JSON document. The shape every text-bearing field in the resource schema points at.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "type": { "type": "string", "const": "doc" },
+    "type": {
+      "type": "string",
+      "const": "doc"
+    },
     "content": {
       "type": "array",
-      "items": { "$ref": "#/$defs/node" }
+      "items": {
+        "$ref": "#/$defs/node"
+      }
     },
-    "attrs": { "type": "object" }
+    "attrs": {
+      "type": "object"
+    }
   },
-  "required": ["type"],
+  "required": [
+    "type"
+  ],
   "$defs": {
     "node": {
       "type": "object",
@@ -30,12 +39,16 @@
         },
         "content": {
           "type": "array",
-          "items": { "$ref": "#/$defs/node" },
+          "items": {
+            "$ref": "#/$defs/node"
+          },
           "description": "Child nodes. Absent on leaf nodes (text, math, hardBreak, image, horizontalRule)."
         },
         "marks": {
           "type": "array",
-          "items": { "$ref": "#/$defs/mark" },
+          "items": {
+            "$ref": "#/$defs/mark"
+          },
           "description": "Inline annotations on a text node."
         },
         "text": {
@@ -43,7 +56,9 @@
           "description": "Present only on text nodes."
         }
       },
-      "required": ["type"]
+      "required": [
+        "type"
+      ]
     },
     "mark": {
       "type": "object",
@@ -59,7 +74,9 @@
           "description": "Mark-type-specific attributes. E.g. `link.href: string`, `textStyle.color: string`. `highlight.color` and `underline.color` name a marker: `yellow` (the default when absent), `green`, `blue`, `pink`, `orange` or `purple`."
         }
       },
-      "required": ["type"]
+      "required": [
+        "type"
+      ]
     }
   }
 }

@@ -20,6 +20,7 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 - **OR-VER-002.** Before 1.0, a minor is breaking and a patch is additive. From 1.0, a major is breaking, a minor is additive, a patch changes documentation only.
 - **OR-VER-003.** A document declares its version in `meta.schemaVersion`. A bare `major.minor` reads as patch 0.
 - **OR-VER-004.** `resource.schema.json` accepts any patch of its own minor.
+- **OR-VER-005.** Each schema file's `$id` is its URL under `schemas/<version>/`. A version directory never changes once published; `schemas/index.json` carries every file's SHA-256, and `schemas/*.json` is a copy of the current version.
 
 ## What breaks
 

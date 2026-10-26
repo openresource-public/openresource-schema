@@ -1,0 +1,24 @@
+{
+  "base": "https://openresource-public.github.io/openresource-schema/schemas/",
+  "current": "0.12.0",
+  "digest": "sha256 over the file as served (LF line endings)",
+  "versions": {
+    "0.12.0": {
+      "path": "0.12.0/",
+      "files": {
+        "resource.schema.json": {
+          "sha256": "3c96a6dca65e39dc71fd24d4b442f5100dc366971ac3249f4c5327072c7deee9",
+          "bytes": 9662
+        },
+        "bento-content.schema.json": {
+          "sha256": "af32bafeb64fd979c567ee91a6920096f6430b71f4fabcd9ae809d7e4faf9c7f",
+          "bytes": 106824
+        },
+        "tiptap-doc-schema.json": {
+          "sha256": "2d07cf56e05de280a175b6ab78327789d9f4e8a07552fa229f89019182b17352",
+          "bytes": 2678
+        }
+      }
+    }
+  }
+}
