@@ -1,0 +1,20 @@
+{
+  "clause": "resource.schema.json: required id",
+  "reason": "a resource without an id",
+  "schemaDetectable": true,
+  "path": "(root)",
+  "document": {
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

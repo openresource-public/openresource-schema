@@ -1,0 +1,67 @@
+{
+  "step": "migrate_0_11_additive",
+  "from": "0.10",
+  "to": "0.11",
+  "before": {
+    "id": "lesson-1",
+    "type": "resource",
+    "title": "Cells",
+    "meta": {
+      "schemaVersion": "0.10",
+      "language": "en"
+    },
+    "objectives": [
+      {
+        "id": "obj-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Describe the parts of a cell"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "sequence": [],
+    "sections": {},
+    "blocks": {}
+  },
+  "after": {
+    "id": "lesson-1",
+    "type": "resource",
+    "title": "Cells",
+    "meta": {
+      "schemaVersion": "0.11",
+      "language": "en"
+    },
+    "objectives": [
+      {
+        "id": "obj-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Describe the parts of a cell"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "sequence": [],
+    "sections": {},
+    "blocks": {}
+  }
+}

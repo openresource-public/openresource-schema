@@ -1,0 +1,394 @@
+{
+  "step": "migrate_0_12_projectionCollapse",
+  "from": "0.11",
+  "to": "0.12.0",
+  "before": {
+    "id": "lesson-1",
+    "type": "resource",
+    "title": "Cells",
+    "meta": {
+      "schemaVersion": "0.11"
+    },
+    "objectives": [
+      {
+        "id": "obj-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Stale outcome"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "kw-1",
+        "term": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "ratio"
+                }
+              ]
+            }
+          ]
+        },
+        "definition": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "old"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "misconceptions": [
+      {
+        "id": "mc-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Off by one"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "assumedKnowledge": [],
+    "teacherTips": [],
+    "sequence": [
+      "sec-1"
+    ],
+    "sections": {
+      "sec-1": {
+        "id": "sec-1",
+        "type": "intro",
+        "heading": "Start",
+        "sequence": [
+          "b-obj",
+          "b-kw",
+          "q1"
+        ]
+      }
+    },
+    "blocks": {
+      "b-obj": {
+        "id": "b-obj",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Edited outcome"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "meta": {
+          "objectiveIds": [
+            "obj-1"
+          ]
+        }
+      },
+      "b-kw": {
+        "id": "b-kw",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "glossary": {
+                "items": [
+                  {
+                    "id": "i1",
+                    "term": {
+                      "type": "doc",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Ratio"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "definition": {
+                      "type": "doc",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "A comparison"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "meta": {
+          "keywordIds": [
+            "kw-1"
+          ]
+        }
+      },
+      "q1": {
+        "id": "q1",
+        "type": "bento",
+        "role": "question",
+        "content": {
+          "tiles": [
+            {
+              "id": "t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Solve"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "meta": {
+          "misconceptionIds": [
+            "mc-1"
+          ]
+        }
+      }
+    }
+  },
+  "after": {
+    "id": "lesson-1",
+    "type": "resource",
+    "title": "Cells",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "objectives": [
+      {
+        "id": "obj-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Edited outcome"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "kw-1",
+        "term": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Ratio"
+                }
+              ]
+            }
+          ]
+        },
+        "definition": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A comparison"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "misconceptions": [
+      {
+        "id": "mc-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Off by one"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "assumedKnowledge": [],
+    "teacherTips": [],
+    "sequence": [
+      "sec-1"
+    ],
+    "sections": {
+      "sec-1": {
+        "id": "sec-1",
+        "type": "intro",
+        "heading": "Start",
+        "sequence": [
+          "b-obj",
+          "b-kw",
+          "q1"
+        ]
+      }
+    },
+    "blocks": {
+      "b-obj": {
+        "id": "b-obj",
+        "type": "bento",
+        "content": {
+          "tiles": [],
+          "projection": {
+            "ids": [
+              "obj-1"
+            ]
+          }
+        },
+        "role": "objectives"
+      },
+      "b-kw": {
+        "id": "b-kw",
+        "type": "bento",
+        "content": {
+          "tiles": [],
+          "projection": {
+            "ids": [
+              "kw-1"
+            ]
+          }
+        },
+        "role": "glossary"
+      },
+      "q1": {
+        "id": "q1",
+        "type": "bento",
+        "role": "question",
+        "content": {
+          "tiles": [
+            {
+              "id": "t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Solve"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "meta": {
+          "misconceptionIds": [
+            "mc-1"
+          ]
+        }
+      }
+    }
+  }
+}

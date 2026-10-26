@@ -1,0 +1,18 @@
+{
+  "reason": "OR-VER-003: a bare major.minor reads as patch 0",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "step": "migrate_0_10_objectiveBlocks",
+  "from": "0.9",
+  "to": "0.10",
+  "before": {
+    "id": "lesson-1",
+    "type": "resource",
+    "title": "Cells",
+    "meta": {
+      "schemaVersion": "0.9",
+      "language": "en"
+    },
+    "objectives": [
+      {
+        "id": "obj-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Describe the parts of a cell"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "keyLearningPoints": [
+      {
+        "id": "klp-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Plant cells have a cell wall"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "pupilLessonOutcome": "I can describe the parts of a cell",
+    "sequence": [
+      "sec-1"
+    ],
+    "sections": {
+      "sec-1": {
+        "id": "sec-1",
+        "type": "intro",
+        "heading": "Start",
+        "sequence": [
+          "blk-obj",
+          "blk-ak"
+        ]
+      }
+    },
+    "blocks": {
+      "blk-obj": {
+        "id": "blk-obj",
+        "type": "content_text",
+        "content": {
+          "richText": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Plant cells have a cell wall"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "meta": {
+          "klpIds": [
+            "klp-1"
+          ]
+        }
+      },
+      "blk-ak": {
+        "id": "blk-ak",
+        "type": "content_text",
+        "content": {
+          "richText": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "You already know cells are small"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "meta": {
+          "assumedKnowledgeIds": [
+            "ak-1"
+          ]
+        }
+      }
+    },
+    "assumedKnowledge": [
+      {
+        "id": "ak-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Cells are small"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "after": {
+    "id": "lesson-1",
+    "type": "resource",
+    "title": "Cells",
+    "meta": {
+      "schemaVersion": "0.10",
+      "language": "en"
+    },
+    "objectives": [
+      {
+        "id": "obj-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Describe the parts of a cell"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "klp-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Plant cells have a cell wall"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "sequence": [
+      "sec-1"
+    ],
+    "sections": {
+      "sec-1": {
+        "id": "sec-1",
+        "type": "intro",
+        "heading": "Start",
+        "sequence": [
+          "blk-obj",
+          "blk-ak"
+        ]
+      }
+    },
+    "blocks": {
+      "blk-obj": {
+        "id": "blk-obj",
+        "type": "content_objective",
+        "content": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Plant cells have a cell wall"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "meta": {
+          "objectiveIds": [
+            "klp-1"
+          ]
+        }
+      },
+      "blk-ak": {
+        "id": "blk-ak",
+        "type": "content_assumed_knowledge",
+        "content": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "You already know cells are small"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "meta": {
+          "assumedKnowledgeIds": [
+            "ak-1"
+          ]
+        }
+      }
+    },
+    "assumedKnowledge": [
+      {
+        "id": "ak-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Cells are small"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

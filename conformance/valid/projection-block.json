@@ -1,0 +1,61 @@
+{
+  "reason": "a tile-less projection block rendering the objectives registry",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {
+      "p1": {
+        "id": "p1",
+        "type": "bento",
+        "role": "objectives",
+        "content": {
+          "tiles": [],
+          "projection": {
+            "ids": [
+              "obj-1"
+            ]
+          }
+        }
+      }
+    },
+    "sections": {
+      "s1": {
+        "id": "s1",
+        "type": "intro",
+        "heading": "Start",
+        "sequence": [
+          "p1"
+        ]
+      }
+    },
+    "sequence": [
+      "s1"
+    ],
+    "objectives": [
+      {
+        "id": "obj-1",
+        "text": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Describe scattering"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

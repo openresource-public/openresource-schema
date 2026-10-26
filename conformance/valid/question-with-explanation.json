@@ -1,0 +1,96 @@
+{
+  "reason": "a question block whose revealed answer is a block in no sequence",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {
+      "q1": {
+        "id": "q1",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "q1-t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Why is the sky blue?"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "role": "question",
+        "explanation": [
+          "q1-ans"
+        ]
+      },
+      "q1-ans": {
+        "id": "q1-ans",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "q1-ans-t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Rayleigh scattering"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sections": {
+      "s1": {
+        "id": "s1",
+        "type": "learning-cycle",
+        "heading": "Teach",
+        "sequence": [
+          "q1"
+        ]
+      }
+    },
+    "sequence": [
+      "s1"
+    ],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

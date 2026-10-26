@@ -1,0 +1,53 @@
+{
+  "clause": "resource.schema.json: block type is the constant \"bento\"",
+  "reason": "type: \"content_text\", retired under 0.11",
+  "schemaDetectable": true,
+  "path": "blocks.b1",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {
+      "b1": {
+        "id": "b1",
+        "type": "content_text",
+        "content": {
+          "richText": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "x"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "sections": {
+      "s1": {
+        "id": "s1",
+        "type": "learning-cycle",
+        "heading": "Teach",
+        "sequence": [
+          "b1"
+        ]
+      }
+    },
+    "sequence": [
+      "s1"
+    ],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

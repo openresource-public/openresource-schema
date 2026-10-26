@@ -5,8 +5,9 @@
  *
  * - every file under schemas/<version>/ matches its SHA-256 in schemas/index.json
  * - the files at schemas/ equal the current version's files
- * - versions.json, CHANGELOG.md, SCHEMA.md, the examples and PROVENANCE.json
- *   all name the same current version
+ * - versions.json, CHANGELOG.md, SCHEMA.md, the examples, PROVENANCE.json and
+ *   migrations/index.mjs all name the same current version
+ * - every migration fixture replays: the step turns before into after
  *
  * CI runs it on every push and weekly (.github/workflows/check.yml).
  */
@@ -60,9 +61,22 @@ if (existsSync(path.join(ROOT, 'PROVENANCE.json'))) {
   problems.push('PROVENANCE.json missing');
 }
 
+const { MIGRATIONS, CURRENT, migrate } = await import('../migrations/index.mjs');
+check(CURRENT === current, `migrations/index.mjs CURRENT (${CURRENT}) is not ${current}`);
+for (const step of MIGRATIONS) {
+  const file = `migrations/fixtures/${step.name}.json`;
+  if (!existsSync(path.join(ROOT, file))) { problems.push(`${file} missing`); continue; }
+  const fx = JSON.parse(read(file));
+  const out = step.migrate(fx.before);
+  const stamped = JSON.stringify({ ...out, meta: { ...(out.meta || {}), schemaVersion: step.to } });
+  check(stamped === JSON.stringify(fx.after), `${file}: the step no longer turns before into after`);
+}
+const oldest = JSON.parse(read(`migrations/fixtures/${MIGRATIONS[0].name}.json`));
+check(migrate(oldest.before).resource.meta.schemaVersion === current, 'migrations: the chain does not end at the current version');
+
 if (problems.length) {
   console.error(`✗ ${problems.length} problem(s):`);
   for (const p of problems) console.error(`  - ${p}`);
   process.exit(1);
 }
-console.log(`✓ ${current}: index, schemas, labels and provenance agree`);
+console.log(`✓ ${current}: index, schemas, labels, provenance and migration fixtures agree`);

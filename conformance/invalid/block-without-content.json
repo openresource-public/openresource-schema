@@ -1,0 +1,37 @@
+{
+  "clause": "resource.schema.json: block requires content",
+  "reason": "a block with no content object",
+  "schemaDetectable": true,
+  "path": "blocks.b1",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {
+      "b1": {
+        "id": "b1",
+        "type": "bento"
+      }
+    },
+    "sections": {
+      "s1": {
+        "id": "s1",
+        "type": "learning-cycle",
+        "heading": "Teach",
+        "sequence": [
+          "b1"
+        ]
+      }
+    },
+    "sequence": [
+      "s1"
+    ],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

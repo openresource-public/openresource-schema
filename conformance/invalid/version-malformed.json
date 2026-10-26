@@ -1,0 +1,21 @@
+{
+  "clause": "OR-VER-003",
+  "reason": "schemaVersion is not major.minor[.patch]",
+  "schemaDetectable": true,
+  "path": "meta.schemaVersion",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "v0.12"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

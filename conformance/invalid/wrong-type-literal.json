@@ -1,0 +1,21 @@
+{
+  "clause": "resource.schema.json: type is the constant \"resource\"",
+  "reason": "type: \"lesson\"",
+  "schemaDetectable": true,
+  "path": "type",
+  "document": {
+    "id": "res-1",
+    "type": "lesson",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

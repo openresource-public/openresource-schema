@@ -1,0 +1,58 @@
+{
+  "clause": "bento-content.schema.json: every tile has a cell",
+  "reason": "a text tile with no cell",
+  "schemaDetectable": true,
+  "path": "blocks.b1",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {
+      "b1": {
+        "id": "b1",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "t1",
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "x"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sections": {
+      "s1": {
+        "id": "s1",
+        "type": "learning-cycle",
+        "heading": "Teach",
+        "sequence": [
+          "b1"
+        ]
+      }
+    },
+    "sequence": [
+      "s1"
+    ],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

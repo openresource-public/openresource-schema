@@ -1,0 +1,64 @@
+{
+  "clause": "resource.schema.json: section type is one of six",
+  "reason": "type: \"homework\"",
+  "schemaDetectable": true,
+  "path": "sections.s1",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {
+      "b1": {
+        "id": "b1",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "b1-t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "x"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sections": {
+      "s1": {
+        "id": "s1",
+        "type": "homework",
+        "heading": "H",
+        "sequence": [
+          "b1"
+        ]
+      }
+    },
+    "sequence": [
+      "s1"
+    ],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

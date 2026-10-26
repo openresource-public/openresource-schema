@@ -1,0 +1,132 @@
+{
+  "clause": "SCHEMA.md, multi-block questions: members sit contiguously",
+  "reason": "two members of question group q3 with another block between them",
+  "schemaDetectable": false,
+  "path": null,
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.12.0"
+    },
+    "blocks": {
+      "a": {
+        "id": "a",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "a-t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "part a"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "role": "question",
+        "question": "q3"
+      },
+      "x": {
+        "id": "x",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "x-t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "interlude"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "b": {
+        "id": "b",
+        "type": "bento",
+        "content": {
+          "tiles": [
+            {
+              "id": "b-t1",
+              "cell": {
+                "col": 1,
+                "row": 1,
+                "w": 12,
+                "h": 6
+              },
+              "text": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "part b"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "role": "question",
+        "question": "q3"
+      }
+    },
+    "sections": {
+      "s1": {
+        "id": "s1",
+        "type": "learning-cycle",
+        "heading": "Teach",
+        "sequence": [
+          "a",
+          "x",
+          "b"
+        ]
+      }
+    },
+    "sequence": [
+      "s1"
+    ],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}

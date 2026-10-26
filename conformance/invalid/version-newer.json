@@ -1,0 +1,21 @@
+{
+  "clause": "OR-VER-023",
+  "reason": "a document from a newer minor than this reader",
+  "schemaDetectable": true,
+  "path": "meta.schemaVersion",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": "0.99.0"
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": [],
+    "objectives": [],
+    "keywords": [],
+    "misconceptions": [],
+    "assumedKnowledge": []
+  }
+}
