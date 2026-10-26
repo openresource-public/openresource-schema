@@ -75,7 +75,8 @@
       "properties": {
         "schemaVersion": {
           "type": "string",
-          "description": "The schema version this resource is shaped to, e.g. \"0.11\". See VERSIONING.md."
+          "pattern": "^0\\.12(\\.\\d+)?$",
+          "description": "The schema version this resource is shaped to: \"0.12.0\", or any patch of the same minor (a patch is additive). A bare major.minor reads as patch 0. See VERSIONING.md."
         },
         "credits": {
           "type": "string",
@@ -324,7 +325,7 @@
           "const": "doc"
         }
       },
-      "description": "A TipTap rich-text document. Full shape: tiptap-doc-schema.json."
+      "description": "A TipTap rich-text document. Full shape: schemas/tiptap-doc-schema.json."
     }
   }
 }

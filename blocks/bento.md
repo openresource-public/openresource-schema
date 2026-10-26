@@ -43,7 +43,7 @@ type Tile = {
   responseMode?: 'place-point' | 'select-point' | 'select-region' | 'run-value'
     | 'run-query' | 'run-program' | 'fill-derived' | 'place-derived' | 'construct'
     | 'place-line' | 'show-inequality' | 'mark-cross' | 'plot-curve' | 'draw-histogram'
-    | 'draw-journey' | 'shade-region' | 'line-of-best-fit' | 'read-off'
+    | 'draw-journey' | 'shade-region' | 'construct-region' | 'line-of-best-fit' | 'read-off'
     | 'transform-curve' | 'draw-tangent',
                                // marked model tiles only — answer-on-the-model interaction;
                                // the full per-mode contract is in the JSON schema

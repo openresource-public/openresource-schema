@@ -360,8 +360,11 @@
               "select-point",
               "select-region",
               "run-value",
+              "run-sheet",
               "run-query",
+              "run-statement",
               "run-program",
+              "run-figure",
               "fill-derived",
               "place-derived",
               "construct",
@@ -372,13 +375,14 @@
               "draw-histogram",
               "draw-journey",
               "shade-region",
+              "construct-region",
               "line-of-best-fit",
               "read-off",
               "transform-curve",
               "sketch-curve",
               "draw-tangent"
             ],
-            "description": "Answer-on-the-model tiles only (a marked `model` tile): the interaction the pupil uses on the figure — place-point (drag a point to a coordinate; correctAnswer { x, y } + optional tolerance), select-point (tap a rendered point; correctAnswer a label or labels), select-region (tap an area; correctAnswer a set of region ids), run-value (a runtime model reports one computed value as an observation; correctAnswer { value, require?, exemplar? } + optional tolerance), run-program (\"write a program/function that…\" on cs/code-editor — the model executes the pupil's code AND an authored reference over the same tests and marks agreement of what they DO: printed lines per stdin test in program mode (Python), or the named function's return values in function mode (Python or JavaScript, and the reference may be a different language from the pupil); correctAnswer { derived: true }, and the model params must carry markProgram with the visible code param left as the task, so static surfaces pose a blank answer space and the reference is never rendered), run-query (\"write a query that returns…\" on cs/sql-playground — the model runs the pupil's query AND an authored reference query over its own tables plus derived variants of that data, and marks agreement of the result-sets, so every equivalent query passes and one that hard-codes rows read off the table fails; correctAnswer { derived: true }, and the model params must carry markQuery.reference with the visible query param left as the task, so static surfaces pose a blank answer space and the reference is never rendered), fill-derived (a derive-first model — two-way-table, frequency-tree, stem-leaf — makes every hidden cell/node/row an editable box and self-checks each typed value against the value it derives from its own data; correctAnswer { derived: true }, no authored values), place-derived (fill-derived's positional twin — the pupil DRAGS role-named markers onto the figure's scale instead of typing; the model self-checks each placed position against the value it derives — box-cf box-plot completion; correctAnswer { derived: true }), construct (fill-derived's shape-the-figure twin — the pupil drags the figure itself into proportion, e.g. pie-chart sector boundaries from an equal-sector start; the model self-checks each part against the value it derives, within its tolerance param; correctAnswer { derived: true }, and the model params must also set construct: true so print/static surfaces pose the question instead of drawing the answer), place-line (\"draw the line …\" on a coordinate grid — a complete but WRONG line is pre-placed as two draggable handle points snapping to the grid; the model self-checks the committed points against the target line in its placeLine param — any two distinct points on the correct line pass; correctAnswer { derived: true }, and the model params must carry placeLine ({m, c} | {x} | {y}) so print/static surfaces pose a blank answer space instead of drawing the answer), show-inequality (\"show the inequality on a number line\" — a complete but WRONG interval is pre-drawn as draggable endpoints and the pupil reshapes it to the target; the model self-checks each component against the constructInequality param; correctAnswer { derived: true }, and the model params must carry constructInequality ({ from, to, fromClosed, toClosed }) so static surfaces pose the wrong start, not the answer — construct's rule, number-line's param), mark-cross (\"mark with a cross the probability that…\" — one or more crosses start PARKED off the scale and the pupil drags each onto the line; the model self-checks each placed cross against the markCrosses param; correctAnswer { derived: true }, and the model params must carry a non-empty markCrosses ([{ at, label? }]) so static surfaces pose the blank scale), plot-curve (\"draw the graph of y = f(x)\" — one handle per tabulated x parks on the x-axis and the pupil drags it up; the model self-checks each placed height against the derived f(x) from its plotCurve param; correctAnswer { derived: true }, and the model params must carry plotCurve ({ fn, xs }) with curves left empty so static surfaces pose the blank grid), transform-curve (\"sketch the graph of y = -f(x)\" — an amber COPY of the shown source curve starts as the identity; the pupil drags it to translate (half-step snap), taps a reflect icon-button to flip it about an axis (one tap = f(-x) or -f(x)), or drags an edge grip to stretch it; the model self-checks the final curve against the transform in its transformCurve param by sampling; correctAnswer { derived: true }, and the model params must carry transformCurve ({ curve?, target: { dx, dy, sx, sy } }) with the source curve drawn in curves — static surfaces pose the source curve alone), sketch-curve (\"sketch y = f(x)\" from RECALL on graphing/function-graph@6 — no base curve is drawn and no table is given, so neither transform-curve nor plot-curve fits: the pupil picks a parent shape from a palette of unnamed shape glyphs and drags/reflects/stretches it into place; the model self-checks each placed curve against the target's derived branch count, asymptote positions and turning points, never pointwise y; correctAnswer { derived: true }, and the model params must carry sketchCurve ({ fns: [{ fn }] }, up to 3 targets so \"both on the same axes\" marks as one figure) with curves left empty unless a curve is genuinely given — static surfaces pose blank answer axes), draw-histogram (\"draw a histogram for the information in the table\" — the class intervals are fixed on the x-axis and the pupil drags each bar's top to its frequency density; the model self-checks each height against the density it derives, frequency ÷ class width; correctAnswer { derived: true }, and the model params must set drawHistogram: true with the full classes so static surfaces pose the blank grid — bars marked given: true are pre-printed context and are not marked), draw-tangent (\"draw a tangent to the curve at x = a\" — the science-rates staple on graphing/first-principles: a deliberately wrong pre-placed line through the marked point pivots as the pupil drags anywhere along it, and the model self-checks their gradient against the derived f′(a) within its gradientTolerance param (or a ±5° by-eye band); correctAnswer { derived: true }, and the model params must set drawTangent: true with point (the touch point) so static surfaces pose the curve + marked point as a blank answer space — the true tangent is never drawn on any surface). The model must support the mode (its library meta responseModes)."
+            "description": "Answer-on-the-model tiles only (a marked `model` tile): the interaction the pupil uses on the figure — place-point (drag a point to a coordinate; correctAnswer { x, y } + optional tolerance), select-point (tap a rendered point; correctAnswer a label or labels), select-region (tap an area; correctAnswer a set of region ids), run-value (a runtime model reports one computed value as an observation; correctAnswer { value, require?, exemplar? } + optional tolerance), run-sheet (\"fill the column with the right formula\" / \"format the prices as currency\" on cs/spreadsheet — the SKILLS its gestures make performable, over a REGION rather than one cell. A fill check marks CELL CONTENT, not the values on show: each marked cell must hold a formula whose references adjust like the pattern's, row by row, with $ anchors holding, so typing the answers as literals fails at once while any correct route — dragged or hand-typed — passes. A format check marks the resulting format, which is exactly what it asked for. correctAnswer { derived: true }, and the model params must carry markSheet ({ fill, format }) with the marked cells left unfilled, so static surfaces pose the tinted answer region and an authored pattern is never rendered), run-program (\"write a program/function that…\" on cs/code-editor — the model executes the pupil's code AND an authored reference over the same tests and marks agreement of what they DO: printed lines per stdin test in program mode (Python), or the named function's return values in function mode (Python or JavaScript, and the reference may be a different language from the pupil); correctAnswer { derived: true }, and the model params must carry markProgram with the visible code param left as the task, so static surfaces pose a blank answer space and the reference is never rendered), run-query (\"write a query that returns…\" on cs/sql-playground — the model runs the pupil's query AND an authored reference query over its own tables plus derived variants of that data, and marks agreement of the result-sets, so every equivalent query passes and one that hard-codes rows read off the table fails; correctAnswer { derived: true }, and the model params must carry markQuery.reference with the visible query param left as the task, so static surfaces pose a blank answer space and the reference is never rendered), run-figure (\"write a program that draws…\" on cs/turtle — the model RUNS the pupil's program and compares the path it draws with the target shape in markFigure (regular-polygon / rectangle / star / path), by default at any position and orientation, so every program that draws the right figure passes and nothing about the wording is marked except the optional method facts in markFigure.require (uses-repeat, uses-procedure, max-lines:n); correctAnswer { derived: true }, the visible code param stays the task, and the question text must SAY what to draw, since the model never draws the target), fill-derived (a derive-first model — two-way-table, frequency-tree, stem-leaf — makes every hidden cell/node/row an editable box and self-checks each typed value against the value it derives from its own data; correctAnswer { derived: true }, no authored values), place-derived (fill-derived's positional twin — the pupil DRAGS role-named markers onto the figure's scale instead of typing; the model self-checks each placed position against the value it derives — box-cf box-plot completion; correctAnswer { derived: true }), construct (fill-derived's shape-the-figure twin — the pupil drags the figure itself into proportion, e.g. pie-chart sector boundaries from an equal-sector start; the model self-checks each part against the value it derives, within its tolerance param; correctAnswer { derived: true }, and the model params must also set construct: true so print/static surfaces pose the question instead of drawing the answer), place-line (\"draw the line …\" on a coordinate grid — a complete but WRONG line is pre-placed as two draggable handle points snapping to the grid; the model self-checks the committed points against the target line in its placeLine param — any two distinct points on the correct line pass; correctAnswer { derived: true }, and the model params must carry placeLine ({m, c} | {x} | {y}) so print/static surfaces pose a blank answer space instead of drawing the answer), show-inequality (\"show the inequality on a number line\" — a complete but WRONG interval is pre-drawn as draggable endpoints and the pupil reshapes it to the target; the model self-checks each component against the constructInequality param; correctAnswer { derived: true }, and the model params must carry constructInequality ({ from, to, fromClosed, toClosed }) so static surfaces pose the wrong start, not the answer — construct's rule, number-line's param), mark-cross (\"mark with a cross the probability that…\" — one or more crosses start PARKED off the scale and the pupil drags each onto the line; the model self-checks each placed cross against the markCrosses param; correctAnswer { derived: true }, and the model params must carry a non-empty markCrosses ([{ at, label? }]) so static surfaces pose the blank scale), plot-curve (\"draw the graph of y = f(x)\" — one handle per tabulated x parks on the x-axis and the pupil drags it up; the model self-checks each placed height against the derived f(x) from its plotCurve param; correctAnswer { derived: true }, and the model params must carry plotCurve ({ fn, xs }) with curves left empty so static surfaces pose the blank grid), transform-curve (\"sketch the graph of y = -f(x)\" — an amber COPY of the shown source curve starts as the identity; the pupil drags it to translate (half-step snap), taps a reflect icon-button to flip it about an axis (one tap = f(-x) or -f(x)), or drags an edge grip to stretch it; the model self-checks the final curve against the transform in its transformCurve param by sampling; correctAnswer { derived: true }, and the model params must carry transformCurve ({ curve?, target: { dx, dy, sx, sy } }) with the source curve drawn in curves — static surfaces pose the source curve alone), sketch-curve (\"sketch y = f(x)\" from RECALL on graphing/function-graph@6 — no base curve is drawn and no table is given, so neither transform-curve nor plot-curve fits: the pupil picks a parent shape from a palette of unnamed shape glyphs and drags/reflects/stretches it into place; the model self-checks each placed curve against the target's derived branch count, asymptote positions and turning points, never pointwise y; correctAnswer { derived: true }, and the model params must carry sketchCurve ({ fns: [{ fn }] }, up to 3 targets so \"both on the same axes\" marks as one figure) with curves left empty unless a curve is genuinely given — static surfaces pose blank answer axes), draw-histogram (\"draw a histogram for the information in the table\" — the class intervals are fixed on the x-axis and the pupil drags each bar's top to its frequency density; the model self-checks each height against the density it derives, frequency ÷ class width; correctAnswer { derived: true }, and the model params must set drawHistogram: true with the full classes so static surfaces pose the blank grid — bars marked given: true are pre-printed context and are not marked), draw-tangent (\"draw a tangent to the curve at x = a\" — the science-rates staple on graphing/first-principles: a deliberately wrong pre-placed line through the marked point pivots as the pupil drags anywhere along it, and the model self-checks their gradient against the derived f′(a) within its gradientTolerance param (or a ±5° by-eye band); correctAnswer { derived: true }, and the model params must set drawTangent: true with point (the touch point) so static surfaces pose the curve + marked point as a blank answer space — the true tangent is never drawn on any surface). The model must support the mode (its library meta responseModes)."
           },
           "text": {
             "$ref": "#/$defs/richTextDoc",
@@ -568,13 +572,18 @@
                       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
                       "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
                     },
+                    "ref": {
+                      "type": "string",
+                      "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                      "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                    },
                     "params": {
                       "type": "object",
-                      "description": "FULL paramset for this stage (not a patch) — validated against the model interface exactly like the base params. Keep axes/ranges identical to the base so the figure never jumps between stages."
+                      "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
                     },
                     "altText": {
                       "type": "string",
-                      "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText."
+                      "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
                     },
                     "revealAt": {
                       "type": "integer",
@@ -587,7 +596,7 @@
                     "params"
                   ]
                 },
-                "description": "Optional staged progression of the SAME figure: each entry is a complete paramset reached sequentially after the base params (stage 0). On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Never combined with draggable params. Use when the construction ACCUMULATES (same axes, same shape, things added or moved), not for unrelated figures."
+                "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
               }
             },
             "required": [
@@ -932,13 +941,18 @@
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
                                 "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
                               },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                              },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against the model interface exactly like the base params. Keep axes/ranges identical to the base so the figure never jumps between stages."
+                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText."
+                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
                               },
                               "revealAt": {
                                 "type": "integer",
@@ -951,7 +965,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the SAME figure: each entry is a complete paramset reached sequentially after the base params (stage 0). On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Never combined with draggable params. Use when the construction ACCUMULATES (same axes, same shape, things added or moved), not for unrelated figures."
+                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
                         }
                       },
                       "required": [
@@ -966,11 +980,11 @@
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item feedback shown after Check when the pupil selected this item — on a distractor, why it tempts and where it goes wrong; on the right answer, brief reinforcement. Distractor pedagogy, not the worked solution (that is the block's explanation). Single-select and True/False have no Check (the card marks itself on click), so it does not surface there."
+                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil; author `feedback` for that."
+                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
                     }
                   },
                   "required": [
@@ -1124,13 +1138,18 @@
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
                                 "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
                               },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                              },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against the model interface exactly like the base params. Keep axes/ranges identical to the base so the figure never jumps between stages."
+                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText."
+                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
                               },
                               "revealAt": {
                                 "type": "integer",
@@ -1143,7 +1162,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the SAME figure: each entry is a complete paramset reached sequentially after the base params (stage 0). On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Never combined with draggable params. Use when the construction ACCUMULATES (same axes, same shape, things added or moved), not for unrelated figures."
+                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
                         }
                       },
                       "required": [
@@ -1158,11 +1177,11 @@
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item feedback shown after Check when the pupil selected this item — on a distractor, why it tempts and where it goes wrong; on the right answer, brief reinforcement. Distractor pedagogy, not the worked solution (that is the block's explanation). Single-select and True/False have no Check (the card marks itself on click), so it does not surface there."
+                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil; author `feedback` for that."
+                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
                     }
                   },
                   "required": [
@@ -1266,13 +1285,18 @@
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
                                 "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
                               },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                              },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against the model interface exactly like the base params. Keep axes/ranges identical to the base so the figure never jumps between stages."
+                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText."
+                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
                               },
                               "revealAt": {
                                 "type": "integer",
@@ -1285,7 +1309,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the SAME figure: each entry is a complete paramset reached sequentially after the base params (stage 0). On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Never combined with draggable params. Use when the construction ACCUMULATES (same axes, same shape, things added or moved), not for unrelated figures."
+                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
                         }
                       },
                       "required": [
@@ -1300,11 +1324,11 @@
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item feedback shown after Check when the pupil selected this item — on a distractor, why it tempts and where it goes wrong; on the right answer, brief reinforcement. Distractor pedagogy, not the worked solution (that is the block's explanation). Single-select and True/False have no Check (the card marks itself on click), so it does not surface there."
+                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil; author `feedback` for that."
+                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
                     }
                   },
                   "required": [
@@ -1419,13 +1443,18 @@
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
                                 "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
                               },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                              },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against the model interface exactly like the base params. Keep axes/ranges identical to the base so the figure never jumps between stages."
+                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText."
+                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
                               },
                               "revealAt": {
                                 "type": "integer",
@@ -1438,7 +1467,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the SAME figure: each entry is a complete paramset reached sequentially after the base params (stage 0). On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Never combined with draggable params. Use when the construction ACCUMULATES (same axes, same shape, things added or moved), not for unrelated figures."
+                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
                         }
                       },
                       "required": [
@@ -1453,11 +1482,11 @@
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item feedback shown after Check when the pupil selected this item — on a distractor, why it tempts and where it goes wrong; on the right answer, brief reinforcement. Distractor pedagogy, not the worked solution (that is the block's explanation). Single-select and True/False have no Check (the card marks itself on click), so it does not surface there."
+                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil; author `feedback` for that."
+                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
                     }
                   },
                   "required": [
@@ -1491,6 +1520,14 @@
                         "math"
                       ],
                       "description": "math: this blank is a math field (MathLive keyboard) and its key is an accepted set of LaTeX forms matched structurally — cosmetic notation folds (\\times/\\cdot, braces, \\frac vs /), a different mathematical form does not. REQUIRED whenever the answer is mathematical notation: π forms (300\\pi), powers (3x^2), surds (\\frac{\\sqrt{2}}{2}), rearranged formulae. Omit for plain typed input."
+                    },
+                    "intent": {
+                      "type": "string",
+                      "enum": [
+                        "equivalent",
+                        "same-form"
+                      ],
+                      "description": "Math blanks only. same-form (default): the written form is assessed — simplify, factorise, standard form, \"in the form …\" — and a different or unsimplified form rejects. equivalent: any algebraically equal answer marks, including a rearranged equation or inequality (2x + y = 26 for y = −2x + 26) — use it when the question does not pin a form (make x the subject, find an equation of the line, write an expression)."
                     }
                   },
                   "required": [
@@ -1659,13 +1696,18 @@
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
                                 "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
                               },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                              },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against the model interface exactly like the base params. Keep axes/ranges identical to the base so the figure never jumps between stages."
+                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText."
+                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
                               },
                               "revealAt": {
                                 "type": "integer",
@@ -1678,7 +1720,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the SAME figure: each entry is a complete paramset reached sequentially after the base params (stage 0). On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Never combined with draggable params. Use when the construction ACCUMULATES (same axes, same shape, things added or moved), not for unrelated figures."
+                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
                         }
                       },
                       "required": [
@@ -1886,7 +1928,7 @@
           ]
         }
       },
-      "description": "The reveal timeline: an ordered list of beats, each beat a set of ops that happen TOGETHER on one click. Anything targeted by a reveal op starts hidden; untargeted tiles are visible from the start. The LANDING frame (before any click) must show something — leave the first line / paragraph / item untargeted as the hook and reveal from the second unit; an empty landing reads as a broken slide. Author beats only when the pacing is the teaching (a build-up, a pose-then-resolve, a proof step); most blocks need none. Static surfaces freeze at a beat index (workbook = beat 0, answer key = final)."
+      "description": "The reveal timeline: an ordered list of beats, each beat a set of ops that happen TOGETHER on one click. Anything targeted by a reveal op starts hidden; untargeted tiles are visible from the start. A block opens showing everything that isn't held back for a beat. If it opens on a question, hold back the answer and anything else that reveals reasoning about it. The LANDING frame (before any click) must show something — leave the question visible, never its answer; an empty landing reads as a broken slide. Slides play the timeline; web and print show it played through, answer-flagged ops held for the answers."
     },
     "projection": {
       "type": "object",
@@ -1912,7 +1954,7 @@
   ],
   "$defs": {
     "richTextDoc": {
-      "description": "A TipTap rich-text document — the shape every text field carries. Full shape: tiptap-doc-schema.json.",
+      "description": "A TipTap rich-text document — the shape every text field carries. Full shape: schemas/tiptap-doc-schema.json.",
       "type": "object",
       "properties": {
         "type": {

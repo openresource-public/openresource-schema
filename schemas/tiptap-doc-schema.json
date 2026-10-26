@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openresource-public.github.io/openresource-schema/tiptap-doc-schema.json",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/tiptap-doc-schema.json",
   "title": "richText document",
   "description": "TipTap (ProseMirror) JSON document. The shape every text-bearing field in the resource schema points at.",
   "type": "object",
@@ -56,7 +56,7 @@
         },
         "attrs": {
           "type": "object",
-          "description": "Mark-type-specific attributes. E.g. `link.href: string`, `textStyle.color: string`."
+          "description": "Mark-type-specific attributes. E.g. `link.href: string`, `textStyle.color: string`. `highlight.color` and `underline.color` name a marker: `yellow` (the default when absent), `green`, `blue`, `pink`, `orange` or `purple`."
         }
       },
       "required": ["type"]

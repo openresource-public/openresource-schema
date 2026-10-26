@@ -5,15 +5,16 @@ JSON schemas for the structured resource format used by Open Resource. The same 
 ## Files
 
 - `SCHEMA.md` — resource model overview.
+- `VERSIONING.md` — what a schema version promises: the scheme, what counts as breaking, and what readers, writers and extensions must do.
 - `blocks/bento.md` — the block: tile catalogue and content shape.
 - `MODELS.md` — computed models (parameterised coded figures): the concept and where they appear.
 - `models/<name>.md` — per-model parameter interface (one published example).
 - `examples/` — real lessons in the schema, stripped of platform internals.
-- `tiptap-doc-schema.json` — rich-text document schema referenced from every text field.
+- `schemas/` — machine-readable JSON Schemas: `resource.schema.json` (the envelope), `bento-content.schema.json` (block content) and `tiptap-doc-schema.json` (the rich-text document every text field carries).
 
 ## Contributing
 
-Issues welcome. The source lives in a separate repository; this one is regenerated on each schema-version release.
+Issues welcome. The source lives in a separate repository; this one is regenerated on each schema-version release, and each release is tagged `v<version>`.
 
 ## Licence
 

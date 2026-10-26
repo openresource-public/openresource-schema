@@ -1,4 +1,4 @@
-# Open Resource schema v0.11
+# Open Resource schema v0.12.0
 
 A data model for educational resources.
 
@@ -21,13 +21,15 @@ A data model for educational resources.
   assumedKnowledge: AssumedKnowledge[],
 
   meta: {
-    schemaVersion: '0.11',
+    schemaVersion: '0.12.0',
     credits?: string     // optional provenance line for the resource as a whole
   }
 }
 ```
 
 A resource is a flat dictionary of blocks and sections referenced by id. The top-level `sequence` carries section ids in order. Resource-level lists (objectives, keywords, misconceptions, prior knowledge) live at the root. `meta.credits` is an optional human-readable source line ("Contains questions from …"); finer-grained provenance lives per block at `meta.attribution` (see [Blocks](#blocks)).
+
+`meta.schemaVersion` names the schema version the document is shaped to. What a version promises, what counts as a breaking change, and what readers and writers must do are set out in [VERSIONING.md](VERSIONING.md).
 
 ## Sections
 
@@ -59,7 +61,8 @@ A block is the atomic content unit: a collection of **tiles** — prose, working
 {
   id: string,
   type: 'bento',         // fixed — a format discriminator, not a choice
-  role?: 'question' | 'worked-example' | 'key-point' | 'objectives' | 'glossary',
+  role?: 'question' | 'worked-example' | 'key-point' | 'objectives' | 'glossary'
+        | 'assumed-knowledge' | 'misconceptions' | 'teacher-tips',
   heading?: string,
   question?: string,     // question-group id — see Multi-block questions
   content: object,       // blocks/bento.md
@@ -93,7 +96,7 @@ type Attribution = {
 
 ## Rich text
 
-Every text-bearing field on a block or registry entry stores a [TipTap](https://tiptap.dev) JSON document. Inline styling (bold, italic, colour, subscript, superscript, links) survives between authoring surfaces and renderers. The full shape is in [tiptap-doc-schema.json](tiptap-doc-schema.json); below, `Doc` is shorthand for it:
+Every text-bearing field on a block or registry entry stores a [TipTap](https://tiptap.dev) JSON document. Inline styling (bold, italic, colour, subscript, superscript, links) survives between authoring surfaces and renderers. The full shape is in [schemas/tiptap-doc-schema.json](schemas/tiptap-doc-schema.json); below, `Doc` is shorthand for it:
 
 ```ts
 type Doc = {
@@ -146,7 +149,7 @@ The general rule: unknown fields are must-ignore, never must-understand. Both `t
 
 ## Models
 
-Some blocks can carry a **computed model** (also called a primitive) as their figure, instead of or alongside an image. A model is a versioned, parameterised coded visual from the platform library (coordinate grids, area models, geometry constructions, …): the block stores a pinned reference plus parameters, and the platform resolves the reference, runs the published code, and renders the figure. Published versions are immutable, so a reference renders identically forever.
+Some blocks can carry a **computed model** (also called a primitive) as their figure, instead of or alongside an image. A model is a versioned, parameterised coded visual from the platform library (coordinate grids, area models, geometry constructions, …): the block stores a pinned reference plus parameters, and the platform resolves the reference, runs the published code, and renders the figure. A published version keeps its interface and its marking stable and may improve its rendering; a change that would alter what a pinned lesson shows or accepts ships as a new version, and a pin never changes on its own (see [VERSIONING.md](VERSIONING.md), models).
 
 ```ts
 type PrimitiveRef = {
