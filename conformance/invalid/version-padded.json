@@ -1,0 +1,17 @@
+{
+  "clause": "OR-VER-003: schemaVersion is major.minor[.patch] with nothing around it",
+  "reason": "schemaVersion: \" 0.12.1 \" (surrounding spaces)",
+  "schemaDetectable": true,
+  "path": "meta.schemaVersion",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": " 0.12.1 "
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": []
+  }
+}

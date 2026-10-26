@@ -4,33 +4,7 @@
   "name": "angles-at-a-point",
   "version": 1,
   "title": "Angles at a point",
-  "tagline": "Rays meeting at a point with marked angle arcs — angles at a point (360°), on a line (180°) and vertically opposite, with algebraic labels; angles derived.",
-  "description": "Straight lines and rays meeting at a single point, with the angles between them marked by arcs and labelled with their sizes. Covers angles at a point (adding to 360°), angles on a straight line (adding to 180°) and vertically opposite angles, plus forming and solving angle equations (algebraic labels like 2x). You choose each arm's direction and which sectors to mark; the point, the lines, and every angle's measure are derived, so the figure stays to scale and correct. Per-angle occlusion (\"find the missing angle\"), highlighting, right-angle marks, an optional caption with the angle fact, and draggable arms on the web. Two arms 180° apart are drawn as one continuous straight line. Not for parallel lines with a transversal or polygon interior/exterior angles — those are separate models.",
-  "whenToUse": "Reach for this whenever the teaching is angles meeting at a point: angles around a point, angles on a straight line, vertically opposite angles, and the \"form and solve an equation\" versions of all three. Build the figure by listing arms by direction in degrees (0° = east/right, 90° = up, 180° = west, anticlockwise positive). Place arms at the cumulative directions so the sectors come out as the angles you want — three angles of 110°, 130°, 120° around a point means arms at 0, 110 and 240. A horizontal straight line is arms at 0 and 180 (drawn as one line); two crossing lines (vertically opposite) are two such opposite pairs, e.g. arms at 0, 125, 180, 305. Mark an angle by its two bounding directions going anticlockwise: [0, 50] is the 50° sector, [50, 0] is the 310° reflex sector on the other side, and [200, 0] is the 160° remainder (not 200°). Common configurations: angles on a line — a line plus a ray, one angle given and the neighbour occluded+highlighted (\"work out the other angle\"); angles at a point — three or more rays, one occluded, caption \"Angles around a point add to 360°\"; vertically opposite — two crossing lines, highlight the equal pair; algebra — give the sectors labels x and 2x with directions roughly proportional (60° and 120°) and put the equation in the caption. Occlude renders the value as \"?\"; the arc still shows. Cross-block convention: keep the same arm directions and labels across the blocks of one lesson so pupils track the angles, not a redrawn figure — change only what is given, occluded or highlighted. Synonyms a teacher might use: angles at a point, angles around a point, angles on a straight line, on a line, vertically opposite, opposite angles, missing angle, find the angle, right angle, reflex angle, full turn, half turn, 360, 180, form an equation, angle facts.",
   "responseModes": [],
-  "tags": [
-    "angles",
-    "angle",
-    "angles at a point",
-    "angles around a point",
-    "angles on a straight line",
-    "angles on a line",
-    "vertically opposite",
-    "opposite angles",
-    "missing angle",
-    "reflex angle",
-    "right angle",
-    "full turn",
-    "half turn",
-    "360",
-    "180",
-    "angle facts",
-    "form an equation",
-    "rays",
-    "straight line",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -39,18 +13,15 @@
         "type": "array",
         "minItems": 2,
         "maxItems": 8,
-        "description": "The rays meeting at the central point. Each arm is a ray at a given DIRECTION; the point's position and every angle BETWEEN arms is derived — you only choose the directions (and optional tip names). Two arms exactly 180° apart are drawn as one continuous straight line through the point, so \"angles on a straight line\" is arms at 0 and 180 plus the rays between, and \"vertically opposite\" is two such opposite pairs.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "direction": {
-              "type": "number",
-              "description": "Direction of this arm from the point, in degrees: 0 = east (right), 90 = up, 180 = west, 270 = down; anticlockwise positive. Use values in [0, 360). Choose cumulative directions so the sectors between arms equal the angles you intend."
+              "type": "number"
             },
             "label": {
-              "type": "string",
-              "description": "Optional short name drawn at this arm's tip — a point name (\"A\") or a line end. Omit for an unlabelled arm."
+              "type": "string"
             }
           },
           "required": [
@@ -60,7 +31,6 @@
       },
       "angles": {
         "type": "array",
-        "description": "The angles (sectors) to MARK with an arc and a value. Each is the sector swept ANTICLOCKWISE from the first bounding direction to the second; its measure is DERIVED from the directions and stays correct when the arms move. Address an angle by the two arm directions that bound it (both must be directions of arms you listed). Sweeping the long way round (>180°) marks the reflex angle. Omit a sector to leave it unmarked.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -71,24 +41,19 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "[fromDirection, toDirection] — two arm directions; the marked angle is swept anticlockwise from the first to the second. [0, 50] marks the 50° sector; [50, 0] marks the 310° reflex sector on the other side; [200, 0] marks the 160° remainder."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed value. Use for ALGEBRA (\"2x\", \"3x + 10\") when forming or solving an equation, or to name the angle. Omit to show the derived measure in degrees (e.g. \"50°\"). Pick arm directions roughly proportional to the algebra so the figure reads right."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this angle's value as \"?\" — the \"find the missing angle\" hook. The arc still shows. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this angle (amber arc + value) — the answer/result, or the angle a question is about. Default false."
+              "type": "boolean"
             },
             "rightAngle": {
-              "type": "boolean",
-              "description": "Mark this angle as a right angle: a small square in the corner instead of an arc and degree value. Use only when the sector is 90°. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -97,20 +62,16 @@
         }
       },
       "vertexLabel": {
-        "type": "string",
-        "description": "Optional name for the central point where the arms meet (e.g. \"O\"), drawn beside it. Omit for none."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "An optional line of text centred below the figure — the angle fact or equation being taught, e.g. \"Angles on a straight line add to 180°\" or \"x + 2x = 180\". Omit for none."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Let pupils drag an arm's tip to rotate it about the point; the marked angle measures recompute live while the total around the point (or on the line) stays fixed — the invariant the figure teaches. Snaps to whole degrees. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -119,7 +80,6 @@
   },
   "examples": [
     {
-      "label": "Answer space — angles on a straight line, work out both",
       "params": {
         "arms": [
           {
@@ -152,7 +112,6 @@
       }
     },
     {
-      "label": "Worked — angles around a point (90° + 110° + 160° = 360°)",
       "params": {
         "arms": [
           {
@@ -191,7 +150,6 @@
       }
     },
     {
-      "label": "Occluded question — one angle given, find the other on the line",
       "params": {
         "arms": [
           {
@@ -223,7 +181,6 @@
       }
     },
     {
-      "label": "Form & solve — x and 2x on a straight line",
       "params": {
         "arms": [
           {
@@ -256,7 +213,6 @@
       }
     },
     {
-      "label": "Vertically opposite — two crossing lines, equal pair highlighted",
       "params": {
         "arms": [
           {
@@ -304,7 +260,6 @@
       }
     },
     {
-      "label": "The hard case — reflex around a point beside a small angle (find the reflex)",
       "params": {
         "arms": [
           {

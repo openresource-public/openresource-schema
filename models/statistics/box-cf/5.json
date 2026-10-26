@@ -4,42 +4,8 @@
   "name": "box-cf",
   "version": 5,
   "title": "Cumulative frequency & box plot",
-  "tagline": "Cumulative-frequency curve and box plot on a shared axis; derives running totals, quartiles, IQR, the five-number summary and 1.5×IQR outliers; read off, compare, or draw the box.",
-  "description": "A cumulative-frequency curve and a box plot on a shared horizontal value axis — the model for cumulative frequency, quartiles and box plots. You give the data (a grouped frequency table, a raw list, or a stated five-number summary) and the axis meaning; the model derives the running cumulative totals (plotted at each upper class boundary), the curve, the median / quartiles / percentiles read off it at the n/2, n/4, 3n/4 heights, the interquartile range, the five-number summary, and the box plot drawn beneath the curve on the same scale. Draw dashed guide lines to read a quartile off the curve, or read the other way (\"how many are less than 50?\"); occlude any read value or box value for a question; stack two box plots (or overlay two curves) to compare distributions. Web: drag a handle along the curve to read the value at any cumulative frequency. Hosted as a marked model tile with responseMode \"place-derived\" and the box hidden (show.box false), the box lane becomes a draw-the-box-plot answer surface: a complete but WRONG box plot is drawn (a narrow box at the centre of the axis) and the pupil reshapes it by dragging the box plot's own parts — the two whisker ends, the two box edges and the median line — each part showing its live value as it moves, until the box plot is right; every part is checked against the value the model derives — no authored key. Outliers: set a `values` distribution's `outliers` flag and the model derives them — it computes the 1.5 × IQR fences from its own quartiles, ends each whisker at the most extreme value inside the fence and draws every value beyond it as a cross (✗) at its own value, so a box plot that \"indicates clearly the position of the outlier\" is derived, never authored; with a stated five-number summary there is nothing to derive from, so give `summary.outliers` as an array and its min / max then mean the extreme non-outlier values. show.fences adds the two fences as dashed lines. Armed, the pupil places the cross(es) as well as the five box parts, each checked against the same derived result. (Frequency-density bars are the separate statistics/histogram model.)",
-  "whenToUse": "Reach for this for cumulative frequency and box plots (box-and-whisker diagrams): building a cumulative-frequency curve (ogive) from a grouped table, reading the median, lower and upper quartiles and the interquartile range off it, estimating \"how many scored less than …\", and drawing or comparing box plots. Give one or two `distributions`, each with exactly one data source: `grouped` as [{from,to,frequency}] touching class intervals (the running total is plotted at each upper boundary `to`, the curve starting at the first `from`), `values` as a raw list (its five-number summary is derived), or `summary` as a stated five-number summary (only when the exam gives the five numbers outright). Use show.curve to draw the curve(s), show.box to draw the box plot(s) beneath the same axis, show.values to print the five-number values, and show.iqr to mark the interquartile range. Add `readOff` items to take readings off the curve: { \"quartile\": \"median\" } (or \"lowerQuartile\" / \"upperQuartile\") draws the n/2, n/4, 3n/4 guides; { \"percentile\": 90 } reads a percentile; { \"atValue\": 50 } reads up from a value to the count below it. Set occlude on a read-off (or list a box value in a distribution's occlude array) to hide the answer as \"?\". curveStyle \"smooth\" (default) is the classic ogive; \"straight\" is the cumulative-frequency polygon (exact linear interpolation, so the box edges sit exactly on the textbook quartile values) — pick whichever your class uses and keep it consistent. The flagship figure shows a curve with all three quartile guides and the box plot below, so pupils see the quartiles transfer down to the box. To compare distributions, give two `distributions` with labels and show.box (boxes stack; both share the axis) or show.curve (curves overlay — the second is amber). Keep the same axes (value range, steps and cumulative-frequency max) across every block in a lesson so curves and boxes line up — set axes.x and axes.cfMax explicitly. A staged build reads well: open on the labelled axes, plot the curve, drop the median guide, then the quartile guides, then bring in the box plot last; or build a box plot value by value. Leave show.curve / show.box off (axes only) for an answer space pupils draw on. Draw the box plot ON the model (auto-marked): the same show: { box: false } answer space on a MARKED model tile with responseMode \"place-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } } — one distribution only; a complete but WRONG box plot is pre-drawn (a narrow box at the axis centre) and the pupil reshapes it by dragging the box plot's own parts — the whisker ends, the box edges and the median line — to correct it (the dragged part's value shown live, neighbours clamped so the box stays valid), each marked against the derived five-number summary, correct within half a small square; works from a stated summary, a raw list, or a grouped table with the curve shown above (read the quartiles off the curve, then drag the box parts to them). Plot the CF curve ON the model (auto-marked, @4): the same responseMode \"place-derived\" with `plotCurve: true`, ONE grouped distribution and show: { curve: false, box: false } — the empty labelled grid arms one draggable point per class at its upper class boundary (x pinned; the pupil chooses only the cumulative frequency), the ogive draws through the placed points, and each point is checked against the derived running total — the \"plot a cumulative frequency graph for this information\" question, fully auto-marked with no authored key. Outliers (A Level \"box plots and outliers\", and any GCSE course that defines them): with a raw `values` list add `outliers: true` to the distribution and everything follows from the data — the model works out Q1 − 1.5 × IQR and Q3 + 1.5 × IQR from its own derived quartiles, stops each whisker at the most extreme value INSIDE its fence, and draws every value beyond the fence as a cross on the box lane at its own value (so a list ending 60, 77, 110 gives whiskers to 77 and a cross at 110, exactly as the mark scheme wants). Use { fence: 2 } if your board defines the fence differently. It is derived, so the auto-marked draw-the-box question is keyed to the FENCED whisker, not the data maximum — set it and the model marks the correct answer correct. When the exam instead GIVES you a box plot with crosses on it, state the summary and its crosses separately: summary: { min, lowerQuartile, median, upperQuartile, max, outliers: [27, 29] }, where min / max are the whisker ends (the extreme values that are not outliers). Add show.fences to show the two fences as dashed lines when you are teaching why the whisker stops early — leave it off in a question. Outliers are a `values` / stated-`summary` idea only: a grouped table has no individual values, so the flag is ignored there. Switch primitive when the teaching changes — for frequency density bars and unequal class widths use statistics/histogram; for a categorical bar chart use statistics/bar-chart; for a scatter of bivariate data use statistics/scatter; for a pie chart use statistics/pie-chart. Synonyms a teacher might use: cumulative frequency, CF curve, ogive, less-than curve, running total, quartiles, median, lower quartile, upper quartile, interquartile range, IQR, percentile, decile, box plot, box-and-whisker, box and whisker diagram, five-number summary, spread, compare distributions.",
   "responseModes": [
     "place-derived"
-  ],
-  "tags": [
-    "cumulative frequency",
-    "cf curve",
-    "ogive",
-    "running total",
-    "box plot",
-    "box and whisker",
-    "box-and-whisker",
-    "five-number summary",
-    "median",
-    "quartile",
-    "lower quartile",
-    "upper quartile",
-    "interquartile range",
-    "iqr",
-    "percentile",
-    "decile",
-    "spread",
-    "outlier",
-    "outliers",
-    "anomaly",
-    "extreme value",
-    "fence",
-    "1.5 x iqr",
-    "box plots and outliers",
-    "cross on a box plot",
-    "compare distributions",
-    "statistics",
-    "data",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -52,11 +18,9 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One distribution drawn on the shared value axis. Give EXACTLY ONE data source: `grouped` (a frequency table → cumulative-frequency curve and/or box), `values` (a raw list → box plot), or `summary` (a stated five-number summary → box plot). Add a `label` to name it when comparing two.",
           "properties": {
             "label": {
-              "type": "string",
-              "description": "A name for this distribution, shown beside its curve / box, e.g. \"Class A\", \"2023\". Important when two are compared. Omit for a single unlabelled distribution."
+              "type": "string"
             },
             "grouped": {
               "type": "array",
@@ -67,17 +31,14 @@
                 "additionalProperties": false,
                 "properties": {
                   "from": {
-                    "type": "number",
-                    "description": "Lower boundary of the class. The cumulative-frequency curve starts at the FIRST class's `from` at cumulative frequency 0, and that value is the box plot's minimum."
+                    "type": "number"
                   },
                   "to": {
-                    "type": "number",
-                    "description": "Upper boundary of the class. The running cumulative total is plotted at this upper boundary (the CF-curve convention). The LAST class's `to` is the box plot's maximum. Use touching intervals: each class's `from` should equal the previous class's `to`."
+                    "type": "number"
                   },
                   "frequency": {
                     "type": "number",
-                    "minimum": 0,
-                    "description": "The frequency (count) in this class. Cumulative totals and n are summed from these."
+                    "minimum": 0
                   }
                 },
                 "required": [
@@ -85,48 +46,39 @@
                   "to",
                   "frequency"
                 ]
-              },
-              "description": "A grouped frequency table as class intervals. Drives the cumulative-frequency curve (running totals plotted at each upper boundary) AND, when a box is shown, the box plot whose quartiles are read off that curve (min = first `from`, max = last `to`). Use for any \"draw / read a cumulative-frequency curve\" or \"box plot from a CF curve\" task."
+              }
             },
             "values": {
               "type": "array",
               "minItems": 4,
               "items": {
                 "type": "number"
-              },
-              "description": "A raw list of data values, e.g. [7, 9, 12, 13, 15, 16, 18, 21, 24]. The five-number summary is derived by the median-of-halves method (median = middle value, or mean of the two middle; LQ / UQ = medians of the lower / upper halves, each excluding the overall median when n is odd) and drawn as a box plot. No curve is drawn from a list."
+              }
             },
             "summary": {
               "type": "object",
               "additionalProperties": false,
-              "description": "A five-number summary stated directly — use this only when the data itself IS the summary (an exam gives the five numbers and asks for the box plot). With a `grouped` table or a `values` list the summary is DERIVED instead, so do not author it there.",
               "properties": {
                 "min": {
-                  "type": "number",
-                  "description": "The minimum (lowest value / left whisker end). With `outliers` given, this is the lowest value that is NOT an outlier — the left whisker still ends here."
+                  "type": "number"
                 },
                 "lowerQuartile": {
-                  "type": "number",
-                  "description": "The lower quartile (Q1 / LQ — left edge of the box)."
+                  "type": "number"
                 },
                 "median": {
-                  "type": "number",
-                  "description": "The median (Q2 — the line inside the box)."
+                  "type": "number"
                 },
                 "upperQuartile": {
-                  "type": "number",
-                  "description": "The upper quartile (Q3 / UQ — right edge of the box)."
+                  "type": "number"
                 },
                 "max": {
-                  "type": "number",
-                  "description": "The maximum (highest value / right whisker end). With `outliers` given, this is the highest value that is NOT an outlier — the right whisker still ends here."
+                  "type": "number"
                 },
                 "outliers": {
                   "type": "array",
                   "items": {
                     "type": "number"
-                  },
-                  "description": "The outlier values this stated summary excludes, each drawn as a cross (✗) on the box lane at its own value, e.g. [27, 29]. Use this ONLY with a stated `summary`: there is no list of data to derive them from, so the exam states the five-number summary and its outliers separately, and `min`/`max` above then mean the extreme NON-outlier values (the whisker ends). With a `values` list never author these — set the distribution's `outliers` flag instead and the model derives which values fall outside the 1.5 × IQR fence."
+                  }
                 }
               },
               "required": [
@@ -148,13 +100,11 @@
                   "properties": {
                     "fence": {
                       "type": "number",
-                      "exclusiveMinimum": 0,
-                      "description": "The fence multiplier of the interquartile range. Default 1.5 — the standard definition (\"more than 1.5 × IQR beyond a quartile\"). Set 2 (or 3) only if your board defines it that way."
+                      "exclusiveMinimum": 0
                     }
                   }
                 }
-              ],
-              "description": "DERIVE the outliers for this distribution from its `values` list, and cap the whiskers at them. The model computes the fences from its OWN derived quartiles (Q1 − 1.5 × IQR and Q3 + 1.5 × IQR), ends each whisker at the most extreme value INSIDE its fence, and draws every value beyond the fence as a cross (✗) on the box lane at its own value — so the five-number readouts' min / max become the whisker ends, not the data extremes. Nothing about the outlier layer is authorable, which is the point: the figure cannot disagree with the data. Use for \"draw a box plot indicating clearly the position of the outlier\". true, or { fence } for a non-standard multiplier. Default off (the whiskers run to the data extremes, as before). Only DERIVES outliers for a `values` distribution — a `grouped` table has no individual values, so no value can be identified as an outlier and the flag is ignored there; with a stated `summary` author `summary.outliers` instead (where { fence } still sets the multiplier show.fences draws at)."
+              ]
             },
             "occlude": {
               "type": "array",
@@ -169,12 +119,10 @@
                   "iqr",
                   "outliers"
                 ]
-              },
-              "description": "Which of this distribution's derived box-plot values to hide as \"?\" — the question hook (\"what is the median?\"). The box, whiskers and lines stay drawn; only the named value labels become \"?\". e.g. [\"median\",\"iqr\"]. \"outliers\" hides every cross's value label (the crosses themselves stay drawn — their position is the figure). Needs show.values (or show.iqr) to be visible. Default none."
+              }
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this distribution in amber to draw the eye to it (single-distribution emphasis). Default false. With two distributions the second is already amber."
+              "type": "boolean"
             }
           },
           "oneOf": [
@@ -194,13 +142,11 @@
               ]
             }
           ]
-        },
-        "description": "The distribution(s) on the shared value axis — one, or two to compare. Each carries exactly one data source (grouped / values / summary). Two curves overlay (the second in amber); two box plots stack beneath the axis, both on the same scale."
+        }
       },
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The shared value axis (horizontal) and the cumulative-frequency axis (vertical, for the curve). Both default to fit the data — set them explicitly to FIX the frame across a lesson (essential when comparing or staging, so curves and boxes line up).",
         "properties": {
           "x": {
             "type": "array",
@@ -208,78 +154,62 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] of the value axis. Default: the lowest class boundary / data minimum to the highest, with a small margin."
+            "maxItems": 2
           },
           "xStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between value-axis gridlines / numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "xLabel": {
-            "type": "string",
-            "description": "The value-axis title with its unit, e.g. \"Mark\", \"Time (seconds)\", \"Height (cm)\"."
+            "type": "string"
           },
           "cfMax": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Top of the cumulative-frequency (vertical) axis. Default: the total frequency n. Set equal across blocks so curves are comparable."
+            "exclusiveMinimum": 0
           },
           "cfStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between cumulative-frequency gridlines / numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "cfLabel": {
-            "type": "string",
-            "description": "The cumulative-frequency axis title. Default \"Cumulative frequency\"."
+            "type": "string"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the background grid behind the curve. Default true (helps read values off the curve)."
+        "type": "boolean"
       },
       "curveStyle": {
         "type": "string",
         "enum": [
           "smooth",
           "straight"
-        ],
-        "description": "\"smooth\" (default): a smooth ogive through the cumulative points. \"straight\": the cumulative-frequency polygon (points joined by straight segments — exact linear interpolation, so read-offs and box edges sit on the textbook quartile values). Read-offs always meet whichever curve is drawn. Keep it consistent across a lesson."
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Which views to draw, and the readout furniture.",
         "properties": {
           "curve": {
-            "type": "boolean",
-            "description": "Draw the cumulative-frequency curve for each grouped distribution. Default: true when any distribution is grouped (else there is no curve). Set false (with grid) for a \"plot the curve yourself\" answer space."
+            "type": "boolean"
           },
           "box": {
-            "type": "boolean",
-            "description": "Draw the box plot for each distribution, beneath the shared axis (two stack). Default: true when NO distribution is grouped (i.e. list / summary data); set true to add boxes below a curve, or false for a \"draw the box plot\" answer space."
+            "type": "boolean"
           },
           "values": {
-            "type": "boolean",
-            "description": "Print the five-number values (min, LQ, median, UQ, max) beside each box-plot marker. Default false — set true for a worked / labelled box plot."
+            "type": "boolean"
           },
           "iqr": {
-            "type": "boolean",
-            "description": "Mark the interquartile range as an amber span beneath the box, labelled \"IQR = …\". Default false."
+            "type": "boolean"
           },
           "points": {
-            "type": "boolean",
-            "description": "Dot each plotted cumulative point on the curve. Default true. Set false when the source draws a bare curve: a dot sitting on a quartile's reading point gives the reading away."
+            "type": "boolean"
           },
           "firstSegment": {
-            "type": "boolean",
-            "description": "Draw the curve from the first class's lower boundary at cumulative frequency 0. Default true. Set false when the source's curve starts at its first plotted point (e.g. (110, 3) with no segment below it); read-offs still use the whole curve."
+            "type": "boolean"
           },
           "fences": {
-            "type": "boolean",
-            "description": "Draw the two outlier fences (Q1 − 1.5 × IQR and Q3 + 1.5 × IQR) as dashed construction lines across the box lane, each labelled with its value — so it is visible WHY a whisker stops where it does. Needs a distribution with `outliers` (or `summary.outliers`) and a drawn box; a fence outside the axis window is not drawn. Never drawn on an armed answer surface (it would give the quartiles away). Default false."
+            "type": "boolean"
           }
         }
       },
@@ -288,7 +218,6 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One reading taken from a cumulative-frequency curve, drawn as dashed guide lines with the read value labelled (amber). Give EXACTLY ONE locator: `quartile`, `percentile`, or `atValue`.",
           "properties": {
             "quartile": {
               "type": "string",
@@ -296,31 +225,25 @@
                 "median",
                 "lowerQuartile",
                 "upperQuartile"
-              ],
-              "description": "Read a quartile: a dashed guide from the cumulative-frequency axis at n/2 (median), n/4 (lower quartile) or 3n/4 (upper quartile) across to the curve and down to the value axis; the read value is labelled. n is derived, so name the quartile — never a raw height."
+              ]
             },
             "percentile": {
               "type": "number",
               "minimum": 0,
-              "maximum": 100,
-              "description": "Read the value at this percentile (0–100): the guide starts from the cumulative-frequency axis at percentile%·n. e.g. 90 reads the 90th percentile. Use for deciles / percentiles beyond the quartiles."
+              "maximum": 100
             },
             "atValue": {
-              "type": "number",
-              "description": "Read the OTHER way: from this value on the horizontal axis up to the curve and across to the cumulative-frequency axis — \"how many are less than this value?\". The read value is a cumulative count."
+              "type": "number"
             },
             "distribution": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Which distribution to read from, counted from 1. Default 1 (the first). Only meaningful when two curves are shown."
+              "minimum": 1
             },
             "label": {
-              "type": "string",
-              "description": "Override the text drawn at the read value. Omit to show the derived number."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide this read value as \"?\" — the \"use the curve to estimate …\" hook. The guide lines still show. Default false."
+              "type": "boolean"
             }
           },
           "oneOf": [
@@ -340,20 +263,16 @@
               ]
             }
           ]
-        },
-        "description": "Readings taken off the cumulative-frequency curve, each drawn with dashed guide lines and the read value labelled. Use for \"read the median / quartiles off the curve\" and \"estimate how many are less than …\". Needs a curve (a grouped distribution). Omit for none."
+        }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. A handle on the cumulative-frequency curve that pupils drag along it; the dashed read-off guides and the read value update live — explore the value at any cumulative frequency. Needs a curve. Default false."
+        "type": "boolean"
       },
       "plotCurve": {
         "oneOf": [
@@ -366,13 +285,11 @@
             "properties": {
               "tolerance": {
                 "type": "number",
-                "exclusiveMinimum": 0,
-                "description": "Accepted |placed − derived| band per point, in cumulative-frequency units. Default: a quarter of the cf step."
+                "exclusiveMinimum": 0
               }
             }
           }
-        ],
-        "description": "@4 \"plot the cumulative frequency graph\" ANSWER arming. On a MARKED model tile with responseMode \"place-derived\", ONE grouped distribution and show: { curve: false, box: false }, the empty labelled grid becomes the plotting surface: one draggable point per class parks on the value axis at its upper class boundary (x pinned — only the cumulative frequency is chosen), the pupil drags each point up, the ogive draws through the placed points, and each point self-checks against the derived running total. correctAnswer is { derived: true } — the derivation is the key; the target totals are never in the DOM, so a posed/print surface stays a clean empty grid. Inert on unmarked tiles. true, or { tolerance } to widen the accepted band."
+        ]
       }
     },
     "required": [
@@ -381,7 +298,6 @@
   },
   "examples": [
     {
-      "label": "Worked (hard case) — CF curve with all three quartile read-offs and the box plot below, sharing the axis",
       "params": {
         "header": "Test marks",
         "axes": {
@@ -446,7 +362,6 @@
       }
     },
     {
-      "label": "Answer space — plot the cumulative-frequency curve yourself (posed: empty grid; armed via responseMode \"place-derived\", one draggable point per upper class boundary)",
       "params": {
         "axes": {
           "x": [
@@ -497,7 +412,6 @@
       }
     },
     {
-      "label": "Occluded question — estimate the median and IQR from the curve (read values hidden)",
       "params": {
         "axes": {
           "x": [
@@ -566,7 +480,6 @@
       }
     },
     {
-      "label": "Box plot from a raw list of data (worked, five-number summary shown)",
       "params": {
         "header": "Reaction times",
         "axes": {
@@ -601,7 +514,6 @@
       }
     },
     {
-      "label": "Outliers derived from a raw list (worked) — the whiskers stop inside the 1.5 × IQR fences and 58 is crossed",
       "params": {
         "header": "Rainfall",
         "axes": {
@@ -639,7 +551,6 @@
       }
     },
     {
-      "label": "Outliers stated with the summary (the exam GIVES the box plot) — two crosses beyond the right whisker",
       "params": {
         "axes": {
           "x": [
@@ -670,7 +581,6 @@
       }
     },
     {
-      "label": "Draw the box plot WITH its outlier ON the model — place-derived from a raw list (marked model tile: responseMode \"place-derived\", correctAnswer { derived: true }; the data goes in the question text)",
       "params": {
         "axes": {
           "x": [
@@ -705,7 +615,6 @@
       }
     },
     {
-      "label": "Compare two distributions — stacked box plots from stated five-number summaries",
       "params": {
         "header": "Two classes",
         "axes": {
@@ -745,7 +654,6 @@
       }
     },
     {
-      "label": "Draw the box plot ON the model — place-derived completion from a stated five-number summary (marked model tile: responseMode \"place-derived\", correctAnswer { derived: true }; the five numbers go in the question text)",
       "params": {
         "header": "Waiting times",
         "axes": {
@@ -774,7 +682,6 @@
       }
     },
     {
-      "label": "Read the curve, then draw the box — place-derived completion beneath a CF curve (marked model tile; quartiles read off the curve, then the box parts dragged to them)",
       "params": {
         "axes": {
           "x": [
@@ -825,7 +732,6 @@
       }
     },
     {
-      "label": "Inverse read-off — estimate how many are below a value",
       "params": {
         "axes": {
           "x": [

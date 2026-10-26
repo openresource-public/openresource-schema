@@ -4,35 +4,8 @@
   "name": "sample-space-grid",
   "version": 1,
   "title": "Sample-space diagram",
-  "tagline": "Two-event sample-space grid; each cell is the combined outcome and shaded events give P=matched÷total; values and probabilities derived, cells occlude.",
-  "description": "A two-event sample-space diagram (a possibility-space grid): the outcomes of one event head the left column and the outcomes of a second head the top row, and each body cell holds the combined outcome of its row and column — the sum, difference (|a − b|), product, max, min, the ordered pair, or a concatenation like \"HT\". Author one or two target events as derived predicates and the model shades the cells that satisfy them — a single event amber (the result), or two events in blue and teal with the cells satisfying both in amber (the intersection) — and reads off the probabilities P(event) = matched cells / total cells, gcd-simplified, beneath the grid. Every cell value, every shaded set, the and/or overlap and every probability fraction are computed from the events and the combine rule; you never write a cell value or a count. Cells occlude to \"?\" for a \"complete the sample space\" question, the probability hides as \"?\" for a \"work out P\" answer space, and the grid stages a build outcome by outcome.",
-  "whenToUse": "Reach for this whenever two events are combined and the outcomes (or their probabilities) are found by listing or counting them in a grid: sample-space / possibility-space diagrams, the two-dice total (the headline figure — P(total = 7) = 6/36 = 1/6), two-dice difference or product, two coins (HH/HT/TH/TT), spinner × spinner, and and / or events. Author the two axes (`rows`, `cols`) as the events' outcomes, choose how a pair combines (`combine`: sum | difference | product | max | min | pair | concat), and give each target event a `label` and a derived `match`. A match is a single condition, an `all` of conditions (and / intersection) or an `any` of conditions (or / union); each condition tests the combined cell value (`of: \"value\"`, the default), the row outcome (`of: \"row\"`) or the column outcome (`of: \"col\"`) with an op (eq, ne, lt, le, gt, ge, even, odd, in). Common configurations: two-dice total — rows/cols 1–6, combine \"sum\", one event { label: \"total = 7\", match: { op: \"eq\", value: 7 } }; at least one — combine \"pair\", event match { any: [ { of: \"row\", op: \"eq\", value: 6 }, { of: \"col\", op: \"eq\", value: 6 } ] }; and / or — give two events (e.g. \"even total\" and \"total > 8\"): blue and teal shade each, amber shades the cells in both, and P(A), P(B), P(A and B), P(A or B) are all read off; coins — rows/cols [\"H\",\"T\"], combine \"concat\"; blank answer space — show.values false (and show.probability false) for pupils to fill the totals in; occluded question — flag a few cells occlude:true to hide totals, or occludeResult:true to shade the event but hide its probability (\"count them and work out P\"). A single event takes the result-amber; with two it switches to the categorical blue/teal with amber kept for the overlap. Keep the same axes across a lesson so pupils track one grid. Staged builds read very well: open on the labelled empty grid, fill the cells (or reveal the method), then shade the event and bring P in last — the base (named axes, empty body) stands alone. Sibling models: for a 2-stage experiment with branch probabilities use probability/tree; for set membership of named items use probability/venn; for properties of single numbers on a grid use number/number-grid. Synonyms a teacher might use: sample space, sample space diagram, possibility space, possibility space diagram, outcomes, two dice, dice totals, sum of two dice, listing outcomes, P(event), probability by counting, equally likely, AND event, OR event, mutually exclusive, combined events.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "sample space",
-    "sample space diagram",
-    "possibility space",
-    "possibility space diagram",
-    "outcomes",
-    "two dice",
-    "dice totals",
-    "sum of two dice",
-    "product",
-    "difference",
-    "two coins",
-    "spinner",
-    "probability",
-    "equally likely",
-    "counting outcomes",
-    "and",
-    "or",
-    "intersection",
-    "union",
-    "combined events",
-    "statistics",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -48,8 +21,7 @@
               "value",
               "row",
               "col"
-            ],
-            "description": "What this condition tests. \"value\" (default) = the combined cell value (the sum / product / pair). \"row\" = the row outcome (the first event's face). \"col\" = the column outcome (the second event's face). Use row/col for events like \"the first dice shows a 6\" or \"at least one head\"."
+            ]
           },
           "op": {
             "type": "string",
@@ -63,15 +35,13 @@
               "even",
               "odd",
               "in"
-            ],
-            "description": "The test. eq/ne = equals / not-equals `value`; lt/le/gt/ge = < / ≤ / > / ≥ `value` (numeric only); even/odd = parity (numeric only, no operand); in = is one of `values`. lt/le/gt/ge/even/odd never match a string outcome."
+            ]
           },
           "value": {
             "type": [
               "number",
               "string"
-            ],
-            "description": "The operand for eq / ne / lt / le / gt / ge. A number for numeric tests (e.g. value 7 with op eq → cells equal to 7); a string for eq/ne on string outcomes (e.g. of \"row\", op eq, value \"H\")."
+            ]
           },
           "values": {
             "type": "array",
@@ -81,8 +51,7 @@
                 "number",
                 "string"
               ]
-            },
-            "description": "The operand for op \"in\" — the set the cell must belong to, e.g. the prime totals [2, 3, 5, 7, 11] or the outcomes [\"HH\", \"TT\"]. Ignored unless op is \"in\"."
+            }
           }
         },
         "required": [
@@ -92,11 +61,9 @@
       "axis": {
         "type": "object",
         "additionalProperties": false,
-        "description": "One event (one die / spinner / coin) forming an axis of the grid.",
         "properties": {
           "name": {
-            "type": "string",
-            "description": "The axis label, e.g. \"First dice\", \"Spinner A\", \"Coin 1\". Drawn along the edge (the left axis name is rotated). Omit for an unnamed axis."
+            "type": "string"
           },
           "outcomes": {
             "type": "array",
@@ -106,10 +73,8 @@
               "type": [
                 "number",
                 "string"
-              ],
-              "description": "One outcome of the event — a number (a die face 1–6, a spinner number) or a short string (a coin \"H\"/\"T\", a colour \"Red\"). The list IS the sample space for that event; outcomes are taken to be equally likely."
-            },
-            "description": "The outcomes of this event, in the order they head the grid. A standard dice is [1, 2, 3, 4, 5, 6]; a coin [\"H\", \"T\"]; a four-sided spinner [1, 2, 3, 4]. Taken to be equally likely."
+              ]
+            }
           }
         },
         "required": [
@@ -119,12 +84,10 @@
     },
     "properties": {
       "rows": {
-        "$ref": "#/$defs/axis",
-        "description": "The event down the LEFT side — one grid ROW per outcome, top to bottom. A standard dice is { \"name\": \"First dice\", \"outcomes\": [1,2,3,4,5,6] }."
+        "$ref": "#/$defs/axis"
       },
       "cols": {
-        "$ref": "#/$defs/axis",
-        "description": "The event across the TOP — one grid COLUMN per outcome, left to right. Combined with each row outcome to fill the body."
+        "$ref": "#/$defs/axis"
       },
       "combine": {
         "type": "string",
@@ -136,8 +99,7 @@
           "min",
           "pair",
           "concat"
-        ],
-        "description": "How each body cell's value is computed from (rowOutcome, colOutcome). \"sum\" a + b (two-dice total); \"difference\" |a − b| (the dice-difference convention, always ≥ 0); \"product\" a × b; \"max\" / \"min\" the larger / smaller; \"pair\" the ordered pair shown \"a, b\" (the full sample space listing); \"concat\" the strings joined (\"H\"+\"T\" → \"HT\", for coins). sum/difference/product/max/min need numeric outcomes. Default \"sum\"."
+        ]
       },
       "events": {
         "type": "array",
@@ -145,14 +107,11 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "A target event: a derived set of cells (match) plus its human name (label) used in the P readout.",
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The event's name, written into the probability readout as \"P(<label>)\" and the legend — e.g. \"sum = 7\", \"at least one six\", \"an even total\". The cells are DERIVED from match; only this phrasing is authored."
+              "type": "string"
             },
             "match": {
-              "description": "The derived predicate that defines this event as a set of cells. Either a single condition, or { \"all\": [ … ] } for AND (every condition must hold), or { \"any\": [ … ] } for OR (at least one). One nesting level only.",
               "oneOf": [
                 {
                   "$ref": "#/$defs/leaf"
@@ -166,8 +125,7 @@
                       "minItems": 2,
                       "items": {
                         "$ref": "#/$defs/leaf"
-                      },
-                      "description": "AND — a cell is in the event only if EVERY condition holds."
+                      }
                     }
                   },
                   "required": [
@@ -183,8 +141,7 @@
                       "minItems": 2,
                       "items": {
                         "$ref": "#/$defs/leaf"
-                      },
-                      "description": "OR — a cell is in the event if AT LEAST ONE condition holds."
+                      }
                     }
                   },
                   "required": [
@@ -198,33 +155,27 @@
             "label",
             "match"
           ]
-        },
-        "description": "The target event(s) to shade and find the probability of. ONE event is the result and shades amber. TWO events shade blue (the first) and teal (the second), with the cells satisfying BOTH in amber (the intersection) — and the readout gives P(A), P(B), P(A and B) and P(A or B). Omit for a plain sample space with no shading."
+        }
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question and emphasis flags, addressed by BODY position (row and col are 1-based indices into rows.outcomes and cols.outcomes). The combined value is always computed; list a cell only to hide its value or ring it. Addresses outside the grid are ignored.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "row": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Row index (1 = the first row outcome)."
+              "minimum": 1
             },
             "col": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Column index (1 = the first column outcome)."
+              "minimum": 1
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's value as \"?\" — the \"complete the sample space\" hook. The cell and any event shading stay visible. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw an amber ring around this cell to point at it (independent of any event). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -236,37 +187,29 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "values": {
-            "type": "boolean",
-            "description": "Show the combined value inside every body cell. false leaves the body blank — a \"fill in the totals\" answer space. Default true."
+            "type": "boolean"
           },
           "probability": {
-            "type": "boolean",
-            "description": "Show the probability readout(s) beneath the grid. Renders nothing when there are no events. Default true."
+            "type": "boolean"
           },
           "corner": {
-            "type": "boolean",
-            "description": "Show the combine symbol (+, −, ×, …) in the top-left corner cell. Default true."
+            "type": "boolean"
           },
           "legend": {
-            "type": "boolean",
-            "description": "Show the colour key naming each event (and the amber overlap). Auto-shown only with two events; set false to suppress. Default true."
+            "type": "boolean"
           }
         }
       },
       "occludeResult": {
-        "type": "boolean",
-        "description": "Render every probability VALUE as \"?\" while still naming the event — \"P(total = 7) = ?\". The \"shade the event, now count and work out P\" answer space. Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the readout, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -276,7 +219,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — two dice, the total, P(sum = 7) shaded",
       "params": {
         "header": "Two dice — the total score",
         "rows": {
@@ -315,7 +257,6 @@
       }
     },
     {
-      "label": "Blank answer space — fill in the totals",
       "params": {
         "rows": {
           "name": "First dice",
@@ -347,7 +288,6 @@
       }
     },
     {
-      "label": "Occluded question — three totals hidden, complete the grid",
       "params": {
         "rows": {
           "name": "First dice",
@@ -393,7 +333,6 @@
       }
     },
     {
-      "label": "Hard case — AND/OR: even total and total over 8",
       "params": {
         "header": "An even total, and a total over 8",
         "rows": {
@@ -438,7 +377,6 @@
       }
     },
     {
-      "label": "Two coins — P(at least one head) by listing the outcomes",
       "params": {
         "header": "Two coins",
         "rows": {
@@ -479,7 +417,6 @@
       }
     },
     {
-      "label": "Two spinners — the product is a multiple of 5 (non-square grid)",
       "params": {
         "header": "Two spinners — the product",
         "rows": {

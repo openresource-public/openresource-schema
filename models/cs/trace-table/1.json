@@ -4,46 +4,8 @@
   "name": "trace-table",
   "version": 1,
   "title": "Trace table",
-  "tagline": "Trace table of an AQA pseudo-code or Python program: columns are variables, rows are steps, every cell executed not authored; cells occlude for \"complete the trace\".",
-  "description": "A ruled trace table for a program written in AQA pseudo-code or, with language \"python\", in Python 3: one column per variable, one row per step, with optional line-number, step-number, call-depth and output columns. The program is actually executed — a hand-rolled tokenise/parse/execute engine, pure and synchronous, seeded so a random draw renders the same every time — and every cell is read off that run, so there is nowhere to write a value and the table can never disagree with the program. Columns default to every variable the run binds, in first-assignment order, and may instead be listed explicitly to restrict, reorder or address array elements and record fields (dist[1], M[0], grid[1][2], car.doors) with a display label. The step grain is chosen, not fixed: a row per statement, a row only where a shown value changes, a row each time execution reaches one named line (which gives exactly one row per loop iteration), or a row only where something was displayed. Any cell, row, column or run of rows renders as \"?\" for \"complete the trace table\", `at` fills the table one row at a time for a staged build, and the whole table can serve as a typed answer surface (fill-derived). Registers are just variables, so a register trace is this model with array-element columns.",
-  "whenToUse": "Reach for this whenever a computing lesson traces a program by hand: dry-running a loop, following a counter and an accumulator, tracing binary search or a bubble-sort pass, unwinding a recursive call, or filling a register trace. Author `program` as AQA pseudo-code by default, or set language:\"python\" and write ordinary Python 3 (the same interpreter cs/code-editor runs — print, input, for/while, def, lists, and the random and math modules; a cell shows a value the way Python prints it, so 2.0 stays 2.0 and a list keeps its quotes). For pseudo-code: (← or <- for assignment, IF/ELSE IF/ENDIF, WHILE…ENDWHILE, REPEAT…UNTIL, FOR…ENDFOR, SUBROUTINE/PROCEDURE/FUNCTION, arrays by assignment, records, OUTPUT, USERINPUT, LEN/POSITION/SUBSTRING/RANDOM_INT and the rest of the AQA built-ins) plus `inputs` for anything USERINPUT reads and `startVars` for values the question GIVES rather than the program setting up. Everything else is derived — you never write a cell. The listing is deliberately not drawn: put it in the block text or a sibling cs/code-editor tile with editable false, and turn on show.line so the table's line column points at it. Common configurations: a worked trace — rows.at \"change\" (the default) with show.line and show.output, which gives the textbook one-row-per-update table; a blank answer space — at 0, so the headings and the right number of rows stand with every derived cell empty; complete the trace table — cells [{ \"fromRow\": 2, \"occlude\": true }] leaves the first row given and the rest as question marks; one row per loop iteration — rows.at \"line\" with rows.line set to the last line of the loop body, which turns a six-pass loop into a six-row table (a Fibonacci build-up, a converging estimate, any once-per-pass view of a loop; for values a question GIVES rather than the listing setting up, put them in startVars and leave show.startRow at its default); a register trace — startVars holding the memory array, columns naming R0, R1, R2 and M[0], M[1], M[2] with labels for the memory locations, show.line on; a recursion trace — show.depth on, since a subroutine's row shows its own local variables at that depth. Staged builds: open on at 0 (a labelled empty table is a sensible slide on its own) and raise `at` one row per stage; the table is sized from the whole trace so no frame resizes. Keep the column set identical across the blocks of one lesson so pupils track one table. Set show.repeatUnchanged false for the compact textbook look where a cell is left empty until it changes. Occluding is safe to do sparingly — hiding one cell also hides every row that carries that same value down, and the output line that would print it, so you do not have to hunt for the leak yourself. Keep the table inside the library's canvas band by keeping the column set modest: two to seven columns of short names and short values all render at the same width, whereas a very long variable name, a cell holding a whole array or a long string, or eight-plus columns push the figure wider and its text smaller — select the variables being taught with `columns`, or address the element you want (dist[1]) rather than showing the whole array. A runaway loop is safe — the engine stops on a step cap and the table says so on one line, which is itself the teaching point. Anything outside the dialect (PRINT, CASE, DIM, //, ==) fails with one named, line-numbered line rather than a blank figure. Synonyms teachers use: trace table, trace, dry run, desk check, hand trace, walk through the code, variable table, register trace, memory trace, iteration table. Switch model when nothing is being traced step by step: a listing pupils only read and run is cs/code-editor; an operation table over a queue, stack, list or hash table is cs/cells; a numeric input-output chain is algebra/function-machine. A tentative-distances (shortest-path) table is the one iteration table that does NOT belong here: the textbook derives it from the algorithm walking the graph and writes ∞, which pseudo-code cannot hold — that figure is cs/graph with its dijkstra mode, where the ∞ is genuinely derived.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "trace table",
-    "trace",
-    "dry run",
-    "desk check",
-    "hand trace",
-    "pseudocode",
-    "pseudo-code",
-    "AQA pseudocode",
-    "algorithm",
-    "variables",
-    "variable table",
-    "iteration",
-    "loop",
-    "while",
-    "for",
-    "selection",
-    "recursion",
-    "call stack",
-    "binary search",
-    "bubble sort",
-    "register",
-    "registers",
-    "accumulator",
-    "memory",
-    "machine code",
-    "little man computer",
-    "fibonacci",
-    "iteration table",
-    "computer science",
-    "computing",
-    "programming",
-    "A level",
-    "GCSE"
   ],
   "interface": {
     "type": "object",
@@ -54,13 +16,11 @@
         "enum": [
           "aqa",
           "python"
-        ],
-        "description": "The language of `program`. \"aqa\" (default) is AQA pseudo-code; \"python\" is Python 3, run on the library's Python interpreter — the same rows, columns, occlusion and marking, with each cell written the way Python prints the value (a string without quotes, True and False, 2.0 for a float, a list as [1, 2]). For Python, `inputs` are the lines input() reads (always text, as in Python), `startVars` are plain JSON values bound before the first line, and a row is recorded after every statement and every for-loop step."
+        ]
       },
       "program": {
         "type": "string",
-        "minLength": 1,
-        "description": "The program to trace, as AQA pseudo-code, newline separated. Assignment is ← (or <-, or :=); comments start #. Selection IF … THEN / ELSE IF … THEN / ELSE / ENDIF; iteration WHILE [DO] … ENDWHILE, REPEAT … UNTIL, FOR i ← a TO b [STEP n] … ENDFOR, FOR x IN … ENDFOR; subroutines SUBROUTINE / SUB / PROCEDURE / FUNCTION with a matching END… and RETURN; arrays are created by assigning a list (scores ← [0, 0, 0]) and indexed a[i], a[i][j] or a[i, j]; RECORD … ENDRECORD with typed fields; OUTPUT e, …, e and x ← USERINPUT; built-ins LEN POSITION SUBSTRING STRING_TO_INT STRING_TO_REAL INT_TO_STRING REAL_TO_STRING CHAR_TO_CODE CODE_TO_CHAR RANDOM_INT. Keywords are case-insensitive; identifiers keep their case. Commands from other languages (PRINT, INPUT, CASE, DIM, //, ==) are refused by name with the AQA form to use instead. Keep listings short — a trace table is read, and the row cap is 40."
+        "minLength": 1
       },
       "inputs": {
         "type": "array",
@@ -69,46 +29,36 @@
           "type": [
             "string",
             "number"
-          ],
-          "description": "One value USERINPUT consumes. Text that looks numeric arrives as a number, as pseudo-code expects."
-        },
-        "description": "The values USERINPUT reads, in order — the dry-run data a question supplies. If the program asks for more than are listed, the trace stops there and the figure says so on one line."
+          ]
+        }
       },
       "startVars": {
         "type": "object",
-        "description": "Variables the program STARTS with — the state a question gives rather than the listing setting up: a memory array for a register trace, an unsorted array for a sort pass, a grid for a two-dimensional walk. These are what the starting row (row 0) shows, so `show.startRow` defaults to true whenever this is non-empty. Keys are variable names; values are numbers, text, True/False (as JSON true/false), or arrays, which may themselves hold arrays for a two-dimensional table.",
         "propertyNames": {
           "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
         },
-        "additionalProperties": {
-          "description": "The starting value: a number, text, a boolean, or an array (which may hold arrays)."
-        }
+        "additionalProperties": {}
       },
       "seed": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Seed for RANDOM_INT, so a program that draws at random renders the same table every time and the printed answer always matches the screen. Default 1. Change it to get a different but equally fixed set of draws."
+        "minimum": 0
       },
       "columns": {
         "type": "array",
         "maxItems": 10,
-        "description": "The variable columns, left to right. Omit to get every variable the run binds, in first-assignment order — which is right for most traces. List them to restrict a busy program to the variables being taught, to fix their order, or to address inside a value: an array element (dist[1], grid[1][2], grid[1, 2]) or a record field (car.doors) each get their own column.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "var": {
               "type": "string",
-              "minLength": 1,
-              "description": "The variable to show, optionally with indices or a field: \"total\", \"dist[1]\", \"grid[1][2]\", \"grid[1, 2]\", \"car.doors\". A whole array in one column prints as [1, 2, 3]. Inside a subroutine the column reads that call's own local variable if it has one, otherwise the global — the same rule the language uses."
+              "minLength": 1
             },
             "label": {
-              "type": "string",
-              "description": "Column heading to show instead of the variable path. The one authored display alias in this model: a register trace heads M[0] as \"FIRST\" and M[1] as \"SECOND\". It never changes a value — only the heading."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this whole column — the one variable a discussion is about. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -119,7 +69,6 @@
       "rows": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The step grain — which of the program's executed statements become table rows. All four choices are derived from the same run; they differ only in what is kept.",
         "properties": {
           "at": {
             "type": "string",
@@ -128,108 +77,86 @@
               "statement",
               "line",
               "output"
-            ],
-            "description": "\"change\" (default): keep a row only where a shown value changed, or something was displayed — the textbook one-row-per-update table, and the right choice unless you need otherwise. \"statement\": keep every executed statement, repeats included (add `groupLine` to band it into iterations). \"line\": keep only the rows executing `line` — set that to the LAST line of a loop body and you get exactly one row per iteration, the once-per-pass table. \"output\": keep only rows that displayed something — a trace of what the program prints."
+            ]
           },
           "line": {
             "type": "integer",
-            "minimum": 1,
-            "description": "The 1-based source line `at: \"line\"` keeps rows for. Ignored by the other grains."
+            "minimum": 1
           },
           "groupLine": {
             "type": "integer",
-            "minimum": 1,
-            "description": "Draw a heavier rule BEFORE each row that executes this line, banding a per-statement trace into one group per pass — the grouped look of a multi-table iteration figure, in one table. Usually the first line of a loop body."
+            "minimum": 1
           },
           "conditions": {
-            "type": "boolean",
-            "description": "Also record the WHILE / UNTIL / IF tests as steps, not just the statements that ran. Turn this on to show a loop being tested and failing (the row where the condition finally goes False). Default false."
+            "type": "boolean"
           },
           "limit": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 40,
-            "description": "Most rows to draw (default 24, hard maximum 40 — a trace table is read by eye). If the run produces more, the last drawn row becomes a vertical ellipsis so the figure never pretends to be the whole trace."
+            "maximum": 40
           }
         }
       },
       "cells": {
         "type": "array",
         "maxItems": 24,
-        "description": "Per-cell question and emphasis flags. Nothing here changes a value — every cell is always derived; an entry only occludes or highlights.",
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One question / emphasis flag applied to a cell, a whole row, a whole column, or a run of rows. Give `row` and `column` for a single cell; `row` alone for every cell in that row; `column` alone for that whole column; `fromRow` for every row from there to the last (optionally narrowed by `column`). The cells themselves always exist and their values are always derived — list one here only to occlude or highlight it.",
           "properties": {
             "row": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Table row, counted 1 at the FIRST step row. Row 0 is the starting-values row (only present when `show.startRow` puts one there). Omit to mean every row."
+              "minimum": 0
             },
             "fromRow": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Apply from this row to the last row inclusive — the classic \"the first row is given, complete the rest\" question is one entry: { \"fromRow\": 2, \"occlude\": true }. Use instead of `row`, not with it."
+              "minimum": 0
             },
             "column": {
-              "type": "string",
-              "description": "Which column, by its key: a variable column's key is exactly its `var` string (\"total\", \"dist[1]\", \"M[0]\"); the derived furniture columns are \"#step\", \"#line\", \"#depth\" and \"#output\". Omit to mean every column in the row(s)."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the value as \"?\" — the \"complete the trace table\" hook. The row, the column heading and every other cell stay visible and correct. Occlusion hides a VALUE, not a position, so it spreads to every place that value would otherwise be readable: the rows below that merely CARRY it down unchanged (stopping the moment it changes), and the output cell of a row that displays exactly that value. It never spreads backwards, so the given opening rows of a question stay visible. An occluded cell carries no change mark, and a row holding one shows no change marks at all, so the highlighting cannot leak which cell moved. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber the cell (or row, or column) — draw the eye to the answer, or to the one variable a discussion is about. Default false."
+              "type": "boolean"
             }
           }
         }
       },
       "at": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Staged builds and mid-trace questions: fill the table down to this row only, leaving the rest of the derived cells empty. 0 is the labelled empty table (a sensible opening slide and the blank answer space). Omit to fill every row. The table is always SIZED from the whole trace, so no frame resizes as the build progresses. Ignored while the model is armed as a question."
+        "minimum": 0
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture columns and display conventions.",
         "properties": {
           "step": {
-            "type": "boolean",
-            "description": "A leading \"step\" column numbering the rows — 1, 2, 3 … , and 0 for the starting-values row. With rows.at \"line\" this numbers the iterations. Default false."
+            "type": "boolean"
           },
           "line": {
-            "type": "boolean",
-            "description": "A \"line\" column giving the source line each row executed — the join to the listing printed beside the figure. Default false."
+            "type": "boolean"
           },
           "depth": {
-            "type": "boolean",
-            "description": "A \"depth\" column giving the call depth (0 in the main program, 1 inside a subroutine it called, and so on) — the recursion trace. Default false."
+            "type": "boolean"
           },
           "output": {
-            "type": "boolean",
-            "description": "An \"output\" column showing what that step displayed. Defaults to true when the program contains an OUTPUT and false when it does not, so a printing program traces its printing without being asked."
+            "type": "boolean"
           },
           "startRow": {
-            "type": "boolean",
-            "description": "Show a row 0 for the state BEFORE the first statement ran — the given starting values. Defaults to true when `startVars` is non-empty (that row is the whole point of giving them) and false otherwise."
+            "type": "boolean"
           },
           "changeMarks": {
-            "type": "boolean",
-            "description": "Draw the cell that CHANGED at each step in accent, leaving the carried-over values plain — the \"what did this statement do?\" cue. Suppressed for any row containing an occluded cell, so it cannot leak the answer. Default true."
+            "type": "boolean"
           },
           "repeatUnchanged": {
-            "type": "boolean",
-            "description": "Repeat a variable's value on every row (default true). false leaves a cell empty until the value changes — the compact textbook look, where only the updates are written."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -238,7 +165,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a running total in a WHILE loop, with line and output columns",
       "params": {
         "header": "Trace the running total",
         "program": "total ← 0\ncount ← 1\nWHILE count <= 4 DO\n  total ← total + count\n  count ← count + 1\nENDWHILE\nOUTPUT total",
@@ -253,7 +179,6 @@
       }
     },
     {
-      "label": "Blank answer space — the headings and the right number of rows, nothing filled",
       "params": {
         "program": "total ← 0\ncount ← 1\nWHILE count <= 4 DO\n  total ← total + count\n  count ← count + 1\nENDWHILE\nOUTPUT total",
         "at": 0,
@@ -264,7 +189,6 @@
       }
     },
     {
-      "label": "Occluded question — digit sum with the first two rows given and the rest hidden",
       "params": {
         "program": "number ← 4193\ndigitSum ← 0\nWHILE number > 0 DO\n  digitSum ← digitSum + number MOD 10\n  number ← number DIV 10\nENDWHILE\nOUTPUT digitSum",
         "show": {
@@ -279,7 +203,6 @@
       }
     },
     {
-      "label": "Binary search — the search window closing in, banded one group per iteration",
       "params": {
         "header": "Binary search for 26",
         "program": "list ← [3, 8, 12, 19, 26, 31, 44]\ntarget ← 26\nlow ← 0\nhigh ← 6\nfound ← -1\nWHILE low <= high AND found = -1 DO\n  mid ← (low + high) DIV 2\n  IF list[mid] = target THEN\n    found ← mid\n  ELSE IF list[mid] < target THEN\n    low ← mid + 1\n  ELSE\n    high ← mid - 1\n  ENDIF\nENDWHILE\nOUTPUT found",
@@ -309,7 +232,6 @@
       }
     },
     {
-      "label": "Hard case — a seven-column register trace over named registers and indexed memory",
       "params": {
         "header": "Register trace",
         "program": "R0 ← M[0]\nR1 ← M[1]\nR2 ← R0 - R1\nM[2] ← R2\nR1 ← 3\nR2 ← R2 * R1\nM[2] ← R2",
@@ -352,7 +274,6 @@
       }
     },
     {
-      "label": "One row per loop iteration — the Fibonacci build-up, first iteration given, the rest to complete",
       "params": {
         "header": "Fibonacci numbers",
         "program": "a ← 1\nb ← 1\nFOR n ← 3 TO 8\n  next ← a + b\n  a ← b\n  b ← next\nENDFOR",

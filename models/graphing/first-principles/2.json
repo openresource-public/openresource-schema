@@ -4,37 +4,8 @@
   "name": "first-principles",
   "version": 2,
   "title": "Differentiation from first principles",
-  "tagline": "Curve with a point, tangent and shrinking chords for first principles; gradients derived; draw-tangent answer mode (pivot a line until tangent) and science axis titles.",
-  "description": "A curve y = f(x) with a point P = (a, f(a)) on it, its tangent, and chords (secants) from P to Q = (a+h, f(a+h)) — the model for differentiation from first principles and for tangents/gradients. You give the function as an expression (\"x^2\", \"x^3 - 2x\"), the point a, and the chord increments h; the model derives everything quantitative — the tangent and its gradient f′(a) (numeric derivative), each chord and its gradient [f(a+h) − f(a)] / h, the point Q, and the δx/δy rise-run triangle. The headline interaction is the h-slider: drag h towards 0 and the live chord rotates onto the tangent (the limit, before your eyes). For print, draw several static chords with shrinking h to show the same convergence. Optionally overlay the whole gradient function y = f′(x). Occlude a gradient for a \"find f′(a)\" question; highlight the answer. Web: the h-slider, dragging P along the curve, or dragging a chord's Q. Answer on the model (@2): set drawTangent: true and host with responseMode \"draw-tangent\" to pose \"draw the tangent at x = a\" — the posed surface shows the curve and the marked point with NO tangent (a blank answer space); armed, a deliberately wrong pre-placed line through the point pivots as the pupil drags, and the model self-checks their gradient against the derived f′(a) within gradientTolerance (default: a ±5° by-eye band); correctAnswer is the { derived: true } sentinel and the true tangent never reaches any surface. Axis titles (@2): axes.labels { x, y } prints quantity + unit titles (\"time (s)\", \"volume of gas (cm³)\") so rates-of-reaction and other science curves carry honest labelled axes.",
-  "whenToUse": "Reach for this to teach differentiation from first principles, the tangent to a curve and its gradient, the chord/secant and the limit as h → 0, or to plot the gradient function f′(x). Give fn as an expression of x (same syntax as function-graph: + - * / ^, parentheses, sin cos tan asin acos atan sqrt cbrt abs exp ln log, pi and e, implicit multiplication like \"2x\" and \"3sin(x)\"; trig in radians), set point.x = a, and choose chords by their increment h. The classic interactive build is one point plus hSlider: { min: 0, max: 3 } — pupils drag h towards 0 and watch the chord rotate onto the tangent (at h = 0 it lands on it); or, equivalently, one point + a single chord + draggable so they drag the chord's far end towards P. For a static (print/slide) version use the chords array, h = 2, 1, 0.5 fanning down onto the tangent, each gradient shown approaching f′(a). Use point alone (tangent: true) for \"the tangent at x = a and its gradient\"; add gradientCurve to motivate the derivative as a function. Set occludeGradient to ask \"work out the gradient\", highlight to mark the answer, point.guides for dashed lines to the axes, chord.triangle for the rise-run right triangle with δx and δy legs. Keep the same window across a lesson's blocks so chords compare on a fixed frame, and choose the y-range so both P and the far chord end Q are in view. Draw the tangent ON the model (auto-marked, @2): for every \"draw the tangent to the curve at x = a\" question — including the GCSE science staple \"draw the tangent at t = 30 s and use it to find the rate\" — host a marked model tile with responseMode \"draw-tangent\", params drawTangent: true and point: { x: a } (tangent is forced off on every surface; the pupil pivots a pre-placed wrong line about the point until it lies tangent). Set gradientTolerance to the mark scheme's accepted gradient half-band when the scheme states a range (accepted range 0.2–0.4 → the point where the centre is derived and gradientTolerance: 0.1); omit it for the default by-eye allowance (±5° of screen angle about the true tangent). There is no live gradient readout while dragging — reading the gradient off the drawn tangent's triangle is the follow-up question's skill, so pair this tile with a typed/math question for the gradient value (\"use your tangent to estimate the rate at t = 30 s\"). Science graphs (@2): give the axes quantity + unit titles with axes.labels: { x: \"time (s)\", y: \"volume of gas (cm³)\" }, identical across a lesson's blocks; keep the same window as the paired function-graph plot so the two figures compare. Switch primitive when the teaching changes — to sketch or read a curve's roots/turning points/asymptotes use graphing/function-graph; for the area under a curve, the trapezium rule or Riemann strips use graphing/area-under-curve; for a distance-time or speed-time gradient use graphing/journey-graph; for a graphical inequality region use graphing/inequality-region. Synonyms a teacher might use: differentiation, derivative, first principles, from first principles, gradient, gradient of a curve, tangent, draw a tangent, chord, secant, rate of change, instantaneous rate, rate of reaction, dy/dx, f prime, gradient function, limit, h tends to zero, delta x.",
   "responseModes": [
     "draw-tangent"
-  ],
-  "tags": [
-    "differentiation",
-    "derivative",
-    "first principles",
-    "gradient",
-    "tangent",
-    "chord",
-    "secant",
-    "rate of change",
-    "dy/dx",
-    "f prime",
-    "gradient function",
-    "limit",
-    "delta",
-    "calculus",
-    "graphing",
-    "curve",
-    "maths",
-    "draw a tangent",
-    "instantaneous rate",
-    "rate of reaction",
-    "science graph",
-    "axis labels",
-    "axis titles",
-    "units"
   ],
   "interface": {
     "type": "object",
@@ -43,7 +14,6 @@
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The window — the rectangle of the plane shown. Frame it so the point P and the far end of every chord are visible with a little room.",
         "properties": {
           "x": {
             "type": "array",
@@ -51,8 +21,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis. Default [-10, 10]."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -60,88 +29,69 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the y-axis. Default [-10, 10]. Include the heights of P and the chord ends."
+            "maxItems": 2
           },
           "xStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "equalAspect": {
-            "type": "boolean",
-            "description": "Force TRUE square scale (1 x-unit = 1 y-unit in pixels) so a stated gradient looks like the right slope on screen. Default false (x and y scaled independently to fill the box). Set true when the visual steepness of the tangent must read accurately."
+            "type": "boolean"
           },
           "degrees": {
-            "type": "boolean",
-            "description": "Evaluate trig in degrees rather than radians. Default false. Rarely needed here."
+            "type": "boolean"
           },
           "labels": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Axis titles — the quantity and unit each axis measures, e.g. { x: \"time (s)\", y: \"volume of gas (cm³)\" }. A bare variable letter (up to 3 characters, e.g. \"t\") prints in the house axis-name style (x just past the x-arrow tip, y above the y-arrow tip); a quantity + unit title prints in the exam-paper position (x centred below the plot, y at the top-left canvas edge) so the figure keeps its size. Use on science/experimental curves (rates of reaction, cooling curves), identical across a lesson's blocks. Omit for a plain maths figure (default: no titles).",
             "properties": {
               "x": {
-                "type": "string",
-                "description": "Title for the horizontal axis, quantity then unit in brackets: \"time (s)\". A bare variable letter (\"t\") also works."
+                "type": "string"
               },
               "y": {
-                "type": "string",
-                "description": "Title for the vertical axis: \"volume of gas (cm³)\", \"mass (g)\"."
+                "type": "string"
               }
             }
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the background grid. Default true."
+        "type": "boolean"
       },
       "fn": {
-        "type": "string",
-        "description": "The function f(x) as an expression: + - * / ^, parentheses, sin cos tan asin acos atan sqrt cbrt abs exp ln log, pi and e, implicit multiplication. Trig in radians. Examples: \"x^2\", \"x^3 - 2x\", \"1/x\", \"sin(x)\"."
+        "type": "string"
       },
       "label": {
-        "type": "string",
-        "description": "Equation label drawn near the curve, e.g. \"y = x²\". Use proper typography (², −). Omit for an unlabelled curve."
+        "type": "string"
       },
       "point": {
         "type": "object",
         "additionalProperties": false,
-        "description": "P — the point on the curve where you differentiate / draw the tangent. Its coordinates (a, f(a)) and the tangent's gradient f′(a) are DERIVED; you give only a.",
         "properties": {
           "x": {
-            "type": "number",
-            "description": "The x-value a. P sits at (a, f(a)) on the curve."
+            "type": "number"
           },
           "label": {
-            "type": "string",
-            "description": "Name shown at P (e.g. \"P\"). Omit to show the derived coordinates."
+            "type": "string"
           },
           "tangent": {
-            "type": "boolean",
-            "description": "Draw the tangent line at P (its gradient f′(a) is derived numerically). Default true."
+            "type": "boolean"
           },
           "showGradient": {
-            "type": "boolean",
-            "description": "Print the derived tangent gradient f′(a) beside the tangent. Default true."
+            "type": "boolean"
           },
           "occludeGradient": {
-            "type": "boolean",
-            "description": "Hide the tangent gradient as \"?\" — the \"work out f′(a)\" hook. The tangent still shows. Default false."
+            "type": "boolean"
           },
           "guides": {
-            "type": "boolean",
-            "description": "Dashed guide lines from P to each axis. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Draw the eye to P and its tangent (amber). Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -151,30 +101,24 @@
       "chords": {
         "type": "array",
         "maxItems": 4,
-        "description": "Secant lines from P to Q = (a + h, f(a + h)) — the first-principles chords. Each chord's gradient [f(a+h) − f(a)] / h is derived. List several with shrinking h (e.g. 2, 1, 0.5) to show the chord gradient approaching the tangent gradient. Requires point.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "h": {
-              "type": "number",
-              "description": "The increment. Q = (a + h, f(a + h)). Positive = chord to the right of P, negative = to the left. Avoid exactly 0."
+              "type": "number"
             },
             "triangle": {
-              "type": "boolean",
-              "description": "Draw the rise-run right triangle under the chord with its legs labelled δx ( = h) and δy ( = f(a+h) − f(a)). Default false."
+              "type": "boolean"
             },
             "label": {
-              "type": "string",
-              "description": "Override the chord's gradient readout text. Omit to show the derived gradient."
+              "type": "string"
             },
             "occludeGradient": {
-              "type": "boolean",
-              "description": "Hide this chord's gradient as \"?\". Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber emphasis on this chord. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -183,32 +127,26 @@
         }
       },
       "gradientCurve": {
-        "type": "boolean",
-        "description": "Overlay the derived gradient function y = f′(x) (the numeric derivative of fn sampled across the window) as a second curve — motivates the derivative as a function. Default false."
+        "type": "boolean"
       },
       "hSlider": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The first-principles slider — the headline interaction. A single live chord is drawn at h = value with a slider above the graph; dragging it toward the minimum shrinks h so the chord rotates ONTO the tangent (the limit, interactively), and the chord gradient closes on f′(a). Keep the tangent on (default) so the chord visibly approaches it, and use min 0 so the slider reaches the limit — at h = 0 the chord coincides with the tangent. The static chords array is the print fallback for the same idea. Web-only.",
         "properties": {
           "min": {
             "type": "number",
-            "minimum": 0,
-            "description": "Smallest h the slider reaches. Use 0 so the chord can shrink the whole way to the limit — at h = 0 the chord lands exactly on the tangent."
+            "minimum": 0
           },
           "max": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Largest h — the chord at its most open, e.g. 3."
+            "exclusiveMinimum": 0
           },
           "value": {
-            "type": "number",
-            "description": "Starting h. Default: max (start open, then drag in towards 0)."
+            "type": "number"
           },
           "step": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Snap h to multiples of this. Omit for a continuous slider."
+            "exclusiveMinimum": 0
           }
         },
         "required": [
@@ -217,25 +155,20 @@
         ]
       },
       "drawTangent": {
-        "type": "boolean",
-        "description": "The \"draw the tangent at x = a\" ANSWER surface (@2, responseMode \"draw-tangent\"). Requires point (the touch point x = a — the question names it) and fn. On EVERY surface the tangent, its gradient, the gradient curve, chords, the h-slider and exploratory dragging are forced off — posed (print/PPTX, no response ctx) the figure is the curve + marked point, a blank answer space the pupil draws on with a ruler. Armed on a web question, a deliberately WRONG pre-placed line through the point pivots as the pupil drags anywhere along it; the model self-checks the pupil's gradient against the derived f′(a) inside its enhance closure (the true tangent is never drawn and never in the markup). correctAnswer is the { derived: true } sentinel. Default false."
+        "type": "boolean"
       },
       "gradientTolerance": {
         "type": "number",
-        "exclusiveMinimum": 0,
-        "description": "draw-tangent only: half-band (in gradient units) the pupil's tangent gradient may differ from the derived f′(a) and still be correct — set it to mirror a mark scheme's stated range (accepted rate 0.2–0.4 → gradientTolerance 0.1). Default: the by-eye allowance, ±5° of on-screen angle about the true tangent."
+        "exclusiveMinimum": 0
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. the function being differentiated. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. With a chord present, P is the FIXED target and you drag the chord's far end Q along the curve — towards P shrinks h so the chord rotates onto the tangent (drag it all the way onto P to reach the limit); the chord gradient closes on f′(a) live. With NO chord, P itself is dragged along the curve so the tangent and its gradient change. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -244,7 +177,6 @@
   },
   "examples": [
     {
-      "label": "The tangent at a point and its gradient (worked)",
       "params": {
         "axes": {
           "x": [
@@ -267,7 +199,6 @@
       }
     },
     {
-      "label": "First principles — chords closing onto the tangent as h → 0",
       "params": {
         "axes": {
           "x": [
@@ -301,7 +232,6 @@
       }
     },
     {
-      "label": "The h-slider — drag h → 0 and the chord rotates onto the tangent",
       "params": {
         "axes": {
           "x": [
@@ -329,7 +259,6 @@
       }
     },
     {
-      "label": "Find the gradient (occluded question)",
       "params": {
         "axes": {
           "x": [
@@ -353,7 +282,6 @@
       }
     },
     {
-      "label": "The hard case — a steep chord with the δx/δy triangle near the edge",
       "params": {
         "axes": {
           "x": [
@@ -382,7 +310,6 @@
       }
     },
     {
-      "label": "Answer space — draw the tangent yourself",
       "params": {
         "axes": {
           "x": [
@@ -403,7 +330,6 @@
       }
     },
     {
-      "label": "The gradient function — overlay y = f′(x)",
       "params": {
         "axes": {
           "x": [
@@ -426,7 +352,6 @@
       }
     },
     {
-      "label": "Draw the tangent (@2 answer surface, the hard case) — a reaction curve on labelled science axes",
       "params": {
         "axes": {
           "x": [
@@ -453,7 +378,6 @@
       }
     },
     {
-      "label": "Draw the tangent (@2 answer surface) — a maths curve",
       "params": {
         "axes": {
           "x": [
@@ -474,7 +398,6 @@
       }
     },
     {
-      "label": "Worked science figure (@2) — the tangent as the instantaneous rate, axes titled",
       "params": {
         "axes": {
           "x": [

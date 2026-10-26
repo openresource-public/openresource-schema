@@ -4,58 +4,20 @@
   "name": "bead-string",
   "version": 1,
   "title": "Bead string",
-  "tagline": "Threaded beads clustered in fives and tens, a solid counted run against a faint remainder; derives the count, five-and-a-bit split, bonds and complements (incl. to 60 minutes).",
-  "description": "A linear threaded string of chunky beads, clustered in fives and paired into tens, with the counted run of beads drawn solid and the uncounted remainder drawn as faint outline beads — the run/remainder break. You write only the bead runs (a list of groups, each a count and an optional colour, optionally struck through for \"taken away\") and, when you want a complement or a fixed strand, the strand length. Everything else is derived: each bead's position (the five/ten clustering for subitising), its colour (red and white alternating every group, so a run of seven shows as five red and two white — \"five and a bit\" — with no extra authoring), the run/remainder break, the total, the bond by colour (6 and 4 make 10), the complement to the strand length (45 and 15 more make 60), the amount that is left after a strike, optional group-tick readouts (5, 10, 15 … or minutes), and a fill-in stem sentence beneath the string. Choose which sentence to state (count / bond / complement / subtraction / one-more / one-less) and occlude one number in it to pose a question — the beads stay correct and the number shows \"?\". Draw it horizontally or vertically; set length 60 with unit \"minutes\" for the minute string. Supports counting, one-more / one-less, counting back, number bonds and complements including to 60.",
-  "whenToUse": "Reach for this for early-number work on a bead string (bead bar / number string / counting beads): counting in ones, twos, fives and tens; subitising a quantity from its five/ten clusters; one more and one less; counting back; number bonds; and complements (\"how many more to make ten / twenty / sixty\"). Write the beads as runs in beads[]: each run is a count and an optional colour, laid along the string in order, so two runs read as two addends. Numbers are derived — never write a total or a colour for each bead. Common configurations: count / subitise — one run (beads: [{ count: 7 }]); leave the colour off and the beads alternate red / white every five, so seven shows as five red and two white (the five-and-a-bit split) for free; stem \"count\", occlude \"total\" for \"how many beads?\". Number bond — two coloured runs summing to a round number on a strand of that length (beads: [{ count: 6, colour: \"red\" }, { count: 4, colour: \"yellow\" }], length 10), stem \"bond\" → \"6 and 4 make 10\". Complement / how many more — one run shorter than the strand (beads: [{ count: 7 }], length 10), stem \"complement\", occlude \"complement\", highlight \"remainder\" → \"7 and ? more make 10\" with the faint remainder beads ambered (counting those beads is the intended concrete reasoning, not a leak). Counting back / subtraction — the beads that stay plus a struck run for the ones removed (beads: [{ count: 5, colour: \"red\" }, { count: 4, colour: \"red\", strike: true }]), stem \"subtract\" → \"9 take away 4 leaves 5\". One more / one less — show the number, stem \"one-more\" or \"one-less\", highlight \"last\" to draw the eye to the bead added or removed. Answer space — beads: [] with a length for an empty strand to fill in. Minute string — length 60, unit \"minutes\", ticks \"fives\" → count and bond in five-minute steps to the hour (45 and 15 more make 60). Group ticks: ticks \"fives\" labels the running total every five beads, \"tens\" every ten — keep them on for counting-in-steps work, off for a clean bond. groupSize 5 (default) alternates the colour every five (paired into tens); groupSize 10 alternates every ten (the hundred-string look). orientation \"horizontal\" (default) or \"vertical\" for a tall placement. Keep the strand length, colours and orientation steady across a lesson so pupils compare like with like. A staged build reads beautifully: open on the empty (or first-addend) strand and reveal a run per stage — for a complement, fill the run, then amber the remainder, then state the bond. Switch model when the teaching changes — for a 2×5 ten-frame use number/ten-frame; for equal groups / arrays use number/array; for a continuous numbered axis with jumps use number/number-line; for place-value columns use number/place-value or number/place-value-blocks. Synonyms a teacher might use: bead string, bead bar, number string, counting beads, bead frame, rekenrek (single row), five and a bit, group of five, count in fives, count in tens, number bond, bonds to ten, bonds to twenty, complement, how many more, count back, one more, one less, minute string, complements to sixty.",
   "responseModes": [],
-  "tags": [
-    "bead string",
-    "bead bar",
-    "bead frame",
-    "number string",
-    "counting beads",
-    "beads",
-    "five and a bit",
-    "count in fives",
-    "count in tens",
-    "skip count",
-    "subitise",
-    "subitising",
-    "number bond",
-    "number bonds",
-    "bonds to ten",
-    "bonds to twenty",
-    "complement",
-    "complements",
-    "how many more",
-    "make ten",
-    "count back",
-    "counting back",
-    "one more",
-    "one less",
-    "minute string",
-    "complements to sixty",
-    "minutes to an hour",
-    "KS1",
-    "primary",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
       "beads": {
         "type": "array",
-        "description": "The bead RUNS — the only quantities you author. Each run is a consecutive group of beads laid along the string from the start, so two runs read as two addends (a bond) and a struck run reads as \"taken away\". An empty array [] draws an empty strand (an answer space) — pair it with length. Total beads across all runs should be 0–100.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "count": {
               "type": "integer",
-              "minimum": 0,
-              "description": "How many beads in this run. 0 is allowed (e.g. a staged base before a run is added)."
+              "minimum": 0
             },
             "colour": {
               "type": "string",
@@ -65,12 +27,10 @@
                 "yellow",
                 "blue",
                 "green"
-              ],
-              "description": "Colour for the WHOLE run — its identity (beads carry no labels). Omit to let the run take the canonical five/ten alternation (red then white per group), which makes a single uncoloured run subitisable and gives the five-and-a-bit split for free. Set a colour to mark an addend in a bond (the red part and the yellow part). Red / white is the canonical grouped-string split; amber is never a bead colour."
+              ]
             },
             "strike": {
-              "type": "boolean",
-              "description": "Draw this run's beads struck through and faded — \"taken away\", for counting back / subtraction. The struck beads still occupy their place and count toward the total; the derived \"leaves\" amount is total − struck. Author subtraction as the beads that stay plus a struck run for those removed (5 + 4 struck = 9, leaves 5). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -81,24 +41,21 @@
       "length": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 100,
-        "description": "Total beads on the strand (its capacity). Omit to default to the run total (no remainder — the strand is exactly the beads shown). Set it LONGER than the runs to show the uncounted remainder as faint outline beads — needed for complements (\"how many more to make ten / twenty / sixty\") and for showing a number on a fixed strand (37 on a 100-bead string). Use 60 for the minute string. Never shorter than the runs need."
+        "maximum": 100
       },
       "groupSize": {
         "type": "integer",
         "enum": [
           5,
           10
-        ],
-        "description": "The colour-alternation period. 5 (default): the colour flips every five beads (red, white, red, white …) — the standard five/ten grouped string. 10: the colour flips every ten (ten red, ten white …) — the hundred-string look. The five/ten spacing clusters are always drawn; this only sets how often the colour changes."
+        ]
       },
       "orientation": {
         "type": "string",
         "enum": [
           "horizontal",
           "vertical"
-        ],
-        "description": "Which way the string runs. \"horizontal\" (default) reads left to right; \"vertical\" runs top to bottom for a tall, narrow placement. The stem sentence, caption and header stay horizontal in both."
+        ]
       },
       "ticks": {
         "type": "string",
@@ -106,8 +63,7 @@
           "none",
           "fives",
           "tens"
-        ],
-        "description": "Group-tick readouts: the running total marked beside the string. \"none\" (default) for a clean figure; \"fives\" labels the count every five beads (5, 10, 15 …); \"tens\" every ten (10, 20, 30 …). Use for counting-in-steps and the minute string (with unit \"minutes\" the ticks read as minutes). Derived from position — you never write them."
+        ]
       },
       "stem": {
         "type": "string",
@@ -120,16 +76,14 @@
           "one-more",
           "one-less",
           "none"
-        ],
-        "description": "Which fill-in sentence to state beneath the string (the verbal twin of the figure); its numbers are always derived. \"auto\" (default) picks one: subtraction if any run is struck, else a bond if there are two or more runs, else a count. \"count\" → \"There are __ beads.\" \"bond\" → \"__ and __ make __.\" (runs by colour). \"complement\" → \"__ and __ more make __.\" (the run, then the remainder, to the strand length). \"subtract\" → \"__ take away __ leaves __.\" \"one-more\" → \"One more than __ is __.\" \"one-less\" → \"One less than __ is __.\" \"none\" → no sentence."
+        ]
       },
       "unit": {
         "type": "string",
         "enum": [
           "beads",
           "minutes"
-        ],
-        "description": "What the beads count. \"beads\" (default). \"minutes\" reads the stem and the ticks in minutes for the 60-bead minute string (\"45 minutes and 15 more make 60\") — set length 60 and ticks \"fives\". The maths is identical; only the wording changes."
+        ]
       },
       "occlude": {
         "type": "string",
@@ -137,8 +91,7 @@
           "none",
           "total",
           "complement"
-        ],
-        "description": "Hide ONE derived number in the stem sentence as \"?\" to pose a question — the beads stay correct and visible to count. \"total\" hides the result (the count, the bond total, the \"leaves\" amount, or the one-more / one-less answer). \"complement\" hides the \"how many more\" number. Default \"none\". Each number lives in one place, so hiding it never leaks elsewhere."
+        ]
       },
       "highlight": {
         "type": "string",
@@ -147,16 +100,13 @@
           "remainder",
           "last",
           "result"
-        ],
-        "description": "Amber emphasis (result / answer only). \"remainder\" ambers the faint remainder beads — the \"how many more?\" answer region. \"last\" ambers the last counted bead — the bead added (one more) or about to be removed (one less). \"result\" ambers the result number in the stem. Default \"none\". Amber is never a bead colour."
+        ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the stem sentence, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -165,7 +115,6 @@
   },
   "examples": [
     {
-      "label": "Answer space — empty 20-bead strand to show a number on",
       "params": {
         "beads": [],
         "length": 20,
@@ -175,7 +124,6 @@
       }
     },
     {
-      "label": "Worked count — seven as five-and-a-bit (five red and two white)",
       "params": {
         "beads": [
           {
@@ -187,7 +135,6 @@
       }
     },
     {
-      "label": "Worked number bond to ten — 6 and 4 make 10",
       "params": {
         "beads": [
           {
@@ -204,7 +151,6 @@
       }
     },
     {
-      "label": "Occluded question — how many more to make 20? (13 shown)",
       "params": {
         "beads": [
           {
@@ -218,7 +164,6 @@
       }
     },
     {
-      "label": "Hard case — minute string: 45 minutes, how many more make an hour?",
       "params": {
         "header": "Complements to an hour",
         "beads": [
@@ -235,7 +180,6 @@
       }
     },
     {
-      "label": "Counting back / subtraction, shown vertically — 9 take away 4 leaves 5",
       "params": {
         "beads": [
           {

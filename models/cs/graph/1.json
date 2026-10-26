@@ -4,57 +4,7 @@
   "name": "graph",
   "version": 1,
   "title": "Graph (network)",
-  "tagline": "Nodes and edges with the adjacency matrix, adjacency list, array encoding, degrees and a stepped depth-first / breadth-first / Dijkstra run all derived from one edge set.",
-  "description": "A graph (network): nodes joined by edges, drawn where you arrange them, with every other representation of the same edge set derived beside it — the adjacency matrix, the adjacency list, and the left/data/right array table a binary tree is stored in. Edges may be directed or undirected, weighted or plain, and repeated between the same pair (parallel edges bow apart, so bridge problems draw properly). From the one edge set the model derives each node's degree, the count of odd vertices and the traversability verdict, the shape of a binary search tree built from an insertion sequence, the shape of an expression tree parsed from infix, and every frame of a run: depth-first with its stack, breadth-first with its queue, Dijkstra with its priority queue and a tentative distance at every node, in-order / pre-order / post-order tree traversals, and a binary-search-tree lookup with its comparison path. Nodes colour themselves through the run in three states — unvisited, partly explored, visited. Show one frame with \"at\" for a staged build, or every frame at once as a numbered filmstrip, which is how a printed page shows a whole trace. Occlude a panel to leave it as the answer space (an empty matrix to complete, a graph with no edges to draw from the matrix given beside it) or occlude one value for a \"?\" — and anything derived from what you hid is hidden too, so an answer can never be read off another panel.",
-  "whenToUse": "Reach for this whenever the picture is nodes joined by edges and something about it is worked out rather than written down: adjacency matrices and adjacency lists (either direction — draw the matrix from the graph, or the graph from the matrix), the degree of each vertex and whether a network can be traversed in one route, binary search trees built by inserting values in order, storing a binary tree as an array of left/data/right records, expression trees and their in-order / post-order readings, and traced algorithms — depth-first search with a stack, breadth-first search with a queue, and Dijkstra's shortest path with a priority queue and running distances. Author the graph as \"nodes\" (each an id, which doubles as its label) plus \"edges\" (from, to and an optional weight); set \"directed\" once if the arrows are one-way. For a free graph whose shape matters, give every node a \"place\" of [column, row] on a coarse lattice — small integers — and the model derives all the geometry from it; leave \"place\" off for an even circle, or set \"layout\" to circle, tree or binary to have the positions derived. Build a binary search tree by giving \"insert\" instead of edges (each value is placed by the comparison rule), or an expression tree by giving \"expression\". Projections: \"view\" picks diagram, matrix, list, array, or the diagram beside one of them — each panel stands alone as a complete figure. Questions: occlude.matrix / .list / .array leave that panel empty to complete; occlude.edges draws the nodes bare so the pupil can draw the graph the matrix describes; occlude.cells hides individual matrix cells; occlude.degrees, .verdict, .order and .distances each hide a derived readout. Traces: set run { algorithm, from } and step \"at\" from 0 through the frames for a staged build (every other param identical, so the figure never resizes), or use \"atVisited\" to land on the frame where named nodes have just been visited (\"the tentative distances once B and D have been visited\"). Set frames to \"all\" for the printed filmstrip of the whole run, \"one\" for a slide. A graph with no run drawn is the untraced question — the network is given and the distances are the pupil's job. Keep node names and the arrangement identical across the blocks of one lesson so pupils track one network. Size, measured: a lattice arrangement stays compact at any size up to the fourteen-node cap, but a ring spreads — twelve single-letter nodes or ten short-word nodes fit the standard figure width, while twelve long place names do not (give those short ids and put the full names in the block text). A matrix or list panel beside the diagram costs roughly another 150px, so pair one with a graph of eight nodes or fewer; past the width band the panel drops beneath the diagram by itself. Synonyms teachers use: graph, network, node, vertex, vertices, edge, arc, arrow, directed graph, digraph, undirected, weighted graph, adjacency matrix, adjacency list, distance matrix, degree, order of a vertex, odd vertex, even vertex, traversable, Eulerian, route inspection, bridges of Konigsberg, route, shortest path, shortest route, Dijkstra, depth-first, breadth-first, DFS, BFS, traversal, stack, queue, priority queue, binary search tree, BST, in-order, pre-order, post-order, expression tree, parse tree, tree as an array. Switch model when nothing is derived from the edges: a hierarchy of authored labels is diagram/tree, concepts joined by named relationships are diagram/concept-map, a process with decisions is diagram/flowchart, states consuming an input string are cs/state-machine, and an array of cells stepped through authored operations is cs/cells.",
   "responseModes": [],
-  "tags": [
-    "graph",
-    "network",
-    "node",
-    "vertex",
-    "edge",
-    "arc",
-    "directed graph",
-    "digraph",
-    "undirected",
-    "weighted graph",
-    "adjacency matrix",
-    "adjacency list",
-    "distance matrix",
-    "degree",
-    "order of a vertex",
-    "odd vertex",
-    "traversable",
-    "Eulerian",
-    "route inspection",
-    "Konigsberg",
-    "Königsberg",
-    "bridges",
-    "route",
-    "shortest path",
-    "shortest route",
-    "Dijkstra",
-    "depth-first",
-    "breadth-first",
-    "DFS",
-    "BFS",
-    "traversal",
-    "stack",
-    "queue",
-    "priority queue",
-    "binary search tree",
-    "BST",
-    "in-order",
-    "pre-order",
-    "post-order",
-    "expression tree",
-    "parse tree",
-    "tree",
-    "decision maths",
-    "computer science",
-    "computing"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -65,16 +15,13 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One node (vertex) of the graph.",
           "properties": {
             "id": {
               "type": "string",
-              "pattern": "^[A-Za-z0-9]+([ -][A-Za-z0-9]+)*$",
-              "description": "Unique name for this node, referenced by every edge (e.g. \"A\", \"B\", \"Leeds\"). It is also the label drawn inside the node unless you give a separate one, so write it the way it should read."
+              "pattern": "^[A-Za-z0-9]+([ -][A-Za-z0-9]+)*$"
             },
             "label": {
-              "type": "string",
-              "description": "Text drawn inside the node when it should differ from the id. Defaults to the id; the node grows to fit it."
+              "type": "string"
             },
             "place": {
               "type": "array",
@@ -82,23 +29,19 @@
               "maxItems": 2,
               "items": {
                 "type": "number"
-              },
-              "description": "Where this node sits, as [column, row] on a COARSE lattice — small numbers like [0,0], [2,1], not pixels. The model derives every pixel from it (spacing, node size, edge routes), so the arrangement is yours and the drawing is the model's. Give it to every node for a free graph whose shape matters (a planar drawing with no crossings, a map-like layout); omit it everywhere to fall back to an even circle. Ignored by the circle, tree and binary layouts, which derive positions."
+              }
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this node's label as \"?\" — \"which vertex is this?\". The node and its edges stay drawn, and the hidden name reaches no other surface — not the aria, the visited list, a frame note, or a matrix, list or table heading. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this node — the answer, the target of a search, or the node under discussion. Default false. (During a run the derived visit colours take over; a highlight still rings it.)"
+              "type": "boolean"
             }
           },
           "required": [
             "id"
           ]
-        },
-        "description": "The nodes of the graph. Any node named by an edge but missing here is added automatically, so a plain edge list is enough — list nodes explicitly to fix their arrangement, give them longer labels, or include an isolated node no edge reaches."
+        }
       },
       "edges": {
         "type": "array",
@@ -106,43 +49,34 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One edge (arc) joining two nodes. Repeat a pair to draw parallel edges — two bridges between the same pair of islands bow apart instead of overlapping.",
           "properties": {
             "from": {
-              "type": "string",
-              "description": "The id of the node this edge leaves. On an undirected edge it is simply one end."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "The id of the node this edge reaches. Equal to \"from\" for a self-loop."
+              "type": "string"
             },
             "weight": {
-              "type": "number",
-              "description": "The number on this edge — a distance, cost or time. Give weights to every edge or none; a weighted graph gets a weighted matrix, a weighted adjacency list and can be run through Dijkstra. Omit for an unweighted graph."
+              "type": "number"
             },
             "directed": {
-              "type": "boolean",
-              "description": "Draw this edge as a one-way arrow from → to, overriding the figure-wide \"directed\". Use for a mixed figure; otherwise set \"directed\" once at the top level."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this edge's weight as \"?\" — \"what must this arc cost?\". The edge itself stays drawn, and every derived value that used the weight (the matrix cell, the list entry, any distance) goes with it. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this edge — the relaxed arc, the chosen route, the bridge being discussed. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "from",
             "to"
           ]
-        },
-        "description": "The edges, in the order you want them considered. Neighbour order at a node breaks traversal ties when neighbourOrder is \"edges\"; with the default \"label\" the tie-break is alphabetical, as textbooks do it. Repeat a pair for parallel edges. Ignored when \"insert\" or \"expression\" builds the structure instead."
+        }
       },
       "directed": {
-        "type": "boolean",
-        "description": "Draw every edge as a one-way arrow from → to. Default false (undirected, plain lines). A directed graph gives an asymmetric adjacency matrix and counts in- and out-degree separately; an undirected one is symmetric. A single edge can override this with its own \"directed\"."
+        "type": "boolean"
       },
       "layout": {
         "type": "string",
@@ -151,12 +85,10 @@
           "circle",
           "tree",
           "binary"
-        ],
-        "description": "How positions are found. \"free\": from each node's \"place\" lattice coordinate (the default when every node has one). \"circle\": evenly spaced round a circle in the order given — the standard untangled presentation, and what an unplaced graph falls back to. \"tree\": a tidy rooted layout derived from the edges, root at the top, a parent centred over its children. \"binary\": left/right slots by depth and in-order position — the default for \"insert\" and \"expression\"."
+        ]
       },
       "root": {
-        "type": "string",
-        "description": "TREE LAYOUT ONLY — the id of the node to hang the tree from. Defaults to the node no edge points into."
+        "type": "string"
       },
       "insert": {
         "type": "array",
@@ -165,19 +97,15 @@
           "type": [
             "string",
             "number"
-          ],
-          "description": "One value to insert."
-        },
-        "description": "Build a BINARY SEARCH TREE by inserting these values in this order, instead of authoring edges. Each value starts at the root and goes left when it is smaller and right when it is larger, until it finds an empty place — so the shape is derived and the insertion order is the whole lesson. Numbers compare numerically, words alphabetically. Use \"at\" to grow the tree one insertion per stage."
+          ]
+        }
       },
       "expression": {
-        "type": "string",
-        "description": "Build an EXPRESSION TREE from this infix expression (e.g. \"(a + b) * c\", \"3 * 4 + 5\"), instead of authoring edges. Operators + − * / and brackets; every other run of letters or digits is an operand. The shape is derived from precedence and brackets, so an in-order reading gives the expression back and a post-order reading gives its reverse Polish form — set run.algorithm to inorder or postorder to show either."
+        "type": "string"
       },
       "run": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Trace an algorithm over the structure. Every frame is derived; omit this entirely for an untraced figure, which is what an unanswered question looks like.",
         "properties": {
           "algorithm": {
             "type": "string",
@@ -189,35 +117,30 @@
               "preorder",
               "inorder",
               "postorder"
-            ],
-            "description": "\"dfs\": depth-first, with the stack of backtrack points. \"bfs\": breadth-first, with the queue. \"dijkstra\": shortest path from \"from\", with a tentative distance at every node and the priority queue of unvisited nodes ordered by distance (needs weights). \"bst-search\": look \"target\" up in a binary search tree, showing the comparison path and whether it is found. \"preorder\" / \"inorder\" / \"postorder\": walk a tree and read off the visit sequence."
+            ]
           },
           "from": {
-            "type": "string",
-            "description": "The id of the node the run starts at. Defaults to the first node (the root for a tree)."
+            "type": "string"
           },
           "target": {
             "type": [
               "string",
               "number"
-            ],
-            "description": "bst-search: the value being looked for — the search stops when it is found or runs off the tree. Dijkstra: optionally the destination whose distance the question asks for; it is ringed, and the run still relaxes the whole graph."
+            ]
           },
           "neighbourOrder": {
             "type": "string",
             "enum": [
               "label",
               "edges"
-            ],
-            "description": "\"label\" (default): visit a node's neighbours in alphabetical order — the textbook tie-break. \"edges\": in the order the edges are listed, which lets you set the visit order deliberately."
+            ]
           },
           "granularity": {
             "type": "string",
             "enum": [
               "event",
               "node"
-            ],
-            "description": "What counts as one frame. \"event\": every push, pop, enqueue and dequeue — the fine-grained trace, and the default for dfs and bfs. \"node\": one frame per node visited — how dijkstra and the tree traversals always step, and the compact choice for a dfs or bfs filmstrip."
+            ]
           }
         },
         "required": [
@@ -226,24 +149,21 @@
       },
       "at": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Which frame of the run to show: 0 is the start state before anything has been visited, 1 is after the first step, and so on. Defaults to the finished run. With \"insert\" and no run it is how many values have been inserted, so stepping it grows the tree. Step it across a staged build; every other param stays identical, so the figure never resizes between stages."
+        "minimum": 0
       },
       "atVisited": {
         "type": "array",
         "maxItems": 14,
         "items": {
           "type": "string"
-        },
-        "description": "Instead of counting frames, land on the frame at which all of these nodes have just been visited — \"the tentative distances allocated to each node once B and D have been visited\". Ignored when \"at\" is given."
+        }
       },
       "frames": {
         "type": "string",
         "enum": [
           "one",
           "all"
-        ],
-        "description": "\"one\" (default): draw the single frame at \"at\" — the staged/slide form. \"all\": draw every frame up to \"at\" as a numbered filmstrip in one figure, which is how a printed page shows a whole trace. A filmstrip is print-first: past about eight frames it is too small to read on a slide."
+        ]
       },
       "panel": {
         "type": "string",
@@ -253,8 +173,7 @@
           "aux",
           "visited",
           "distance-table"
-        ],
-        "description": "The auxiliary structure drawn beside the graph during a run. \"auto\" (default): whatever the algorithm keeps — the visited list and the stack for dfs, the visited list and the queue for bfs, the priority queue for dijkstra, the visit sequence for a traversal, the comparison path for bst-search. \"aux\": the stack/queue/priority queue only. \"visited\": the visited list or sequence only. \"distance-table\": dijkstra only — a row per iteration of the tentative distance at every node, the table version of the same trace. \"none\": the graph alone."
+        ]
       },
       "view": {
         "type": "string",
@@ -266,92 +185,74 @@
           "diagram+matrix",
           "diagram+list",
           "diagram+array"
-        ],
-        "description": "Which projection to draw. \"diagram\" (default): the drawn graph. \"matrix\": the adjacency matrix alone. \"list\": the adjacency list alone. \"array\": the left/data/right array table a binary tree is stored in (binary layouts only). The combined values draw the diagram beside its derived panel, the way a textbook prints the pair. Every panel is a complete standalone figure, so it also composes beside another model in one row."
+        ]
       },
       "matrixStyle": {
         "type": "string",
         "enum": [
           "weights",
           "binary"
-        ],
-        "description": "\"weights\" (default when the graph is weighted): each cell holds the weight of that edge, blank where there is none. \"binary\": 1 where an edge exists and 0 where it does not — the unweighted form. Parallel edges count, so a double bridge shows 2."
+        ]
       },
       "listStyle": {
         "type": "string",
         "enum": [
           "neighbours",
           "weighted"
-        ],
-        "description": "\"neighbours\" (default when unweighted): each node maps to a plain list of the nodes it reaches. \"weighted\": each node maps to neighbour: weight pairs, the dictionary form. Nodes reaching nothing show an empty list."
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "weights": {
-            "type": "boolean",
-            "description": "Draw the number on each weighted edge. Default true when any edge has a weight. Turning it off leaves the shape of the network only."
+            "type": "boolean"
           },
           "degrees": {
-            "type": "boolean",
-            "description": "Label every node with its derived degree — the number of edge ends meeting it, counting a self-loop twice and parallel edges separately. On a directed graph it shows in and out degree. Default false."
+            "type": "boolean"
           },
           "verdict": {
-            "type": "boolean",
-            "description": "Add the derived traversability line beneath the graph: how many vertices have odd degree, and whether the network can be traversed in one route (all even = a closed route, exactly two odd = a route between those two, otherwise not). Default false."
+            "type": "boolean"
           },
           "distances": {
-            "type": "boolean",
-            "description": "Label every node with its tentative distance during a Dijkstra run — ∞ until it is reached. Default true while dijkstra is running; irrelevant otherwise."
+            "type": "boolean"
           },
           "key": {
-            "type": "boolean",
-            "description": "Draw a small key for the three run colours (unvisited, partly explored, visited). Default false — say it in the block text instead unless the figure stands alone."
+            "type": "boolean"
           }
         }
       },
       "occlude": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Hide DERIVED things — the question hooks. Hiding one thing also hides everything computed from it, in every panel and in the aria, so an answer can never be read off the other half of the figure. Occluding a whole panel leaves it EMPTY, which is the answer space to complete; occluding a single value marks it \"?\".",
         "properties": {
           "edges": {
-            "type": "boolean",
-            "description": "Draw the nodes with NO edges between them — the blank graph to complete from the matrix or list given beside it. Every degree, verdict, panel and run result goes with them."
+            "type": "boolean"
           },
           "weights": {
-            "type": "boolean",
-            "description": "Every weight renders \"?\" — \"what must each arc cost?\". Every matrix cell, list entry and distance derived from a weight goes with it."
+            "type": "boolean"
           },
           "matrix": {
-            "type": "boolean",
-            "description": "The adjacency matrix draws its headings and an empty grid — \"complete the adjacency matrix for this graph\"."
+            "type": "boolean"
           },
           "list": {
-            "type": "boolean",
-            "description": "The adjacency list draws its node names with nothing beside them — \"write the adjacency list for this graph\"."
+            "type": "boolean"
           },
           "array": {
-            "type": "boolean",
-            "description": "The array table draws its headings and empty rows — \"show how this tree could be stored in an array\"."
+            "type": "boolean"
           },
           "cells": {
             "type": "array",
             "maxItems": 24,
-            "description": "Individual matrix cells rendered \"?\" rather than the whole grid — for a mostly-worked matrix with a few gaps.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "row": {
-                  "type": "string",
-                  "description": "The id of the row (from) node."
+                  "type": "string"
                 },
                 "col": {
-                  "type": "string",
-                  "description": "The id of the column (to) node."
+                  "type": "string"
                 }
               },
               "required": [
@@ -361,40 +262,32 @@
             }
           },
           "degrees": {
-            "type": "boolean",
-            "description": "Every degree renders \"?\" while the graph stays drawn — \"write down the degree of each vertex\". The verdict goes with it."
+            "type": "boolean"
           },
           "verdict": {
-            "type": "boolean",
-            "description": "The traversability line renders \"?\" — \"is this network traversable?\" — while the degrees stay visible."
+            "type": "boolean"
           },
           "order": {
-            "type": "boolean",
-            "description": "The visited order / visit sequence renders \"?\" — \"in what order are the vertices visited?\"."
+            "type": "boolean"
           },
           "distances": {
-            "type": "boolean",
-            "description": "Every tentative distance renders \"?\" — \"what is the shortest distance to each node?\". The priority queue and distance table go with them."
+            "type": "boolean"
           },
           "panel": {
-            "type": "boolean",
-            "description": "The auxiliary panel draws its frame with nothing in it — \"what is on the stack at this point?\"."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure: what the frame shows. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked example — a weighted network beside its adjacency matrix",
       "params": {
         "header": "Delivery times (minutes)",
         "view": "diagram+matrix",
@@ -470,7 +363,6 @@
       }
     },
     {
-      "label": "Depth-first search paused mid-run, with the visited list and the stack",
       "params": {
         "header": "Depth-first search from A",
         "nodes": [
@@ -551,7 +443,6 @@
       }
     },
     {
-      "label": "Occluded question — complete the adjacency matrix for this graph",
       "params": {
         "view": "diagram+matrix",
         "directed": true,
@@ -614,7 +505,6 @@
       }
     },
     {
-      "label": "Blank answer space — the matrix is given, the graph is the answer",
       "params": {
         "view": "diagram+matrix",
         "directed": true,
@@ -688,7 +578,6 @@
       }
     },
     {
-      "label": "Binary search tree built by inserting values in order, with its array storage",
       "params": {
         "header": "Binary search tree",
         "view": "diagram+array",
@@ -705,7 +594,6 @@
       }
     },
     {
-      "label": "Degrees and the traversability verdict on a network with parallel edges",
       "params": {
         "header": "Four islands, seven bridges",
         "nodes": [
@@ -775,7 +663,6 @@
       }
     },
     {
-      "label": "Hard case — the whole of a Dijkstra run as a numbered filmstrip",
       "params": {
         "header": "Dijkstra's algorithm from A",
         "frames": "all",

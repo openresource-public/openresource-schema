@@ -4,30 +4,8 @@
   "name": "percentage-table",
   "version": 1,
   "title": "Percentage table (benchmark ladder)",
-  "tagline": "Of-amount percentage benchmark ladder (100% = amount, then 50% / 10% / 5% / 1% …); each value derived, ÷k/×k mental-step arrows, and a build-up to a target %.",
-  "description": "A single-quantity of-amount benchmark ladder, drawn as a two-column table: a Percentage column (100%, 50%, 25%, 20%, 10%, 5%, 1% …) and a value column headed \"of <amount>\". You write one original amount (the 100% whole) and which benchmark percents to list; the model derives each row's value (percent/100 × amount, exact), the ÷k / ×k scale-factor arrows between consecutive rows (the mental step — halve, ÷10), and, if you give a `build`, a foot row that combines chosen benchmarks into a target percentage (\"35% = 3 × 10% + 5%\") with its derived value. Occlude any row's value to \"?\" for \"find 10% of the amount\", occlude a percent for the reverse \"what percentage is this?\", blank cells for a staged build, and highlight the rows that matter. Values format as plain numbers, or as money (`prefix: \"£\"`, pence shown only when present) or with a `suffix` unit. The tabular benchmark cousin of mental-percent methods — distinct from fdp-table (equivalence of one value) and ratio-table (scaling a multi-part ratio).",
-  "whenToUse": "Reach for this whenever a percentage of an amount is found by benchmarks or mental %: \"find 10% / 5% / 1% of £600\", the build-up method (find 10% then 5%, add them for 15%; find 1% then multiply), halving for 50% and 25%, and complete-the-ladder questions. Author the semantics: set `amount` (the 100% whole, the problem's given), then `benchmarks` — the percent rows in the order you want them read (default 100, 50, 10, 5, 1). The value of each row is computed; you never write one. Order matters because the ÷k/×k arrow between two consecutive rows is derived from their percents — list 100, 50, 25 to show \"halve, halve again\"; list 100, 10, 1 to show \"÷10, ÷10\"; list 10, 5 to show \"halve 10% for 5%\". To pose a question: set a benchmark's `occlude` to hide its value (\"find 10% of 600\"), `occludePercent` to hide its percent (the reverse, \"60 is what % of 600?\"), or `show.values: false` for a blank answer-space ladder (the percents and arrows stay as the method). For the build-up, add a `build` with `parts` (the benchmarks combined, each with an optional `times`): the model derives the target percent (the sum) and its value and draws a foot row plus a \"35% = 3 × 10% + 5%\" working line; set `build.occlude` to hide the target value (\"find 35% of 600\" — the visible benchmark rows are the scaffold). Highlight the benchmark rows a build draws from so pupils see which ones are added. Money: set `prefix: \"£\"` (or `money: true`) and values show pence only when needed (£60, £3.65). `suffix` adds a unit (\" ml\", \" g\"). Cross-block convention: keep the same amount and the same benchmark set across one lesson so pupils track one ladder; change only what is occluded, built or asked. Strongly staged: open on the 100% row, bring in one benchmark (with its arrow) per stage; or open on the ladder, highlight the rows to add, then reveal the build foot row last — the base (the 100% row, or the bare ladder) stands alone as a sensible figure. Switch model when the teaching is percentage change / a multiplier / reverse percentage (use number/percentage-square or number/compound-growth-table), or fraction↔decimal↔percentage equivalence (use number/fdp-table), or scaling a multi-part ratio (use number/ratio-table). Synonyms a teacher might use: percentage of an amount, percent of, find 10%, 1% method, benchmark percentages, build up, mental percentages, halve for 50%, complete the table, of amount.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "percentage",
-    "percent",
-    "percentage of an amount",
-    "percent of",
-    "benchmark",
-    "benchmarks",
-    "build up",
-    "10 percent",
-    "1 percent method",
-    "mental percentages",
-    "halving",
-    "find 10%",
-    "of amount",
-    "complete the table",
-    "percentage ladder",
-    "number",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -35,8 +13,7 @@
     "properties": {
       "amount": {
         "type": "number",
-        "exclusiveMinimum": 0,
-        "description": "The whole quantity = 100%. The single ORIGINAL authored value; every benchmark value is derived from it. Write the amount from the problem (600, 80, 240, 2.5). For money use it with `prefix: \"£\"`."
+        "exclusiveMinimum": 0
       },
       "benchmarks": {
         "type": "array",
@@ -45,40 +22,32 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One benchmark percentage = one ROW of the ladder, top to bottom. Its `value` (this percent of the amount) is always derived; list flags here only to occlude, blank or highlight it. Order the rows so consecutive arrows show the mental step you want (100, 50, 25 for halving; 100, 10, 1 for the ÷10 method).",
           "properties": {
             "percent": {
               "type": "number",
-              "exclusiveMinimum": 0,
-              "description": "The percentage for this row — a number, NOT a string (\"%\" is added for you). 100 is the whole amount; 50, 25, 20, 10, 5, 1 are the usual benchmarks; 2.5 and 12.5 are fine. Its value (percent/100 × amount) is computed."
+              "exclusiveMinimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this row's VALUE as \"?\" — the \"find this percentage of the amount\" hook. The percent stays visible; the hidden value appears nowhere else (cell, arrow, build, aria) so it cannot leak. Default false."
+              "type": "boolean"
             },
             "occludePercent": {
-              "type": "boolean",
-              "description": "Render this row's PERCENT as \"?\" — the REVERSE hook (\"this value is what percentage of the amount?\"). The value stays visible. The arrows touching this row read \"÷ ?\" so the percent cannot leak. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render this row's value cell EMPTY (nothing) — an unfilled row, for a staged build that fills the ladder one row at a time, or a per-row answer space. Different from occlude: \"?\" poses a question, blank poses nothing yet. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this whole row (percent + value) — the benchmark in focus, a row being combined in a build-up, or the answer row. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "percent"
           ]
-        },
-        "description": "The benchmark percentage rows of the ladder, top to bottom. Default [100, 50, 10, 5, 1] if omitted. Order them so the consecutive arrows show the mental route you want (see whenToUse)."
+        }
       },
       "build": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Add a build-up foot row that combines benchmarks into a target percentage. OMIT for a plain ladder. The target percent (Σ percent × times) and its value are derived; a \"target% = a% + b% …\" working line is drawn beneath the table.",
         "properties": {
           "parts": {
             "type": "array",
@@ -87,32 +56,26 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "description": "One benchmark used in the build-up, optionally taken several times. \"30% = 3 × 10% + 5%\" is parts [{ percent: 10, times: 3 }, { percent: 5 }].",
               "properties": {
                 "percent": {
                   "type": "number",
-                  "exclusiveMinimum": 0,
-                  "description": "The benchmark percentage being added (usually one that appears as a row above)."
+                  "exclusiveMinimum": 0
                 },
                 "times": {
                   "type": "integer",
-                  "minimum": 1,
-                  "description": "How many of this benchmark are added — renders \"3 × 10%\". Default 1."
+                  "minimum": 1
                 }
               },
               "required": [
                 "percent"
               ]
-            },
-            "description": "The benchmarks added together, left to right. [{ percent: 10, times: 3 }, { percent: 5 }] builds 35%. Usually these percents also appear as rows above (the scaffold)."
+            }
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the target VALUE as \"?\" — \"find this percentage of the amount\". The percent build and the visible benchmark rows stay as the scaffold. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the build foot row — answer emphasis. Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -120,55 +83,44 @@
         ]
       },
       "prefix": {
-        "type": "string",
-        "description": "Text put BEFORE every value — a currency symbol, usually \"£\". With \"£\" (or `money: true`) values show pence only when present (£60, £3.65). Omit for none."
+        "type": "string"
       },
       "suffix": {
-        "type": "string",
-        "description": "Text put AFTER every value — a unit, e.g. \" ml\", \" g\", \" cm\". Omit for none."
+        "type": "string"
       },
       "money": {
-        "type": "boolean",
-        "description": "Format values as money: show 2 decimal places only when there are pence (£60, £3.65 — never £60.00). Set automatically when `prefix` is \"£\". Default false."
+        "type": "boolean"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Readout and furniture toggles.",
         "properties": {
           "arrows": {
-            "type": "boolean",
-            "description": "Show the scale-factor arrows between consecutive rows (the mental step: ÷2, ÷10, ×5). Default true. Only drawn when there are at least two rows."
+            "type": "boolean"
           },
           "arrowStyle": {
             "type": "string",
             "enum": [
               "split",
               "both"
-            ],
-            "description": "\"split\" (default): the multiplier on the LEFT going down and its inverse on the RIGHT going up (÷2 down, ×2 up — \"there and back\"). \"both\": the SAME multiplier on both edges, both arrows pointing down."
+            ]
           },
           "factors": {
-            "type": "boolean",
-            "description": "Show the numeric multiplier on each arrow. Default true. Set false to pose \"what is the step?\" — the arrows read \"÷ ?\" / \"× ?\"."
+            "type": "boolean"
           },
           "values": {
-            "type": "boolean",
-            "description": "Show every derived value. Default true. Set false for a blank answer-space ladder: the percents, headers and arrows stay (the method), and every derived value blanks for pupils to fill — EXCEPT the 100% row, which keeps its value (that is the given whole, the anchor). The build target value blanks too. Blank the 100% row explicitly if you want it empty as well."
+            "type": "boolean"
           },
           "headers": {
-            "type": "boolean",
-            "description": "Show the column-header row (\"Percentage\" and \"of <amount>\"). Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the table, e.g. a stem sentence (\"10% of £600 is £60, so halve it for 5%\"). Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -177,7 +129,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — the 10% / 5% / 1% ladder of 600",
       "params": {
         "header": "Percentages of 600",
         "amount": 600,
@@ -202,7 +153,6 @@
       }
     },
     {
-      "label": "Blank answer space — complete the ladder of 80",
       "params": {
         "amount": 80,
         "benchmarks": [
@@ -225,7 +175,6 @@
       }
     },
     {
-      "label": "Occluded question — find 10% of 350",
       "params": {
         "amount": 350,
         "benchmarks": [
@@ -241,7 +190,6 @@
       }
     },
     {
-      "label": "Worked build-up — 35% of 600 = 3 × 10% + 5%",
       "params": {
         "amount": 600,
         "benchmarks": [
@@ -273,7 +221,6 @@
       }
     },
     {
-      "label": "Hard case — 17.5% of £240 via 10% + 5% + 2.5% (money, answer hidden)",
       "params": {
         "amount": 240,
         "prefix": "£",
@@ -309,7 +256,6 @@
       }
     },
     {
-      "label": "Reverse — £42 is what percentage of £240?",
       "params": {
         "amount": 240,
         "prefix": "£",

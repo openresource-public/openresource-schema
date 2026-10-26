@@ -4,59 +4,7 @@
   "name": "compound-area",
   "version": 3,
   "title": "Compound area",
-  "tagline": "Trapezium / triangle / compound 2-D shape drawn to scale from its outline; derived edge lengths, areas and an occludable perpendicular-height guide; totals summed; units optional.",
-  "description": "A compound (composite) 2-D shape drawn to scale from its outline, optionally split into coloured rectangle / triangle parts, for area and perimeter by splitting and summing. You give the shape outline as a ring of [x, y] vertices in real units (y upward); the model draws it, labels every edge with its derived length, and (when you give the dissection parts) light-fills each in its own categorical hue and writes its derived area inside it. The total area is derived as the sum of the parts (a part marked subtract is taken away — the \"complete the rectangle then subtract\" method, e.g. 60 − 12 = 48), shown as a chain beneath the figure; the perimeter is the derived sum of the outline edges. Nothing is authored but coordinates, the chosen split and question flags: occlude a part area, a dimension, the total or the perimeter to pose \"find it\", highlight the answer, or override a dimension label with the given datum or a letter. Set show.dimensionUnits true (recommended on every new figure) to append the unit to every derived dimension label so edges read \"5.12 m\" like the exam paper — authored label overrides stay verbatim and occluded labels stay \"?\"; it defaults false only so figures authored before it existed keep their bare numbers. Each part may carry its own dims list (same grammar as the outline dims, indexed round the part's own ring) to hide, occlude, override or highlight individual part-edge labels — e.g. a square hole labelled on just two sides, as sources usually print it. Splitting the same outline two different ways gives the same total — the staged way to show area is split-independent. Set explode to pull the parts apart into separate standalone shapes (a decompose view) — each piece drawn on its own with its own edge lengths and area — which, paired with steps, gives the staged decomposition: whole shape → pieces pulled apart → each area worked out → reassembled with the total. Give height to draw the internal PERPENDICULAR-HEIGHT guide of a trapezium, parallelogram or triangle — the exam idiom of a dashed double-arrow with a right-angle foot mark and a DERIVED length, drawn either between two parallel outline edges (height.toEdge) or from an apex vertex down to the base edge (height.toVertex); its length is computed from the coordinates (never authored), so ½(a+b)h and ½·b·h always agree with the shoelace area. Occlude the guide (height.occlude) to render \"h = ?\" — \"find the height\" — while keeping the right-angle mark, or override it with a letter (height.label: \"h\") or a not-to-scale datum; highlight it amber. This is how the area of a trapezium is posed: draw the trapezium to scale, label the two parallel sides, mark the perpendicular height, and either occlude the total (\"find the area\") or give the area in the stem and occlude the height (\"find h\").",
-  "whenToUse": "Reach for this for compound / composite area and perimeter: L-shapes, T-shapes, cross / plus shapes, \"house\" or \"arrow\" shapes, and any rectilinear shape split into rectangles (and right-triangles) then summed — and for \"find the shaded area\" / area by subtraction (a bounding rectangle with a rectangular piece cut out). Author the shape outline as a ring of [x, y] vertices going round the boundary (y increases upward, like a coordinate grid); the model draws the shape and auto-labels each edge with its length, so you never write a measurement. To teach the split-and-sum method, give parts: each part is its own ring of [x, y] vertices (a rectangle is 4, a triangle is 3); the model fills each part a distinct colour and writes its derived area inside. Common configurations: split and sum — list the rectangles/triangles that tile the shape, the total chain shows \"24 + 12 = 36\"; subtraction — give the whole enclosing rectangle as one part and the removed piece as a part with subtract true (drawn as a dashed hole), the total chain shows \"60 − 12 = 48\"; the removed piece can be a rectangle or a circle (give circle: { cx, cy, r } instead of points — its area is π × r², e.g. a rectangle with a circular hole shows \"96 − 28.27 = 67.73\"); answer space — omit parts (or set show.partAreas false) and set total.occlude true for \"find the area of this shape\"; find the missing length — occlude one dimension via dims and set show.perimeter true; split two ways — keep the same outline and give two different parts lists across two blocks (or a staged build) to show the area is the same either way. Decompose / pull apart — set explode { on: true } to draw the parts as separate standalone shapes, each with its own edge lengths (show.partDimensions) and area, so a pupil sees each piece (a 6 by 3 rectangle, a triangle) on its own before adding; \"row\" lines them up, \"radial\" fans a symmetric shape out. For a staged decomposition give steps with explode { on: false } in the first frame (the whole shape) and explode { on: true } in the later frames (pulled apart) — the viewBox is reserved for both so it never resizes. show.working writes the \"w × h\" (rectangle) or \"½ × b × h\" (right-triangle) calculation inside each part. show.perimeter adds the perimeter readout; show.grid draws a faint unit grid for counting squares. On every NEW figure set show.dimensionUnits true so dimension labels carry the unit (\"5 cm\", \"3.23 m\") the way worksheets print them — it is off by default only for figures authored before it existed. When a piece or hole should not be labelled on every side, give that part a dims list ({edge, hide} etc., edge i joining the part's vertex i to i+1) — e.g. a square hole labelled on two sides with the other two hidden; occlude a part edge to ask for it (that part's w × h working is auto-suppressed so it cannot leak). Keep the unit (default \"cm\") and the outline identical across the blocks of one lesson so pupils track one shape. For the AREA OF A TRAPEZIUM (or a parallelogram / triangle) with its perpendicular height marked — the standard exam figure with the two parallel sides labelled and a vertical double-arrow between them — author the shape as a 4- (or 3-) vertex outline TO SCALE and add height: give height.base = the bottom edge index, and EITHER height.toEdge = the opposite parallel edge (trapezium / parallelogram) OR height.toVertex = the apex vertex (triangle); the guide's length is derived. Hide the two slant sides with dims { hide: true } when the source labels only the parallel sides. Two ways to pose it: (a) height GIVEN, find the area — leave the guide showing its derived value (\"7 m\") and set total.occlude true (\"Area = ?\"); the derived area (e.g. 52.5) is the answer and cross-checks ½(a+b)h. (b) area GIVEN in the stem, find the height — set height.occlude true (renders \"?\") or height.label \"h\" (the unknown letter), and show.total false (the area lives in the stem); the derived height (e.g. 6) is the boxed answer and cross-checks ½(a+b)h = area. Draw the trapezium roughly symmetric (top edge centred over the bottom) so the vertical guide sits cleanly between the parallel sides. If an internal altitude would cross a cut-out or clutter the interior, measure it beside the shape instead with height.side. Switch primitive when the teaching changes — for the area of a single rectangle product / grid method use algebra/area-model, for a single triangle's area or Pythagoras use geometry/triangle, for circle / sector area use geometry/circle-parts. Synonyms a teacher might use: compound area, composite area, compound shape, composite shape, L-shape, T-shape, cross / plus shape, house shape, arrow shape, rectilinear, split into rectangles, find the shaded area, area by subtraction, complete the rectangle, rectangle with a circular hole, compound perimeter, missing length, area of a trapezium, parallel sides, perpendicular height, height of a trapezium, find the height, altitude.",
   "responseModes": [],
-  "tags": [
-    "compound area",
-    "composite area",
-    "compound shape",
-    "composite shape",
-    "compound perimeter",
-    "area",
-    "perimeter",
-    "L-shape",
-    "T-shape",
-    "cross shape",
-    "plus shape",
-    "house shape",
-    "arrow shape",
-    "rectilinear",
-    "split into rectangles",
-    "split and sum",
-    "shaded area",
-    "decompose",
-    "decompose into shapes",
-    "pull apart",
-    "separate shapes",
-    "exploded view",
-    "staged decomposition",
-    "area by subtraction",
-    "complete the rectangle",
-    "missing length",
-    "circular hole",
-    "rectangle with a hole",
-    "rectangle",
-    "triangle",
-    "circle",
-    "geometry",
-    "maths",
-    "dimension units",
-    "unit labels",
-    "labelled dimensions",
-    "square hole",
-    "trapezium",
-    "area of a trapezium",
-    "parallelogram",
-    "parallel sides",
-    "perpendicular height",
-    "height of a trapezium",
-    "find the height",
-    "altitude",
-    "height guide",
-    "double arrow"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -65,21 +13,18 @@
         "type": "array",
         "minItems": 3,
         "maxItems": 16,
-        "description": "The shape's boundary: a ring of [x, y] vertices going round the outline once, in real units, with y increasing UPWARD (as on a coordinate grid). Do NOT repeat the first vertex at the end — the ring closes automatically. Order may be clockwise or anticlockwise. Example L-shape: [[0,0],[6,0],[6,3],[3,3],[3,5],[0,5]]. Each straight side between consecutive vertices is one EDGE; the model labels every edge with its derived length.",
         "items": {
           "type": "array",
           "minItems": 2,
           "maxItems": 2,
           "items": {
             "type": "number"
-          },
-          "description": "An [x, y] vertex of the outline, in real units (y upward)."
+          }
         }
       },
       "parts": {
         "type": "array",
         "maxItems": 8,
-        "description": "How the shape is split for the method — OMIT for a plain outline (an answer space, \"find the area\"). Each part is a sub-region drawn light-filled in its own categorical colour, with its derived area written inside. A part is EITHER a polygon (give points) OR a circle (give circle) — never both. For a clean split-and-sum the parts should tile the outline; for SUBTRACTION give the whole enclosing rectangle as one part and the removed rectangle (or circle) as a part with subtract true.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -88,15 +33,13 @@
               "type": "array",
               "minItems": 3,
               "maxItems": 8,
-              "description": "The part's own ring of [x, y] vertices, in the SAME units and y-up convention as the outline. A rectangle is its 4 corners; a triangle its 3. The area is derived from these vertices (shoelace); an axis-aligned rectangle or a right-triangle with axis-aligned legs also yields the \"w × h\" / \"½ × b × h\" working when show.working is on. Use EITHER points OR circle, not both.",
               "items": {
                 "type": "array",
                 "minItems": 2,
                 "maxItems": 2,
                 "items": {
                   "type": "number"
-                },
-                "description": "An [x, y] vertex of this part."
+                }
               }
             },
             "circle": {
@@ -107,39 +50,31 @@
                 "cy",
                 "r"
               ],
-              "description": "A CIRCULAR part instead of a polygon — for a circular hole in a shape (\"a rectangle with a circular hole cut out\") or a circular added piece. Give the centre and radius in the SAME real units as the outline (y upward). Its area is derived as π × r² (the \"π × r²\" working shows the radius substituted), and it enters the total chain like any other part (with a minus when subtract is true, e.g. \"70 − 28.27 = 41.73\"). Use EITHER circle OR points, not both.",
               "properties": {
                 "cx": {
-                  "type": "number",
-                  "description": "Circle centre x, in real units."
+                  "type": "number"
                 },
                 "cy": {
-                  "type": "number",
-                  "description": "Circle centre y, in real units (y upward)."
+                  "type": "number"
                 },
                 "r": {
                   "type": "number",
-                  "exclusiveMinimum": 0,
-                  "description": "Circle radius, in real units."
+                  "exclusiveMinimum": 0
                 }
               }
             },
             "subtract": {
-              "type": "boolean",
-              "description": "This part is REMOVED, not added — area by subtraction. It is drawn as a dashed \"cut-out\" (no colour fill) and its area enters the total chain with a minus (e.g. the 12 in \"60 − 12 = 48\", or a circular hole's \"28.27\" in \"70 − 28.27 = 41.73\"). Use for \"find the shaded area\" / a rectangle with a rectangular OR circular piece cut out. Default false."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this part's area as \"?\" — the \"what is this piece's area?\" hook. The part still draws; the value is hidden here AND shown as \"?\" in the total chain. To stop the total leaking it, also set total.occlude. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this part with an amber emphasis border (its categorical fill stays). Use for the piece under discussion or the answer piece. Default false."
+              "type": "boolean"
             },
             "dims": {
               "type": "array",
               "maxItems": 8,
-              "description": "Per-edge control of THIS part's own dimension labels (drawn when show.partDimensions is on) — same grammar as the top-level dims but indexed round the part's own ring: edge i joins the part's vertex i to vertex i+1. List only the edges you want to change; unlisted edges show their derived length. Use hide to label a piece on fewer sides (e.g. a square hole labelled on two sides, as sources usually print it); occlude to ask \"find this side\" (that part's w × h working is then auto-suppressed so it cannot leak); label to override with a given datum or a letter. Ignored for circle parts (they have no edges).",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
@@ -149,24 +84,19 @@
                 "properties": {
                   "edge": {
                     "type": "integer",
-                    "minimum": 0,
-                    "description": "Index of this part's edge (edge i joins the part's vertex i to vertex i+1, round its ring)."
+                    "minimum": 0
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Render this part edge's length as \"?\" — \"find this side\". Suppresses the part's w × h working so the value cannot leak. Default false."
+                    "type": "boolean"
                   },
                   "label": {
-                    "type": "string",
-                    "description": "Override the derived length with given text, shown verbatim (include the unit yourself if you want one, e.g. \"1.9 m\" or \"x\"). Omit to show the derived length."
+                    "type": "string"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Amber this part-edge label — emphasis. Default false."
+                    "type": "boolean"
                   },
                   "hide": {
-                    "type": "boolean",
-                    "description": "Do not draw this part edge's label at all (different from occlude, which shows \"?\"). Default false."
+                    "type": "boolean"
                   }
                 }
               }
@@ -189,31 +119,25 @@
       "dims": {
         "type": "array",
         "maxItems": 16,
-        "description": "Per-edge control of the dimension labels (the model labels every outline edge with its derived length by default). List only the edges you want to change. An edge is identified by its index: edge 0 runs from outline vertex 0 to vertex 1, edge 1 from vertex 1 to vertex 2, and so on round the ring.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "edge": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Index of the outline edge this entry controls (edge i joins outline vertex i to vertex i+1)."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this edge's length as \"?\" — the \"find the missing length\" hook. The length is hidden in the figure and in the aria-label. Default false."
+              "type": "boolean"
             },
             "label": {
-              "type": "string",
-              "description": "Override the derived length with given text — the datum the question gives (e.g. a slanted edge's \"5\") or an unknown (\"x\"). Use when the true coordinate length should be shown as something else, e.g. a not-to-scale exam value. Omit to show the derived length."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this dimension label — emphasis. Default false."
+              "type": "boolean"
             },
             "hide": {
-              "type": "boolean",
-              "description": "Do not draw this edge's dimension label at all (different from occlude, which shows \"?\"). Use to leave an edge unlabelled. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -222,56 +146,45 @@
         }
       },
       "unit": {
-        "type": "string",
-        "description": "Unit of length appended to dimensions (\"5 cm\") and, squared, to areas (\"12 cm²\"). Default \"cm\". Set to an empty string \"\" for bare numbers (no unit)."
+        "type": "string"
       },
       "total": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Modifiers for the total-area line (shown by default — see show.total).",
         "properties": {
           "occlude": {
-            "type": "boolean",
-            "description": "Render the total area as \"?\" — \"find the area of this shape\". The chain of parts, if shown, stays visible (set part occludes too if it must not leak). Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the total-area result — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "perimeter": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The perimeter readout (drawn only when show.perimeter is true) and its modifiers.",
         "properties": {
           "working": {
-            "type": "boolean",
-            "description": "Show the chain of edge lengths summed (\"5 + 3 + 2 + 3 + 3 + 6 = 22\") rather than just the result (\"22\"). Default true."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the perimeter result as \"?\" — \"find the perimeter\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the perimeter result — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "explode": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Pull the authored parts APART into separate standalone shapes — the DECOMPOSE view, for \"split it up, work out each piece, then add\". It reuses the SAME parts; when on, each piece is drawn on its own (with its own edge lengths via show.partDimensions, and its derived area), and the original outline is not drawn. Whenever explode is PRESENT (on OR off) the figure reserves room for BOTH the assembled and the pulled-apart layouts, so a STAGED build never resizes — give the first frame explode { on: false } (the whole shape) and later frames explode { on: true } (the pieces apart), and the viewBox is identical across them. Pairs with steps to teach split-and-sum: whole shape → pieces pulled apart with their side lengths → each area worked out → reassembled with the total.",
         "properties": {
           "on": {
-            "type": "boolean",
-            "description": "Pull the parts apart. false draws them assembled in place while still reserving the pulled-apart extent — use false for the FIRST frame of a staged decompose and true for the later frames. Default false."
+            "type": "boolean"
           },
           "gap": {
             "type": "number",
-            "minimum": 0,
-            "description": "How far apart to space the separated pieces, as a fraction of the shape size — larger means more space between them. Default 0.25."
+            "minimum": 0
           },
           "direction": {
             "type": "string",
@@ -279,15 +192,13 @@
               "row",
               "column",
               "radial"
-            ],
-            "description": "How the separated pieces are laid out. \"row\" lines them up left to right (default — the clearest \"here are the separate shapes\"); \"column\" stacks them top to bottom; \"radial\" pushes each piece outward from the centre, which suits symmetric shapes (a cross fans into its five squares). Default \"row\"."
+            ]
           }
         }
       },
       "height": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Draw the internal PERPENDICULAR-HEIGHT guide of a trapezium, parallelogram or triangle — the exam idiom: a dashed double-arrow with a right-angle foot mark, spanning perpendicularly from a base edge to the opposite parallel edge (trapezium / parallelogram) or up to an apex vertex (triangle). Its length is DERIVED from the outline coordinates (never authored), so it always agrees with the shoelace area — ½(a+b)h / ½·b·h. OMIT for a plain compound shape. The shape must be authored TO SCALE for the height to be right (as every compound-area figure already is). Give base and exactly ONE of toEdge / toVertex.",
         "required": [
           "base"
         ],
@@ -306,97 +217,77 @@
         "properties": {
           "base": {
             "type": "integer",
-            "minimum": 0,
-            "description": "Index of the outline edge the height is measured perpendicular FROM — the base / bottom parallel side. Edge i joins outline vertex i to vertex i+1 round the ring (the same indexing as dims)."
+            "minimum": 0
           },
           "toEdge": {
             "type": "integer",
-            "minimum": 0,
-            "description": "TRAPEZIUM / PARALLELOGRAM: index of the outline edge OPPOSITE the base — the top parallel side. The guide spans the perpendicular gap between base and this edge (a constant, since they are parallel). Give EITHER toEdge OR toVertex, never both."
+            "minimum": 0
           },
           "toVertex": {
             "type": "integer",
-            "minimum": 0,
-            "description": "TRIANGLE: index of the apex outline vertex the altitude rises to. The guide is the true altitude — its foot is the perpendicular projection of the apex onto the base edge's line. Give EITHER toVertex OR toEdge, never both."
+            "minimum": 0
           },
           "at": {
             "type": "number",
             "minimum": 0,
-            "maximum": 1,
-            "description": "Where along the base to draw the guide, 0 = base start vertex, 1 = base end vertex. Default: centred under the opposite edge / apex so the arrow sits cleanly between the parallel sides. Honoured for toEdge; ignored for toVertex (the altitude foot is fixed at the apex's perpendicular projection)."
+            "maximum": 1
           },
           "label": {
-            "type": "string",
-            "description": "Override the derived height with given text, shown verbatim — the unknown letter \"h\", or a not-to-scale datum (\"7 cm\"; include the unit yourself). Omit to show the derived length (with the unit when show.dimensionUnits is on). Author override always wins; the right-angle mark and drawn proportions stay true."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the height as \"?\" — the \"find the height\" hook (area given in the stem, solve for h). The dashed arrow and right-angle mark still draw; only the value is hidden. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the height guide and its label — answer / emphasis. Default false."
+            "type": "boolean"
           },
           "arrows": {
-            "type": "boolean",
-            "description": "Draw double arrowheads on the guide (the measurement double-arrow ↕). Default true. Set false for a plain dashed altitude line with just the right-angle mark. On a very short guide the heads are dropped automatically so they cannot overlap."
+            "type": "boolean"
           },
           "side": {
             "type": "string",
             "enum": [
               "left",
               "right"
-            ],
-            "description": "Draw the height as an EXTERNAL vertical measurement OFF TO THE SIDE of the shape (a solid double-arrow beside the figure, spanning the same DERIVED height) instead of the internal altitude — \"left\" places it to the left of the shape, \"right\" to the right. Use this whenever the internal altitude would run through a cut-out or clutter the interior (e.g. a triangle with a rectangular hole under the apex, where a central altitude label reads as the hole's width): the side measurement is drawn clear of everything and its label sits outward, so it unambiguously reads as the height. This matches how exam papers print a triangle's height (a \"↕ 10 cm\" arrow beside the shape). With side set there is no line through the shape and no right-angle foot mark (the measurement is not at a base corner); base + toEdge/toVertex still select WHAT is measured. Omit for the internal altitude (default)."
+            ]
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "dimensions": {
-            "type": "boolean",
-            "description": "Label the outline edges with their lengths. Default true. (Per-edge tweaks live in dims.)"
+            "type": "boolean"
           },
           "partAreas": {
-            "type": "boolean",
-            "description": "Write each part's derived area inside it. false leaves the coloured parts unlabelled — a \"work out each piece\" answer space. Default true. (Only meaningful when parts are given.)"
+            "type": "boolean"
           },
           "partDimensions": {
-            "type": "boolean",
-            "description": "Label each part with its OWN edge lengths (so a separated piece reads as e.g. a 6 by 3 rectangle — the datum needed to work out its area on its own). Defaults to true when explode.on is set, false otherwise; turn it on without exploding to label every piece's sides in place. Circular parts show no edge labels (their radius is in the \"π × r²\" working)."
+            "type": "boolean"
           },
           "working": {
-            "type": "boolean",
-            "description": "Inside each part, also show the calculation it performs — \"w × h\" for an axis-aligned rectangle, \"½ × b × h\" for a right-triangle with axis-aligned legs — above the area. Default false."
+            "type": "boolean"
           },
           "total": {
-            "type": "boolean",
-            "description": "Show the total-area line beneath the figure (\"Area = 24 + 12 = 36 cm²\", or \"Area = 48 cm²\" when there are no parts). Default true."
+            "type": "boolean"
           },
           "perimeter": {
-            "type": "boolean",
-            "description": "Show the perimeter readout beneath the area line. Default false."
+            "type": "boolean"
           },
           "grid": {
-            "type": "boolean",
-            "description": "Draw a faint unit grid behind the shape (for counting squares). Default false."
+            "type": "boolean"
           },
           "dimensionUnits": {
-            "type": "boolean",
-            "description": "Append the unit to every DERIVED dimension label, on outline and part edges alike, so edges read \"5 cm\" / \"3.23 m\" the way worksheets print them. Set it TRUE on every new figure. Authored dims[].label overrides stay verbatim (add the unit yourself there) and occluded labels stay \"?\". Default false — only so figures authored before this toggle existed keep their bare numbers."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -405,7 +296,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — L-shape split into two rectangles, total + perimeter",
       "params": {
         "outline": [
           [
@@ -484,7 +374,6 @@
       }
     },
     {
-      "label": "Decompose — L-shape pulled apart into two separate rectangles",
       "params": {
         "outline": [
           [
@@ -565,7 +454,6 @@
       }
     },
     {
-      "label": "Blank answer space — find the area of this compound shape",
       "params": {
         "outline": [
           [
@@ -603,7 +491,6 @@
       }
     },
     {
-      "label": "Occluded question — one piece and the total hidden",
       "params": {
         "outline": [
           [
@@ -683,7 +570,6 @@
       }
     },
     {
-      "label": "Hard case — rectangle + triangle \"house\", slanted edges, areas derived",
       "params": {
         "outline": [
           [
@@ -753,7 +639,6 @@
       }
     },
     {
-      "label": "Area by subtraction — rectangle with a corner cut out",
       "params": {
         "outline": [
           [
@@ -831,7 +716,6 @@
       }
     },
     {
-      "label": "Find the missing length, then the perimeter",
       "params": {
         "outline": [
           [
@@ -877,7 +761,6 @@
       }
     },
     {
-      "label": "T-shape split into three rectangles — area and perimeter",
       "params": {
         "outline": [
           [
@@ -984,7 +867,6 @@
       }
     },
     {
-      "label": "Cross / plus shape split into five squares",
       "params": {
         "outline": [
           [
@@ -1146,7 +1028,6 @@
       }
     },
     {
-      "label": "House — rectangle plus triangle, minus a doorway (subtraction)",
       "params": {
         "outline": [
           [
@@ -1237,7 +1118,6 @@
       }
     },
     {
-      "label": "Shaded area — rectangle with a circular hole cut out",
       "params": {
         "outline": [
           [
@@ -1294,7 +1174,6 @@
       }
     },
     {
-      "label": "Shaded frame — square hole labelled on two sides, units on every label",
       "params": {
         "outline": [
           [
@@ -1368,7 +1247,6 @@
       }
     },
     {
-      "label": "Find the hole's missing side, then the shaded area (occluded part edge)",
       "params": {
         "outline": [
           [
@@ -1437,7 +1315,6 @@
       }
     },
     {
-      "label": "Trapezium — height given, find the area (perpendicular-height guide)",
       "params": {
         "outline": [
           [
@@ -1481,7 +1358,6 @@
       }
     },
     {
-      "label": "Trapezium — area given, find the height h (occluded height guide)",
       "params": {
         "outline": [
           [
@@ -1526,7 +1402,6 @@
       }
     },
     {
-      "label": "Triangle — perpendicular height from the apex to the base",
       "params": {
         "outline": [
           [
@@ -1563,7 +1438,6 @@
       }
     },
     {
-      "label": "Parallelogram — base and perpendicular height",
       "params": {
         "outline": [
           [
@@ -1607,7 +1481,6 @@
       }
     },
     {
-      "label": "Shaded triangle with a hole — height measured to the side (external ↕)",
       "params": {
         "outline": [
           [

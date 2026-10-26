@@ -4,33 +4,8 @@
   "name": "differences-table",
   "version": 1,
   "title": "Sequence differences table",
-  "tagline": "Method-of-differences table for sequences; derives each difference row, the degree (linear/quadratic/cubic) and the nth term exactly; cells occlude to question.",
-  "description": "A method-of-differences working table for sequences: a top row of the sequence terms (with an optional position row n = 1, 2, 3 … above), then offset difference rows — the 1st differences sitting between consecutive terms, the 2nd differences between those, and a 3rd row for a cubic — each value joined by a light bracket to the two cells it is the difference of. You author only the integer sequence; the model derives every difference, decides how many rows to draw (it stops at the first constant row — the degree), names the sequence type (linear, quadratic or cubic) and works out the nth-term expression by the finite-difference method, expanded exactly so coefficients can be fractions (e.g. ½n² − ½n + 1). Below the table it shows the type and the nth term, with optional far-term predictions (\"Term 50 = …\"). Occlude any cell, the type or the nth term (each renders \"?\") to pose \"complete the differences\", \"what kind of sequence is this?\" or \"find the nth term\"; an occluded term automatically hides the adjacent differences that would leak it. A static model with teacher-led staged builds (reveal one difference row at a time, then the type, then the nth term). The differences and the rule are derived, which makes it a model, not a plain content table.",
-  "whenToUse": "Reach for this for the method of differences on a number sequence: finding the nth term of a linear sequence from its constant 1st difference, the nth term of a quadratic sequence from its constant 2nd difference, a cubic from its 3rd difference, spotting the type of a sequence from which difference row becomes constant, and \"show that the nth term is …\". Author the sequence as a list of integers in order — sequence: [2, 5, 10, 17, 26] — and nothing else mathematical: the model takes the differences, draws exactly as many difference rows as it needs to reach a constant row (1 for linear, 2 for quadratic, 3 for cubic), names the type and derives the nth-term polynomial. Give 4–6 terms (enough to confirm the pattern; 5 is ideal for a quadratic, 6 for a cubic). Turn on the readouts with the type and nthTerm objects ({ show: true }); nthTerm.working adds the leading-coefficient step (\"2nd difference = 2, so the n² term is 2 ÷ 2 = 1\"). Choose the furniture with show: show.position (the n = 1, 2, 3 row, default on), show.differences (the difference rows, default on), show.differenceValues (default on — set false for a blank \"complete the differences\" answer space that keeps the rows and brackets but empties the cells), show.levels (force the number of difference rows 1–3 — use 2 on a linear sequence to show the 2nd differences are 0). Occlude to make a question: cells: [{ level, index, occlude: true }] where level 0 is the term row and 1, 2, 3 are the difference rows, index counts from 0 left to right within that row; occlude a term (level 0) for \"find the missing/next term\" (the model hides the two 1st differences next to it so it cannot be read straight off); occlude the nthTerm ({ occlude: true }) for \"find the nth term\"; occlude type ({ occlude: true }) for \"what kind of sequence?\". Keep the same sequence length and shown rows across one lesson so pupils track one table. Staged builds read very well: open on just the terms (difference rows present but blank), reveal the 1st differences, then the 2nd, then the type, then the nth term last — the base state (the bare sequence with empty difference rows) stands alone as a sensible figure. Switch primitive when the picture changes: for the dot / tile picture of a growing pattern (square numbers as grids, matchstick patterns) use algebra/sequence-pattern; for a table of (x, y) values plotted on a mini grid use algebra/graph-table; for marks or jumps on a number line use number/number-line. v1 takes integer sequences and finds linear / quadratic / cubic rules (positions start at n = 1); a sequence with no constant difference within three rows (geometric, Fibonacci-style) still draws its difference rows but asserts no type or nth term. Synonyms a teacher might use: sequence, sequences, nth term, general term, method of differences, first differences, second differences, common difference, constant difference, linear sequence, arithmetic sequence, quadratic sequence, cubic sequence, find the nth term, show that the nth term is, term-to-term, position-to-term.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "sequence",
-    "sequences",
-    "nth term",
-    "general term",
-    "method of differences",
-    "first differences",
-    "second differences",
-    "third differences",
-    "common difference",
-    "constant difference",
-    "linear sequence",
-    "arithmetic sequence",
-    "quadratic sequence",
-    "cubic sequence",
-    "difference table",
-    "finite differences",
-    "position to term",
-    "term to term",
-    "algebra",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -42,12 +17,10 @@
         "maxItems": 8,
         "items": {
           "type": "integer"
-        },
-        "description": "The sequence terms, in order, as INTEGERS — e.g. [2, 5, 10, 17, 26]. Position is implicit: the first entry is term 1 (n = 1), the second is term 2, and so on. Give enough terms to confirm the pattern: at least 3 for a quadratic, 4 for a cubic (5–6 is comfortable). Every difference, the sequence type and the nth-term expression are derived from this list — you never write a difference or a formula."
+        }
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question / staging flags. Every cell's value is always computed; list a cell here only to occlude, blank or highlight it. ADDRESSING: level 0 is the term row, level 1 the 1st-differences row, level 2 the 2nd, level 3 the 3rd; index counts from 0, left to right, within that row (the level-1 row has one fewer cell than the terms, level 2 two fewer, …).",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -55,25 +28,20 @@
             "level": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 3,
-              "description": "Which row: 0 = the sequence terms, 1 = 1st differences, 2 = 2nd differences, 3 = 3rd differences."
+              "maximum": 3
             },
             "index": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Position within the row, 0-based from the left. Level 0 has one cell per term; each lower level has one fewer cell than the level above it."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's value as \"?\" — the question hook. The cell stays in place; the true value is printed nowhere else. Occluding a TERM (level 0) also hides the two 1st differences immediately beside it, so the term cannot be read straight off a single subtraction. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render nothing in this cell — an unfilled cell, for staged builds and answer spaces. If both blank and occlude are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber fill and value for this cell — draw the eye to a result (e.g. one cell of the constant difference row). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -85,82 +53,65 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture and column toggles.",
         "properties": {
           "position": {
-            "type": "boolean",
-            "description": "Show the position row n = 1, 2, 3 … above the terms, linking each term to its position. Default true."
+            "type": "boolean"
           },
           "differences": {
-            "type": "boolean",
-            "description": "Draw the difference rows at all. Default true. Set false to show only the sequence (and its position row) — a bare \"here is a sequence, find the nth term\" stimulus."
+            "type": "boolean"
           },
           "differenceValues": {
-            "type": "boolean",
-            "description": "Show the computed value inside each difference cell. Default true. Set FALSE for a \"complete the differences\" answer space: the difference rows, their boxes and the brackets are drawn but the cells are empty for pupils to fill. (Per-cell blank flags do the same one cell at a time.)"
+            "type": "boolean"
           },
           "rowLabels": {
-            "type": "boolean",
-            "description": "Show the left-hand row labels (\"Term\", \"1st difference\", \"2nd difference\", …). Default true."
+            "type": "boolean"
           },
           "brackets": {
-            "type": "boolean",
-            "description": "Draw the light bracket arcs joining each difference to the two cells above it that it is the difference of. Default true."
+            "type": "boolean"
           },
           "levels": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 3,
-            "description": "Force how many difference rows are drawn (1, 2 or 3). Omit to let the model choose — it draws down to the first constant row (1 for a linear sequence, 2 for quadratic, 3 for cubic). Set it to show MORE than that, e.g. 2 on a linear sequence to display that the 2nd differences are all 0. Clamped to the number the term count allows."
+            "maximum": 3
           }
         }
       },
       "type": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The sequence-type readout below the table — \"Linear sequence\", \"Quadratic sequence\" or \"Cubic sequence\", derived from which difference row first becomes constant. Omit for none. (A sequence with no constant difference within three rows reads \"Not a linear, quadratic or cubic sequence\".)",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the type readout. Default true when the type object is present."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the type as \"?\" — \"what kind of sequence is this?\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the type readout. Default false."
+            "type": "boolean"
           }
         }
       },
       "nthTerm": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The nth-term readout below the table — \"nth term = …\", the polynomial derived from the differences (exact, so coefficients can be fractions such as ½). Omit for none. Shown only when the sequence is linear, quadratic or cubic.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the nth-term line. Default true when the nthTerm object is present."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the expression as \"?\" — the \"find the nth term\" hook (the label still shows). Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the nth-term expression — answer emphasis. Default false."
+            "type": "boolean"
           },
           "working": {
-            "type": "boolean",
-            "description": "Add a small step naming the constant difference and the leading coefficient it gives (\"2nd difference = 2, so the n² coefficient is 2 ÷ 2 = 1\"; for a linear sequence, the 1st difference IS the n coefficient). Default false."
+            "type": "boolean"
           }
         }
       },
       "predict": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Evaluate the nth-term rule at far-off positions, shown as a prediction row beneath the readouts (\"Term 50 = 2501\"). Use it to pose / answer \"what is the 50th term?\" without extending the table. Shown only when an nth term exists.",
         "properties": {
           "terms": {
             "type": "array",
@@ -168,26 +119,21 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 9999
-            },
-            "description": "Positions to evaluate, e.g. [50] → \"Term 50 = …\", [10, 100] → two lines. These terms are NOT drawn in the table."
+            }
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the predicted values as \"?\" — \"find the 50th term\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the prediction row. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below everything, e.g. a short context note. Keep it short. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -196,7 +142,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — quadratic nth term via 2nd differences (n² + 3)",
       "params": {
         "sequence": [
           4,
@@ -218,7 +163,6 @@
       }
     },
     {
-      "label": "Linear sequence — constant 1st difference gives 3n + 2",
       "params": {
         "sequence": [
           5,
@@ -241,7 +185,6 @@
       }
     },
     {
-      "label": "Blank answer space — complete the differences and find the nth term",
       "params": {
         "sequence": [
           2,
@@ -261,7 +204,6 @@
       }
     },
     {
-      "label": "Occluded question — show the differences, find the nth term (2n² + 1)",
       "params": {
         "sequence": [
           3,
@@ -283,7 +225,6 @@
       }
     },
     {
-      "label": "Quadratic with a fractional coefficient — ½n² − ½n + 1",
       "params": {
         "header": "A fractional leading coefficient",
         "sequence": [
@@ -306,7 +247,6 @@
       }
     },
     {
-      "label": "Hard case — cubic sequence, three difference rows, nth term n³ + 1",
       "params": {
         "header": "A cubic sequence",
         "sequence": [

@@ -4,33 +4,8 @@
   "name": "stem-leaf",
   "version": 3,
   "title": "Stem-and-leaf diagram",
-  "tagline": "Stem-and-leaf from raw data; derives stems, ordered leaves, key, median/mode/range; answer on the model — complete the leaves, or fully construct the stems, leaves and key.",
-  "description": "A data set drawn as a stem-and-leaf diagram (stemplot): each value is split into a stem (the higher digits) and a leaf (the last digit), the leaves are grouped by stem and ordered, and a key states the place value (\"3 | 8 means 38\"). Give the raw data and the model derives the stems (including empty stems in between), the ordered leaves, the key, and the summary statistics — median (the mean of the two middle values when n is even), mode, range and count — all by exact arithmetic. Two groups sharing the stems draw a back-to-back diagram for comparison: the first group sits on the left with its leaves reading right-to-left, the second on the right. Hide a statistic as \"?\" for a \"find the median\" question, blank a group's leaves for a \"build the diagram\" answer space, show the leaves in data order for a \"now order them\" stage, or highlight the median position / a stem row. Set leafUnit 0.1 for decimal data (4.2 → 4 | 2 means 4.2), and keyUnit to end the key sentence with the unit word (\"2 | 9 means 29 cm\"). Hosted as a marked model tile with responseMode \"fill-derived\", an occludeLeaves group becomes a complete-the-diagram answer surface: each stem row is an editable slot, and the pupil types the row's leaves in ascending order — the model checks every row against the leaves it derives from the raw data, so ordering is marked as part of the skill. Add occludeStems and occludeKey (the full construct) and the pupil ALSO supplies the stem column (one blank slot per stem row, typed in ascending order, including an empty stem where the range skips one) and the key (a scaffolded \"▢ | ▢ means ▢\" completed with a place-value-consistent example) — so a whole \"draw an ordered stem-and-leaf diagram, and include a key\" is auto-marked, not just the leaves. Assumes non-negative values and one leaf digit per value.",
-  "whenToUse": "Reach for this to build or read a stem-and-leaf diagram (stemplot): split a list of values into stems and ordered leaves with a key, and read the median, mode and range off it; or compare two groups back-to-back. Author the raw data only — pass each group as { data: [...] } inside groups; one group is a simple stem-and-leaf, two groups is a back-to-back diagram sharing the stems (first group left, leaves reading right-to-left; second right). Every stem, ordered leaf, the key and the statistics are computed — you never write a leaf or a number. Common configurations: worked example — stats: { median: true, mode: true, range: true } shows the readouts; find the … — occlude: { median: true } (or mode/range/count) renders that statistic as \"?\" while the leaves stay visible so it can be worked out; build it (answer space) — set occludeLeaves: true on a group to blank its leaf rows (the stems and key still show), usually composed with the raw list in the surrounding text and with stats omitted so the answer is not given away; complete it ON the model (auto-marked) — the same occludeLeaves params on a MARKED model tile with responseMode \"fill-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } }: each stem row becomes a typed answer slot, the pupil enters that row's leaves in ascending order (digits, separators optional — \"2 5 7\" or \"257\") and the model checks every row against the ordered leaves it derives from the raw data, so ordering is marked as part of the skill — put the raw list in the question text; FULL construct (draw the whole diagram, auto-marked) — add occludeStems: true and occludeKey: true alongside occludeLeaves on that same fill-derived tile: the pupil supplies the stem values (in ascending order, including an empty stem where the range skips one), each row's ordered leaves, AND the key (completing a scaffolded \"▢ | ▢ means ▢ <unit>\" with any place-value-consistent example) — use this for \"Draw an ordered stem-and-leaf diagram for this data. You must include a key.\" so choosing the stems and writing the key are marked, not pre-printed; now order them — ordered: false shows each row in data-entry order (the rough draft) for a staged build that then sets ordered: true; compare two groups — two groups with labels (\"Boys\"/\"Girls\"), stats median + range, highlight: { median: true } to ring the middle value(s). Use leafUnit 1 (default) for whole numbers, 0.1 for one-decimal data (heights 4.2, 5.7 → key \"4 | 2 means 4.2\"), 10 for data in tens; set keyUnit to the data's unit word (\"cm\", \"kg\", \"years\") so the key reads \"2 | 9 means 29 cm\". Keep leafUnit and the data context consistent across one lesson. A staged build reads beautifully: open on the empty frame, add the stems, then the leaves a stem at a time (or unordered then ordered), write the key, reveal the statistics last. Switch primitive when the data is grouped into class intervals (values lost) — that is statistics/histogram; for a frequency table use a table block, for bivariate data statistics/scatter, for quartiles/box plots statistics/box-cf. Synonyms a teacher might use: stem and leaf, stem-and-leaf, stemplot, stem plot, leaf diagram, key, back-to-back, ordered data, median, mode, range from a stem and leaf, draw an ordered stem and leaf diagram, include a key.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "stem and leaf",
-    "stem-and-leaf",
-    "stemplot",
-    "stem plot",
-    "leaf",
-    "key",
-    "back-to-back",
-    "back to back",
-    "median",
-    "mode",
-    "range",
-    "ordered data",
-    "spread",
-    "averages",
-    "data",
-    "statistics",
-    "maths",
-    "draw",
-    "construct",
-    "include a key"
   ],
   "interface": {
     "type": "object",
@@ -40,7 +15,6 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 2,
-        "description": "The data set(s). ONE group draws a simple stem-and-leaf; TWO groups draw a back-to-back diagram sharing one stem column — the first group on the LEFT (its leaves read right-to-left, smallest leaf against the stem), the second on the RIGHT. Every stem, ordered leaf, key value and statistic is derived from the data.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -50,16 +24,13 @@
               "minItems": 1,
               "items": {
                 "type": "number"
-              },
-              "description": "The raw data values for this group, in any order — the model splits, groups and orders them. Non-negative. e.g. [42, 38, 51, 47] → stems 3,4,5 with ordered leaves."
+              }
             },
             "label": {
-              "type": "string",
-              "description": "Display name for this group — the side header in a back-to-back diagram (e.g. \"Class A\", \"Boys\"). Optional for a single group (a caption above its leaves)."
+              "type": "string"
             },
             "occludeLeaves": {
-              "type": "boolean",
-              "description": "Blank THIS group's leaf rows — the \"build the diagram\" answer space. The stems and the key still show (unless occludeStems / occludeKey also hide them), only the leaves are hidden. On a MARKED model tile with responseMode \"fill-derived\" these blank rows become the typed answer slots (one per stem; the pupil types the row's leaves ascending and the model self-checks each row against the derived leaves). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -69,93 +40,73 @@
       },
       "leafUnit": {
         "type": "number",
-        "exclusiveMinimum": 0,
-        "description": "Place value of one leaf digit. 1 (default) = units (42 → 4 | 2 means 42); 0.1 = tenths, for one-decimal data (4.2 → 4 | 2 means 4.2); 10 = tens. The stem is the remaining higher digits; the key states the place value. Keep it consistent across a lesson."
+        "exclusiveMinimum": 0
       },
       "keyUnit": {
-        "type": "string",
-        "description": "Optional unit word ending the key sentence — \"2 | 9 means 29 cm\". Keep it short and matching the data context (\"cm\", \"kg\", \"mph\", \"years\"). Default none (the key ends at the value). With occludeKey the unit word stays printed as a fixed scaffold while the pupil supplies the example values."
+        "type": "string"
       },
       "showKey": {
-        "type": "boolean",
-        "description": "Show the key that explains the place value (\"3 | 8 means 38\", derived from the smallest value and leafUnit). Default true."
+        "type": "boolean"
       },
       "occludeStems": {
-        "type": "boolean",
-        "description": "Blank the STEM column — the pupil supplies the stems. For the FULL construct: with occludeLeaves (and usually occludeKey) on a \"build the diagram\" answer space or a MARKED fill-derived tile, the stem digits are hidden and (armed) each stem row becomes a typed slot; the pupil writes the stem values in ascending order, including an empty stem where the range skips one. The stem column is shared, so this is diagram-wide (both groups of a back-to-back). Default false. Meant to accompany occludeLeaves — a blank stem beside a printed leaf would leak the stems."
+        "type": "boolean"
       },
       "occludeKey": {
-        "type": "boolean",
-        "description": "Blank the KEY's example values — the pupil writes the key. Renders the fixed scaffold (\"Key: ▢ | ▢ means ▢ <keyUnit>\") with three editable slots (a stem example, a leaf example, the value it means); armed, the model marks the key correct when the pupil's example is place-value consistent (value = stem·10 + leaf, at leafUnit) — any consistent example is accepted, not only the smallest data value. Requires showKey (the default). Default false. Use with occludeStems + occludeLeaves for a whole \"…and include a key\" construct."
+        "type": "boolean"
       },
       "ordered": {
-        "type": "boolean",
-        "description": "Order each row's leaves ascending — the finished diagram. false leaves them in data-entry order (the rough draft before tidying), for a staged build that reveals the ordered version next. The statistics are correct either way. Default true."
+        "type": "boolean"
       },
       "stats": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Which summary statistics to show beneath the diagram (one line per group, labelled). All derived from the data; none shown by default.",
         "properties": {
           "median": {
-            "type": "boolean",
-            "description": "Show the median — the middle value, or the mean of the two middle values when n is even. Default false."
+            "type": "boolean"
           },
           "mode": {
-            "type": "boolean",
-            "description": "Show the mode — the most common value (\"no mode\" if every value is distinct; all listed if several tie). Default false."
+            "type": "boolean"
           },
           "range": {
-            "type": "boolean",
-            "description": "Show the range — largest value minus smallest. Default false."
+            "type": "boolean"
           },
           "count": {
-            "type": "boolean",
-            "description": "Show n — the number of values in the group. Default false."
+            "type": "boolean"
           }
         }
       },
       "occlude": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Question hooks: render a derived statistic as \"?\" so the diagram asks \"find the …\". The statistic's line appears even if it is not in stats. The leaves stay visible so the value can be read off and worked out.",
         "properties": {
           "median": {
-            "type": "boolean",
-            "description": "Render the median as \"?\". Default false."
+            "type": "boolean"
           },
           "mode": {
-            "type": "boolean",
-            "description": "Render the mode as \"?\". Default false."
+            "type": "boolean"
           },
           "range": {
-            "type": "boolean",
-            "description": "Render the range as \"?\". Default false."
+            "type": "boolean"
           },
           "count": {
-            "type": "boolean",
-            "description": "Render the count as \"?\". Default false."
+            "type": "boolean"
           }
         }
       },
       "highlight": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Amber emphasis (result / chosen class). At most one of each.",
         "properties": {
           "median": {
-            "type": "boolean",
-            "description": "Ring the median position in the diagram (the two middle leaves when n is even) and amber its readout — \"where is the median?\". Default false."
+            "type": "boolean"
           },
           "stem": {
-            "type": "number",
-            "description": "Amber one stem's whole row (stem + its leaves) to draw the eye to a class. Give the stem value, e.g. 4 for the 40s row."
+            "type": "number"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -164,7 +115,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — test marks, key + median/mode/range/count",
       "params": {
         "header": "Test marks (out of 65)",
         "groups": [
@@ -197,7 +147,6 @@
       }
     },
     {
-      "label": "Blank answer space — build the diagram (stems + key, leaves hidden)",
       "params": {
         "groups": [
           {
@@ -221,7 +170,6 @@
       }
     },
     {
-      "label": "Complete on the model — fill-derived answer surface with a unit key (marked model tile: responseMode \"fill-derived\", correctAnswer { derived: true }; raw list goes in the question text)",
       "params": {
         "header": "Journey times (minutes)",
         "groups": [
@@ -247,7 +195,6 @@
       }
     },
     {
-      "label": "FULL construct (hard case) — blank frame: pupil supplies stems, leaves AND the key (marked fill-derived tile; occludeLeaves + occludeStems + occludeKey; raw list in the question text)",
       "params": {
         "groups": [
           {
@@ -274,7 +221,6 @@
       }
     },
     {
-      "label": "FULL construct — empty-stem case (range skips a stem: the 30s row is empty and must still be written)",
       "params": {
         "header": "Reaction times (seconds)",
         "groups": [
@@ -302,7 +248,6 @@
       }
     },
     {
-      "label": "Occluded question — find the median of an even data set",
       "params": {
         "groups": [
           {
@@ -332,7 +277,6 @@
       }
     },
     {
-      "label": "Hard case — back-to-back, even groups, median ringed (mean of two middles)",
       "params": {
         "header": "Test scores: Class A vs Class B",
         "groups": [
@@ -377,7 +321,6 @@
       }
     },
     {
-      "label": "Decimal data — seedling heights, leafUnit 0.1",
       "params": {
         "header": "Seedling heights (cm)",
         "groups": [
@@ -405,7 +348,6 @@
       }
     },
     {
-      "label": "Back-to-back comparison — resting pulse rate, two groups",
       "params": {
         "header": "Resting pulse rate (bpm)",
         "groups": [

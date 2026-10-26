@@ -4,32 +4,8 @@
   "name": "bearings",
   "version": 3,
   "title": "Bearings",
-  "tagline": "Map points joined by paths with north lines and clockwise three-figure bearing arcs; bearings and back bearings derived from positions, always to scale.",
-  "description": "A bearings diagram: named points on a map plane (north is up), joined by straight paths (journey legs or sight lines), with a north line at the measured points and a bearing arc swept clockwise from north round to a path, labelled with its three-figure bearing (000°–359°). You place the points — by absolute map coordinates, or by a bearing-and-distance leg from another point — and choose which bearings to mark; the bearing angle and the back (reverse) bearing are derived from the positions, so the figure is always to scale and a marked value can never lie. Per-bearing occlusion (\"measure the bearing\", shown as \"?\"), highlighting the answer, an optional compass rose for compass-point work, authored distance labels on legs, a caption, and draggable points on the web (every bearing recomputes live). Covers measuring and drawing bearings, back bearings, from/to bearings, compass points, and multi-leg journeys.",
-  "whenToUse": "Reach for this for anything taught with a three-figure bearing: measuring or drawing the bearing of one point from another, back (reverse) bearings, the bearing from one place to another, compass points as bearings (045° = NE), and multi-leg journeys with a bearing at each turn. Build the figure by listing points: give the first an absolute position with at [x, y] (x east, y north/up, e.g. [0, 0]), then add each further point with polar — a bearing and distance from an existing point, phrased exactly as the question is (\"B is 8 km from A on a bearing of 070°\" → polar: { from: \"A\", bearing: 70, distance: 8 }). Draw the legs/sight lines with paths (from → to, optional arrow for a journey, optional distance label), and mark a bearing with bearings: { at, to } — the protractor sits at \"at\", points to \"to\", and the value is the derived bearing of \"to\" from \"at\". A back bearing is simply { at: \"B\", to: \"A\" } (it comes out at the forward bearing ± 180°, drawn as a reflex arc when over 180°). Common configurations: measure / work out the bearing — mark the bearing and set occlude: true so it shows \"?\", with the question in the block text; draw a bearing — give the point its polar bearing and show the arc (occlude false); back bearing — mark both { at: A, to: B } and { at: B, to: A }; journey — two polar legs and a bearing at each turn, occluding the one you ask for; compass points — add compass: { at, eightPoint: true } for an 8-point rose. A north line is drawn automatically wherever a bearing is marked; set a point's north: true to force one elsewhere (e.g. an answer space where pupils measure for themselves). Highlight the bearing that is the answer. Cross-block convention: keep the same points and distances across the blocks of one lesson so pupils track one journey — change only which bearings are shown, occluded or highlighted. A staged build reads well: start from the labelled points and north line, add one leg and its bearing per stage. UNITS — set unit: \"km\" once per figure and any bare-number leg label (\"8\") reads \"8 km\"; a label carrying its own text (\"8 km\", \"x\") stays verbatim; bearings are angles and never take it. Synonyms a teacher might use: bearing, bearings, three-figure bearing, 3-figure bearing, back bearing, reverse bearing, bearing of, bearing from, compass bearing, true bearing, due north/east/south/west, compass points, north-east, NE, journey, navigation, scale drawing, map. @3 — ANSWER ON THE MODEL: for a \"mark the position of C with a cross\" question give placePoint and host the tile with responseMode \"place-point\" and marking.correctAnswer { derived: true }. Use { from, bearing, distance } for \"C is <distance> from A on a bearing of <b>°\" (the pupil drags a cross; the model marks the bearing within angleTol and the distance within distanceTol — the mark-scheme band); use { intersect: [{ from, bearing }, { from, bearing }] } for \"C is on a bearing of X from A and Y from B\" (marked within posTol of the crossing). The target is never drawn on the posed figure — the answer space is a padded blank — so the completed plot belongs in the worked-solution figure (a normal point C, or ctx.reveal). @3 — RIGHT-ANGLE MARK: add rightAngles: [{ at, to }] to draw the 90° square between the north line and a due-E/W leg where the bearing is read off the right angle (e.g. A due west of P ⇒ the bearing of A from P is 270°).",
   "responseModes": [
     "place-point"
-  ],
-  "tags": [
-    "bearings",
-    "bearing",
-    "three-figure bearing",
-    "3-figure bearing",
-    "back bearing",
-    "reverse bearing",
-    "compass",
-    "compass points",
-    "compass bearing",
-    "north",
-    "due north",
-    "north-east",
-    "journey",
-    "navigation",
-    "scale drawing",
-    "map",
-    "protractor",
-    "geometry",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -39,14 +15,12 @@
         "type": "array",
         "minItems": 2,
         "maxItems": 6,
-        "description": "The named points (places) in the figure. Each carries a position — given EITHER absolutely with at, OR relatively with polar (a bearing+distance from another point). The first point is usually absolute; later points build off it. Positions are the only authored geometry; every bearing is derived from them.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "id": {
-              "type": "string",
-              "description": "Short identifier used to reference this point in paths, bearings and compass (e.g. \"A\", \"B\", \"Port\"). Must be unique. Also the default display label."
+              "type": "string"
             },
             "at": {
               "type": "array",
@@ -54,28 +28,23 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "Absolute map coordinates [x, y]: x measured EAST, y measured NORTH (up). Use for the first / reference point, e.g. [0, 0]. Provide at OR polar, not both."
+              "maxItems": 2
             },
             "polar": {
               "type": "object",
               "additionalProperties": false,
-              "description": "Place this point relative to another by a bearing-and-distance leg — phrase it exactly as the question does. The bearing of this point FROM `from` then derives back to this same value, so it can be marked and occluded as a question without ever lying. Provide polar OR at, not both.",
               "properties": {
                 "from": {
-                  "type": "string",
-                  "description": "id of the point this one is measured from (must be another point in the list)."
+                  "type": "string"
                 },
                 "bearing": {
                   "type": "number",
                   "minimum": 0,
-                  "maximum": 360,
-                  "description": "Bearing of this point from `from`, in degrees clockwise from north (0–360). 70 places it on a bearing of 070°."
+                  "maximum": 360
                 },
                 "distance": {
                   "type": "number",
-                  "exclusiveMinimum": 0,
-                  "description": "Map distance from `from` (same units across the figure — keep distances proportional to the real ones so the drawing is to scale). Default 5 when omitted (for figures where only the direction matters)."
+                  "exclusiveMinimum": 0
                 }
               },
               "required": [
@@ -84,12 +53,10 @@
               ]
             },
             "label": {
-              "type": "string",
-              "description": "Display name drawn beside the point. Defaults to id. Set it to show a fuller name (e.g. \"Harbour\") while keeping a short id for references."
+              "type": "string"
             },
             "north": {
-              "type": "boolean",
-              "description": "Force a north line at this point even when no bearing is marked here — e.g. an answer space where pupils measure the bearing themselves. A north line is drawn automatically at any point that is a bearing vertex, so this is only needed elsewhere. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -99,34 +66,28 @@
       },
       "paths": {
         "type": "array",
-        "description": "The straight lines drawn between points — journey legs or sight lines. A bearing marked between two points already draws its own sight line, so list a path here for legs you want drawn in their own right (a journey, the return leg, a triangle side), to add a distance label, or to make a leg a directed arrow.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "from": {
-              "type": "string",
-              "description": "id of the start point."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "id of the end point."
+              "type": "string"
             },
             "label": {
-              "type": "string",
-              "description": "Text along the leg, typically a distance (\"8 km\"). Authored — the model does not compute real-world lengths. A bare-number label (\"8\") takes the figure's `unit` automatically (\"8 km\"); a label with any other text (\"8 km\", \"x\") is shown verbatim. Omit for an unlabelled line."
+              "type": "string"
             },
             "arrow": {
-              "type": "boolean",
-              "description": "Draw a direction arrowhead at the `to` end — use for a directed journey leg. Default false (a plain sight line)."
+              "type": "boolean"
             },
             "style": {
               "type": "string",
               "enum": [
                 "solid",
                 "dashed"
-              ],
-              "description": "\"solid\" (default) for a travelled leg / sight line; \"dashed\" for a construction or return reference line."
+              ]
             }
           },
           "required": [
@@ -137,30 +98,24 @@
       },
       "bearings": {
         "type": "array",
-        "description": "The bearings to MARK with a north line, a clockwise arc and a three-figure value. Each is the bearing of `to` FROM `at`: the protractor sits at `at` (where the north line is) and points to `to`. The value is DERIVED from the positions and stays correct under drag; a sweep over 180° draws as a reflex arc. A back bearing is just { at: B, to: A }.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "string",
-              "description": "id of the point the bearing is measured AT (the north line / protractor sits here)."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "id of the point the bearing is measured TO. The arc sweeps clockwise from north round to the direction of this point."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the value as \"?\" — the \"measure / work out the bearing\" hook. The north line and arc still show. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this bearing (amber arc + value) — the answer, or the bearing a question is about. Default false."
+              "type": "boolean"
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed value — for a known/algebraic value only (\"x\", \"2x\"). Omit to show the derived three-figure bearing; the arc is always drawn true to the geometry regardless."
+              "type": "string"
             }
           },
           "required": [
@@ -172,15 +127,12 @@
       "compass": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Draw a compass rose centred on a point — the teaching aid for compass-point work (045° = NE). Omit for no rose.",
         "properties": {
           "at": {
-            "type": "string",
-            "description": "id of the point to centre the rose on."
+            "type": "string"
           },
           "eightPoint": {
-            "type": "boolean",
-            "description": "Show the eight points (N, NE, E, SE, S, SW, W, NW). Default false shows the four cardinal points (N, E, S, W) only."
+            "type": "boolean"
           }
         },
         "required": [
@@ -190,48 +142,38 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "northLabels": {
-            "type": "boolean",
-            "description": "Label each north line \"N\". Default true."
+            "type": "boolean"
           },
           "grid": {
-            "type": "boolean",
-            "description": "Show a faint background square grid (helps read a scale drawing). Default false — most bearings figures are gridless."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. the fact being taught. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Let pupils drag a point to reposition it; every bearing, back bearing and arc recomputes live, staying true to the new positions. Snaps to the grid of map units. Default false."
+        "type": "boolean"
       },
       "unit": {
-        "type": "string",
-        "description": "The figure's distance unit, e.g. \"km\", \"m\", \"mi\". Appended to every path-leg distance label (paths[].label) that is a BARE NUMBER (\"8\" → \"8 km\"). A label with any other text (\"8 km\", \"x\") is shown verbatim — an authored override always wins. Bearings (angles) never take it. Default \"\" (labels stay bare). Set it once per figure and keep it consistent across a lesson. @2."
+        "type": "string"
       },
       "rightAngles": {
         "type": "array",
-        "description": "Right-angle square marks (@3): each { at, to } draws the 90° square in the corner between the north line at `at` and the leg to `to`. LOAD-BEARING where a point is due east/west of another — the bearing is then read off the right angle (A due west of P ⇒ the bearing of A from P is 270°). The author asserts the perpendicularity, so place it only where the geometry is a true 90°. Structural neutral, like the north line it corners against.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "string",
-              "description": "id of the vertex the square sits at (has a north line — a bearing vertex, or north: true)."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "id of the point the perpendicular leg runs to."
+              "type": "string"
             }
           },
           "required": [
@@ -243,41 +185,34 @@
       "placePoint": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Answer-on-the-model target (@3) for a marked place-point response — host the tile with responseMode \"place-point\" and marking.correctAnswer { derived: true }. The point the pupil must PLOT with a cross. It is DERIVED and NEVER drawn on the posed figure (print / slide pose only a padded blank answer space); the model self-checks the placed cross against the mark-scheme band in its own closure, so no coordinate reaches the DOM. Give EXACTLY ONE target shape: a polar leg (from + bearing + distance), the crossing of two bearings (intersect), or an absolute point (at). Phrase it exactly as the question does (\"2.5 km from A on a bearing of 210°\" → { from: \"A\", bearing: 210, distance: 2.5 }).",
         "properties": {
           "from": {
-            "type": "string",
-            "description": "Polar target: id of the anchor the point is measured from. The placed cross is checked as the bearing-and-distance of that cross from `from`."
+            "type": "string"
           },
           "bearing": {
             "type": "number",
             "minimum": 0,
-            "maximum": 360,
-            "description": "Polar target: the bearing of the point from `from`, degrees clockwise from north."
+            "maximum": 360
           },
           "distance": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Polar target: the distance from `from`, in the figure's map units. Public — it IS the question — and it sizes the answer space, but the position is never drawn."
+            "exclusiveMinimum": 0
           },
           "intersect": {
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
-            "description": "Intersect target: the CROSSING of two bearing rays — [{ from, bearing }, { from, bearing }]. Use for \"C is on a bearing of X from A and Y from B; mark C\". The pupil sees a sight line from each anchor as they place the cross.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "from": {
-                  "type": "string",
-                  "description": "id of the anchor this bearing ray starts from."
+                  "type": "string"
                 },
                 "bearing": {
                   "type": "number",
                   "minimum": 0,
-                  "maximum": 360,
-                  "description": "Bearing of the ray from `from`, degrees clockwise from north."
+                  "maximum": 360
                 }
               },
               "required": [
@@ -292,32 +227,26 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "Absolute target [x, y] (east, north) — an escape hatch for a fixed answer. Prefer polar/intersect so the target reads straight from the question and reveals nothing."
+            "maxItems": 2
           },
           "label": {
-            "type": "string",
-            "description": "Label drawn beside the plotted cross and the revealed target. Default \"C\"."
+            "type": "string"
           },
           "angleTol": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Polar target: bearing tolerance in degrees (the mark-scheme band). Default 2."
+            "exclusiveMinimum": 0
           },
           "distanceTol": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Polar target: distance tolerance in map units. Default 0.3."
+            "exclusiveMinimum": 0
           },
           "posTol": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Intersect / absolute target: radial tolerance in map units around the derived point. Default 0.4."
+            "exclusiveMinimum": 0
           },
           "reach": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Override the auto answer-space radius reserved around the anchor(s), in map units. Default: polar 1.3×distance; intersect 0.6×anchor separation. Raise it if the target would fall off-canvas."
+            "exclusiveMinimum": 0
           }
         }
       }
@@ -328,7 +257,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — the bearing of B from A is 072°",
       "params": {
         "header": "Bearing of B from A",
         "points": [
@@ -364,7 +292,6 @@
       }
     },
     {
-      "label": "Occluded question — work out the bearing of B from A",
       "params": {
         "points": [
           {
@@ -401,7 +328,6 @@
       }
     },
     {
-      "label": "Back bearing — forward 075° at A, the 255° reverse at B",
       "params": {
         "header": "Forward and back bearing",
         "points": [
@@ -442,7 +368,6 @@
       }
     },
     {
-      "label": "Answer space — a two-leg journey, measure each bearing",
       "params": {
         "points": [
           {
@@ -488,7 +413,6 @@
       }
     },
     {
-      "label": "Distance unit — bare-number leg labels take \"km\"",
       "params": {
         "header": "A two-leg journey",
         "points": [
@@ -543,7 +467,6 @@
       }
     },
     {
-      "label": "Compass points — a bearing of 045° is north-east",
       "params": {
         "header": "Compass points and bearings",
         "points": [
@@ -585,7 +508,6 @@
       }
     },
     {
-      "label": "Hard case — journey A→B→C, find the back bearing of A from B",
       "params": {
         "points": [
           {
@@ -644,7 +566,6 @@
       }
     },
     {
-      "label": "Right-angle mark (@3) — A due west of P, bearing of A from P is 270°",
       "params": {
         "points": [
           {
@@ -696,7 +617,6 @@
       }
     },
     {
-      "label": "Answer on the model (@3) — plot C 2.5 km from A on a bearing of 210°",
       "params": {
         "points": [
           {
@@ -733,7 +653,6 @@
       }
     },
     {
-      "label": "Answer on the model (@3) — plot C where two bearings cross",
       "params": {
         "points": [
           {

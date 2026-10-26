@@ -4,90 +4,42 @@
   "name": "score",
   "version": 1,
   "title": "Sheet music",
-  "tagline": "Sheet music from ABC: any clef, key and time signature, multi-part systems, lyrics, chords, dynamics; accidentals, beams and bar numbers derived; bars occlude; pages by bar range.",
-  "description": "A printed score: one to four staves (parts), each with its own clef, sharing a key signature and time signature, with bars of notes, rests and chords laid out in systems that break to fit the width. You write each part's music as an ABC body — the standard compact text notation (C D E F G A B for the octave from middle C, c d e f g a b for the octave above, commas and apostrophes to shift octaves, ^ _ = for sharp flat natural, a number for length in units of unitLength, / to halve, z for a rest, [CEG] for a chord, - for a tie, ( ) for a slur, (3 for a triplet, | for bar lines, |: :| for repeats, \"G\" for a chord symbol, !f! !p! for dynamics, . for staccato, {g} for a grace note) — and the model derives the notation: key-signature sharps and flats in the right places for each clef, which accidentals actually print (an accidental holds for the rest of its bar), stem direction, flags, beam groups split by the metre's beat, dots, ledger lines, rests, tie and slur curves, tuplet brackets, note spacing and justification, system breaks, bar numbers (a short first bar is a pickup, bar 0), and lyric syllables under their notes. A ? before an event hides it behind a boxed question mark whose width is the bar's remaining beats — \"complete the bar\"; !highlight! on an event or highlightBars on whole bars draws the eye. window shows a bar range and revealTo reveals a score bar by bar, so the host's steps paginate a long piece or build a melody phrase by phrase. On the web a Play control sounds the score with a moving cursor; print and slides show the same notation. Tap-to-select bars or notes for a marked question (select-region).",
-  "whenToUse": "Reach for this whenever a lesson shows notation: reading pitch on the treble or bass stave, note values and rests, time signatures and counting beats in a bar, key signatures and accidentals, ties and dotted rhythms, a class song with lyrics and chord symbols for singing or ukulele, a melody to sight-read or clap, a rhythm to dictate, a chord progression on a grand staff, an SATB extract for GCSE harmony, and any \"complete the bar\" / \"add the missing bar lines\" / \"name this note\" question. Write the music in ABC. Set unitLength to the note the bare letters mean — \"1/8\" (the default) makes \"C D E F\" four quavers and \"C2\" a crotchet; \"1/4\" makes the bare letters crotchets, which reads more naturally for primary rhythm work. Use uppercase for the middle-C octave and lowercase for the one above; in bass clef write C, D, (comma = an octave down). Spaces between notes break beams; run quavers together (CDEF) to beam them, and the model still splits beams at each beat of the metre. Use z for rests and z2 z4 for longer ones; Z2 is two whole bars of rest. Give a key (\"G\", \"F\", \"Bb\", \"Am\", \"Em\") and the model prints the signature — write F in G major and it sounds F sharp with no accidental shown; write =F to force a natural. For a question, put ? before the event to hide: \"C D ? |\" boxes the missing beats; \"?2\" hides a known-length note; set occlude.key or occlude.meter to ask for the signature; show.noteNames writes letter names under every note as a scaffold (leave it off when naming the note IS the question). Highlight with !highlight! before a note or highlightBars for whole bars. Part layout: one entry in parts per stave; two parts with treble and bass clefs brace automatically as a grand staff (set brace false to bracket instead); name parts with name. Two voices on one stave (a hymn's soprano and alto) go in music and voice2 of the same part. Lyrics are ABC w: lines — one string per verse, syllables split with - and held with _; the model places each under its note. Shape: the figure is landscape for a single stave of up to about eight bars; every extra system or stave adds height, so a lyric-bearing grand staff of a whole song comes out tall and thin. PAGE IT — keep ONE paramset for the whole piece and use the host's steps: give each step a window { from, to } of about four bars (two to four bars for a grand staff with lyrics) to page a long score, or revealTo n to reveal it bar by bar while the layout stays put. Aim for a square or slightly landscape figure per step. barsPerSystem overrides the derived breaks when a source lays four bars a line. Sound: each part's instrument picks a playback voice (piano, organ, flute, pluck, strings, percussion) for the web Play control; set sound false when hearing the answer would give it away. Keep the same clef, key and metre across blocks in one lesson so pupils track one stave. Answer on the figure (marked model tiles): responseMode \"select-region\" with select \"bars\" for \"tap the bar with the wrong number of beats\" (correctAnswer [\"bar:3\"]) or select \"notes\" for \"tap every minim\" (ids note:<part>:<bar>:<i>). Synonyms teachers use: stave, staff, sheet music, notation, score, treble clef, bass clef, note values, crotchet, quaver, minim, semibreve, rests, time signature, key signature, bar, measure, ties, dotted notes, triplet, grand staff, SATB, lead sheet, chord chart, melody, tune, sight-reading, rhythm, lyrics.",
   "responseModes": [
     "select-region"
-  ],
-  "tags": [
-    "music",
-    "sheet music",
-    "stave",
-    "staff",
-    "notation",
-    "score",
-    "treble clef",
-    "bass clef",
-    "alto clef",
-    "tenor clef",
-    "key signature",
-    "time signature",
-    "note values",
-    "crotchet",
-    "quaver",
-    "minim",
-    "semibreve",
-    "rest",
-    "bar",
-    "measure",
-    "tie",
-    "slur",
-    "triplet",
-    "dotted note",
-    "grand staff",
-    "SATB",
-    "lyrics",
-    "chord symbols",
-    "lead sheet",
-    "melody",
-    "rhythm",
-    "sight reading",
-    "ABC notation",
-    "playback"
   ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
       "header": {
-        "type": "string",
-        "description": "Optional title centred above the score — the PIECE's name (\"Over the hill\", \"Hot cross buns\"). Never a question or an instruction (\"Complete bar 2\", \"Which bar is wrong?\"): that text belongs in the block's text tile, not on the figure. The top padding grows to clear it."
+        "type": "string"
       },
       "composer": {
-        "type": "string",
-        "description": "Optional credit line right-aligned under the title, e.g. \"Trad.\" or \"Words and music: class 4B\". Omit for none."
+        "type": "string"
       },
       "key": {
-        "type": "string",
-        "description": "The key in ABC form, which sets the printed key signature for every part: a tonic letter with optional # or b and an optional mode — \"C\", \"G\", \"D\", \"F\", \"Bb\", \"Eb\", \"Am\", \"Em\", \"Dm\", \"F#m\", \"Ddor\", \"Gmix\", \"Amin\", \"Cmaj\". \"none\" prints no signature and every accidental is written out. Default \"C\"."
+        "type": "string"
       },
       "meter": {
-        "type": "string",
-        "description": "The time signature: \"4/4\", \"3/4\", \"2/4\", \"6/8\", \"9/8\", \"12/8\", \"2/2\", \"5/4\", \"7/8\", or \"C\" (common time) / \"C|\" (cut time); \"none\" prints no signature and never splits beams by beat. Sets the beat unit used to derive beam groups and the width of a bare ? occlusion. Default \"4/4\"."
+        "type": "string"
       },
       "unitLength": {
-        "type": "string",
-        "description": "The note length a bare letter means (ABC L:): \"1/8\" (default) — \"C\" is a quaver, \"C2\" a crotchet, \"C4\" a minim, \"C/\" a semiquaver, \"C3\" a dotted crotchet; \"1/4\" — bare letters are crotchets (natural for primary rhythm work: \"C D E2\" = two crotchets and a minim); \"1/16\" for fast music. Choose the one that makes your ABC read most simply."
+        "type": "string"
       },
       "tempo": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional tempo. Prints a \"♩ = 96\" mark (and any text) above the first system and sets the playback speed. Omit to print nothing (playback then uses 96 to the beat).",
         "properties": {
           "bpm": {
             "type": "number",
             "minimum": 20,
-            "maximum": 300,
-            "description": "Beats per minute."
+            "maximum": 300
           },
           "unit": {
-            "type": "string",
-            "description": "The note that gets the beat: \"1/4\" (crotchet, default), \"1/8\", \"3/8\" (dotted crotchet, for 6/8), \"1/2\"."
+            "type": "string"
           },
           "text": {
-            "type": "string",
-            "description": "Optional tempo word printed before the mark, e.g. \"Allegro\", \"Gently\"."
+            "type": "string"
           }
         },
         "required": [
@@ -98,14 +50,12 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 4,
-        "description": "One entry per stave, top to bottom. Every part shares key and meter and must have the same number of bars (a shorter part is padded with empty bars). One part = a single stave; treble + bass = a grand staff; three or four = a bracketed system.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "name": {
-              "type": "string",
-              "description": "Part name printed left of the stave on the first system, e.g. \"Voice\", \"Piano\", \"Soprano\". Omit for none."
+              "type": "string"
             },
             "clef": {
               "type": "string",
@@ -115,16 +65,13 @@
                 "alto",
                 "tenor",
                 "percussion"
-              ],
-              "description": "The clef. treble (default) — bottom line E4, middle C sits on the first ledger line below; bass — bottom line G2, write middle-C-octave notes with a comma (C, D, E,); alto — middle line is middle C (viola); tenor — fourth line is middle C (cello, trombone); percussion — a neutral clef, pitches place as in treble."
+              ]
             },
             "music": {
-              "type": "string",
-              "description": "The part's music as an ABC body. Pitches: C D E F G A B = the octave starting at middle C; c d e f g a b = the octave above; a comma lowers an octave (C,), an apostrophe raises one (c'). Accidentals BEFORE the letter: ^ sharp, _ flat, = natural, ^^ double sharp, __ double flat (an accidental holds for the rest of the bar, as on paper). Length AFTER the letter, in units of unitLength: C2 doubles, C3 triples (dotted), C/ or C/2 halves, C// quarters, C3/2 is dotted. Rests: z with the same lengths; x an invisible rest; Z3 three whole bars of rest. Chords: [CEG] or [CEG]2. Tie: a hyphen straight after the note (C2-C). Slur: ( before the first note, ) after the last. Broken rhythm: C>D dots the first and halves the second, C<D the reverse. Tuplets: (3CDE a triplet; (5 (6 (7 likewise. Bar lines: | ordinary, || double, |] final, |: and :| repeat marks, :: both, |1 and |2 (or [1 [2) first and second endings. Chord symbols in double quotes before a note: \"G\" \"Am7\" \"D/F#\". Dynamics as decorations before a note: !pp! !p! !mp! !mf! !f! !ff! !sfz!; hairpins !crescendo(! … !crescendo)! and !diminuendo(! … !diminuendo)!. Articulation and ornaments before a note: . (staccato), !accent!, !tenuto!, !fermata!, !trill!, !mordent!, !turn!. Grace notes in braces before a note: {g}A or {/g}A for a slashed acciaccatura. Text above a note: \"^text\"; below: \"_text\". Inline changes at a bar start: [K:D] new key, [M:3/4] new metre, [L:1/4] new unit length. Spaces break beams (run beamed notes together); newlines are treated as spaces (system breaks are derived). Questions: ? before an event hides it behind a boxed question mark sized to the bar's remaining beats (?2 hides an event of known length); !highlight! before an event colours it amber. Anything the model cannot read is drawn as a small marked gap rather than dropped silently."
+              "type": "string"
             },
             "voice2": {
-              "type": "string",
-              "description": "Optional second voice on the SAME stave, in the same ABC form and bar structure as music (bar for bar). The first voice takes stems up, this one stems down — a hymn's soprano and alto on one stave, or a piano right hand with two lines. Omit for a single voice."
+              "type": "string"
             },
             "instrument": {
               "type": "string",
@@ -135,16 +82,14 @@
                 "pluck",
                 "strings",
                 "percussion"
-              ],
-              "description": "Web playback voice for this part (a synthesised patch, not a sampled instrument): \"piano\" (default — percussive, decaying), \"organ\" (sustained), \"flute\" (soft, breathy), \"pluck\" (short, guitar/ukulele-like), \"strings\" (bowed section — slow attack, sustained, gentle vibrato; good for chorales and slow melodies), \"percussion\" (unpitched click — the default for a percussion clef). Affects sound only; the notation is unchanged."
+              ]
             },
             "lyrics": {
               "type": "array",
               "maxItems": 4,
               "items": {
                 "type": "string"
-              },
-              "description": "Lyric verses in ABC w: form, one string per verse, printed under this stave in order. Syllables are assigned to the notes in order (rests and tied-to notes are skipped): split a word across notes with a hyphen (\"Twin-kle twin-kle\"), hold a syllable over extra notes with an underscore (\"lit-tle_ star\"), skip a note with *, write a space inside a syllable as ~, and put | to jump to the next bar. Omit for no lyrics."
+              }
             }
           },
           "required": [
@@ -153,23 +98,19 @@
         }
       },
       "brace": {
-        "type": "boolean",
-        "description": "Join the parts with a curly brace (a grand staff — one instrument) instead of a straight bracket (an ensemble). Default: true when there are exactly two parts with treble then bass clefs, false otherwise. A single part never draws either."
+        "type": "boolean"
       },
       "window": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Show only bars from..to (printed bar numbers, inclusive; a pickup is bar 0). Numbers continue as printed, and the clef, key and metre reprint at the start. Use this per host step to PAGE a long score. Omit to show every bar.",
         "properties": {
           "from": {
             "type": "integer",
-            "minimum": 0,
-            "description": "First bar shown."
+            "minimum": 0
           },
           "to": {
             "type": "integer",
-            "minimum": 0,
-            "description": "Last bar shown (inclusive)."
+            "minimum": 0
           }
         },
         "required": [
@@ -179,14 +120,12 @@
       },
       "revealTo": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Staged reveal: lay out EVERY bar (so the figure keeps its size across steps) but draw notes, lyrics and symbols only in bars up to and including this printed bar number; later bars show as empty staves with their bar lines. 0 draws only a pickup bar (or nothing). Give each host step a larger value to reveal a melody phrase by phrase. Omit to draw everything."
+        "minimum": 0
       },
       "barsPerSystem": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 16,
-        "description": "Fix the number of bars per line of music instead of deriving the breaks from the width — 4 when a source prints four bars a line, or 2 for large primary rhythm cards. Omit to derive."
+        "maximum": 16
       },
       "highlightBars": {
         "type": "array",
@@ -194,74 +133,59 @@
         "items": {
           "type": "integer",
           "minimum": 0
-        },
-        "description": "Printed bar numbers to wash amber across every part — \"look at bar 3\", the answer bar in a worked example. Omit for none. For a single note use !highlight! in the music instead."
+        }
       },
       "occlude": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Hide furniture behind a boxed question mark. (To hide a note or bar, use ? in the music.)",
         "properties": {
           "clef": {
-            "type": "boolean",
-            "description": "Replace each clef with a boxed ? — \"which clef is this?\" (pitches still place as the true clef). Default false."
+            "type": "boolean"
           },
           "key": {
-            "type": "boolean",
-            "description": "Replace the key signature with a boxed ? — \"what key is this in?\" (accidentals still print as the true key implies, so the notes themselves do not leak the signature). Default false."
+            "type": "boolean"
           },
           "meter": {
-            "type": "boolean",
-            "description": "Replace the time signature with a boxed ? — \"what is the time signature?\" Default false."
+            "type": "boolean"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "barNumbers": {
-            "type": "boolean",
-            "description": "Print the bar number above the first bar of each system after the first. Default true."
+            "type": "boolean"
           },
           "noteNames": {
-            "type": "boolean",
-            "description": "Write each note's letter name (with its sharp or flat) under the stave as a reading scaffold. Never prints under an occluded event. Default false."
+            "type": "boolean"
           },
           "partNames": {
-            "type": "boolean",
-            "description": "Print the part names. Default true."
+            "type": "boolean"
           },
           "clef": {
-            "type": "boolean",
-            "description": "Print the clefs. Default true."
+            "type": "boolean"
           },
           "key": {
-            "type": "boolean",
-            "description": "Print the key signature. Default true."
+            "type": "boolean"
           },
           "meter": {
-            "type": "boolean",
-            "description": "Print the time signature. Default true."
+            "type": "boolean"
           }
         }
       },
       "sound": {
-        "type": "boolean",
-        "description": "Web only: show a Play control that sounds the score (simple synthesised tones at the tempo, cursor on the current notes) and lets a tap on a note sound it. Print and slides show only the notation either way. Default true; set false for a pure reading task or when hearing the answer would give it away."
+        "type": "boolean"
       },
       "select": {
         "type": "string",
         "enum": [
           "bars",
           "notes"
-        ],
-        "description": "Answer-on-the-figure (select-region) only: what a tap selects — \"bars\" (ids bar:<printed number>, default) or \"notes\" (ids note:<part>:<bar>:<event>, 1-based part and event within the bar; rests and chords count as events)."
+        ]
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the score, e.g. the source or a performance note."
+        "type": "string"
       }
     },
     "required": [
@@ -270,7 +194,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a melody in G, 4/4: beams, a tie, a dotted rhythm, note names on",
       "params": {
         "key": "G",
         "meter": "4/4",
@@ -286,7 +209,6 @@
       }
     },
     {
-      "label": "Blank / answer space — four empty bars of 3/4 for pupils to write a rhythm",
       "params": {
         "meter": "3/4",
         "parts": [
@@ -300,7 +222,6 @@
       }
     },
     {
-      "label": "Occluded question — complete the bar: the missing beats in bar 2 are boxed",
       "params": {
         "meter": "4/4",
         "unitLength": "1/4",
@@ -314,7 +235,6 @@
       }
     },
     {
-      "label": "Bass clef — a walking bass line with accidentals the key does not carry",
       "params": {
         "key": "F",
         "meter": "4/4",
@@ -328,7 +248,6 @@
       }
     },
     {
-      "label": "Hard case — grand staff class song in 6/8: pickup, tuplet, tie, endings, chords, dynamics, hairpin, lyrics",
       "params": {
         "header": "Over the hill",
         "composer": "Trad., arr. for class",
@@ -357,7 +276,6 @@
       }
     },
     {
-      "label": "Two voices on one stave and an SATB chord progression — GCSE harmony, bars 1–4 highlighted for analysis",
       "params": {
         "header": "Cadence in D major",
         "key": "D",

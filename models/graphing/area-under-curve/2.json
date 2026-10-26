@@ -4,46 +4,7 @@
   "name": "area-under-curve",
   "version": 2,
   "title": "Area under a curve",
-  "tagline": "Curve with the area to the x-axis shaded — definite integral, trapezium rule, area between curves, tangents; bare A Level sketch axes and parametric curves; values derived.",
-  "description": "A curve y = f(x) with the area between it and the x-axis over an interval [a, b] shaded — the model for the definite integral as area, the trapezium rule and Riemann estimates. You give the function(s) as expressions — any combination of + − × ÷ ^, parentheses and the built-in functions, so polynomials (\"x^3 − 4x\"), products (\"x*sin(x)\"), trig (\"2 + sin(x)\") and rational (\"4/(1 + x)\") curves all work — or PARAMETRICALLY as x(t), y(t) over a t-range (\"x = 5cos t, y = 3sin 2t\"), plus the limits a and b and (optionally) a strip rule and count; the model derives the shaded region, the true area (the definite integral, numerically), and — for the estimate — each strip, its ordinate heights, the estimate total and the over/under error. Give two curves and set region.between to shade and measure the area between them: the enclosed region is shaded and the readout is the total enclosed area ∫|upper − lower| dx (so it stays honest even where the curves cross). A single curve that dips below the axis shades above and below to the curve (signed area). Two registers: the default GCSE one draws numbered, gridded axes with the derived area printed below; axes.bare draws the A Level SKETCH — arrowhead axes with no numbers, ticks or grid, a bare italic x and y beside the arrow tips, an optional O at the origin, and no derived readout at all (the question and its answer live in the surrounding text). Pair it with monochrome for the black-ink sketch look and region.fill \"solid\" or \"hatch\" for exam-paper shading. Occlude the area or the estimate for a \"find / estimate the area\" question; highlight the answer in amber. Tangents to the curve — at a given x, or where the curve has a given gradient — with an optional gradient triangle are the speed-time graph's other half: the area is the distance, the tangent the acceleration. Web: drag the interval limits a and b and the area updates.",
-  "whenToUse": "Reach for this for the area under a curve, the definite integral as area, the trapezium rule, Riemann rectangles (left/right/midpoint estimates, over- and under-estimates), or the area between two curves. Give each curve an fn expression (same syntax as function-graph: + - * / ^, parentheses, sin cos tan asin acos atan sqrt cbrt abs exp ln log, pi and e, implicit multiplication; trig in radians) and set region.from / region.to to the limits a, b. For the true area, set region (shade defaults on) and read region's value. For an estimate, add strips with a rule (\"trapezium\", \"left\", \"right\", \"midpoint\") and n; set strips.showOrdinates to draw the ordinate heights and strips.showError to compare the estimate with the true value. For \"use the trapezium rule to estimate the area\" set strips.occludeEstimate; for \"find the area\" set region.occlude. Area between two curves: give two curves (curve 0 is the upper one) and set region.between — the model shades the enclosed strip and reads out the total enclosed area ∫|upper − lower| dx, which equals ∫(upper − lower) when one curve stays above the other and remains correct (no cancellation) where they cross. For an area under a single curve the value is the signed integral by default (negative where the curve is below the axis) — set region.absolute for the total geometric area (e.g. GCSE \"area under a speed-time graph\", or an A Level curve with a lobe each side of the axis). CHOOSE THE REGISTER FIRST. GCSE and any question that reads values off the axes wants the default: numbered, gridded axes with the area printed below. A LEVEL PURE sketches instead — set axes.bare for arrowhead axes with no numbers, ticks or gridlines, just a bare italic x and y beside the arrow tips (add axes.showOrigin for an O at the origin), and add monochrome so the curves draw in black ink rather than blue and teal. Under axes.bare the derived readouts default OFF, which is what you want: a sketch states its answer in the text, not on the figure. Set region.fill \"solid\" for the exam paper's mid-grey shading or \"hatch\" for 45° hatching (the usual A Level parametric idiom); \"tint\" is the default light wash. When a limit is an exact form the axes cannot show — x = ln 2, x = e², x = π/3 — give region.fromLabel / region.toLabel and that bounding line draws solid with the text under the axis. PARAMETRIC curves: instead of fn, give xt, yt and tRange, e.g. { xt: \"5cos(t)\", yt: \"3sin(2t)\", tRange: [0, 1.5708] } for x = 5 cos t, y = 3 sin 2t on 0 ≤ t ≤ π/2 — same expression syntax with t as the variable, and write t-ranges as decimals (π/2 ≈ 1.5708). region.from / region.to are still X-values, and the area ∫y dx is derived from the path, with the traversal direction normalised so a right-to-left curve still reads positive. Restrict an explicit curve to part of its domain with curves[].domain (e.g. [0.01, 3.14] for a cosec curve on 0 < x < π); estimate strips and region.between are for explicit curves only and are ignored on a parametric one. Keep the same window across a lesson so the strips and areas compare on a fixed frame. A staged build reads well: shade the region → overlay 2 strips → 4 → 8, the estimate closing on the true area; or, on bare axes, curve → bounding lines → shaded region → answer. Switch primitive when the teaching changes — to sketch or read a curve's roots/turning points use graphing/function-graph; for the tangent, gradient or differentiation from first principles as the teaching use graphing/first-principles (a tangent drawn on a speed-time graph to estimate an acceleration is `tangents` here); for the area under a straight-line speed-time graph (motion) use graphing/journey-graph; for a shaded inequality region use graphing/inequality-region. Synonyms a teacher might use: area under the curve, definite integral, integration, integral, trapezium rule, trapezoidal, Riemann sum, rectangles, strips, ordinates, estimate the area, area between curves, signed area, sketch, the sketch shows, finite region R, parametric equations, parametric curve.",
   "responseModes": [],
-  "tags": [
-    "area under the curve",
-    "definite integral",
-    "integration",
-    "integral",
-    "trapezium rule",
-    "trapezoidal",
-    "riemann",
-    "rectangles",
-    "strips",
-    "ordinates",
-    "area between curves",
-    "signed area",
-    "estimate",
-    "calculus",
-    "graphing",
-    "curve",
-    "maths",
-    "sketch",
-    "bare axes",
-    "unnumbered axes",
-    "arrowhead axes",
-    "monochrome",
-    "parametric",
-    "parametric equations",
-    "region R",
-    "hatched",
-    "shaded region",
-    "a level",
-    "exact form",
-    "tangent",
-    "gradient triangle",
-    "speed-time graph",
-    "velocity-time graph",
-    "acceleration"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -51,7 +12,6 @@
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The window — the rectangle of the plane shown. Frame it so the whole interval [a, b] and the curve's height over it are visible.",
         "properties": {
           "x": {
             "type": "array",
@@ -59,8 +19,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis. Default [-10, 10]. Include a margin either side of [a, b]."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -68,64 +27,51 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the y-axis. Default [-10, 10]. Fit the curve's height over [a, b]."
+            "maxItems": 2
           },
           "xStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value. (Still sets the drag snap under axes.bare, where nothing is drawn.)"
+            "exclusiveMinimum": 0
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "equalAspect": {
-            "type": "boolean",
-            "description": "Force TRUE square scale. Default false (x and y scaled independently to fill the box). Rarely needed for areas."
+            "type": "boolean"
           },
           "degrees": {
-            "type": "boolean",
-            "description": "Evaluate trig in degrees rather than radians. Default false. Applies to a parametric curve's xt / yt too."
+            "type": "boolean"
           },
           "bare": {
-            "type": "boolean",
-            "description": "The A LEVEL SKETCH register: arrowhead axes with NO gridlines, NO ticks and NO numbers, and a bare italic x and y beside the arrow tips. Because numbers are exactly what it removes, it also DEFAULTS the derived readouts off (region.showValue, strips.showEstimate, a gradient triangle's derived leg labels) — a sketch states its area in the surrounding text, not on the figure; set either readout to true, or give the triangle's labels as text, to override. Pair with monochrome for the black-ink look and region.fill \"solid\" / \"hatch\" for exam-paper shading. Default false (numbered, gridded axes — the GCSE register)."
+            "type": "boolean"
           },
           "showOrigin": {
-            "type": "boolean",
-            "description": "Print an italic O at the origin. Only drawn under axes.bare (a numbered figure already labels 0). Default false."
+            "type": "boolean"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the background grid. Default true. Forced off by axes.bare."
+        "type": "boolean"
       },
       "monochrome": {
-        "type": "boolean",
-        "description": "Draw every curve in the axis ink (near-black) instead of the categorical blue / teal — the black-ink look of an A Level printed sketch. A highlight then reads as stroke WEIGHT rather than amber, and a highlighted region fills one shade darker, so the figure stays honestly monochrome. Default false."
+        "type": "boolean"
       },
       "curves": {
         "type": "array",
         "maxItems": 2,
-        "description": "The curve(s). One curve shades to the x-axis; two curves can be shaded between (region.between). Each curve is either EXPLICIT (fn) or PARAMETRIC (xt + yt + tRange). Curve 0 is drawn blue, curve 1 teal (both black under monochrome). For \"between\", curve 0 is treated as the upper curve.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "fn": {
-              "type": "string",
-              "description": "EXPLICIT form: the function f(x) as an expression: + - * / ^, parentheses, sin cos tan asin acos atan sinh cosh tanh sqrt cbrt abs exp ln log log2, pi and e, implicit multiplication. Trig in radians. Handles complex functions — cubics, products and trig. Examples: \"x^2\", \"0.5x^2 + 1\", \"x^3 - 4x\", \"x*sin(x)\", \"2 + sin(x)\", \"4/(1 + x)\"."
+              "type": "string"
             },
             "xt": {
-              "type": "string",
-              "description": "PARAMETRIC form: x as an expression in t. Same syntax as fn but with t as the variable, e.g. \"5cos(t)\", \"t - sin(t)\", \"ln(t)\", \"3cos(2t)\". Give yt and tRange too; fn is then ignored."
+              "type": "string"
             },
             "yt": {
-              "type": "string",
-              "description": "PARAMETRIC form: y as an expression in t, e.g. \"3sin(2t)\", \"1 - cos(t)\", \"1/t\"."
+              "type": "string"
             },
             "tRange": {
               "type": "array",
@@ -133,8 +79,7 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "PARAMETRIC form: [tMin, tMax] — the parameter interval traced. Write exact forms as decimals: π/2 ≈ 1.5708, π ≈ 3.1416, 2π ≈ 6.2832."
+              "maxItems": 2
             },
             "domain": {
               "type": "array",
@@ -142,16 +87,13 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "EXPLICIT curves only: restrict the plotted x-range to [min, max] — a piecewise piece, one branch, or a stated domain such as 0 < x < π. Default: the whole window. (A parametric curve is bounded by tRange instead.)"
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Equation label near the curve, e.g. \"y = x²\". Use proper typography. Omit for an unlabelled curve — A Level sketches usually name the curve in the text, not on the figure."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Override this curve to amber emphasis (reserved for the answer) — or, under monochrome, to a heavier stroke in the same ink. By default curve 0 is blue and curve 1 teal, so you do NOT need this just to tell two curves apart. Default false."
+              "type": "boolean"
             }
           },
           "anyOf": [
@@ -173,23 +115,18 @@
       "region": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The area to shade and measure: between curve 0 and the x-axis (default), or between the two curves (between: true), over [from, to].",
         "properties": {
           "from": {
-            "type": "number",
-            "description": "The lower limit a (an x-value, including for a parametric curve)."
+            "type": "number"
           },
           "to": {
-            "type": "number",
-            "description": "The upper limit b (an x-value, including for a parametric curve)."
+            "type": "number"
           },
           "between": {
-            "type": "boolean",
-            "description": "Shade between the two curves instead of between curve 0 and the x-axis (needs two EXPLICIT curves). The enclosed region is filled neutral and the readout is the total enclosed area ∫|upper − lower| dx — correct even where the curves cross. Default false. (Estimate strips are ignored in between mode; so is a parametric curve.)"
+            "type": "boolean"
           },
           "shade": {
-            "type": "boolean",
-            "description": "Fill the true region. Set false to mark the interval without filling (e.g. an answer space, or to show only the estimate strips). Default true."
+            "type": "boolean"
           },
           "fill": {
             "type": "string",
@@ -197,36 +134,28 @@
               "tint",
               "solid",
               "hatch"
-            ],
-            "description": "How the region is filled — style only, the shaded SHAPE is identical either way. 'tint' (default) = the light wash; 'solid' = the mid-grey of a printed exam figure, the usual choice on bare sketch axes; 'hatch' = 45° hatch lines, the A Level parametric-area idiom."
+            ]
           },
           "absolute": {
-            "type": "boolean",
-            "description": "Single-curve only: read out the total GEOMETRIC area (sum of the magnitudes) instead of the signed definite integral. Use for \"area under a speed-time graph\" style questions, and for a curve with a lobe on each side of the axis where the two parts must not cancel. Default false (signed integral). Ignored for region.between (the between area is always the enclosed magnitude)."
+            "type": "boolean"
           },
           "showValue": {
-            "type": "boolean",
-            "description": "Print the derived area / integral value below the figure. Default true — but FALSE by default under axes.bare, where a printed sketch shows no readout. Set explicitly either way to be sure."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Hide the area value as \"?\" — the \"find the area\" hook. Default false. (On a bare sketch prefer showValue: false and put the question in the text; there is no readout to occlude.)"
+            "type": "boolean"
           },
           "label": {
-            "type": "string",
-            "description": "A name placed in the region (e.g. \"R\") or text that overrides the value readout. Omit to show the derived value."
+            "type": "string"
           },
           "fromLabel": {
-            "type": "string",
-            "description": "Text printed under the x-axis at the lower limit, for a bound whose EXACT form the axes cannot show — \"ln 2\", \"e\", \"π/3\". Giving it also draws that bounding line SOLID in the ink instead of dashed construction grey, because a labelled bound is part of the question. Omit for an unlabelled limit."
+            "type": "string"
           },
           "toLabel": {
-            "type": "string",
-            "description": "The same for the upper limit — \"ln 4\", \"e²\", \"2π\"."
+            "type": "string"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Shade the region in amber emphasis — or, under monochrome, one shade darker in grey. Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -237,7 +166,6 @@
       "strips": {
         "type": "object",
         "additionalProperties": false,
-        "description": "A numeric-estimate overlay on the SAME interval as region: n strips under the rule, with the derived estimate. Requires region and an EXPLICIT curve 0. Use to teach the trapezium rule or Riemann rectangles.",
         "properties": {
           "rule": {
             "type": "string",
@@ -246,29 +174,23 @@
               "left",
               "right",
               "midpoint"
-            ],
-            "description": "'trapezium' = the trapezium rule (straight tops between ordinates); 'left' / 'right' / 'midpoint' = rectangles whose height is the curve at the left / right / middle of each strip (Riemann estimates — left & right give the under/over estimates for a monotonic curve)."
+            ]
           },
           "n": {
             "type": "integer",
-            "minimum": 1,
-            "description": "The number of strips. The strip width is (to − from) / n."
+            "minimum": 1
           },
           "showOrdinates": {
-            "type": "boolean",
-            "description": "Draw and label the ordinate heights (y0, y1, … for trapezium; the sampled height for rectangles). Default false."
+            "type": "boolean"
           },
           "showEstimate": {
-            "type": "boolean",
-            "description": "Print the estimate total. Default true — but FALSE by default under axes.bare, which shows no readouts."
+            "type": "boolean"
           },
           "occludeEstimate": {
-            "type": "boolean",
-            "description": "Hide the estimate as \"?\" — the \"use the rule to estimate\" hook. Default false."
+            "type": "boolean"
           },
           "showError": {
-            "type": "boolean",
-            "description": "Also print how the estimate compares with the true area (over- / under-estimate and by how much). Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -279,34 +201,27 @@
       "tangents": {
         "type": "array",
         "maxItems": 3,
-        "description": "Tangents drawn to curve 0 (explicit curves only), over the curve and across the window: the speed-time graph's \"draw a tangent to estimate the acceleration at t = 2\" or \"find when the acceleration equals the average\". Each gives `at` (the touch x) or `gradient` (the model finds where the curve has that gradient). No gradient value is printed; add a triangle for the run and rise. Default none.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "number",
-              "description": "Touch the curve at this x; the gradient is derived."
+              "type": "number"
             },
             "gradient": {
-              "type": "number",
-              "description": "Touch the curve where its gradient equals this value (e.g. parallel to a chord), searched along the drawn part of curve 0 — including a point the gradient only just reaches (the steepest point). Nothing is drawn if the curve never has this gradient. Ignored when `at` is given."
+              "type": "number"
             },
             "near": {
-              "type": "number",
-              "description": "With `gradient`: where the curve has that gradient more than once, the touch point nearest this x. Default the first from the left."
+              "type": "number"
             },
             "triangle": {
               "type": "object",
               "additionalProperties": false,
-              "description": "A gradient triangle between the touch point and the point `run` along the tangent, its right angle below the line; legs labelled with the run and the rise.",
               "properties": {
                 "run": {
-                  "type": "number",
-                  "description": "How far along the tangent the triangle reaches from the touch point, in x units (negative reaches left)."
+                  "type": "number"
                 },
                 "labels": {
-                  "description": "Leg labels [run, rise]. Default the derived values (none on axes.bare, which prints no numbers); false draws none; or give the text as written in the source (e.g. a reading off the graph). A leg the window clips away is not labelled.",
                   "oneOf": [
                     {
                       "type": "boolean",
@@ -343,16 +258,13 @@
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional SHORT line centred below the figure, e.g. the integral being found. Keep it to a few words: it is centred on one line and is not wrapped, so a sentence overflows the canvas. The question wording and the working belong in the block's text, beside the figure."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Drag the interval limit handles a and b along the x-axis; the shaded area, the value and any strips recompute live. On a parametric curve the handles stay within the path's own x-extent. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -361,7 +273,6 @@
   },
   "examples": [
     {
-      "label": "The area under a curve (worked, value shown)",
       "params": {
         "axes": {
           "x": [
@@ -389,7 +300,6 @@
       }
     },
     {
-      "label": "The trapezium rule (occluded estimate question)",
       "params": {
         "axes": {
           "x": [
@@ -421,7 +331,6 @@
       }
     },
     {
-      "label": "Riemann rectangles — a left-hand under-estimate vs the true area",
       "params": {
         "axes": {
           "x": [
@@ -453,7 +362,6 @@
       }
     },
     {
-      "label": "The hard case — a curve crossing the axis (signed area), 4 trapezia",
       "params": {
         "axes": {
           "x": [
@@ -486,7 +394,6 @@
       }
     },
     {
-      "label": "A cubic — the definite integral of a more complex function",
       "params": {
         "axes": {
           "x": [
@@ -513,7 +420,6 @@
       }
     },
     {
-      "label": "A product / trig curve (x·sin x)",
       "params": {
         "axes": {
           "x": [
@@ -541,7 +447,6 @@
       }
     },
     {
-      "label": "Area between two curves (a parabola and a line)",
       "params": {
         "axes": {
           "x": [
@@ -573,7 +478,6 @@
       }
     },
     {
-      "label": "Area between two curves that cross (total enclosed area)",
       "params": {
         "axes": {
           "x": [
@@ -605,7 +509,6 @@
       }
     },
     {
-      "label": "Answer space — estimate the area yourself",
       "params": {
         "axes": {
           "x": [
@@ -631,7 +534,6 @@
       }
     },
     {
-      "label": "@2 bare sketch — the region R between a curve and a horizontal line (solid grey, no readout)",
       "params": {
         "axes": {
           "x": [
@@ -664,7 +566,6 @@
       }
     },
     {
-      "label": "@2 bare sketch, the hard case — two lobes, one below the axis (total area)",
       "params": {
         "axes": {
           "x": [
@@ -695,7 +596,6 @@
       }
     },
     {
-      "label": "@2 parametric — the area under a cycloid arch (hatched region)",
       "params": {
         "axes": {
           "x": [
@@ -729,7 +629,6 @@
       }
     },
     {
-      "label": "@2 parametric with exact-form bounding lines (worked — the area is exactly 0.3)",
       "params": {
         "axes": {
           "x": [
@@ -765,7 +664,6 @@
       }
     },
     {
-      "label": "@2 a restricted domain sketched on bare axes (no region)",
       "params": {
         "axes": {
           "x": [
@@ -792,7 +690,6 @@
       }
     },
     {
-      "label": "A tangent with a gradient triangle — the acceleration at t = 2 on a speed-time curve (worked)",
       "params": {
         "axes": {
           "x": [
@@ -822,7 +719,6 @@
       }
     },
     {
-      "label": "Find the shaded area (occluded question, numbered axes)",
       "params": {
         "axes": {
           "x": [

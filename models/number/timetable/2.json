@@ -4,30 +4,7 @@
   "name": "timetable",
   "version": 2,
   "title": "Timetable",
-  "tagline": "Bus or train timetable grid of clock times; derives journey durations, gaps between services and the latest arrive-by with 60-base time arithmetic past midnight.",
-  "description": "A bus / train timetable as a grid: the stops or stations down the left (one row each), one service per column, and a clock time in every cell (12- or 24-hour). Reading down a column follows one service through the stops; reading across a row is the same stop on different services. The author writes the stops, the services and the cell times (\"HH:MM\", 24-hour) — and the model derives every cross-cell value with proper hours:minutes (60-base) arithmetic: a journey duration down a column, the gap between two services at a stop, and the latest service that arrives by a target time, all wrapping correctly past midnight for late services. A stop a service skips is written as null and drawn as \"—\". Any cell occludes to \"?\" (complete the timetable), and the single derived readout (a journey duration, a difference, or an arrive-by) occludes its answer to \"?\" too; a readout that reads a hidden cell shows \"?\" so nothing leaks. Cells and the readout highlight in amber for emphasis.",
-  "whenToUse": "Reach for this for reading and reasoning with a timetable: read off a time, work out a journey duration (how long from one stop to another on a service), the gap between two services at a stop (how long until the next bus / train), and the classic \"I must arrive by 10:00 — what is the latest bus I can catch?\" question. Author `stops` (the row labels — stations or stops) and `services` (the columns); each service carries a `times` array with ONE entry per stop, a clock time \"HH:MM\" in 24-hour (e.g. \"09:05\", \"13:40\", \"00:15\"), or null where the service does not call at that stop (drawn as \"—\"). Set `format` to \"12h\" for am/pm display or \"24h\" (default) — this is display only; always author the times in 24-hour. Add one `query` for the derived readout: kind \"duration\" (service column + from/to stops) for a journey time, kind \"difference\" (a stop + two service columns) for the gap between services, kind \"arriveBy\" (a destination stop + a \"by\" time, optional origin) for the latest service in time. Occlude the query (`occlude: true`) to ask the question and show the working space; occlude a cell instead (in `cells`) to ask pupils to complete the timetable. Times past midnight work automatically — write \"23:40\" then \"00:15\" down a column and the duration is 35 minutes, not negative. Up to 6 services and up to 14 stops fit in one block (a full GCSE bus route of 10–12 stops draws in one table); for a longer route than that, split across blocks and keep the same stops so pupils track one table. A staged build reads well: open on the plain table, trace one journey, then work the arrive-by reasoning. This model is for cross-cell TIME (durations); for a frequency table whose cells are counts that sum to totals use statistics/two-way-table, and for plotting a journey as distance against time use graphing/journey-graph. Synonyms a teacher might use: timetable, bus timetable, train timetable, departure times, arrival times, journey time, how long does the journey take, time difference, elapsed time, catch the bus, arrive by, latest train, reading timetables, 24-hour clock.",
   "responseModes": [],
-  "tags": [
-    "timetable",
-    "bus timetable",
-    "train timetable",
-    "departure",
-    "arrival",
-    "journey time",
-    "duration",
-    "elapsed time",
-    "time difference",
-    "arrive by",
-    "catch the bus",
-    "latest train",
-    "24-hour clock",
-    "12-hour clock",
-    "reading timetables",
-    "time",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -38,21 +15,18 @@
           "type": "string"
         },
         "minItems": 2,
-        "maxItems": 14,
-        "description": "The stops or stations, top to bottom — one table ROW each. These are the row headers down the left, e.g. [\"Maple Cross\", \"Thornbury\", \"Wexcombe\", \"Larkhall\"]. Up to 14 rows — enough for a full GCSE bus route (10–12 stops is common)."
+        "maxItems": 14
       },
       "services": {
         "type": "array",
         "minItems": 1,
         "maxItems": 6,
-        "description": "The services, left to right — one table COLUMN each. Each service is a journey down the stops; its `times` give the clock time at every stop in order.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "name": {
-              "type": "string",
-              "description": "Optional short column header for the service (a route letter \"A\", a route number \"X1\", or a category). Omit to leave the column unlabelled — services are then told apart by their times, as on a real timetable."
+              "type": "string"
             },
             "times": {
               "type": "array",
@@ -62,8 +36,7 @@
                   "null"
                 ],
                 "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
-              },
-              "description": "One entry per stop, in the SAME order as `stops`: a clock time \"HH:MM\" in 24-hour (\"09:05\", \"13:40\", \"00:15\"), or null where this service does not call at that stop (drawn as \"—\"). Times down a column should run forward in real time; a later stop whose clock time is smaller is taken as past midnight and the durations wrap a day automatically."
+              }
             }
           },
           "required": [
@@ -76,33 +49,27 @@
         "enum": [
           "24h",
           "12h"
-        ],
-        "description": "How clock times are DISPLAYED: \"24h\" (default) shows \"09:05\", \"13:40\", \"00:15\"; \"12h\" shows \"9:05 am\", \"1:40 pm\", \"12:15 am\". Display only — always author the times in 24-hour. Keep one format across a lesson."
+        ]
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question and emphasis flags. The cells themselves always come from `services[].times`; list a cell here only to occlude or highlight it. Addresses outside the grid are ignored.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "stop": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Stop (row) of the cell, counted from 1 at the top stop."
+              "minimum": 1
             },
             "service": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Service (column) of the cell, counted from 1 at the leftmost service."
+              "minimum": 1
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's time as \"?\" — the \"complete the timetable\" hook. The cell stays in place; only its time hides. A query that reads this cell then shows \"?\" too. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this cell — follow one journey, or mark a result. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -112,39 +79,31 @@
         }
       },
       "query": {
-        "description": "The single derived readout below the table — choose ONE kind. \"duration\": a journey time down a service column. \"difference\": the gap between two services at a stop. \"arriveBy\": the latest service that arrives at a destination by a target time. Omit for a plain timetable (an answer space to read).",
         "oneOf": [
           {
             "type": "object",
             "additionalProperties": false,
-            "description": "JOURNEY DURATION down one service column, from an earlier stop to a later one. The model reads the two cell times and computes the elapsed time in hours and minutes (wrapping past midnight when the arrival time is earlier on the clock than the departure). A brace spans the two cells and the duration reads out below.",
             "properties": {
               "kind": {
-                "const": "duration",
-                "description": "Selects the journey-duration readout."
+                "const": "duration"
               },
               "service": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "Which service column to read down, counted from 1 at the leftmost column."
+                "minimum": 1
               },
               "from": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "The departure stop (row), counted from 1 at the top stop. Must be an earlier row than `to`, and the service must call there (a non-null time)."
+                "minimum": 1
               },
               "to": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "The arrival stop (row). A later row than `from`; the service must call there."
+                "minimum": 1
               },
               "occlude": {
-                "type": "boolean",
-                "description": "Render the computed duration as \"?\" — the \"how long does the journey take?\" question. The two cell times stay visible. Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the two spanned cells and the brace (answer emphasis). Default false — the query already tints its cells in accent."
+                "type": "boolean"
               }
             },
             "required": [
@@ -157,16 +116,13 @@
           {
             "type": "object",
             "additionalProperties": false,
-            "description": "The GAP between two services at one stop — \"how much later is the next bus?\". The model reads the two times across the row and computes the difference in minutes (the second taken as the later service, wrapping past midnight if its clock time is smaller). A brace spans the two cells and the gap reads out below.",
             "properties": {
               "kind": {
-                "const": "difference",
-                "description": "Selects the difference-between-services readout."
+                "const": "difference"
               },
               "stop": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "Which stop (row) to compare across, counted from 1 at the top stop."
+                "minimum": 1
               },
               "services": {
                 "type": "array",
@@ -175,16 +131,13 @@
                   "minimum": 1
                 },
                 "minItems": 2,
-                "maxItems": 2,
-                "description": "The two service columns to compare, as [earlier, later] 1-based indices. Both must call at the stop. The gap is later − earlier."
+                "maxItems": 2
               },
               "occlude": {
-                "type": "boolean",
-                "description": "Render the gap as \"?\" — the \"how long until the next service?\" question. Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the two spanned cells and the brace. Default false."
+                "type": "boolean"
               }
             },
             "required": [
@@ -196,34 +149,27 @@
           {
             "type": "object",
             "additionalProperties": false,
-            "description": "The classic \"catch the … to arrive by T\" question. Given a destination stop and a target time, the model finds the LATEST-departing service that still arrives at the destination at or before T, and reads out its departure and arrival. The chosen column's departure and arrival cells are marked.",
             "properties": {
               "kind": {
-                "const": "arriveBy",
-                "description": "Selects the latest-service-to-arrive-by readout."
+                "const": "arriveBy"
               },
               "stop": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "The DESTINATION stop (row) you must arrive at, counted from 1 at the top stop."
+                "minimum": 1
               },
               "by": {
                 "type": "string",
-                "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
-                "description": "The target arrival time as \"HH:MM\" (24-hour) — you must be at the destination at or before this time."
+                "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
               },
               "from": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "The ORIGIN stop (row) you board at. Default 1 (the top stop). Only services calling at both origin and destination are considered."
+                "minimum": 1
               },
               "occlude": {
-                "type": "boolean",
-                "description": "Render the chosen departure time as \"?\" — the \"which is the latest service?\" question. Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the chosen service's departure and arrival cells (answer emphasis). Default false."
+                "type": "boolean"
               }
             },
             "required": [
@@ -235,16 +181,13 @@
         ]
       },
       "cornerLabel": {
-        "type": "string",
-        "description": "Text for the top-left corner cell of the header row, e.g. \"Stop\" or \"Station\". Showing it (or any service `name`) draws the header band. Default empty."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure (e.g. the route — \"Bus 7, weekdays\"); the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -254,7 +197,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — journey duration on the 09:05 (Maple Cross → Larkhall, 1 h 7 min)",
       "params": {
         "header": "Bus 7 — weekday mornings",
         "cornerLabel": "Stop",
@@ -307,7 +249,6 @@
       }
     },
     {
-      "label": "Complete the timetable (answer space) — a missing time occluded, 12-hour display",
       "params": {
         "header": "Coastline trains",
         "cornerLabel": "Station",
@@ -354,7 +295,6 @@
       }
     },
     {
-      "label": "Occluded question — find the duration of a part journey (the 08:35, Thornbury → Larkhall)",
       "params": {
         "header": "Bus 7 — weekday mornings",
         "cornerLabel": "Stop",
@@ -408,7 +348,6 @@
       }
     },
     {
-      "label": "Difference between services — how long until the next bus from Greenford (18 min)",
       "params": {
         "header": "Bus 12 — every few minutes",
         "cornerLabel": "Stop",
@@ -451,7 +390,6 @@
       }
     },
     {
-      "label": "Arrive by — the latest bus from Maple Cross to reach Larkhall by 10:00 (the 08:35)",
       "params": {
         "header": "Bus 7 — weekday mornings",
         "cornerLabel": "Stop",
@@ -505,7 +443,6 @@
       }
     },
     {
-      "label": "Hard case — a night bus past midnight: 23:40 → 00:35 is 55 min, with a skipped stop drawn \"—\"",
       "params": {
         "header": "Night bus N9",
         "cornerLabel": "Stop",

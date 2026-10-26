@@ -4,54 +4,20 @@
   "name": "ten-frame",
   "version": 1,
   "title": "Ten-frame",
-  "tagline": "One or two 2×5 ten-frames with two-colour counters; derives the count, the colour bond and how-many-more-to-ten for bonds and bridging.",
-  "description": "One or two 2×5 ten-frames filled with chunky two-colour counters, with the count, the number bond and \"how many more to ten\" derived and read off the frame. You write only the counts — a list of counter groups, each a quantity and a colour (red and yellow by default — the canonical two-colour split), optionally struck through to show subtraction (\"taken away\"). The model derives everything else: how many frames (one for up to ten counters, two up to twenty), which cell each counter fills (in reading order, left to right then down), the empty cells, the total, the bond by colour (7 and 3 make 10), the complement to the next ten (3 more to make ten), and a fill-in stem sentence beneath the frame. Choose which sentence to state (count / bond / complement / subtraction) and occlude one number in it to pose a question — the counters stay correct and the number shows \"?\". Supports subitising, number bonds to 5 and 10, the make-ten bridging strategy across two frames, and add / subtract within 10 and 20.",
-  "whenToUse": "Reach for this for early-number work on a ten-frame (or two): subitising (\"how many?\" at a glance), number bonds to 5 and 10, \"how many more to make ten\", counting, and add / subtract within 10 and 20. Write the counters as groups in counters[]: each group is a count and a colour, laid into the frame in order. Use one colour for a plain count (subitising); use two colours (the default red then yellow) to show a number bond or an addition — the two addends read as two colours. Numbers are derived: never write the total or the bond — the model computes them. Common configurations: subitising / count — one colour, stem \"count\", occlude \"total\" for \"how many counters?\"; number bond to ten — fill ten cells with two colours (7 red + 3 yellow), stem \"bond\" → \"7 and 3 make 10\"; how many more to ten — fill some cells, stem \"complement\", occlude \"complement\", highlight \"empties\" → \"6 and ? more make ten\" with the empty cells ringed (the empties are the answer — counting them is the intended, concrete reasoning, not a leak); make ten / bridging within 20 — two addends summing past ten (8 red + 5 yellow = 13) spill into a second frame; subtraction — give the counters that stay plus a struck-through group for the ones taken away (5 red + 4 red struck = 9 total), stem \"subtract\" → \"9 take away 4 leaves 5\"; answer space — counters: [] for an empty frame to fill in. The frame count is derived (1 up to ten, 2 up to twenty); set frames: 2 to force an empty second frame for \"make twenty\". fill \"row\" (default) lays the canonical five-and-five rows; fill \"column\" lays pairs down each column (doubles, odd / even). Keep the colours and the stem the same across a lesson so pupils compare like with like. A staged build reads beautifully: open on the first addend, add the second a stage later, and (for bridging) fill to ten before the spill. Switch model when the teaching changes — for beads grouped in fives use number/bead-string; for the part-whole \"cherry\" use number/part-whole (when shipped); for place-value columns use number/place-value; for a number line use number/number-line. Synonyms a teacher might use: ten frame, tens frame, ten-frame, counters, two-colour counters, subitise, subitising, number bond, bonds to ten, make ten, how many more, ten-ness, add within ten, add within twenty, take away.",
   "responseModes": [],
-  "tags": [
-    "ten frame",
-    "ten-frame",
-    "tens frame",
-    "counters",
-    "two-colour counters",
-    "subitise",
-    "subitising",
-    "number bond",
-    "number bonds",
-    "bonds to ten",
-    "bonds to five",
-    "make ten",
-    "making ten",
-    "bridging",
-    "how many more",
-    "complement",
-    "count",
-    "counting",
-    "addition",
-    "subtraction",
-    "add within ten",
-    "add within twenty",
-    "take away",
-    "KS1",
-    "primary",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
       "counters": {
         "type": "array",
-        "description": "The counter GROUPS, laid into the frame(s) in order — the only quantities you author. An empty array [] draws an empty frame (an answer space). Groups fill consecutively in reading order, so two groups read as two addends. Total counters across all groups should be 0–20 (two frames hold twenty); extras beyond the frames are dropped.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "count": {
               "type": "integer",
-              "minimum": 0,
-              "description": "How many counters in this group. 0 is allowed (e.g. a staged base before an addend is added)."
+              "minimum": 0
             },
             "colour": {
               "type": "string",
@@ -60,12 +26,10 @@
                 "yellow",
                 "blue",
                 "green"
-              ],
-              "description": "Counter colour for this group. Omit to take the default by position — first group red, second yellow, then blue, green. Use one colour for a plain count; two colours to show a bond or an addition (the canonical red / yellow split). Colour is the counter's identity — there are no per-counter labels."
+              ]
             },
             "strike": {
-              "type": "boolean",
-              "description": "Draw this group's counters struck through and faded — \"taken away\", for subtraction. The struck counters still occupy their cells and count toward the total; the derived \"leaves\" amount is total − struck. Author subtraction as the counters that stay plus a struck group for those removed (5 red + 4 red struck = 9, leaves 5). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -76,16 +40,14 @@
       "frames": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 2,
-        "description": "Force the number of 2×5 frames. Omit to derive it (one frame for up to ten counters, two up to twenty). Set 2 to show an empty second frame — e.g. for a \"how many more to make twenty?\" question. Never fewer frames than the counters need."
+        "maximum": 2
       },
       "fill": {
         "type": "string",
         "enum": [
           "row",
           "column"
-        ],
-        "description": "Order the cells fill in. \"row\" (default): the top row left to right, then the bottom row — the canonical five-and-five layout for subitising and bonds to ten. \"column\": down each column in pairs (cell 1 above cell 6, then the next column) — for doubles and odd / even work."
+        ]
       },
       "stem": {
         "type": "string",
@@ -96,8 +58,7 @@
           "complement",
           "subtract",
           "none"
-        ],
-        "description": "Which fill-in sentence to state beneath the frame (the verbal twin of the figure). Its numbers are always derived. \"auto\" (default) picks one: subtraction if any group is struck, else a bond if there are two or more colours, else a count. \"count\" → \"There are __ counters.\" \"bond\" → \"__ and __ make __.\" (addends by colour). \"complement\" → \"__ and __ more make ten.\" (filled, then empties; \"twenty\" with two frames). \"subtract\" → \"__ take away __ leaves __.\" \"none\" → no sentence band."
+        ]
       },
       "occlude": {
         "type": "string",
@@ -105,8 +66,7 @@
           "none",
           "total",
           "complement"
-        ],
-        "description": "Hide ONE number in the stem sentence as \"?\" to pose a question — the counters and the frame stay correct. \"total\" hides the result (the count, the bond total, or the \"leaves\" amount). \"complement\" hides the \"how many more to make ten\" number. Default \"none\". (Each number lives in only one place, so hiding it never leaks elsewhere.)"
+        ]
       },
       "highlight": {
         "type": "string",
@@ -114,16 +74,13 @@
           "none",
           "empties",
           "result"
-        ],
-        "description": "Amber emphasis (result / answer only). \"empties\" rings the empty cells — the \"how many more?\" answer region. \"result\" ambers the result number in the stem. Default \"none\". Amber is never used as a counter colour."
+        ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the stem sentence, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -132,7 +89,6 @@
   },
   "examples": [
     {
-      "label": "Answer space — empty ten-frame to fill in",
       "params": {
         "counters": [],
         "stem": "none",
@@ -140,7 +96,6 @@
       }
     },
     {
-      "label": "Worked number bond to ten — 7 and 3 make 10",
       "params": {
         "counters": [
           {
@@ -156,7 +111,6 @@
       }
     },
     {
-      "label": "Occluded question — how many more to make ten? (6 shown)",
       "params": {
         "counters": [
           {
@@ -170,7 +124,6 @@
       }
     },
     {
-      "label": "Hard case — make ten / bridging within 20: 8 and 5 make 13",
       "params": {
         "counters": [
           {
@@ -186,7 +139,6 @@
       }
     },
     {
-      "label": "Subtraction by taking away — 9 take away 4 leaves 5",
       "params": {
         "counters": [
           {
@@ -203,7 +155,6 @@
       }
     },
     {
-      "label": "Subitising — how many counters? (count occluded)",
       "params": {
         "counters": [
           {

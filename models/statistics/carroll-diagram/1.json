@@ -4,37 +4,7 @@
   "name": "carroll-diagram",
   "version": 1,
   "title": "Carroll diagram",
-  "tagline": "Carroll sort grid (2×2, or 2×3 with a categorical axis): items placed into cells derived from two yes/no or numeric-rule properties; cells occlude/highlight, counts derived.",
-  "description": "A Carroll diagram: a sort grid whose columns are the categories of one property and rows the categories of another, with each item placed in its cell. You write the items — each a label, an optional numeric value, and optional attribute tags — and the two properties to sort by (property 1 = columns, property 2 = rows), each a predicate: an attribute tag (matches an item's tags) or a numeric rule (even, odd, multiple of k, greater than / less than / at least / at most / between). The cell every item belongs to is derived by evaluating those predicates; the negative category headers (\"Not even\"), the per-cell counts and the grid sizing are all computed too. There is no way to author an item's position, so the diagram cannot mis-sort. A yes/no property gives a 2×2; a categorical property (its own list of `categories`) gives a 2×3. Occlude a cell to ask \"what goes here?\" (the count blanks with it, no leak); colour tags tint the chips their real colour for colour sorts. For the overlapping-circle form of the same sorting (a Venn / sorting circles), use probability/venn — this model is the grid.",
-  "whenToUse": "Reach for this to sort or classify a set of numbers or shapes by two yes/no questions at once — the primary (KS1/KS2) Carroll-diagram work and lower-secondary two-way sorting. Author the semantics only — list the `items` (label + `value` for number sorts, + `attrs` tags for shape/colour/feature sorts) and the two `properties` (each a `tag` or a numeric `rule`); every item is then placed for you. Property 1 makes the columns, property 2 the rows; a yes/no property gives a 2×2 (its negative \"Not even\" header is derived — override with `notLabel`), a categorical property (`categories`) gives a 2×3 (e.g. a colour or size-band axis). Common configurations: worked — list everything and let it sort (turn on `show.counts` for \"how many are even and a multiple of 3?\"); blank answer space — `show.items:false` draws the empty headed grid for pupils to fill in (\"sort these into the diagram\"); occluded question — occlude a cell (`cells:[{col,row,occlude:true}]`) to ask \"what goes in this cell?\"; single-axis — give one property for a simple two-column (odd/even) split. Colour sorts: tag items \"red\"/\"blue\"/… and the chips render in that colour. Staged builds read well: open on the empty headed grid (`show.items:false`, or every cell `blank`) and reveal one cell per stage; or pose an occluded cell and reveal the answer. The grid handles large sets — cells grow to hold many chips. Cross-block convention: keep the same items, properties and headers across a lesson so pupils track one diagram — change only what is hidden, blanked or highlighted. Use probability/venn instead when the sorting wants overlapping circles (a Venn). Synonyms a teacher might use: Carroll diagram, sorting diagram, sort, classify, classification, two-way sort, sorting grid, attribute, property, criteria, odd and even, multiples, factors, shape sort, colour sort.",
   "responseModes": [],
-  "tags": [
-    "carroll diagram",
-    "carroll",
-    "sort",
-    "sorting",
-    "classify",
-    "classification",
-    "sorting diagram",
-    "sorting grid",
-    "two-way sort",
-    "attribute",
-    "property",
-    "criteria",
-    "odd and even",
-    "even",
-    "odd",
-    "multiples",
-    "factors",
-    "shape sort",
-    "colour sort",
-    "data handling",
-    "statistics",
-    "primary",
-    "ks1",
-    "ks2",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -42,7 +12,6 @@
       "rule": {
         "type": "object",
         "additionalProperties": false,
-        "description": "A numeric predicate evaluated on the item's `value`. An item with no `value` fails every numeric rule (so it lands in the \"not\" category).",
         "properties": {
           "kind": {
             "type": "string",
@@ -55,20 +24,16 @@
               "atLeast",
               "atMost",
               "between"
-            ],
-            "description": "even / odd: value parity. multipleOf: value is a multiple of `k`. greaterThan / lessThan / atLeast / atMost: compare value to `k` (atLeast = ≥, atMost = ≤). between: min ≤ value ≤ max (inclusive)."
+            ]
           },
           "k": {
-            "type": "number",
-            "description": "The comparison number for multipleOf / greaterThan / lessThan / atLeast / atMost. Ignored by even/odd/between."
+            "type": "number"
           },
           "min": {
-            "type": "number",
-            "description": "Lower bound (inclusive) for the `between` rule."
+            "type": "number"
           },
           "max": {
-            "type": "number",
-            "description": "Upper bound (inclusive) for the `between` rule."
+            "type": "number"
           }
         },
         "required": [
@@ -82,30 +47,24 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One thing to be sorted, drawn as a labelled chip. Its placement is DERIVED from its `value` / `attrs` against the two properties — you never say which cell it goes in.",
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The text on the chip — the item being sorted (\"12\", \"cat\", \"red triangle\"). If omitted, the `value` is shown."
+              "type": "string"
             },
             "value": {
-              "type": "number",
-              "description": "A number used by numeric `rule` predicates (even, multipleOf, greaterThan, …). Omit for purely categorical items (sorted only by `attrs`)."
+              "type": "number"
             },
             "attrs": {
               "type": "array",
               "items": {
                 "type": "string"
-              },
-              "description": "Attribute tags this item HAS, tested by `tag` predicates — [\"red\", \"triangle\", \"has-right-angle\"]. A recognised colour tag (red, blue, green, yellow, orange, purple, pink) also TINTS the chip its real colour (a sanctioned manipulative-colour convention for colour sorts)."
+              }
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this chip — draw the eye to one item. Default false."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide this single chip's label as \"?\" while still placing it. Rare; usually you occlude a whole cell instead. Default false."
+              "type": "boolean"
             }
           },
           "anyOf": [
@@ -120,45 +79,37 @@
               ]
             }
           ]
-        },
-        "description": "The things to sort, each drawn as a chip. Placement is derived from each item's `value` / `attrs` against the properties — you never place a chip. Set `show.items:false` for a blank answer space (the items still define the diagram's shape)."
+        }
       },
       "properties": {
         "type": "array",
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One sorting property / axis. Property 1 is the COLUMNS, property 2 is the ROWS. A plain property is YES/NO (its predicate is the positive category, e.g. \"Even\", and the negative \"Not even\" is derived); add `categories` to make the axis categorical (a 2×3). Give exactly one of `tag`, `rule` or `categories`.",
           "properties": {
             "name": {
-              "type": "string",
-              "description": "The positive-category header — \"Even\", \"Multiple of 3\", \"Red\", \"Has a right angle\"."
+              "type": "string"
             },
             "tag": {
-              "type": "string",
-              "description": "Categorical predicate: an item satisfies this property when its `attrs` list includes this tag (e.g. tag \"red\" matches an item with attrs [\"red\", …]). Use for shape/colour/feature sorts."
+              "type": "string"
             },
             "rule": {
               "$ref": "#/$defs/rule"
             },
             "notLabel": {
-              "type": "string",
-              "description": "Override the derived NEGATIVE category header (default \"Not \" + a lowercased name, e.g. \"Not even\"). e.g. \"Odd\" for an Even property, or \"Not a multiple of 3\"."
+              "type": "string"
             },
             "categories": {
               "type": "array",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "description": "One column or row of a CATEGORICAL axis (use this to make a 2×3, e.g. a colour axis Red | Blue | Green). Each category is a label plus its own predicate; an item is placed in the FIRST category it satisfies. Categories should be mutually exclusive and cover every item — an item matching none lands in a derived \"Other\" column/row that only appears when something falls there.",
                 "properties": {
                   "label": {
-                    "type": "string",
-                    "description": "The column/row header for this category — \"Red\", \"Blue\"."
+                    "type": "string"
                   },
                   "tag": {
-                    "type": "string",
-                    "description": "Categorical predicate: an item is in this category when its `attrs` include this tag."
+                    "type": "string"
                   },
                   "rule": {
                     "$ref": "#/$defs/rule"
@@ -179,79 +130,64 @@
                     ]
                   }
                 ]
-              },
-              "description": "Make this axis CATEGORICAL instead of yes/no — one column (property 1) or row (property 2) per category, e.g. a colour axis [{label:\"Red\",tag:\"red\"},{label:\"Blue\",tag:\"blue\"},{label:\"Green\",tag:\"green\"}] gives a 2×3."
+              }
             }
           },
           "required": [
             "name"
           ]
-        },
-        "description": "The two sorting criteria. Property 1 = the COLUMNS axis, property 2 = the ROWS axis. Give ONE property for a single-axis (2-column) split, or two for a full grid. Each is a `tag` or a numeric `rule`; an axis may be made categorical with `categories`."
+        }
       },
       "cells": {
         "type": "array",
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "Mark one cell (occlude / highlight / blank it). Address by 1-based column and row in the RENDERED order: a yes/no axis is positive-then-negative (Even = col 1, Not even = col 2); a categorical axis follows the authored category order, with any derived \"Other\" last.",
           "properties": {
             "col": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Column index from 1 (property 1, the columns axis)."
+              "minimum": 1
             },
             "row": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Row index from 1 (property 2, the rows axis)."
+              "minimum": 1
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's contents (and its count) as \"?\" — the \"what goes here?\" hook. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber-tint this cell — emphasis / the answer cell. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render this cell empty (no chips) — an unfilled cell for a staged build. Different from occlude: \"?\" poses a question, blank poses nothing yet. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "col",
             "row"
           ]
-        },
-        "description": "Per-cell occlude / highlight / blank marks (the cells always exist and are filled automatically; list one here only to mark it)."
+        }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "items": {
-            "type": "boolean",
-            "description": "Draw the item chips. false renders the empty headed grid — a blank answer space for \"sort these into the diagram\". Default true."
+            "type": "boolean"
           },
           "counts": {
-            "type": "boolean",
-            "description": "Show the derived count of items in each cell (a small tally). Occluded cells show \"?\" for the count too. Default false."
+            "type": "boolean"
           },
           "frame": {
-            "type": "boolean",
-            "description": "Draw the grid outline. Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -261,7 +197,6 @@
   },
   "examples": [
     {
-      "label": "Worked 2×2 — sort 1–12 by Even and Multiple of 3, with counts",
       "params": {
         "header": "Sort the numbers 1 to 12",
         "properties": [
@@ -323,7 +258,6 @@
       }
     },
     {
-      "label": "Blank answer space — the empty headed grid to fill in",
       "params": {
         "header": "Even and multiples of 3",
         "properties": [
@@ -386,7 +320,6 @@
       }
     },
     {
-      "label": "Occluded question — \"what goes in this cell?\"",
       "params": {
         "properties": [
           {
@@ -451,7 +384,6 @@
       }
     },
     {
-      "label": "2×3 categorical Carroll — sort shapes by colour and right angle (colour-tinted chips)",
       "params": {
         "header": "Sort the shapes",
         "properties": [
@@ -522,7 +454,6 @@
       }
     },
     {
-      "label": "Single-axis split — odd or even (one property, two columns)",
       "params": {
         "header": "Odd or even?",
         "properties": [
@@ -578,7 +509,6 @@
       }
     },
     {
-      "label": "Hard case — a larger sort (1–30 by Even and Multiple of 5); cells grow to hold the chips",
       "params": {
         "header": "Sort the numbers 1 to 30",
         "properties": [

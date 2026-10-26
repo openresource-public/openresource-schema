@@ -4,37 +4,8 @@
   "name": "protractor",
   "version": 2,
   "title": "Protractor",
-  "tagline": "A protractor on an angle: dual 0–180 scale, measured arc, derived reading; occlude to measure, list sizes for a pie chart, construct: true for a marked draw-an-angle.",
-  "description": "A semicircle protractor laid over an angle: the instrument is centred on the vertex with its flat 0–180 edge along the baseline (the zero arm), the dual scale graduated round the rim, the arc between the arms marked, and the reading shown. The author writes the instrument's orientation (the baseline direction, which way the scale runs, semicircle or full circle) and each angle's size in degrees; every arm direction, the cumulative scale position, the ticks, both dual-scale numbers, the measured arc and the reading are computed. One angle measures or constructs a single angle (acute, right, obtuse); several angles stack cumulatively to construct a pie chart with each sector slice and cumulative reading derived; a full-circle kind or a reflex flag handles reflex angles. Occlude an angle's reading for \"measure this angle\", highlight the correct scale reading to teach the read-the-right-scale trap, or drag the free arm to sweep through acute–right–obtuse and watch the reading change. For \"draw an angle of X°, label A\" as a MARKED question, set construct: true with exactly one angle and host with responseMode \"construct\": the figure shows a fixed base ray, a deliberately WRONG free ray at a fixed start, the pre-printed label, and a translucent draggable + rotatable protractor tool set aside from the vertex. The pupil measures with the tool and swings the free ray (snapping to 1°) to the target — no reading is shown, because reading the scale is the assessed skill. The target size is checked against the drawn angle at marking time (within ±toleranceDegrees) and never rendered; print and static slides pose the same wrong-start figure.",
-  "whenToUse": "Reach for this whenever a protractor is the lesson: measuring an angle (lay the instrument on it and read the correct scale — acute, right, obtuse), drawing / constructing an angle of a given size, constructing a pie chart (the cumulative sector angles), and reflex angles. Author each angle by its size in degrees; the arm, the scale crossing and the reading are derived. Common configurations: measure this angle — one angle with occlude true (its reading shows \"?\"); the dual scale is drawn so pupils must pick the scale whose 0 sits on the baseline arm — highlight the correct reading to teach the classic \"read 138, not 42\" trap. Construct an angle (TEACHING figure) — show the reading (the instruction \"draw an angle of 70°\" goes in the block text), or give an empty `angles: []` with just the baseline arm as a blank answer space for the pupil to draw on. Draw an angle as a MARKED question — set construct: true with a single angle { size, label } and host the model on a marked tile with responseMode \"construct\" and correctAnswer { derived: true }: the figure poses a fixed base line, a deliberately wrong free ray, the pre-printed label (e.g. \"A\") and a translucent protractor tool the pupil drags onto the vertex and rotates to align; the pupil swings the free ray to the size the question asks (keep the target 1–180). The measured reading/answer is NEVER shown on the figure (no reading, no arc value) — the target is only used to mark the drawn angle, within ±toleranceDegrees (default 2, the exam measuring allowance). Put the instruction (\"Draw an angle of 60°. Label the angle A.\") in the block stem when one exists; for a standalone/print figure the question text — including the target size — may ride in the caption. Pie chart — kind \"circle\", one angle per slice with `fill: true` and a category `label`; sizes are the sector angles (they should sum to 360) and the cumulative construction lines are derived. Reflex — either kind \"circle\" with a size over 180, or a single angle with `reflex: true` (drawn at `size` ≤180 but marked and read as 360 − size, the subtract-from-360 method). Tilt the figure with `baseline` (degrees, 0 = the zero arm points right, anticlockwise positive — the same convention as geometry/angles-at-a-point) so pupils learn to align the protractor, not just read horizontally. Set `draggable` to let pupils swing the free arm round and watch the reading update live through acute–right–obtuse (this is EXPLORATORY — for a MARKED draw-an-angle use construct, not draggable). Keep `baseline`, `kind` and the show flags the same across the blocks of one lesson so pupils compare like with like. Switch primitive when the protractor is not the point: for rays meeting at a point and angle facts (vertically opposite, on a line, angle sums) use geometry/angles-at-a-point; for a clock-hands angle use geometry/clock; for a finished pie chart read off frequencies use statistics/pie-chart; for constructing a pie chart as a MARKED question (drag the sector boundaries) use statistics/pie-chart with construct: true; for three-figure bearings from North use geometry/bearings; for compass-and-straightedge constructions use geometry/construction. Synonyms a teacher might use: protractor, measure an angle, draw an angle, construct an angle, label the angle, read the scale, acute, right angle, obtuse, reflex, degrees, angle measurer, set square, pie chart construction, angle at the centre.",
   "responseModes": [
     "construct"
-  ],
-  "tags": [
-    "protractor",
-    "measure angles",
-    "measuring angles",
-    "draw angles",
-    "draw an angle",
-    "construct an angle",
-    "label the angle",
-    "angle measurer",
-    "degrees",
-    "acute",
-    "obtuse",
-    "right angle",
-    "reflex angle",
-    "dual scale",
-    "read the scale",
-    "pie chart construction",
-    "angle at the centre",
-    "sector",
-    "geometry",
-    "angles",
-    "construct",
-    "KS2",
-    "primary",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -46,109 +17,87 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One angle measured from the baseline (the zero arm). With several angles they stack CUMULATIVELY — each size is the next sector and its arm sits at the running total — so a list of sector sizes constructs a pie chart with every cumulative reading derived. In the `construct` QUESTION state there is exactly ONE entry: its `size` is the TARGET the pupil must draw (used only to mark, never rendered) and its `label` is pre-printed beside the angle.",
           "properties": {
             "size": {
               "type": "number",
               "exclusiveMinimum": 0,
-              "maximum": 360,
-              "description": "The angle in DEGREES, measured from the baseline arm along the `measure` direction. With one angle this is the angle to measure or construct; with several it is this sector's size and the arm is drawn at the cumulative total. The arm direction, where it crosses the scale and the reading are all derived from this. In `construct` mode this is the TARGET the pupil constructs — it is NEVER drawn or spoken (anti-leak); keep it 1–180 (a semicircle draw-an-angle question)."
+              "maximum": 360
             },
             "label": {
-              "type": "string",
-              "description": "Override the text shown for this angle, e.g. \"x°\" for an algebra unknown, or a category name (\"Walk\") on a pie sector. Omit to show the derived reading (\"138°\"). An occluded angle shows \"?\" regardless. In `construct` mode this is the angle's NAME (e.g. \"A\"), pre-printed beside the vertex on every surface — the \"label the angle A\" instruction."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this angle's reading as \"?\" — the \"measure this angle\" hook. The arm and arc stay drawn; only the value is hidden (and it is hidden in the aria-label too, so nothing leaks). Ignored in `construct` mode (no reading is ever shown there). Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this angle — its arc, reading and (if filled) sector — to draw the eye to the result or to the correct scale reading. Default false."
+              "type": "boolean"
             },
             "fill": {
-              "type": "boolean",
-              "description": "Shade this sector (the wedge from its start boundary to its arm) with a bold-border light fill — for pie-chart construction, where each sector is a coloured slice. Several filled sectors cycle the categorical palette. Default false."
+              "type": "boolean"
             },
             "reflex": {
-              "type": "boolean",
-              "description": "Mark and read the REFLEX angle (the long way round, 360 − size) instead of `size` itself — the classroom method of measuring an angle ≤180° on a semicircle protractor and subtracting from 360°. The arm is still drawn at `size`; the major arc and the reading 360 − size are derived. Only meaningful for a single angle. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "size"
           ]
-        },
-        "description": "The angles laid against the protractor, each measured from the baseline. ONE angle = measure / construct that angle; SEVERAL = cumulative sectors (a pie chart). An empty array draws just the protractor and its baseline (zero) arm — a blank answer space for the pupil to draw on. In `construct` mode there must be exactly ONE angle: its `size` is the target and its `label` is pre-printed."
+        }
       },
       "baseline": {
-        "type": "number",
-        "description": "Direction of the baseline (the zero arm) in degrees, anticlockwise from east (the geometry/angles-at-a-point convention): 0 = pointing right, 90 = up, 180 = left. The whole instrument and its angles rotate with it — tilt it (e.g. 23) so pupils must align the protractor rather than read off the horizontal. In `construct` mode the base ray follows this too (default 0, a horizontal base line reads best). Default 0."
+        "type": "number"
       },
       "measure": {
         "type": "string",
         "enum": [
           "acw",
           "cw"
-        ],
-        "description": "Which way the scale runs from the baseline zero: \"acw\" (anticlockwise — the dome sits above a rightward baseline) or \"cw\" (clockwise — dome below). This flips which of the two scales is the correct one, so it sets up the dual-scale reading. Default \"acw\"."
+        ]
       },
       "kind": {
         "type": "string",
         "enum": [
           "semicircle",
           "circle"
-        ],
-        "description": "The instrument: \"semicircle\" is the usual 0–180° protractor; \"circle\" is the full 360° protractor for reflex angles and pie-chart construction. Defaults to semicircle, auto-promoting to circle when an angle's cumulative position exceeds 180°. `construct` mode always uses a semicircle tool."
+        ]
       },
       "construct": {
-        "type": "boolean",
-        "description": "Render the draw-an-angle QUESTION state: a fixed base ray, a deliberately WRONG pre-placed free ray, the pre-printed angle label, and a TRANSLUCENT draggable + rotatable protractor tool set aside from the vertex, for the pupil to swing the free ray to the target size (snapping to 1°). The target is never rendered — it is derived-checked at marking time (host on a marked tile with responseMode \"construct\" and correctAnswer { derived: true }). On web the pupil drags the free ray and positions/rotates the tool to measure; print and static slides show this same wrong-start posed figure, so the question stays posed on paper. Needs exactly ONE angle with a target `size` (keep it 1–180) and a `label`. Forces every reading OFF (reading the scale is the assessed skill). Default false."
+        "type": "boolean"
       },
       "toleranceDegrees": {
         "type": "number",
         "minimum": 0,
-        "maximum": 10,
-        "description": "Construct mode only: the acceptance allowance in degrees — the drawn angle marks correct when it is within this of the target size. Default 2, the exam measuring allowance. Ignored when construct is false."
+        "maximum": 10
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional sentence centred below the figure: a stem sentence (\"The angle is ___ degrees\"). Rendered in a warm primary band. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles, all default true. Ignored in construct mode (readings are forced off there).",
         "properties": {
           "protractor": {
-            "type": "boolean",
-            "description": "Draw the protractor instrument (body, rim, ticks, scale). false leaves only the angle (arms + arc + reading) — the \"now take the protractor away\" finished figure. Default true."
+            "type": "boolean"
           },
           "scale": {
-            "type": "boolean",
-            "description": "Draw the graduations and numbers round the rim. false gives a plain protractor body with no markings. Default true."
+            "type": "boolean"
           },
           "secondaryScale": {
-            "type": "boolean",
-            "description": "Draw the SECOND scale ring (the dual scale: 180 − θ). Showing both is what teaches \"read the scale that starts at 0 on your arm\"; turn it off for a single clean scale at primary level. Default true."
+            "type": "boolean"
           },
           "readings": {
-            "type": "boolean",
-            "description": "Show the derived reading(s) — the value beside each arc, and the highlighted crossing on the rim. false hides every value (the figure becomes a pure answer space). Per-angle occlude hides one reading as \"?\". Default true."
+            "type": "boolean"
           },
           "arcs": {
-            "type": "boolean",
-            "description": "Draw the measured arc(s) between the arms near the vertex. Default true."
+            "type": "boolean"
           }
         }
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. The free arm of a single angle gets a handle pupils can drag to swing it round the protractor; the arm direction, the measured arc and the reading all recompute live, so pupils sweep through acute–right–obtuse and read the dual scale in motion. This is EXPLORATORY (the reading is shown) — for a MARKED draw-an-angle question use construct instead. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -157,7 +106,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — measure an acute angle (55°), dual scale, reading shown",
       "params": {
         "header": "Measuring an angle",
         "angles": [
@@ -169,13 +117,11 @@
       }
     },
     {
-      "label": "Blank answer space — construct a 70° angle (protractor + baseline arm only)",
       "params": {
         "angles": []
       }
     },
     {
-      "label": "Occluded question — measure this obtuse angle (\"?\")",
       "params": {
         "angles": [
           {
@@ -186,7 +132,6 @@
       }
     },
     {
-      "label": "Hard case — tilted baseline, obtuse 138°, the read-the-correct-scale trap, correct reading highlighted",
       "params": {
         "baseline": 23,
         "angles": [
@@ -198,7 +143,6 @@
       }
     },
     {
-      "label": "Pie-chart construction — four cumulative sectors round a full circle",
       "params": {
         "kind": "circle",
         "header": "How we travel to school",
@@ -227,7 +171,6 @@
       }
     },
     {
-      "label": "Reflex angle — measure 110° and subtract from 360° (reads 250°)",
       "params": {
         "angles": [
           {
@@ -240,7 +183,6 @@
       }
     },
     {
-      "label": "Construct question — draw an acute angle of 72° and label it P (marked)",
       "params": {
         "construct": true,
         "angles": [
@@ -252,7 +194,6 @@
       }
     },
     {
-      "label": "Construct question — draw an obtuse angle of 145° and label it R (marked, tolerance 3°)",
       "params": {
         "construct": true,
         "toleranceDegrees": 3,

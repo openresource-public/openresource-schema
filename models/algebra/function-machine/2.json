@@ -4,31 +4,8 @@
   "name": "function-machine",
   "version": 2,
   "title": "Function machine",
-  "tagline": "Input flows through operation boxes to an output; runs forward or backward, derives running values, occludes a terminal or a whole box (\"complete the machine\"), forms equations.",
-  "description": "A number function machine: an input value flows left-to-right through an ordered chain of operation boxes (× 3, + 2, − 5, ÷ 4, square, √) to an output. You write the ordered operations and a seed value — the input (forward), the output (backward), or both when one box is the unknown; the model derives the other terminal, every derivable running value between the boxes, each box label and, optionally, the formed equation. Run it forward to apply a function, backward to find the input from the output by inverse operations, occlude the input or the output for \"find the missing number\" questions, occlude a whole OPERATION box (with both terminals given) for \"complete the machine\" — the pupil finds the missing operation — and reveal the running values to show the method. A two-step machine run backwards (× 3 then + 1 gives 16) draws as the equation 3x + 1 = 16 with show.equation, bridging the representation to solving linear equations. Make the input draggable to scrub its value and watch the whole chain recompute live.",
-  "whenToUse": "Reach for this whenever a calculation or a function is taught as a chain of operations on one number — applying functions, inverse operations / working backwards, and the bridge to forming and solving simple equations. Author the operations in order and one seed: put input.value for a forward machine (the output is derived) or output.value for a backward machine (the input is derived by inverse operations in reverse order) — never both. Common configurations: worked example — input.value set, show.runningValues true, so every value along the chain shows; forward question — input.value set, output occluded (\"what comes out?\"); backward question — output.value set, input occluded (\"what went in?\"); forming / solving equations — output.value set, input occluded, show.equation true and variable \"x\" draws the formed equation (e.g. 3x + 1 = 16) under the machine for pupils to solve; complete the machine — give BOTH input.value and output.value and set occlude: true on ONE operation box: it draws \"?\", the value entering it is derived forward from the input and the value leaving it backward from the output, and the pupil supplies the missing operation (e.g. input 5, × 4 then \"?\", output 30 → the box is + 10); blank answer space — omit both terminal values, leaving boxes and arrows for pupils to fill. Reveal a single intermediate with running [{ after: 1, show: true }] or question one with running [{ after: 1, occlude: true }]. Keep the operands clean so running values stay whole (a ÷ that gives a recurring decimal is rounded). Staged builds read well two ways: work the calculation — open on the input with running values hidden, then reveal one more running value per stage and the output last; or build the machine — open on the input and reveal one box (and its running value) per stage. Set draggable true (forward machines only) to let pupils drag the input along a short track over inputRange and watch every value recompute — explore how output depends on input. Cross-block: keep the same operations and orientation across a lesson so pupils track one machine; if a lesson teaches forward then backward, keep the operations identical and just move the seed from input to output. Synonyms a teacher might use: function machine, number machine, input-output machine, function box, operation machine, applying a function, inverse / reverse operations, working backwards, one-step / two-step function machine, \"what comes out\", \"what goes in\", complete the machine, find the missing operation, forming equations, building equations.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "function machine",
-    "number machine",
-    "input output machine",
-    "function box",
-    "inverse operations",
-    "reverse operations",
-    "working backwards",
-    "two-step function machine",
-    "one-step function machine",
-    "applying functions",
-    "complete the machine",
-    "missing operation",
-    "unknown operation",
-    "forming equations",
-    "solving equations",
-    "operations",
-    "algebra",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -41,7 +18,6 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One operation box. The box label is computed from op + by (\"× 3\", \"+ 2\", \"− 5\", \"÷ 4\", \"square\", \"√\"); you never write the label or the value it produces.",
           "properties": {
             "op": {
               "type": "string",
@@ -52,20 +28,16 @@
                 "divide",
                 "square",
                 "root"
-              ],
-              "description": "The operation this box performs. add/subtract/multiply/divide take a \"by\" operand (rendered \"+ 2\", \"− 5\", \"× 3\", \"÷ 4\"). \"square\" squares the running value (box reads \"square\", inverse √); \"root\" takes the positive square root (box reads \"√\", inverse square). Inverses used for backward machines: add↔subtract, multiply↔divide, square↔root."
+              ]
             },
             "by": {
-              "type": "number",
-              "description": "The operand for add/subtract/multiply/divide (e.g. by 3 with op \"multiply\" → \"× 3\"). REQUIRED for those four; omit for square/root. Must be non-zero for divide (and pointless as 0 for multiply). Negatives allowed (op \"add\" with by −4 still reads \"+ −4\"; prefer op \"subtract\" by 4)."
+              "type": "number"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this box as \"?\" — the UNKNOWN operation to be found (\"complete the machine\"). Requires BOTH input.value and output.value so the machine is pinned on each side; the value entering the box is derived forward from the input, the value leaving it backward from the output, and the pupil supplies the operation between them. At most one box should be occluded (extra occluded boxes still draw \"?\", but the running values between two unknowns stay blank). The box still needs a valid op/by so the schema is well-formed — choose any; it is hidden. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this box to draw the eye to one step (e.g. the operation being undone, or the unknown box). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -138,44 +110,35 @@
               }
             }
           ]
-        },
-        "description": "The ordered operation boxes, left to right — the machine itself. One or two boxes is the common case (two-step machines); up to four. Example: × 3 then + 1 is [{ \"op\": \"multiply\", \"by\": 3 }, { \"op\": \"add\", \"by\": 1 }]."
+        }
       },
       "input": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The LEFT terminal. Set input.value to seed a FORWARD machine (the output is derived). occlude it for a \"what went in?\" question (the value is still derived behind the \"?\"). A terminal value (the input on the left, or the output on the right). Give \"value\" on ONE terminal for the usual machine: a value on the INPUT runs it FORWARD (the output is derived); a value on the OUTPUT runs it BACKWARD (the input is derived by inverse operations). Give it on BOTH terminals ONLY when one operation box is occluded (\"complete the machine\") — the machine is then pinned on each side and the missing box is the answer. Omit value on both terminals for a blank answer space (just boxes and arrows). occlude/highlight are display flags on whichever terminal you point them at.",
         "properties": {
           "value": {
-            "type": "number",
-            "description": "The known value at this terminal — the seed. Put it on input for a forward machine or on output for a backward one; set BOTH only when a box is occluded (complete-the-machine). The figure derives the other terminal (or the derivable running values) from it."
+            "type": "number"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render this terminal's value as \"?\" — the \"find the missing number\" hook. The value is still derived correctly behind the \"?\" (so a worked answer matches). Occlude the OUTPUT for \"what comes out?\"; occlude the INPUT for \"what went in?\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber this terminal's value — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "output": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The RIGHT terminal. Set output.value to seed a BACKWARD machine (the input is derived by inverse operations). occlude it for a \"what comes out?\" question. A terminal value (the input on the left, or the output on the right). Give \"value\" on ONE terminal for the usual machine: a value on the INPUT runs it FORWARD (the output is derived); a value on the OUTPUT runs it BACKWARD (the input is derived by inverse operations). Give it on BOTH terminals ONLY when one operation box is occluded (\"complete the machine\") — the machine is then pinned on each side and the missing box is the answer. Omit value on both terminals for a blank answer space (just boxes and arrows). occlude/highlight are display flags on whichever terminal you point them at.",
         "properties": {
           "value": {
-            "type": "number",
-            "description": "The known value at this terminal — the seed. Put it on input for a forward machine or on output for a backward one; set BOTH only when a box is occluded (complete-the-machine). The figure derives the other terminal (or the derivable running values) from it."
+            "type": "number"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render this terminal's value as \"?\" — the \"find the missing number\" hook. The value is still derived correctly behind the \"?\" (so a worked answer matches). Occlude the OUTPUT for \"what comes out?\"; occlude the INPUT for \"what went in?\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber this terminal's value — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
@@ -184,55 +147,44 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "Per-slot control of ONE running value — the number on the arrow AFTER an operation box. Use it to reveal, hide or question a single intermediate without turning every running value on. (Input and output are controlled by the input/output terminals, not here.)",
           "properties": {
             "after": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Which running value: the value emerging AFTER operation number `after`, counting boxes from 1 at the left. Must be less than the number of operations (the value after the LAST box is the output — control that on the output terminal). Out-of-range entries are ignored."
+              "minimum": 1
             },
             "show": {
-              "type": "boolean",
-              "description": "Force this one running value visible even when show.runningValues is off — for staged builds that reveal the chain one box at a time. Default false (intermediate hidden unless show.runningValues is on)."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this running value as \"?\" — \"what is the value here?\". Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this running value. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "after"
           ]
-        },
-        "description": "Per-intermediate-slot display flags — reveal, hide or question individual running values (the numbers on the arrows between boxes). Leave empty to use show.runningValues for all of them at once. List a slot here only to override it."
+        }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "runningValues": {
-            "type": "boolean",
-            "description": "Show the running value on every arrow BETWEEN boxes (the intermediate results). Turn on for a worked example; leave off for a question so the method is hidden. The input and output values are governed by their terminals, not this. Default false."
+            "type": "boolean"
           },
           "equation": {
-            "type": "boolean",
-            "description": "Draw the equation the machine forms beneath it — the input written as the variable, the operations applied to it, set equal to the output (e.g. \"3x + 1 = 16\"). Use with a known output and an occluded/unknown input to set up \"solve the equation\". Linear chains collect to a·x + b; a machine with square/root forms the nested expression instead. Default false."
+            "type": "boolean"
           }
         }
       },
       "variable": {
         "type": "string",
-        "pattern": "^[a-z]$",
-        "description": "The single letter used for the input in the formed equation (show.equation). Default \"x\"."
+        "pattern": "^[a-z]$"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Make the INPUT a handle on a short track pupils can drag to scrub its value (over inputRange, snapped to whole numbers); every running value and the output recompute live. Forward machines only (needs input.value as the starting position). Default false."
+        "type": "boolean"
       },
       "inputRange": {
         "type": "array",
@@ -240,16 +192,13 @@
           "type": "number"
         },
         "minItems": 2,
-        "maxItems": 2,
-        "description": "The [min, max] the draggable input may take, e.g. [0, 12]. Only meaningful with draggable. Default [0, 12]."
+        "maxItems": 2
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -308,7 +257,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — forward two-step machine with the running values shown",
       "params": {
         "header": "Function machine",
         "operations": [
@@ -331,7 +279,6 @@
       }
     },
     {
-      "label": "Blank answer space — boxes and arrows only, no values given",
       "params": {
         "operations": [
           {
@@ -346,7 +293,6 @@
       }
     },
     {
-      "label": "Occluded forward question — input given, output hidden (\"what comes out?\")",
       "params": {
         "operations": [
           {
@@ -367,7 +313,6 @@
       }
     },
     {
-      "label": "Backward question — output given, input hidden (\"what went in?\")",
       "params": {
         "operations": [
           {
@@ -389,7 +334,6 @@
       }
     },
     {
-      "label": "Hard case — two-step machine run backwards, formed as 3x + 1 = 16",
       "params": {
         "operations": [
           {
@@ -415,7 +359,6 @@
       }
     },
     {
-      "label": "Worked example with a square — input 4, + 1 then square gives 25",
       "params": {
         "operations": [
           {
@@ -436,7 +379,6 @@
       }
     },
     {
-      "label": "Complete the machine (worked) — × 4 then ? gives 30, the value between shown",
       "params": {
         "operations": [
           {
@@ -464,7 +406,6 @@
       }
     },
     {
-      "label": "Complete the machine (question) — + 7 then ? reaches 45, the box is hidden",
       "params": {
         "operations": [
           {
@@ -486,7 +427,6 @@
       }
     },
     {
-      "label": "Complete the machine — the FIRST box is unknown: ? then − 3 gives 21",
       "params": {
         "operations": [
           {

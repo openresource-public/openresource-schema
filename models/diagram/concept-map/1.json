@@ -4,33 +4,7 @@
   "name": "concept-map",
   "version": 1,
   "title": "Concept map",
-  "tagline": "Concept map — concept boxes joined by labelled directed links (the relationship on each arrow); auto-laid-out free graph, any node or link label occludable.",
-  "description": "A concept map: concept boxes joined by directed arrows, each arrow carrying the relationship between the two concepts (\"the Sun — provides energy for → plants — eaten by → herbivores\"). Unlike the rest of the diagram family it is a free, many-to-many directed graph — one concept can have several incoming and outgoing links, and a cross-link can close a cycle. You author only the graph (the concepts as nodes, and the links as from/to pairs each with a relationship label); the model derives every box's size from its wrapped label, every box position from a layered auto-layout, every arrow's route — including cross-links and cycles that curve around a side margin — and the placement of each relationship label on the middle of its own arrow (with a background halo so it reads over the line). Any concept can be occluded to \"?\" (\"which concept goes here?\"), and — the signature question — any relationship label can be occluded to ask \"what is the relationship between these two?\". Concepts and links highlight in amber to mark an answer or trace a path. For a single central idea with one ring of unlabelled branches use diagram/mind-map; for a single-parent hierarchy use diagram/tree; for an algorithm with decision diamonds and loops use diagram/flowchart.",
-  "whenToUse": "Reach for this to draw a concept map: several concepts joined by directed arrows, each arrow labelled with the relationship between the two concepts, so the figure reads as a web of sentences (\"photosynthesis — produces → glucose\"). It is the model for showing how ideas relate with named relationships — synoptic links in science (energy flow, the carbon/water cycle, body systems), systems and cause-webs in geography (causes and effects of climate change, a river system), and \"link these concepts\" revision tasks across subjects. Author the graph: list the concepts as `nodes` (each an id + a noun-phrase label) and the relationships as `links` (each `from` one concept id `to` another, with the relationship as its `label` — write it as the verb phrase that makes \"from label to\" a sentence). The layout, box sizes, arrow routes and label placement are all derived, so you never position anything. A concept may have many incoming and outgoing links, and a link may point back at an earlier concept to close a cycle (it routes around a side margin). Conventions: keep relationship labels short verb phrases; keep roughly three to six links leaving any one rank so the map stays readable (a genuinely all-to-all tangle is out of scope in v1 — split it into two maps); keep `direction` consistent across a lesson (\"down\", the default, reads top-to-bottom; \"right\" suits a left-to-right cause-chain). Nodes are a neutral grey by default so the relationships carry the eye — set a node `color` only to mark out genuinely distinct categories of concept (inputs vs outputs, causes vs effects). Questions: occlude a link label to ask \"what is the relationship?\" (the defining concept-map question), or occlude a node to ask \"which concept goes here?\" — the rest of the map stays visible; highlight a concept or link to mark the answer. Staged build: keep the concepts fixed and reveal links / move the highlight along a synoptic path stage by stage (the layout never moves). Synonyms a teacher might use: concept map, knowledge map, relationship map, semantic map, linking words, synoptic links, cause and effect web, systems diagram, \"link these ideas\". Switch model when the picture changes: a single central idea ringed by one level of unlabelled branches (no links between them) is diagram/mind-map; a strict single-parent classification / family hierarchy is diagram/tree; an algorithm or procedure with decision diamonds and control-flow loops is diagram/flowchart.",
   "responseModes": [],
-  "tags": [
-    "concept map",
-    "concept-map",
-    "knowledge map",
-    "relationship map",
-    "semantic map",
-    "linking words",
-    "synoptic",
-    "synoptic links",
-    "cause and effect",
-    "cause web",
-    "systems diagram",
-    "mind organiser",
-    "relationships",
-    "links",
-    "graph",
-    "network",
-    "revision",
-    "diagram",
-    "science",
-    "geography",
-    "cross-curricular"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -45,33 +19,27 @@
           "properties": {
             "id": {
               "type": "string",
-              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-              "description": "Unique kebab-case id for this concept, referenced by links (e.g. \"sun\", \"photosynthesis\", \"carbon-dioxide\"). Not shown to pupils — it is the wiring handle."
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
             },
             "label": {
-              "type": "string",
-              "description": "The concept written inside the box, wrapped to fit (e.g. \"Photosynthesis\", \"Carbon dioxide\"). Keep it to a noun / noun phrase — the relationship goes on the link, not in the box."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this concept's label as \"?\" — the \"which concept goes here?\" hook. The box and all links stay drawn and the hidden word never leaks into the aria description. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this concept — the answer, or the box reached when a staged build traces a path through the map. Default false."
+              "type": "boolean"
             },
             "color": {
               "type": "string",
-              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-              "description": "Override THIS concept's colour. Nodes default to a neutral grey so the relationships carry the eye; set a colour ONLY to mark out genuinely distinct CATEGORIES of concept (e.g. inputs vs outputs, causes vs effects) — colour every node in a category the same. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts this box OUT of brand reskinning. Ignored on a highlighted box (amber is reserved)."
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             }
           },
           "required": [
             "id",
             "label"
           ]
-        },
-        "description": "The concepts of the map. Each has a unique id and a label. Order does not matter — positions are derived from the links."
+        }
       },
       "links": {
         "type": "array",
@@ -82,63 +50,51 @@
           "additionalProperties": false,
           "properties": {
             "from": {
-              "type": "string",
-              "description": "Id of the concept the arrow leaves (the relationship reads from here)."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "Id of the concept the arrow enters. A link whose target sits at or above its source — a cross-link that closes a cycle — is routed around a side margin automatically, so a cycle (e.g. \"respiration returns CO₂\") draws cleanly."
+              "type": "string"
             },
             "label": {
-              "type": "string",
-              "description": "The RELATIONSHIP / linking phrase on this arrow — the heart of a concept map (\"provides energy for\", \"is eaten by\", \"produces\", \"causes\", \"is a type of\"). Written as the verb phrase that makes \"FROM — label → TO\" read as a sentence. Drawn at the middle of the arrow with a background halo so it reads over the line; wrapped if long. Omit only for a bare association."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this link's relationship label as \"?\" — the signature concept-map question, \"what is the relationship between these two concepts?\". The arrow and both concepts stay drawn; the hidden phrase never leaks into the aria. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this link and its label — the answer relationship, or the active link when a staged build traces a path. Default false."
+              "type": "boolean"
             },
             "color": {
               "type": "string",
-              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-              "description": "Override THIS link's colour (and its relationship label) — so one relationship can be picked out without recolouring the rest. Wins over the figure-wide `colors.links`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour) is honoured exactly and opts this link OUT of brand reskinning. Ignored on a highlighted link (amber is reserved)."
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             }
           },
           "required": [
             "from",
             "to"
           ]
-        },
-        "description": "The directed, labelled arrows: each runs from one node id to another and carries the relationship between them as its `label`. The same concept can be the `to` of several links and the `from` of several others; point a link back at an earlier concept to close a cycle."
+        }
       },
       "direction": {
         "type": "string",
         "enum": [
           "down",
           "right"
-        ],
-        "description": "Reading flow: \"down\" (default) lays the map top-to-bottom; \"right\" lays a left-to-right cause-chain. Keep it consistent across a lesson."
+        ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "colors": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"make the links grey\"). Omit to keep the themeable defaults. A per-link `color` overrides this for one arrow; a per-node `color` overrides a concept's colour.",
         "properties": {
           "links": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Default colour of every arrow and its relationship label, replacing the near-black ink. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly. A single arrow can still differ via its own `color`."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           }
         }
       }
@@ -150,7 +106,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — photosynthesis (two reactants and the Sun feed one process, which produces two outputs)",
       "params": {
         "header": "Photosynthesis",
         "nodes": [
@@ -209,7 +164,6 @@
       }
     },
     {
-      "label": "Answer space — every relationship label hidden (\"write the relationship on each arrow\")",
       "params": {
         "nodes": [
           {
@@ -268,7 +222,6 @@
       }
     },
     {
-      "label": "Occluded question — one concept hidden (\"which group completes the energy flow?\")",
       "params": {
         "nodes": [
           {
@@ -314,7 +267,6 @@
       }
     },
     {
-      "label": "Hard case — the carbon cycle: a dense web where respiration closes three cycles back to CO₂",
       "params": {
         "header": "The carbon cycle",
         "nodes": [
@@ -384,7 +336,6 @@
       }
     },
     {
-      "label": "Left-to-right map — water flowing to the sea, with a split and a merge (direction: right)",
       "params": {
         "direction": "right",
         "header": "Where rain ends up",
@@ -431,7 +382,6 @@
       }
     },
     {
-      "label": "Author-set colours — reactants / process / products colour-coded, the answer link highlighted",
       "params": {
         "header": "Photosynthesis",
         "nodes": [

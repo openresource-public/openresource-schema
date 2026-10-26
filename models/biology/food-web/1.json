@@ -4,30 +4,7 @@
   "name": "food-web",
   "version": 1,
   "title": "Food chain / food web",
-  "tagline": "Food chain / web — organisms joined by energy-flow arrows (prey → predator); trophic levels, roles and remove-a-species knock-on all derived; labels and roles occludable.",
-  "description": "A food chain or food web: organisms drawn as boxes joined by directed arrows meaning \"energy flows to\" / \"is eaten by\" — drawn prey → predator, the direction of energy flow (a common exam trap the model can label with a legend). You author only the organisms (id + label, and the one decomposer flag) and the feeding pairs (from the prey to the consumer); the model derives each organism's trophic level (producer = level 1; a consumer sits one level above the highest thing it eats), its trophic role (producer, primary / secondary / tertiary / quaternary consumer, apex predator, decomposer), the layered layout with producers at the base and energy rising, every arrow route, and — the knock-on prediction — which populations rise or fall when an organism is removed (its prey rise, its predators fall). There is nowhere to author a trophic label, so the roles cannot be wrong. Occlude an organism's label (\"which organism is the producer?\"), occlude its derived role readout (\"name a secondary consumer\"), highlight to mark an answer, colour boxes by level, and set remove to show the consequence of losing a species. Handles a simple linear chain and a branching web (multiple producers, a decomposer fed from several levels). For the energy / biomass / numbers pyramid with 10% transfer figures use diagram/pyramid; for a free labelled relationship graph use diagram/concept-map.",
-  "whenToUse": "Reach for this for food chains and food webs — the GCSE / KS3 ecology topic of who eats whom, trophic levels and interdependence. Author the organisms as `organisms` (each an id + a label; add kind:\"decomposer\" for bacteria / fungi / worms) and the feeding relationships as `arrows`, each running `from` the prey (energy source) `to` the consumer — so \"a fox eats a rabbit\" is { from:\"rabbit\", to:\"fox\" }. The arrow is DRAWN prey → predator, the direction energy flows; this is the exam convention (pupils commonly draw it backwards), and show.convention (default on) prints a one-line legend saying so. Every trophic level and role is derived from the graph: a producer eats nothing (no incoming arrow); a primary consumer eats a producer; each further level is one above the highest thing it eats; an apex predator is a consumer nothing eats; a decomposer is the flagged organism. Keep the arrows in energy-flow order and the roles come out right — there is no role to author. Questions: occlude an organism's label to ask \"which organism goes here?\", occlude its role readout (occludeRole, with show.roles on) to ask \"what is the producer? / name a secondary consumer\"; highlight an organism or an arrow to mark the answer or trace one energy path. Set remove:\"<id>\" to predict a knock-on: the removed organism greys out, its prey are marked rising (↑) and its predators falling (↓) — a first-order prediction; deeper cascades belong in the block text. Set colorByLevel:true to tint each box by its trophic level (producers green at the base up to the apex). Staged build via reveal: grow the chain one organism at a time, reveal the roles, or reveal the knock-on last. Conventions: a food CHAIN is just a web with one arrow per organism; keep layout consistent across a lesson. Synonyms a teacher might use: food chain, food web, trophic level, producer, consumer, herbivore, carnivore, predator, prey, apex predator, decomposer, energy transfer, energy flow, interdependence, ecosystem, \"who eats whom\". Switch model when the picture changes: the energy / biomass / numbers pyramid with percentage transfer is diagram/pyramid; a free concept graph where each arrow carries its own written relationship is diagram/concept-map.",
   "responseModes": [],
-  "tags": [
-    "food chain",
-    "food web",
-    "trophic level",
-    "producer",
-    "consumer",
-    "herbivore",
-    "carnivore",
-    "predator",
-    "prey",
-    "apex predator",
-    "decomposer",
-    "energy transfer",
-    "energy flow",
-    "interdependence",
-    "ecosystem",
-    "ecology",
-    "biology",
-    "science"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -42,39 +19,32 @@
           "properties": {
             "id": {
               "type": "string",
-              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-              "description": "Unique kebab-case id for this organism, referenced by the feeding arrows (e.g. \"grass\", \"rabbit\", \"fox\"). Not shown to pupils — it is the wiring handle."
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
             },
             "label": {
-              "type": "string",
-              "description": "The organism written inside the box, wrapped to fit (e.g. \"Grass\", \"Rabbit\", \"Fungi\"). A noun / noun phrase."
+              "type": "string"
             },
             "kind": {
               "type": "string",
               "enum": [
                 "decomposer"
-              ],
-              "description": "Mark this organism a DECOMPOSER (bacteria, fungi, worms — feeds on dead matter across all levels). This is the ONE role that cannot be derived from the feeding graph (a decomposer that is also a graph sink looks like an apex predator), so it is authored. Omit for every other organism — producer / consumer roles are all derived from position."
+              ]
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this organism's LABEL as \"?\" — the \"which organism goes here?\" hook. The box, its arrows and its derived role stay drawn; the hidden name never leaks into the aria. Default false."
+              "type": "boolean"
             },
             "occludeRole": {
-              "type": "boolean",
-              "description": "Render this organism's derived ROLE readout as \"?\" — the \"what is the producer? / name a secondary consumer\" hook (only meaningful when show.roles is on). The label stays visible; the role word never leaks into the aria. Independent of occlude. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this organism — the answer, or the organism a staged build is drawing attention to. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "id",
             "label"
           ]
-        },
-        "description": "The organisms of the chain / web. Each has a unique id and a label; add kind:\"decomposer\" for a decomposer. Order does not matter — positions are derived from the feeding arrows."
+        }
       },
       "arrows": {
         "type": "array",
@@ -85,72 +55,58 @@
           "additionalProperties": false,
           "properties": {
             "from": {
-              "type": "string",
-              "description": "Id of the organism energy flows FROM — the PREY / food (the one being eaten). The arrow is drawn starting here."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "Id of the organism energy flows TO — the CONSUMER / predator (the one doing the eating). The arrowhead points here. So \"a rabbit eats grass\" is { from: \"grass\", to: \"rabbit\" } — the arrow runs grass → rabbit, the direction of energy flow (the exam convention)."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this arrow — trace one energy path through the web. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "from",
             "to"
           ]
-        },
-        "description": "The feeding relationships, each an arrow FROM the prey (energy source) TO the consumer — drawn prey → predator, the direction of energy flow. An organism can be the `to` of several arrows (eats several things) and the `from` of several (is eaten by several). A single chain is one arrow leaving each organism."
+        }
       },
       "remove": {
-        "type": "string",
-        "description": "Id of an organism to REMOVE — the knock-on hook. It is drawn greyed and struck through, its prey (what it ate) are marked rising ↑ and its predators (what ate it) marked falling ↓ — the derived first-order consequence of losing that species. Omit for the intact web."
+        "type": "string"
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Staged build: draw only the first N organisms (in trophic order, producers first) and the arrows between them. The layout is computed from the FULL web so nothing reflows as organisms appear. Omit (or 0-and-up beyond the count) to draw the whole web."
+        "minimum": 0
       },
       "colorByLevel": {
-        "type": "boolean",
-        "description": "Tint each organism box by its derived trophic level (producers green at the base, rising through the levels) — helps pupils see the levels. Default false: neutral grey boxes so the arrows carry the eye. Ignored on a removed / highlighted / rising / falling box (those colours are reserved)."
+        "type": "boolean"
       },
       "layout": {
         "type": "string",
         "enum": [
           "vertical",
           "horizontal"
-        ],
-        "description": "Reading direction. \"vertical\" (default): trophic levels stack, producers at the base, energy rising up the page. \"horizontal\": levels run left → right, producers on the left — natural for a simple linear food chain. Keep it consistent across a lesson."
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "roles": {
-            "type": "boolean",
-            "description": "Show each organism's derived trophic-role readout under its box (\"Producer\", \"Secondary consumer\", \"Apex predator\", \"Decomposer\"). Default true. Turn off for a bare web where the roles are the discussion, not the answer."
+            "type": "boolean"
           },
           "levels": {
-            "type": "boolean",
-            "description": "Draw a faint \"Trophic level 1 / 2 / 3…\" guide beside each band. Default false."
+            "type": "boolean"
           },
           "convention": {
-            "type": "boolean",
-            "description": "Show the one-line legend naming the arrow convention (\"Arrows point from prey to predator — the direction energy flows\"). Default true — it labels the exam trap. Turn off once a class knows it."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -160,7 +116,6 @@
   },
   "examples": [
     {
-      "label": "Worked food web — roles labelled, arrows show energy flow",
       "params": {
         "header": "A grassland food web",
         "organisms": [
@@ -222,7 +177,6 @@
       }
     },
     {
-      "label": "Simple 4-link food chain (horizontal, roles shown)",
       "params": {
         "header": "A pond food chain",
         "layout": "horizontal",
@@ -261,7 +215,6 @@
       }
     },
     {
-      "label": "Occluded question — name the producer / a secondary consumer (roles hidden)",
       "params": {
         "show": {
           "roles": true
@@ -305,7 +258,6 @@
       }
     },
     {
-      "label": "Blank answer space — draw the arrows / no roles",
       "params": {
         "show": {
           "roles": false
@@ -345,7 +297,6 @@
       }
     },
     {
-      "label": "Hard case — remove-a-species knock-on (remove the fox: rabbits rise, nothing above falls)",
       "params": {
         "caption": "The rabbit and mouse populations lose a predator.",
         "remove": "fox",
@@ -396,7 +347,6 @@
       }
     },
     {
-      "label": "Branching web with a decomposer and two producers, coloured by level",
       "params": {
         "header": "A woodland food web",
         "colorByLevel": true,

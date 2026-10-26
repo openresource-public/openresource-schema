@@ -1,6 +1,6 @@
-# resource schema
+# Open Resource schema
 
-JSON schemas for the structured resource format used by Open Resource. The same JSON drives slide, web, print, PPTX, and DOCX output. Resources can be imported from Oak National Academy slide decks (and other sources) or authored from scratch.
+The data model for a structured educational resource: a lesson, a quiz, a worksheet, as one JSON document that web, slide, print, PowerPoint and Word surfaces all render. Machine-readable schemas are served at `https://openresource-public.github.io/openresource-schema/schemas/<version>/`; the current version is in [versions.json](versions.json). Pre-1.0: a minor is breaking, a patch is additive (see [VERSIONING.md](VERSIONING.md)).
 
 ## Files
 
@@ -12,7 +12,7 @@ JSON schemas for the structured resource format used by Open Resource. The same 
 - `conformance/` — valid and invalid documents with the rule each breaks, and a runner to prove a validator against them.
 - `blocks/bento.md` — the block: tile catalogue and content shape.
 - `MODELS.md` — computed models (parameterised coded figures): the concept and where they appear.
-- `models/catalogue.json` — every published model and version with status; `models/<family>/<name>/<version>.json` is the interface a pin resolves to; `models/coordinate-grid.md` is one interface written up in prose.
+- `models/catalogue.json` — every published model and version with status; `models/<family>/<name>/<version>.json` is the contract a pin resolves to (response modes, params schema, example paramsets); `models/coordinate-grid.md` is one model written up in prose.
 - `examples/` — real lessons in the schema, stripped of platform internals.
 - `schemas/` — machine-readable JSON Schemas: `resource.schema.json` (the envelope), `bento-content.schema.json` (block content) and `tiptap-doc-schema.json` (the rich-text document every text field carries). `schemas/<version>/` holds each published version, never changed once published; the files at `schemas/` are the current version; `schemas/index.json` lists every file's SHA-256. Each file's `$id` is its versioned URL.
 

@@ -4,37 +4,7 @@
   "name": "money",
   "version": 1,
   "title": "Money (coins & notes)",
-  "tagline": "UK coins (drawn chunky, real shapes & colours) and notes with a derived total; count a set, make an amount, and give change on a count-on skip-count track; £/p, occludable.",
-  "description": "The primary (KS1/KS2) money manipulative: a set of UK coins and notes drawn as chunky, tactile tokens — copper 1p/2p, silver 5p–50p, gold £1, bimetallic £2, the seven-sided 20p/50p and twelve-sided £1, and polymer-coloured £5–£50 notes — each faithfully sized. You author only the pieces (a denomination in pence, with an optional count) and, for giving change, the count-on baseline; the model derives each coin's colour, shape, size and face label, the grand total of the set, the running totals after each coin, and — when a count-on baseline (the cost) is set — the amount paid (baseline + total) shown as a skip-count track from cost up to the money tendered. £/p formatting is automatic (47p, £3.65, £10.05). The total occludes to \"?\" for \"how much altogether?\", a coin's face occludes for \"name the coin\", and the track's end occludes for \"how much did they pay?\". One figure recognises a coin, values it, counts a set, makes an amount and gives change.",
-  "whenToUse": "Reach for this for primary money work with real UK coins and notes: recognise / value a coin (one piece, with its face occluded to ask \"which coin is this?\"), count a set (\"how much altogether?\" — list the pieces, turn on the total, occlude it for the question), make an amount (the pieces that make a target — occlude one piece to ask \"what coin completes 50p?\", or pose the target in the caption over a blank tray), and give change by counting on (set `track.start` to the cost in pence, list the change coins in count-on order, and the track skip-counts from the cost up to the money paid — running totals shown at every step). Author the pieces as denominations in pence (50 = 50p, 100 = £1, 500 = £5); never write a total or position a coin — the total, running totals, change and amount paid are all derived. Key choices: `count` and `group: true` to show a stack of identical coins with a \"×N\" badge; `arrange: \"by-value\"` to sort the set high-to-low (the \"sort coins by value\" intent); `total: { show: true, label: \"Change\" }` for the derived readout (occlude it for the question); `track: { show: true, start: 635 }` for the count-on / give-change track (occlude its end for \"how much was paid?\"); `unit` to force pence-only or pounds display (default auto: under £1 shows pence, £1+ shows pounds). Per-piece `occlude` hides a face as \"?\", `blank` leaves a dashed empty slot for a staged build, `highlight` rings a coin amber. A staged build reads beautifully here: open on the cost (or an empty tray), add one coin per stage and watch the running total climb to the amount paid — the base state must stand alone (the cost marker, or the first coin), never an empty void. Cross-block: keep the same denominations, layout and unit display across one lesson so pupils track one tray. Use number/part-whole or number/bar-model when change is taught as a part-whole / bar (not as drawn coins), number/column-arithmetic for the written £.pp algorithm, and number/number-line for a to-scale count-on jump line. Synonyms a teacher might use: money, coins, notes, pounds and pence, £ and p, sterling, recognise coins, value of coins, how much altogether, count money, total, make the amount, pay, change, give change, counting on, count up, how much change, shopping, price, cost.",
   "responseModes": [],
-  "tags": [
-    "money",
-    "coins",
-    "notes",
-    "pounds",
-    "pence",
-    "sterling",
-    "pounds and pence",
-    "recognise coins",
-    "value of money",
-    "count money",
-    "total",
-    "make an amount",
-    "change",
-    "give change",
-    "counting on",
-    "count up",
-    "shopping",
-    "price",
-    "cost",
-    "currency",
-    "number",
-    "maths",
-    "primary",
-    "ks1",
-    "ks2"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -45,7 +15,6 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One coin or note (or — with `count` — a stack of identical ones). Give it a `value` in PENCE; its colour, shape, size and face label (\"5p\", \"£1\", \"£2\", \"£5\") are all derived. Hide its face for a question with `occlude` (\"?\"), empty its slot for a staged build with `blank`, or ring it amber with `highlight`.",
           "properties": {
             "value": {
               "type": "integer",
@@ -62,90 +31,72 @@
                 1000,
                 2000,
                 5000
-              ],
-              "description": "The denomination in PENCE — a real UK piece. Coins: 1, 2, 5, 10, 20, 50 (pence), 100 (£1), 200 (£2). Notes: 500 (£5), 1000 (£10), 2000 (£20), 5000 (£50). 1p/2p draw copper, 5p–50p silver, £1 gold, £2 bimetallic gold-and-silver; 20p/50p are seven-sided, £1 twelve-sided; £5–£50 draw as polymer-coloured notes. The face label is derived (50 → \"50p\", 100 → \"£1\", 500 → \"£5\")."
+              ]
             },
             "count": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 20,
-              "description": "How many identical pieces of this `value` — a shorthand for listing the same coin several times (count 3 of value 10 = three 10p coins, contributing 30p to the total). Default 1. With `group: true` the stack collapses to one piece carrying a \"×3\" badge."
+              "maximum": 20
             },
             "label": {
-              "type": "string",
-              "description": "An optional caption shown under this piece — \"spent\", \"saved\", \"in my pocket\". Omit for a bare coin."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this piece's face value as \"?\" — the \"which coin is this?\" / \"name the coin\" hook. The coin is still drawn (its colour, shape and size give the clue) and the engine still knows its value, so the total and the track never leak it. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Draw an empty dashed slot where this piece would be — an unfilled place for a staged build (\"which coin goes here?\") or an answer space. Different from `occlude`: \"?\" draws the coin and hides its value; blank draws no coin at all. If both are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Ring this piece in amber — the coin in focus, or the answer once revealed. A ring (not a colour change) so it reads clearly even on the gold £1/£2. Reserve it for emphasis. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "value"
           ]
-        },
-        "description": "The coins and notes in the set, left to right (wrapping into tidy rows). Each is a denomination in pence with an optional count. May be EMPTY for a \"make this amount\" answer space (an empty tray under a caption). On a count-on / give-change track these are the change coins, listed in the order you count them on."
+        }
       },
       "arrange": {
         "type": "string",
         "enum": [
           "as-listed",
           "by-value"
-        ],
-        "description": "\"as-listed\" (default): draw the pieces in the order written — use this on a count-on track so the hops follow your counting order. \"by-value\": sort the whole set from highest denomination to lowest (the \"sort the coins by value\" task)."
+        ]
       },
       "group": {
-        "type": "boolean",
-        "description": "Collapse each run of identical pieces into ONE coin carrying a \"×N\" count badge, instead of drawing N separate coins. Tidies a set with many repeats (eight 1p coins → one 1p with \"×8\"). Default false (draw every coin)."
+        "type": "boolean"
       },
       "total": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The derived grand-total readout below the coins (Σ of every piece). OMIT it for a bare tray (recognise / sort tasks). Include it to show or ask \"how much altogether?\".",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the total readout. Default true when this object is present."
+            "type": "boolean"
           },
           "label": {
-            "type": "string",
-            "description": "The word before the amount — \"Total\" (default), \"Altogether\", \"Change\", \"Saved\". Names what the sum means."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the total amount as \"?\" — the \"how much altogether?\" / \"how much change?\" question. The coins stay visible and correct. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the total — answer emphasis once revealed. Default false."
+            "type": "boolean"
           }
         }
       },
       "track": {
         "type": "object",
         "additionalProperties": false,
-        "description": "A running-total skip-count track drawn beneath the coins: equal-width hops, one per piece, each labelled with its value, with the running total under every tick. With no `start` it skip-counts the set from 0 (the running-total picture of counting a set). With `start` set to a cost it becomes the COUNT-ON / give-change track — it counts on from the cost up to the money paid (cost + total).",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the track. Default true when this object is present."
+            "type": "boolean"
           },
           "start": {
             "type": "integer",
-            "minimum": 0,
-            "description": "The count-on baseline in PENCE — the cost being paid for. The track starts here and the change coins count on to the amount paid (start + total). Default 0 (skip-count the set from nothing)."
+            "minimum": 0
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the track's END value (the amount paid = start + total) as \"?\" — \"how much did they pay?\". The intermediate running totals stay shown. Default false."
+            "type": "boolean"
           }
         }
       },
@@ -155,20 +106,16 @@
           "auto",
           "pence",
           "pounds"
-        ],
-        "description": "How amounts are written. \"auto\" (default): under £1 shows pence (47p), £1 and over shows pounds (£3.65, £2). \"pence\": always pence (250p). \"pounds\": always pounds with two decimals (£0.47, £2.00). Coin FACE labels always use the conventional form (50p, £1) regardless."
+        ]
       },
       "frame": {
-        "type": "boolean",
-        "description": "Draw a soft rounded tray panel behind the coins — a light \"purse / money tray\" context. Default false (coins on plain space). Furniture only; never carries meaning."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below everything, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -177,7 +124,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — count a set: 20p + 20p + 5p + 2p = 47p",
       "params": {
         "header": "Counting coins",
         "pieces": [
@@ -201,7 +147,6 @@
       }
     },
     {
-      "label": "Blank/answer-space — make 50p (empty tray under the prompt)",
       "params": {
         "pieces": [],
         "frame": true,
@@ -209,7 +154,6 @@
       }
     },
     {
-      "label": "Occluded question — name the coin (face hidden, shape & colour give the clue)",
       "params": {
         "pieces": [
           {
@@ -220,7 +164,6 @@
       }
     },
     {
-      "label": "Occluded question — how much altogether? (total hidden)",
       "params": {
         "pieces": [
           {
@@ -247,7 +190,6 @@
       }
     },
     {
-      "label": "Sort & group — a mixed set arranged by value with ×N badges",
       "params": {
         "header": "Sort the coins",
         "pieces": [
@@ -278,7 +220,6 @@
       }
     },
     {
-      "label": "The hard case — give change from £10 for £6.35 by counting on",
       "params": {
         "header": "Change from £10",
         "pieces": [

@@ -4,42 +4,7 @@
   "name": "column-arithmetic",
   "version": 1,
   "title": "Column arithmetic (written method)",
-  "tagline": "Vertical written addition, subtraction and multiplication; derives every carry, borrow, partial product and the answer; staged a step at a time, plain or grid.",
-  "description": "The standard vertical written method for addition, subtraction and multiplication: numbers right-aligned by place value with a fixed decimal point, a rule line, and the answer beneath. Give the operands and the operation; the model aligns the digits, works the algorithm, and derives every carry (addition: written above the columns, or below the line), every regroup/borrow mark (subtraction: the lending digit struck through with its decremented value above, a small 1 on the borrowing digit, zeros in a cascade struck to 9), every partial product (multiplication: one row per non-zero digit of the multiplier, its placeholder zeros in a contrasting colour, the carries small at the upper left of the digit they are added into, then + and a second rule for the summed total with its carries below the line), the answer and the column headers — you never author a carry, a partial product or an answer digit. Draw it plain (bare digits, the exam look) or in a headed place-value grid (M·HTh·Th·H·T·O·t·h headers). Reveal the method a step at a time for the staged build; hide the answer (left blank, an answer space) or one given digit (an empty box) for a question — the model draws no question marks; band a column to mark the one being worked; add a £ prefix and fix the decimal places for money. Distinct from the place-value chart (one number, ×÷ by ten as digit shifts), the area model (a multiplication grid) and short division (the bus stop).",
-  "whenToUse": "Reach for this whenever the lesson is the standard written method for adding, subtracting or multiplying: column addition with carrying, column subtraction with borrowing / regrouping / exchange, adding several numbers, decimal-aligned add and subtract, money (£.pp), short multiplication (by one digit) and long multiplication (by two or more digits). Write the `operation` (\"add\" / \"subtract\" / \"multiply\") and the `operands` as plain numbers; the model right-aligns them by place value, fixes the decimal point in the same column across every row, and works the algorithm — every carry, borrow mark, partial product and the answer are computed (never authored). Common configurations: worked example — defaults show the whole method worked; answer space — reveal: 0 draws the operands, operator and rule with the working space empty (pupils work it); question — occlude: { answer: true } leaves the answer (and all the working) blank, so nothing leaks; missing-digit puzzle — occlude: { cells: [{ row: \"operand\", operand: 1, place: 1 }] } puts an empty box where one given digit was; staged method — reveal works the method a step at a time. For add and subtract a step is a column (reveal: 1 does the ones, 2 the ones and tens …). For multiply a step is one digit of the top number times one digit of the multiplier, so each partial-product row takes as many steps as the top number has digits, then the total works a column per step: with a 2-digit top number, reveal 2 finishes the first row and 4 the second, so stage by rows (2, 4, then the full total) or by single steps. Multiply takes exactly two operands, [the number being multiplied, the multiplier]; the multiplier is a whole number (up to 4 digits; a zero digit gets no row). A decimal top number keeps its point aligned through every row (£12.65 × 14). A decimal MULTIPLIER is worked by the integer method, as an exam solution does: author 7425 × 3 and place the point in the text (74.25 × 3 = 222.75). Notation variants: grid \"plain\" (bare right-aligned digits — the exam convention, default) or \"headed\" (a place-value grid with column headers); carryStyle \"above\" (addition carries above the top number, default) or \"below\" (below the rule line). Money: set prefix \"£\" and decimalPlaces 2 so £15.40 + £6.85 keeps the pence column aligned and the trailing zero shown. Keep the same grid style across a lesson so pupils track one layout. Synonyms a teacher might use: column addition, column subtraction, column multiplication, the written method, columns, carrying, carry the one, borrowing, regrouping, exchange, decomposition, vertical addition, short multiplication, long multiplication, partial products, placeholder zero, times, adding decimals, subtracting decimals, money problems, add up, take away. Switch model when the teaching changes: for one number and ×÷ by powers of ten (digit shifts) use number/place-value; for the grid / box method of multiplication use algebra/area-model; for division use number/short-division; for a number on a line use number/number-line.",
   "responseModes": [],
-  "tags": [
-    "column addition",
-    "column subtraction",
-    "column multiplication",
-    "written method",
-    "columns",
-    "carrying",
-    "carry",
-    "borrowing",
-    "regrouping",
-    "exchange",
-    "decomposition",
-    "vertical addition",
-    "vertical subtraction",
-    "short multiplication",
-    "long multiplication",
-    "partial products",
-    "placeholder zero",
-    "adding decimals",
-    "subtracting decimals",
-    "decimal addition",
-    "multiplying decimals",
-    "money",
-    "place value",
-    "addition",
-    "subtraction",
-    "multiplication",
-    "times",
-    "arithmetic",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -50,52 +15,43 @@
           "add",
           "subtract",
           "multiply"
-        ],
-        "description": "The algorithm to work. \"add\" sums all the operands column by column with carries; \"subtract\" does operand[0] − operand[1] (minuend − subtrahend) with borrowing / regrouping; \"multiply\" does operand[0] × operand[1] by the written method — one partial-product row per non-zero digit of operand[1] (short multiplication when it has one digit), then + and the summed total."
+        ]
       },
       "operands": {
         "type": "array",
         "minItems": 2,
         "maxItems": 5,
         "items": {
-          "type": "number",
-          "description": "One number in the calculation, written as a plain number (whole or decimal, e.g. 386, 13.6, 15.4). Non-negative. Its digits are decomposed into the correct place-value columns automatically."
-        },
-        "description": "The numbers, top to bottom in the order given. Addition takes 2–5 addends; subtraction uses the FIRST TWO (operand[0] − operand[1]); multiplication uses the FIRST TWO (operand[0] × operand[1]) — operand[1] is the multiplier, a WHOLE number of up to 4 digits (a decimal multiplier is drawn by the integer method: both numbers lose their points). Assumed non-negative; for subtraction the first must be ≥ the second (the written method cannot borrow past the top)."
+          "type": "number"
+        }
       },
       "grid": {
         "type": "string",
         "enum": [
           "plain",
           "headed"
-        ],
-        "description": "\"plain\" (default): bare digits right-aligned with a rule line — the standard exam look. \"headed\": a place-value grid with column headers (M, HTh, TTh, Th, H, T, O, then t, h, th for tenths / hundredths / thousandths) and cell borders — the scaffolded classroom layout."
+        ]
       },
       "carryStyle": {
         "type": "string",
         "enum": [
           "above",
           "below"
-        ],
-        "description": "Where ADDITION carries are written. \"above\" (default): small carry digits above the top operand, in the column carried into. \"below\": small carry digits just below the rule line, in the column carried into (the \"carry below the line\" notation). Ignored for subtraction (the strike-through borrow) and multiplication (partial-product carries sit in their row; the total's carries sit below its line)."
+        ]
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Staged control: how much of the method has been WORKED. Omit to show it all worked; reveal 0 = nothing worked yet (an answer space). For add / subtract it counts COLUMNS from the right: reveal 1 works the ones, 2 the ones and tens, and so on, each with its carry / borrow. For multiply it counts STEPS: a step multiplies one digit of the top number by one digit of the multiplier and writes its digit and carry (the first step of a row also writes the placeholder zeros; the last writes any carried-out digit), so each partial-product row takes as many steps as the top number has digits as drawn (£8.30 padded by decimalPlaces 2 counts 3); after the rows, the total works one column per step. Use it across staged frames to reveal a step (or a whole row: reveal = rows × digits in the top number) at a time. Capped at the total."
+        "minimum": 0
       },
       "occlude": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Hide chosen things — the question hooks. Nothing is drawn as \"?\": a hidden answer is left blank (an exam answer space) and a hidden single digit is an empty box. The rest of the figure stays visible and correct; the caption leaves the hidden value out so it cannot leak the answer.",
         "properties": {
           "answer": {
-            "type": "boolean",
-            "description": "Leave the answer blank — \"work it out\". For add / subtract the answer row is empty and the carry / borrow marks are hidden; for multiply every partial product, carry and the total are hidden, and so are the + and the second rule, which would show how many rows the method needs (the working space stays reserved). The caption reads \"386 + 257 =\". Default false."
+            "type": "boolean"
           },
           "cells": {
             "type": "array",
-            "description": "Hide specific digits — the missing-digit puzzle (\"4□ + 27 = 73, find the digit\"). Each names a digit by row and place; that digit becomes an empty box while the rest stay visible.",
             "items": {
               "type": "object",
               "additionalProperties": false,
@@ -105,17 +61,14 @@
                   "enum": [
                     "operand",
                     "answer"
-                  ],
-                  "description": "Which row the digit is in. \"operand\" = one of the input numbers (say which with `operand`); \"answer\" = the result row (for long multiplication, the total)."
+                  ]
                 },
                 "operand": {
                   "type": "integer",
-                  "minimum": 1,
-                  "description": "Which operand row, 1-based top to bottom (operand 1 is the first number). Only meaningful when row is \"operand\"."
+                  "minimum": 1
                 },
                 "place": {
-                  "type": "integer",
-                  "description": "The digit's column as a power of ten: 0 = ones, 1 = tens, 2 = hundreds, −1 = tenths, −2 = hundredths. (A multiplier sits right-aligned under the top number; its places count from its own ones digit.)"
+                  "type": "integer"
                 }
               },
               "required": [
@@ -128,11 +81,9 @@
       "highlight": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Band ONE column amber to draw the eye to the place currently being worked (pairs naturally with a staged reveal). Result / emphasis lane.",
         "properties": {
           "place": {
-            "type": "integer",
-            "description": "Which column to band, as a power of ten (0 = ones, 1 = tens, −1 = tenths)."
+            "type": "integer"
           }
         },
         "required": [
@@ -142,34 +93,27 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "carries": {
-            "type": "boolean",
-            "description": "Show the derived carry digits (addition, multiplication) and borrow / regroup marks (subtraction). false hides the working marks and shows just the numbers, rules and answer. Default true."
+            "type": "boolean"
           },
           "caption": {
-            "type": "boolean",
-            "description": "Draw the line below the calculation (the derived equation, or `caption` when given). false draws no caption at all, as an exam worked solution prints the bare column method. Default true."
+            "type": "boolean"
           }
         }
       },
       "prefix": {
-        "type": "string",
-        "description": "A unit symbol drawn before the leftmost digit of the numbers and the answer, e.g. \"£\" for money (for multiply: the top number and the answer only, and none when a decimal multiplier is drawn by the integer method, whose numbers are not amounts). Notation only — it never affects the alignment or the arithmetic. Omit for plain numbers."
+        "type": "string"
       },
       "decimalPlaces": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Pad every number to AT LEAST this many decimal places, so e.g. money keeps £15.40 (not 15.4) and the pence column lines up. Never truncates — if an operand already has more decimal places, the larger count is used. Default: the largest number of decimal places among the operands."
+        "minimum": 0
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the calculation; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the calculation. Overrides the derived equation caption (\"386 + 257 = 643\", or \"386 + 257 =\" while the answer is hidden or still being worked); omit to let the derivation speak. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -179,7 +123,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — column addition with carrying, 386 + 257 = 643",
       "params": {
         "operation": "add",
         "operands": [
@@ -190,7 +133,6 @@
       }
     },
     {
-      "label": "Answer space — 4517 + 2968, operands and rule drawn, answer empty",
       "params": {
         "operation": "add",
         "operands": [
@@ -201,7 +143,6 @@
       }
     },
     {
-      "label": "Question — adding decimals, 13.6 + 8.75, answer left blank",
       "params": {
         "operation": "add",
         "operands": [
@@ -214,7 +155,6 @@
       }
     },
     {
-      "label": "Hard case — subtraction borrowing across a zero, 503 − 247 = 256",
       "params": {
         "operation": "subtract",
         "operands": [
@@ -225,7 +165,6 @@
       }
     },
     {
-      "label": "Money — £15.40 + £6.85 = £22.25 in a headed place-value grid",
       "params": {
         "operation": "add",
         "operands": [
@@ -238,7 +177,6 @@
       }
     },
     {
-      "label": "Adding several numbers — 125 + 240 + 318 = 683, carry below the line",
       "params": {
         "operation": "add",
         "operands": [
@@ -250,7 +188,6 @@
       }
     },
     {
-      "label": "Short multiplication — 386 × 7 = 2702, carries in the answer row",
       "params": {
         "operation": "multiply",
         "operands": [
@@ -260,7 +197,6 @@
       }
     },
     {
-      "label": "Long multiplication — 73 × 26 = 1898, two partial products and the total",
       "params": {
         "operation": "multiply",
         "operands": [
@@ -271,7 +207,6 @@
       }
     },
     {
-      "label": "Hard case — 487 × 306 = 149022: a zero in the multiplier gets no row, two placeholder zeros",
       "params": {
         "operation": "multiply",
         "operands": [
@@ -281,7 +216,6 @@
       }
     },
     {
-      "label": "Question — money, £12.65 × 14, all the working left blank",
       "params": {
         "operation": "multiply",
         "operands": [

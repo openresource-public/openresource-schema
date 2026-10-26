@@ -4,48 +4,15 @@
   "name": "polygons-at-a-point",
   "version": 1,
   "title": "Polygons at a point",
-  "tagline": "Regular polygons fitted round a shared vertex, edge-to-edge; each interior angle at the point, the 360° gap and one unknown polygon's side count all derived.",
-  "description": "Two or more regular polygons placed edge-to-edge around one common vertex (the \"point\"), with the interior angle each contributes at that vertex marked by an arc and the angles-round-a-point reasoning derived. Use it for \"the angles at a point add to 360°\" with real polygons: a semiregular tiling vertex (a square and two octagons; a square, a hexagon and a dodecagon), the gap left when polygons do not fill the turn (three regular pentagons leave 36°), and the \"P is a regular polygon — how many sides has it?\" variant where one polygon is unknown and its side count comes from 360 − the others. You list the polygons by number of sides (mark one unknown to make it P); the model derives every polygon's shape, each interior angle (180 − 360/n), the leftover gap (360 − Σ interior), the unknown polygon's side count (360 ÷ (180 − its interior)), the edge-to-edge placement, the auto right-angle square on a square, and the fills. By default the figure is a cropped SNAPSHOT — each polygon is drawn as just its corner at the point (a couple of sides trailing off) so its side count cannot be counted off the figure and a many-sided P does not dwarf the others; crop \"none\" draws whole polygons (for a true tessellation) and crop \"unknown\" crops only P (so a lesson can name the other polygons' far vertices). Every polygon is drawn the same edge length (sizing \"edge\") so shared edges coincide and each shape shows equal-length sides at the point; sizing \"point\" instead makes every polygon the same visual size. Per-polygon occlusion (\"find this angle\") and highlighting, an occludable/highlightable gap wedge, polygon labels (A, B, P), named vertices and a shared-point label, an optional caption, \"not to scale\", and host-driven staged builds (reveal the polygons one at a time).",
-  "whenToUse": "Reach for this whenever the teaching is REGULAR POLYGONS meeting at a point and the fact that the angles round the point add to 360°: semiregular tiling vertices, the gap a set of polygons leaves, and \"P is a regular polygon fitted in the gap — how many sides has it?\". List the polygons in polygons[] going round the point, each { sides } (3–24); the interior angle it contributes is derived as 180 − 360/sides, so a square is 90°, a regular pentagon 108°, a hexagon 120°, an octagon 135°, a dodecagon 150°. Turn on showAngles to mark every interior angle at the point (a 90° angle draws as a small right-angle square). Common configurations: a semiregular tiling vertex — list the polygons that meet (square + octagon + octagon; square + hexagon + dodecagon), showAngles, caption \"The angles at a point add to 360°\"; find the missing angle — showAngles with one polygon's occludeAngle + highlightAngle so the pupil subtracts the rest from 360°; the gap — when the polygons do not fill the turn, add gap { show: true } to mark the leftover wedge (occlude + highlight it, label it \"x\"), with \"Work out the size of the gap\" in the block text; how many sides is P? — give one polygon { unknown: true, label: \"P\" } (omit its sides) and the model solves its side count from 360 − the others; set occludeAngle on P to make finding its interior the first step. Cropping: by default (crop \"all\") every polygon is drawn as just its corner at the point — a snapshot that keeps the figure compact and stops a pupil counting P's sides off the page; use crop \"none\" for a true tessellation where showing whole tiles is the point (a square and two octagons; six triangles), and crop \"unknown\" to crop only P while drawing the known polygons whole (so you can name their far vertices A–G, e.g. a pentagon and a square with P fitted in the corner). Sizing: \"edge\" (default) draws every polygon the same edge length so shared edges line up exactly and each shape shows equal-length sides — the right look for polygons meeting or tiling edge-to-edge; \"point\" instead draws every polygon the same visual size (a looser not-to-scale look). Orientation: startAngle rotates the fan and clockwise mirrors it; the default centres the polygons upward with any gap at the bottom. Name a polygon with label (\"A\", \"B\", \"P\"); name its corners with vertexLabels (letters in vertex order — vertex 0 is the shared point, then round the polygon toward the next polygon); name the shared point with pointLabel (\"D\", \"O\"). Override a displayed value with a polygon's angleLabel (a not-to-scale given) or the gap's label (algebra \"x\"); occlude renders a value as \"?\" with the arc still shown. Keep the same figure across the blocks of one lesson, changing only what is given, occluded or highlighted. Switch model when the teaching changes: for one polygon's interior/exterior angles or angle sum use geometry/polygon-angles; for rays meeting at a point with no polygon bodies (angles at a point / on a line / vertically opposite) use geometry/angles-at-a-point; for the tangram / pattern-block manipulative use geometry/tiling-manipulative. Synonyms a teacher might use: angles at a point, angles around a point, polygons meeting at a point, regular polygons round a point, tessellation, tiling, semiregular tiling, fit together, tile the plane, gap, how many sides, 360 degrees, interior angle, regular polygon, pentagon square octagon dodecagon.",
   "responseModes": [],
-  "tags": [
-    "polygons at a point",
-    "angles at a point",
-    "angles around a point",
-    "regular polygons",
-    "tiling",
-    "tessellation",
-    "tessellate",
-    "semiregular",
-    "fit together",
-    "meeting at a point",
-    "gap",
-    "how many sides",
-    "interior angle",
-    "360",
-    "360 degrees",
-    "polygon",
-    "pentagon",
-    "square",
-    "hexagon",
-    "octagon",
-    "dodecagon",
-    "triangle",
-    "missing angle",
-    "regular polygon",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
-    "description": "List the regular polygons that meet at the point (polygons[]) and annotate. Every angle at the point, the gap and any unknown side count are derived — you never type a measure.",
     "properties": {
       "polygons": {
         "type": "array",
         "minItems": 2,
         "maxItems": 8,
-        "description": "The regular polygons round the point, in order going round it (anticlockwise by default). Each contributes its interior angle (180 − 360/sides) at the shared vertex; the model places them edge-to-edge. Give at least two. At most one may be { unknown: true } — the polygon P whose side count is the answer.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -53,51 +20,42 @@
             "sides": {
               "type": "integer",
               "minimum": 3,
-              "maximum": 24,
-              "description": "Number of sides of this regular polygon (3 = equilateral triangle, 4 = square, 5 = pentagon, 6 = hexagon, 8 = octagon, 12 = dodecagon, …). Its interior angle at the point is derived as 180 − 360/sides. Omit ONLY when unknown is true (this is P, the polygon being solved for)."
+              "maximum": 24
             },
             "unknown": {
-              "type": "boolean",
-              "description": "Mark this polygon as P — the one whose side count is the answer. Omit its sides; the model derives its interior angle as 360 − the sum of the others (the cluster is taken to close with no gap) and from that its number of sides. At most one polygon may be unknown. Default false."
+              "type": "boolean"
             },
             "label": {
-              "type": "string",
-              "description": "A short name drawn at this polygon's centre — \"A\", \"B\", \"P\". The text is authored; its position is derived. Omit for none. Note: on a CROPPED polygon whose angle is also marked (showAngles / occludeAngle / angleLabel), the drawn name is omitted — its angle mark already identifies the corner, and there is no room in a thin wedge for both; the name still feeds the aria text. Whole polygons (crop \"none\", or the un-cropped ones under crop \"unknown\") always show the name."
+              "type": "string"
             },
             "occludeAngle": {
-              "type": "boolean",
-              "description": "Render THIS polygon's interior angle at the point as \"?\" — the \"find this angle\" hook. The arc still shows. Default false."
+              "type": "boolean"
             },
             "highlightAngle": {
-              "type": "boolean",
-              "description": "Draw the eye to this polygon's angle at the point (amber arc + value) — the answer, or the angle the question is about. Default false."
+              "type": "boolean"
             },
             "angleLabel": {
-              "type": "string",
-              "description": "Override the displayed interior-angle value — a given measure on a not-to-scale figure (\"135°\") or algebra. Omit to show the value derived from the shape."
+              "type": "string"
             },
             "vertexLabels": {
               "type": "array",
               "maxItems": 24,
               "items": {
                 "type": "string"
-              },
-              "description": "Letters for this polygon's corners, in vertex order: index 0 is the SHARED POINT, then the vertices going round the polygon toward the next polygon (index 1 is on the shared edge with the next polygon). Use an empty string \"\" to skip a vertex (e.g. the shared point, so it is not labelled twice). Omit for an unlabelled polygon."
+              }
             }
           }
         }
       },
       "showAngles": {
-        "type": "boolean",
-        "description": "Mark EVERY polygon's interior angle at the point with an arc and its derived measure (a 90° angle draws as a small right-angle square). Per-polygon occludeAngle / highlightAngle / angleLabel still override individual polygons. Default false."
+        "type": "boolean"
       },
       "sizing": {
         "type": "string",
         "enum": [
           "point",
           "edge"
-        ],
-        "description": "\"point\" (default): draw every polygon at the same VISUAL size (equal circumradius) — the not-to-scale \"meeting at a point\" look where a triangle and a many-sided P read at comparable sizes; polygons share the vertex. \"edge\": draw every polygon with the same EDGE length so genuinely shared edges coincide exactly — use for true edge-to-edge tilings and \"sitting on / fitted into a corner\" figures (a many-sided polygon then draws larger, to scale)."
+        ]
       },
       "crop": {
         "type": "string",
@@ -105,60 +63,47 @@
           "unknown",
           "all",
           "none"
-        ],
-        "description": "How much of each polygon to draw. \"unknown\" (default): draw only the unknown polygon P as a corner \"snapshot\" at the point (a couple of sides trailing off) so its side count cannot be counted off the figure and a many-sided P does not dwarf the others; every KNOWN polygon is drawn whole. \"all\": crop EVERY polygon to its corner — the classic exam snapshot (just the meeting point and a bit of each shape); named far-vertices are not shown. \"none\": draw every polygon whole (use for true tessellations where showing the complete tiling is the point). A small polygon whose sides meet within the snapshot is drawn whole regardless."
+        ]
       },
       "startAngle": {
-        "type": "number",
-        "description": "Direction (degrees, 0 = east/right, anticlockwise positive) of the first shared edge from the point — rotates the whole fan. Omit to auto-centre the polygons upward (any gap at the bottom)."
+        "type": "number"
       },
       "clockwise": {
-        "type": "boolean",
-        "description": "Lay the polygons out going clockwise round the point instead of anticlockwise — mirrors the fan to match a source figure's orientation. Default false."
+        "type": "boolean"
       },
       "gap": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Mark the leftover GAP wedge — the part of the turn the polygons do not cover (360 − Σ interior). Include it only when the polygons leave a gap; its measure is derived.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Mark the gap wedge with an arc and its derived measure. Default false (no gap mark)."
+            "type": "boolean"
           },
           "label": {
-            "type": "string",
-            "description": "Override the gap's displayed value — algebra \"x\", or a given. Omit to show the derived measure."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the gap's value as \"?\" — \"work out the gap\". The arc still shows. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the gap arc + value — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "pointLabel": {
-        "type": "string",
-        "description": "A name for the shared point where the polygons meet (e.g. \"O\", \"D\"), drawn beside it. Omit for none."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "An optional line centred below the figure: the rule, e.g. \"The angles at a point add to 360°\". Omit for none. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "notToScale": {
-        "type": "boolean",
-        "description": "Print a \"Not to scale\" note by the figure. Use when the given values would not draw exactly to scale (most exam figures). Default false."
+        "type": "boolean"
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Host-driven staged builds only: draw just the first this-many polygons (round the point), so a lesson can add them one at a time. The figure is always SIZED from the full set, so the drawing never resizes between stages. Omit to draw every polygon."
+        "minimum": 0
       }
     },
     "required": [
@@ -167,7 +112,6 @@
   },
   "examples": [
     {
-      "label": "Answer space — square, hexagon and dodecagon at a point, find the missing angle",
       "params": {
         "polygons": [
           {
@@ -190,7 +134,6 @@
       }
     },
     {
-      "label": "Worked — a square and two regular octagons tile round a point (whole polygons)",
       "params": {
         "polygons": [
           {
@@ -212,7 +155,6 @@
       }
     },
     {
-      "label": "How many sides is P? — square, hexagon and an unknown polygon at a point",
       "params": {
         "polygons": [
           {
@@ -235,7 +177,6 @@
       }
     },
     {
-      "label": "Find the gap — a regular hexagon and two squares leave a wedge",
       "params": {
         "polygons": [
           {
@@ -261,7 +202,6 @@
       }
     },
     {
-      "label": "The hard case — a regular hexagon and a square, P fitted edge-to-edge in the corner (named vertices)",
       "params": {
         "polygons": [
           {
@@ -297,7 +237,6 @@
       }
     },
     {
-      "label": "Worked — six equilateral triangles meet at a point (whole polygons)",
       "params": {
         "polygons": [
           {

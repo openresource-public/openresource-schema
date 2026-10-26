@@ -4,33 +4,7 @@
   "name": "forces",
   "version": 1,
   "title": "Force diagram (free body)",
-  "tagline": "Free-body force diagram: labelled arrows from a body, lengths derived from newtons; resultant and balanced/unbalanced verdict always derived and occludable.",
-  "description": "A free-body force diagram — one object in a scene (a box on a surface, a hanging mass, a falling or floating body) with labelled force arrows drawn from its centre. The author writes only the scene and each force's name, magnitude in newtons and direction (a cardinal up/down/left/right or a bearing in degrees); every arrow's length is derived from its newtons against one shared scale, so a weak force can never be drawn long. The resultant force (its magnitude and direction) and the balanced-or-unbalanced verdict are always derived from the exact component sum of the forces — there is nowhere to author them. A force value can be occluded (\"what is this force?\"), and with balanceOne the hidden value is the derived complement that balances the rest (anti-leak). The resultant can be occluded (\"find the resultant\"), one arrow highlighted, and the whole thing built one force per stage. Covers balanced vs unbalanced forces, Newton's first law, finding a resultant (including the diagonal 3-4-5 case by Pythagoras) and the terminal-velocity story as a staged sequence.",
-  "whenToUse": "Reach for this to draw a free-body / force diagram whenever forces act on an object: balanced vs unbalanced forces, Newton's first law (steady speed = balanced), finding a resultant force, and terminal velocity. Set the scene to the physical context (box-on-ground, hanging, falling, floating, free) — it draws the object glyph and any support furniture. Give each force its name (label), magnitude (newtons) and direction: dir for the usual axis-aligned case (\"up\"/\"down\"/\"left\"/\"right\" — weight down, normal contact up, thrust right, drag left), or bearing in degrees clockwise from up for a slanted force. Every arrow length is derived from the newtons on one shared scale, and the resultant + verdict are derived from the forces — you never author a length, a resultant or a verdict. Common configurations: BALANCED — equal opposite forces (weight 500 down, normal 500 up) → the verdict reads \"balanced, 0 N\"; UNBALANCED — thrust 800 right, drag 300 left → resultant 500 N right; FIND THE RESULTANT — occlude: \"resultant\" hides the derived magnitude/direction and verdict for a question; WHAT FORCE BALANCES THIS? — give the known forces, add the unknown force with only its direction + an id, and set balanceOne to that id so its newtons is derived as the complement that balances the rest (its value shows \"?\", anti-leak); THE DIAGONAL HARD CASE — a 3 N right and a 4 N down give a 5 N resultant by Pythagoras (keep authored forces perpendicular so it stays GCSE-safe). Staged builds read well: set reveal to add one force per stage (base = the object with the first force), bring the resultant in on the last stage; the terminal-velocity story is a sequence of blocks — weight only (accelerating), weight vs growing drag, then balanced at terminal velocity. Toggle show.resultant, show.verdict, show.values, show.grid. Keep the same scene and newton scale across a lesson so pupils compare like with like. Synonyms a teacher might use: free-body diagram, force diagram, resultant force, net force, balanced forces, unbalanced forces, Newton's first law, terminal velocity, weight, normal reaction, thrust, drag, air resistance, tension, friction.",
   "responseModes": [],
-  "tags": [
-    "forces",
-    "free-body diagram",
-    "force diagram",
-    "resultant force",
-    "net force",
-    "balanced forces",
-    "unbalanced forces",
-    "newton",
-    "newtons",
-    "newtons first law",
-    "terminal velocity",
-    "weight",
-    "normal reaction",
-    "normal contact force",
-    "thrust",
-    "drag",
-    "air resistance",
-    "tension",
-    "friction",
-    "physics",
-    "mechanics"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -43,8 +17,7 @@
           "falling",
           "floating",
           "free"
-        ],
-        "description": "The physical context, which draws the object and any support furniture. \"box-on-ground\": a box resting on a ground line. \"hanging\": a mass on a string from a ceiling. \"falling\": a body in the air (skydiver / raindrop) with no support. \"floating\": a body in water with a waterline. \"free\": a plain body with no scene furniture (a puck, a general object). Default \"free\"."
+        ]
       },
       "forces": {
         "type": "array",
@@ -55,13 +28,11 @@
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The force's name, drawn beside its arrow — \"Weight\", \"Air resistance\", \"Thrust\", \"Normal contact force\", \"Tension\". Omit for an unlabelled arrow."
+              "type": "string"
             },
             "newtons": {
               "type": "number",
-              "exclusiveMinimum": 0,
-              "description": "The magnitude of the force in newtons (positive). The arrow's LENGTH is derived from this against the shared scale — you never set a length. Omit only when this force is the one balanceOne solves for (its value is then derived)."
+              "exclusiveMinimum": 0
             },
             "dir": {
               "type": "string",
@@ -70,27 +41,22 @@
                 "down",
                 "left",
                 "right"
-              ],
-              "description": "The force's direction as a cardinal: up / down / left / right. Use this for the usual axis-aligned free-body diagram (weight down, normal up, thrust right, drag left). Give EITHER dir OR bearing, not both."
+              ]
             },
             "bearing": {
               "type": "number",
               "minimum": 0,
-              "exclusiveMaximum": 360,
-              "description": "The force's direction as a bearing in degrees measured CLOCKWISE from straight up (0 = up, 90 = right, 180 = down, 270 = left). Use for a slanted force (a rope at an angle). Give EITHER dir OR bearing. Keep the hard case perpendicular so the resultant is a clean Pythagorean value — no trig beyond Pythagoras at GCSE."
+              "exclusiveMaximum": 360
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this force's newton value as \"?\" — the \"what is this force?\" hook. The arrow still draws (at its true length). Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this arrow in amber to draw the eye to one force. Default false."
+              "type": "boolean"
             },
             "id": {
               "type": "string",
-              "pattern": "^[a-z0-9-]+$",
-              "description": "Optional kebab-case identifier, only needed so balanceOne can name which force it solves for (e.g. \"friction\")."
+              "pattern": "^[a-z0-9-]+$"
             }
           },
           "required": [
@@ -106,64 +72,51 @@
               }
             }
           ]
-        },
-        "description": "The forces acting on the object, each drawn as an arrow from the body centre. Write each force's name, newtons and direction — the length, the resultant and the verdict are all derived."
+        }
       },
       "resultant": {
         "type": "object",
         "additionalProperties": false,
-        "description": "How to present the DERIVED resultant. The resultant itself (magnitude + direction) is always computed from the forces — this object only styles/occludes it.",
         "properties": {
           "occlude": {
-            "type": "boolean",
-            "description": "Hide the resultant magnitude and direction (and the verdict) as \"?\" — the \"find the resultant force\" hook. The resultant arrow is not drawn. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Draw the resultant arrow and readout in amber emphasis. Default true when the resultant is shown (the resultant IS the result)."
+            "type": "boolean"
           }
         }
       },
       "balanceOne": {
         "type": "string",
-        "pattern": "^[a-z0-9-]+$",
-        "description": "The id of ONE force whose magnitude is UNKNOWN and DERIVED as the complement that makes the whole system balance (resultant zero) — the \"what force balances these?\" hook. Give that force its direction + id and omit its newtons; its value renders as \"?\" (anti-leak) and the system is treated as balanced. If the named force's direction cannot balance the rest, its value is left unknown."
+        "pattern": "^[a-z0-9-]+$"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles (all default true unless stated).",
         "properties": {
           "resultant": {
-            "type": "boolean",
-            "description": "Draw the resultant arrow (dashed, from the centre) and its readout. false shows the forces only. Default true (false when balanceOne is set — a balanced system has no resultant to draw)."
+            "type": "boolean"
           },
           "verdict": {
-            "type": "boolean",
-            "description": "Show the \"Balanced\" / \"Unbalanced\" readout beneath the figure. Default true."
+            "type": "boolean"
           },
           "values": {
-            "type": "boolean",
-            "description": "Write each force's newton value beside its name. false shows names only (or names hidden too if unlabelled) — an answer space. Default true."
+            "type": "boolean"
           },
           "grid": {
-            "type": "boolean",
-            "description": "Show a faint square background grid (helps read arrow lengths / components). Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Staged build: draw only the first N forces (and the resultant only once all authored forces are shown). Omit to draw everything. The base of a staged build is reveal 1 (the object with its first force); bring the resultant in last."
+        "minimum": 0
       }
     },
     "required": [
@@ -172,7 +125,6 @@
   },
   "examples": [
     {
-      "label": "Balanced — a box at rest: weight down = normal contact up",
       "params": {
         "scene": "box-on-ground",
         "header": "A box resting on the ground",
@@ -191,7 +143,6 @@
       }
     },
     {
-      "label": "Unbalanced — driving force beats drag: resultant 500 N right",
       "params": {
         "scene": "free",
         "header": "A car accelerating",
@@ -220,7 +171,6 @@
       }
     },
     {
-      "label": "Find the resultant (occluded) — thrust vs drag, verdict hidden",
       "params": {
         "scene": "free",
         "forces": [
@@ -241,7 +191,6 @@
       }
     },
     {
-      "label": "What force balances this? — friction derived as the complement",
       "params": {
         "scene": "box-on-ground",
         "header": "The box moves at a steady speed",
@@ -271,7 +220,6 @@
       }
     },
     {
-      "label": "The hard case — 3 N right and 4 N down give a diagonal 5 N resultant (Pythagoras)",
       "params": {
         "scene": "free",
         "header": "Resultant of two perpendicular forces",
@@ -293,7 +241,6 @@
       }
     },
     {
-      "label": "Terminal velocity frame — weight balanced by air resistance (skydiver)",
       "params": {
         "scene": "falling",
         "header": "At terminal velocity",

@@ -4,43 +4,10 @@
   "name": "coordinate-grid",
   "version": 4,
   "title": "Coordinate grid",
-  "tagline": "Numbered coordinate grid: points, segments and lines x = k / y = k / y = mx + c, labels derived; place-point, select-point and place-line (draw the line) answers.",
-  "description": "A coordinate grid with numbered axes, optional plotted points (labelled, with optional coordinate readouts), line segments between points, axis-parallel constant lines (x = k / y = k) and straight lines in slope-intercept form (y = mx + c), each drawn across the whole grid with a derived equation label. Ranges crossing zero produce a four-quadrant grid automatically. Supports answer-on-the-model questions (marked model tile): place-point (click a grid intersection), select-point (tap a rendered point), and place-line (draw a straight line by dragging the two handle points of a pre-placed wrong line; the placeLine param names the target and marking derives from it — any two distinct points on the correct line pass).",
-  "whenToUse": "Any teaching about coordinates, plotting, position or straight lines drawn on a grid. Use with points: [] for a blank answer-space grid (\"plot the point (3,2)\"); with labelled points + showCoordinates for worked examples; with occlude: true on a point to hide its readout as (?, ?) for practice questions; with negative ranges for four-quadrant work. Use lines for full-grid lines — lines: [{x: -1}] draws the vertical line x = −1, lines: [{y: 6}] the horizontal line y = 6, and lines: [{m: 2, c: 1}] the straight line y = 2x + 1 (write x + y = 4 as {m: -1, c: 4}); set occlude: true on a line to hide its equation as \"?\" for \"what is the equation of this line?\". For a \"draw the line …\" QUESTION use a marked model tile with responseMode \"place-line\", correctAnswer { derived: true } and placeLine naming the target ({m: 2, c: 1} | {x: -1} | {y: 6}) — do NOT also author the same line in lines (that would draw the answer); a given companion line (simultaneous equations) does go in lines. Choose axis ranges so the target line crosses the grid well inside the window (for y = mx + c make sure at least two grid intersections on the line are in range — handles snap to axes.step). Constant/straight lines differ from segments, which join two named points. On wide ranges number the axes in 2s or 5s (axes.labelStep) rather than every line — cramped tick numbers are never acceptable. Keep axis ranges identical across blocks in one lesson so the representation stays stable for pupils.",
   "responseModes": [
     "place-point",
     "select-point",
     "place-line"
-  ],
-  "tags": [
-    "coordinates",
-    "coordinate",
-    "plotting",
-    "plot",
-    "axes",
-    "axis",
-    "quadrant",
-    "grid",
-    "points",
-    "position",
-    "graph",
-    "x-axis",
-    "y-axis",
-    "ordered pairs",
-    "maths",
-    "geometry",
-    "constant line",
-    "vertical line",
-    "horizontal line",
-    "x = k",
-    "y = k",
-    "draw the line",
-    "straight line",
-    "linear graph",
-    "y = mx + c",
-    "gradient",
-    "intercept",
-    "simultaneous equations"
   ],
   "interface": {
     "type": "object",
@@ -56,8 +23,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis, e.g. [0, 10] (first quadrant) or [-5, 5] (crosses zero → four quadrants)."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -65,28 +31,23 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the y-axis."
+            "maxItems": 2
           },
           "step": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Grid spacing in axis units (the x grid, and the y grid unless yStep overrides). Default 1. Also the snap grain for place-point clicks and place-line handles."
+            "exclusiveMinimum": 0
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Grid spacing for the y-axis alone, when the printed grid counts up faster than across — a draw-the-graph window like y −16…14 over x −2…3 has 1 square = 1 unit across but 2 units up, so set step 1 with yStep 2. Keeps the squares near-square on a tall window (the canvas already compresses a tall y-axis to stay readable) and becomes the y snap grain. Default: step."
+            "exclusiveMinimum": 0
           },
           "labelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Number the axes every this many units while the grid stays at step — e.g. step 1 with labelStep 2 or 5 counts in 2s/5s. Use a multiple of step. Governs both axes unless yLabelStep overrides. Default: every grid line is numbered, which CROWDS on wide ranges — if a range spans more than ~15 units, set labelStep so numbers stay clearly separated."
+            "exclusiveMinimum": 0
           },
           "yLabelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Number the y-axis every this many units, when it needs a different count from x (x every 1, y every 2). Use a multiple of yStep. Default: labelStep."
+            "exclusiveMinimum": 0
           },
           "labels": {
             "type": "array",
@@ -94,8 +55,7 @@
               "type": "string"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "Axis name labels [x, y]. Default [\"x\", \"y\"]."
+            "maxItems": 2
           }
         },
         "required": [
@@ -104,8 +64,7 @@
         ]
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show grid lines. Default true. Set false for a sparser sketch look."
+        "type": "boolean"
       },
       "points": {
         "type": "array",
@@ -120,8 +79,7 @@
               "type": "number"
             },
             "label": {
-              "type": "string",
-              "description": "Point name shown beside the marker, e.g. \"A\". Omit for an unnamed point."
+              "type": "string"
             },
             "style": {
               "type": "string",
@@ -129,24 +87,20 @@
                 "dot",
                 "open",
                 "cross"
-              ],
-              "description": "Marker shape. Default \"dot\"."
+              ]
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide this point's coordinate readout as \"(?, ?)\" when showCoordinates is on — the question hook for \"what are the coordinates of…?\". The marker and label stay visible."
+              "type": "boolean"
             },
             "color": {
-              "type": "string",
-              "description": "Optional CSS colour for the marker. Default is the theme accent."
+              "type": "string"
             }
           },
           "required": [
             "x",
             "y"
           ]
-        },
-        "description": "Points to plot. Empty/omitted = blank grid (an answer space)."
+        }
       },
       "segments": {
         "type": "array",
@@ -157,12 +111,10 @@
           },
           "minItems": 2,
           "maxItems": 2
-        },
-        "description": "Line segments between labelled points, as pairs of point labels, e.g. [[\"A\",\"B\"],[\"B\",\"C\"]]. Useful for shapes and journeys. For a full-grid line (x = k / y = k / y = mx + c) use lines, not segments."
+        }
       },
       "lines": {
         "type": "array",
-        "description": "Full-grid lines, each drawn across the whole window with a DERIVED equation label. Each item is EXACTLY ONE of: {x: k} (vertical line x = k), {y: k} (horizontal line y = k), or {m, c} (the straight line y = mx + c, clipped to the grid; write x + y = 4 as {m: -1, c: 4}). Use for \"draw the line …\" figures and, with occlude, \"what is the equation of this line?\". A line that misses the grid window is not drawn. For a marked \"draw the line\" QUESTION use placeLine instead — a lines entry would draw the answer.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -185,36 +137,28 @@
           ],
           "properties": {
             "x": {
-              "type": "number",
-              "description": "Draw a VERTICAL line at this x value (the line x = k), spanning ymin..ymax. Provide exactly one of x / y / m."
+              "type": "number"
             },
             "y": {
-              "type": "number",
-              "description": "Draw a HORIZONTAL line at this y value (the line y = k), spanning xmin..xmax. Provide exactly one of x / y / m."
+              "type": "number"
             },
             "m": {
-              "type": "number",
-              "description": "Gradient of a straight line y = mx + c, drawn across the grid. Pair with c (c defaults to 0). Provide exactly one of x / y / m."
+              "type": "number"
             },
             "c": {
-              "type": "number",
-              "description": "y-intercept of the straight line y = mx + c. Only meaningful with m. Default 0."
+              "type": "number"
             },
             "label": {
-              "type": "string",
-              "description": "Override the derived equation label (default \"x = k\" / \"y = k\" / \"y = mx + c\"). Rarely needed — only for a non-equation caption."
+              "type": "string"
             },
             "showLabel": {
-              "type": "boolean",
-              "description": "Show the equation label beside the line. Default true; set false for an unlabelled line."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide the equation label as \"?\" (the line itself stays visible) — the question hook for \"what is the equation of this line?\". Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the line and its label in the amber result/emphasis colour. Default false."
+              "type": "boolean"
             }
           }
         }
@@ -241,42 +185,33 @@
         ],
         "properties": {
           "m": {
-            "type": "number",
-            "description": "Target gradient: the pupil must draw y = mx + c. Pair with c (default 0). Provide exactly one of m / x / y."
+            "type": "number"
           },
           "c": {
-            "type": "number",
-            "description": "Target y-intercept for the m form. Default 0."
+            "type": "number"
           },
           "x": {
-            "type": "number",
-            "description": "Target VERTICAL line: the pupil must draw x = this value."
+            "type": "number"
           },
           "y": {
-            "type": "number",
-            "description": "Target HORIZONTAL line: the pupil must draw y = this value."
+            "type": "number"
           }
-        },
-        "description": "The place-line TARGET — the line the pupil must draw ({m, c} | {x} | {y}). Question tiles only: pair with responseMode \"place-line\" and correctAnswer { derived: true }. The target is the question (\"Draw the line y = 2x + 1\" — put the equation in the header or stem), so it is public. Static surfaces (print/PPTX) draw NO line for it — a blank answer space; on web/slides a complete but WRONG line is pre-placed as two draggable handles that snap to the grid, and marking derives from this spec: any two distinct committed points on the target line are correct. Choose ranges so at least two grid intersections on the target line sit well inside the window."
+        }
       },
       "highlight": {
         "type": "array",
         "items": {
           "type": "string"
-        },
-        "description": "Labels of points to emphasise with a ring (draws the eye in worked examples)."
+        }
       },
       "showCoordinates": {
-        "type": "boolean",
-        "description": "Render \"(x, y)\" readouts beside labelled points. Default false. Combine with per-point occlude for question variants."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title rendered above the grid."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only: points can be dragged, snapping to the grid, with live coordinate readout. Use for exploration (\"move A to (5, 1)\"); has no effect on static surfaces. Ignored when the tile carries a responseMode."
+        "type": "boolean"
       }
     },
     "required": [
@@ -285,7 +220,6 @@
   },
   "examples": [
     {
-      "label": "Blank first-quadrant grid (answer space)",
       "params": {
         "axes": {
           "x": [
@@ -301,7 +235,6 @@
       }
     },
     {
-      "label": "Worked example — plotted points with readouts",
       "params": {
         "axes": {
           "x": [
@@ -329,7 +262,6 @@
       }
     },
     {
-      "label": "Question — occluded readout",
       "params": {
         "axes": {
           "x": [
@@ -366,7 +298,6 @@
       }
     },
     {
-      "label": "Four quadrants with a segment",
       "params": {
         "axes": {
           "x": [
@@ -399,7 +330,6 @@
       }
     },
     {
-      "label": "Wide range numbered in 2s (unit grid, uncrowded labels)",
       "params": {
         "axes": {
           "x": [
@@ -428,7 +358,6 @@
       }
     },
     {
-      "label": "Constant line — the vertical line x = −3 (four quadrants)",
       "params": {
         "axes": {
           "x": [
@@ -448,7 +377,6 @@
       }
     },
     {
-      "label": "Constant line — the horizontal line y = 4",
       "params": {
         "axes": {
           "x": [
@@ -468,7 +396,6 @@
       }
     },
     {
-      "label": "Hard case — the lines x = 2 and y = −3 crossing on four quadrants",
       "params": {
         "axes": {
           "x": [
@@ -491,7 +418,6 @@
       }
     },
     {
-      "label": "Question — name this line (occluded equation)",
       "params": {
         "axes": {
           "x": [
@@ -512,7 +438,6 @@
       }
     },
     {
-      "label": "Straight line — y = 2x − 1 drawn and labelled (worked example)",
       "params": {
         "axes": {
           "x": [
@@ -546,7 +471,6 @@
       }
     },
     {
-      "label": "Question — name this straight line (occluded y = mx + c)",
       "params": {
         "axes": {
           "x": [
@@ -568,7 +492,6 @@
       }
     },
     {
-      "label": "Hard case — simultaneous pair y = x + 1 and y = −2x + 7 with the intersection read out",
       "params": {
         "axes": {
           "x": [
@@ -604,7 +527,6 @@
       }
     },
     {
-      "label": "Draw the line y = 2x + 3 — place-line question state (marked model tile: responseMode \"place-line\", correctAnswer { derived: true }; statically a blank answer space)",
       "params": {
         "axes": {
           "x": [
@@ -623,7 +545,6 @@
       }
     },
     {
-      "label": "Draw the line x = −2 — place-line question state (vertical target on four quadrants)",
       "params": {
         "axes": {
           "x": [

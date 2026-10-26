@@ -4,31 +4,7 @@
   "name": "fraction-wall",
   "version": 1,
   "title": "Fraction wall",
-  "tagline": "Stacked bars of one whole split by denominator so equivalent fractions line up; derives equivalence, comparison and the common-denominator row.",
-  "description": "A fraction wall — bars of one shared whole width stacked on top of each other, each split into equal bricks by its denominator (halves, thirds, quarters …), so equivalent fractions line up vertically and fractions can be compared by where their bricks fall. You write the denominators as rows; the model derives every brick's position and width, every brick and row label, the value of any shaded fraction, which rows a guide line lines up with, the auto-shaded set of equivalent fractions, and the common-denominator row that resolves a comparison. Shade the leftmost bricks of a row to show a fraction of the whole; drop vertical guide lines at fraction positions to compare two fractions or mark a whole equivalent set; occlude a label to \"?\" for a question; highlight the row that resolves the comparison. Covers equivalent fractions, comparing and ordering fractions, adding fractions over a common denominator, and a fraction of a whole.",
-  "whenToUse": "Reach for this to compare, order, equate or add fractions of one whole on the classic fraction wall. Author the rows as denominators — `rows: [1, 2, 3, 4, 6, 8, 12]` draws the whole, halves, thirds, quarters, sixths, eighths and twelfths, each to scale on the same width. Key configurations: equivalent fractions — give a guide `{ n: 1, d: 2, equivalents: true }` and the model auto-shades and labels every row that lines up with one half (2/4, 3/6, 4/8, 6/12), with an alignment dot at each coincidence — the fastest way to mark a whole equivalent set; or shade each row yourself (`{ denominator: 4, shade: 2 }`) and add a plain guide to confirm the alignment. Comparing / ordering — shade each fraction on its own row (2/3 on a thirds row, 3/4 on a quarters row) and drop a guide at each; the longer shaded bar and the guide positions show which is larger, and adding the common-denominator row (twelfths) with `highlight: true` shows the guides landing on exact brick edges (8/12 vs 9/12) — the resolution. Adding over a common denominator — one row at the common denominator, `shade` the sum, and a guide at the first addend boundary (`{ n: 3, d: 8 }`) to show 3/8 + 2/8 = 5/8. A fraction of a whole — one row, shade k of d, with a caption. Answer space — `showRowLabels: false` and `brickLabels: \"none\"` leaves bare bars to shade. Use `occlude` on a row label (\"name this fraction\") or a guide label, `highlight` (blue) to mark the resolving row, `dim` to background a row, `brickLabels` (\"unit\" labels every brick 1/d — the recognisable wall; \"all\" numbers them i/d; \"shaded\" labels only shaded bricks; \"none\" is clean). Set `draggable` so pupils can slide a guide across the wall and watch which fractions line up. Keep the same rows across a lesson so pupils track one wall — change only what is shaded, guided or occluded. A staged build reads well: open on the whole bar, add a row of bricks per stage, then shade and guide. Switch model for a fraction of an amount (¾ of 20), a ratio share, a percentage bar or an equation bar model — that is number/bar-model, where you author segments and solve from totals; fraction-wall is one unit whole, denominators in. Synonyms a teacher might use: fraction wall, fraction strips, fraction bars, equivalent fractions, comparing fractions, ordering fractions, common denominator, adding fractions, unit fractions, halves thirds quarters, how many eighths.",
   "responseModes": [],
-  "tags": [
-    "fraction wall",
-    "fraction strips",
-    "fraction bars",
-    "fraction",
-    "fractions",
-    "equivalent fractions",
-    "comparing fractions",
-    "ordering fractions",
-    "common denominator",
-    "adding fractions",
-    "unit fractions",
-    "denominator",
-    "numerator",
-    "halves",
-    "thirds",
-    "quarters",
-    "eighths",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -42,28 +18,23 @@
             {
               "type": "integer",
               "minimum": 1,
-              "maximum": 24,
-              "description": "Shorthand for a plain unshaded row: the denominator alone (e.g. 4 draws a row of quarters). Use the object form to shade, label or occlude."
+              "maximum": 24
             },
             {
               "type": "object",
               "additionalProperties": false,
-              "description": "One row of the wall: a bar split into `denominator` equal bricks across the shared whole width. Give a bare integer (the denominator) instead of this object for a plain, unshaded row.",
               "properties": {
                 "denominator": {
                   "type": "integer",
                   "minimum": 1,
-                  "maximum": 24,
-                  "description": "How many equal bricks this row is split into — 1 is the whole, 2 halves, 3 thirds, 4 quarters … Bricks are drawn to scale across the one shared whole width, so rows with denominators sharing a factor line their edges up (quarters edges meet halves and eighths edges). Required."
+                  "maximum": 24
                 },
                 "shade": {
                   "type": "integer",
-                  "minimum": 0,
-                  "description": "Shade the leftmost `shade` bricks amber — this DRAWS the fraction `shade`/`denominator` on the row (3 of 4 → three quarters shaded). 0 leaves the row unshaded; a value equal to `denominator` shades the whole bar; values above `denominator` are clamped down. Default 0."
+                  "minimum": 0
                 },
                 "label": {
-                  "type": "string",
-                  "description": "Override the row's left-hand label. By default the label is DERIVED: the shaded fraction `shade/denominator` when the row is shaded, otherwise the unit fraction `1/denominator` (just \"1\" for the whole row). An \"a/b\" string renders as a stacked fraction; plain words (\"halves\") render as text. Omit to use the derived label."
+                  "type": "string"
                 },
                 "brickLabels": {
                   "type": "string",
@@ -72,24 +43,19 @@
                     "unit",
                     "all",
                     "shaded"
-                  ],
-                  "description": "Which fraction labels print INSIDE this row's bricks, overriding the top-level `brickLabels`. \"unit\" = every brick shows 1/denominator (the classic wall); \"all\" = brick i shows i/denominator (1/4, 2/4, 3/4, 4/4); \"shaded\" = only the shaded bricks are labelled i/denominator; \"none\" = bare bricks. A label too wide for a narrow brick is dropped automatically."
+                  ]
                 },
                 "occlude": {
-                  "type": "boolean",
-                  "description": "Render this row's left label as \"?\" — the \"name this fraction\" hook. The bricks and the shading stay visible and correct. Default false."
+                  "type": "boolean"
                 },
                 "occludeBricks": {
-                  "type": "boolean",
-                  "description": "Render this row's brick labels as \"?\" — \"which fraction is each brick?\". Default false."
+                  "type": "boolean"
                 },
                 "highlight": {
-                  "type": "boolean",
-                  "description": "Emphasise this whole row with a blue accent outline — e.g. the common-denominator row that resolves a comparison, or the row in focus. Distinct from `shade` (amber, the fraction being shown). Default false."
+                  "type": "boolean"
                 },
                 "dim": {
-                  "type": "boolean",
-                  "description": "Draw this row faded (lighter ink) to push it into the background while another row is in focus. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -97,8 +63,7 @@
               ]
             }
           ]
-        },
-        "description": "The rows of the wall, stacked top to bottom. Each entry is a denominator (a bare integer for a plain row) or a row object that can shade, label, occlude or emphasise it. All rows share the left edge and the whole width, so their bricks line up."
+        }
       },
       "brickLabels": {
         "type": "string",
@@ -107,8 +72,7 @@
           "unit",
           "all",
           "shaded"
-        ],
-        "description": "Default brick-label style for every row (each row may override with its own `brickLabels`). \"unit\" (default) shows 1/denominator in every brick — the classic fraction wall; \"all\" numbers the bricks i/denominator (1/4, 2/4, 3/4, 4/4); \"shaded\" labels only shaded bricks; \"none\" leaves bricks bare for a clean comparison. A label too wide for a narrow brick is dropped automatically."
+        ]
       },
       "guides": {
         "type": "array",
@@ -116,53 +80,42 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "A vertical guide line dropped through the whole wall at the fraction position `n`/`d` — for comparing where two fractions fall, marking the boundary of an addend, and reading which brick edges line up. A guide with `n` > `d` sits off the wall (value above 1) and is ignored.",
           "properties": {
             "n": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Numerator of the guide position: the line falls at `n`/`d` of the whole width (0 = left edge, equal to `d` = right edge). Required."
+              "minimum": 0
             },
             "d": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Denominator of the guide position `n`/`d`. Required."
+              "minimum": 1
             },
             "label": {
-              "type": "string",
-              "description": "Text at the top of the guide line. Default: the derived fraction `n/d` rendered as a stacked fraction. An \"a/b\" string also renders stacked; plain text is drawn as-is."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the guide label as \"?\" — \"what fraction is this line at?\". Default false."
+              "type": "boolean"
             },
             "equivalents": {
-              "type": "boolean",
-              "description": "Turn this guide into the EQUIVALENT-FRACTIONS reader: every row whose brick edge meets the line exactly (n × denominator ÷ d is a whole number) is auto-shaded up to the line, given its equivalent fraction as its left label, and marked with an alignment dot where the edge meets the line. This is how you mark a whole SET of equivalent fractions at once (½ = 2/4 = 3/6 = 4/8 = 6/12). A row that already has its own `shade` keeps it. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "n",
             "d"
           ]
-        },
-        "description": "Vertical guide lines dropped through the wall at fraction positions, for comparing where fractions fall and reading which brick edges line up. A guide with `equivalents: true` also auto-shades and labels every row that lines up with it (the equivalent set). Omit for no guides."
+        }
       },
       "showRowLabels": {
-        "type": "boolean",
-        "description": "Show the left-hand row labels (the fraction naming each row). Default true. Set false for an answer space — bare bars for pupils to label or shade themselves."
+        "type": "boolean"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Each guide line gets a handle pupils can drag horizontally across the wall; as it slides, the rows whose brick edge it crosses light up and a readout shows the line's position — \"drag the line: which fractions line up here?\". Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the wall; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the wall, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -171,7 +124,6 @@
   },
   "examples": [
     {
-      "label": "Reference wall (worked) — the whole down to twelfths, every brick labelled",
       "params": {
         "header": "Fraction wall",
         "rows": [
@@ -188,7 +140,6 @@
       }
     },
     {
-      "label": "Blank answer space — bare bars to shade in halves, thirds, quarters, sixths, eighths",
       "params": {
         "rows": [
           2,
@@ -202,7 +153,6 @@
       }
     },
     {
-      "label": "Equivalent fractions (worked) — one half marked right across the wall",
       "params": {
         "header": "Fractions equivalent to one half",
         "rows": [
@@ -223,7 +173,6 @@
       }
     },
     {
-      "label": "Occluded question — name the fraction equivalent to two thirds",
       "params": {
         "rows": [
           {
@@ -245,7 +194,6 @@
       }
     },
     {
-      "label": "Hard case — compare 2/3 and 3/4 with the twelfths that resolve it",
       "params": {
         "rows": [
           {
@@ -276,7 +224,6 @@
       }
     },
     {
-      "label": "Adding over a common denominator — 3/8 + 2/8 = 5/8",
       "params": {
         "rows": [
           {

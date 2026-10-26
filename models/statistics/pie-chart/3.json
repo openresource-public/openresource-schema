@@ -4,40 +4,8 @@
   "name": "pie-chart",
   "version": 3,
   "title": "Pie chart",
-  "tagline": "Pie chart of frequencies; derives total, multiplier, angles, percentages; occlude to find one; drag-to-construct; read-off schematic with right-angle & given-angle cues.",
-  "description": "A pie chart of category frequencies — the model for parts of a whole as sector angles and for the frequency→angle multiplier. You give the categories and their frequencies; the model splits the circle into sectors whose angles are proportional to the frequencies and derives the total, the multiplier (360 ÷ total, e.g. \"each person = 6°\"), every sector's angle (frequency ÷ total × 360) and percentage, the sector geometry, the label placement (inside a wide sector, or outside on a leader line for a thin one) and an optional legend. Show each sector's frequency, angle and/or percentage; show the multiplier; occlude one sector's values to ask pupils to find the missing frequency or angle; highlight a sector (e.g. the mode). Turn the sectors off for a \"draw the pie from these angles\" answer space. For \"draw the pie chart\" as a MARKED question, set construct: true and host with responseMode \"construct\": the circle starts as equal sectors and the pupil drags each boundary (snapping to whole degrees) until every sector has the correct angle — the correct angles are derived from the frequencies at marking time and never rendered; print shows the same equal-sector start (names and frequencies, no write-on line). Set readOff: true for the schematic \"compute the angles\" exam figure: a plain outlined pie carrying only a few GIVEN cues — mark one sector given: \"right-angle\" for a right-angle square (a 90° quarter), one sector given: \"angle\" for its derived angle label (e.g. \"40°\") and its arc, and leave the rest name-only for the pupil to work out; the frequency/angle/multiplier/total furniture is all suppressed (the numbers live in the question's table). Read-off is drawn to scale by default, reproducing the accurate exam figure; set toScale: false for a deliberately non-proportional schematic where the name-only unknowns cannot be measured off the geometry. For comparing categories by bar height use the bar-chart model instead.",
-  "whenToUse": "Reach for this for pie charts: parts of a whole shown as sector angles, the frequency→angle multiplier (360 ÷ total = \"degrees per person/pupil/item\"), drawing a pie from a frequency table, reading a frequency back from a sector's angle, and finding the mode (biggest sector). Give categories: [{ label, frequency }] — the frequency is the raw count (or any share); sectors are drawn in the order given, starting at the top (12 o'clock) and sweeping clockwise. Every angle (frequency ÷ total × 360), percentage and the multiplier are derived — never author an angle. Set unitName to the thing being counted (\"person\", \"pupil\", \"car\") so the multiplier reads \"Each person = 6°\". Toggle show.frequencies / show.angles / show.percents to choose what each sector's label carries, show.multiplier for the \"Each unit = k° (360° ÷ total)\" line, show.total for \"n = …\", and show.legend for a side list (category — frequency, angle). Common configurations: worked example — show frequencies, angles and the multiplier. Draw the pie as a MARKED question — construct: true on a marked model tile with responseMode \"construct\" and correctAnswer { derived: true }: the circle starts as equal sectors with the category labels, and the pupil drags each boundary until every sector has the correct angle (±toleranceDegrees, default 2 — the measuring allowance); needs 2 or more categories, every frequency above zero; keep the angle CALCULATION as block text or a staged explanation, never on the figure. Draw the pie as an unmarked answer space — show.sectors false with show.legend true and show.angles true: an empty circle plus a table of the angles to construct with a protractor. Find the missing piece — occlude one category (its frequency and angle render \"?\", the sector stays); pupils subtract from the shown total or read the angle. Find the frequency from the angle — show.angles true, show.frequencies false, show.multiplier true: every angle is shown, pupils divide by the multiplier. Read off the angles (schematic exam figure) — readOff: true: a plain outlined pie giving only a few cues for the pupil to compute the rest from. Put given: \"right-angle\" on the 90° sector (a right-angle square instead of a \"90°\" readout), given: \"angle\" on ONE sector to label its derived angle (e.g. \"40°\" with its arc), and leave every other sector name-only (no readout — those are the unknowns). Order the categories so the sectors fall where the exam figure draws them (from 12 o'clock clockwise). Keep readOff drawn to scale (the default) to reproduce a figure that is accurately drawn; set toScale: false for a deliberately not-to-scale schematic (given sectors at their real angle, the name-only unknowns sharing the rest equally) when you do not want the answers measurable with a protractor — put a \"not accurately drawn\" note in the caption or the question stem. Read-off pairs with a separate completion table (a content/question block) that holds the frequencies and the answers; the figure is the stimulus, not the answer surface. Find the mode — highlight the biggest sector. If you only have percentages, give them as the frequencies (they sum to 100) and the multiplier becomes 3.6° per percent. Keep the same unitName and the same show.* choices across a lesson so pupils read one consistent diagram. Switch primitive when the teaching changes — for comparing categories by bar height use statistics/bar-chart; for continuous grouped data (touching bars, frequency density) use statistics/histogram; for bivariate data use statistics/scatter. Synonyms a teacher might use: pie chart, pie graph, sector, sector angle, slice, parts of a whole, proportion, frequency, angle multiplier, degrees per person, draw a pie chart, construct a pie chart, read a pie chart, mode.",
   "responseModes": [
     "construct"
-  ],
-  "tags": [
-    "pie chart",
-    "pie graph",
-    "sector",
-    "sector angle",
-    "slice",
-    "parts of a whole",
-    "proportion",
-    "percentage",
-    "frequency",
-    "angle multiplier",
-    "degrees per person",
-    "mode",
-    "statistics",
-    "draw a pie chart",
-    "construct",
-    "data",
-    "maths",
-    "read a pie chart",
-    "read-off",
-    "work out the angle",
-    "right angle",
-    "right-angle square",
-    "given angle",
-    "not to scale",
-    "not accurately drawn",
-    "complete the table",
-    "sector angle"
   ],
   "interface": {
     "type": "object",
@@ -47,35 +15,29 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 8,
-        "description": "The categories that make up the whole, drawn as sectors in this order from the top (12 o'clock) clockwise. Give each one a label and its frequency; every sector angle is derived as frequency ÷ total × 360. Largest-first is the usual reading order, but the order is yours. Cap of 8 keeps sectors readable.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The category name shown on or beside its sector, e.g. \"Football\". This is the sector's identity, so it stays visible even when the sector is occluded."
+              "type": "string"
             },
             "frequency": {
               "type": "number",
-              "minimum": 0,
-              "description": "The raw frequency (count) for this category — the data itself. The sector angle is derived from it (frequency ÷ total × 360); never author an angle. May be 0 (an empty category: no sector, but it can still appear in the legend). If your frequencies are percentages they should sum to 100. In construct mode every frequency must be above zero (a 0° target cannot be constructed)."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this category's numeric readouts (frequency, angle, percentage) as \"?\" — the \"find the missing piece\" hook. The sector itself is still drawn at its correct angle and the label stays, so pupils find the value by subtracting from the total or reading the angle. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this sector in amber to draw the eye — the mode, or the answer. Default false."
+              "type": "boolean"
             },
             "given": {
               "type": "string",
               "enum": [
                 "right-angle",
                 "angle"
-              ],
-              "description": "READ-OFF mode only (readOff: true) — the cue this sector carries so the pupil can compute the rest. \"right-angle\": a right-angle square at the centre, asserting a 90° sector (drawn honestly only where the sector really is 90°; in a to-scale figure that means its frequency is a quarter of the total). \"angle\": label this sector with its DERIVED angle (e.g. \"40°\") and its arc — the single given angle. Omit for a name-only sector (an unknown, shown with just its label). Ignored outside read-off mode. Use at most one \"right-angle\" and one \"angle\" per figure for an exam-authentic set of cues."
+              ]
             }
           },
           "required": [
@@ -85,69 +47,54 @@
         }
       },
       "unitName": {
-        "type": "string",
-        "description": "The singular noun for one unit of frequency — \"person\", \"pupil\", \"car\". Used in the multiplier sentence (\"Each person = 6°\"). The data carries no unit, so this names it. Default: \"unit\"."
+        "type": "string"
       },
       "construct": {
-        "type": "boolean",
-        "description": "Render the construction QUESTION state: the circle divided into EQUAL sectors (one per category, 360 ÷ n each) with the category labels, for the pupil to drag each boundary until every sector has the correct angle. The correct angles are never rendered — they are derived from the frequencies at marking time (host the model on a marked tile with responseMode \"construct\" and correctAnswer { derived: true }). On web each sector shows its current angle live; print and static slides show this same equal-sector starting state (labels and frequencies, no write-on line), so the question stays posed on paper. Needs 2 or more categories, every frequency > 0. Overrides show.sectors/angles/percents/multiplier (the derived values must stay hidden); show.frequencies and show.legend still choose whether the given data rides the labels. Default false."
+        "type": "boolean"
       },
       "toleranceDegrees": {
         "type": "number",
         "minimum": 0,
-        "maximum": 10,
-        "description": "Construct mode only: the per-sector acceptance allowance in degrees — a sector within this of its correct angle marks correct. Default 2, the exam measuring allowance. Ignored when construct is false."
+        "maximum": 10
       },
       "readOff": {
-        "type": "boolean",
-        "description": "Render the READ-OFF state: the schematic \"compute the angles\" exam figure. A plain outlined pie (no sector fills, no frequency/angle/multiplier/total readouts) carrying only the per-sector `given` cues — a right-angle square, one given-angle label + arc, and name-only sectors for the unknowns. The figure is a STIMULUS; the pupil computes the missing angles and frequencies in a separate table, so nothing on the figure is occludable or markable. Overrides show.* (the readouts must stay off). Needs 2 or more categories. Default false. Mutually exclusive with construct."
+        "type": "boolean"
       },
       "toScale": {
-        "type": "boolean",
-        "description": "Read-off mode only: whether the sectors are drawn proportional to their frequencies. Default true — the figure is accurate (reproducing a Maths Genie read-off figure, which is drawn to scale). Set false for a deliberately non-proportional schematic: given sectors (right-angle → 90°, given-angle → its real angle) are drawn honestly, and the name-only unknowns share the remaining angle EQUALLY, so their true angles cannot be read off with a protractor. When false, add a \"not accurately drawn\" note in the caption or the question stem. Ignored outside read-off mode."
+        "type": "boolean"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "What each sector's label carries and which furniture/readouts appear.",
         "properties": {
           "frequencies": {
-            "type": "boolean",
-            "description": "Print each sector's frequency in its label. Set false to hide all frequencies — e.g. a \"find the frequency from the angle\" question, or a construct question whose data lives in a separate table. Default true."
+            "type": "boolean"
           },
           "angles": {
-            "type": "boolean",
-            "description": "Print each sector's derived angle in degrees. Set false when the angle is the unknown (\"work out the angle for each part\"). Ignored in construct mode (derived angles never render there). Default true."
+            "type": "boolean"
           },
           "percents": {
-            "type": "boolean",
-            "description": "Also print each sector's derived percentage (frequency ÷ total × 100). Default false."
+            "type": "boolean"
           },
           "multiplier": {
-            "type": "boolean",
-            "description": "Show the frequency→angle multiplier line \"Each <unitName> = k° (360° ÷ total)\", where k = 360 ÷ total. The heart of the build method. Default false."
+            "type": "boolean"
           },
           "total": {
-            "type": "boolean",
-            "description": "Show the total frequency as \"n = <total>\" beneath the figure. Default false."
+            "type": "boolean"
           },
           "legend": {
-            "type": "boolean",
-            "description": "Show a side list naming each category with its frequency and angle (a colour swatch per row), instead of labelling sectors in place. Pairs with sectors:false as a \"draw the pie\" answer space, and declutters a crowded pie. In construct mode the legend rows carry label and frequency only (never the derived angle). Default false."
+            "type": "boolean"
           },
           "sectors": {
-            "type": "boolean",
-            "description": "Draw the shaded sectors. Set false for an answer space: an empty circle with a single starting radius for pupils to construct the pie themselves (pair with legend:true and angles:true to give them the angles to draw). Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. the data's context. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -156,7 +103,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — favourite lunch of 90 pupils, angles and multiplier shown",
       "params": {
         "header": "Favourite lunch (90 pupils)",
         "categories": [
@@ -191,7 +137,6 @@
       }
     },
     {
-      "label": "Answer space — draw the pie from the angles (empty circle + legend)",
       "params": {
         "categories": [
           {
@@ -221,7 +166,6 @@
       }
     },
     {
-      "label": "Occluded question — one sector hidden, find the missing frequency and angle",
       "params": {
         "categories": [
           {
@@ -253,7 +197,6 @@
       }
     },
     {
-      "label": "Hard case — thin sectors on leader lines, multiplier shown (travel survey, 30 people)",
       "params": {
         "header": "How 30 people travel to work",
         "categories": [
@@ -287,7 +230,6 @@
       }
     },
     {
-      "label": "Find the frequency from the angle — angles shown, frequencies hidden",
       "params": {
         "header": "Eye colour of 40 students",
         "categories": [
@@ -317,7 +259,6 @@
       }
     },
     {
-      "label": "Percentages derived from counts (non-integer multiplier 1.8°)",
       "params": {
         "header": "Waste sorted by 200 households",
         "categories": [
@@ -347,7 +288,6 @@
       }
     },
     {
-      "label": "Construct question — equal sectors to drag to the correct angles (60 visitors)",
       "params": {
         "header": "Favourite animal (60 zoo visitors)",
         "construct": true,
@@ -377,7 +317,6 @@
       }
     },
     {
-      "label": "Construct question, hard case — thin targets, data in a separate table (45 pupils)",
       "params": {
         "header": "Journeys to school (45 pupils)",
         "construct": true,
@@ -411,7 +350,6 @@
       }
     },
     {
-      "label": "Read-off — compute the missing angles (right-angle square + one given angle, to scale)",
       "params": {
         "readOff": true,
         "header": "Favourite subject (120 students)",
@@ -438,7 +376,6 @@
       }
     },
     {
-      "label": "Read-off, not to scale — a schematic where the name-only unknowns cannot be measured",
       "params": {
         "readOff": true,
         "toScale": false,
@@ -467,7 +404,6 @@
       }
     },
     {
-      "label": "Read-off, hard case — a thin given-angle sector on a leader line",
       "params": {
         "readOff": true,
         "header": "Recycling collected (108 kg)",

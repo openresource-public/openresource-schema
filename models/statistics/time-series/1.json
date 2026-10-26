@@ -4,31 +4,7 @@
   "name": "time-series",
   "version": 1,
   "title": "Time-series graph",
-  "tagline": "Time-series line graph; derives a centred moving average, a least-squares trend and season bands; series in blue, trend in teal; occlude to question.",
-  "description": "A time-series line graph — the model for data measured at equally spaced points in time, its trend, moving averages and seasonality. You give the values in time order plus the time labels; the model joins them into a line with markers and derives, on request, a k-point moving average (centred — an even window such as 4 plots between the time points), a least-squares trend line (through the moving-average points or the raw data), light alternating season bands to expose a repeating pattern, and a value read off the graph with projection guides. The raw series is drawn in blue; the derived moving average and trend share a second colour (teal) so the eye separates the observed data from the smoothed trend. Occlude moving-average values for a \"calculate the moving averages\" question, occlude a read-off for \"use the graph to find …\", highlight a point, or leave the series alone as an answer space for pupils to add the moving average and trend themselves.",
-  "whenToUse": "Reach for this for a time series / line graph over time: plotting and reading a quantity over months, quarters or years, describing the trend, calculating and plotting moving averages, and spotting seasonality (a repeating yearly pattern). Give series.values as the readings in time order and series.labels as the matching time labels (\"Q1\",\"Q2\",… or \"2019\",\"2020\",…); set axes.yLabel (with units, e.g. \"Sales (£1000s)\") and axes.xLabel (\"Quarter\"). Add movingAverage: { window: 4 } for a 4-point moving average — it is computed and plotted centred, so a 4-point average sits between the quarters (the usual GCSE position); use window 3 for a 3-point (centred on a point). Add trend: {} for a least-squares trend line — by default it is fitted through the moving-average points when a moving average is shown (the standard \"trend line through the moving averages\"), or set trend.through \"data\" to fit the raw points (use for non-seasonal annual data with no moving average). Turn on showKey to label which line is which, season: { length: 4, labels: [\"Year 1\",\"Year 2\"] } to band each year so the repeating pattern stands out, and readAt: { index } to draw a guide to one reading and read its value off the axis (readAt.occlude for \"use the graph to find the value\"). Questions: movingAverage.showValues with movingAverage.occlude: [indices] prints some moving averages and hides the rest as \"?\" (\"the first two are 37 and 38 — work out the rest\"); series.occlude: [indices] hides chosen data values to read off; series.highlight: [indices] draws the eye (amber). Leave movingAverage / trend off (just the line + labels) for an answer space where pupils add them. Keep the same axes.y, yStep and labels across a lesson so the graphs line up. A staged build reads well: plot the series → add the moving average → draw the trend. Switch primitive when the teaching changes — for unconnected bivariate data, correlation or a line of best fit use statistics/scatter; for a distance–time or speed–time journey with gradient/speed sections use graphing/journey-graph; for a curve y = f(x) use graphing/function-graph; for grouped data as bars use statistics/bar-chart or statistics/histogram. Synonyms a teacher might use: time series, time-series graph, line graph, trend, trend line, moving average, 4-point moving average, three-point moving average, centred moving average, seasonal, seasonality, seasonal variation, cyclic, fluctuation, smoothing.",
   "responseModes": [],
-  "tags": [
-    "time series",
-    "time-series",
-    "line graph",
-    "trend",
-    "trend line",
-    "moving average",
-    "moving averages",
-    "4-point moving average",
-    "three-point moving average",
-    "centred moving average",
-    "smoothing",
-    "seasonal",
-    "seasonality",
-    "seasonal variation",
-    "cyclic",
-    "fluctuation",
-    "statistics",
-    "data",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -36,46 +12,39 @@
       "series": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The data: a single quantity measured at equally spaced times, in time order. The line, the markers, the value-axis scale and every derived overlay come from these values — never author a moving-average value or a trend.",
         "properties": {
           "values": {
             "type": "array",
             "minItems": 2,
             "items": {
               "type": "number"
-            },
-            "description": "The readings, in time order, e.g. [18, 24, 31, 22, 21, 28]. Equal time spacing is assumed (one reading per period). At least 2."
+            }
           },
           "labels": {
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "description": "The time-axis label for each value, in the same order, e.g. [\"Q1\",\"Q2\",\"Q3\",\"Q4\"] or [\"2019\",\"2020\",\"2021\"]. Omit for bare position numbers (1, 2, 3 …). If there are more values than labels, the extra points are numbered; crowded labels thin automatically (every 2nd/3rd shown)."
+            }
           },
           "name": {
-            "type": "string",
-            "description": "Optional name of the quantity, used in the key and the aria description, e.g. \"Sales\"."
+            "type": "string"
           },
           "showValues": {
-            "type": "boolean",
-            "description": "Print each reading above its marker (for reading practice or a worked example). Default false."
+            "type": "boolean"
           },
           "occlude": {
             "type": "array",
             "items": {
               "type": "integer",
               "minimum": 1
-            },
-            "description": "1-based positions in values whose printed reading is replaced by \"?\" (the \"read off / state the value\" hook). The marker and line stay; only the number is hidden. Needs showValues or a readAt to make sense. Default none."
+            }
           },
           "highlight": {
             "type": "array",
             "items": {
               "type": "integer",
               "minimum": 1
-            },
-            "description": "1-based positions in values to emphasise with an amber ring (a point of interest, a peak, the answer). Default none."
+            }
           }
         },
         "required": [
@@ -85,67 +54,56 @@
       "movingAverage": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Overlay a DERIVED moving average that smooths the series. Each average is the mean of `window` consecutive readings, plotted at the CENTRE of its window — so an even window (4) lands halfway between time points and an odd window (3) lands on a point. Omit for no moving average (e.g. an answer space).",
         "properties": {
           "window": {
             "type": "integer",
             "minimum": 2,
-            "maximum": 12,
-            "description": "How many readings each average covers (k). 4 for quarterly data (a 4-point moving average), 3 for a 3-point. With n readings there are n − k + 1 averages. Default 4."
+            "maximum": 12
           },
           "showValues": {
-            "type": "boolean",
-            "description": "Print each moving-average value beside its point. Default false. Pair with occlude for a \"calculate the moving averages\" question."
+            "type": "boolean"
           },
           "occlude": {
             "type": "array",
             "items": {
               "type": "integer",
               "minimum": 1
-            },
-            "description": "1-based positions in the moving-average sequence whose value is hidden as \"?\" (the point still plots). Use to show the first few and ask for the rest. Only meaningful with showValues. Default none."
+            }
           },
           "connect": {
-            "type": "boolean",
-            "description": "Join the moving-average points with a line. Default true. Set false to plot the averages as separate points only."
+            "type": "boolean"
           }
         }
       },
       "trend": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Draw a DERIVED least-squares trend line. By default it is fitted through the MOVING-AVERAGE points when a moving average is present (the standard \"trend line through the moving averages\"), otherwise through the raw data. Omit for no trend line.",
         "properties": {
           "through": {
             "type": "string",
             "enum": [
               "moving-average",
               "data"
-            ],
-            "description": "What the least-squares line is fitted through. 'moving-average' (default when a moving average is shown) is the usual approach for seasonal data; 'data' fits the raw readings — use for non-seasonal annual data with no moving average. If 'moving-average' is asked for but no moving average is present, it falls back to the data."
+            ]
           },
           "label": {
-            "type": "string",
-            "description": "Text drawn by the trend line, e.g. \"trend\". Omit for none."
+            "type": "string"
           }
         }
       },
       "season": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Band the time axis into equal periods with light alternating shading, so a repeating (seasonal) pattern is easy to see — e.g. one band per year of quarterly data. Furniture only; does not change the data.",
         "properties": {
           "length": {
             "type": "integer",
-            "minimum": 2,
-            "description": "How many readings make one period, e.g. 4 for quarters within a year, 12 for months within a year."
+            "minimum": 2
           },
           "labels": {
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "description": "Optional label under each period band, e.g. [\"Year 1\",\"Year 2\",\"Year 3\"]. One per band, left to right."
+            }
           }
         },
         "required": [
@@ -155,20 +113,16 @@
       "readAt": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Read a single reading off the graph with dashed guides (up from the time label to the point, across to the value axis) — the \"use the graph to find the value at …\" hook.",
         "properties": {
           "index": {
             "type": "integer",
-            "minimum": 1,
-            "description": "1-based position of the reading to read off."
+            "minimum": 1
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Hide the read-off value as \"?\" (ask pupils to read it). Default false."
+            "type": "boolean"
           },
           "label": {
-            "type": "string",
-            "description": "Override the read-off text. Omit to show the derived value."
+            "type": "string"
           }
         },
         "required": [
@@ -178,7 +132,6 @@
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Value-axis window and axis titles. The time (horizontal) axis is categorical — its labels come from series.labels.",
         "properties": {
           "y": {
             "type": "array",
@@ -186,43 +139,34 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the value axis. Default: fits the data with a small margin. Set [0, max] for a zero baseline, and FIX it across a lesson so graphs compare."
+            "maxItems": 2
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between value gridlines / numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "yLabel": {
-            "type": "string",
-            "description": "The value-axis title with units, e.g. \"Sales (£1000s)\". Important for stats."
+            "type": "string"
           },
           "xLabel": {
-            "type": "string",
-            "description": "The time-axis title, e.g. \"Quarter\" or \"Year\"."
+            "type": "string"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the background grid (helps read values). Default true."
+        "type": "boolean"
       },
       "showMarkers": {
-        "type": "boolean",
-        "description": "Draw a marker at each data point. Default true. Set false for a bare line."
+        "type": "boolean"
       },
       "showKey": {
-        "type": "boolean",
-        "description": "Show a key naming the lines (the series, the k-point moving average, the trend). Default false — turn on whenever more than one line is drawn."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -231,7 +175,6 @@
   },
   "examples": [
     {
-      "label": "The hard case — quarterly sales, 4-point moving average, trend line, season bands",
       "params": {
         "header": "Quarterly sales",
         "axes": {
@@ -294,7 +237,6 @@
       }
     },
     {
-      "label": "Answer space — line only, for pupils to add the moving averages",
       "params": {
         "header": "Monthly visitors",
         "axes": {
@@ -327,7 +269,6 @@
       }
     },
     {
-      "label": "Worked — reading a value off the graph",
       "params": {
         "header": "Daily high temperature",
         "axes": {
@@ -369,7 +310,6 @@
       }
     },
     {
-      "label": "Occluded question — calculate the remaining moving averages",
       "params": {
         "header": "Energy use",
         "axes": {
@@ -423,7 +363,6 @@
       }
     },
     {
-      "label": "Seasonality — the moving average flattens the seasonal swing",
       "params": {
         "header": "Ice cream sales",
         "axes": {
@@ -471,7 +410,6 @@
       }
     },
     {
-      "label": "Trend line through the data (no seasonal cycle)",
       "params": {
         "header": "Annual rainfall",
         "axes": {

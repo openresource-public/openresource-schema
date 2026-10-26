@@ -4,35 +4,8 @@
   "name": "construction",
   "version": 3,
   "title": "Ruler-and-compass construction",
-  "tagline": "Ruler-and-compass construction — given points, swung arcs, crossings, the constructed line, locus or region; staged, every point derived; marked construct/draw answer.",
-  "description": "A ruler-and-compass construction drawn the way it is built: given points and lines, the faint compass arcs swung from them, the points where those arcs and lines cross, the straightedge lines drawn through the crossings, and an optional shaded locus region. The author supplies only the given points and which arcs and lines to draw; every arc centre and radius, the angular sweep actually drawn, each crossing point, the bisector or perpendicular line, the right-angle square and the shaded region are all derived — there is nowhere to author a crossing's coordinates, so the figure cannot lie and a partially built (staged) frame places every point identically. Construction arcs and auxiliary lines read as light grey scaffolding; the given figure is solid ink; the constructed answer is solid accent. Covers perpendicular bisectors, angle bisectors, perpendiculars from and at a point, the SSS triangle (the apex is two arcs' crossing), loci (the circle, the bisector, and the compound region satisfying two conditions at once), and the six-petal flower. Equal aspect is forced so circles read round; it is a staged model — sequence frames that add one element at a time, not a live drag.",
-  "whenToUse": "Reach for this whenever a figure is built with compasses and a straightedge rather than measured: constructing the perpendicular bisector of a segment, bisecting an angle, dropping a perpendicular from a point to a line or erecting one at a point on a line, constructing a triangle from three sides (SSS), and loci — the locus a fixed distance from a point (a circle), equidistant from two points or two lines (a bisector), and the compound locus region that satisfies two conditions at once (the hard case: \"within 3 cm of A and nearer to B than C\"). Author the given points with coordinates on a notional squared grid; then list the arcs (each a centre point plus a radius — \"to\" a point or an explicit \"length\"), the lines (from/to two points, with a role: \"given\" solid ink, \"construction\" dashed grey scaffolding, or \"answer\" solid accent), the intersections (each names two elements to cross and a \"pick\" — top/bottom/left/right — to choose which crossing), and optionally a region (a list of conditions, combined \"all\" for and or \"any\" for or). Everything geometric is derived from the points, so when you stage a build keep the same \"view\" window and the same \"points\" across every frame and add one arc / crossing / line / region per frame — the figure stays put and the answer comes in last. The base (frame 0) should be the given figure alone (a labelled segment, the empty angle), which stands as a sensible answer-space slide on its own. Mark a right angle with rightAngles where you construct a perpendicular; mark equal radii by giving a line \"ticks\". Occlude a region or line label to ask \"which locus is this?\". UNITS — set unit: \"cm\" once per figure and any bare-number line label (\"8\") reads \"8 cm\"; a name or a label with its own text (\"AB\", \"8 cm\", \"x\") stays verbatim. MARKED ANSWER (@3) — to make the construction auto-mark, author the FULL truthful construction (given figure + arcs + crossings + the answer-role line / region / answer:true points), then set construct:true and constructTarget (\"line\" to drag a line onto a perpendicular/bisector, \"region\" to shade a locus, \"point\" to drop a cross on each derived position) and host the tile with responseMode \"construct\" and correctAnswer { derived: true }; the posed surface shows only the given figure with a wrong start, the answer stays hidden, and the pupil's work self-checks against the derived construction. Switch primitive when the teaching is about the finished shape, not how it was built: a labelled triangle with sides/angles is geometry/triangle, a circle-theorem diagram is geometry/circle-theorems, plotting points is graphing/coordinate-grid. Synonyms a teacher might use: construction, constructions, ruler and compass, ruler and compasses, compass, compasses, bisect, bisector, perpendicular bisector, angle bisector, perpendicular, drop a perpendicular, locus, loci, equidistant, SSS, scale drawing, arcs, intersecting arcs.",
   "responseModes": [
     "construct"
-  ],
-  "tags": [
-    "construction",
-    "constructions",
-    "ruler and compass",
-    "compasses",
-    "bisect",
-    "bisector",
-    "perpendicular bisector",
-    "angle bisector",
-    "perpendicular",
-    "locus",
-    "loci",
-    "equidistant",
-    "SSS",
-    "triangle",
-    "compound locus",
-    "region",
-    "arc",
-    "intersecting arcs",
-    "straightedge",
-    "six-petal flower",
-    "geometry",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -41,7 +14,6 @@
       "view": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The window of the plane shown, in grid units. Keep it IDENTICAL across the frames of a staged build so the figure stays put. Omit to auto-fit the drawn elements with a margin (fine for a single static figure, but a staged build should set it explicitly). Aspect is always equalised so circles read round — if x and y spans differ the figure is letterboxed inside the box, never stretched.",
         "properties": {
           "x": {
             "type": "array",
@@ -49,8 +21,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] of the x-axis in grid units."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -58,8 +29,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] of the y-axis in grid units (y increases upward, as on squared paper)."
+            "maxItems": 2
           }
         },
         "required": [
@@ -68,16 +38,13 @@
         ]
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show a faint squared-paper background (construction grey, hairline). Default false — most constructions sit on plain paper. Turn on for a squared-exercise-book look."
+        "type": "boolean"
       },
       "animate": {
-        "type": "boolean",
-        "description": "WEB ONLY. Draw the construction on in order when the figure first appears — each compass arc and straightedge line is revealed in turn (the given figure, then the arcs, then any construction lines, then the answer last), so the ORDER of construction is shown, not just the result. Default false (the figure appears complete at once). Has no effect on the printed / slide / PNG render, which always shows the COMPLETE construction; use it for a live board demo where the build sequence is the teaching. Honours the viewer's reduced-motion preference (shows the finished figure instead)."
+        "type": "boolean"
       },
       "points": {
         "type": "array",
-        "description": "The GIVEN points — the only authored positions. Everything else is derived from these. A segment is two points; an angle is a vertex and a point on each arm; the SSS base is its two ends. List a point here only if it is GIVEN; crossings of arcs/lines go in \"intersections\" and are computed.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -85,8 +52,7 @@
             "name": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 12,
-              "description": "The point's id, referenced by arcs, lines, intersections and conditions. Also the default label. Convention: a single uppercase letter (A, B, V, O)."
+              "maxLength": 12
             },
             "at": {
               "type": "array",
@@ -94,24 +60,19 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "[x, y] position in grid units."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Display text beside the dot. Defaults to the name; set \"\" to draw the dot with no label, or a different string to relabel."
+              "type": "string"
             },
             "showDot": {
-              "type": "boolean",
-              "description": "Draw the point marker. Default true. Set false for a reference point that only aims a ray or defines a direction and should not appear."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber the dot and label — result emphasis. Default false."
+              "type": "boolean"
             },
             "answer": {
-              "type": "boolean",
-              "description": "Mark this point as a constructed ANSWER position for constructTarget \"point\" — the pupil drops a cross on it and the model self-checks against it. Hidden on the posed answer space (no leak). Default false. @3."
+              "type": "boolean"
             }
           },
           "required": [
@@ -122,32 +83,26 @@
       },
       "arcs": {
         "type": "array",
-        "description": "The compass arcs, drawn as faint grey scaffolding. Each is a centre point and a radius; by default only the part of the arc near its crossings is drawn (the little intersecting arcs you actually strike), or the full circle when it has no crossings (a locus circle, a flower petal).",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "id": {
-              "type": "string",
-              "description": "A reference id, needed if an intersection or a region condition refers to this arc. Convention: a short lowercase id (a1, arcB)."
+              "type": "string"
             },
             "center": {
-              "type": "string",
-              "description": "The arc centre — a point name (given or a derived intersection)."
+              "type": "string"
             },
             "radius": {
               "type": "object",
               "additionalProperties": false,
-              "description": "The compass span. Give EITHER \"to\" (open the compass from the centre to a named point — the usual instruction, so the radius stays exact when the point moves) OR \"length\" (an explicit distance in the same grid units as the point coordinates).",
               "properties": {
                 "to": {
-                  "type": "string",
-                  "description": "A point name. The radius is the distance from the arc centre to this point — e.g. centre \"A\", to \"B\" draws the arc of every point as far from A as B is."
+                  "type": "string"
                 },
                 "length": {
                   "type": "number",
-                  "exclusiveMinimum": 0,
-                  "description": "An explicit radius in grid units (the same units as point coordinates). Use when the span is a stated measurement rather than the distance to an existing point."
+                  "exclusiveMinimum": 0
                 }
               },
               "oneOf": [
@@ -169,16 +124,13 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "[fromDeg, toDeg] — force the drawn arc to this angular range (degrees, 0° = east, anticlockwise positive). Omit to let the model draw just the window around the arc's crossings (or the full circle if it has none)."
+              "maxItems": 2
             },
             "full": {
-              "type": "boolean",
-              "description": "Force the whole circle to be drawn (a locus circle, a flower petal). Default false. Ignored if \"sweep\" is given."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this arc in amber — to single out one key arc. Default false (construction grey)."
+              "type": "boolean"
             }
           },
           "required": [
@@ -189,22 +141,18 @@
       },
       "lines": {
         "type": "array",
-        "description": "Straightedge lines between two named points. The role sets the grammar: \"given\" is the figure you start with (solid ink), \"construction\" is auxiliary scaffolding (dashed grey), \"answer\" is the constructed result (solid accent).",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "id": {
-              "type": "string",
-              "description": "A reference id, needed if an intersection or condition refers to this line (its infinite line). Convention: a short lowercase id (base, bis)."
+              "type": "string"
             },
             "from": {
-              "type": "string",
-              "description": "Start point name."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "End point name."
+              "type": "string"
             },
             "role": {
               "type": "string",
@@ -212,8 +160,7 @@
                 "given",
                 "construction",
                 "answer"
-              ],
-              "description": "\"given\" — the original figure, solid ink (the segment, the angle arms, the base). \"construction\" — auxiliary scaffolding, dashed grey (a bisector used only to bound a region). \"answer\" — the constructed result, solid accent (the perpendicular, the bisector you were asked for). Default \"given\"."
+              ]
             },
             "extend": {
               "type": "string",
@@ -221,26 +168,21 @@
                 "none",
                 "ray",
                 "line"
-              ],
-              "description": "How far to DRAW the line. \"none\" — the segment between the two points (default). \"ray\" — beyond the \"to\" end. \"line\" — both ways across the view. (Intersections always treat a line as infinite regardless of this.)"
+              ]
             },
             "ticks": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 3,
-              "description": "Equal-length tick marks at the midpoint — give the same count to segments that are equal (e.g. the two equal radii of a perpendicular bisector). Default 0 (none)."
+              "maximum": 3
             },
             "label": {
-              "type": "string",
-              "description": "Text along the line (e.g. a length or a name). A bare-number label (\"8\") takes the figure's `unit` automatically (\"8 cm\"); a label with any other text (a name \"AB\", \"8 cm\", \"x\") is shown verbatim. Omit for none."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the label as \"?\" — the \"which line is this?\" hook. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the line in amber. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -251,7 +193,6 @@
       },
       "intersections": {
         "type": "array",
-        "description": "Derived points where two elements cross — the heart of every construction. Each names the two elements to intersect and which crossing to keep. The position is computed (two-circle or circle-line solve); you never write its coordinates, so it stays exact when a given point moves or a frame is dropped.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -259,8 +200,7 @@
             "name": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 12,
-              "description": "The crossing point's id (referenceable like a given point) and default label."
+              "maxLength": 12
             },
             "of": {
               "type": "array",
@@ -268,8 +208,7 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two elements to cross, by id — each an arc id or a line id (e.g. [\"a1\", \"a2\"] for two arcs, [\"a1\", \"base\"] for an arc and a line). Lines are treated as infinite."
+              "maxItems": 2
             },
             "pick": {
               "type": "string",
@@ -278,24 +217,19 @@
                 "bottom",
                 "left",
                 "right"
-              ],
-              "description": "Which crossing to keep when there are two — the one furthest in that direction AS SEEN on the figure: \"top\" highest up, \"bottom\" lowest, \"left\"/\"right\" furthest to that side. Default \"top\"."
+              ]
             },
             "label": {
-              "type": "string",
-              "description": "Display text. Defaults to the name; \"\" hides the label (a bare crossing)."
+              "type": "string"
             },
             "showDot": {
-              "type": "boolean",
-              "description": "Draw the point marker. Default true."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber the point and label. Default false."
+              "type": "boolean"
             },
             "answer": {
-              "type": "boolean",
-              "description": "Mark this crossing as a constructed ANSWER position for constructTarget \"point\" (e.g. the two possible positions of P where a circle meets a bisector) — the pupil drops a cross on it and the model self-checks against it. Hidden on the posed answer space (no leak). Default false. @3."
+              "type": "boolean"
             }
           },
           "required": [
@@ -306,22 +240,18 @@
       },
       "rightAngles": {
         "type": "array",
-        "description": "Small right-angle squares — mark the perpendicularity a construction produces. Each is drawn at a vertex between the rays to two other points.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "string",
-              "description": "The vertex point name (where the right angle sits)."
+              "type": "string"
             },
             "from": {
-              "type": "string",
-              "description": "A point naming one arm direction from the vertex."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "A point naming the other arm direction from the vertex."
+              "type": "string"
             }
           },
           "required": [
@@ -334,7 +264,6 @@
       "region": {
         "type": "object",
         "additionalProperties": false,
-        "description": "A shaded LOCUS region — the set of points satisfying the conditions. The boundary curves are the arcs and lines the conditions reference (draw them too). Omit for a construction with no region.",
         "properties": {
           "conditions": {
             "type": "array",
@@ -343,23 +272,18 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "description": "One condition a point must satisfy to lie in the region. References an arc or line already in the figure so the boundary is drawn. Use exactly one of: \"inside\" / \"outside\" an arc (its full circle), or \"side\" + \"of\" for a half-plane.",
               "properties": {
                 "inside": {
-                  "type": "string",
-                  "description": "An arc id. The condition is \"inside (or on) that circle\" — i.e. within the compass radius of its centre. The locus of points a fixed distance FROM a point."
+                  "type": "string"
                 },
                 "outside": {
-                  "type": "string",
-                  "description": "An arc id. The condition is \"outside (or on) that circle\" — i.e. at least the compass radius from its centre (\"more than 3 cm from the mast\")."
+                  "type": "string"
                 },
                 "side": {
-                  "type": "string",
-                  "description": "A point name. With \"of\", the condition is \"on the same side of that line as this point\" — e.g. side \"B\" of the perpendicular bisector of BC means \"nearer to B than to C\"."
+                  "type": "string"
                 },
                 "of": {
-                  "type": "string",
-                  "description": "A line id, paired with \"side\". The line is treated as infinite; the condition keeps the half-plane containing the \"side\" point."
+                  "type": "string"
                 }
               },
               "oneOf": [
@@ -380,28 +304,23 @@
                   ]
                 }
               ]
-            },
-            "description": "The conditions. One disk/half-plane each; the compound locus is two of them combined \"all\" (within a circle AND on one side of a bisector)."
+            }
           },
           "combine": {
             "type": "string",
             "enum": [
               "all",
               "any"
-            ],
-            "description": "\"all\" — a point is in the region only if it satisfies EVERY condition (AND — the usual compound locus). \"any\" — if it satisfies ANY (OR — a union of regions). Default \"all\"."
+            ]
           },
           "label": {
-            "type": "string",
-            "description": "A name placed in the region, e.g. \"R\". Omit for none."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the region label as \"?\" — the \"name the shaded locus\" hook. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Shade the region in amber rather than the default accent. Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -409,20 +328,16 @@
         ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "unit": {
-        "type": "string",
-        "description": "The figure's length unit, e.g. \"cm\", \"m\", \"mm\". Appended to every line label (lines[].label) that is a BARE NUMBER (\"8\" → \"8 cm\"). The line label is dual-purpose (a length OR a name), so a label with any other text (a name \"AB\", \"8 cm\", \"x\") is shown verbatim — a name or authored override always wins. Default \"\" (labels stay bare). @2."
+        "type": "string"
       },
       "construct": {
-        "type": "boolean",
-        "description": "Arm the MARKED construct/draw answer state (validator-required when the tile uses responseMode \"construct\"). The posed surface shows ONLY the given figure (given points and given-role lines) with a deliberately-wrong starting answer for the pupil to complete; every arc, crossing, answer-role line and region stays in the params (the marking key and the reveal) but is NEVER drawn on the answer space. Set constructTarget to say what is drawn and marked. The verdict is self-checked at response time against the DERIVED construction (host with correctAnswer { derived: true }); print and static slides show the same posed answer space. Default false. @3."
+        "type": "boolean"
       },
       "constructTarget": {
         "type": "string",
@@ -430,20 +345,17 @@
           "line",
           "region",
           "point"
-        ],
-        "description": "What the pupil constructs when construct:true (required with it). \"line\" — a straight line the pupil drags onto the constructed perpendicular / bisector (the figure's answer-role line; marked as the same infinite line, angle within toleranceDegrees and offset within tolerance). \"region\" — the pupil shades the locus region (the figure's region; marked cell-by-cell against the derived predicate). \"point\" — the pupil drops a cross on each answer position (the intersections/points flagged answer:true, e.g. the possible positions of P; each marked within tolerance). @3."
+        ]
       },
       "toleranceDegrees": {
         "type": "number",
         "minimum": 0,
-        "maximum": 20,
-        "description": "constructTarget \"line\" only: the angular acceptance (degrees) between the drawn line and the derived answer line. Default 4. @3."
+        "maximum": 20
       },
       "tolerance": {
         "type": "number",
         "minimum": 0,
-        "maximum": 5,
-        "description": "Construct acceptance in grid units: the perpendicular offset a drawn \"line\" may sit from the derived line, and the distance a dropped \"point\" cross may sit from its target. Default 0.6. (Region shading uses a coverage threshold, not this.) @3."
+        "maximum": 5
       }
     },
     "required": [
@@ -452,7 +364,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — perpendicular bisector of AB (arcs, both crossings, the bisector, right angle)",
       "params": {
         "header": "Perpendicular bisector of AB",
         "view": {
@@ -548,7 +459,6 @@
       }
     },
     {
-      "label": "Blank / answer space — a given angle, ready to bisect",
       "params": {
         "header": "Bisect angle AVB",
         "view": {
@@ -601,7 +511,6 @@
       }
     },
     {
-      "label": "Occluded question — name the shaded locus (a circle round a fixed point)",
       "params": {
         "view": {
           "x": [
@@ -645,7 +554,6 @@
       }
     },
     {
-      "label": "Hard case — compound locus: within 3 of A and nearer to B than C",
       "params": {
         "header": "Region within 3 of A and nearer B than C",
         "view": {
@@ -759,7 +667,6 @@
       }
     },
     {
-      "label": "SSS triangle — construct ABC with BC = 7, AB = 6, AC = 5",
       "params": {
         "view": {
           "x": [
@@ -838,7 +745,6 @@
       }
     },
     {
-      "label": "Marked draw (construct, line) — construct the perpendicular bisector of AB",
       "params": {
         "view": {
           "x": [
@@ -924,7 +830,6 @@
       }
     },
     {
-      "label": "Marked draw (construct, region) — shade the compound locus",
       "params": {
         "view": {
           "x": [
@@ -1038,7 +943,6 @@
       }
     },
     {
-      "label": "Marked draw (construct, point) — mark the possible positions of P",
       "params": {
         "view": {
           "x": [
@@ -1153,7 +1057,6 @@
       }
     },
     {
-      "label": "Six-petal flower — equal-radius arcs round a hexagon",
       "params": {
         "header": "Six-petal rose",
         "view": {

@@ -4,37 +4,7 @@
   "name": "spinner",
   "version": 1,
   "title": "Spinner",
-  "tagline": "Equal-sector spinner (circle or polygon) with repeatable labels and a pointer; derives each angle and P(label)=matching÷total as a simplified fraction.",
-  "description": "A divided spinner — the model for \"P(land on X) by counting equal sectors\". A circle, or a regular polygon (square, pentagon, hexagon, octagon), is split into equal sectors, one per label you give; labels may repeat (three \"C\" sectors out of eight), and a central pointer/needle sits over the figure. From the label list the model derives the number of sectors, each sector's equal angle (360 ÷ n), the dividing lines, the outline, one colour per distinct label (repeats share a hue so matching sectors are easy to count), the pointer, and — for any label you ask about — P(land on it) = matching sectors ÷ total as an exact simplified fraction, plus whether the spinner is fair (every label equally likely) or biased. Occlude a probability to ask for it; highlight a label to shade its sectors; point the needle at a sector to show a landed result. Distinct from pie-chart (whose sector angles are proportional to frequency, with no pointer and no repeated labels).",
-  "whenToUse": "Reach for this for spinners in probability: a fair or biased spinner spun once, finding P(land on a colour / letter / number) by counting equal sectors, and the spinner stimulus that sits above a probability-scale, relative-frequency or sample-space question. Give \"sectors\" as the list of labels going clockwise from the top — the number of labels is the number of equal sectors, and repeats are simply repeated strings ([\"A\",\"B\",\"C\",\"C\",\"A\",\"C\",\"B\",\"A\"] is an 8-sector spinner with three Cs). Set \"shape\": \"circle\" for a round spinner, or \"square\" / \"pentagon\" / \"hexagon\" / \"octagon\" for a polygonal one — for a polygon give exactly as many labels as the shape has sides (square 4, pentagon 5, hexagon 6, octagon 8) so the dividing lines meet the corners. Every probability is derived — list the ones to display in \"ask\" as P(label) = matching ÷ total (simplified by default), occlude one to ask for it, highlight one to shade the sectors you are counting. Common configurations: worked example — ask each distinct label, show.simplified true. Answer space — omit \"ask\" and put the question in \"caption\" (\"Write down P(an even number)\"), so the figure is the stimulus a pupil answers from. Find the probability — one ask entry with occlude:true and highlight:true. Fair vs biased — show.fairness true adds a derived \"fair\" / \"biased\" line (fair when every label is equally likely). Landed result — pointer.at the sector the needle should point to (a spin outcome). Keep labels short (a letter, a number, a colour word): the model places a label outside on a leader line when its sector is too thin, but many long labels in many sectors will crowd, so prefer 8 sectors or fewer for word labels. Keep the same shape and the same show.* choices across a lesson so pupils read one consistent spinner. Switch model when the teaching changes — for parts of a whole as angles proportional to frequency use statistics/pie-chart; for the long-run frequency of many spins use probability/relative-frequency; for two combined events use statistics/sample-space-grid. Synonyms a teacher might use: spinner, fair spinner, biased spinner, spin, equally likely, equal sections, sectors, segments, probability, chance, likelihood, P(red), wheel.",
   "responseModes": [],
-  "tags": [
-    "spinner",
-    "fair spinner",
-    "biased spinner",
-    "spin",
-    "wheel",
-    "probability",
-    "chance",
-    "likelihood",
-    "equally likely",
-    "equal sectors",
-    "equal sections",
-    "sectors",
-    "segments",
-    "P(event)",
-    "counting",
-    "fraction",
-    "circle",
-    "polygon",
-    "square",
-    "pentagon",
-    "hexagon",
-    "octagon",
-    "probability",
-    "statistics",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -44,10 +14,8 @@
         "minItems": 2,
         "maxItems": 12,
         "items": {
-          "type": "string",
-          "description": "One sector's label. Repeat a label to give it more than one sector — repeated labels share a colour and are counted together for probability."
-        },
-        "description": "The sector labels, going clockwise from the TOP sector. The COUNT of labels is the number of equal sectors (so this list alone fixes the geometry); every sector spans the same angle, 360 ÷ count. Labels may repeat: [\"A\",\"B\",\"C\",\"C\",\"A\",\"C\",\"B\",\"A\"] is eight equal sectors, three of them \"C\". For a polygon shape give exactly as many labels as the shape has sides (square 4, pentagon 5, hexagon 6, octagon 8). Keep labels short — a letter, a number, or a colour word."
+          "type": "string"
+        }
       },
       "shape": {
         "type": "string",
@@ -57,8 +25,7 @@
           "pentagon",
           "hexagon",
           "octagon"
-        ],
-        "description": "The spinner outline. \"circle\" (default) is a round spinner with any 2–12 sectors. The polygons draw a flat-top regular shape whose corners the dividing lines meet — use as many sectors as the shape has sides: \"square\" 4, \"pentagon\" 5, \"hexagon\" 6, \"octagon\" 8. The sectors are still equal and the maths is identical to the circle; only the outline changes."
+        ]
       },
       "ask": {
         "type": "array",
@@ -66,81 +33,64 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One probability to compute and show beneath the spinner, as \"P(label) = matching ÷ total\". List one entry per probability you want shown; omit the whole \"ask\" array for a pure stimulus (no readout) — the answer space a pupil works from.",
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The label whose probability to show. The model counts how many sectors carry EXACTLY this label and renders P = count ÷ total as an exact fraction (e.g. \"P(C) = 3/8\"). A label that appears on no sector gives P = 0 (an impossible event) — useful deliberately."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this probability's value as \"?\" — the question hook (\"work out P(green)\"). The spinner and its sectors stay fully visible; only the answer is hidden. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber every sector carrying this label AND this readout line — draws the eye to the sectors being counted (e.g. shade the four \"Red\" sectors while asking P(Red)). Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "label"
           ]
-        },
-        "description": "Which probabilities to display beneath the spinner. Each entry shows \"P(label) = matching ÷ total\" (simplified by default), derived by counting sectors. List one entry per distinct label you want shown (list them all for a full worked example); omit the array entirely for a pure stimulus with no readout. Occlude an entry to ask for its value; highlight an entry to shade the sectors it counts."
+        }
       },
       "pointer": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The central pointer/needle — the spinner's defining feature. Drawn by default, resting upright; set an outcome with \"at\" or \"angle\".",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Draw the needle. Set false for a bare divided shape (e.g. \"how many equal sections?\"). Default true."
+            "type": "boolean"
           },
           "at": {
             "type": "integer",
-            "minimum": 1,
-            "description": "Point the needle at this sector — its number, counting from 1 at the TOP sector and going clockwise. Use to show a landed result (\"the spinner landed here\"). Out-of-range values are ignored and the needle rests upright."
+            "minimum": 1
           },
           "angle": {
-            "type": "number",
-            "description": "Point the needle at this angle in degrees, measured clockwise from straight up (0 = up, 90 = right). Ignored if \"at\" is given. Use for a needle resting between sectors. Default: straight up."
+            "type": "number"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the single sector the needle points at (the landed sector). Use with \"at\". Default false."
+            "type": "boolean"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Display toggles.",
         "properties": {
           "labels": {
-            "type": "boolean",
-            "description": "Print each sector's label on the figure. Set false for an unlabelled divided shape. Default true."
+            "type": "boolean"
           },
           "fill": {
-            "type": "boolean",
-            "description": "Tint each sector with its label's colour (one hue per distinct label; repeats share it). Set false for white sectors with just the outline and labels. Default true."
+            "type": "boolean"
           },
           "simplified": {
-            "type": "boolean",
-            "description": "When a probability fraction reduces, also show the simplified form (\"P(B) = 2/8 = 1/4\"). Set false to show only matching ÷ total. Default true."
+            "type": "boolean"
           },
           "fairness": {
-            "type": "boolean",
-            "description": "Add a derived line stating whether the spinner is FAIR (every label equally likely) or BIASED. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. the context (\"The spinner is spun once\"). Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -149,7 +99,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — 8-sector letter spinner with repeats, P of each letter",
       "params": {
         "header": "Letter spinner",
         "sectors": [
@@ -177,7 +126,6 @@
       }
     },
     {
-      "label": "Answer space — fair 1–6 spinner, probability asked in the caption only",
       "params": {
         "header": "Spin the spinner",
         "sectors": [
@@ -192,7 +140,6 @@
       }
     },
     {
-      "label": "Occluded question — find P(green), the green sectors highlighted",
       "params": {
         "sectors": [
           "Green",
@@ -214,7 +161,6 @@
       }
     },
     {
-      "label": "Hard case — biased octagonal spinner, four labels, needle on a landed Red",
       "params": {
         "header": "Octagonal spinner",
         "shape": "octagon",
@@ -251,7 +197,6 @@
       }
     },
     {
-      "label": "Polygon — square spinner divided by its diagonals, P(win) vs P(lose)",
       "params": {
         "header": "Square spinner",
         "shape": "square",
@@ -274,7 +219,6 @@
       }
     },
     {
-      "label": "Fair vs biased — a fair four-way spinner, fairness stated",
       "params": {
         "sectors": [
           "Cat",

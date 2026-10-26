@@ -4,41 +4,8 @@
   "name": "logic-gates",
   "version": 2,
   "title": "Logic gates",
-  "tagline": "Logic-gate circuit (AND, OR, NOT, XOR, NAND, NOR) with wire states and truth table derived by evaluating it; occludable cells, mystery gates, blank-canvas answer space.",
-  "description": "A combinational logic circuit drawn with the standard gate symbols — named input switches on the left, gates wired from inputs or from other gates, named output terminals on the right — with an optional truth table beside it. Everything except the structure is computed: every wire's 0/1 state comes from really evaluating the circuit at the current switch values (high wires draw in blue, low in grey), the truth table re-evaluates the whole circuit for all 2ⁿ input combinations, the row matching the current switches is marked live, and the Boolean expression for each output (e.g. \"Q = (A AND B) OR NOT C\") is derived from the wiring. Truth-table cells and whole columns occlude (\"?\") or blank for complete-the-truth-table questions — and whenever the switches sit on a row whose cell is hidden, that signal's live state (wire colour and 0/1 readout) is suppressed on the circuit, so the diagram can never leak a hidden answer, however the switches are set. A gate can itself be occluded (its symbol hides inside a \"?\" box) for \"name this gate\" questions. Blank-canvas mode goes one step further and hides the WIRING: the drawing area renders as an empty bordered rectangle with the labelled input terminals down its left edge and the output terminals down its right, optionally beside a key of the gate symbols a pupil may use — the printed \"draw a circuit that gives this output\" answer space, with the target truth table still derived from the (undrawn) answer circuit. With toggleable set, pupils click the input switches and watch the wire states and the marked table row update.",
-  "whenToUse": "Reach for this whenever a lesson draws a logic circuit or a truth table: single gates and their tables (AND, OR, NOT, XOR, NAND, NOR), compound two- and three-gate circuits, writing or reading Boolean expressions, \"complete the truth table\", \"name the gate from its behaviour\", tracing 1s and 0s through a circuit diagram, \"draw a circuit that produces this output\", and the half and full adder. Author the structure only — inputs (conventionally A, B, C), gates wired by name/id, outputs (conventionally Q, or P and Q) — and every value is evaluated for you. MARKED questions (responseMode fill-derived, correctAnswer { derived: true }): on the web every occluded or blank truth-table cell becomes a box the pupil types 0 or 1 into, and an occluded gate becomes a choice of AND, OR, NOT, XOR, NAND and NOR; each answer is marked against the evaluated circuit, and a gate choice is right when the circuit with that gate gives the same outputs on every row (so where two gates behave alike in the wiring, either is right). Paper keeps the \"?\" boxes. A blankCanvas tile is never marked. Common configurations: worked example — include table and set show.expression true; complete the truth table — occlude cells or a whole column ({ \"col\": \"Q\" } with no row hides the column; whenever the switches match a hidden row the circuit stops showing that signal's live state, so the answer can never be read off the wires); an answer space for the TABLE — table.blank the output column (empty cells rather than \"?\"); an answer space for the CIRCUIT — include blankCanvas ({} for a bare space, or { \"legend\": [\"AND\", \"OR\", \"NOT\"] } to show which gates may be used), keep the table so the target output is given, and author the intended answer in gates as usual: it is never drawn, and every readout that would give the wiring away is suppressed for you. Reveal that answer in a SIBLING block carrying the same params without blankCanvas — two blocks, never two stages of one staged build, because the empty canvas is deliberately sized independently of the answer. Name the gate — set occlude on the gate and leave the table fully visible (the behaviour IS the clue); explore — set toggleable true and let pupils click the switches. Give a gate a label (e.g. \"NOT B\") to add that intermediate column to the truth table — exam tables usually include the working columns, though in blank-canvas mode those columns are dropped (a column headed \"A AND B\" would hand over the first gate). Three recipes worth keeping to hand: HALF ADDER — two gates reading the same pair of inputs, XOR for the sum S and AND for the carry C. FULL ADDER — inputs A, B and Cin with five gates: A XOR B feeds both the sum XOR (with Cin) and a carry AND (with Cin), and the carry OR combines that with A AND B, giving outputs S and Cout. COLUMNAR PROOF — put the two sides of a Boolean identity in as the two outputs P and Q over the same inputs (e.g. P = NOT (A AND B) against Q = NOT A OR NOT B) and the last two table columns come out identical, which IS the De Morgan proof. Rows run in binary counting order with the FIRST declared input as the most significant bit (A=0,B=0 first — the exam convention); keep the same input order across every block in a lesson so row numbers line up. Synonyms teachers use: logic gate, logic circuit, circuit diagram, truth table, Boolean, Boolean expression, Boolean logic, binary, AND gate, OR gate, NOT gate (inverter), XOR (exclusive OR), NAND, NOR, inputs and outputs, logic diagram, half adder, full adder, sum and carry, De Morgan.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "logic gate",
-    "logic gates",
-    "truth table",
-    "boolean",
-    "boolean logic",
-    "boolean expression",
-    "circuit",
-    "logic circuit",
-    "circuit diagram",
-    "AND",
-    "OR",
-    "NOT",
-    "XOR",
-    "NAND",
-    "NOR",
-    "inverter",
-    "binary",
-    "computing",
-    "computer science",
-    "GCSE computer science",
-    "A level computer science",
-    "half adder",
-    "full adder",
-    "adder",
-    "sum and carry",
-    "De Morgan",
-    "draw a circuit",
-    "answer space"
   ],
   "interface": {
     "type": "object",
@@ -48,23 +15,20 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 3,
-        "description": "The named input switches, drawn top-to-bottom on the left. Order matters twice: it sets the vertical order on the circuit AND the truth-table column/bit order (first input = most significant bit). Convention: single capital letters A, B, C — or A, B, Cin for an adder.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "name": {
               "type": "string",
-              "pattern": "^[A-Za-z][A-Za-z0-9]{0,3}$",
-              "description": "The input's name (1–4 characters, conventionally a single capital letter like \"A\"). Gates wire from this name; the truth table heads a column with it."
+              "pattern": "^[A-Za-z][A-Za-z0-9]{0,3}$"
             },
             "value": {
               "type": "integer",
               "enum": [
                 0,
                 1
-              ],
-              "description": "The switch's CURRENT value — the live state the circuit is evaluated at (wire colours, output readouts, the marked table row). Default 0. Ignored in blankCanvas mode, where no switches are drawn."
+              ]
             }
           },
           "required": [
@@ -76,15 +40,13 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 8,
-        "description": "The gates. Each is wired from input names or other gate ids (\"in\"); the drawing position (column by depth, row by its sources) and every output value are derived. Wire a gate only from inputs/gates already defined conceptually upstream — a cycle cannot be evaluated and draws stateless. In blankCanvas mode these are the ANSWER: still authored, still what the truth table is evaluated from, but never drawn.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "id": {
               "type": "string",
-              "pattern": "^[a-z][a-z0-9-]*$",
-              "description": "Kebab-case id other gates and outputs wire from, e.g. \"g1\". Not drawn — name the gate for the table with \"label\" instead."
+              "pattern": "^[a-z][a-z0-9-]*$"
             },
             "type": {
               "type": "string",
@@ -95,8 +57,7 @@
                 "XOR",
                 "NAND",
                 "NOR"
-              ],
-              "description": "The gate's logic. Drawn with the standard distinctive symbol (D-shape AND, curved OR, triangle-and-bubble NOT, double-curve XOR, bubbled NAND/NOR). NOT takes exactly one input; every other type exactly two."
+              ]
             },
             "in": {
               "type": "array",
@@ -104,20 +65,16 @@
               "maxItems": 2,
               "items": {
                 "type": "string"
-              },
-              "description": "What feeds this gate: 1 entry (NOT) or 2 entries (all other types), each an input name (\"A\") or a gate id (\"g1\"). An input or gate may feed several gates — the fan-out junction dot is drawn for you."
+              }
             },
             "label": {
-              "type": "string",
-              "description": "Name this gate's signal as a truth-table column (e.g. \"NOT B\", \"A AND B\") — the intermediate working column exam tables include. Omit to keep the signal out of the table. Dropped in blankCanvas mode, where such a column would give the wiring away."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide WHICH gate this is: the symbol draws as a plain box holding \"?\" and the gate's operator masks as \"?\" in the derived expression — the \"name this gate from its truth table\" question. The circuit still evaluates normally. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber the gate outline — draw the eye to one gate. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -158,23 +115,19 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 2,
-        "description": "The named output terminals on the right (conventionally Q, or P and Q — or S and Cout for an adder). Each reads one gate's signal and shows its live value (\"Q = 1\") unless that column is hidden in the table. Two outputs over the same inputs give the columnar proof of a Boolean identity.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "name": {
               "type": "string",
-              "pattern": "^[A-Za-z][A-Za-z0-9]{0,3}$",
-              "description": "The output's name, e.g. \"Q\". Heads the truth-table column."
+              "pattern": "^[A-Za-z][A-Za-z0-9]{0,3}$"
             },
             "from": {
-              "type": "string",
-              "description": "The id of the gate this terminal reads (usually the last gate)."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this output's readout — answer emphasis. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -186,28 +139,23 @@
       "table": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this object to derive and draw the truth table beside the circuit; omit it for the circuit alone. Columns: the inputs (declared order), then every LABELLED gate, then the outputs. Rows: all 2ⁿ input combinations in binary counting order (first input = most significant bit), numbered from 1 at the all-zeros row.",
         "properties": {
           "markCurrentRow": {
-            "type": "boolean",
-            "description": "Wash the row matching the current switch values in amber — the live link between the circuit and the table. Default true. Suppressed in blankCanvas mode, where there are no switches to link to; use highlight to point at a row instead."
+            "type": "boolean"
           },
           "occlude": {
             "type": "array",
-            "description": "Cells to render as \"?\" — the complete-the-truth-table hook. Anti-leak: while the switches sit on a row hidden in a column, that column's signal draws stateless on the circuit (plain ink, no 0/1 readout), so toggling onto an occluded row can never reveal its answer. Input columns cannot be hidden (they define the rows) — entries naming them are ignored.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "col": {
-                  "type": "string",
-                  "description": "The column to hide in: an output name, or a labelled gate's label (exact match)."
+                  "type": "string"
                 },
                 "row": {
                   "type": "integer",
                   "minimum": 1,
-                  "maximum": 8,
-                  "description": "The row (1 = the all-zeros top row). OMIT to hide the whole column."
+                  "maximum": 8
                 }
               },
               "required": [
@@ -217,20 +165,17 @@
           },
           "blank": {
             "type": "array",
-            "description": "Cells to render EMPTY — an unfilled answer space or a staged build's not-yet-reached rows. Same addressing and the same anti-leak suppression as occlude; blank poses nothing yet where \"?\" poses a question. If a cell is both, blank wins.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "col": {
-                  "type": "string",
-                  "description": "The column: an output name or a labelled gate's label."
+                  "type": "string"
                 },
                 "row": {
                   "type": "integer",
                   "minimum": 1,
-                  "maximum": 8,
-                  "description": "The row (1 = all-zeros). OMIT to blank the whole column."
+                  "maximum": 8
                 }
               },
               "required": [
@@ -240,20 +185,17 @@
           },
           "highlight": {
             "type": "array",
-            "description": "Cells to emphasise in bold amber — e.g. the row pair that distinguishes OR from XOR, or the target row of a draw-the-circuit question.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "col": {
-                  "type": "string",
-                  "description": "The column: an input name, output name or gate label."
+                  "type": "string"
                 },
                 "row": {
                   "type": "integer",
                   "minimum": 1,
-                  "maximum": 8,
-                  "description": "The row (1 = all-zeros). OMIT to highlight the whole column."
+                  "maximum": 8
                 }
               },
               "required": [
@@ -266,13 +208,11 @@
       "blankCanvas": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this object to draw the circuit as an EMPTY ANSWER SPACE instead of drawing it: a bordered rectangle with the labelled input terminals down its left edge and the output terminals down its right, and nothing inside — the printed \"draw a circuit that gives this output\" space, where the TOPOLOGY is the answer. Author the intended answer in gates exactly as normal: those gates are never drawn, but they are still what the truth table is evaluated from, so the target output cannot be wrong. Everything that would give the wiring away is suppressed for you — the gate symbols and names, the wires and their 0/1 states, the switch boxes, the derived Boolean expression, any labelled-gate working column, the marked current row, click-to-toggle, and the aria description. Keep the table (it poses the question); reveal the answer in a SIBLING block holding the same params without this object — two blocks, never two stages of one staged build, because the canvas is deliberately sized independently of the answer, so the two frames differ in width.",
         "properties": {
           "legend": {
             "type": "array",
             "maxItems": 6,
             "uniqueItems": true,
-            "description": "Gate symbols to show as a labelled key beside the answer space, in the order given — the \"you may use these gates\" list a printed question gives. Each entry draws that gate's distinctive symbol with its name beside it. Omit for a bare answer space.",
             "items": {
               "type": "string",
               "enum": [
@@ -290,33 +230,26 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Readout toggles.",
         "properties": {
           "wireValues": {
-            "type": "boolean",
-            "description": "Show the evaluated 0/1 beside each gate's output wire (and the \"= value\" on each output terminal). false leaves the wires coloured but unnumbered. Columns hidden in the table suppress their own readouts regardless. Default true."
+            "type": "boolean"
           },
           "gateNames": {
-            "type": "boolean",
-            "description": "Write each gate's type (AND, NOR, …) under its symbol. false leaves the bare symbols — use once pupils read the shapes. An occluded gate shows \"?\" either way. Default true."
+            "type": "boolean"
           },
           "expression": {
-            "type": "boolean",
-            "description": "Write the derived Boolean expression for each output beneath the circuit, e.g. \"Q = (A AND B) OR NOT C\". An occluded gate's operator masks as \"?\". Suppressed in blankCanvas mode — the expression IS the topology in words. Default false."
+            "type": "boolean"
           }
         }
       },
       "toggleable": {
-        "type": "boolean",
-        "description": "Web-only. Pupils click the input switches to flip them and watch every wire state, output readout and the marked table row update live. Exploration only: inert in blankCanvas mode (there are no switches to click) and on a marked fill-derived tile (the answer boxes own the figure). Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it. A title longer than the figure is wide wraps onto further lines rather than widening the canvas."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Wraps onto further lines rather than stretching the figure. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -327,7 +260,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a single AND gate with its truth table and expression",
       "params": {
         "inputs": [
           {
@@ -362,7 +294,6 @@
       }
     },
     {
-      "label": "Two-gate compound — Q = A AND (NOT B), intermediate column in the table",
       "params": {
         "inputs": [
           {
@@ -405,7 +336,6 @@
       }
     },
     {
-      "label": "Occluded question — complete the truth table for A XOR B",
       "params": {
         "inputs": [
           {
@@ -446,7 +376,6 @@
       }
     },
     {
-      "label": "Blank answer space — fill the whole Q column for a NOR gate",
       "params": {
         "inputs": [
           {
@@ -483,7 +412,6 @@
       }
     },
     {
-      "label": "Hard case — three inputs, nested gates: Q = (A AND B) OR NOT C, 8-row table with hidden cells",
       "params": {
         "inputs": [
           {
@@ -551,7 +479,6 @@
       }
     },
     {
-      "label": "Name the gate — symbol hidden, behaviour fully visible in the table",
       "params": {
         "inputs": [
           {
@@ -584,7 +511,6 @@
       }
     },
     {
-      "label": "Blank canvas — draw a circuit giving this output (the half adder), with a gate key",
       "params": {
         "inputs": [
           {
@@ -633,7 +559,6 @@
       }
     },
     {
-      "label": "Full adder — five gates, three inputs, sum and carry out (the answer to the blank canvas above, one input wider)",
       "params": {
         "inputs": [
           {
@@ -705,7 +630,6 @@
       }
     },
     {
-      "label": "Columnar proof — NOT (A AND B) against NOT A OR NOT B, two output columns that come out identical",
       "params": {
         "inputs": [
           {

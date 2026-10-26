@@ -4,54 +4,8 @@
   "name": "cells",
   "version": 2,
   "title": "Data structure cells",
-  "tagline": "Cell array with pointers stepped through queue, stack, list, hash and linked-list operations; contents, pointers, hashes and returns derived; occluded slots auto-marked.",
-  "description": "An indexed array of cells with named pointers, driven through an ordered sequence of operations, and rendered either as the array diagram at one chosen step (cells with pointer arrows and index labels, plus a wrap arc for a circular queue or chain arcs for a linked list) or as the operation table (operation · hash · contents · pointers · return value), or both stacked. Six structures share one engine — linear queue, circular queue, stack, list, hash table and linked list — each defining how one operation transitions the same state. You author the starting cells and the operations; the model derives every cell's contents at every step, every pointer value (front, rear, top, start, free, length) including the −1 empty marker and every MOD-capacity wrap, the running size, the full and empty verdicts, every return value (the dequeued or popped item, a found index, \"not found\", \"underflow\", \"overflow\"), each key's hash and the linear-probe index actually used, the list shift on insert and remove, and the linked-list next-pointer rewiring with its chain arcs. The table always draws a row per operation with the operation column filled, so it doubles as the \"complete the table\" answer space; \"at\" fills it a step at a time for a staged build. Occlude a row's contents or return, or a cell, next pointer or pointer readout in the diagram, to pose the question. Hosted as a marked model tile with responseMode \"fill-derived\", every occluded slot becomes a typed answer box ON the figure — the array after an operation cell by cell, a pointer value including the (p + 1) MOD capacity wrap, the size, a full or empty verdict, the index a key actually landed on after linear probing — and the model self-checks each against the derived truth, so tracing is marked without an authored answer key.",
-  "whenToUse": "Reach for this whenever a data structure is taught by walking it through operations: enqueue and dequeue on a linear or circular queue (front/rear and the (p + 1) MOD capacity wrap), push and pop on a stack (including a call stack, where each push carries a \"note\" for the return line), insert and delete on a list with elements shifting along, hash-table insertion and search with a derived hash column and linear probing on a collision, and the array-backed linked list where an insert redirects a next pointer instead of shifting. Author the start state (initial) and the operations; never a value after an operation. Common configurations: the diagram alone (view \"diagram\") to show one state — pair it with \"at\" to pick which step; the table alone (view \"table\") for \"complete the table showing the contents and the value returned after each operation\" — the operation column always fills, so an untouched table is already the answer space; view \"both\" to show the trace and the array it leaves behind. Occlude a row with occlude \"return\" (\"what does the third dequeue return?\"), \"contents\" or \"both\"; occlude a diagram cell, a next pointer or a pointer readout with diagram.occludeCells / diagram.occludeNext / diagram.occludePointers. Any of those occlusions is AUTO-MARKED on a MARKED model tile with responseMode \"fill-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } }: each \"?\" becomes a typed box the pupil fills on the figure itself, self-checked against the derived truth — the state after an operation cell by cell, a pointer value including the MOD wrap, the size, a full/empty verdict, or the slot a key probed to. Marking raw state is honest here because tracing IS the skill: a pupil who states the queue after each operation has done exactly the work. Occlusion is chained, so you can occlude freely without leaking — with view \"both\" the diagram and the table's row \"at\" are the same state and hide together (only the side you authored takes the typed answers, so nothing is typed twice), an occluded next pointer loses its chain arc, and the show.change wash never paints an occluded cell. Set show.size to expose the size counter that decides full and empty (isFull returns size = capacity, isEmpty returns size = 0). Staged builds: keep every param identical across stages and step \"at\" from 0 to the number of operations, with show.change true so the cell each operation touches ambers as you go — the base state (the start array and the empty table) stands alone as a sensible opening figure. A stack can be given an rpn expression instead of operations: each token becomes one derived operation, so \"5 3 + 2 *\" shows the stack after reading each symbol. Cross-block: keep capacity and pointerStyle identical across one lesson so pupils track one array. Synonyms teachers use: queue, circular queue, ring buffer, first in first out, FIFO, stack, last in first out, LIFO, push, pop, top, stack pointer, call stack, overflow, underflow, array, list, insert, delete, shift, hash table, hashing, collision, probing, linked list, next pointer, traverse, reverse Polish, postfix.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "queue",
-    "circular queue",
-    "ring buffer",
-    "FIFO",
-    "enqueue",
-    "dequeue",
-    "front",
-    "rear",
-    "stack",
-    "LIFO",
-    "push",
-    "pop",
-    "peek",
-    "top",
-    "stack pointer",
-    "call stack",
-    "overflow",
-    "underflow",
-    "array",
-    "list",
-    "insert",
-    "delete",
-    "shift",
-    "linear search",
-    "hash table",
-    "hashing",
-    "hash function",
-    "collision",
-    "probing",
-    "linked list",
-    "next pointer",
-    "null pointer",
-    "free list",
-    "traverse",
-    "reverse Polish",
-    "postfix",
-    "RPN",
-    "trace",
-    "data structures",
-    "computer science",
-    "computing"
   ],
   "interface": {
     "type": "object",
@@ -66,19 +20,16 @@
           "list",
           "hash-table",
           "linked-list"
-        ],
-        "description": "Which structure the cells hold — this selects the transition rule, so it changes what every operation MEANS. \"queue\": linear FIFO, front and rear only ever move right, so the array is used up. \"circular-queue\": the same but both pointers wrap with MOD capacity, drawn with a wrap arc. \"stack\": LIFO with a top pointer, drawn as a column growing upwards. \"list\": an ordered sequence with no pointers — insert and remove shift the elements along and a length is derived. \"hash-table\": each value is stored at its derived hash index, with linear probing on a collision. \"linked-list\": each cell holds data plus the index of the next node; inserts and deletes rewire the chain instead of shifting."
+        ]
       },
       "capacity": {
         "type": "integer",
         "minimum": 2,
-        "maximum": 12,
-        "description": "Number of cells in the array. Defaults to the length of \"initial\" if given, otherwise 6. This is the modulus for a circular queue and the divisor for the hash function."
+        "maximum": 12
       },
       "initial": {
         "type": "array",
         "maxItems": 12,
-        "description": "The cells BEFORE any operation runs — the question's given start state, aligned to indices 0, 1, 2 …. Use null for an empty cell. Omit for an empty structure. Every pointer is derived from it: a queue's front and rear from the occupied run (which may wrap for a circular queue), a stack's top from the highest filled cell, a linked list's start from the node no other node points to and its free from the first empty cell. Entries are plain values except for a linked list, where each occupied cell is { data, next }.",
         "items": {
           "anyOf": [
             {
@@ -93,20 +44,17 @@
             {
               "type": "object",
               "additionalProperties": false,
-              "description": "One linked-list node already in the array: its data and the index of the next node (−1 for the end of the chain).",
               "properties": {
                 "data": {
                   "type": [
                     "string",
                     "number"
-                  ],
-                  "description": "A cell value — a number (23) or a short label (\"A\", \"Ada\"). Numbers compare and hash numerically; strings compare and hash by their characters."
+                  ]
                 },
                 "next": {
                   "type": "integer",
                   "minimum": -1,
-                  "maximum": 11,
-                  "description": "Index of the next node in the chain, or −1 for the last node. Default −1."
+                  "maximum": 11
                 }
               },
               "required": [
@@ -119,7 +67,6 @@
       "operations": {
         "type": "array",
         "maxItems": 14,
-        "description": "The operations applied in order, each one table row. The state after each is derived — you never write a resulting value.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -138,32 +85,27 @@
                 "find",
                 "isEmpty",
                 "isFull"
-              ],
-              "description": "The operation. Queues take enqueue / dequeue / peek / isEmpty / isFull; stacks take push / pop / peek / isEmpty / isFull; lists take insert / append / remove / find; hash tables take insert / find / remove; linked lists take insert / remove / find. An operation the structure does not define is ignored (and reported in the aria label), so a paramset cannot silently draw nonsense."
+              ]
             },
             "value": {
               "type": [
                 "string",
                 "number"
-              ],
-              "description": "The value the operation acts on — enqueued, pushed, inserted, removed by value, or searched for. Required for enqueue, push, append, find, and for insert on every structure except a list insert by index."
+              ]
             },
             "index": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 11,
-              "description": "LIST ONLY — the position for insert (elements from here on shift right) or remove (the element here is taken out and the rest shift left). Omit remove's index to remove by value instead."
+              "maximum": 11
             },
             "after": {
               "type": [
                 "string",
                 "number"
-              ],
-              "description": "LINKED LIST ONLY — insert the new node immediately after the node holding this value. Omit to insert in ascending order (the classic sorted linked list), which puts a new smallest value at the head."
+              ]
             },
             "note": {
-              "type": "string",
-              "description": "A short second line inside the pushed cell — the call-stack frame's return line (\"return to line 12\") or a parameter. Every cell grows to fit, so the array stays the same size across a staged build."
+              "type": "string"
             },
             "occlude": {
               "type": "string",
@@ -171,12 +113,10 @@
                 "contents",
                 "return",
                 "both"
-              ],
-              "description": "Render this row's derived cells as \"?\" — the question hook. \"return\" asks what the operation gives back, \"contents\" asks for the array after it (with its pointer and hash columns), \"both\" hides the whole row. Two authoring rules keep a row question honest. Where the operation RETURNS AN INDEX — a hash-table insert or find, a list find — the contents column shows the very cell the return names, so use \"both\", never \"return\" alone, or the answer can simply be counted along the row. And occlude a CONTIGUOUS RUN of rows ending at the last one: a fully-printed row directly beneath a hidden one leaves most of its state, and any pointer the operation did not move, readable straight off it. The operation itself always stays visible: it is the question, not the answer. On a MARKED model tile with responseMode \"fill-derived\" the hidden cells become typed answer boxes: \"contents\" draws the array miniature empty so each cell can be filled in one by one, and \"return\" takes the dequeued or popped item, a probed \"index 4\" (or just \"4\"), True / False, \"overflow\", \"underflow\" or \"not found\"."
+              ]
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this table row — draw the eye to one step. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -185,29 +125,25 @@
         }
       },
       "rpn": {
-        "type": "string",
-        "description": "STACK ONLY — a reverse Polish (postfix) expression such as \"5 3 + 2 *\", space separated, using + − * / and numbers. Each token becomes ONE derived operation: a number pushes, an operator pops its two operands and pushes the result, returning it. Use instead of \"operations\" (which is ignored when this is set) for \"show the stack as this expression is evaluated\"."
+        "type": "string"
       },
       "pointerStyle": {
         "type": "string",
         "enum": [
           "last",
           "next-free"
-        ],
-        "description": "What the moving pointer POINTS AT — the two conventions taught. \"last\" (default): rear is the index of the last item and top is the index of the top item, so an empty queue has front 0 and rear −1 and an empty stack has top −1. \"next-free\": rear and top are the index of the next free slot, so an empty structure has them at 0 and the first item is written where the pointer already is. Either way size decides full and empty. Keep one convention across a lesson."
+        ]
       },
       "hashFunction": {
         "type": "string",
         "enum": [
           "mod",
           "sum-mod"
-        ],
-        "description": "HASH TABLE ONLY — how a key becomes an index. \"mod\" (default): the key MOD capacity, for numeric keys. \"sum-mod\": the sum of the key's character codes MOD capacity, for word keys. The column header names the function and each row shows the derived hash; a collision then probes forward one cell at a time."
+        ]
       },
       "at": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Which step the figure shows: 0 is the start state before any operation, 1 is after the first, and so on. Defaults to after the last operation. The diagram draws the state at this step and the table fills its contents and return columns down to this row (the operation column always fills, so the unfilled rows read as the answer space). Step \"at\" through a staged build; every other param stays identical, so the figure never resizes between stages."
+        "minimum": 0
       },
       "view": {
         "type": "string",
@@ -215,44 +151,35 @@
           "diagram",
           "table",
           "both"
-        ],
-        "description": "What to draw. \"diagram\" (default): the array of cells with its pointer arrows at step \"at\". \"table\": the operation table only — the trace. \"both\": the diagram above the table, sharing one canvas width. The table view stands alone as a complete figure, so it composes beside another model in one row."
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "indices": {
-            "type": "boolean",
-            "description": "Number every cell with its index (0, 1, 2 …) beside the array in the diagram. Default true."
+            "type": "boolean"
           },
           "pointers": {
-            "type": "boolean",
-            "description": "Draw the named pointer arrows in the diagram AND give each pointer its own column in the table. false leaves the bare cells — the answer space for \"mark where front and rear are now\". Default true."
+            "type": "boolean"
           },
           "returns": {
-            "type": "boolean",
-            "description": "Include the return-value column in the table. false drops it for structures where nothing is returned. Default true."
+            "type": "boolean"
           },
           "hashColumn": {
-            "type": "boolean",
-            "description": "HASH TABLE ONLY — include the derived hash column in the table, headed with the function being applied. Default true."
+            "type": "boolean"
           },
           "size": {
-            "type": "boolean",
-            "description": "Show the derived size counter (items currently stored) under the diagram — the value that decides full and empty. Default false."
+            "type": "boolean"
           },
           "change": {
-            "type": "boolean",
-            "description": "Amber the cell the current operation touched (written, read or cleared) and its table row, so a staged build reads step by step. Only ever fires when \"at\" is set to a real operation. Default false."
+            "type": "boolean"
           }
         }
       },
       "diagram": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Question hooks on the diagram at step \"at\".",
         "properties": {
           "occludeCells": {
             "type": "array",
@@ -261,8 +188,7 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 11
-            },
-            "description": "Indices whose contents render as \"?\" — \"what is in cell 3 now?\". The cell itself stays drawn, and its occupancy tint is dropped so the shading cannot say whether it holds anything. Safe with view \"both\": the table's row \"at\" shows the same state, so it hides exactly these cells too. On a MARKED model tile with responseMode \"fill-derived\" each becomes a typed answer box (say an empty cell with \"empty\", \"none\" or \"−\")."
+            }
           },
           "occludePointers": {
             "type": "array",
@@ -278,8 +204,7 @@
                 "length",
                 "size"
               ]
-            },
-            "description": "Pointers whose VALUE renders as \"?\" — \"what is rear after these operations?\". The arrow is not drawn for an occluded pointer, so its position cannot leak the answer. \"size\" hides the size counter (needs show.size). Safe with view \"both\": the table's pointer columns on row \"at\" hide to match. On a MARKED model tile with responseMode \"fill-derived\" each becomes a typed answer box — this is how \"what is rear after the queue wraps?\" is auto-marked."
+            }
           },
           "occludeNext": {
             "type": "array",
@@ -288,8 +213,7 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 11
-            },
-            "description": "LINKED LIST ONLY — indices whose NEXT pointer renders as \"?\" (\"which node does 27 point to now?\"). The chain arc out of an occluded node is not drawn, since the arc IS the pointer drawn as a picture. On a MARKED model tile with responseMode \"fill-derived\" each becomes a typed answer box; −1 may be written as \"null\" or \"none\". Use it for rewiring questions: after an insert, ask for the two next pointers that changed."
+            }
           },
           "highlightCells": {
             "type": "array",
@@ -298,14 +222,12 @@
               "type": "integer",
               "minimum": 0,
               "maximum": 11
-            },
-            "description": "Indices drawn in amber — emphasis on the cell being discussed."
+            }
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -314,7 +236,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — linear queue diagram after three enqueues and a dequeue",
       "params": {
         "structure": "queue",
         "capacity": 6,
@@ -342,7 +263,6 @@
       }
     },
     {
-      "label": "Hard case — circular queue that has wrapped, diagram and table together",
       "params": {
         "structure": "circular-queue",
         "capacity": 5,
@@ -377,7 +297,6 @@
       }
     },
     {
-      "label": "Occluded question — complete the operation table for a stack",
       "params": {
         "structure": "stack",
         "capacity": 6,
@@ -411,7 +330,6 @@
       }
     },
     {
-      "label": "Blank answer space — an empty array with no pointers marked",
       "params": {
         "structure": "queue",
         "capacity": 8,
@@ -422,7 +340,6 @@
       }
     },
     {
-      "label": "Hash table — insert with a collision, derived hash column and linear probing",
       "params": {
         "structure": "hash-table",
         "capacity": 7,
@@ -458,7 +375,6 @@
       }
     },
     {
-      "label": "Linked list — an ordered insert rewires the chain instead of shifting",
       "params": {
         "structure": "linked-list",
         "capacity": 6,
@@ -491,7 +407,6 @@
       }
     },
     {
-      "label": "List — insert and remove shift the elements along",
       "params": {
         "structure": "list",
         "capacity": 7,
@@ -521,7 +436,6 @@
       }
     },
     {
-      "label": "Call stack — each push carries the line to return to",
       "params": {
         "structure": "stack",
         "capacity": 5,
@@ -549,7 +463,6 @@
       }
     },
     {
-      "label": "Marked — type the pointers after a circular queue wraps (fill-derived)",
       "params": {
         "structure": "circular-queue",
         "capacity": 5,
@@ -586,7 +499,6 @@
       }
     },
     {
-      "label": "Marked — complete the stack table, contents and returns (fill-derived)",
       "params": {
         "structure": "stack",
         "capacity": 4,
@@ -616,7 +528,6 @@
       }
     },
     {
-      "label": "Marked — which slot did the collision probe to? (fill-derived)",
       "params": {
         "structure": "hash-table",
         "capacity": 7,
@@ -641,7 +552,6 @@
       }
     },
     {
-      "label": "RPN — the stack after reading each symbol of 6 2 − 4 *",
       "params": {
         "structure": "stack",
         "capacity": 4,

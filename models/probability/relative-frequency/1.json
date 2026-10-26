@@ -4,32 +4,7 @@
   "name": "relative-frequency",
   "version": 1,
   "title": "Relative frequency (experimental vs theoretical)",
-  "tagline": "Experimental relative-frequency line settling toward an amber theoretical level; derives RF at each milestone and expected frequency; fair vs biased.",
-  "description": "A line graph of experimental relative frequency (0–1, up the side) against the number of trials (along the bottom), settling toward a theoretical probability drawn as a horizontal amber reference line — the model for relative frequency, experimental vs theoretical probability, fairness and expected frequency. You give each series its trial data as cumulative counts at a list of trial milestones (e.g. 2 sixes after 10 throws, 14 after 100, 99 after 600) and, optionally, the theoretical probability as a fraction (1/6); the model derives the relative frequency at every milestone (count ÷ trials), the joining line, the markers, the theoretical line and its label, and the expected frequency (P × number of trials). Plot two or three series on the same axes to compare a fair experiment converging to its theoretical value against a biased one converging somewhere else. Occlude a theoretical line to ask \"what does it settle on?\". Make it draggable so pupils sweep the number of trials and watch the relative frequency settle.",
-  "whenToUse": "Reach for this whenever experimental probability is taught by watching the relative frequency of an event settle as the number of trials grows: relative frequency tables and graphs (\"after 10, 50, 100, … throws\"), experimental vs theoretical probability, deciding whether a coin / die / spinner is fair or biased, and expected frequency. Author the experiment, never the curve: each series carries data as a list of { n, count } where n is a number-of-trials milestone and count is the cumulative number of times the tracked event has happened in the first n trials — the model plots (n, count ÷ n) and joins the points. Give the known probability as theoretical: { num, den } (a fraction such as 1/6, 1/2, 3/10); it is drawn as a horizontal dashed amber line at that height and labelled with the fraction — the value the experiment should converge to. Common configurations: a single fair experiment converging to its theoretical line (the worked example); a fair vs biased comparison — two series, two theoretical lines, settling at different heights (give each a label so the legend names them); an answer space — a series with empty data on labelled axes for pupils to plot from their own table; an estimate question — show the settling line but set theoretical.occlude so its value reads \"?\" (\"estimate the probability\"); expected frequency — set showExpected to print \"P × n = expected (got observed)\" for each series. Keep yMax low (e.g. 0.4) to zoom in on a small probability like 1/6, or leave it at 1 for a coin. Keep the same axes across a lesson so pupils compare like with like. A staged build reads very well: open on the axes with the theoretical line drawn, then reveal the experimental line over a few stages (volatile at first, then settling) and bring in the expected-frequency readout last — the base (labelled axes + target line) stands alone. Set draggable for a web slider that sweeps the number of trials and grows the line so pupils see it settle. Switch model when the teaching is not convergence-over-trials: for a one-off distribution of outcomes (frequency per category) use statistics/bar-chart; for sample-space counting use statistics/sample-space-grid; for a probability of compound events use probability/tree or probability/venn. Synonyms a teacher might use: relative frequency, experimental probability, estimated probability, experimental vs theoretical, fair, fairness, biased, bias, expected frequency, expected number, long-run proportion, convergence, settles down, law of large numbers.",
   "responseModes": [],
-  "tags": [
-    "relative frequency",
-    "experimental probability",
-    "estimated probability",
-    "theoretical probability",
-    "experimental vs theoretical",
-    "expected frequency",
-    "expected number",
-    "fair",
-    "fairness",
-    "biased",
-    "bias",
-    "convergence",
-    "long-run",
-    "law of large numbers",
-    "dice",
-    "coin",
-    "spinner",
-    "probability",
-    "statistics",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -38,31 +13,26 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 3,
-        "description": "The experimental series — one line each. Most figures have one; give two or three (each with a label) to compare a fair experiment against a biased one on shared axes. Each series's colour is assigned automatically from the categorical palette (blue, then teal, then purple) — never amber, which is reserved for the theoretical line.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The trace's name, shown in the legend when there are two or more series and used in the description, e.g. \"Fair die — P(six)\" or \"Biased spinner\". Omit for a single unlabelled line."
+              "type": "string"
             },
             "data": {
               "type": "array",
-              "description": "The experiment as cumulative readings: one { n, count } per trial milestone. The relative frequency at each milestone is DERIVED as count ÷ n and the points are joined into the line. Order does not matter (points are sorted by n). Give an EMPTY array for an answer space — labelled axes with no line for pupils to plot themselves.",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
                   "n": {
                     "type": "integer",
-                    "minimum": 1,
-                    "description": "A number-of-trials milestone (the x value), e.g. 10, 50, 100, 600."
+                    "minimum": 1
                   },
                   "count": {
                     "type": "number",
-                    "minimum": 0,
-                    "description": "The CUMULATIVE number of times the tracked event happened in the first n trials (not the count in this batch alone). Relative frequency = count ÷ n; a count above n is clamped to n."
+                    "minimum": 0
                   }
                 },
                 "required": [
@@ -74,21 +44,17 @@
             "theoretical": {
               "type": "object",
               "additionalProperties": false,
-              "description": "The known (theoretical) probability the experiment should converge to, as a fraction — drawn as a horizontal dashed amber line at height num ÷ den and labelled with the fraction. Omit when the theoretical value is unknown (a pure \"where does it settle?\" investigation).",
               "properties": {
                 "num": {
                   "type": "number",
-                  "minimum": 0,
-                  "description": "Numerator of the probability fraction, e.g. 1 in 1/6."
+                  "minimum": 0
                 },
                 "den": {
                   "type": "number",
-                  "exclusiveMinimum": 0,
-                  "description": "Denominator of the probability fraction, e.g. 6 in 1/6."
+                  "exclusiveMinimum": 0
                 },
                 "occlude": {
-                  "type": "boolean",
-                  "description": "Render the theoretical line's value as \"?\" instead of the fraction — the line still shows where it settles, the question asks pupils to name the probability. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -102,62 +68,49 @@
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The window and axis titles. Keep these identical across the blocks of one lesson so pupils compare like with like.",
         "properties": {
           "yMax": {
             "type": "number",
             "exclusiveMinimum": 0,
-            "maximum": 1,
-            "description": "Top of the relative-frequency axis (which always starts at 0). Default 1. Lower it to zoom in on a small probability — e.g. 0.4 makes the convergence to 1/6 easy to read."
+            "maximum": 1
           },
           "xMax": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Top of the number-of-trials axis. Default: just beyond the largest milestone in the data."
+            "exclusiveMinimum": 0
           },
           "xStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "xLabel": {
-            "type": "string",
-            "description": "The x-axis title. Default \"Number of trials\". Keep it short — a long title is shrunk to fit."
+            "type": "string"
           },
           "yLabel": {
-            "type": "string",
-            "description": "The y-axis title. Default \"Relative frequency\". Keep it short (it runs up the side); \"Relative frequency of a six\" is about the longest that reads well."
+            "type": "string"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the background grid (helps read values off the axes). Default true."
+        "type": "boolean"
       },
       "markers": {
-        "type": "boolean",
-        "description": "Draw a dot at each plotted reading (each row of the table). Default true; turn off for a very dense line."
+        "type": "boolean"
       },
       "showExpected": {
-        "type": "boolean",
-        "description": "Print an expected-frequency readout for each series with a (non-occluded) theoretical line: \"P × n = expected (got observed)\", using the largest milestone as n. Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Adds a \"trials\" slider below the plot: pupils sweep the number of trials and the experimental line grows to that point, with a live readout of the current n and relative frequency — so they watch it settle toward the theoretical line. The static figure already shows the whole line. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -166,7 +119,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a fair die: P(six) settles toward 1/6",
       "params": {
         "axes": {
           "yMax": 0.4,
@@ -223,7 +175,6 @@
       }
     },
     {
-      "label": "The hard case — fair vs biased die, two theoretical lines + expected frequency",
       "params": {
         "axes": {
           "yMax": 0.5,
@@ -326,7 +277,6 @@
       }
     },
     {
-      "label": "Answer space — labelled axes, plot the relative frequencies yourself",
       "params": {
         "axes": {
           "yMax": 1,
@@ -343,7 +293,6 @@
       }
     },
     {
-      "label": "Occluded question — the line settles, estimate the probability",
       "params": {
         "axes": {
           "yMax": 0.4,
@@ -389,7 +338,6 @@
       }
     },
     {
-      "label": "A fair coin converging to 1/2 over 1000 throws",
       "params": {
         "axes": {
           "yMax": 1,
@@ -442,7 +390,6 @@
       }
     },
     {
-      "label": "Draggable — sweep the trials and watch it settle (web)",
       "params": {
         "header": "Add more trials",
         "axes": {

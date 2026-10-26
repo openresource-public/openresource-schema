@@ -4,28 +4,8 @@
   "name": "tally-chart",
   "version": 2,
   "title": "Tally chart",
-  "tagline": "Gated five-bar tally chart; marks derived from each row's count; occlude a frequency, mismatch one to pose the error, or draw a blank row's tally on the model, auto-marked.",
-  "description": "A tally chart drawn as a ruled table: one row per category, each row showing its count as gated tally marks — four vertical strokes crossed by a diagonal fifth for every group of five, plus single strokes for the remainder — with an optional Frequency column. You give each row a label and a count; the model derives the gate layout (count ÷ 5 gates and the leftover singles), the grid, the column headers and the alignment, so the marks always match the count. The Frequency column shows the derived count by default (a consistent chart); a row may instead author an explicit frequency that DISAGREES with its marks, which is how a \"write down one thing wrong with this tally chart\" question is posed (twelve marks but the column reads thirteen). Occlude a row's frequency so pupils read it back by counting the marks, blank a row's tally cell to leave a \"draw the tally\" answer space, or highlight a row. Hosted as a marked model tile with responseMode \"fill-derived\", each blank row is drawn ON the figure by clicking: every click in the cell's empty space adds a stroke, the fifth stroke of each group gates automatically (four verticals crossed by the diagonal — the same rule the printed rows follow), and a click on the drawn marks removes the last stroke. The model self-checks each row's committed stroke count against its authored count — marking is the sentinel { derived: true }, one observation per row. Counting the gated fives is the teaching point — for repeated picture symbols against a key use the pictogram model, for a cross-tabulation use the two-way-table model.",
-  "whenToUse": "Reach for this for tally charts (also tally tables, tally marks, five-bar gate): reading a tally chart, completing one from the marks, drawing the tally for a frequency, and \"what is wrong with this tally chart\" spot-the-error questions. Give rows: [{ label, count }] and the model draws each count as gated fives (a group of five = four verticals with a diagonal across them) plus singles, with a Frequency column showing the count. Configurations: read a tally — occlude on a row shows its marks but its frequency as \"?\", the marks are the question (pose the number as a typed gap in the question text); draw a tally ON the model (auto-marked) — blank: true on the target rows (their frequency still shows — that is the number to draw) on a MARKED model tile with responseMode \"fill-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } }: the pupil clicks strokes into each blank cell, watches the fifth stroke cross its gate, and the model self-checks each row's stroke count against its count; as a STATIC figure the same blank rows are a paper answer space; spot the error — give the mismatched row an explicit frequency that differs from its count (count 12, frequency 13), highlight it, and the pupil must count the gated marks to find the contradiction; compare — highlight the most / fewest row. showFrequencies false drops the Frequency column entirely (a marks-only chart). categoryHeader sets the first column's header word (\"Day\", \"Colour\", \"Team\"); the Tally and Frequency headers are fixed. Keep the rows and categoryHeader constant across the frames of a staged build so the table does not jump; a staged build reads well opening on the labelled rows with empty tally cells, then filling one row of marks per stage. Switch model when the picture is not gated tally marks: for repeated picture symbols read against a key (\"each ⬤ = 5\") use statistics/pictogram, for a two-variable cross-tabulation use statistics/two-way-table, for a grouped frequency table with mean/median use statistics/averages-table. Synonyms a teacher might use: tally chart, tally table, tally marks, five-bar gate, gate marks, count in fives, frequency column, complete the tally chart, draw the tally, what is wrong with this tally chart.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "tally chart",
-    "tally table",
-    "tally marks",
-    "five-bar gate",
-    "gate",
-    "count in fives",
-    "frequency",
-    "frequency column",
-    "complete the tally",
-    "draw the tally",
-    "spot the error",
-    "categorical",
-    "data",
-    "statistics",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -34,36 +14,29 @@
       "rows": {
         "type": "array",
         "minItems": 1,
-        "description": "The categories, one row each, top to bottom. Each carries its count; the gated tally marks are derived from it (⌊count ÷ 5⌋ gates + the remainder as singles).",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The category name in the first column, e.g. \"Monday\" or \"Red\"."
+              "type": "string"
             },
             "count": {
               "type": "integer",
-              "minimum": 0,
-              "description": "How many tally marks this row shows — the model draws them as gated fives plus singles. This is the number a pupil COUNTS; never author a mark layout. For a blank row drawn on a fill-derived tile this stays the truth the pupil's strokes are checked against."
+              "minimum": 0
             },
             "frequency": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Optional OVERRIDE for the value shown in the Frequency column. Omit it and the column shows the derived count (a self-consistent chart). Author it only to pose a deliberately WRONG chart whose frequency disagrees with the drawn marks — e.g. count 12 with frequency 13 for a \"one thing wrong with this tally chart\" question. The marks always follow count, never frequency."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this row's Frequency cell as \"?\" — the reading hook (\"how many is this?\"). The tally marks stay visible, so counting them IS the question. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this row in amber — the most / fewest category, the answer, or the row with the error. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Leave this row's Tally cell EMPTY — the \"draw the tally\" answer space (its Frequency may still show, so pupils draw the marks for a given number). Different from occlude, which hides only the frequency. On a MARKED model tile with responseMode \"fill-derived\" every blank row becomes a click-to-draw counter (clicks add strokes, the fifth auto-gates, clicking the marks removes the last) self-checked against count. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -73,20 +46,16 @@
         }
       },
       "categoryHeader": {
-        "type": "string",
-        "description": "The header word over the first (category) column, e.g. \"Day\", \"Colour\", \"Team\". Default none (a blank header cell). The Tally and Frequency column headers are fixed."
+        "type": "string"
       },
       "showFrequencies": {
-        "type": "boolean",
-        "description": "Show the Frequency column (header + a value per row). Default true. false gives a marks-only tally chart (no Frequency column at all). A row with occlude still shows \"?\" here when the column is on."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -95,7 +64,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — favourite fruit, marks + frequency",
       "params": {
         "header": "Favourite fruit",
         "categoryHeader": "Fruit",
@@ -121,7 +89,6 @@
       }
     },
     {
-      "label": "Read from the marks — one frequency occluded",
       "params": {
         "header": "Cars passing the school",
         "categoryHeader": "Colour",
@@ -149,7 +116,6 @@
       }
     },
     {
-      "label": "Complete the chart — read two, draw one tally (the fill-derived target)",
       "params": {
         "header": "Goals scored each match",
         "categoryHeader": "Match",
@@ -178,7 +144,6 @@
       }
     },
     {
-      "label": "Hard case — one thing wrong (12 marks, frequency reads 13)",
       "params": {
         "header": "Pets owned",
         "categoryHeader": "Pet",
@@ -206,7 +171,6 @@
       }
     },
     {
-      "label": "Draw the whole chart — every tally blank (answer space)",
       "params": {
         "header": "Ways pupils travel to school",
         "categoryHeader": "Method",
@@ -236,7 +200,6 @@
       }
     },
     {
-      "label": "Marks only — no frequency column",
       "params": {
         "categoryHeader": "Team",
         "rows": [

@@ -4,89 +4,43 @@
   "name": "number-track",
   "version": 1,
   "title": "Number track",
-  "tagline": "Row of contiguous numbered boxes holding a counting sequence; cell values and the step rule derived from start + step; cells occlude, blank, highlight or lift out as loose cards.",
-  "description": "A horizontal row of contiguous boxed cells — a filmstrip of slots — holding the terms of an arithmetic sequence, ordered left to right. Unlike a number line there is no axis and no ticks: quantity is which BOX a number sits in, not a position along a continuous scale. You author only the sequence — the value in the first cell (start), the counting step (the common difference, negative to count back), and the number of cells (length). Every cell value is derived as start + index·step with exact decimal arithmetic, so a step of 0.2 reads 0.2, 0.4, 0.6 with no float noise and a count-back crosses zero into negative numbers cleanly. The cells are uniform; their width grows to fit the widest derived label (and to fit text on slides). A \"count up / back in Ns\" stem sentence, an optional further-right-is-greater arrow (which flips to point left when the step is negative), and a floating loose-card value are all derived too. Per-cell flags pose questions and stage builds without touching the maths: occlude shows \"?\" in a slot for missing-cell completion, blank draws an empty slot for an answer space or a sparse \"fill in the rest\" track, highlight ambers a slot, and loose lifts the value out into a card above an empty dashed drop-slot. There is nowhere to author a cell value, so the track cannot lie.",
-  "whenToUse": "Reach for this for early-number work on a number track (number track, counting track, numbered boxes, a board-game-style row of squares): counting on and back in ones, twos, fives, tens; ordering numbers in cells; finding a missing number in a sequence; one more / one less by the box next door; placing a number card into the right box; decade ordering; and \"further right is greater\". Author the sequence — start (the leftmost cell), step (the counting jump; negative counts back), length (how many cells) — and every cell value is computed; never write the numbers in. Common configurations: worked / full track — show every value (show.values default true), stem \"rule\" for the \"Count up in 10s.\" sentence. Answer space — show.values false (or blank every cell) for an empty track to fill in; a caption says what to write. Missing-cell completion — occlude one or two cells (cells: [{ index: 3, occlude: true }]) so they read \"?\"; the pupil reads the rule off the neighbours. Sparse \"deduce the rest\" — blank all but two anchor cells (e.g. show 40 in cell 0 and 80 in cell 4, blank the rest) so the pupil works out the step and fills in; the two shown values are still derived from start + step, so they cannot disagree. Place a loose card — mark a cell loose (cells: [{ index: 3, loose: true }]) to float its value as a card above an empty box; pair with a caption like \"Put the card in the right box.\" One more / one less — show a short track and highlight the cell next to a given one. Ordering — show.greaterArrow true to draw the derived \"greater\" arrow beneath the track. Use header for a title (question wording goes in the block text, never the caption), and stem \"rule\" for the warm counting-rule sentence. Cross-block: keep start, step and length steady across a lesson where pupils should compare like with like; change only what is hidden. A staged build reads beautifully — open on the empty (or two-anchor) track and reveal a cell or a chunk per stage, bringing the rule sentence in last; the base state must stand alone as a sensible figure. Switch model when the teaching changes — for a continuous numbered axis with marked points, jumps or inequality intervals use number/number-line; for beads grouped in fives use number/bead-string; for a 2×5 ten-frame use number/ten-frame; for place-value columns use number/place-value. Synonyms a teacher might use: number track, counting track, number squares, numbered boxes, count on, count back, count in twos / fives / tens, missing number, fill in the missing numbers, what comes next, sequence, order numbers, one more, one less, place the number, decade, bigger / smaller, greater than.",
   "responseModes": [],
-  "tags": [
-    "number track",
-    "counting track",
-    "number squares",
-    "numbered boxes",
-    "count on",
-    "count back",
-    "count in twos",
-    "count in fives",
-    "count in tens",
-    "skip count",
-    "missing number",
-    "fill in the missing numbers",
-    "what comes next",
-    "sequence",
-    "arithmetic sequence",
-    "order numbers",
-    "ordering",
-    "one more",
-    "one less",
-    "place value",
-    "decade",
-    "greater than",
-    "less than",
-    "bigger",
-    "smaller",
-    "place the number",
-    "number card",
-    "KS1",
-    "KS2",
-    "primary",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
       "start": {
-        "type": "number",
-        "description": "The value in the FIRST (leftmost) cell, cell 0. Every other cell is derived from it: cell index holds start + index·step. May be negative or a decimal."
+        "type": "number"
       },
       "step": {
-        "type": "number",
-        "description": "The counting step — the common difference added from one cell to the next. 1 counts up in ones, 10 in tens, 2 in twos, 0.2 in two-tenths; a NEGATIVE step counts back (step −4: 10, 6, 2, −2 …). Must be non-zero. Default 1."
+        "type": "number"
       },
       "length": {
         "type": "integer",
         "minimum": 2,
-        "maximum": 20,
-        "description": "How many cells the track has (2–20). Cell values run start, start + step, … up to start + (length−1)·step."
+        "maximum": 20
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question and staging flags. The cells and their values always exist (derived from start + step) — list a cell here only to occlude it (\"?\"), blank it (empty), highlight it (amber), or lift it out as a loose card. Index is 0-based from the left; addresses outside the track are ignored.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "index": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Which cell, counted from 0 at the LEFT (cell 0 holds `start`, cell 1 holds start + step, and so on). Addresses outside 0..length−1 are ignored."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's value as \"?\" — the missing-number hook (\"what goes here?\"). The slot itself stays visible and the value stays correct; nothing else leaks it. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Draw this slot empty — nothing inside. Use for an answer space, for the cells a sparse \"fill in the rest\" track hides, and for the not-yet-filled cells of a staged build. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber tint and number for this cell — draw the eye to the answer cell or the one being discussed. Default false."
+              "type": "boolean"
             },
             "loose": {
-              "type": "boolean",
-              "description": "Lift this cell's value out of the track into a detached rounded CARD floating just above the slot, with the slot drawn as an empty dashed drop-target — the \"place the loose card into the right box\" picture. The card value is derived (it is this slot's own value). If the cell is also occluded the card shows \"?\" too (no leak). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -103,15 +57,12 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "values": {
-            "type": "boolean",
-            "description": "Show the derived number in every cell. false draws every cell empty — the whole-track answer space (\"write the numbers in\"). Per-cell blank flags blank one cell at a time; this blanks them all. Default true."
+            "type": "boolean"
           },
           "greaterArrow": {
-            "type": "boolean",
-            "description": "Draw a derived arrow beneath the track pointing toward GREATER values, labelled \"greater\" — the further-right-is-greater hint. The direction is computed from the step: it points right when the step is positive and LEFT when the step is negative (values increasing leftward). Default false."
+            "type": "boolean"
           }
         }
       },
@@ -120,16 +71,13 @@
         "enum": [
           "none",
           "rule"
-        ],
-        "description": "An optional warm stem sentence in a band beneath the track, its numbers derived. \"rule\" states the counting rule — \"Count up in 10s.\" / \"Count back in 4s.\" / \"Count up in 1s.\" (up or back from the step sign, the magnitude from |step|). \"none\" (default) shows no sentence."
+        ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the track; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the track (and the stem, if shown), e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -139,7 +87,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — number track 1 to 10, counting in ones",
       "params": {
         "header": "Number track to 10",
         "start": 1,
@@ -149,7 +96,6 @@
       }
     },
     {
-      "label": "Answer space — empty track, count up in fives and fill it in",
       "params": {
         "start": 0,
         "step": 5,
@@ -160,7 +106,6 @@
       }
     },
     {
-      "label": "Occluded question — missing numbers on a count-in-threes track",
       "params": {
         "start": 3,
         "step": 3,
@@ -178,7 +123,6 @@
       }
     },
     {
-      "label": "Sparse — two numbers given (40 and 80), deduce the rest",
       "params": {
         "start": 40,
         "step": 10,
@@ -209,7 +153,6 @@
       }
     },
     {
-      "label": "Place a loose card into the right box",
       "params": {
         "header": "Place the number",
         "start": 1,
@@ -225,7 +168,6 @@
       }
     },
     {
-      "label": "Hard case — counting back in fours, past zero, one missing",
       "params": {
         "header": "Counting back past zero",
         "start": 10,

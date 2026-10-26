@@ -4,65 +4,31 @@
   "name": "polygon-angles",
   "version": 1,
   "title": "Polygon angles",
-  "tagline": "Single polygon with interior and/or exterior angles marked and the angle sum derived; regular or irregular, triangle-split, with algebraic-label questions.",
-  "description": "A single polygon (3–12 sides) with its interior and/or exterior angles marked by arcs and the angle sum derived. One figure for the interior-angle sum ((n − 2) × 180°, optionally shown by splitting into n − 2 triangles), regular-polygon angles (each interior = 180 − 360/n, each exterior = 360/n), the exterior-angle sum (360°) and forming/solving angle equations (an irregular polygon with one unknown interior angle). You give the polygon as a regular n-gon (the model generates it) or as an irregular vertex sketch (any units — only the shape matters); the model derives every angle measure, the sum, each regular angle, the triangle-split diagonals and the equal-side ticks. Mark every interior or exterior angle at once, or address one by its vertex number; occlude an angle or the sum (\"find the missing angle\"), highlight the answer, override a value as given data (\"100°\") or algebra (\"2x\"), and on the web drag a vertex to watch the interior sum stay (n − 2) × 180°.",
-  "whenToUse": "Reach for this whenever the teaching is the angles of a polygon (a quadrilateral, pentagon, hexagon and up): the interior-angle sum, regular-polygon interior and exterior angles, exterior angles adding to 360°, and \"form and solve an equation\" for a missing interior angle. Choose the input: a regular polygon is regular: n (a regular n-gon is generated, sitting flat on its base) — use it for \"the interior angles of a regular hexagon\" or \"an exterior angle of a regular octagon\"; an irregular polygon is vertices: a list of [x, y] corners placed as a sketch in any units (the shape need not be to scale — set notToScale and override each given angle with a label). Common configurations: interior sum — showInteriorAngles to mark every interior angle, with angleSum { mode: \"interior\" } for the \"(n − 2) × 180°\" readout; add diagonalsFrom: 1 to fan the triangle-split that proves it. Regular angle — regular: n, showInteriorAngles (every angle the same), angleSum { perAngle: true } to show \"÷ n = … each\". Exterior angles — showExteriorAngles and angleSum { mode: \"exterior\" } (sum 360°, 360 ÷ n each). Find the missing angle — showInteriorAngles, then an angles entry on the unknown vertex with occlude: true, highlight: true, and angleSum showing the total so the pupil subtracts. Form an equation — give the sectors labels x, 2x via angles[].label and put the equation in the caption. Address one angle by its 1-based vertex number (at: 1 is the first vertex you listed, counting round the polygon); per-angle entries override the show-all flags so you can occlude or highlight just one. Occlude renders a value as \"?\"; the arc still shows. Set draggablePoints (irregular only) to let pupils reshape the polygon and watch the interior angles change while their sum stays (n − 2) × 180° — the invariant. Keep the same polygon across the blocks of one lesson so pupils track one figure; change only what is given, occluded or highlighted. Switch model when the teaching changes — for a triangle specifically (Pythagoras, trig, the 180° sum) use geometry/triangle; for parallel lines and a transversal use geometry/parallel-lines; for angles at a point, on a line, or vertically opposite use geometry/angles-at-a-point. Synonyms a teacher might use: polygon, interior angles, exterior angles, angle sum, sum of interior angles, sum of the angles, regular polygon, irregular polygon, pentagon, hexagon, heptagon, octagon, quadrilateral, missing angle, (n − 2) × 180, 360 degrees, each angle, form an equation, angle facts.",
   "responseModes": [],
-  "tags": [
-    "polygon",
-    "polygons",
-    "interior angles",
-    "exterior angles",
-    "angle sum",
-    "sum of interior angles",
-    "sum of angles",
-    "regular polygon",
-    "irregular polygon",
-    "pentagon",
-    "hexagon",
-    "heptagon",
-    "octagon",
-    "quadrilateral",
-    "nonagon",
-    "decagon",
-    "missing angle",
-    "n-2 180",
-    "exterior angle",
-    "360",
-    "form an equation",
-    "angle facts",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
-    "description": "Supply the polygon EXACTLY one way — regular (a generated regular n-gon) OR vertices (an irregular sketch) — then annotate. Every other property applies to both.",
     "properties": {
       "regular": {
         "type": "integer",
         "minimum": 3,
-        "maximum": 12,
-        "description": "Draw a REGULAR polygon with this many sides; the model generates the vertices (equal sides and angles), sitting flat on its base. Use 4 for a square, 5 a regular pentagon, 6 a regular hexagon, 8 an octagon, and so on. Give EITHER regular OR vertices, never both. Vertices are numbered 1 upward going anticlockwise from the lower-left corner."
+        "maximum": 12
       },
       "vertices": {
         "type": "array",
         "minItems": 3,
         "maxItems": 12,
-        "description": "Draw an IRREGULAR polygon from these corners, in order around the outline. Each corner is an [x, y] point in your OWN units (y up) — place them as a SKETCH; only the shape matters and the figure is auto-fitted to the canvas. The order numbers the vertices (the first is vertex 1) and is the direction angles are read round. Give EITHER vertices OR regular, never both. For a not-to-scale exam figure, set notToScale and override each given angle with a label.",
         "items": {
           "type": "array",
           "items": {
             "type": "number"
           },
           "minItems": 2,
-          "maxItems": 2,
-          "description": "One corner as [x, y] in your own units (y up)."
+          "maxItems": 2
         }
       },
       "angles": {
         "type": "array",
-        "description": "Per-vertex angle marks — list a vertex here only to occlude it, highlight it, override its value, or mark its exterior angle. The measure is DERIVED from the shape; an entry here OVERRIDES the showInteriorAngles / showExteriorAngles flags for that one vertex. Omit for none (or rely on the show-all flags).",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -70,24 +36,19 @@
             "at": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 12,
-              "description": "Which vertex this angle sits at — its 1-based number (vertex 1 is the first you listed, or the start vertex of a regular polygon; counting round the outline). Must be a vertex the polygon has."
+              "maximum": 12
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed value — a given measure on a not-to-scale figure (\"100°\"), or algebra when forming an equation (\"2x\", \"x + 20\"). Omit to show the measure derived from the shape (e.g. \"108°\")."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this angle's value as \"?\" — the \"find the missing angle\" hook. The arc still shows. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this angle (amber arc + value) — the answer, or the angle a question is about. Default false."
+              "type": "boolean"
             },
             "exterior": {
-              "type": "boolean",
-              "description": "Mark the EXTERIOR angle at this vertex (between the previous side extended past the vertex and the next side) instead of the interior one — the \"turn\" you make walking round the polygon, equal to 180 − interior. Intended for convex vertices. Default false (interior)."
+              "type": "boolean"
             }
           },
           "required": [
@@ -96,73 +57,58 @@
         }
       },
       "showInteriorAngles": {
-        "type": "boolean",
-        "description": "Mark EVERY interior angle with an arc and its derived measure (a regular n-gon shows the same value at each vertex; a right angle shows as a small square). Per-vertex angles[] entries override individual vertices (e.g. to occlude the unknown one). Default false."
+        "type": "boolean"
       },
       "showExteriorAngles": {
-        "type": "boolean",
-        "description": "Mark EVERY exterior angle (each side extended past its vertex, the turn arc and its derived measure). Pairs with angleSum mode \"exterior\" (they add to 360°). Best on a convex polygon. Default false."
+        "type": "boolean"
       },
       "angleSum": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this to render the derived angle-sum readout below the figure; omit it for no readout. Both the working and the total are computed — you never type the sum, so it cannot be wrong.",
         "properties": {
           "mode": {
             "type": "string",
             "enum": [
               "interior",
               "exterior"
-            ],
-            "description": "\"interior\" (default): \"Sum of interior angles = (n − 2) × 180° = …\". \"exterior\": \"Sum of exterior angles = 360°\"."
+            ]
           },
           "showWorking": {
-            "type": "boolean",
-            "description": "Show the working chain (\"(6 − 2) × 180°\") before the total. false shows just \"= 720°\". Default true."
+            "type": "boolean"
           },
           "perAngle": {
-            "type": "boolean",
-            "description": "For a REGULAR polygon, also show the division to one angle — interior \"… ÷ n = 120° each\", exterior \"360 ÷ n = 45°\". Ignored for an irregular polygon (the angles differ). Default false."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the final total as \"?\" (\"= ?\") — \"what is the sum?\". The working, if shown, stays visible. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the total — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "diagonalsFrom": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 12,
-        "description": "Fan dashed construction diagonals from this vertex (its 1-based number) to every non-adjacent vertex, splitting the polygon into n − 2 triangles — the visual proof that the interior angles sum to (n − 2) × 180°. Omit for no diagonals."
+        "maximum": 12
       },
       "showEqualMarks": {
-        "type": "boolean",
-        "description": "Tick equal sides — a regular polygon gets one tick on every side (all equal); an irregular polygon ticks sides that share a length with matching tick counts. Signals \"regular\" / which sides are equal. Default false."
+        "type": "boolean"
       },
       "vertexLabels": {
-        "type": "boolean",
-        "description": "Print a letter (A, B, C, …) just outside each vertex, going round the outline. Useful for an exam figure that names its corners. Default false."
+        "type": "boolean"
       },
       "notToScale": {
-        "type": "boolean",
-        "description": "Print a \"Not to scale\" note by the figure. Only when the source figure prints one — most exam figures don't. Default false."
+        "type": "boolean"
       },
       "caption": {
-        "type": "string",
-        "description": "An optional line centred below the figure: the rule, e.g. \"The interior angles of a pentagon add to 540°\". Omit for none. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "draggablePoints": {
-        "type": "boolean",
-        "description": "Web-only, IRREGULAR polygons only. Let pupils drag a vertex to reshape the polygon; the interior and exterior angle measures recompute live while the interior sum stays (n − 2) × 180° — the invariant. Default false."
+        "type": "boolean"
       }
     },
     "oneOf": [
@@ -180,7 +126,6 @@
   },
   "examples": [
     {
-      "label": "Answer space — regular pentagon, find the interior-angle sum",
       "params": {
         "regular": 5,
         "angleSum": {
@@ -190,7 +135,6 @@
       }
     },
     {
-      "label": "Worked example — regular hexagon, every interior angle and the sum",
       "params": {
         "regular": 6,
         "showInteriorAngles": true,
@@ -204,7 +148,6 @@
       }
     },
     {
-      "label": "Occluded question — irregular pentagon, find the missing angle",
       "params": {
         "vertices": [
           [
@@ -260,7 +203,6 @@
       }
     },
     {
-      "label": "The hard case — irregular hexagon (not to scale), one angle unknown",
       "params": {
         "vertices": [
           [
@@ -325,7 +267,6 @@
       }
     },
     {
-      "label": "Exterior angles — regular octagon, each one and their sum",
       "params": {
         "regular": 8,
         "showExteriorAngles": true,
@@ -344,7 +285,6 @@
       }
     },
     {
-      "label": "Proof — split a heptagon into triangles",
       "params": {
         "regular": 7,
         "diagonalsFrom": 1,

@@ -4,88 +4,9 @@
   "name": "sql-playground",
   "version": 6,
   "title": "SQL playground",
-  "tagline": "Runnable SQL over small named tables: SELECT with aggregates, GROUP BY and JOIN … ON, DDL/DML that really changes the drawn tables, and marked before/after statement views.",
-  "description": "One SQL model, one workbench window, one `sql` param off one hand-rolled parser/executor. It lives in the app's coding window: one header row with three coloured window circles, the title, Run, Reset and full screen; the tables rail beside the query (a file tab, line numbers) with the result strip beneath it; and a footer naming the language (it says what a statement changed only when there is no result pane to say it). It comes in seven colour themes (`theme`). A string `sql`: up to three small named data tables drawn as grids (columns optionally carrying declared SQL types, shown as a schema line and enforced), an editable statement box, and Run. Any statement in the taught subset really executes: a SELECT shows its result grid below (WHERE with =, <>, <, >, <=, >=, BETWEEN, IN, LIKE, IS [NOT] NULL, NOT/AND/OR and brackets; aggregates COUNT(*), COUNT(col), SUM, AVG, MIN, MAX with GROUP BY and HAVING; joins written either implicitly — FROM t1, t2 WHERE t1.key = t2.key — or explicitly as [INNER] JOIN … ON, over two or three tables; SELECT DISTINCT; AS aliases on columns and tables; calculated columns like price * 1.2; multi-key ORDER BY, including ORDER BY COUNT(*) or an AS alias; LIMIT; text comparison and LIKE are case-insensitive, the DBMS default pupils meet), while CREATE TABLE, ALTER TABLE ADD/DROP/RENAME COLUMN, INSERT INTO … VALUES, UPDATE … SET … WHERE, DELETE FROM … WHERE and DROP TABLE visibly change the drawn tables — the changed cells, new rows and new columns are marked, a derived one-line summary reports what happened, and a Reset button restores the authored start. Declared types, NOT NULL, UNIQUE and primary keys are enforced with clear one-line teaching errors; nothing outside the subset ever crashes the window. The result grid stays hidden until Run is pressed, so predict-the-result tasks are never spoiled — on paper too, which carries a screenshot of this same pre-run window. A LIST `sql` renders the assessed before → statement(s) → after form in the SAME window: the Before tables fill the rail pane, the statement listing sits read-only where the query box would be, and the After tables — produced by executing the statements, never authored — take the result pane with the exact changes marked (rows that arrived or went, cells that moved, columns added, renamed or dropped, tables created or dropped); `occludeAfter` hides the result (\"draw the table after this runs\") as changed-cells-as-\"?\" or as a one-line prompt; an occluded statement is still executed, so \"write the SQL that did this\" is posed off two genuinely derived tables. The statements window IS the real derived transition — the engine is pure and synchronous, so print and PPTX (which embed a screenshot of this same window) carry the executed result. Auto-marking, both registers, through ONE `mark` param whose oracle follows its key: a QUERY key marks the rows returned (\"write a query that…\"), a STATEMENT key marks the state left (\"write the SQL that did this\") — and an occluded entry needs no key written at all, since it already is one. Either way the shown data plus derived variants decide it, so every equivalent answer passes and a hard-coded one fails once the data moves.",
-  "whenToUse": "Reach for this whenever a computing lesson needs SQL on the page — querying OR changing tables — rather than a static screenshot. ONE model, one workbench window, ONE `sql` param whose SHAPE picks the picture. Write a STRING when the pupil should DO something: a worked SELECT they edit and re-run, a \"write a query that returns…\" answer space — AUTO-MARKED when you add `mark.reference` on a run-query tile, which marks the RESULT the pupil's query produces rather than its wording — a predict-the-result activity (show tables and a query, predict, then Run to check; carry the instruction in the block text), or a live DDL sandbox where pupils type INSERT / UPDATE / CREATE and watch the drawn tables change (Reset restores the start; this is how table alteration is taught as an ACT). Write a LIST when the block is something to READ or answer on rather than drive: the same window shows the Before tables in the rail, the statement listing read-only, and the executed After tables with the changes marked — a worked before→after example, a predict question with `occludeAfter: \"changes\"` (row count unchanged — UPDATE, ALTER ADD: differing cells show \"?\") or `occludeAfter: \"table\"` (row count itself is the answer — INSERT, DELETE: the After pane becomes a one-line prompt with no grid), or the reverse question with `occlude: true` on a statement (\"which single statement did this?\" — the hidden statement is still executed, so the two tables cannot disagree with the answer). A list block becomes ANSWERABLE by adding `mark: {}` when one entry is occluded: that entry turns into an editable box, the pupil writes the statement that did this, and Run marks it on the database state it leaves (responseMode run-statement). Between the two keys, every \"write the SQL\" question — query or statement — is typed in the app and auto-marked. Rule of thumb: pupils typing → a string, or a list with an occluded entry plus `mark`; pupils reading → a plain list. The dataset lives in `tables` either way (3–6 columns, a handful of rows read best; omit `tables` entirely only for a statement sequence that starts from nothing with CREATE TABLE). What actually sets the window's width is the TOTAL WIDTH OF THE GRID — the number of columns MULTIPLIED BY how long their values and names are, since data cells never wrap — so long values widen it exactly as extra columns do: six columns of one-word values sit comfortably, six columns of sentence-length values do not, and a single long free-text field (a description, a full address, a sentence) widens the window on its own. Keep values short and name columns tersely; put prose in the block text, not in a cell. Rows are cheap — they add height, which the figure has room for. Use TYPED column objects whenever the schema is part of the teaching — types display as a schema line and are enforced — and plain string columns for pure SELECT work. There is no staged `reveal`: build a statement-by-statement story by SEQUENCING blocks (each block's `statements` a longer prefix of the sequence), and keep `show.types` on across such a sequence so the schema line fixes the column widths and the window does not resize between blocks. Keep the SAME starting table across the blocks of one lesson so pupils track one dataset. SELECT specifics: aggregates COUNT(*)/COUNT(col)/SUM/AVG/MIN/MAX with GROUP BY and HAVING (a bare column outside the GROUP BY errors with a teaching line, the rule mark schemes assume); joins written implicitly (FROM t1, t2 WHERE t1.key = t2.key) or explicitly ([INNER] JOIN … ON — the form textbooks print), over up to THREE tables, so the Students/Courses/Enrolments link-table scenario fits; SELECT DISTINCT; AS aliases on columns and tables (COUNT(*) AS Total); calculated columns (SELECT price * 1.2). Honest gaps, each refused with a named teaching error rather than built: sub-queries, UNION, outer (LEFT/RIGHT) joins, COUNT(DISTINCT …). Null comparisons never match (IS NULL is the test that sees a null — author some null cells when teaching it); string comparison and LIKE are case-INSENSITIVE, the default of every classroom DBMS ('oak' matches 'Oak' — do not build a lesson on case-sensitive matching); ties under every ORDER BY key keep their original order, and GROUP BY groups appear in first-appearance order. This model owns its own mutable state, so it does NOT support staged `steps` or draggable params. Synonyms teachers use: SQL, database, query, SELECT, WHERE, ORDER BY, BETWEEN, IN, LIKE, wildcard, null, join, link table, foreign key, table, records, field, relational, DBMS, DDL, DML, CREATE TABLE, ALTER TABLE, INSERT INTO, UPDATE, DELETE, DROP, schema, data type, primary key, constraint, NOT NULL, VARCHAR, GCSE computer science, A level computer science, computing, data.",
   "responseModes": [
     "run-query",
     "run-statement"
-  ],
-  "tags": [
-    "sql",
-    "database",
-    "databases",
-    "query",
-    "select",
-    "where",
-    "order by",
-    "relational",
-    "table",
-    "records",
-    "dbms",
-    "computer science",
-    "cs",
-    "computing",
-    "gcse",
-    "a level",
-    "data",
-    "filter",
-    "sort",
-    "sqlite",
-    "run query",
-    "predict output",
-    "and",
-    "or",
-    "between",
-    "in",
-    "like",
-    "wildcard",
-    "null",
-    "is null",
-    "not",
-    "join",
-    "joins",
-    "link table",
-    "foreign key",
-    "ddl",
-    "dml",
-    "schema",
-    "data types",
-    "data type",
-    "create table",
-    "alter table",
-    "insert",
-    "insert into",
-    "update",
-    "delete",
-    "drop table",
-    "add column",
-    "primary key",
-    "not null",
-    "unique",
-    "default",
-    "varchar",
-    "integer",
-    "field",
-    "attribute",
-    "constraint",
-    "aggregate",
-    "aggregates",
-    "count",
-    "sum",
-    "avg",
-    "average",
-    "min",
-    "max",
-    "group by",
-    "having",
-    "distinct",
-    "alias",
-    "as",
-    "inner join",
-    "join on",
-    "calculated field",
-    "link table scenario"
   ],
   "interface": {
     "type": "object",
@@ -106,50 +27,39 @@
       "tables": {
         "type": "array",
         "maxItems": 3,
-        "description": "The starting dataset: up to three small named tables. This is the authored data — result grids and after-tables are NOT written here, they are produced by executing SQL over these tables. Keep tables small (a few columns, a handful of rows). A SELECT can read one table or join two or three, implicitly (FROM t1, t2 WHERE t1.key = t2.key) or with [INNER] JOIN … ON — three tables is the Students/Courses/Enrolments link-table exam scenario, with table.column qualification for shared column names. For an IS NULL task, author some null cells in the relevant column. Omit entirely ONLY for a `statements` block that starts from nothing (the Before rail reads \"(no tables yet)\" and the first statement is normally CREATE TABLE).",
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One named table: a name, its columns, and its rows.",
           "properties": {
             "name": {
-              "type": "string",
-              "description": "The table name used in statements (e.g. \"pupils\"). Case-insensitive when matched. Use a simple identifier (letters, digits, underscore)."
+              "type": "string"
             },
             "columns": {
               "type": "array",
               "minItems": 1,
-              "description": "The columns in display order. Each is EITHER a plain string name (an untyped column — right for pure SELECT work; treated as numeric when all its non-null values are numbers) OR a typed column object with a declared SQL type and constraint marks (right whenever the schema is part of the teaching — the type line displays under the header and is enforced by every write). The two forms can be mixed in one table.",
               "items": {
                 "anyOf": [
                   {
-                    "type": "string",
-                    "description": "An untyped column, named only (e.g. \"score\"). Accepts any value; numeric-ness is inferred from the data."
+                    "type": "string"
                   },
                   {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "A TYPED column: its name plus a declared SQL type and any key or constraint marks. Declared types are displayed in a schema line under the header and ENFORCED by every statement that writes to the column. Use typed columns whenever the schema is part of the teaching (DDL lessons, CREATE/ALTER, keys); plain string columns are fine for pure SELECT work.",
                     "properties": {
                       "name": {
-                        "type": "string",
-                        "description": "Column name as it should read in the header, e.g. \"StudentID\". Matched case-insensitively by every statement."
+                        "type": "string"
                       },
                       "type": {
-                        "type": "string",
-                        "description": "The declared SQL type, written exactly as it should read in the schema line: \"INTEGER\", \"REAL\", \"TEXT\", \"VARCHAR(20)\", \"CHAR(3)\", \"DECIMAL(6,2)\", \"DATE\", \"BOOLEAN\". Enforced when a statement writes to the column — an INTEGER column rejects '12' in quotes, VARCHAR(20) rejects a 25-character value, a DATE column wants YYYY-MM-DD — and the offending statement shows a one-line error instead of running. Omit for an untyped column: it accepts anything and shows no type line."
+                        "type": "string"
                       },
                       "primaryKey": {
-                        "type": "boolean",
-                        "description": "Mark this column as the primary key. The name renders UNDERLINED (the textbook convention) and every write is checked for uniqueness and non-null. Default false."
+                        "type": "boolean"
                       },
                       "notNull": {
-                        "type": "boolean",
-                        "description": "NOT NULL: a statement that would leave this cell empty fails with a one-line error. Shown in the schema line. Default false."
+                        "type": "boolean"
                       },
                       "unique": {
-                        "type": "boolean",
-                        "description": "UNIQUE: a statement that would repeat a non-null value in this column fails with a one-line error. Shown in the schema line. Default false."
+                        "type": "boolean"
                       },
                       "default": {
                         "type": [
@@ -157,21 +67,17 @@
                           "string",
                           "boolean",
                           "null"
-                        ],
-                        "description": "DEFAULT value: used when an INSERT omits this column, and filled into existing rows when ALTER TABLE ADD introduces a column with one. Without a default those cells become null."
+                        ]
                       },
                       "references": {
                         "type": "object",
                         "additionalProperties": false,
-                        "description": "Foreign key: the table and column this one points at. Shown as FK in the schema line and named in the aria label. NOT enforced — deleting a referenced parent row is allowed, so do not build a referential-integrity lesson on it.",
                         "properties": {
                           "table": {
-                            "type": "string",
-                            "description": "The referenced table name."
+                            "type": "string"
                           },
                           "column": {
-                            "type": "string",
-                            "description": "The referenced column name (normally its primary key)."
+                            "type": "string"
                           }
                         },
                         "required": [
@@ -197,12 +103,9 @@
                     "string",
                     "boolean",
                     "null"
-                  ],
-                  "description": "One cell value: a number (stays numeric, right-aligned), a string, true/false, or null for a blank cell (rendered as a grey italic \"null\")."
-                },
-                "description": "One row: cell values aligned position-by-position to `columns`."
-              },
-              "description": "The starting rows, each an array of cell values aligned to `columns`. Numbers stay numeric; strings are text; true/false render as TRUE/FALSE; null renders as a grey italic \"null\". Omit (or give []) for a table that exists but is empty — the state straight after a CREATE TABLE."
+                  ]
+                }
+              }
             }
           },
           "required": [
@@ -212,37 +115,30 @@
         }
       },
       "sql": {
-        "description": "The SQL. Its SHAPE picks the picture — there is no mode flag.\n\nA STRING is the TOOL: one dataset, a statement box and Run, with the table changing in place the way the real thing behaves. Pupils edit it (unless `editable: false`) and press Run; the statement really executes. A SELECT shows its result grid (SELECT [DISTINCT] <items | *> FROM <tables> [WHERE] [GROUP BY … [HAVING …]] [ORDER BY …] [LIMIT n]; items are columns, aggregates COUNT(*)/COUNT(col)/SUM/AVG/MIN/MAX or calculated expressions, each optionally AS-aliased; WHERE combines =, <>, !=, <, >, <=, >=, BETWEEN a AND b, IN (…), LIKE with % and _, IS [NOT] NULL and NOT with AND / OR and brackets — text matching is case-insensitive; two or three tables join implicitly or with [INNER] JOIN … ON). A CREATE / ALTER / INSERT / UPDATE / DELETE / DROP changes the drawn tables and marks what moved. Reset is on every editable box: it puts the authored query back, the authored tables back, and clears the result — one way back to the start however far the pupil has wandered. An empty string is a BLANK box (a written answer space); OMIT `sql` entirely for a tables-only window — named grids, no box, no Run — the right form for teaching what a table, record or field IS.\n\nA LIST is the FIGURE: the assessed before → statement(s) → after form. The starting tables fill the Before rail, the statements sit read-only in the middle pane, and the executed After takes the result pane with the exact changes marked. Each entry is one statement, executed against what the previous ones left. Use it for worked examples pupils READ, and — with `occludeAfter` or an entry's `occlude` — for questions they answer. There is no staged reveal: build a statement-by-statement story by SEQUENCING blocks, each carrying a longer prefix.",
         "anyOf": [
           {
-            "type": "string",
-            "description": "One statement, in an editable box with Run — the tool."
+            "type": "string"
           },
           {
             "type": "array",
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "description": "One SQL statement of the sequence, executed against whatever the statements before it left behind.",
               "properties": {
                 "sql": {
-                  "type": "string",
-                  "description": "The statement, as a plain string (use \\n for line breaks; a trailing \";\" is fine). Exactly ONE statement per entry — a sequence is a list of entries. Supported: CREATE TABLE t (col TYPE [PRIMARY KEY|NOT NULL|UNIQUE|DEFAULT v|REFERENCES t2(c)], … [, PRIMARY KEY (c)] [, FOREIGN KEY (c) REFERENCES t2(c)]); DROP TABLE [IF EXISTS] t; ALTER TABLE t ADD [COLUMN] col TYPE …; ALTER TABLE t DROP [COLUMN] col; ALTER TABLE t RENAME COLUMN a TO b; INSERT INTO t [(cols)] VALUES (…) [, (…)]; UPDATE t SET col = <expression> [, …] [WHERE cond]; DELETE FROM t [WHERE cond]; and SELECT — the full query subset, including aggregates, GROUP BY/HAVING, JOIN … ON and DISTINCT (its result grid renders below the listing). A SET expression may be a literal, another column, or arithmetic on columns and numbers (score + 5, price * 1.1) with brackets. WHERE takes =, <>, <, >, <=, >=, AND, OR, NOT, brackets, BETWEEN … AND …, IN (…), LIKE (% and _, case-insensitive), IS [NOT] NULL. Anything else — TRUNCATE, CREATE VIEW/INDEX, a sub-query, a type mismatch, a broken key — produces one clear error line on this statement and leaves the table as it was; it never crashes the window."
+                  "type": "string"
                 },
                 "occlude": {
-                  "type": "boolean",
-                  "description": "Render this line as \"?\" — the reverse question, \"write the SQL that turned the first table into the second\". The statement is STILL EXECUTED, so the after-table is the real result of the hidden statement and cannot be inconsistent with it. Default false."
+                  "type": "boolean"
                 },
                 "highlight": {
-                  "type": "boolean",
-                  "description": "Amber this line — draw the eye to the statement under discussion in a longer listing. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
                 "sql"
               ]
-            },
-            "description": "A sequence, read-only beside its executed before/after — the figure."
+            }
           }
         ]
       },
@@ -251,31 +147,25 @@
         "enum": [
           "changes",
           "table"
-        ],
-        "description": "For a LIST `sql`. Hide the after-state, so the window asks \"what does the table look like after this runs?\". \"changes\" draws the After tables but renders every cell, header and column that DIFFERS from the before-state as \"?\" — right when the number of rows is unchanged (UPDATE, ALTER TABLE ADD COLUMN, RENAME). \"table\" replaces the whole After pane with a one-line prompt and NO grid at all — right when the row count is itself part of the answer (INSERT, DELETE, DROP), where drawing the correct number of rows would leak it. A SELECT statement's result grid is hidden the same way: \"changes\" keeps the grid's shape with every value as \"?\" (predict the values), \"table\" drops the grid entirely (predict the whole result). Omit for a worked example that shows the result."
+        ]
       },
       "mark": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Turns the block into an AUTO-MARKED answer space. Set it on a marked model tile; correctAnswer is { derived: true }, because the model derives the answer itself.\n\nThe KEY is either written here as `reference` (needed when the visible SQL is the task or a blank) or is ALREADY AUTHORED as the entry you marked `occlude: true` — that entry renders nowhere, so it can serve as the key with nothing more to write: `mark: {}` is the whole param.\n\nThe ORACLE follows from what the key IS, which is the only honest rule: a QUERY is marked on the ROWS IT RETURNS, a STATEMENT on the STATE IT LEAVES.\n• Query key (responseMode run-query): the pupil writes a query, and theirs and the reference run over the shown data plus derived variants. Any query computing the right thing passes — different predicates, spacing, a redundant LIMIT — and one hard-coding rows read off the table fails, because the variants move the data underneath it. Row order is marked only when the reference itself has ORDER BY (rows it leaves tied compare as a set); selected columns must match the reference's names in order, EXCEPT a computed column (aggregate or calculation), which marks by value alone, so COUNT(*), count(id) and COUNT(*) AS Total all pass.\n• Statement key (responseMode run-statement): the pupil writes the statement that did this, and the DATABASE STATE it leaves is compared — every table, every column WITH its declared type and key/constraint marks, and every row. Row identity is deliberately ignored, so DELETE-then-INSERT and a straight UPDATE are judged on what the tables HOLD. A SELECT is refused with a teaching line, since the task asks for a statement that CHANGES the table. After Run the pane shows what the PUPIL's statement did (headed \"After your statement\"), never the reference's, so a wrong answer is diagnosed rather than given away; Reset re-poses it.\n\nA key that does not run leaves the tile unmarked and shows an authoring error — it never marks a pupil wrong. The key is never rendered on any surface.",
         "properties": {
           "reference": {
-            "type": "string",
-            "description": "The KEY — a correct answer, in the same subset the pupil writes in. Required when the visible SQL is the task (a comment or a blank box); omit it when an entry is already `occlude: true`, since that entry IS the key. Its ORDER BY (or absence) decides whether row order is marked. Its WHERE literals are planted into the variant datasets so boundary errors are caught: comparison literals and BOTH BETWEEN bounds get their neighbours planted, every IN member is planted plus a value named nowhere, LIKE patterns are planted as probe strings that break each anchor, and an IS NULL target gets a null planted. If it joins tables, the join-key columns move CONSISTENTLY across variants so the links survive and a hard-coded answer still breaks."
+            "type": "string"
           },
           "variants": {
-            "type": "integer",
-            "description": "How many derived variant datasets to test agreement over, beyond the shown data. Default 3 (max 5). Each keeps the same tables, columns and declared types but re-deals values, plants the key's own literals, and adds a row — enough that an answer naming what it saw stops agreeing. Set 0 to mark on the shown data ALONE: only for a question whose meaning depends on exactly the rows displayed, since with 0 a pupil who reads the answer off the table passes."
+            "type": "integer"
           }
         }
       },
       "editable": {
-        "type": "boolean",
-        "description": "String `sql` only. Whether pupils can edit the statement box. true (default) is a live box they can change and re-run; false is a read-only statement they can read and run but not change — use false for a fixed worked example or a \"read and trace this query\" listing."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "The window's title, or a filename. A filename ending .sql (\"pupils.sql\") names the query's file tab, which otherwise reads \"query.sql\"; anything else (\"Which statement did this?\") is the title in the window's header row. For a list `sql` it is always the title. Purely cosmetic — it does not affect execution."
+        "type": "string"
       },
       "theme": {
         "type": "string",
@@ -287,41 +177,32 @@
           "terminal",
           "aubergine",
           "amber"
-        ],
-        "description": "The window's colour theme. Light: \"platinum\" (default, warm grey), \"paper\" (white chrome, ink colours), \"contrast\" (black on white, every colour at least 7:1 — for pupils who need it or a weak projector). Dark: \"chalkboard\" (dark green, chalk colours), \"terminal\" (warm dark), \"aubergine\" (deep plum), \"amber\" (an old amber monitor). Use ONE theme for every coding window in a lesson, and VARY it between lessons rather than leaving every lesson on platinum. Dark themes print as paper automatically."
+        ]
       },
       "skin": {
-        "type": "string",
-        "description": "Retired (the old glossy and bevel window skins). Accepted so older lessons still validate; ignored — use theme."
+        "type": "string"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles. `result` applies to a string `sql`; `before` and `diff` to a list; `types`, `rowNumbers` and `rowCount` to both.",
         "properties": {
           "result": {
-            "type": "boolean",
-            "description": "String `sql`: show the result surface and the Run button. Default true. Set false to present the tables and statement alone with no run surface — e.g. a query to read and trace by hand where running is not the point."
+            "type": "boolean"
           },
           "rowNumbers": {
-            "type": "boolean",
-            "description": "Show a leading row-number gutter (1, 2, 3 …) on the table grids (both faces) and the result grid. Default true; it makes \"the third record\" sayable. Set false for a barer grid."
+            "type": "boolean"
           },
           "before": {
-            "type": "boolean",
-            "description": "List `sql`: show the Before rail. Default true. Set false for a statement-and-result window where the starting state is already established in the surrounding text or a previous block."
+            "type": "boolean"
           },
           "types": {
-            "type": "boolean",
-            "description": "Show the schema line under each typed column name — the declared type plus PK / NOT NULL / UNIQUE / FK marks. Default true (the schema is half of what DDL changes; untyped columns never show one). Set false for a pure SELECT or INSERT/UPDATE/DELETE lesson where types would crowd the grids."
+            "type": "boolean"
           },
           "diff": {
-            "type": "boolean",
-            "description": "List `sql`: mark what changed — rows that arrived and cells that moved are ambered in the After pane, and rows or columns that went are greyed and struck through in the Before rail. Default true. Set false to show the two states plainly and make pupils spot the difference themselves."
+            "type": "boolean"
           },
           "rowCount": {
-            "type": "boolean",
-            "description": "Show the derived row count on a result's strip (\"4 rows\"). Default true. Set false to make counting the rows the task. Tables never carry a count; their row numbers (on by default) show it."
+            "type": "boolean"
           }
         }
       }
@@ -329,7 +210,6 @@
   },
   "examples": [
     {
-      "label": "Worked SELECT-WHERE — pupils in one house, sorted by score (live mode)",
       "params": {
         "header": "pupils.sql",
         "tables": [
@@ -379,7 +259,6 @@
       }
     },
     {
-      "label": "Auto-marked answer space — write a query that lists the cheap books, cheapest first",
       "params": {
         "header": "answer.sql",
         "tables": [
@@ -421,7 +300,6 @@
       }
     },
     {
-      "label": "Live DDL sandbox — type the INSERT, press Run, watch the typed table change",
       "params": {
         "header": "members.sql",
         "tables": [
@@ -474,7 +352,6 @@
       }
     },
     {
-      "label": "Statements worked example — UPDATE computed from the old value, changes marked",
       "params": {
         "header": "Halving the unsealed barley",
         "tables": [
@@ -535,7 +412,6 @@
       }
     },
     {
-      "label": "Occluded question — the statement is hidden but still executed (\"which statement did this?\")",
       "params": {
         "tables": [
           {
@@ -588,7 +464,6 @@
       }
     },
     {
-      "label": "Aggregate worked example — COUNT(*) per genre with GROUP BY, HAVING and an AS alias (A Level)",
       "params": {
         "header": "loans.sql",
         "tables": [
@@ -637,7 +512,6 @@
       }
     },
     {
-      "label": "Three-table link scenario — Students/Courses/Enrolments with JOIN … ON (the canonical exam case)",
       "params": {
         "header": "school.sql",
         "tables": [
@@ -747,7 +621,6 @@
       }
     },
     {
-      "label": "Auto-marked aggregate question — how many books per genre, most first",
       "params": {
         "header": "answer.sql",
         "tables": [
@@ -794,7 +667,6 @@
       }
     },
     {
-      "label": "Hard case — a six-statement build from nothing: create, insert, alter, update, delete",
       "params": {
         "tables": [],
         "sql": [

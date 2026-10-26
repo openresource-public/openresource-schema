@@ -4,42 +4,7 @@
   "name": "parallel-lines",
   "version": 2,
   "title": "Parallel lines and transversals",
-  "tagline": "Parallel lines and transversals, derived marked angles — corresponding (F), alternate (Z), co-interior (C), the triangle angle-sum proof and a triangle spanning the parallels.",
-  "description": "Two or more parallel lines (drawn with matching arrowhead marks) crossed by one or more straight transversals, with the angles at each crossing marked by arcs and labelled with their sizes. The model for angles in parallel lines: corresponding (F) angles, alternate (Z) angles, co-interior / allied (C) angles, vertically opposite angles, and multi-step \"find the angle, giving reasons\" chains. You choose how many parallel lines there are and each transversal's direction; the line positions, the crossings and every angle's measure are derived, so the figure stays to scale and the degrees stay correct. Address an angle by its line, its transversal and which of the four corners it sits in; then show its derived degree, occlude it (\"?\"), label it for algebra (\"x\", \"2x\"), highlight it, or tick it equal to its pair. Optional draggable transversal on the web (rotate it and watch the equal/supplementary relationships hold). Also draws the angles-in-a-triangle proof (triangleProof): a triangle with a construction line through its apex parallel to the base, where the two base angles reappear at the apex as equal alternate angles and the three angles on the straight line there sum to 180° — proving the triangle's angle sum, every value derived. Also draws a TRIANGLE SPANNING THE PARALLELS (triangleSpan): a triangle placed to scale with a base on one parallel and its apex either ON the far parallel or BEYOND the pair (external), whose sides act as transversals — the interior angles, the alternate / co-interior / straight-line angles each side makes with the parallels, and the isosceles equal-side ticks are all derived from the vertex positions. Not for angles at a single point or polygon angles — those are separate models.",
-  "whenToUse": "Reach for this whenever the teaching is angles in parallel lines — a transversal (or two) crossing parallel lines: corresponding angles, alternate angles, co-interior (allied) angles, vertically opposite angles, and \"work out the angle, giving reasons\". Build the figure by setting how many parallel lines there are (lines, default 2, drawn top to bottom and evenly spaced) and listing the transversals by direction in degrees (0° = along the lines / pointing right, 90° = straight up = perpendicular, anticlockwise positive — the same convention as geometry/angles-at-a-point). A transversal makes an acute angle of min(direction, 180 − direction) with the lines: direction 70 or 110 both give a 70°/110° pair. Mark an angle with { line, corner } (and transversal, default 1): line is 1 at the top, counting down; corner is which of the four angles at that crossing — \"top-right\" (above the line, right of the transversal), \"top-left\", \"bottom-left\", \"bottom-right\". At one crossing, top-right and bottom-left are vertically opposite (equal), as are top-left and bottom-right; neighbouring corners are angles on a straight line (add to 180°). Relationship templates (line 1 = top, line 2 = bottom, one transversal): corresponding — same corner on each line (top-right line 1 and top-right line 2 are equal); alternate (Z) — bottom-left line 1 with top-right line 2 (or bottom-right line 1 with top-left line 2) are equal; co-interior (C) — bottom-right line 1 with top-right line 2 (or bottom-left line 1 with top-left line 2) add to 180°. Common configurations: show the degree — mark an angle with no label and the derived size shows; find it — occlude it (\"?\") or label it \"x\" and highlight it, keeping the arc; algebra — label two angles \"x\" and \"2x\" (pick a direction roughly proportional so the figure reads right) and put the equation in the caption; equal angles — give a pair the same mark count (mark: 1) to tick them equal, a different relationship mark: 2; chain — two transversals at different directions, one visible angle on each, the targets occluded (\"work out x and y, giving reasons\" goes in the block text). Set draggable so pupils rotate a transversal and watch the relationships hold. Cross-block convention: keep the same line count and transversal directions across the blocks of one lesson so pupils track the same diagram — change only what is given, occluded, labelled or highlighted. An optional tilt rotates the whole figure (the corner names stay in the upright frame) for exam-style variety. Synonyms a teacher might use: parallel lines, transversal, corresponding angles, F angles, alternate angles, Z angles, co-interior angles, allied angles, C angles, supplementary, vertically opposite, angles in parallel lines, give reasons, missing angle. Angle-sum proof: to prove that the angles in a triangle add to 180° (not just state it — for that use geometry/triangle), set triangleProof with the two base angles (baseLeft, baseRight); the model draws the triangle, the dashed line through the apex parallel to the base, the two base angles ticked equal to their alternate copies at the apex, and the apex angle (derived = 180 − the two) between them — the three on the straight apex line summing to 180. Add a header for the question, let showSum print the derived sum, or annotate.apex.occlude to make it \"find the third angle\". Triangle spanning the parallels: for the \"triangle drawn between (or across) two parallel lines\" figure — an isosceles triangle sitting on one line with its apex touching the other, or a triangle with a vertex on each line and its apex sticking out beyond the pair — set triangleSpan instead of transversals. Give the vertical gap (gap, any units) and the three vertices; each vertex has an x (horizontal position, same units as gap) and either on: \"top\"/\"bottom\" (it sits on that parallel) or a free y (measured DOWNWARD from the top line: 0 = top line, gap = bottom line, so a value between them is inside the strip and a value outside is above/below — an external apex is placed OUTSIDE the base horizontally, by its x). Place the vertices roughly to scale (like geometry/triangle — the model derives every angle from them and fits the figure), or, for a not-to-scale exam figure, place a representative sketch and override each shown value with a label. Mark an angle with { at: vertexName, arms: [armA, armB] }: each arm is either another vertex name (the triangle SIDE going to it) or \"left\"/\"right\" (the parallel LINE ray at that vertex, toward the left or right end — only valid when the vertex lies on a line). So the interior angle of the triangle at E is { at: \"E\", arms: [\"F\", \"G\"] }; the angle ∠AEG between the line (toward the A end, left) and the side EG is { at: \"E\", arms: [\"left\", \"G\"] }; the angle ∠FGD between side GF and the line toward D (right) is { at: \"G\", arms: [\"F\", \"right\"] }. Each marked angle takes the same occlude (\"?\"), highlight (amber), label (algebra/given value) and mark (equal-tick count) options as the transversal figure. Equal sides are ticked automatically (isosceles/equilateral, from the placed lengths) — set showEqualTicks: false to suppress. Name the two lines with topLabel / bottomLabel (a two-letter string like \"AB\" prints A at the left end and B at the right end, matching the exam). Common configurations: ISOSCELES ON THE LINES (apex on the far line) — two vertices on: \"top\" and the apex on: \"bottom\" centred between them (so the two slant sides come out equal and get ticked); give one base-to-line angle (arms [\"left\", apex]) and occlude/highlight the apex-to-line angle to ask for it. EXTERNAL APEX — one vertex on: \"top\", one on: \"bottom\", the apex free with an x beyond them; mark the co-interior angle a side makes with a line, the triangle's interior angle, and the straight-line angle x, which sum correctly because every measure is derived. Cross-block convention: keep the same triangle placement across a lesson's blocks — change only what is given, occluded, labelled or highlighted. tilt rotates the whole figure for exam-style variety (arm directions still resolve in the upright frame). Synonyms: triangle in parallel lines, triangle between parallel lines, triangle spanning parallels, isosceles triangle on parallel lines, apex on the line, external apex, angles in parallel lines with a triangle.",
   "responseModes": [],
-  "tags": [
-    "parallel lines",
-    "transversal",
-    "angles in parallel lines",
-    "corresponding angles",
-    "alternate angles",
-    "co-interior angles",
-    "allied angles",
-    "supplementary",
-    "vertically opposite",
-    "F angles",
-    "Z angles",
-    "C angles",
-    "angle facts",
-    "give reasons",
-    "missing angle",
-    "form an equation",
-    "angles in a triangle",
-    "angle sum",
-    "triangle proof",
-    "angle sum proof",
-    "sum to 180",
-    "proof",
-    "triangle in parallel lines",
-    "triangle between parallel lines",
-    "triangle spanning parallels",
-    "isosceles triangle on parallel lines",
-    "external apex",
-    "apex on the line",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -48,18 +13,15 @@
         "type": "array",
         "minItems": 2,
         "maxItems": 4,
-        "description": "The parallel lines, ordered TOP to BOTTOM (line 1 is the top one). They are drawn horizontally (before any tilt), evenly spaced, each with a matching arrowhead \"feather\" so they read as parallel. Provide one entry per line; omit the whole array for two unlabelled lines. Their positions are derived — you only choose how many there are and (optionally) their names.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "Optional name for this line, drawn at its right-hand end, e.g. \"AB\" or \"CD\". Omit for an unlabelled line."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this whole line in amber — emphasis when a question is about one specific parallel. Default false."
+              "type": "boolean"
             }
           }
         }
@@ -68,22 +30,18 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 3,
-        "description": "The straight lines that cross the parallels. Each is given by a DIRECTION; its position is derived (one transversal is centred, several are spread evenly across the figure). Every angle in the figure is measured from these directions.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "direction": {
-              "type": "number",
-              "description": "Bearing of the transversal in degrees: 0° points right along the parallel lines, 90° is perpendicular (straight up), measured anticlockwise. The transversal makes an acute angle of min(direction, 180 − direction) with the parallels — so a transversal at 110° makes a 70° acute and a 110° obtuse angle. Use a value strictly between 0 and 180 (90 = perpendicular, all four angles 90°; values near 0 or 180 are almost parallel and degenerate). To make a 70° angle land in the top-right/bottom-left corners use 70; to land it in the top-left/bottom-right corners use 110."
+              "type": "number"
             },
             "label": {
-              "type": "string",
-              "description": "Optional name for this transversal, drawn near its top end. Omit for none."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this whole transversal in amber. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -93,7 +51,6 @@
       },
       "angles": {
         "type": "array",
-        "description": "The angles to MARK with an arc and a value. Each is one of the four angles at a parallel–transversal crossing, addressed by its line, its transversal and its corner; its measure is DERIVED and stays correct when a direction changes. Omit an angle to leave it unmarked. Address an angle whose line or transversal does not exist and it is ignored.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -101,14 +58,12 @@
             "line": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 4,
-              "description": "Which parallel line this angle sits at, counted from 1 at the TOP line downward."
+              "maximum": 4
             },
             "transversal": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 3,
-              "description": "Which transversal forms this angle, counted from 1 in the order they are listed. Default 1 — omit it when there is a single transversal."
+              "maximum": 3
             },
             "corner": {
               "type": "string",
@@ -117,30 +72,24 @@
                 "top-right",
                 "bottom-left",
                 "bottom-right"
-              ],
-              "description": "Which of the four angles at this crossing, by the region it occupies in the upright frame: \"top-right\" opens above the line and to the right of the transversal, \"top-left\" above and left, \"bottom-left\" below and left, \"bottom-right\" below and right. At one crossing top-right and bottom-left are vertically opposite (equal), as are top-left and bottom-right."
+              ]
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed value — use for ALGEBRA (\"x\", \"2x\", \"3x − 10\") or to name the angle a letter (\"a\"). Omit to show the derived measure in degrees (e.g. \"70°\"). (If occlude is also set, the value shows \"?\".)"
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this angle's value as \"?\" — the \"find the missing angle\" hook. The arc still shows. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this angle (amber arc + value) — the answer/result, or the angle the question is about. Default false."
+              "type": "boolean"
             },
             "mark": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 3,
-              "description": "Add this many small tick dashes across the arc — the standard equal-angle notation. Give an equal pair the SAME mark count to show they are equal (corresponding or alternate angles, mark: 1), and a second equal set a different count (mark: 2). Omit for a plain arc."
+              "maximum": 3
             },
             "rightAngle": {
-              "type": "boolean",
-              "description": "Draw this angle as a right angle — a small square in the corner instead of an arc and degree value. Use only when the transversal is perpendicular (direction 90). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -152,55 +101,44 @@
       "triangleProof": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Switch the figure to the ANGLES-IN-A-TRIANGLE PROOF: a triangle whose APEX has a construction line drawn through it PARALLEL to the base (dashed, in construction grey). The two base angles reappear at the apex as ALTERNATE angles (equal arcs, matching tick counts), and the three angles on the straight line at the apex — the two alternate copies and the apex angle between them — sum to 180°, proving the triangle's angles do too. You give only the TWO BASE ANGLES; the apex angle is DERIVED (180 − the two), the triangle is built to scale, and every arc, alternate-equal mark and degree value is computed — so the figure cannot lie. When present this REPLACES the parallel-lines-and-transversal figure (omit transversals); keep using the plain figure for every other angles-in-parallel-lines task. Pair with a header (\"Why do the angles in a triangle add to 180°?\") and let showSum print the derived straight-line sum, or occlude/relabel an angle to turn the proof into a \"find the angle / x\" question.",
         "properties": {
           "baseLeft": {
-            "type": "number",
-            "description": "Interior angle at the LEFT base vertex (B), in degrees. The apex sits above the base; this angle sets the left side's slope. Default 55. Keep roughly 20–140; with baseRight it is gently scaled if the two would leave the apex angle too small to draw."
+            "type": "number"
           },
           "baseRight": {
-            "type": "number",
-            "description": "Interior angle at the RIGHT base vertex (C), in degrees. Default 68. The apex angle is DERIVED as 180 − baseLeft − baseRight and shown at the top; pick the two base angles to be the lesson's triangle."
+            "type": "number"
           },
           "labels": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Vertex names. Defaults apex \"A\", left base \"B\", right base \"C\". Override to match a question (e.g. apex \"P\").",
             "properties": {
               "apex": {
-                "type": "string",
-                "description": "Name of the apex (top) vertex. Default \"A\"."
+                "type": "string"
               },
               "left": {
-                "type": "string",
-                "description": "Name of the left base vertex. Default \"B\"."
+                "type": "string"
               },
               "right": {
-                "type": "string",
-                "description": "Name of the right base vertex. Default \"C\"."
+                "type": "string"
               }
             }
           },
           "annotate": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Per-angle annotation. \"left\" is the base-left angle (and its equal alternate copy at the apex), \"right\" the base-right angle (and its copy), \"apex\" the apex angle between them. A base angle's annotation applies to BOTH it AND its alternate copy at the apex — that is the proof, so an \"x\" or a \"?\" appears at both, tied by equal ticks. Each is an object with optional label (override the displayed value, e.g. \"x\"), occlude (show \"?\"), highlight (amber — the result/answer).",
             "properties": {
               "left": {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
                   "label": {
-                    "type": "string",
-                    "description": "Override the shown value (e.g. \"x\"); omit for the derived degree."
+                    "type": "string"
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Show \"?\" instead of the value (find-the-angle). Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Amber arc + value — the answer/result. Default false."
+                    "type": "boolean"
                   }
                 }
               },
@@ -209,16 +147,13 @@
                 "additionalProperties": false,
                 "properties": {
                   "label": {
-                    "type": "string",
-                    "description": "Override the shown value (e.g. \"x\"); omit for the derived degree."
+                    "type": "string"
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Show \"?\" instead of the value (find-the-angle). Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Amber arc + value — the answer/result. Default false."
+                    "type": "boolean"
                   }
                 }
               },
@@ -227,72 +162,59 @@
                 "additionalProperties": false,
                 "properties": {
                   "label": {
-                    "type": "string",
-                    "description": "Override the shown value (e.g. \"x\"); omit for the derived degree."
+                    "type": "string"
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Show \"?\" instead of the value (find-the-angle). Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Amber arc + value — the answer/result. Default false."
+                    "type": "boolean"
                   }
                 }
               }
             }
           },
           "showSum": {
-            "type": "boolean",
-            "description": "When no caption is given AND no angle is occluded/relabelled, print the derived straight-line sum below the figure, e.g. \"55° + 57° + 68° = 180°\". Default true. Set false (or write your own caption) to suppress it."
+            "type": "boolean"
           },
           "showAlternateMarks": {
-            "type": "boolean",
-            "description": "Draw the equal-angle ticks (one tick on the left alternate pair, two on the right) and the parallel \"feather\" marks on the base and apex line. Default true. Set false for a plain figure with arcs only."
+            "type": "boolean"
           },
           "showVertexLabels": {
-            "type": "boolean",
-            "description": "Show the vertex names A / B / C at the corners. Default true."
+            "type": "boolean"
           }
         }
       },
       "triangleSpan": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Switch the figure to a TRIANGLE SPANNING THE TWO PARALLELS: a triangle placed to scale between (or across) the two parallel lines, whose sides act as transversals. Use for the \"triangle drawn on / between parallel lines\" idiom — an isosceles triangle sitting on one line with its apex touching the other, or a triangle with a vertex on each line and its apex sticking out beyond the pair (external). Give the vertical gap and the three vertices; the model places the two horizontal parallels (top = AB, bottom = CD), draws the triangle, and DERIVES every interior angle, every angle a side makes with a parallel it meets (the alternate / co-interior / straight-line angles), and the isosceles equal-side ticks. When present this REPLACES the parallel-lines-and-transversal figure (omit transversals) and is distinct from triangleProof (that is the angle-SUM proof with a construction line through the apex). Mark angles with { at, arms: [armA, armB] } where an arm is a vertex name (a side) or \"left\"/\"right\" (the line ray at that vertex); occlude / highlight / label / mark exactly as on the transversal figure.",
         "properties": {
           "gap": {
-            "type": "number",
-            "description": "Vertical distance between the two parallel lines, in the SAME arbitrary units as the vertices' x (and free y). Only ratios matter — the model scales the whole figure uniformly to fit the canvas, so angles are preserved. Default 120. The top line is at height 0, the bottom line at height gap."
+            "type": "number"
           },
           "vertices": {
             "type": "array",
             "minItems": 3,
             "maxItems": 3,
-            "description": "The three triangle vertices, each given a name and a position. A vertex either lies ON a parallel line (set on: \"top\" or \"bottom\" and give its x) or is FREE (omit on, give x AND y) — used for an external apex. Place them roughly to scale: every angle is derived from these positions.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "name": {
-                  "type": "string",
-                  "description": "The vertex's letter (e.g. \"E\", \"F\", \"G\"), used to address it from angles[].at and as an arm, and drawn at the corner. Must be unique across the three vertices."
+                  "type": "string"
                 },
                 "on": {
                   "type": "string",
                   "enum": [
                     "top",
                     "bottom"
-                  ],
-                  "description": "Which parallel line this vertex sits ON: \"top\" (line AB) or \"bottom\" (line CD). Omit for a FREE vertex (an external apex not on either line) — then y is required."
+                  ]
                 },
                 "x": {
-                  "type": "number",
-                  "description": "Horizontal position of the vertex, in the same units as gap. Larger x is further right. For an external apex, an x beyond the base vertices puts the apex outside the pair."
+                  "type": "number"
                 },
                 "y": {
-                  "type": "number",
-                  "description": "ONLY for a free vertex (on omitted): its vertical position, measured DOWNWARD from the top line — 0 is on the top line, gap is on the bottom line, a value between them is inside the strip, a negative value is above the top line and a value greater than gap is below the bottom line. Ignored when on is set."
+                  "type": "number"
                 }
               },
               "required": [
@@ -303,45 +225,37 @@
           },
           "angles": {
             "type": "array",
-            "description": "The angles to MARK with an arc and a value. Each is addressed by the vertex it sits at and its two ARMS; its measure is DERIVED from the vertex positions. Omit an angle to leave it unmarked.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "at": {
-                  "type": "string",
-                  "description": "The vertex name where this angle sits (one of the three vertices)."
+                  "type": "string"
                 },
                 "arms": {
                   "type": "array",
                   "minItems": 2,
                   "maxItems": 2,
-                  "description": "The two arms bounding the angle. Each arm is EITHER another vertex's name — the triangle side running to it — OR \"left\" / \"right\", the parallel-line ray at this vertex toward its left / right end (valid only when the vertex lies on a line). The interior angle of the triangle at E is arms [\"F\",\"G\"]; the angle ∠AEG between the line (toward the left/A end) and side EG is arms [\"left\",\"G\"]; ∠FGD between side GF and the line toward the right/D end is arms [\"F\",\"right\"]. The smaller (< 180°) sector between the two arms is marked.",
                   "items": {
                     "type": "string"
                   }
                 },
                 "label": {
-                  "type": "string",
-                  "description": "Override the displayed value — use for ALGEBRA (\"x\", \"2x\") or a given value on a not-to-scale figure (\"110°\"). Omit to show the derived measure in degrees. (If occlude is also set, the value shows \"?\".)"
+                  "type": "string"
                 },
                 "occlude": {
-                  "type": "boolean",
-                  "description": "Render this angle's value as \"?\" — the \"find this angle\" hook. The arc still shows. Default false."
+                  "type": "boolean"
                 },
                 "highlight": {
-                  "type": "boolean",
-                  "description": "Draw the eye to this angle (amber arc + value) — the answer / the angle asked for. Default false."
+                  "type": "boolean"
                 },
                 "mark": {
                   "type": "integer",
                   "minimum": 1,
-                  "maximum": 3,
-                  "description": "Add this many tick dashes across the arc — the equal-angle notation. Give an equal pair the SAME count (e.g. the two equal base angles of the isosceles triangle). Omit for a plain arc."
+                  "maximum": 3
                 },
                 "rightAngle": {
-                  "type": "boolean",
-                  "description": "Draw this angle as a right-angle square instead of an arc and value. Use only when the two arms are actually perpendicular. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -351,20 +265,16 @@
             }
           },
           "topLabel": {
-            "type": "string",
-            "description": "Name for the TOP parallel line. A two-letter string like \"AB\" prints \"A\" at the line's left end and \"B\" at its right end (matching the exam's A——B); any other string is drawn once at the right end. Omit for an unlabelled line."
+            "type": "string"
           },
           "bottomLabel": {
-            "type": "string",
-            "description": "Name for the BOTTOM parallel line, e.g. \"CD\" (C at the left end, D at the right). Omit for an unlabelled line."
+            "type": "string"
           },
           "showEqualTicks": {
-            "type": "boolean",
-            "description": "Automatically tick equal-length sides (isosceles → one pair single-ticked; equilateral → all three). Derived from the placed side lengths. Default true. Set false to suppress the ticks."
+            "type": "boolean"
           },
           "showVertexLabels": {
-            "type": "boolean",
-            "description": "Draw each vertex's name at its corner. Default true."
+            "type": "boolean"
           }
         },
         "required": [
@@ -372,30 +282,24 @@
         ]
       },
       "tilt": {
-        "type": "number",
-        "description": "Rotate the WHOLE figure by this many degrees anticlockwise, for exam-style variety (the parallels are no longer dead horizontal). Presentation only — it does not change any measure, and the corner names (\"top-right\" …) stay in the upright frame. Default 0. Keep within roughly ±35 so the figure still reads as parallel lines with a transversal."
+        "type": "number"
       },
       "showParallelMarks": {
-        "type": "boolean",
-        "description": "Show the arrowhead \"feather\" marks on the parallel lines that signal they are parallel. Default true."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line of text centred below the figure: the angle fact being taught, e.g. \"Alternate angles are equal\". Omit for none. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Each transversal gets a grip pupils can drag to ROTATE it about its crossing point; the marked angle measures recompute live while the parallel-line relationships (corresponding/alternate stay equal, co-interior stays 180°) hold — the invariant the figure teaches. Default false."
+        "type": "boolean"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked example — corresponding angles equal (one transversal, both crossings shown)",
       "params": {
         "transversals": [
           {
@@ -426,7 +330,6 @@
       }
     },
     {
-      "label": "Answer space — one angle given, work out the others",
       "params": {
         "transversals": [
           {
@@ -457,7 +360,6 @@
       }
     },
     {
-      "label": "Occluded question — alternate (Z) angles, find the marked angle",
       "params": {
         "transversals": [
           {
@@ -480,7 +382,6 @@
       }
     },
     {
-      "label": "Co-interior (allied) angles — find the supplement",
       "params": {
         "transversals": [
           {
@@ -503,7 +404,6 @@
       }
     },
     {
-      "label": "Form & solve an equation — x and 2x as co-interior angles",
       "params": {
         "transversals": [
           {
@@ -526,7 +426,6 @@
       }
     },
     {
-      "label": "The hard case — two transversals, work out x and y giving reasons",
       "params": {
         "lines": [
           {
@@ -574,7 +473,6 @@
       }
     },
     {
-      "label": "Angle-sum proof — base angles reappear at the apex as alternate angles",
       "params": {
         "triangleProof": {
           "baseLeft": 54,
@@ -583,7 +481,6 @@
       }
     },
     {
-      "label": "Proof as a question — apex angle highlighted, base angles given",
       "params": {
         "triangleProof": {
           "baseLeft": 50,
@@ -599,7 +496,6 @@
       }
     },
     {
-      "label": "Triangle spanning parallels — isosceles, apex on the far line (find the marked angle)",
       "params": {
         "triangleSpan": {
           "gap": 120,
@@ -645,7 +541,6 @@
       }
     },
     {
-      "label": "Triangle spanning parallels — external apex, find x (the hard case)",
       "params": {
         "triangleSpan": {
           "gap": 130,

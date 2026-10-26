@@ -4,34 +4,7 @@
   "name": "area-model",
   "version": 1,
   "title": "Area model",
-  "tagline": "Rectangle split by two factors into partial-product cells with a derived total; cells, sides and total occlude for multiplying, the grid method or factorising.",
-  "description": "A rectangle partitioned into a grid by the terms of two factors — one factor decomposed across the top edge, the other down the left side — with each cell showing the product of its row and column terms (the partial products) and an optional total line beneath. Cell values, calculation strings, edge labels, factor braces, and the expanded-and-collected total are all computed from the terms: numbers multiply with exact decimal places, x-terms multiply with powers, surds multiply and simplify. Numeric grids size cells by magnitude (20 reads wider than 3); algebraic grids use the classroom convention (x reads wide); sizing \"equal\" gives the grid-method table look. Cells, factor terms, and the total occlude independently, so one figure asks \"complete the grid\", \"what goes on the sides?\" (factorising), or \"what is the product?\".",
-  "whenToUse": "Reach for this whenever a product is taught by splitting its factors and multiplying the parts: long multiplication by place value (34 × 27 via 30 + 4 and 20 + 7), decimal multiplication, expanding double brackets — (x + 5)(x + 2), (2x − 3)(x + 4), perfect squares, difference of two squares — surd expansion, and the reverse direction, factorising. Author the factors as terms; every cell, edge label, brace, and total is computed — you never write a partial product. Common configurations: complete the grid — show.cellValues false for a whole-grid answer space, or occlude chosen cells (an occluded cell also shows as \"?\" inside the expanded total, so the total cannot leak it); factorising — occlude every factor term and let the cells stand (\"what goes on the sides?\"), with total.expanded false so the total line shows only the collected quadratic; find the product — total: { occlude: true }; collecting like terms — highlight the two middle cells. sizing \"proportional\" (default) is the area-model look; \"equal\" is the grid-method / box-method table with a × corner — use whichever your class knows, and keep it consistent across a lesson. Staged builds: open on factors with blank cells, clear one cell's blank per stage, bring the total in last — the base state (labelled edges, empty grid) stands alone as a sensible figure. Cross-block: keep the same factor on the same edge across blocks so pupils track one diagram. Synonyms teachers use: area model, grid method, box method, the grid, partial products, expanding brackets, expand and simplify, double brackets, FOIL, splitting into tens and ones.",
   "responseModes": [],
-  "tags": [
-    "area model",
-    "grid method",
-    "box method",
-    "multiplication",
-    "partial products",
-    "long multiplication",
-    "place value",
-    "decimals",
-    "expand",
-    "expanding brackets",
-    "double brackets",
-    "binomial",
-    "quadratic",
-    "perfect square",
-    "difference of two squares",
-    "factorise",
-    "factorising",
-    "factoring",
-    "surds",
-    "FOIL",
-    "algebra",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -41,32 +14,26 @@
         "additionalProperties": false,
         "properties": {
           "coeff": {
-            "type": "number",
-            "description": "The numeric part of the term — required, non-zero. Alone it IS the term (30, 0.4, −3); with symbol or surd it multiplies them (coeff 2 with symbol \"x\" → 2x; coeff 3 with surd 2 → 3√2; coeff −1 with surd 3 → −√3). coeff 1 with a symbol renders as just \"x\"."
+            "type": "number"
           },
           "symbol": {
             "type": "string",
-            "pattern": "^[a-z]$",
-            "description": "Single variable letter for an algebraic term, e.g. \"x\". The term renders as coeff·symbol^power and multiplies algebraically (x × x → x², 2x × 3 → 6x). Use the SAME letter throughout one figure. Omit for number or surd terms."
+            "pattern": "^[a-z]$"
           },
           "power": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 3,
-            "description": "Exponent on symbol: power 2 → x². Default 1. Only meaningful with symbol; products add powers (x × x² → x³)."
+            "maximum": 3
           },
           "surd": {
             "type": "integer",
-            "minimum": 2,
-            "description": "Positive integer radicand for a surd term: surd 5 → √5 (with coeff 3 → 3√5). Products simplify automatically (√3 × √3 → 3; √2 × √6 → 2√3). Never combine with symbol in one term."
+            "minimum": 2
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render this edge label as \"?\" — the factorising hook (\"what goes on the sides?\"). The grid and the computed cell values stay visible and correct. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber this edge label — draw the eye to one part of a factor. Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -97,7 +64,6 @@
       "factors": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The two factors of the product, each decomposed into the terms that head the grid. Every cell value is computed as side term × top term — write the factors, never the products.",
         "properties": {
           "top": {
             "type": "array",
@@ -105,8 +71,7 @@
             "maxItems": 4,
             "items": {
               "$ref": "#/$defs/term"
-            },
-            "description": "Terms of the factor written across the TOP edge — one grid COLUMN per term, left to right. 34 is [{ \"coeff\": 30 }, { \"coeff\": 4 }]; (x + 5) is [{ \"coeff\": 1, \"symbol\": \"x\" }, { \"coeff\": 5 }]."
+            }
           },
           "side": {
             "type": "array",
@@ -114,8 +79,7 @@
             "maxItems": 4,
             "items": {
               "$ref": "#/$defs/term"
-            },
-            "description": "Terms of the factor written down the LEFT edge — one grid ROW per term, top to bottom. Same term shape as top."
+            }
           }
         },
         "required": [
@@ -125,7 +89,6 @@
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question and staging flags. The cells themselves always exist and their values are always computed (side term × top term) — list a cell here only to occlude, blank, or highlight it. Addresses must lie inside the grid the factors define.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -133,26 +96,21 @@
             "row": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 4,
-              "description": "Row of the cell, counted from 1 at the TOP row (the side factor's first term)."
+              "maximum": 4
             },
             "col": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 4,
-              "description": "Column of the cell, counted from 1 at the LEFT column (the top factor's first term)."
+              "maximum": 4
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's value as \"?\" — the question hook (\"what goes here?\"). The cell stays visible, and the value also appears as \"?\" inside the expanded total so the total cannot leak it. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render nothing in this cell — an unfilled cell, for staged builds that fill the grid one stage at a time. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber fill and label — e.g. the pair of like-term cells about to be collected, or the answer cell. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -164,19 +122,15 @@
       "total": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this object to render the product line beneath the grid; omit it for no total. Both halves of the line are computed: the expanded sum of the cells and the collected result — \"600 + 80 + 210 + 28 = 918\"; \"x² + 5x + 2x + 10 = x² + 7x + 10\" (like terms collected, surds simplified, numbers evaluated).",
         "properties": {
           "expanded": {
-            "type": "boolean",
-            "description": "Show the full chain \"sum of cells = result\". false shows only \"= result\" — use when the split must stay hidden (factorising) or the sum would crowd. Occluded cells appear as \"?\" inside the chain. Default true."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the final collected result as \"?\" — \"what is the product?\". The expanded sum, if shown, stays visible. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the result — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
@@ -185,31 +139,25 @@
         "enum": [
           "proportional",
           "equal"
-        ],
-        "description": "How column widths and row heights are set. \"proportional\" (default): numeric terms size by softened magnitude, so 30 reads wider than 4 without starving small terms; algebraic and surd terms take a conventional wide share (x reads bigger than a constant — magnitude is meaningless there). \"equal\": every column and row the same — the grid-method / box-method table look, drawn with a × corner mark. Use equal when the class knows the method as \"the grid\"; proportional when the area reading matters."
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "cellValues": {
-            "type": "boolean",
-            "description": "Show the computed value in every cell. false renders every cell empty — the whole-grid answer space for \"complete the grid\". (Per-cell blank flags do the same one cell at a time.) Default true."
+            "type": "boolean"
           },
           "calculations": {
-            "type": "boolean",
-            "description": "Write the calculation each cell performs (\"30 × 20\", \"x × 5\") in small text above the cell value. Pairs well with occluded or blank cells: the calculation shows, the answer doesn't. Default false."
+            "type": "boolean"
           },
           "factorTotals": {
-            "type": "boolean",
-            "description": "Brace each edge with its recomposed factor — \"34\" over 30 + 4, \"x + 5\" over x and 5 — connecting the decomposition back to the original product. If any of a factor's terms is occluded, its brace renders \"?\" so it cannot leak. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -218,7 +166,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — 34 × 27 by place value, calculations, braces, expanded total",
       "params": {
         "factors": {
           "top": [
@@ -248,7 +195,6 @@
       }
     },
     {
-      "label": "Blank decimal grid (answer space) — 4.3 × 2.6 with every cell empty",
       "params": {
         "factors": {
           "top": [
@@ -274,7 +220,6 @@
       }
     },
     {
-      "label": "Occluded question — (x + 5)(x + 2): middle cells and total hidden",
       "params": {
         "factors": {
           "top": [
@@ -315,7 +260,6 @@
       }
     },
     {
-      "label": "Worked example — (2x − 3)(x + 4) with the like-term pair highlighted",
       "params": {
         "factors": {
           "top": [
@@ -355,7 +299,6 @@
       }
     },
     {
-      "label": "Hard case — surd expansion (5 + √3)(2 − √3), automatic simplification to 7 − 3√3",
       "params": {
         "factors": {
           "top": [
@@ -383,7 +326,6 @@
       }
     },
     {
-      "label": "Factorising — cells given, factors occluded: what goes on the sides of x² + 8x + 12?",
       "params": {
         "factors": {
           "top": [

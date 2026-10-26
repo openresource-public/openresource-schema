@@ -4,29 +4,7 @@
   "name": "scale-drawing",
   "version": 1,
   "title": "Scale drawing",
-  "tagline": "Figure drawn to scale with a scale statement and derived representative fraction; converts real↔drawn length both ways; bearing-and-distance routes.",
-  "description": "A figure drawn to scale — a map, a plan, or a bearing-and-distance route — with a scale statement (\"1 cm represents 5 km\") and the derived representative fraction (\"1 : 500 000\"). You give the scale and place the points (by absolute real-world coordinates, or by a bearing and a single known length from another point); the model derives every leg's real length and its drawn (map) length, converting both ways from the one length you supply — say a real 6 km at 1:50000 and it computes the 12 cm to draw, or say a map measurement of 8 cm and it computes the real distance. Each leg can show its real length, its drawn length, both, or \"?\" for a question; a bearing can be marked with a north line and a clockwise three-figure arc. Drag a point on the web and every real/drawn length, bearing and the to-scale layout recompute live. (No graphical scale bar / ruler is drawn — the on-screen figure is never guaranteed physically to scale, so a measured ruler would mislead; the scale statement and the conversion carry the scale.) The scale, not the bearing, is the subject — for bearing-focused work (back bearings, compass points, journeys) use the bearings model.",
-  "whenToUse": "Reach for this whenever a scale or a real↔drawing conversion is the lesson: reading distances off a map (\"the scale is 1:50000, the map distance is 8 cm, find the real distance\"), drawing something to scale (\"draw 6 km on a bearing of 070° at 1:50000\"), a scale drawing / plan of a real object (a 40 m × 30 m field at 1:500), the representative fraction / scale factor, and bearing-and-distance constructions where the to-scale length matters. Give the SCALE two ways: a unit statement — scale: { drawnUnit: \"cm\", real: 5, realUnit: \"km\" } reads \"1 cm represents 5 km\"; or a representative fraction — scale: { ratio: 50000 } reads \"1 : 50 000\" (1 unit on the drawing is 50000 of the same unit in reality). The ratio is always shown too, derived. Place points by absolute real coordinates (at: [east, north] in the real unit — for corners of a plan, e.g. [0,0], [40,0], [40,30]) or by a leg (polar: { from, bearing, distance }) where distance is the one known length — { value: 6, unit: \"km\", of: \"real\" } for a real distance (the model finds the drawn length) or { value: 8, unit: \"cm\", of: \"drawn\" } for a map measurement (the model finds the real distance). Draw legs with paths (each shows its derived length via show: \"real\" | \"drawn\" | \"both\" | \"none\"; occlude it for a \"find the length\" question; highlight the answer; arrow for a directed journey leg). Mark a bearing with bearings: { at, to } — a north line and clockwise arc labelled with the derived three-figure bearing (use sparingly, for the bearing in a construction). No graphical scale bar / ruler is drawn — the on-screen figure is never guaranteed physically to scale, so a measured ruler would mislead; the scale statement and the conversion carry the scale. Common configurations: worked conversion — show: \"both\" on the leg so \"6 km\" and \"12 cm\" both read; question — occlude the leg length (or the bearing) and pose it in the caption; answer space — draw the legs with occluded lengths and a known reference leg, so pupils use the scale statement (not a ruler) to convert; plan — absolute at coordinates with real sides shown. Keep the same scale across the blocks of one lesson. A staged build reads well: open on the labelled points, add a leg per stage, reveal the conversion last. Set draggable to let pupils drag a point and watch the lengths and bearing recompute. Synonyms a teacher might use: scale, scale drawing, scale factor, map scale, representative fraction, 1 cm represents, to scale, real distance, actual distance, map distance, drawn length, bearing and distance, plan, convert.",
   "responseModes": [],
-  "tags": [
-    "scale",
-    "scale drawing",
-    "scale factor",
-    "map scale",
-    "representative fraction",
-    "to scale",
-    "real distance",
-    "actual distance",
-    "map distance",
-    "drawn length",
-    "conversion",
-    "bearing and distance",
-    "bearings",
-    "plan",
-    "map",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -34,30 +12,25 @@
       "scale": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The scale — the conversion between a DRAWN length on the figure and the REAL length it represents. The model's defining input: every real↔drawn conversion and the representative fraction derive from it. Give it EITHER as a unit statement (drawnUnit + real + realUnit, reading \"1 cm represents 5 km\") OR as a representative fraction (ratio, reading \"1 : 50 000\"). If ratio is present it wins.",
         "properties": {
           "ratio": {
             "type": "number",
-            "exclusiveMinimum": 1,
-            "description": "Representative fraction: the figure is at 1 : ratio — 1 unit on the drawing represents `ratio` of the SAME unit in reality. 50000 → \"1 : 50 000\" (1 cm on the map is 50000 cm = 0.5 km). Use for a map scale written as a ratio. Provide ratio OR the unit statement, not both. Real lengths are then displayed in `displayUnit` (default chosen to read nicely)."
+            "exclusiveMinimum": 1
           },
           "drawn": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Unit statement: the drawn length that represents `real`. Default 1 (the usual \"1 cm represents …\"). Set to e.g. 2 for \"2 cm represents 5 m\"."
+            "exclusiveMinimum": 0
           },
           "drawnUnit": {
             "type": "string",
             "enum": [
               "mm",
               "cm"
-            ],
-            "description": "The unit the drawing / map is measured in (a ruler on paper). Default \"cm\". Also the unit of the drawn-length readouts."
+            ]
           },
           "real": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Unit statement: the real-world distance that `drawn` drawnUnit represents, expressed in `realUnit`. With drawn 1, drawnUnit \"cm\", realUnit \"km\": real 5 reads \"1 cm represents 5 km\". Omit when using ratio."
+            "exclusiveMinimum": 0
           },
           "realUnit": {
             "type": "string",
@@ -66,8 +39,7 @@
               "cm",
               "m",
               "km"
-            ],
-            "description": "Unit of `real`, and the default unit for derived real-length readouts. Omit when using ratio."
+            ]
           },
           "displayUnit": {
             "type": "string",
@@ -76,8 +48,7 @@
               "cm",
               "m",
               "km"
-            ],
-            "description": "Force the unit used for derived REAL-length readouts across the whole figure (e.g. always \"km\"). Default: realUnit if given, otherwise a unit chosen so the numbers read nicely. Drawn lengths always use drawnUnit."
+            ]
           }
         }
       },
@@ -85,14 +56,12 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 8,
-        "description": "The named points of the drawing. Each has a position given EITHER absolutely with `at` (real-world coordinates) OR relatively with `polar` (a bearing + one known length from another point). Positions are the only authored geometry; every length is derived. A figure can be one point with a single polar leg (a pure conversion), a chain of legs (a route / journey), or the corners of a shape (a plan).",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "id": {
-              "type": "string",
-              "description": "Short unique identifier, used to reference this point in paths and bearings, and the default display label (e.g. \"A\", \"B\", \"Port\")."
+              "type": "string"
             },
             "at": {
               "type": "array",
@@ -100,33 +69,27 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "Absolute REAL-WORLD coordinates [east, north] in the scale's real unit (realUnit, or displayUnit for a ratio scale). Use for the reference point and any corner whose position is known directly — e.g. [0,0], [40,0], [40,30], [0,30] for a 40 × 30 field. Provide `at` OR `polar`, not both."
+              "maxItems": 2
             },
             "polar": {
               "type": "object",
               "additionalProperties": false,
-              "description": "Place this point by a LEG from another point: a bearing (direction) and one KNOWN length. Phrase it exactly as the question does. The partner length (drawn if you gave real, real if you gave drawn) is DERIVED from the scale. Provide `polar` OR `at`, not both.",
               "properties": {
                 "from": {
-                  "type": "string",
-                  "description": "id of the point this leg starts from (must be another point in the list)."
+                  "type": "string"
                 },
                 "bearing": {
                   "type": "number",
                   "minimum": 0,
-                  "maximum": 360,
-                  "description": "Direction of this leg, in degrees clockwise from north (0–360). 70 → a bearing of 070°; 90 → due east. For a plain scale drawing with no compass meaning, any direction that lays the figure out works."
+                  "maximum": 360
                 },
                 "distance": {
                   "type": "object",
                   "additionalProperties": false,
-                  "description": "The ONE known length of this leg. `value` is in `unit`; `of` says whether it is the REAL distance (the model derives the drawn length) or the DRAWN / map length (the model derives the real distance) — this is what makes the conversion run both ways.",
                   "properties": {
                     "value": {
                       "type": "number",
-                      "exclusiveMinimum": 0,
-                      "description": "The length, a positive number."
+                      "exclusiveMinimum": 0
                     },
                     "unit": {
                       "type": "string",
@@ -135,16 +98,14 @@
                         "cm",
                         "m",
                         "km"
-                      ],
-                      "description": "Unit of `value`. Default: for of \"drawn\" the scale's drawnUnit; for of \"real\" the scale's realUnit (or displayUnit)."
+                      ]
                     },
                     "of": {
                       "type": "string",
                       "enum": [
                         "real",
                         "drawn"
-                      ],
-                      "description": "Whether `value` is the REAL distance (default) or the DRAWN length measured on the map. The other is derived from the scale."
+                      ]
                     }
                   },
                   "required": [
@@ -159,12 +120,10 @@
               ]
             },
             "label": {
-              "type": "string",
-              "description": "Display name drawn beside the point. Defaults to id."
+              "type": "string"
             },
             "north": {
-              "type": "boolean",
-              "description": "Force a north line at this point even when no bearing is marked here (e.g. an answer space where pupils measure for themselves). A north line is drawn automatically at any bearing vertex. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -174,18 +133,15 @@
       },
       "paths": {
         "type": "array",
-        "description": "The straight legs drawn between points — routes, plan sides, sight lines. A point placed by `polar` already draws its own leg from `from`; list a path to draw an ADDITIONAL leg (a plan side between two `at` points, a return leg), or to control a leg's length readout / occlusion / highlight / arrow / style. Each leg's length is DERIVED and shown per `show`.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "from": {
-              "type": "string",
-              "description": "id of the start point."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "id of the end point."
+              "type": "string"
             },
             "show": {
               "type": "string",
@@ -194,32 +150,26 @@
                 "drawn",
                 "both",
                 "none"
-              ],
-              "description": "Which derived length(s) to label on this leg: \"real\" (\"6 km\"), \"drawn\" (\"12 cm\"), \"both\" (\"6 km = 12 cm\"), or \"none\". Default \"real\"."
+              ]
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this leg's length as \"?\" — the \"work out the length\" hook. The leg stays drawn to scale. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the leg and its length in amber — the answer, or the leg in focus. Default false."
+              "type": "boolean"
             },
             "arrow": {
-              "type": "boolean",
-              "description": "Arrowhead at the `to` end — a directed journey leg. Default false (a plain line)."
+              "type": "boolean"
             },
             "style": {
               "type": "string",
               "enum": [
                 "solid",
                 "dashed"
-              ],
-              "description": "\"solid\" (default) for a drawn / travelled leg; \"dashed\" for a construction or return reference."
+              ]
             },
             "label": {
-              "type": "string",
-              "description": "Override the length text with your own (e.g. an algebraic length \"x\"). Omit to show the derived length(s). The leg is always drawn to scale regardless."
+              "type": "string"
             }
           },
           "required": [
@@ -230,30 +180,24 @@
       },
       "bearings": {
         "type": "array",
-        "description": "Bearings to MARK with a north line and a clockwise arc, labelled with the derived three-figure bearing of `to` from `at`. Use sparingly — for the bearing in a bearing-and-distance construction. For bearing-focused teaching (back bearings, compass points, multi-leg journeys) use the geometry/bearings model.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "string",
-              "description": "id of the point the bearing is measured AT (the north line sits here)."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "id of the point the bearing is measured TO; the arc sweeps clockwise from north round to its direction."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the value as \"?\" — the \"measure the bearing\" hook. The north line and arc still show. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber arc + value — the answer. Default false."
+              "type": "boolean"
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed value (e.g. \"x\"). Omit to show the derived three-figure bearing; the arc is always true to the geometry."
+              "type": "string"
             }
           },
           "required": [
@@ -265,37 +209,29 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "statement": {
-            "type": "boolean",
-            "description": "Show the scale statement \"1 cm represents 5 km\". Default true."
+            "type": "boolean"
           },
           "ratio": {
-            "type": "boolean",
-            "description": "Show the derived representative fraction \"1 : N\". Default true."
+            "type": "boolean"
           },
           "grid": {
-            "type": "boolean",
-            "description": "Faint background square grid behind the figure. Default false."
+            "type": "boolean"
           },
           "northLabels": {
-            "type": "boolean",
-            "description": "Label each north line \"N\". Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. the fact being taught. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Let pupils drag a point to reposition it; every real and drawn length, the bearings and the to-scale layout recompute live. Snaps to a sensible increment. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -305,7 +241,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — 6 km on a bearing of 070° draws as 12 cm at 1:50 000",
       "params": {
         "header": "Drawing to scale",
         "scale": {
@@ -351,7 +286,6 @@
       }
     },
     {
-      "label": "Occluded question — work out the drawn length (hard case as a question)",
       "params": {
         "scale": {
           "ratio": 50000,
@@ -397,7 +331,6 @@
       }
     },
     {
-      "label": "Map distance to real — A to B measures 8 cm at 1:25 000, find the real distance",
       "params": {
         "scale": {
           "ratio": 25000,
@@ -437,7 +370,6 @@
       }
     },
     {
-      "label": "Worked example — \"1 cm represents 5 km\", two towns 7 cm apart",
       "params": {
         "scale": {
           "drawnUnit": "cm",
@@ -478,7 +410,6 @@
       }
     },
     {
-      "label": "Scale drawing of a plan — a 40 m by 30 m field at 1:500",
       "params": {
         "header": "Plan of a field",
         "scale": {
@@ -541,7 +472,6 @@
       }
     },
     {
-      "label": "Answer space — a two-leg journey, use the scale to find each real distance",
       "params": {
         "scale": {
           "ratio": 100000,

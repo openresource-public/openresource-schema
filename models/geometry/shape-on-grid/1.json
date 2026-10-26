@@ -4,35 +4,8 @@
   "name": "shape-on-grid",
   "version": 1,
   "title": "Shape on a centimetre grid",
-  "tagline": "One rectangle, triangle or parallelogram on centimetre squared paper; sides, area, perimeter derived and occludable; drag-to-construct a shape obeying length/area/perimeter rules.",
-  "description": "A single named-type shape — a rectangle, a triangle or a parallelogram — drawn on centimetre squared paper (1 square = 1 cm) with its vertices on grid intersections, its dimensions countable on the grid. You write the grid size, a semantic shape (its type and dimensions — width and height for a rectangle, base and perpendicular height for a triangle or parallelogram), and/or the constraints the drawing must satisfy. The model derives everything else: the vertices (always integer grid points), the dimension labels, the perpendicular-height line with its right-angle mark, the area and perimeter (computed by the shoelace rule, so the area is always exact — an integer or half-integer), and — for a marked question — the deterministic wrong start the pupil adjusts plus the canonical correct instance the answer reveals. Occlude the dimension labels, the area or the perimeter for a \"work it out\" question; highlight the answer readout in amber. Turn a question into a MARKED construct by setting construct: true and hosting the tile with responseMode \"construct\" and correctAnswer { derived: true }: the pupil is shown a wrong shape of the right type and drags its vertices (snapping to grid intersections) until it obeys the constraints. Marking is position- and orientation-invariant — length is the longer side and width the shorter, so a tall or a wide rectangle both pass, as does any triangle orientation or either parallelogram shear. There are NO live area/perimeter readouts while dragging (that would pre-answer \"draw a rectangle with area 40 cm²\"); the sides stay countable on the paper, which is the point. Distinct from geometry/area-grid (area by counting shaded squares) and geometry/geoboard (polygon properties on a pin board).",
-  "whenToUse": "Reach for this to draw ONE shape to a rule on a centimetre grid, or to label the dimensions / area / perimeter of a rectangle, triangle or parallelogram whose sides are countable on squared paper — the \"draw a rectangle with length twice its width and perimeter 18 cm\", \"draw a triangle with base 6 cm and area 9 cm²\", \"work out the area of this parallelogram\" family. Set grid: { cols, rows } to the centimetre squared paper (x runs left-to-right, y bottom-to-top, both in whole centimetres); keep it identical across the blocks of one lesson. WORKED / LABELLED figure: give shape — its type and dimensions (rectangle: width, height; triangle / parallelogram: base, height where height is the PERPENDICULAR height; parallelogram also takes slant, the horizontal shear of the top edge; triangle takes apexShift, the horizontal offset of the apex from the base-left, default 0 for a right-angled triangle) and optionally at: [x, y] to place its anchor (bottom-left for a rectangle, base-left otherwise; omit to centre it). The dimension labels, the perpendicular-height line and the area / perimeter are all derived — never author a length or an area. Show the area and/or perimeter with shape.area: { show: true } / shape.perimeter: { show: true }. QUESTION (unmarked): set shape.occludeDims true (every dimension label renders \"?\"), or shape.area: { show: true, occlude: true } / shape.perimeter: { show: true, occlude: true } for \"what is the area / perimeter?\"; the shape stays visible and countable. ANSWER SPACE: omit shape entirely for a blank sheet, and put the task in caption (\"Draw a rectangle with an area of 12 cm².\"). MARKED construct question (\"draw the shape and auto-mark it\"): give constraints and set construct: true, then host the model on a marked tile with responseMode \"construct\" and correctAnswer { derived: true }. Each constraint is either a measure equal to a CONSTANT ({ measure: \"perimeter\", equals: 18 }) or a measure equal to k times ANOTHER measure ({ measure: \"length\", equals: { times: 2, of: \"width\" } }); the measure vocabulary is width / length (rectangle — length is DEFINED as the longer dimension and width the shorter, which is what makes marking orientation-invariant), base / height (triangle & parallelogram; height is the perpendicular height), area and perimeter. Give the shape TYPE via shape: { type: \"rectangle\" } (dimensions are optional in a construct question — the model derives a canonical answer for the reveal). The pupil sees a wrong shape of that type and drags it into shape; each constraint becomes one marked cell; the verdict is correct only when EVERY constraint holds (within tolerance, default a hair — grid drags land on exact measures; widen tolerance only for deliberately tilted work). Keep the arithmetic / method as block text or a staged explanation, never on the figure. Common configurations: draw-to-a-rule rectangle — constraints [{ measure: \"length\", equals: { times: 2, of: \"width\" } }, { measure: \"perimeter\", equals: 18 }]; draw-a-triangle — [{ measure: \"base\", equals: { times: 2, of: \"height\" } }, { measure: \"area\", equals: 9 }]; single loose rule (many right answers) — one constraint like [{ measure: \"area\", equals: 24 }]. Switch model when the teaching changes: for area by COUNTING squares (including half-squares) use geometry/area-grid; for the properties of a polygon (equal sides, parallel sides, right angles) on a pin board use geometry/geoboard; for coordinates and plotting points use graphing/coordinate-grid; for a compound / composite area split into rectangles use geometry/compound-area. Synonyms a teacher might use: draw a rectangle, draw a triangle, draw a parallelogram, centimetre grid, squared paper, cm grid, length and width, base and height, perpendicular height, area, perimeter, draw a shape with, construct a shape, dimensions.",
   "responseModes": [
     "construct"
-  ],
-  "tags": [
-    "shape on a grid",
-    "draw a rectangle",
-    "draw a triangle",
-    "draw a parallelogram",
-    "centimetre grid",
-    "squared paper",
-    "cm grid",
-    "length",
-    "width",
-    "base",
-    "height",
-    "perpendicular height",
-    "area",
-    "perimeter",
-    "draw a shape",
-    "construct",
-    "rectangle",
-    "triangle",
-    "parallelogram",
-    "dimensions",
-    "geometry",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -41,19 +14,16 @@
       "grid": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The centimetre squared paper. 1 square = 1 cm; x runs 0…cols left-to-right, y runs 0…rows bottom-to-top. Vertices sit on the integer intersections. Keep it identical across the blocks of one lesson.",
         "properties": {
           "cols": {
             "type": "integer",
             "minimum": 2,
-            "maximum": 24,
-            "description": "Squares ACROSS the paper (x from 0 to cols)."
+            "maximum": 24
           },
           "rows": {
             "type": "integer",
             "minimum": 2,
-            "maximum": 24,
-            "description": "Squares UP the paper (y from 0 to rows)."
+            "maximum": 24
           }
         },
         "required": [
@@ -64,7 +34,6 @@
       "shape": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The shape to draw — its TYPE and dimensions. Omit entirely for a blank answer space. In a marked construct question the dimensions are optional (only the type is needed — the model derives a canonical answer for the reveal). Vertices are computed from these semantic dimensions and always land on grid intersections; never author a vertex or a length label.",
         "properties": {
           "type": {
             "type": "string",
@@ -72,8 +41,7 @@
               "rectangle",
               "triangle",
               "parallelogram"
-            ],
-            "description": "Which shape. \"rectangle\" is axis-aligned (width across, height up). \"triangle\" sits on a horizontal base with its apex above it. \"parallelogram\" sits on a horizontal base with the top edge sheared sideways."
+            ]
           },
           "at": {
             "type": "array",
@@ -81,79 +49,62 @@
               "type": "integer"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "Anchor grid point [x, y]: the BOTTOM-LEFT corner of a rectangle, or the LEFT end of the base for a triangle / parallelogram. Omit to centre the shape on the grid."
+            "maxItems": 2
           },
           "width": {
             "type": "integer",
-            "minimum": 1,
-            "description": "Rectangle only: the horizontal side length, in cm."
+            "minimum": 1
           },
           "height": {
             "type": "integer",
-            "minimum": 1,
-            "description": "The vertical extent, in cm. For a rectangle it is the up side; for a triangle / parallelogram it is the PERPENDICULAR height (apex / top edge sits this many cm above the base)."
+            "minimum": 1
           },
           "base": {
             "type": "integer",
-            "minimum": 1,
-            "description": "Triangle / parallelogram only: the horizontal base length, in cm."
+            "minimum": 1
           },
           "slant": {
-            "type": "integer",
-            "description": "Parallelogram only: the horizontal shear of the top edge relative to the base, in cm (the top edge is base-parallel and congruent, shifted this far right; negative shears left). Default 2. 0 would draw a rectangle."
+            "type": "integer"
           },
           "apexShift": {
-            "type": "integer",
-            "description": "Triangle only: the horizontal offset of the apex from the base-left end, in cm. Default 0 (a right-angled triangle with the right angle at the base-left). Set to base/2 for an isosceles triangle."
+            "type": "integer"
           },
           "label": {
-            "type": "string",
-            "description": "A name drawn at the shape's centre — \"A\", \"R\", or a word. The TEXT is authored (a name cannot be derived); its position is computed. Omit for an unlabelled shape."
+            "type": "string"
           },
           "occludeDims": {
-            "type": "boolean",
-            "description": "Render every dimension label (\"6 cm\", the base, the height) as \"?\" — the \"work out the dimensions\" hook. The shape stays visible and countable. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Draw the shape in amber — emphasis / \"this is the answer\". Reserved colour; use sparingly. Default false."
+            "type": "boolean"
           },
           "area": {
             "type": "object",
             "additionalProperties": false,
-            "description": "The area readout beneath the figure (\"Area = 18 cm²\"). Derived; omit the object for no area line.",
             "properties": {
               "show": {
-                "type": "boolean",
-                "description": "Show the derived area readout. Default false."
+                "type": "boolean"
               },
               "occlude": {
-                "type": "boolean",
-                "description": "Render the area value as \"?\" — \"what is the area?\". Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the area value — answer emphasis. Default false."
+                "type": "boolean"
               }
             }
           },
           "perimeter": {
             "type": "object",
             "additionalProperties": false,
-            "description": "The perimeter readout beneath the figure (\"Perimeter = 18 cm\"). Derived; omit the object for no perimeter line.",
             "properties": {
               "show": {
-                "type": "boolean",
-                "description": "Show the derived perimeter readout. Default false."
+                "type": "boolean"
               },
               "occlude": {
-                "type": "boolean",
-                "description": "Render the perimeter value as \"?\". Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the perimeter value. Default false."
+                "type": "boolean"
               }
             }
           }
@@ -165,15 +116,13 @@
       "constraints": {
         "type": "array",
         "maxItems": 4,
-        "description": "The rules a MARKED construct drawing must satisfy — the marking key (each becomes one graded cell). Only meaningful with construct: true. Two forms only: a measure equal to a CONSTANT, or a measure equal to k times ANOTHER measure. Measure vocabulary: \"width\"/\"length\" (rectangle — length is the LONGER side, width the shorter, so marking is orientation-invariant), \"base\"/\"height\" (triangle & parallelogram; height is the perpendicular height), \"area\", \"perimeter\".",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "id": {
               "type": "string",
-              "pattern": "^[a-z0-9-]+$",
-              "description": "Optional stable id for this constraint's marked cell (kebab-case). Defaults to c1, c2, … in order."
+              "pattern": "^[a-z0-9-]+$"
             },
             "measure": {
               "type": "string",
@@ -184,23 +133,19 @@
                 "height",
                 "area",
                 "perimeter"
-              ],
-              "description": "The measure this rule constrains (the left-hand side)."
+              ]
             },
             "equals": {
-              "description": "The right-hand side: either a NUMBER (measure equals that constant, e.g. perimeter equals 18) OR an object { times, of } (measure equals times × the \"of\" measure, e.g. length equals 2 × width).",
               "oneOf": [
                 {
-                  "type": "number",
-                  "description": "A constant the measure must equal (in cm, cm² or cm as appropriate)."
+                  "type": "number"
                 },
                 {
                   "type": "object",
                   "additionalProperties": false,
                   "properties": {
                     "times": {
-                      "type": "number",
-                      "description": "The multiplier k."
+                      "type": "number"
                     },
                     "of": {
                       "type": "string",
@@ -211,8 +156,7 @@
                         "height",
                         "area",
                         "perimeter"
-                      ],
-                      "description": "The other measure being multiplied."
+                      ]
                     }
                   },
                   "required": [
@@ -230,13 +174,11 @@
         }
       },
       "construct": {
-        "type": "boolean",
-        "description": "Arm the construction QUESTION state (validator-required when the tile uses responseMode \"construct\"). The pupil is shown a WRONG shape of the given type and drags its vertices — snapping to grid intersections, the type enforced — until it obeys every constraint. The correct answer is never rendered: each constraint is checked at marking time against the measure the model derives from the vertices (host with correctAnswer { derived: true }). On web the shape follows the drag with amber handles; print and static slides show the same wrong start (no live readouts). Needs a shape.type and at least one constraint. Default false."
+        "type": "boolean"
       },
       "start": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Construct mode only: authored dimensions for the pre-placed WRONG start shape (same dimension fields as shape — width/height or base/height/slant/apexShift, and at). Omit to let the model derive a deterministic wrong start from the constraints. If an authored start happens to satisfy every constraint it is perturbed so the pupil always has something to fix.",
         "properties": {
           "at": {
             "type": "array",
@@ -244,66 +186,53 @@
               "type": "integer"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "Anchor grid point for the wrong start."
+            "maxItems": 2
           },
           "width": {
             "type": "integer",
-            "minimum": 1,
-            "description": "Rectangle wrong-start width."
+            "minimum": 1
           },
           "height": {
             "type": "integer",
-            "minimum": 1,
-            "description": "Wrong-start vertical extent / perpendicular height."
+            "minimum": 1
           },
           "base": {
             "type": "integer",
-            "minimum": 1,
-            "description": "Triangle / parallelogram wrong-start base."
+            "minimum": 1
           },
           "slant": {
-            "type": "integer",
-            "description": "Parallelogram wrong-start shear."
+            "type": "integer"
           },
           "apexShift": {
-            "type": "integer",
-            "description": "Triangle wrong-start apex offset."
+            "type": "integer"
           }
         }
       },
       "tolerance": {
         "type": "number",
         "minimum": 0,
-        "maximum": 5,
-        "description": "Construct mode only: the acceptance allowance on each measure (a constraint holds when its two sides are within this of each other, in the measure's units). Default 0.05 — grid drags land on exact whole-cm measures, so keep it tiny; widen only when the answer is deliberately tilted (irrational side lengths)."
+        "maximum": 5
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "dims": {
-            "type": "boolean",
-            "description": "Draw the dimension labels on a worked / labelled figure (length, width, base, perpendicular height). Default true. (Ignored in a construct question — no live readouts there.)"
+            "type": "boolean"
           },
           "grid": {
-            "type": "boolean",
-            "description": "Draw the centimetre squared-paper grid. Default true."
+            "type": "boolean"
           },
           "unitHint": {
-            "type": "boolean",
-            "description": "Draw a discreet \"1 cm\" bracket on one grid square so the scale is explicit. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -312,7 +241,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a 6 cm by 3 cm rectangle with its dimensions, area and perimeter",
       "params": {
         "grid": {
           "cols": 9,
@@ -338,7 +266,6 @@
       }
     },
     {
-      "label": "Blank answer space — an empty centimetre grid to draw on",
       "params": {
         "grid": {
           "cols": 8,
@@ -348,7 +275,6 @@
       }
     },
     {
-      "label": "Occluded question — find the area of this rectangle (dimensions and area hidden)",
       "params": {
         "grid": {
           "cols": 10,
@@ -372,7 +298,6 @@
       }
     },
     {
-      "label": "Hard case — a sheared parallelogram, base 6 cm and perpendicular height 3 cm, area shown",
       "params": {
         "grid": {
           "cols": 11,
@@ -397,7 +322,6 @@
       }
     },
     {
-      "label": "Construct question — draw a rectangle with length = 2 × width and perimeter 18 cm",
       "params": {
         "grid": {
           "cols": 10,
@@ -426,7 +350,6 @@
       }
     },
     {
-      "label": "Construct question — draw a triangle with base = 2 × height and area 9 cm²",
       "params": {
         "grid": {
           "cols": 9,

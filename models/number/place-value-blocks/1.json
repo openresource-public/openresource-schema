@@ -4,45 +4,7 @@
   "name": "place-value-blocks",
   "version": 1,
   "title": "Place-value blocks",
-  "tagline": "Place-value mat with Dienes, counters or bundles; derives the numeral, a stem sentence, subtraction and the exchange — the concrete→abstract bridge.",
-  "description": "A primary place-value mat: columns headed by place (Hundreds, Tens, Ones, Tenths …) each holding physical manipulatives, with the number, a stem sentence and any exchange or take-away all derived from the pieces. Choose the manipulative with piece: \"dienes\" draws proportional base-ten blocks (unit cube, ten-rod, hundred-flat, thousand-cube — sized by their real ratios, and re-cast for decimals so the flat is one whole); \"counters\" draws uniform place-value counter discs colour-coded per place and labelled with their value (the only kind for thousands and beyond); \"bundles\" draws bundled-ten sticks (a ten is ten sticks banded together). Give a value to decompose it canonically into pieces, or per-place columns (count, struck, blank) for the non-canonical states a calculation passes through. The model derives the numeral (always the exact sum of the pieces shown), a stem sentence (\"2 hundreds, 3 tens and 4 ones\"), the result of a subtraction (value minus the struck pieces), and — from a regroup instruction — the ring, arrow and \"10 ones = 1 ten\" label of an exchange. It is the concrete→abstract bridge that pairs with the column add/subtract and short multiplication/division algorithms. occlude hides the number as \"?\" in both readouts (anti-leak); blank empties a column to fill; highlight rings a place; staged builds add pieces, show the exchange, or strike a take-away one step at a time.",
-  "whenToUse": "Reach for this whenever place value is taught with physical apparatus — base-ten blocks (Dienes), place-value counters, or bundles of ten — rather than abstract digit cards (for digit cards / ×÷ by powers of ten as a digit shift, use number/place-value instead). Core uses: represent or compose a number (2 flats, 3 rods, 4 cubes = 234) and read the digits back; the concrete→abstract bridge for column addition and subtraction drawn beside the written method; exchange / regroup (\"10 ones = 1 ten\" when carrying, \"1 ten = 10 ones\" when borrowing); subtraction as struck-through pieces; decimals as tenths and hundredths; and large numbers (thousands, millions) with counters. Pick the manipulative with piece — dienes for the proportional cube/rod/flat picture (KS1–KS2, up to 4 consecutive places; for decimals choose the places and the smallest shown place becomes the small cube, the whole becomes the flat), counters for any places including thousands and millions (each disc colour-coded and labelled with its value), bundles for the \"tie ten together\" story (ones to hundreds). Author either value (a number, decomposed canonically — the everyday \"show this number\" case) or columns (an explicit count per place, plus strike for take-aways, blank for empty answer columns) — use columns for the states a calculation passes through, e.g. 12 ones before a carry, or 4 tens and 12 ones after a borrow. Set places { from, to } to pin the columns shown across a lesson (powers of ten: from is the highest/leftmost, to the lowest/rightmost). To show an exchange add regroup { from, to } naming two adjacent places — from→to with to = from+1 bundles ten into one (a carry), to = from−1 breaks one into ten (a borrow); the ten pieces and the single piece are ringed and joined by an arrow labelled \"10 ones = 1 ten\". Questions: occlude: true renders the number as \"?\" in the numeral and the stem so neither leaks (count the pieces → write the number); show.pieces false (or a column blank) gives a blank labelled mat to fill from a shown number (\"make 162 with blocks\"); highlight a place to ask its value. show toggles numeral / stem / mat / pieces (the stem sentence is on by default — the verbal twin of the figure). Staged builds read very well: open on a sensible base (an empty mat, or the start number) then add the pieces of one place per stage, or show the carry/borrow step by step, or strike the take-away last — keep the same places and piece across the stages so the mat never reflows. Keep the same piece and places across one lesson. Synonyms a teacher might use: place value, base ten blocks, base-ten blocks, Dienes, MAB, dienes blocks, hundreds tens and ones, flats rods units, place value counters, bundles of ten, exchange, regrouping, carrying, borrowing, trading, partition a number, tenths and hundredths, make this number. Switch model when the teaching changes: for the abstract digit-card chart and ×÷ by powers of ten use number/place-value; for the written column algorithm itself use number/column-arithmetic; for a number on a line use number/number-line; for equal groups / arrays use number/array.",
   "responseModes": [],
-  "tags": [
-    "place value",
-    "place value blocks",
-    "base ten blocks",
-    "base-ten blocks",
-    "dienes",
-    "mab blocks",
-    "place value counters",
-    "counters",
-    "bundles",
-    "bundling",
-    "hundreds tens ones",
-    "flats rods units",
-    "exchange",
-    "regrouping",
-    "regroup",
-    "carrying",
-    "borrowing",
-    "trading",
-    "compose a number",
-    "partition",
-    "represent numbers",
-    "decimals",
-    "tenths",
-    "hundredths",
-    "column addition",
-    "column subtraction",
-    "concrete",
-    "manipulative",
-    "primary",
-    "ks1",
-    "ks2",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -53,13 +15,11 @@
           "dienes",
           "counters",
           "bundles"
-        ],
-        "description": "The manipulative drawn in every column. \"dienes\" = proportional base-ten blocks (unit cube, ten-rod, hundred-flat, thousand-cube), sized by their true ratios; limited to 4 consecutive places, and for a decimal window the smallest shown place becomes the small cube and the whole becomes the flat. \"counters\" = uniform place-value counter discs, colour-coded per place and labelled with their value — the kind to use for thousands and millions. \"bundles\" = bundled-ten sticks (a single stick is one, ten sticks banded is a ten, ten ten-bundles banded is a hundred); ones to hundreds. Default \"dienes\"."
+        ]
       },
       "value": {
         "type": "number",
-        "minimum": 0,
-        "description": "The number to represent, decomposed CANONICALLY into pieces (234 → 2 hundreds, 3 tens, 4 ones; 1.25 → 1 one, 2 tenths, 5 hundredths). The everyday \"show this number\" case. Give EITHER value OR columns — use columns for non-canonical states (12 ones before a carry, a borrowed column). Non-negative."
+        "minimum": 0
       },
       "columns": {
         "type": "array",
@@ -72,53 +32,44 @@
             "place": {
               "type": "integer",
               "minimum": -4,
-              "maximum": 6,
-              "description": "The column, as a power of ten: 0 = Ones, 1 = Tens, 2 = Hundreds, 3 = Thousands … 6 = Millions; −1 = Tenths, −2 = Hundredths, −3 = Thousandths. Each place appears at most once."
+              "maximum": 6
             },
             "count": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 20,
-              "description": "How many pieces of this place sit on the mat. Usually a single digit (0–9), but a NON-canonical state can hold more — 12 ones before bundling a ten, or 12 ones after a borrow. The numeral and stem are derived from these counts, so the picture always matches the number it shows."
+              "maximum": 20
             },
             "strike": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 20,
-              "description": "How many of this place's pieces are STRUCK THROUGH — taken away in a subtraction. Must not exceed count. The result readout shows value − (struck total); the un-struck pieces are the answer. Default 0."
+              "maximum": 20
             },
             "blank": {
-              "type": "boolean",
-              "description": "Draw this column EMPTY — header but no pieces — an answer space for \"draw the pieces for this number\". count still defines the intended amount (so the numeral can assert the target), but nothing is drawn. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Ring this column's pieces in amber — draw the eye to one place (the value-of-a-digit / focus hook). Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "place",
             "count"
           ]
-        },
-        "description": "Explicit per-place amounts — the general construction. Each entry is a place (power of ten) and how many pieces sit there, plus optional strike (struck-through, for a take-away), blank (empty answer column) and highlight. The numeral, stem and subtraction result are all derived from these. Use this instead of value to draw the states a calculation passes through (12 ones awaiting a carry; 4 tens and 12 ones after a borrow, 27 struck)."
+        }
       },
       "places": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Pin the range of columns shown, as powers of ten — keeps the mat steady across a lesson and across staged frames. By default the mat spans exactly the populated places (and always includes the ones column for an integer). The override only EXTENDS the range; a populated place outside it is still shown.",
         "properties": {
           "from": {
             "type": "integer",
             "minimum": -4,
-            "maximum": 6,
-            "description": "Highest-power (leftmost) column: 3 = Thousands, 2 = Hundreds, 0 = Ones."
+            "maximum": 6
           },
           "to": {
             "type": "integer",
             "minimum": -4,
-            "maximum": 6,
-            "description": "Lowest-power (rightmost) column: 0 = Ones, −1 = Tenths, −2 = Hundredths."
+            "maximum": 6
           }
         }
       },
@@ -128,29 +79,24 @@
           "name",
           "power",
           "none"
-        ],
-        "description": "The column header band. \"name\" = place names (Hundreds, Tens, Ones, Tenths …) — best for KS1/KS2. \"power\" = powers of ten (10², 10¹, 1, 10⁻¹ …) — compact, pairs with counters for large or deep-decimal charts. \"none\" drops the header band. Default \"name\"."
+        ]
       },
       "regroup": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Show an EXCHANGE between two ADJACENT columns: the ten pieces and the single piece are ringed in amber and joined by a curved arrow, with a \"10 ones = 1 ten\" label. Name the two places; the direction is read from them — to = from+1 bundles ten of the lower place into one of the higher (a CARRY), to = from−1 breaks one of the higher place into ten of the lower (a BORROW). The lower place always shows the ten ringed, the higher place the one. The pieces themselves come from value/columns — set the state you want to annotate (e.g. 12 ones with regroup {from:0,to:1} for \"ten of these ones make a ten\").",
         "properties": {
           "from": {
             "type": "integer",
             "minimum": -4,
-            "maximum": 6,
-            "description": "The place the exchange starts from (a power of ten)."
+            "maximum": 6
           },
           "to": {
             "type": "integer",
             "minimum": -4,
-            "maximum": 6,
-            "description": "The adjacent place it goes to — from+1 for a carry, from−1 for a borrow."
+            "maximum": 6
           },
           "label": {
-            "type": "boolean",
-            "description": "Show the \"10 ones = 1 ten\" text label on the arrow. Default true."
+            "type": "boolean"
           }
         },
         "required": [
@@ -159,43 +105,34 @@
         ]
       },
       "occlude": {
-        "type": "boolean",
-        "description": "Render the derived NUMBER as \"?\" — in the numeral readout AND in the stem sentence together, so neither leaks the answer (the \"what number is shown?\" hook). The pieces stay visible to be counted. Default false."
+        "type": "boolean"
       },
       "stem": {
-        "type": "string",
-        "description": "Override the auto stem sentence (\"2 hundreds, 3 tens and 4 ones\"). Use for bespoke wording; omit to let the model derive it from the counts and place names. Hidden / blanked when occlude is set."
+        "type": "string"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "pieces": {
-            "type": "boolean",
-            "description": "Draw the manipulatives. false leaves a labelled but EMPTY mat — the answer space for \"make this number with blocks\". Default true."
+            "type": "boolean"
           },
           "numeral": {
-            "type": "boolean",
-            "description": "Show the derived numeral readout (the number, or \"start − taken = result\" when pieces are struck). Default true."
+            "type": "boolean"
           },
           "stem": {
-            "type": "boolean",
-            "description": "Show the derived stem sentence — the verbal twin of the figure. Default true."
+            "type": "boolean"
           },
           "mat": {
-            "type": "boolean",
-            "description": "Draw the place-value mat: the column separators and headers frame. Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the mat; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the mat, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "anyOf": [
@@ -213,7 +150,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — 234 with base-ten blocks (2 flats, 3 rods, 4 cubes)",
       "params": {
         "piece": "dienes",
         "value": 234,
@@ -221,7 +157,6 @@
       }
     },
     {
-      "label": "Blank answer space — make 162 with base-ten blocks",
       "params": {
         "piece": "dienes",
         "value": 162,
@@ -233,7 +168,6 @@
       }
     },
     {
-      "label": "Occluded question — what number do these counters show? (3406)",
       "params": {
         "piece": "counters",
         "value": 3406,
@@ -242,7 +176,6 @@
       }
     },
     {
-      "label": "Worked example — 1.25 with Dienes, the flat re-cast as one whole",
       "params": {
         "piece": "dienes",
         "value": 1.25,
@@ -254,7 +187,6 @@
       }
     },
     {
-      "label": "Exchange (carry) — ten single sticks bundle to make a ten",
       "params": {
         "piece": "bundles",
         "columns": [
@@ -275,7 +207,6 @@
       }
     },
     {
-      "label": "Hard case — 52 − 27: exchange a ten, then take 27 away (borrow + strike)",
       "params": {
         "piece": "dienes",
         "columns": [

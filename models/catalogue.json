@@ -7,14 +7,13 @@
       "family": "algebra",
       "name": "algebra-tiles",
       "title": "Algebra tiles",
-      "tagline": "x²/x/unit algebra tiles in positive/negative colours, as a collection or a rectangle; the collected expression, zero pairs and rectangle area/factors are derived by counting.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/algebra/algebra-tiles/1.json",
-          "sha256": "c348e294e2520fabd97b8b1da8f8cf266dda114b1fd757a0681a1a4c2746bd92"
+          "sha256": "62900f4152d0684b1aea4317f8bb2f126f1d3e6ad203cc58a6d1c22bcee512a6"
         }
       ]
     },
@@ -23,14 +22,13 @@
       "family": "algebra",
       "name": "area-model",
       "title": "Area model",
-      "tagline": "Rectangle split by two factors into partial-product cells with a derived total; cells, sides and total occlude for multiplying, the grid method or factorising.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/algebra/area-model/1.json",
-          "sha256": "4a15407381023c8aca8707e3bfee75e22ac94b3552bdac6ea9dee59b6bd8f869"
+          "sha256": "457b959e1c50c19ce6d7b5cd721df9e54151a300b9797e7df47ac5d2d0939008"
         }
       ]
     },
@@ -39,14 +37,13 @@
       "family": "algebra",
       "name": "balance-hanger",
       "title": "Balance hanger",
-      "tagline": "Equation as a hanger diagram: labelled shapes hang either side of a pivoted beam; equation, solution and numeric tilt derived; shapes occlude, strike and highlight.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/algebra/balance-hanger/1.json",
-          "sha256": "395ea409bec120195736bae5826644b4eb82280417848f60eb62cef7f29a9a6b"
+          "sha256": "ef0f8c007483f6958d5c4ac197f6fb26c0c94156d9152b5a9513b59b5d5aec13"
         }
       ]
     },
@@ -55,14 +52,13 @@
       "family": "algebra",
       "name": "balance-scales",
       "title": "Balance scales (equations)",
-      "tagline": "Linear equation as a level two-pan balance of boxes and unit weights; derives the equation, the solution and same-to-both-sides steps for solving.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/algebra/balance-scales/1.json",
-          "sha256": "b1f0db0931e69e36509147ba8d4663ec7cdb5a24a547173aca7bd71373d10bec"
+          "sha256": "749b796e2bd6f46a610cdd25bf48fd80e38856066f7299fc05e7496e88a33e89"
         }
       ]
     },
@@ -71,14 +67,13 @@
       "family": "algebra",
       "name": "differences-table",
       "title": "Sequence differences table",
-      "tagline": "Method-of-differences table for sequences; derives each difference row, the degree (linear/quadratic/cubic) and the nth term exactly; cells occlude to question.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/algebra/differences-table/1.json",
-          "sha256": "2cb4c5a90f5c420b31937744909aff1a86d006f629db48ecbf26c588919796cb"
+          "sha256": "fc45ec52d2a67a588beb5b631078ef3aa1162939a723c2327a0b0e45c7bb1a60"
         }
       ]
     },
@@ -87,14 +82,13 @@
       "family": "algebra",
       "name": "function-machine",
       "title": "Function machine",
-      "tagline": "Input flows through operation boxes to an output; runs forward or backward, derives running values, occludes a terminal or a whole box (\"complete the machine\"), forms equations.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/algebra/function-machine/2.json",
-          "sha256": "2fe63eb2692a9c1221c23a6e47f863a2ccc4062aa9e1baf4c79afcfa0c6cdf8b"
+          "sha256": "4a57aeba64423a53c6101a5ab881ddc4bc12b4675c936c3cd733f168189e1bb1"
         },
         {
           "version": 1,
@@ -109,14 +103,13 @@
       "family": "algebra",
       "name": "graph-table",
       "title": "Table of values & graph",
-      "tagline": "Table of values for y=f(x) above a mini grid plotting the same points; y-values, joining curve and a differences row derived; occlude a column to question.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/algebra/graph-table/2.json",
-          "sha256": "8f46b98c41ae812010088e72c5ff2634f4744edb08712f503ed8332d691da1e8"
+          "sha256": "dd1ae60d6f7e4e574cb1a78796f781a8cbf1acf116cdc2db61c7710e02c3d087"
         },
         {
           "version": 1,
@@ -130,14 +123,13 @@
       "family": "algebra",
       "name": "iteration-cobweb",
       "title": "Iteration (staircase / cobweb) diagram",
-      "tagline": "Staircase/cobweb diagram for xₙ₊₁=g(xₙ): y=x, the curve and a zig-zag walking toward or away from the fixed point; every iterate derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/algebra/iteration-cobweb/1.json",
-          "sha256": "192bd41680caee1a5aff8b2dc86df8730aa022fbc0c2f29a0559a2c94d9b6fc7"
+          "sha256": "a5bf5f44daebe20c4a9a0fd2eddd67c94cfcd7a8bdcad5f6854d8bf464fe7b3c"
         }
       ]
     },
@@ -146,14 +138,13 @@
       "family": "algebra",
       "name": "number-pyramid",
       "title": "Number pyramid",
-      "tagline": "Brick pyramid where each brick is the sum (or difference) of the two below; numeric or algebraic; bricks occlude for complete, find-the-top or work-back puzzles.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/algebra/number-pyramid/1.json",
-          "sha256": "85484121f558effdbd937e5922db63128153b3dbfd5ce3a0cd1420eb0c82c23f"
+          "sha256": "5ed5e4e4f351b6f8dc8c9dda1d25fe0c05d0aea29580aaa64f0f2570860a42f5"
         }
       ]
     },
@@ -162,14 +153,13 @@
       "family": "algebra",
       "name": "sequence-pattern",
       "title": "Sequence pattern",
-      "tagline": "Pictorial growing sequence of dots/squares with counts and the nth-term link; linear, square, triangular or a shaped two-colour motif; predicts far terms, occludes for questions.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/algebra/sequence-pattern/2.json",
-          "sha256": "724481aeb9e07552246f1b7d763f9afe73fdb05235317f134d3673b80cbb3462"
+          "sha256": "5998d33d6d751bcf22f10789b9cb4e822c386cb8a0c85042dfde81d142a5e9ed"
         },
         {
           "version": 1,
@@ -184,14 +174,13 @@
       "family": "biology",
       "name": "food-web",
       "title": "Food chain / food web",
-      "tagline": "Food chain / web — organisms joined by energy-flow arrows (prey → predator); trophic levels, roles and remove-a-species knock-on all derived; labels and roles occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/biology/food-web/1.json",
-          "sha256": "40b9edbdd9605464e0380a53652011d77663f1447aa5854a7cdbd94b2c521c0b"
+          "sha256": "0eb3bb571dace20727e2c0cfda6ff23e1a40dd728ba215aeb21e2928115ecb49"
         }
       ]
     },
@@ -200,14 +189,13 @@
       "family": "biology",
       "name": "punnett-square",
       "title": "Punnett square",
-      "tagline": "Punnett square for a monohybrid or dihybrid cross: gametes head the axes, every offspring cell and the genotype/phenotype ratios are derived; cells, gametes and ratios occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/biology/punnett-square/1.json",
-          "sha256": "a1e1b618b3c1738bd72ed0b73d12d4df7cad90d2504040427323c3c75ac41167"
+          "sha256": "83ae7d693c558c74e6bf407e671b56086df5a2ad269d62bd623b07e9b84b6b97"
         }
       ]
     },
@@ -216,14 +204,13 @@
       "family": "chemistry",
       "name": "dot-and-cross",
       "title": "Dot-and-cross diagram (bonding)",
-      "tagline": "Dot-and-cross bonding diagram derived from the formula — shells, shared pairs, transferred electrons and ion charges all computed; electrons and charges occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/chemistry/dot-and-cross/1.json",
-          "sha256": "12fd67d9d17acb9cba78f0e1376027dc00f7c08903309282bfeb2c4aeff17c46"
+          "sha256": "4e6292880be884db8dbe09d8f5d7ef4ff68fe15b1d1ce540ceec685e5a37d7b4"
         }
       ]
     },
@@ -232,14 +219,13 @@
       "family": "chemistry",
       "name": "energy-profile",
       "title": "Reaction energy profile",
-      "tagline": "Reaction energy profile: reactant and product levels, with the peak, ΔH and the exo/endothermic verdict derived; optional catalyst curve at a lower Ea; readouts occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/chemistry/energy-profile/1.json",
-          "sha256": "f9bb318385a3dc5cec04e010cccb1c1cbdfd5cf815acaa70621b2f8902f7bc94"
+          "sha256": "4acb4e4440c06d9a0db794741e18c015ff64a941aed6c0c9b1d89479188acf08"
         }
       ]
     },
@@ -248,14 +234,13 @@
       "family": "chemistry",
       "name": "particle-model",
       "title": "Particle model (states of matter)",
-      "tagline": "Container of particles whose arrangement and spacing derive from the state — solid lattice, close liquid, sparse gas; state from substance + temperature, name occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/chemistry/particle-model/1.json",
-          "sha256": "9197d40f7db9ebd6370288cd97800abc6d90b9a70b3edd470b0927509a3942bc"
+          "sha256": "fa0eb131f0cb9f9fc6536f22482bcd66471c200677195a773c8a7e3dff403ce0"
         }
       ]
     },
@@ -264,14 +249,13 @@
       "family": "cs",
       "name": "binary-converter",
       "title": "Binary converter",
-      "tagline": "Binary place-value board (128 64 32 ... 1, 4/8/16-bit) with toggleable bits and a derived denary, hex and binary readout; bits, total and hex occlude for conversion questions.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/binary-converter/1.json",
-          "sha256": "74022cbf652beac5169dfa73dc0a70f47bbd6686ac4509a6a7eb89ce6e63e2df"
+          "sha256": "5a5570a45202c44070adde6e0ec74067736332093f2d78df096d77fc8ed76200"
         }
       ]
     },
@@ -280,14 +264,13 @@
       "family": "cs",
       "name": "blocks-editor",
       "title": "Block programming",
-      "tagline": "Block programs that really run, Scratch-grade: sprites, events, loops, clones, sound, lists and custom blocks; task-sized toolbox, Parsons tray, run-marked answers.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/cs/blocks-editor/3.json",
-          "sha256": "a1afc318e5ca42e987da3fbddca445b7861ed88aaa24533c1257c1f892d97a9c"
+          "sha256": "c35f6d7c55af001e24984203a4e0c1cb787569d8437c272f230e5268badea271"
         },
         {
           "version": 2,
@@ -306,14 +289,13 @@
       "family": "cs",
       "name": "caesar-cipher",
       "title": "Caesar cipher",
-      "tagline": "Caesar cipher: an authored message + shift with the encoded/decoded twin, A→D mapping strip and letter-frequency bars all derived; occlude the shift, output or mapping.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/caesar-cipher/1.json",
-          "sha256": "4c6eacd5a8cc4827a064066bf2cfddbaab73c7cfb60ab2e89a594bbc881e85ec"
+          "sha256": "4eaf98c06178ae63f9a1769fd5f8376adaa57f43ab1de9a4e80de8affbd1eecd"
         }
       ]
     },
@@ -322,14 +304,13 @@
       "family": "cs",
       "name": "cells",
       "title": "Data structure cells",
-      "tagline": "Cell array with pointers stepped through queue, stack, list, hash and linked-list operations; contents, pointers, hashes and returns derived; occluded slots auto-marked.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/cs/cells/2.json",
-          "sha256": "55766935147114617160f039506c042229da05ed823c00e604bdad222497b965"
+          "sha256": "21bab9c1eb06ccdfbc0025258c2e96af7a455a525e6d3fc618b93e8e84c23a31"
         },
         {
           "version": 1,
@@ -343,14 +324,13 @@
       "family": "cs",
       "name": "code-editor",
       "title": "Code editor",
-      "tagline": "Interactive Python or JavaScript editor with a run console, in seven colour themes; output is produced by running the code, so it cannot show a result the code would not.",
       "current": 4,
       "versions": [
         {
           "version": 4,
           "status": "current",
           "interface": "models/cs/code-editor/4.json",
-          "sha256": "c145f62309c1cf95da92fe04b686ff01d172ccffb7ff305996b9c46ba4211967"
+          "sha256": "ba76d7b58e4caf17664887bed04765e39b0b7490c724f9f57b7fa534719382a9"
         },
         {
           "version": 3,
@@ -375,14 +355,13 @@
       "family": "cs",
       "name": "er-diagram",
       "title": "Entity-relationship diagram",
-      "tagline": "Entity boxes joined by cardinality-marked relationship lines, or the relations written out; foreign keys, link-entity composite keys and the 1NF/2NF/3NF table sets all derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/er-diagram/1.json",
-          "sha256": "21d2ecff76ca3499fce2d897aaeea351580711ec5e7bcb1411a9e8e4daba08c3"
+          "sha256": "1b3fe67ed6fdea4dab730dd97f55a92f44f473798187e9cb2fba7a7456d8ca17"
         }
       ]
     },
@@ -391,14 +370,13 @@
       "family": "cs",
       "name": "graph",
       "title": "Graph (network)",
-      "tagline": "Nodes and edges with the adjacency matrix, adjacency list, array encoding, degrees and a stepped depth-first / breadth-first / Dijkstra run all derived from one edge set.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/graph/1.json",
-          "sha256": "b9945a9d0879c499e6340d8644986fa42af9355b187d58462f5f78e085100c57"
+          "sha256": "85bc37bf205edd6ea6574851ee32af9fc82e85b6f94006364efe792bf7fa1d75"
         }
       ]
     },
@@ -407,14 +385,13 @@
       "family": "cs",
       "name": "logic-gates",
       "title": "Logic gates",
-      "tagline": "Logic-gate circuit (AND, OR, NOT, XOR, NAND, NOR) with wire states and truth table derived by evaluating it; occludable cells, mystery gates, blank-canvas answer space.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/cs/logic-gates/2.json",
-          "sha256": "362ebd9ed3691e453128bc94085bac7a04c3cf4f3d1ec8f12b849ec4916764dd"
+          "sha256": "9382c7a481d803eb4b57759aae6bd44d3ae431721efa5896bfcbf752d5937fc5"
         },
         {
           "version": 1,
@@ -429,14 +406,13 @@
       "family": "cs",
       "name": "pixel-grid",
       "title": "Pixel grid",
-      "tagline": "Bitmap image as its stored numbers: a code grid beside the picture those codes look up, with derived resolution, colour depth and file size; either side blanks for the question.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/pixel-grid/1.json",
-          "sha256": "56c8f888edb547881d4a4c33a208cf12c56057f98abcbc9895f7ebbbce8041ee"
+          "sha256": "8f1cefab73feafe5b3927a75b085d34913e932c932a11de4f14f9186b18033f9"
         }
       ]
     },
@@ -445,14 +421,13 @@
       "family": "cs",
       "name": "pseudocode-editor",
       "title": "Pseudo-code editor",
-      "tagline": "Editable AQA pseudo-code listing that really runs: Run/Step/Reset, live variables, output where USERINPUT waits for the pupil; occlude for predict-the-output; run-program marking.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/pseudocode-editor/1.json",
-          "sha256": "1a7cb069ebbe8f85c6a4c0f4749ee315a57650ea970feadef6f8ea2eb588099a"
+          "sha256": "1905a4f876c77930a8267679719909b24c12107461f51ece045a8faa079204f9"
         }
       ]
     },
@@ -461,14 +436,13 @@
       "family": "cs",
       "name": "sampling",
       "title": "Sampling and quantisation",
-      "tagline": "Analogue curve, its sample instants and the derived quantised staircase against the level grid; sample rate, bit depth, levels and file size derived and occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/sampling/1.json",
-          "sha256": "5a91fe437a2b372c4f3b7e3862696169cb0cbf965b24147fec13f33c8f518fa8"
+          "sha256": "4b57610e5daa8fc3676af2a71427d8356d5bbd41ba0fce169982da8501c4fd76"
         }
       ]
     },
@@ -477,14 +451,13 @@
       "family": "cs",
       "name": "spreadsheet",
       "title": "Spreadsheet",
-      "tagline": "Interactive spreadsheet with a real recalc engine: $ refs with fill and copy/paste, COUNTIF/SUMIF, VLOOKUP, pupil formatting — it cannot show a value its formulas would not give.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/cs/spreadsheet/2.json",
-          "sha256": "327bec2f6b6edb268c9ad457142b217cd70c1930fe4e3eb4704ddc304a831715"
+          "sha256": "51a73c7196c3c5e2f05c946a2e3b17eaf779b87732f866ae9a2ff41ad60d84df"
         },
         {
           "version": 1,
@@ -498,14 +471,13 @@
       "family": "cs",
       "name": "sql-playground",
       "title": "SQL playground",
-      "tagline": "Runnable SQL over small named tables: SELECT with aggregates, GROUP BY and JOIN … ON, DDL/DML that really changes the drawn tables, and marked before/after statement views.",
       "current": 6,
       "versions": [
         {
           "version": 6,
           "status": "current",
           "interface": "models/cs/sql-playground/6.json",
-          "sha256": "674071cdd2b51a7479a80b9f39bb3409613d66deb5849e09a70672d1d804442a"
+          "sha256": "baab1b2391a6d8062d495c65276c4ee47a16012a5c893cfbe044608c64746339"
         },
         {
           "version": 5,
@@ -542,14 +514,13 @@
       "family": "cs",
       "name": "state-machine",
       "title": "State machine",
-      "tagline": "States + labelled transitions with the transition table, δ rules, run trace, accept/reject verdict and Turing tape all derived from one authored rule set; every cell occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/state-machine/1.json",
-          "sha256": "b6db74b2d1c63cb4e46d78a2e23e700786ab912b4b86d0e7f3ff321d039b7fa1"
+          "sha256": "8b75edcf789282e0f4bdcb4ef714dc553e816538a989923343418d2549963035"
         }
       ]
     },
@@ -558,14 +529,13 @@
       "family": "cs",
       "name": "trace-table",
       "title": "Trace table",
-      "tagline": "Trace table of an AQA pseudo-code or Python program: columns are variables, rows are steps, every cell executed not authored; cells occlude for \"complete the trace\".",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/cs/trace-table/1.json",
-          "sha256": "06243277b4d7510f3e3266a3e9dbff5cd3adafa6daad7a266249d8ec323be319"
+          "sha256": "5533032c261ff569fdc4e7ffec709e28c4e99c0b5b35f7997ffa77c36a8c91be"
         }
       ]
     },
@@ -574,14 +544,13 @@
       "family": "cs",
       "name": "turtle",
       "title": "Turtle graphics",
-      "tagline": "Turtle editor beside a canvas, in Python 3 or classroom LOGO: loops, procedures, variables, arithmetic. Run executes the program, so the drawing comes from the code, not an author.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/cs/turtle/3.json",
-          "sha256": "c46ec1db2abcb781c9097eb62766c9dca63fb2efc06d2ed064099cbe736d420c"
+          "sha256": "246f9bd55468381d4a13eb5dcc92b2d9fa78fbc4a801b38b0509bebaab726f48"
         },
         {
           "version": 2,
@@ -600,14 +569,13 @@
       "family": "diagram",
       "name": "concept-map",
       "title": "Concept map",
-      "tagline": "Concept map — concept boxes joined by labelled directed links (the relationship on each arrow); auto-laid-out free graph, any node or link label occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/concept-map/1.json",
-          "sha256": "219e7b179363f00e137de3bcdc6e36b4bf9643e369b3cc35b9b432ab99ad000d"
+          "sha256": "16099ce6ed3a5876cfaa76e447ea7540739a38e9eace3bcbde4a2c6657a6437c"
         }
       ]
     },
@@ -616,14 +584,13 @@
       "family": "diagram",
       "name": "cycle",
       "title": "Cycle",
-      "tagline": "Ring of sequenced nodes joined by directed arrows that loop back to the start — life cycles, water/rock cycle; optional photo per node, positions and arrows all derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/cycle/1.json",
-          "sha256": "f5ad70204197e3d8638beb04c2c8779ecea77b5c8d13b5caa0f16f57c7591de9"
+          "sha256": "55604f1d2e75717a25abb23b81060d91f18f61cf2b6bbb65a93aa1809f8b9559"
         }
       ]
     },
@@ -632,14 +599,13 @@
       "family": "diagram",
       "name": "decision-walk",
       "title": "Decision walk (branching scenario)",
-      "tagline": "Branching 'choose-your-path' scenario — labelled options lead to outcome cards; drawn as a branching tree, static or staged; labels occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/decision-walk/1.json",
-          "sha256": "9ebe700ff59e4f9b2b6cdd1d76bb3eb8e59c030e9b369f034ac40e4fd7df21eb"
+          "sha256": "4ea3d872d7856e8d3365634b9796bffa0bb27064a9b2134b666edd119f108e3b"
         }
       ]
     },
@@ -648,14 +614,13 @@
       "family": "diagram",
       "name": "etymology",
       "title": "Etymology breakdown",
-      "tagline": "A word split into morphemes under a bracket, each with its meaning and origin; bracket and columns derived, any meaning occludes for a question.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/etymology/1.json",
-          "sha256": "b9d57c30a7339f574cab4a4bb241985a31bb78db068b56275d450f1ae8a00180"
+          "sha256": "c036fafe7ef5cf4b4eb2195aa26fe82f9e0ac6a2ebbdfaebf625e5a5f33959fa"
         }
       ]
     },
@@ -664,14 +629,13 @@
       "family": "diagram",
       "name": "flowchart",
       "title": "Flowchart",
-      "tagline": "Decision/flow diagram — start, process, decision and input-output boxes joined by directed arrows with Yes/No branches; auto-laid-out, every box occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/flowchart/1.json",
-          "sha256": "ab0b37c33dd847565a9c8648f0dce068567bcaff0090878b75929a914d089540"
+          "sha256": "32808e9ca90bef862cad89d4f440ee09c88c586e5d73a3920644f261bab6eca8"
         }
       ]
     },
@@ -680,14 +644,13 @@
       "family": "diagram",
       "name": "frayer",
       "title": "Frayer model",
-      "tagline": "Frayer model: a central concept title above a 2×2 grid of four quadrants (Definition, Characteristics, Examples, Non-examples, or custom); bodies occlude as an answer space.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/frayer/1.json",
-          "sha256": "0bfe5fb18460fd018afc995e14a9ff695cbd3e165c4beda477a0b3c4c7b5cf51"
+          "sha256": "b7fb5a45a5543ac347e7628c1c86a01ddf322f7293c51c714ab7a0179ce9ce83"
         }
       ]
     },
@@ -696,14 +659,13 @@
       "family": "diagram",
       "name": "mind-map",
       "title": "Mind map",
-      "tagline": "Hub-and-spoke mind map — a central idea ringed by labelled branch boxes on spokes; even radial auto-layout, branches occludable, reveal them one at a time.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/mind-map/1.json",
-          "sha256": "a5da3db25de51960304139ac4f07f97dd61adae9b215baa0041351a12368a59b"
+          "sha256": "66db9ccf3841d78928d997e769c19f96c2c16a1a92e65b04246786d6be1cbf92"
         }
       ]
     },
@@ -712,14 +674,13 @@
       "family": "diagram",
       "name": "pyramid",
       "title": "Pyramid (stacked tiers)",
-      "tagline": "Stacked-triangle pyramid of labelled tiers from a broad base to a narrow tip; equal or value-proportional heights, derived percentages, occludable labels/values, invertible.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/pyramid/1.json",
-          "sha256": "40a0bad8a52d556d1e90966c7e7976193fdf85bcaf1a2edcaa1c51c960edce5e"
+          "sha256": "9bc155ffc91365f8520bae6bb7f790ddec2487ef79201c0ea88e3c35d698f48b"
         }
       ]
     },
@@ -728,14 +689,13 @@
       "family": "diagram",
       "name": "timeline",
       "title": "Timeline",
-      "tagline": "Dated event cards along a line — evenly spaced (ordinal) or by date (scaled, gaps meaningful); optional photos and era bands; positions and ticks derived, events occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/timeline/1.json",
-          "sha256": "cc8e7ec0bc39da5dda1f264d777d42018385d341e4324cc2b161a14b13678a63"
+          "sha256": "26a66f79b0166bb8a59182b597e601836e07593ad56e6b898db1707c9a7aa68d"
         }
       ]
     },
@@ -744,14 +704,13 @@
       "family": "diagram",
       "name": "tree",
       "title": "Tree (hierarchy)",
-      "tagline": "Top-down hierarchy tree — a root and its branching children as labelled boxes joined by connectors; tidy auto-layout, optional Yes/No edge labels, every box occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/diagram/tree/1.json",
-          "sha256": "46537f195d168ba7a7a35ff52fa51f9f3393b45e443212b6272970852eb51d9d"
+          "sha256": "0a0654c3975925993f3e11ae0c62cc18a642f20c7abe412b6360949dde31de57"
         }
       ]
     },
@@ -760,14 +719,13 @@
       "family": "geography",
       "name": "choropleth",
       "title": "Choropleth map",
-      "tagline": "Choropleth map from the plate atlas: regions shaded by your data through a derived class scale and key; occlude a value or blank a shade to question it; two panels share one scale.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geography/choropleth/1.json",
-          "sha256": "5f5f7f86f207a8941df0c09c67f71510e50fba6f8d98d532290b784732513f3b"
+          "sha256": "fdd56c395ef16e7536ac13cbd4ebb98263b58c5376cb58da97eeee34f084c0aa"
         }
       ]
     },
@@ -776,14 +734,13 @@
       "family": "geography",
       "name": "map-extract",
       "title": "Map extract",
-      "tagline": "Exam-style map extract from the plate atlas: numbered km grid, derived contours, 4/6-figure refs; refs occlude into questions.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/geography/map-extract/2.json",
-          "sha256": "d155bd5575704ce039d445b3710147cbdfd6a748f311fe37977ecbf232d0a5d9"
+          "sha256": "a91335759bca98cd1c126b50f6a1f8db722c9a8f4fd57cb34c743b5d3ae9ce80"
         },
         {
           "version": 1,
@@ -797,14 +754,13 @@
       "family": "geometry",
       "name": "angle-estimator",
       "title": "Angle estimator",
-      "tagline": "One angle from two rays at an authored size, for estimating by eye and classifying (acute/right/obtuse/reflex/straight); size and type derived, reading occludable, guides optional.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/angle-estimator/1.json",
-          "sha256": "147d23895975a540ae61b185969959ce3d7613058b2dd1e664c45e7f10b53d5a"
+          "sha256": "1cb64bf0df9ae6c5a658d2bc25f8003bacaf108106895eaf7c33f1a813429d54"
         }
       ]
     },
@@ -813,14 +769,13 @@
       "family": "geometry",
       "name": "angles-at-a-point",
       "title": "Angles at a point",
-      "tagline": "Rays meeting at a point with marked angle arcs — angles at a point (360°), on a line (180°) and vertically opposite, with algebraic labels; angles derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/angles-at-a-point/1.json",
-          "sha256": "e9791855b13de3876adf0a75915fcc111756b07ec8cc55ecb7c1aae5940ea46b"
+          "sha256": "819e15dfe7f8b35a340854050ab156865a6d2c94f6236d79bbd8b97337b6d66e"
         }
       ]
     },
@@ -829,14 +784,13 @@
       "family": "geometry",
       "name": "area-grid",
       "title": "Area on squared paper",
-      "tagline": "A shape on squared paper with its cells shaded and counted (whole and half squares) for area as counting; the outline, tally and area are derived and the area occludes.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/area-grid/1.json",
-          "sha256": "bb7ac23ec3519d60eb0ea5517a3b4e19ed6979c07dcb67ecfb99530e000419e3"
+          "sha256": "6899b4f502d0c01b9eb7194412937eab6c1bf89defd32264cd740e0f419743fd"
         }
       ]
     },
@@ -845,14 +799,13 @@
       "family": "geometry",
       "name": "bearings",
       "title": "Bearings",
-      "tagline": "Map points joined by paths with north lines and clockwise three-figure bearing arcs; bearings and back bearings derived from positions, always to scale.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/geometry/bearings/3.json",
-          "sha256": "db929d9ef05d5dccdd41be27be1d08cb5044d86464e69ace27efe7807ae21404"
+          "sha256": "2bd7ea8998d67d8fcea2e96d48b0adfa2a4205c939cdd12e4b140c680257c9e8"
         },
         {
           "version": 2,
@@ -873,14 +826,13 @@
       "family": "geometry",
       "name": "circle-parts",
       "title": "Circle: parts, sectors and regions",
-      "tagline": "A circle with named parts and derived measures; plus isolated sectors, annuli and composite sector/triangle regions — lettered, edge-dimensioned, right-angle marked, shaded or not.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/geometry/circle-parts/3.json",
-          "sha256": "3c4b6fc1956c5f9aad563a726272def215546e4c3a7a55b3fc599ac4c3260b89"
+          "sha256": "8057c7f4e4e10b1130587c5e9669660d0154ff4683b49cd574c5f08033a6b4f7"
         },
         {
           "version": 2,
@@ -901,14 +853,13 @@
       "family": "geometry",
       "name": "circle-theorems",
       "title": "Circle geometry",
-      "tagline": "Circle with named points, chords, radii and tangents and computed angle marks; presets for the standard circle theorems, every value derived from the geometry.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/geometry/circle-theorems/3.json",
-          "sha256": "437de0d77751f583e4768b31e432ffd01d2e9dbb1f1337ca37e5a80c4f87a988"
+          "sha256": "a52541e1ab9e91bf065f9f930793e2c8597506752af8a4dac07d35ffe654267e"
         },
         {
           "version": 2,
@@ -929,14 +880,13 @@
       "family": "geometry",
       "name": "clock",
       "title": "Clock face",
-      "tagline": "Analogue clock with hands placed faithfully from a time (3:30 is mid-way); derived angle arc between two arms in degrees or as a fraction of a turn.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/clock/1.json",
-          "sha256": "dd65b806c2ea7ae36c37894b334981cd82295daa28b6d8644adb5d18d2686d4c"
+          "sha256": "514abc6b9ad7125f616feb12ed6a292bccaa22e8c819cb9ba2aa396d200f3021"
         }
       ]
     },
@@ -945,14 +895,13 @@
       "family": "geometry",
       "name": "composite-solid",
       "title": "Composite solid (isometric)",
-      "tagline": "Coaxial composite of 2–3 solids (now incl. the frustum) — stacked, flipped, drilled or scooped; combined volume & surface area derived; optional assembled+exploded twin view.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/geometry/composite-solid/2.json",
-          "sha256": "56babc8782773b4426ece1128d03ba9b349d3aab646bb807d8ce43448d99d24e"
+          "sha256": "092c8210f79c937e3df443a6621b85e0e84bf62a3388253ce1b63a83e6a21a34"
         },
         {
           "version": 1,
@@ -967,14 +916,13 @@
       "family": "geometry",
       "name": "compound-area",
       "title": "Compound area",
-      "tagline": "Trapezium / triangle / compound 2-D shape drawn to scale from its outline; derived edge lengths, areas and an occludable perpendicular-height guide; totals summed; units optional.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/geometry/compound-area/3.json",
-          "sha256": "a99065f5483a836159242e21ecd684930a53ce430bf042a545415fb052b98938"
+          "sha256": "572d6185d2fc5301eba0a23495eaceb841710f87d754ed942c66e49157f1fdbf"
         },
         {
           "version": 2,
@@ -995,14 +943,13 @@
       "family": "geometry",
       "name": "congruence",
       "title": "Congruent triangles",
-      "tagline": "Two named triangles with SSS/SAS/ASA/RHS marks — in a parent figure, on a circle, or free-standing; derives the matched pairs and criterion (the proof is block text).",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/geometry/congruence/3.json",
-          "sha256": "86484cd138f52a06113205ccf56bc9689559f2b4a87f1db5fa3f156c1d273a6b"
+          "sha256": "d4adfa2f7f483f9e545c99601b0a909423e9e32d699f92b819ae2b7a0bfa553d"
         },
         {
           "version": 2,
@@ -1023,14 +970,13 @@
       "family": "geometry",
       "name": "construction",
       "title": "Ruler-and-compass construction",
-      "tagline": "Ruler-and-compass construction — given points, swung arcs, crossings, the constructed line, locus or region; staged, every point derived; marked construct/draw answer.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/geometry/construction/3.json",
-          "sha256": "85f64d342c4235d0c6ee459855f61ee238a2088daee014b7fe77462ef5b49d64"
+          "sha256": "af15ef4d99e9e2dc497d7be0d30f937fb23eee7b7ad47c96b16af9a576ef1aca"
         },
         {
           "version": 2,
@@ -1051,14 +997,13 @@
       "family": "geometry",
       "name": "digital-clock",
       "title": "Digital clock",
-      "tagline": "Segmented digital time display (12-hr with am/pm or 24-hr) and a 12↔24 conversion table; period, 12-hr number and +12 link all derived, per-segment occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/digital-clock/1.json",
-          "sha256": "8e8dc46945b2cb4987c976432c03a89a2e9be571c9fdc8ccec8be4967a255c1e"
+          "sha256": "10e4382d6935a0be33b08c05cb1c524130c75502faf19ab9da04b6f7af93fcae"
         }
       ]
     },
@@ -1067,14 +1012,13 @@
       "family": "geometry",
       "name": "exact-trig-table",
       "title": "Exact trig values table",
-      "tagline": "Exact sin, cos and tan at 0–90° as a reference table, values rendered as stacked surds; degrees or radians; cells occlude for recall.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/exact-trig-table/1.json",
-          "sha256": "bcc5e2c6d0fd489eedf07be05017ac6fe58ae3bf20651acf3d26905ebda18c28"
+          "sha256": "dbdf7cf2a8a3c1c6ad661db86f3366055f1b71f777d0746ed7bf5c016860effa"
         }
       ]
     },
@@ -1083,14 +1027,13 @@
       "family": "geometry",
       "name": "frustum",
       "title": "Cone frustum (truncated cone)",
-      "tagline": "Conical frustum (truncated cone) drawn front-on — author R, r, h; derives the slant, the apex extension and the right-angled similar triangles for the difference-of-cones method.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/frustum/1.json",
-          "sha256": "a95e9a278d450f53a9ba71d9258dabae7e79469b93e70f6236f98bdeb4dd7205"
+          "sha256": "18c37fae3ec245894a999370664948e34ff3d7c0bb8a7b0dd88ea551fd1c01ed"
         }
       ]
     },
@@ -1099,14 +1042,13 @@
       "family": "geometry",
       "name": "geoboard",
       "title": "Geoboard",
-      "tagline": "Peg board — square, isometric or circular pin-ring — with polygons formed by joining pegs; the band, fills and right-angle/parallel/equal-side marks all derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/geoboard/1.json",
-          "sha256": "0becd6c8dd502b13874bd81d3444a821ce11e9b3e6b7c47e94ad7cb1b688c801"
+          "sha256": "d93062fcf9f7fdca67b428d00cf78294c6ec74b0c8370771138d7bdc1177da3c"
         }
       ]
     },
@@ -1115,14 +1057,13 @@
       "family": "geometry",
       "name": "intersecting-lines",
       "title": "Intersecting lines",
-      "tagline": "A web of straight lines through named points with a derived angle at every crossing; occlude, label or tick angles, flag lines parallel, shade the interior triangle.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/intersecting-lines/1.json",
-          "sha256": "6483a0380d6e03d1efd042e95ee8d23174db9738f476443f10c245081f85e8ee"
+          "sha256": "6d8eecd761fe543ca15aca814e9a4208c4df989fdd2b790a5101380d1f663499"
         }
       ]
     },
@@ -1131,14 +1072,13 @@
       "family": "geometry",
       "name": "isometric-cubes",
       "title": "Isometric cubes",
-      "tagline": "Solid of unit cubes in isometric projection from a list of filled cells; faces tone-shaded, hidden cubes dropped; the cube or volume count occludes.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/geometry/isometric-cubes/2.json",
-          "sha256": "0a52a0f0924eda5ee6918581eaaa206b27c8dda786dd676413dba9c2fd06d2f5"
+          "sha256": "3fda5758ddc0364f09ad6985ed3097e55f718df330eb2da5d06de4f1b07b50ba"
         },
         {
           "version": 1,
@@ -1153,14 +1093,13 @@
       "family": "geometry",
       "name": "line-segment",
       "title": "Line segment",
-      "tagline": "Bare horizontal line with ordered labelled collinear points, ticks and occludable length braces; each length derived from the ratio + one given length. Not a numeric axis.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/line-segment/1.json",
-          "sha256": "883045403cd26440308750e7cc1d046ce400fa7ec8c01256c1b4e215b8173f6b"
+          "sha256": "a919d6624c68d474540501e406c81f6c790eeedb97d8467057e8153713a1fdc1"
         }
       ]
     },
@@ -1169,14 +1108,13 @@
       "family": "geometry",
       "name": "net",
       "title": "Net of a solid",
-      "tagline": "Net of a solid (cuboid, prism, pyramid, cylinder) and/or the solid it folds to; fold and cut edges, face areas and surface area derived; staged fold.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/net/1.json",
-          "sha256": "9ed3fe625a1bf9c04b82cfe84a4dfe0d10684762e09ac65db23100f7d386b420"
+          "sha256": "bb22f98ae972263848b22603a0cdcc3909b6988e3eb4b497d06b628a02179dbc"
         }
       ]
     },
@@ -1185,14 +1123,13 @@
       "family": "geometry",
       "name": "orthographic-views",
       "title": "Orthographic views (plan and elevations)",
-      "tagline": "Plan/front/side views of a non-cube solid (rectangle, triangle, trapezium, circle, pentagon, polygon) on squared paper; dimensions derived, panels occludable, marked draw answer.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/geometry/orthographic-views/2.json",
-          "sha256": "ec05928784bc1f374a6d8deecc0dfe5a82c5f22584dc9b7c9d524ee16f3a3d6a"
+          "sha256": "b8975aa30cabdb1ae6c29f34e144419efc590bdf4a0dd8bcd7949d17dc02fc3d"
         },
         {
           "version": 1,
@@ -1207,14 +1144,13 @@
       "family": "geometry",
       "name": "parallel-lines",
       "title": "Parallel lines and transversals",
-      "tagline": "Parallel lines and transversals, derived marked angles — corresponding (F), alternate (Z), co-interior (C), the triangle angle-sum proof and a triangle spanning the parallels.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/geometry/parallel-lines/2.json",
-          "sha256": "dd03f6e65923bf03c6806ea68a44b9d2ca5d09e833773f5a45c2aaa1edb1b109"
+          "sha256": "161a04fd166e0ea630a178fe89c61951f11779ff4cadd85256707f0f6b6d4cbb"
         },
         {
           "version": 1,
@@ -1229,14 +1165,13 @@
       "family": "geometry",
       "name": "parallelogram-angles",
       "title": "Parallelogram angles",
-      "tagline": "Parallelogram from three placed corners; interior angles derived (opposite equal, co-interior 180) plus optional extended-side triangle and diagonal-cevian angle-chase constructs.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/parallelogram-angles/1.json",
-          "sha256": "2c5aefb19ec1312e3e6971543925f59418797e529e5d5a6f78b110653c3f2827"
+          "sha256": "7d9be01de8ffcf050e1efc209f6583c6a5292b4c2e94dc1997ca31af6b6eacb0"
         }
       ]
     },
@@ -1245,14 +1180,13 @@
       "family": "geometry",
       "name": "plan-elevation",
       "title": "Plans and elevations",
-      "tagline": "Cube solid in isometric beside its plan, front and side elevations, all derived from a height map; occlude a panel to question the others.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/plan-elevation/1.json",
-          "sha256": "103842df2068a3ac85b625a83cb25e6dfcf82f9a9d007479ba2c91c64c61d519"
+          "sha256": "cb0048cee945209a6f76881a5b5c9b82b74784df202526ca0dae29aa4d80a297"
         }
       ]
     },
@@ -1261,14 +1195,13 @@
       "family": "geometry",
       "name": "polygon-angle-table",
       "title": "Polygon angle table",
-      "tagline": "Regular-polygon angle facts as a table — sides, interior sum, each interior, each exterior; one seed back-derives the rest both ways; cells occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/polygon-angle-table/1.json",
-          "sha256": "dad22f0121128bb4fe31ba63a6516aea7d137d28ca0b748faefe6ccf09ac9263"
+          "sha256": "54a52ef29134e577a1f54933e011c023d13652885c1997d81936ad5181c022e9"
         }
       ]
     },
@@ -1277,14 +1210,13 @@
       "family": "geometry",
       "name": "polygon-angles",
       "title": "Polygon angles",
-      "tagline": "Single polygon with interior and/or exterior angles marked and the angle sum derived; regular or irregular, triangle-split, with algebraic-label questions.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/polygon-angles/1.json",
-          "sha256": "3892c4ddbf96820bf068cd136315da75948f3986e3ca6dc215c684a368568252"
+          "sha256": "0839f6092cdad3d50e2c630036a6c3504567a9c3ea3b73c91c8d9e0686a4749f"
         }
       ]
     },
@@ -1293,14 +1225,13 @@
       "family": "geometry",
       "name": "polygons-at-a-point",
       "title": "Polygons at a point",
-      "tagline": "Regular polygons fitted round a shared vertex, edge-to-edge; each interior angle at the point, the 360° gap and one unknown polygon's side count all derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/polygons-at-a-point/1.json",
-          "sha256": "3b9c88e6690ed5260bca62e60714d6f799b40ca43ea915a96b6903b7c3e160e2"
+          "sha256": "b8baf0ec7945e070693fd861500e7f425003a77155850d0cc5edacf40975f555"
         }
       ]
     },
@@ -1309,14 +1240,13 @@
       "family": "geometry",
       "name": "prism",
       "title": "Prism (isometric)",
-      "tagline": "Isometric prism — extrude any cross-section (regular, circle, sector, L-shape, arch) along a length; area/SA/volume derived; symbolic labels, vertex letters, drag to rotate.",
       "current": 5,
       "versions": [
         {
           "version": 5,
           "status": "current",
           "interface": "models/geometry/prism/5.json",
-          "sha256": "bd25a27c0a258029afbf23964e46676240f839a047dab66cf385b75ccbb70ef7"
+          "sha256": "0bd56eb369ee84eacd3203fb075ed120f1963d9bf3b08201586a91944926a65a"
         },
         {
           "version": 4,
@@ -1349,14 +1279,13 @@
       "family": "geometry",
       "name": "protractor",
       "title": "Protractor",
-      "tagline": "A protractor on an angle: dual 0–180 scale, measured arc, derived reading; occlude to measure, list sizes for a pie chart, construct: true for a marked draw-an-angle.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/geometry/protractor/2.json",
-          "sha256": "f767ba19017cdf1e23f98adf591ebc7991fe3a2f462cfd55040afeb6c8f25c74"
+          "sha256": "395d94fb359b20d59a41259bbdab76fdaff4040f926c80f5a8905814f0f81c1a"
         },
         {
           "version": 1,
@@ -1371,14 +1300,13 @@
       "family": "geometry",
       "name": "pythagoras-proof",
       "title": "Pythagoras' theorem (squares)",
-      "tagline": "Right triangle with a square on each side and its area shown — the a²+b²=c² visual proof; hypotenuse and areas derived, square areas occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/pythagoras-proof/1.json",
-          "sha256": "9758ccc5ad4b51002267d2abef940d548c8e0cffb757ed1983e356ef764bb3ba"
+          "sha256": "209341a07a47954ca40febaa918adca4193b9f790e4a931a2fe5fa8e3aa4ecf5"
         }
       ]
     },
@@ -1387,14 +1315,13 @@
       "family": "geometry",
       "name": "quadrilateral",
       "title": "Quadrilateral",
-      "tagline": "Quadrilateral from four vertices with derived sides, angles, right angles and an optional splitting diagonal for two-triangle Pythagoras figures; occludable/highlightable.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/geometry/quadrilateral/2.json",
-          "sha256": "b6a55989d612519dc3961c71f73723953f8386fe35648d97a86b57bb4760c441"
+          "sha256": "129c615ba2dd32b6468857ba9b33ee8574be58017f5bd327ddb8872f6b3a172c"
         },
         {
           "version": 1,
@@ -1409,14 +1336,13 @@
       "family": "geometry",
       "name": "scale-drawing",
       "title": "Scale drawing",
-      "tagline": "Figure drawn to scale with a scale statement and derived representative fraction; converts real↔drawn length both ways; bearing-and-distance routes.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/scale-drawing/1.json",
-          "sha256": "26c60109e8bf1d956a8f77a7a6099e74d03c62812f3b4b65073d11e593b2d960"
+          "sha256": "a041a480b501bb726e9cc6cb1aafbd276888daa8dbf0df781c4b3a6a6644f91b"
         }
       ]
     },
@@ -1425,14 +1351,13 @@
       "family": "geometry",
       "name": "scale-map",
       "title": "Scale map",
-      "tagline": "Gridded map with a compass rose, landmark icons, a scale bar and a double number line; distances and 8-point directions between places are derived from the scale and occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/scale-map/1.json",
-          "sha256": "8ff0228a7a45d971f21d8ac735e498ee9c9aa8ff6ae7a0635a7ee7683b86e326"
+          "sha256": "be1c33d12ba7dd4f52a08b69cd030919e989dfa2f3b404bb276fabe2a58acb92"
         }
       ]
     },
@@ -1441,14 +1366,13 @@
       "family": "geometry",
       "name": "shape-dissection",
       "title": "Shape dissection",
-      "tagline": "A polygon cut into named child-shape pieces, then rearranged by rigid moves into a same-area shape; piece areas, shape names and the area-conservation check are derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/shape-dissection/1.json",
-          "sha256": "4291026a4b56cece13c0a2af6a923fa0302a791ea490a8e67e4b81bfc1afb0fb"
+          "sha256": "9e564ff2fe7b5823f8c4f06f369b1bc99e5c489b34687c0272f060578974f1c3"
         }
       ]
     },
@@ -1457,14 +1381,13 @@
       "family": "geometry",
       "name": "shape-on-grid",
       "title": "Shape on a centimetre grid",
-      "tagline": "One rectangle, triangle or parallelogram on centimetre squared paper; sides, area, perimeter derived and occludable; drag-to-construct a shape obeying length/area/perimeter rules.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/shape-on-grid/1.json",
-          "sha256": "b0b336bb4e69bfd38a249678ead15dc5ec166aefc74668ea2a643a1b7d5eb90e"
+          "sha256": "01470034e0dca75d1109bb579b7ca57ff0b59f5cc48a05f6c7ff165a42a767ba"
         }
       ]
     },
@@ -1473,14 +1396,13 @@
       "family": "geometry",
       "name": "similar-shapes",
       "title": "Similar shapes",
-      "tagline": "Two similar triangles — disjoint, nested (parallel line in a triangle) or bowtie (shared apex); derives every missing length + the area/volume factors; occlude the unknown.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/geometry/similar-shapes/3.json",
-          "sha256": "9c26597650bd6edc7d48736ef019c2bbf64a755d5d718309836cda8435c0ca53"
+          "sha256": "5da412e33ba99efff06c4ef484d807cfdf2b91916ccc66b79941c29a5be87188"
         },
         {
           "version": 2,
@@ -1501,14 +1423,13 @@
       "family": "geometry",
       "name": "similar-shapes-table",
       "title": "Similar shapes measurements table",
-      "tagline": "Two or three similar shapes compared in a working table — shapes as columns, Length / Area / Volume as rows, with derived ×k / ×k² / ×k³ scale-factor arrows across the gaps.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/similar-shapes-table/1.json",
-          "sha256": "7ced80d54f4ff3cb840dcd024145e6ce79486fe02eaa3cf9ad262a77f761783b"
+          "sha256": "836120dbe9147062b3cedfb394ae10e9d53ac4b73770d9b5ef34dbb99c75a385"
         }
       ]
     },
@@ -1517,14 +1438,13 @@
       "family": "geometry",
       "name": "similar-solids",
       "title": "Similar solids (pair)",
-      "tagline": "a pair of similar 3-D solids (cylinder, cone, frustum, sphere) — B = k × A drawn genuinely larger; label the given dimension on A, B or both; area k², volume k³.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/similar-solids/1.json",
-          "sha256": "ac536e8280dfcc9136d1312eb5ef1d32a25eff2c6fed4dd9d3014f36306a2d95"
+          "sha256": "148b5d11abf0d05f3e9a1600bdbef5303f099af87f91c4f9195564215eb7de03"
         }
       ]
     },
@@ -1533,14 +1453,13 @@
       "family": "geometry",
       "name": "similarity-ratio-table",
       "title": "Similar shapes scale-factor table",
-      "tagline": "Length, Area and Volume scale-factor table (k, k², k³); one factor back-derives the others exactly with surds; cells occlude for complete-the-table.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/similarity-ratio-table/1.json",
-          "sha256": "57ab5e18a3896d6aeca83993ff1b49c1ebe3bb7aa051cea2ea636e88cac1999d"
+          "sha256": "b9f28c2d0b9a1874a64bc5fd7c66c66acb60590916340cad8a1c2a12c6396a30"
         }
       ]
     },
@@ -1549,14 +1468,13 @@
       "family": "geometry",
       "name": "solid",
       "title": "3D solid (isometric)",
-      "tagline": "3-D solid in isometric — 8 shapes; round by radius/diameter; cone by height/slant; derived volume, surface area, slant; symbolic labels; letter a pyramid ABCDE; drag-to-rotate.",
       "current": 4,
       "versions": [
         {
           "version": 4,
           "status": "current",
           "interface": "models/geometry/solid/4.json",
-          "sha256": "2ef92d7c0c812b0fa73279ca0c73c4de8c197c7b2e16c21bfb57343e2aaf0a0c"
+          "sha256": "7fdee7d4e128129a3c0b1898c5a3f7b219d3e226366b055b7dce334223aaa796"
         },
         {
           "version": 3,
@@ -1583,14 +1501,13 @@
       "family": "geometry",
       "name": "symmetric-pattern",
       "title": "Symmetric pattern",
-      "tagline": "Squared-paper grid: colour one half, the other reflects across a central vertical/horizontal/diagonal mirror; mirror cells derived, leave blank or tap to complete.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/symmetric-pattern/1.json",
-          "sha256": "fc815983e3e037c603feb44412c92ff77048356d799b6e7d260faddca22eeaca"
+          "sha256": "53f05882d3cce403250dbfd70be70e2ab33dded67b88d6b1d7585a04d8284807"
         }
       ]
     },
@@ -1599,14 +1516,13 @@
       "family": "geometry",
       "name": "symmetry",
       "title": "Symmetry",
-      "tagline": "Shape with its symmetry marked — dashed mirror lines and rotational order with a turn arrow; counts derived, occlude or hide for find-them / draw-them.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/symmetry/1.json",
-          "sha256": "cfedba5bc8293c99ecbeea3b4c8839248589ef9eb3383487315d3b8286038c6c"
+          "sha256": "9f1a09de6fc43808fd801b4ac3b291229d0c5b391e3a1c2f8ad874a02d97a511"
         }
       ]
     },
@@ -1615,14 +1531,13 @@
       "family": "geometry",
       "name": "tiling-manipulative",
       "title": "Tangram & pattern blocks",
-      "tagline": "A fixed canonical piece-set — the 7-piece tangram or the pattern blocks — placed to compose a figure; total area, fractions and the piece-equivalence relations all derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/tiling-manipulative/1.json",
-          "sha256": "51d13b1cfcbfbd42f273b68b8b8c6833080c2fa73dcfef045a28c32ad18a8022"
+          "sha256": "c562e53f2468cd7678eaf704ad8c68374c91afde4dbacbc5a09bd0fedc241eae"
         }
       ]
     },
@@ -1631,14 +1546,13 @@
       "family": "geometry",
       "name": "transformations",
       "title": "Transformations",
-      "tagline": "Object and derived image on a grid under one transformation or a sequence; shapes nameable A/B; construct mode: pupils place the image's vertices, marked as an exact set.",
       "current": 4,
       "versions": [
         {
           "version": 4,
           "status": "current",
           "interface": "models/geometry/transformations/4.json",
-          "sha256": "6f09f8cce87b717273775de339ee0bc1c50882a3be90e04c53c08dbb9abdf8e0"
+          "sha256": "13ed74a716e707aed1c01b0af7ea1ecb251d22b190738c171687076c261613ec"
         },
         {
           "version": 3,
@@ -1665,14 +1579,13 @@
       "family": "geometry",
       "name": "triangle",
       "title": "Triangle",
-      "tagline": "Single triangle from three vertices with angles, sides, ticks, right angles and altitude/cevians; colour-paired angle↔opposite-side annotation for sine/cosine/area-rule figures.",
       "current": 6,
       "versions": [
         {
           "version": 6,
           "status": "current",
           "interface": "models/geometry/triangle/6.json",
-          "sha256": "706a5fdb933da4f81acead9b737c20935b4a80c2818510c6fd963fab5bdbd45e"
+          "sha256": "e0c4c5c851d5a4f9b9e8fdb16f6c703ab6dc6b511f2c57e5ea4f984c55f232fe"
         },
         {
           "version": 5,
@@ -1711,14 +1624,13 @@
       "family": "geometry",
       "name": "turn",
       "title": "Turn (amount of turn)",
-      "tagline": "Amount of turn about a centre (quarter/half/three-quarter/full, clockwise or anticlockwise) as a sweep arrow, turn-dial or landmarks rosette; angle and fraction derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/turn/1.json",
-          "sha256": "f8a8631d2e6140b090ac4e50abb74120f2e771813e217494391c9110fe535ac3"
+          "sha256": "6f286bea8cedf87c53fbde3b64f4d2ad32affd532076a7c1a0c92a6104a97d4a"
         }
       ]
     },
@@ -1727,14 +1639,13 @@
       "family": "geometry",
       "name": "vector-proof-free",
       "title": "Vector proof (free figure)",
-      "tagline": "Author any vector figure point-by-point — each point a position vector in {a, b}, joined by chosen edges; base arrows, amber segment highlighter, derived routes / k / collinearity.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/vector-proof-free/1.json",
-          "sha256": "4006b89fe67c45dae47737be2a1e0d47745da4176367b5909fa5dbbacf11d929"
+          "sha256": "8f76a626a68efe0c7f2592bea8afecea67276ca850908e491697d527552e8640"
         }
       ]
     },
@@ -1743,14 +1654,13 @@
       "family": "geometry",
       "name": "vector-proof-preset",
       "title": "Vector proof (preset shapes)",
-      "tagline": "Not-to-scale triangle/parallelogram/hexagon with base vectors a, b and symbolic points (ratio, midpoint, extended); derives routes in a,b, the scalar k, collinearity and reverse.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/vector-proof-preset/1.json",
-          "sha256": "67746e0cc0c8b5abb7fb931319188f5208b2d9a25e27eedacb257b1673413a36"
+          "sha256": "0f2233eb0a354a1a47b2a76203f951da7755f493ba31f53786082b37e24dd459"
         }
       ]
     },
@@ -1759,14 +1669,13 @@
       "family": "geometry",
       "name": "vectors",
       "title": "Vectors",
-      "tagline": "Column vectors as arrows on a grid plus their algebra; scalar multiples and resultants drawn tip-to-tail or by the parallelogram rule, components derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/geometry/vectors/1.json",
-          "sha256": "107a5c1d4348b2a0728abfdd6d0185b115ec9b318ee173ba1abc82ccf59642a1"
+          "sha256": "ca8401e2b15f6b6abdc793f59b778ead42a6fbfbdf5c021afbd26ca11489ea11"
         }
       ]
     },
@@ -1775,14 +1684,13 @@
       "family": "graphing",
       "name": "area-under-curve",
       "title": "Area under a curve",
-      "tagline": "Curve with the area to the x-axis shaded — definite integral, trapezium rule, area between curves, tangents; bare A Level sketch axes and parametric curves; values derived.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/graphing/area-under-curve/2.json",
-          "sha256": "e836923c802698968e24cd90ef5ed939ea84860977006bba5cfd888b6c7aec99"
+          "sha256": "41eee5b57127e8f2fcd762c5c250f569d95bd5435e40b9fa14310f5abe1bd0d9"
         },
         {
           "version": 1,
@@ -1797,14 +1705,13 @@
       "family": "graphing",
       "name": "circle-graph",
       "title": "Circle on coordinate axes",
-      "tagline": "A circle on numbered axes: derives the centre–radius equation, the tangent at a point (⊥ to the radius, exact equation) and where a line meets the circle.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/graphing/circle-graph/1.json",
-          "sha256": "a9e95ff523401b76cb823666be1475e5e5daff5decfec0601c3a329729e1fd8c"
+          "sha256": "b9190b14085ac13698d7a0a1dedf5ec78a420f2572b5d75faf1a1becf950fe54"
         }
       ]
     },
@@ -1813,14 +1720,13 @@
       "family": "graphing",
       "name": "conversion-graph",
       "title": "Conversion graph",
-      "tagline": "straight-line unit-conversion graph on a numbered grid; line from a rate or two points; dashed read-off guides with derived, occludable values, or arm read-off to read one off.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/graphing/conversion-graph/2.json",
-          "sha256": "a1b121cc6b7363b51a288ecbcaaf89f8d949e61ad601b600c540960d7f3df0d6"
+          "sha256": "6d85eaf0fd50287996df955da7098b549a3ed19115e5f917a08be47f88739437"
         },
         {
           "version": 1,
@@ -1835,14 +1741,13 @@
       "family": "graphing",
       "name": "coordinate-grid",
       "title": "Coordinate grid",
-      "tagline": "Numbered coordinate grid: points, segments and lines x = k / y = k / y = mx + c, labels derived; place-point, select-point and place-line (draw the line) answers.",
       "current": 4,
       "versions": [
         {
           "version": 4,
           "status": "current",
           "interface": "models/graphing/coordinate-grid/4.json",
-          "sha256": "4bd3a0c4b4fd96443b1831ac1833816d9d1c4ee5066ef2d0a2efa0226b9086f2"
+          "sha256": "24002a2ce31ecdca50ab818cc8fc488942c60aecd04684ec73fcf99671a2207f"
         },
         {
           "version": 3,
@@ -1869,14 +1774,13 @@
       "family": "graphing",
       "name": "first-principles",
       "title": "Differentiation from first principles",
-      "tagline": "Curve with a point, tangent and shrinking chords for first principles; gradients derived; draw-tangent answer mode (pivot a line until tangent) and science axis titles.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/graphing/first-principles/2.json",
-          "sha256": "bf3d82ae18c3e1882871e986cb668bb8d1e8feff11041c99e7fc98136e49d748"
+          "sha256": "cc1d4e69dcbb2ea66139f8b75a649a2ad7ffea54b33ef61e600da90935e35fb5"
         },
         {
           "version": 1,
@@ -1891,14 +1795,13 @@
       "family": "graphing",
       "name": "function-graph",
       "title": "Function graph",
-      "tagline": "Curves y=f(x), parametric or anonymous sketches; numbered or bare axes; derives roots, turning points, asymptotes; sketch-curve auto-marks \"sketch y = f(x)\" from recall.",
       "current": 6,
       "versions": [
         {
           "version": 6,
           "status": "current",
           "interface": "models/graphing/function-graph/6.json",
-          "sha256": "435371f5ac15719e94620648149cf95f41ae8099a511c3abad3cc7aeb656f32b"
+          "sha256": "0f257e1d50ec6bf9f30d5f90083897fce96bb9427df6c23c7a83506ba05d2d3c"
         },
         {
           "version": 5,
@@ -1936,14 +1839,13 @@
       "family": "graphing",
       "name": "inequality-region",
       "title": "Graphical inequalities (regions)",
-      "tagline": "Linear inequalities as boundary lines with the feasible region shaded; solid/dashed edges and integer solutions derived; pupils can shade, mark crosses or draw-then-shade.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/graphing/inequality-region/3.json",
-          "sha256": "7dc9ea52bca07d9045b56777e84088efc01ffb05b01b17748a585e0692427c74"
+          "sha256": "8689d330855e7516bfb2b896d013206001831ad80577e8131f6d00e1e858ed16"
         },
         {
           "version": 2,
@@ -1963,14 +1865,13 @@
       "family": "graphing",
       "name": "journey-graph",
       "title": "Journey graph (distance–time / speed–time)",
-      "tagline": "Piecewise motion graph from waypoints; derives each section's gradient and area; occlude to question, or arm draw-journey to draw it / read-off to read a value off it.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/graphing/journey-graph/2.json",
-          "sha256": "a70251387973820d3ad4eb151a1710edf3a3f2973bfeca52ad0ba74742f26dcc"
+          "sha256": "f86bf68ccf6169acd739f1535d2ab7c02cb5cbaf787df60e15e20a82ff4fd233"
         },
         {
           "version": 1,
@@ -1985,14 +1886,13 @@
       "family": "graphing",
       "name": "proportionality-graph",
       "title": "Proportionality sketch graph",
-      "tagline": "unscaled sketch graphs of the four proportionality shapes (y∝x line, y∝1/x, y∝x², y∝1/x²) on labelled x–y axes with an O origin; one panel or a 2×2 A/B/C/D match grid.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/graphing/proportionality-graph/1.json",
-          "sha256": "a7386bd2279c6cc1f189de4a489d8eeb9865b97d90204a19dffb274df9d24402"
+          "sha256": "6df76c380a964821b95a632f3c01c6598bc26b7901b4091a80b2074939f96382"
         }
       ]
     },
@@ -2001,14 +1901,13 @@
       "family": "graphing",
       "name": "transformation-explorer",
       "title": "Transformation explorer",
-      "tagline": "Parent curve in grey + its derived image y = a·f(x−b)+c (with f(−x), −f(x) reflections); derived mapped points + arrows show the base-to-image correspondence.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/graphing/transformation-explorer/1.json",
-          "sha256": "98f8f878a43752b8861763d473e04e10338d0e25de0328f1787045b1006909e8"
+          "sha256": "27e1d995c948efaea75e6b8d94a1be8a155dbb6eaacab76f87e1838ff13ec050"
         }
       ]
     },
@@ -2017,14 +1916,13 @@
       "family": "measures",
       "name": "balance-scale",
       "title": "Balance scale",
-      "tagline": "Tilting beam / pan balance for comparing and ordering mass; the tilt, verdict and order are derived from authored masses, occlude for \"which is heavier?\".",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/measures/balance-scale/1.json",
-          "sha256": "3892360c89e3dc772057a984cd5fa3c3cc74d8a01b8951c718f82ffd2626ad07"
+          "sha256": "87306bffce4859d6703adef66f5be83656400c48c294b82ba699e030dcfe1e99"
         }
       ]
     },
@@ -2033,14 +1931,13 @@
       "family": "measures",
       "name": "measuring-scale",
       "title": "Measuring scale",
-      "tagline": "Graduated instrument read against an indicator — ruler, capacity jug or dial scale; ticks and the reading derived, occlude to \"?\" for reading off.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/measures/measuring-scale/1.json",
-          "sha256": "71995c1f920799156b33207324a757e1e6151e45ec09ca4a7f9f9a532a7b31c6"
+          "sha256": "475119277750c15c6cd9634f4235c30b7b7880cda36ee1cc108d553b767e7ed1"
         }
       ]
     },
@@ -2049,14 +1946,13 @@
       "family": "mechanics",
       "name": "force-diagram",
       "title": "Force diagram (statics and dynamics)",
-      "tagline": "A Level free-body figure: a particle or block on a level, inclined, wall or ceiling scene with labelled force arrows and derived angle arcs; magnitudes optional, nothing resolved.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/mechanics/force-diagram/1.json",
-          "sha256": "b3fa80f7ec6f5472b90d505786c45cf6d05be6daa30c0dec126a84c56233b612"
+          "sha256": "f631c6f9d40814cd562244a21ee1237aa982461a7948635c0311b801d4d98dea"
         }
       ]
     },
@@ -2065,14 +1961,13 @@
       "family": "mechanics",
       "name": "pulley-system",
       "title": "Connected particles over a pulley",
-      "tagline": "Two particles on a taut string over a pulley — Atwood, table-edge or a wedge at a labelled angle; string path, wedge and angle arcs derived, masses and heights occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/mechanics/pulley-system/1.json",
-          "sha256": "b993155c3ee21caabc5a1843faedbd9fa459dc7a3e770a0d57c88d3d1a4dc19b"
+          "sha256": "f82087b1174127e59e2ac1b40510c8b9102836194b382af152776252ef6475e4"
         }
       ]
     },
@@ -2081,14 +1976,13 @@
       "family": "mechanics",
       "name": "rod",
       "title": "Rod (loaded beam and leaning ladder)",
-      "tagline": "Rigid rod AB with named points, two or more supports (pivots, strings, pegs, a wall hinge), loads and dimension arrows from an end; horizontal beam or ladder leaning at θ.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/mechanics/rod/2.json",
-          "sha256": "34d2485568cb872babff75477558448411816e79e481e4fd0e86ade7cc470d89"
+          "sha256": "392bc55d57247954609acf43f3b845049398a6b98e7c8a2b10580f3d60e98c90"
         },
         {
           "version": 1,
@@ -2102,14 +1996,13 @@
       "family": "music",
       "name": "score",
       "title": "Sheet music",
-      "tagline": "Sheet music from ABC: any clef, key and time signature, multi-part systems, lyrics, chords, dynamics; accidentals, beams and bar numbers derived; bars occlude; pages by bar range.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/music/score/1.json",
-          "sha256": "d641c20880e6f392a449e5c1c4ab1cb0653523bf42df43fa116a48d80d566e42"
+          "sha256": "de1729edb5bce159e3cc74f0a4f7b6da8df98104178ec5b352bba5c21782f6e3"
         }
       ]
     },
@@ -2118,14 +2011,13 @@
       "family": "number",
       "name": "array",
       "title": "Array",
-      "tagline": "Discrete objects in rows×cols groups; derives the total, repeated-addition sentence, commutativity, factors and fraction of a set; a KS1/2 manipulative.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/array/1.json",
-          "sha256": "c7827dbd34a974028a967342327adaaaa3df04de8bc8f13283dcac3c976e6ec0"
+          "sha256": "0395a3c613c7a218ec0948a1b73a1fe028c06d2a2f5757098954f6da1aa857ca"
         }
       ]
     },
@@ -2134,14 +2026,13 @@
       "family": "number",
       "name": "bar-model",
       "title": "Bar model",
-      "tagline": "Singapore bar model — bars split into value or unit segments with braces; derives the unit value and unknown parts for part–whole, ratio and fractions.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/bar-model/1.json",
-          "sha256": "48753d7ec68672b1210d69bf2cd9f3802b516cae174f37d3c830ca8bf8c7b36b"
+          "sha256": "53be5cc99d700f1da6aae60bb8b079fccd5835bbfbe7bb704c6916eb555ad2e2"
         }
       ]
     },
@@ -2150,14 +2041,13 @@
       "family": "number",
       "name": "bead-string",
       "title": "Bead string",
-      "tagline": "Threaded beads clustered in fives and tens, a solid counted run against a faint remainder; derives the count, five-and-a-bit split, bonds and complements (incl. to 60 minutes).",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/bead-string/1.json",
-          "sha256": "1e34aaa42bd1145d1e02ba3dd2d7cbf3850986c602c6b98cb96bbd696f308e7f"
+          "sha256": "1de60a89909e0a0f1cb75c83379bc2839de4b3cccf0d0b480f114fba5e0cfbf7"
         }
       ]
     },
@@ -2166,14 +2056,13 @@
       "family": "number",
       "name": "column-arithmetic",
       "title": "Column arithmetic (written method)",
-      "tagline": "Vertical written addition, subtraction and multiplication; derives every carry, borrow, partial product and the answer; staged a step at a time, plain or grid.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/column-arithmetic/1.json",
-          "sha256": "a826b8554f68866a10595d56bb3c95b99d3f8cd93fcb4918f9b92257847ef923"
+          "sha256": "9cb752842fe376532c210b9d57b98637ab0744239a5d913293db241155c039f0"
         }
       ]
     },
@@ -2182,14 +2071,13 @@
       "family": "number",
       "name": "compound-growth-table",
       "title": "Compound growth & decay table",
-      "tagline": "A period-by-period table for compound interest, depreciation and repeated % change: derived opening balance, ×(1±r) multiplier, interest and closing balance each year.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/compound-growth-table/1.json",
-          "sha256": "247ca8d335a2778da0d03b1d77f4bc26dd4d04369911f2313e5be09660939b40"
+          "sha256": "a535f14b12c03ef1e9a7b2b9b4df5df0c7236e7d67394536cdce288416932d71"
         }
       ]
     },
@@ -2198,14 +2086,13 @@
       "family": "number",
       "name": "cuisenaire-rods",
       "title": "Cuisenaire rods",
-      "tagline": "Coloured proportional rods in trains; length and colour from value, with derived totals, number sentences and fractions for iterating, comparing and building a whole.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/cuisenaire-rods/1.json",
-          "sha256": "04e8e5bcffbb4659ab0b50ddfb1d9c4d2001cd1a5f8603f6cf3636dcd2f57b77"
+          "sha256": "778480ecfd362919e7e20a8a315712d640a9526e13da5e786d59d17c9493a7e1"
         }
       ]
     },
@@ -2214,14 +2101,13 @@
       "family": "number",
       "name": "double-number-line",
       "title": "Double number line",
-      "tagline": "Two aligned 0-based scales in direct proportion; one correspondence derives the scaling and every partner value — recipes, rates, percentages, unitary.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/double-number-line/1.json",
-          "sha256": "2c752437203ef067d57276ae9590d7efd610e2cf8c2c9b8cda113babfa480e36"
+          "sha256": "c05ca5496e048fdee0d5dc21642d5dad53fac0c1ddc7fc4b9c74c121c06f4c95"
         }
       ]
     },
@@ -2230,14 +2116,13 @@
       "family": "number",
       "name": "fdp-table",
       "title": "Fraction, decimal & percentage table",
-      "tagline": "Fraction–decimal–percentage equivalence table; write one form per row and the other two derive string-exact (recurring dots); cells occlude and rows sort by value.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/fdp-table/1.json",
-          "sha256": "cca71e3e77c5be52cee2854829f54021e84529189b964181a1b4127f95bbf6df"
+          "sha256": "3780d368d5a59fba2bd0bf7b33bc9f82970dbc5c5cee53b734493680ef64ff75"
         }
       ]
     },
@@ -2246,14 +2131,13 @@
       "family": "number",
       "name": "fraction-shape",
       "title": "Fraction of a shape",
-      "tagline": "Bar, circle or grid split into equal parts and shaded for a fraction; a common-denominator partition derived for adding, equivalence and of-amount.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/fraction-shape/1.json",
-          "sha256": "9ec95dfa00b536fa23c37cde2bd79e859c5a93b7047dd4dbd7c60ae38b83f567"
+          "sha256": "6500a27e154ab3a2155b6baa27900a6d1e48473cbef53c829a652fb7872110de"
         }
       ]
     },
@@ -2262,14 +2146,13 @@
       "family": "number",
       "name": "fraction-wall",
       "title": "Fraction wall",
-      "tagline": "Stacked bars of one whole split by denominator so equivalent fractions line up; derives equivalence, comparison and the common-denominator row.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/fraction-wall/1.json",
-          "sha256": "f20b85f4cb5fad06aafd5afb5ca78f9096e0bf8c64c4787f06667d4d292acc59"
+          "sha256": "4efde86d2537465ce5bb60d923112a02d12d57c87f7300cb5b746b8d7ed32975"
         }
       ]
     },
@@ -2278,14 +2161,13 @@
       "family": "number",
       "name": "gattegno-chart",
       "title": "Gattegno place-value chart",
-      "tagline": "Powers-of-ten rows × digit columns 1–9; ring one cell per place to build a number (the sum), with ×10/÷10 shown as derived same-column row jumps.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/gattegno-chart/1.json",
-          "sha256": "88d017423737244e2dfb480478bb0195f15d401a78e12d8fd6c33546d8bf5427"
+          "sha256": "37c50cdaa6ebebf2173e6b55e7d8b4be8ea8213b9a9ac82f2a8d3196cc767e83"
         }
       ]
     },
@@ -2294,14 +2176,13 @@
       "family": "number",
       "name": "metric-ladder",
       "title": "Metric conversion table",
-      "tagline": "Metric unit conversion as a working table — unit rungs (length / mass / capacity) down the rows with derived ×k / ÷k power-of-ten arrows and the converted value.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/metric-ladder/1.json",
-          "sha256": "c20065d990ab7e5943d127eb46bde8323247f50c6dc7cc208a3d76b39dff7c64"
+          "sha256": "01f96b2ccbb51987eb057d32e0cbf9ed1d25e46cd8aa9fd7454a76d1525d239a"
         }
       ]
     },
@@ -2310,14 +2191,13 @@
       "family": "number",
       "name": "money",
       "title": "Money (coins & notes)",
-      "tagline": "UK coins (drawn chunky, real shapes & colours) and notes with a derived total; count a set, make an amount, and give change on a count-on skip-count track; £/p, occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/money/1.json",
-          "sha256": "ada4d6d4271c84b6c124535ae3b3d9e91320a6848949f8ec565c9249105b3203"
+          "sha256": "cdb1541d1000354f59425de49a4e41a879b77f81b2e4aa16b712edbca8984f0b"
         }
       ]
     },
@@ -2326,14 +2206,13 @@
       "family": "number",
       "name": "number-cards",
       "title": "Number cards",
-      "tagline": "Row of bordered card tiles with authored faces (digits, numbers, letters, symbols); one to three labelled groups; cards occlude to \"?\", blank for answer spaces, highlight amber.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/number-cards/1.json",
-          "sha256": "2bdffce63d6340fe8a319400a131875369cb77eb2a7e176110544e244fc5bec1"
+          "sha256": "7bd14c0689aa78cdef34240715af53187f35a5b8565dab6aa75b7f5b544595f4"
         }
       ]
     },
@@ -2342,14 +2221,13 @@
       "family": "number",
       "name": "number-grid",
       "title": "Number grid",
-      "tagline": "Hundred-square shaded by value rules — multiples, primes, sequences, remainders — with common-multiple overlap in amber; shaded sets derived, cells ring.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/number-grid/1.json",
-          "sha256": "1a680e6fa6b8a97731aa1ea2f8c84d5f6009db39b7a7081905e090c64545ac92"
+          "sha256": "21149877ae7f8de36b01fdd7e0a4723c6eb3dcafa5296689861306b46caa6781"
         }
       ]
     },
@@ -2358,14 +2236,13 @@
       "family": "number",
       "name": "number-line",
       "title": "Number line",
-      "tagline": "Horizontal number line with marked points, signed jumps and shaded open/closed intervals; answer on it — draw an inequality or mark a probability with a cross; positions derived.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/number/number-line/3.json",
-          "sha256": "7fc5c0293400d4ae6f0dc70b509cf10544c4d53c57be031aa1d969b046d7d76e"
+          "sha256": "0702be92a718b515824ccaf17c3450919fc69adeeeb6960f8cedf6ec55f06530"
         },
         {
           "version": 2,
@@ -2386,14 +2263,13 @@
       "family": "number",
       "name": "number-shape",
       "title": "Number shape",
-      "tagline": "Numicon-style pegged number shapes 1–10 (2-wide, odd numbers protrude a peg) as plates, cubes or counters; derives parity, number bonds and the stem sentence.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/number-shape/1.json",
-          "sha256": "263dec16f770a99506671c4584f86fed39ddaa8c5528870375e7fd5574122743"
+          "sha256": "dfc01b608cf7bdbb95e03f4afd18a2fb29256d367e6c498e8ee03de195bc5d52"
         }
       ]
     },
@@ -2402,14 +2278,13 @@
       "family": "number",
       "name": "number-track",
       "title": "Number track",
-      "tagline": "Row of contiguous numbered boxes holding a counting sequence; cell values and the step rule derived from start + step; cells occlude, blank, highlight or lift out as loose cards.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/number-track/1.json",
-          "sha256": "006c66ba7963ecb419a2eb3a1b1b58b9b2cb9c6f9319409e1238f2fb3c361716"
+          "sha256": "9d14d487ffe41247575c2143ea65a2cc95ddd124feb037c9d83aaa0e442edf71"
         }
       ]
     },
@@ -2418,14 +2293,13 @@
       "family": "number",
       "name": "part-whole",
       "title": "Part-whole model",
-      "tagline": "Part-whole \"cherry\" — a whole linked to 2–3 parts for number bonds and fact families; the omitted node derived (fractions too), any node occludes.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/part-whole/1.json",
-          "sha256": "361c7c00a9452f09dcbbf201d352f78c4e083a31c73702d6b062e838db0cf7d8"
+          "sha256": "04c530733c6a6fc2e4fb74bc4695b27442ac51ccb1fa2b7204a866f134b7c0e7"
         }
       ]
     },
@@ -2434,14 +2308,13 @@
       "family": "number",
       "name": "percentage-square",
       "title": "Percentage square",
-      "tagline": "10×10 hundred-square shaded for a percentage with derived decimal, fraction and multiplier; models increase/decrease and forward or reverse percentage.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/percentage-square/1.json",
-          "sha256": "b65a72ead69eb4dc6a2a10a2005828777c27a300b3d53e2eddb5a52e19c7d20e"
+          "sha256": "12783c4018dd070a528b3a4bc195efd779b71d607eaf1e5b036a475c83d8e259"
         }
       ]
     },
@@ -2450,14 +2323,13 @@
       "family": "number",
       "name": "percentage-table",
       "title": "Percentage table (benchmark ladder)",
-      "tagline": "Of-amount percentage benchmark ladder (100% = amount, then 50% / 10% / 5% / 1% …); each value derived, ÷k/×k mental-step arrows, and a build-up to a target %.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/percentage-table/1.json",
-          "sha256": "98030491bc573a86831d9ddfb51b2d94f004d6cebe4ef914468b7170e58e3fd6"
+          "sha256": "5137b5a1c12cb68dd5b98ba5521b20ac00dd6098c43061ce28a2450ce501d18c"
         }
       ]
     },
@@ -2466,14 +2338,13 @@
       "family": "number",
       "name": "place-value",
       "title": "Place value chart",
-      "tagline": "Number in a power-of-ten place-value chart; ×/÷ by a power of ten drawn as derived digit shifts with a fixed point; standard form ↔ ordinary.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/place-value/1.json",
-          "sha256": "6d64dc7c03f885360ff51728fe860bf0573598e283587e2dfb0aa481f3f62b5a"
+          "sha256": "cb0df7c0d648b80621082d8bf4573bd91394c0aa3a471cf4b24542373dc97f38"
         }
       ]
     },
@@ -2482,14 +2353,13 @@
       "family": "number",
       "name": "place-value-blocks",
       "title": "Place-value blocks",
-      "tagline": "Place-value mat with Dienes, counters or bundles; derives the numeral, a stem sentence, subtraction and the exchange — the concrete→abstract bridge.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/place-value-blocks/1.json",
-          "sha256": "604b715d2160fed171ca36af0205c33ce1016615ab3bf5e57cc7f2fec6e873e7"
+          "sha256": "349f6129195a086c72e22242a3ad7e59a408a7a9cf0b5430888642c918b1e411"
         }
       ]
     },
@@ -2498,14 +2368,13 @@
       "family": "number",
       "name": "prime-factor-tree",
       "title": "Prime factor tree",
-      "tagline": "Number split into a prime factor tree with primes ringed; derives the product in index or expanded form and, with a second tree, the HCF and LCM.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/prime-factor-tree/1.json",
-          "sha256": "f3400e91f41f71609ec287e9864cb38a8c6d4c9712a81ccaccb6c3742582ecea"
+          "sha256": "6af451cfc66cf83e1253e1fd1a44f5789ddf1c6da45fb9b4bb1489214702ffe1"
         }
       ]
     },
@@ -2514,14 +2383,13 @@
       "family": "number",
       "name": "ratio-bars",
       "title": "Ratio bars",
-      "tagline": "Ratio as equal-unit part-bars at simplified and actual scales joined by ×k/÷k arrows; derives the share value and every quantity from one known.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/ratio-bars/1.json",
-          "sha256": "b298916943f617903364b448d3cc20a54ff50f8c78650db5a1f188de4f246876"
+          "sha256": "43a30894007926ec747902d1e6d7dd1eafe3b0049e526a51f66afb9a43fcbd6a"
         }
       ]
     },
@@ -2530,14 +2398,13 @@
       "family": "number",
       "name": "ratio-table",
       "title": "Ratio table",
-      "tagline": "Ratio as a working table with scaled rows and ×k/÷k edge arrows; derives every cell, the factors and Total/Difference columns from one known value.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/ratio-table/1.json",
-          "sha256": "845e9f39566711bdbffbff96f6c94f346b02c81150aee21e8e727a64948bcce0"
+          "sha256": "7bc8d19b7cf732a3a20b3968e682eeb3063adddbcd35617d761c6bf417eac15a"
         }
       ]
     },
@@ -2546,14 +2413,13 @@
       "family": "number",
       "name": "short-division",
       "title": "Short division (bus-stop method)",
-      "tagline": "Division by the short (bus-stop) method; derives every quotient digit, carried remainders and the decimal by an exact engine; staged reveal, cells occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/short-division/1.json",
-          "sha256": "6bf91fcf0bc95bf9d0b786845f76fd839614c0441da89a7b2ff85d464bf39b77"
+          "sha256": "1ab5642511d42fd17c9512ce95072694247c8a0123b2c77f24925971960a4554"
         }
       ]
     },
@@ -2562,14 +2428,13 @@
       "family": "number",
       "name": "ten-frame",
       "title": "Ten-frame",
-      "tagline": "One or two 2×5 ten-frames with two-colour counters; derives the count, the colour bond and how-many-more-to-ten for bonds and bridging.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/number/ten-frame/1.json",
-          "sha256": "eb632ef58f1fc6de96b0fc7a4925a8a6cea44326a4da3ee64940a6443fd1bbae"
+          "sha256": "3c4035a89580fdc61d6d356cff59341387552887d0de778fed3727fd9ae7c48d"
         }
       ]
     },
@@ -2578,14 +2443,13 @@
       "family": "number",
       "name": "timetable",
       "title": "Timetable",
-      "tagline": "Bus or train timetable grid of clock times; derives journey durations, gaps between services and the latest arrive-by with 60-base time arithmetic past midnight.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/number/timetable/2.json",
-          "sha256": "c10f013f67df404088727d873b7e6f6dd4a1858e1fcb9fd7e02a3cfc08a2c2a6"
+          "sha256": "a53029162cde24d3dbf794205d0099d1e867854091edd3a46cfe280bc6e41429"
         },
         {
           "version": 1,
@@ -2600,14 +2464,13 @@
       "family": "physics",
       "name": "atom",
       "title": "Atom (shell model)",
-      "tagline": "Bohr shell-model atom — nucleus counts, electron shells and configuration, all derived from the species; draws neutral atoms, ions and isotopes.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/atom/1.json",
-          "sha256": "d1e435f591a1e9826071e5c8b2540190899a77d3a6463bf64c807ece061e7012"
+          "sha256": "85e66022c193e4377c9710de037d79b41075da3d423693a4c10269e944e6d406"
         }
       ]
     },
@@ -2616,14 +2479,13 @@
       "family": "physics",
       "name": "circuit",
       "title": "Circuit",
-      "tagline": "Series / parallel circuit in BS/IEC symbols whose currents, pds, meter readings and bulb brightness are all derived by solving it; occludable readings, clickable switches.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/circuit/1.json",
-          "sha256": "0cba93794c7ecd16884a968205f36e498202f831ad3b900393fed54157ab4ab6"
+          "sha256": "e3825ef742ae60c5828c9a6fdaf9b0a809e2b0837dad05d4c76e67cf2ab3f5c0"
         }
       ]
     },
@@ -2632,14 +2494,13 @@
       "family": "physics",
       "name": "forces",
       "title": "Force diagram (free body)",
-      "tagline": "Free-body force diagram: labelled arrows from a body, lengths derived from newtons; resultant and balanced/unbalanced verdict always derived and occludable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/forces/1.json",
-          "sha256": "a083a80cf2a33a17a57a8c2a84530ac4b752ad1f87b4dacdc90fb372a27933ca"
+          "sha256": "c0a05d3ca3872eb3f86e47b7e135f272b07496b116a628d0df43b62f95baacd5"
         }
       ]
     },
@@ -2648,14 +2509,13 @@
       "family": "physics",
       "name": "gear-train",
       "title": "Gear train",
-      "tagline": "Meshed gears drawn to scale from their tooth counts; rotation directions, turns/rpm and the overall gear ratio derived, compound shaft pairs included; each occludes.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/gear-train/1.json",
-          "sha256": "55064188d82449530d0813bface5c95d839ed23a712cb9bdd9e4a48578892c35"
+          "sha256": "2edc8f81b2f8a5cd693b0d7113732ddbeee1457670340e10f59c573df897895f"
         }
       ]
     },
@@ -2664,14 +2524,13 @@
       "family": "physics",
       "name": "moments",
       "title": "Moments (levers and see-saws)",
-      "tagline": "Beam on a pivot with weights (force N) at distances either side; moments F×d, side totals, the balance verdict and the tilt are derived; occlude a force or distance to solve.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/moments/1.json",
-          "sha256": "8ccddc6dcddec8a2c0c1db64748c5e82f7b9c5ce35b5daf6cbb7a3652afbf8a6"
+          "sha256": "2a84010d97a74b19eec0115cd60541ef89f26e45648cabd72cf152d57cd68225"
         }
       ]
     },
@@ -2680,14 +2539,13 @@
       "family": "physics",
       "name": "ray-optics",
       "title": "Ray diagrams (mirror & lens)",
-      "tagline": "Light ray diagrams: plane-mirror reflection (derived reflected ray, normal, equal angles) and convex-lens principal-ray construction with the derived image and its nature.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/ray-optics/1.json",
-          "sha256": "59bfe6ca2f4d91e05c69b88ee3faa9556da523287970c8e5d56ab6496e6bde10"
+          "sha256": "a1c7bb9ba1a2a4250a1f5d8c28bfe4e035d6874dddd08bac9335e1cd00a9b081"
         }
       ]
     },
@@ -2696,14 +2554,13 @@
       "family": "physics",
       "name": "sankey",
       "title": "Sankey diagram",
-      "tagline": "Energy-transfer Sankey diagram: input bar splits into useful/wasted branches, widths and efficiency derived from value; values occludable, useful branch highlightable.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/sankey/1.json",
-          "sha256": "0f7df09c2ff841c9afcb3035041fea75da11743be8312d82c6cf4584b7283a09"
+          "sha256": "e3f9c2dccd66ca79459675bf39c4bf3296996b5e8da825a753de2b3d6005045b"
         }
       ]
     },
@@ -2712,14 +2569,13 @@
       "family": "physics",
       "name": "wave-superposition",
       "title": "Wave superposition",
-      "tagline": "Two sine waves and their derived point-by-point sum on one axis; constructive / destructive interference, phase difference, standing-wave nodes; sum occludable to \"sketch it\".",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/physics/wave-superposition/1.json",
-          "sha256": "01928559a58ca0477ac588a5298e15510f44b200ee2c53eb70326b283d2aa009"
+          "sha256": "ec96d29d90d69c3dbb7a8ad073ab11cfeda1ef3942c3a0de9dbc2b03e9a75c2e"
         }
       ]
     },
@@ -2728,14 +2584,13 @@
       "family": "probability",
       "name": "probability-table",
       "title": "Probability table",
-      "tagline": "Discrete distribution table summing to 1; derives missing probabilities, expected frequency and a cumulative F(x) row; occluded cells show \"?\" or a named unknown (a, b).",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/probability/probability-table/3.json",
-          "sha256": "0088059a4a3f4533a9a2b67c00c54139214dcd3fc37d06089a486fb5bc22da20"
+          "sha256": "cd4a8f8294a8e1cc3a6ac551eeec392ae1fb9e1ed0fe54e4ebc73bbe68498ee5"
         },
         {
           "version": 2,
@@ -2755,14 +2610,13 @@
       "family": "probability",
       "name": "relative-frequency",
       "title": "Relative frequency (experimental vs theoretical)",
-      "tagline": "Experimental relative-frequency line settling toward an amber theoretical level; derives RF at each milestone and expected frequency; fair vs biased.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/probability/relative-frequency/1.json",
-          "sha256": "d79cc6bb02a326da9e94dac81ce165c7d5b94004a7343c088688c4f3176fb631"
+          "sha256": "eb2e3c0e85a6f8d72bf638d86b3ceb0aa453c7a90343a7fa07eb57ace8cdfb1c"
         }
       ]
     },
@@ -2771,14 +2625,13 @@
       "family": "probability",
       "name": "spinner",
       "title": "Spinner",
-      "tagline": "Equal-sector spinner (circle or polygon) with repeatable labels and a pointer; derives each angle and P(label)=matching÷total as a simplified fraction.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/probability/spinner/1.json",
-          "sha256": "be7926a8caab33a930cb8b218a27d1fe8684dfa21c791e0a64b44b51424e64b4"
+          "sha256": "c64aac3cd23ea511b78761d808337be1bad86ae73311cac3663ec903c0292df5"
         }
       ]
     },
@@ -2787,14 +2640,13 @@
       "family": "probability",
       "name": "tree",
       "title": "Tree diagram",
-      "tagline": "Probability or frequency tree, 2–3 stages; labels every branch; derives the missing branch, end probabilities and totals; occludes; answer on the model to complete the tree.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/probability/tree/3.json",
-          "sha256": "14db8190316721b4cba20a6f5f314a26050aa050fb092e70ce8ec139f972e2d1"
+          "sha256": "1630de5d693662e6ee168b98f0ca07120815c03fd07359169b38cb88e15bc891"
         },
         {
           "version": 2,
@@ -2815,14 +2667,13 @@
       "family": "probability",
       "name": "venn",
       "title": "Venn diagram",
-      "tagline": "2- or 3-set Venn in a universal rectangle, circles standard/chain/disjoint/apart; regions carry values, stacked \"a/b\" fraction labels or member lists; ξ total suppressible.",
       "current": 4,
       "versions": [
         {
           "version": 4,
           "status": "current",
           "interface": "models/probability/venn/4.json",
-          "sha256": "9fa5c3113aa064bd924ce53ec897cfcc709c67a0d9ac976ee00885eff90e1faa"
+          "sha256": "20ea23977507ddb931545b7b9e79f9a4ceea98d5b1737d04944a76cd9ed95998"
         },
         {
           "version": 3,
@@ -2848,14 +2699,13 @@
       "family": "statistics",
       "name": "averages-table",
       "title": "Averages from a frequency table",
-      "tagline": "Frequency-table working surface; derives midpoint, f×x, cumulative f, mean, modal class, median; cells occlude to \"?\" or a symbol; open \"4 or more\" rows; both interval styles.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/statistics/averages-table/2.json",
-          "sha256": "23c8c55b87601e6d741f369e22c2ae94b52bf1cb6e8bf81e03df4a5363f6367a"
+          "sha256": "90dcc892fb65e0d8d04bb6c86c788d3b6f5577e7e87e5049c2078cdc223a6d25"
         },
         {
           "version": 1,
@@ -2870,14 +2720,13 @@
       "family": "statistics",
       "name": "bar-chart",
       "title": "Bar chart",
-      "tagline": "Bar chart of categorical data with separated bars; derives the value-axis scale, total and mode; a second series compares; occlude to read a value off, or draw the blank bars.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/statistics/bar-chart/2.json",
-          "sha256": "10d369085c5147bd02d1162191d5ad5c6b17c9449e3a0cd945a61b5a3921d4ed"
+          "sha256": "f80530f4021d9c2e28a7ae3bd8dd9592f258bc1dab7f89a6e79cebe02f9f616e"
         },
         {
           "version": 1,
@@ -2892,14 +2741,13 @@
       "family": "statistics",
       "name": "box-cf",
       "title": "Cumulative frequency & box plot",
-      "tagline": "Cumulative-frequency curve and box plot on a shared axis; derives running totals, quartiles, IQR, the five-number summary and 1.5×IQR outliers; read off, compare, or draw the box.",
       "current": 5,
       "versions": [
         {
           "version": 5,
           "status": "current",
           "interface": "models/statistics/box-cf/5.json",
-          "sha256": "274b622e3c90ec5e576753129e31192c51e93a0de59d87afdeceba2ca2ad8f18"
+          "sha256": "0dadd161651828a3fc961da48d0111f7e1a997a0d5d25f141a6aa64e78fb3a23"
         },
         {
           "version": 4,
@@ -2932,14 +2780,13 @@
       "family": "statistics",
       "name": "carroll-diagram",
       "title": "Carroll diagram",
-      "tagline": "Carroll sort grid (2×2, or 2×3 with a categorical axis): items placed into cells derived from two yes/no or numeric-rule properties; cells occlude/highlight, counts derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/statistics/carroll-diagram/1.json",
-          "sha256": "a80741b67f0542308c2ac459fc9cf2c1654417ff6bd353c36c4cf63701b3b2d3"
+          "sha256": "e7b3391202ee0e350be15064e589aa906d6b82826d25c91173a0231c4d403f73"
         }
       ]
     },
@@ -2948,14 +2795,13 @@
       "family": "statistics",
       "name": "climate-graph",
       "title": "Climate graph",
-      "tagline": "Climate graph (climograph): monthly rainfall bars on a left axis, a temperature line on a right axis; totals, means, ranges, wettest/hottest month all derived; readings occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/statistics/climate-graph/1.json",
-          "sha256": "c62c1d93a933ed85feefd4a19cef45b8d7531f8ba694017bfb336f767be984fa"
+          "sha256": "b1e64488c131880167c6b287817eb5ea38931bfb8cd26acadd12fe47908805a8"
         }
       ]
     },
@@ -2964,14 +2810,13 @@
       "family": "statistics",
       "name": "frequency-polygon",
       "title": "Frequency polygon",
-      "tagline": "Frequency polygon of grouped data — derives midpoints, plots × at (midpoint, frequency) and joins; overlays up to three; occludable points; draw-it-on marking via place-derived.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/statistics/frequency-polygon/2.json",
-          "sha256": "eeb50b6ca4357ae5362f670dd6b8295610c10eb7451627fc2aeb2e4e5ceaee73"
+          "sha256": "e78699983b4dabec15f4053f20b91553508dde444b6016408003f9b6d0f1b528"
         },
         {
           "version": 1,
@@ -2986,14 +2831,13 @@
       "family": "statistics",
       "name": "frequency-tree",
       "title": "Frequency tree",
-      "tagline": "Frequency tree: a count inside an ellipse node at each junction (root total → stage counts), category words on the branches; a missing count derives, any node occludes to \"?\".",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/statistics/frequency-tree/1.json",
-          "sha256": "b4f727becc3f048d3f4fb7c1adaeed92bc6f7bc7f637351ad1fa6c34ea29a99f"
+          "sha256": "f49224a710e5d9efc50ce93b1b4378d9c977219b980584f4af3d614b94b3f167"
         }
       ]
     },
@@ -3002,14 +2846,13 @@
       "family": "statistics",
       "name": "histogram",
       "title": "Histogram",
-      "tagline": "Histogram of grouped continuous data — height is frequency density, area is frequency; derives densities and sub-range frequency; can be drawn ON to answer \"draw the histogram\".",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/statistics/histogram/3.json",
-          "sha256": "35618a81ec99dc1f2369afad65b6551063491d68372d1fda584b83627ac92c8e"
+          "sha256": "f2ca94fdc7266c9bb3405b0bd3b1c5fc4336e00c0a6d1175c3dbe056b67f021c"
         },
         {
           "version": 2,
@@ -3029,14 +2872,13 @@
       "family": "statistics",
       "name": "pictogram",
       "title": "Pictogram",
-      "tagline": "Pictogram read against a key; part-symbols as wedges or grid cells; occlude a frequency or the KEY itself; blank rows complete on the model in quarter steps, auto-marked.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/statistics/pictogram/3.json",
-          "sha256": "4c94cf7060cfd16149941a0911c7898a3b6ef5b89db06280fa5af4080570a10e"
+          "sha256": "6622a95a9cc297c7dbc15bcfcb30f8dc545584b0fbde5c78dcc52c4c3924e831"
         },
         {
           "version": 2,
@@ -3057,14 +2899,13 @@
       "family": "statistics",
       "name": "pie-chart",
       "title": "Pie chart",
-      "tagline": "Pie chart of frequencies; derives total, multiplier, angles, percentages; occlude to find one; drag-to-construct; read-off schematic with right-angle & given-angle cues.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/statistics/pie-chart/3.json",
-          "sha256": "a8b9eb489da0bbffaec1fd5b8d324150d025aa7f30d201fc3c383d9baa3d82d6"
+          "sha256": "0937c439d4110ae4649d9d36142365846336aac585c527fc6cd1d2d2f7f9062b"
         },
         {
           "version": 2,
@@ -3085,14 +2926,13 @@
       "family": "statistics",
       "name": "population-pyramid",
       "title": "Population pyramid",
-      "tagline": "Population pyramid: back-to-back male/female age bands; widest cohort, dependency ratio and the youthful/ageing verdict derived; readings occlude, blank bars are drawn and marked.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/statistics/population-pyramid/1.json",
-          "sha256": "3a1a856192b0bfe3b23f5b924204f1b7a3b3be4e75954d37951928619eaa95ec"
+          "sha256": "623035094e495d06454dcaf4539d114d44c3dd40f2958096a45cf0af21ac5b0e"
         }
       ]
     },
@@ -3101,14 +2941,13 @@
       "family": "statistics",
       "name": "sample-space-grid",
       "title": "Sample-space diagram",
-      "tagline": "Two-event sample-space grid; each cell is the combined outcome and shaded events give P=matched÷total; values and probabilities derived, cells occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/statistics/sample-space-grid/1.json",
-          "sha256": "4be3e36748b648de546b8d7bdd28dc699c68d3442ccc59428a693413d8cb6c99"
+          "sha256": "70f45a30db30cdc8f6986fed2c7fd00e7be2253786e31c1770261ba8d23d13d4"
         }
       ]
     },
@@ -3117,14 +2956,13 @@
       "family": "statistics",
       "name": "scatter",
       "title": "Scatter graph",
-      "tagline": "Scatter graph of bivariate data; derives line of best fit, correlation, outliers, estimates. @2 answer modes: plot-the-points, draw a line of best fit, read off an estimate.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/statistics/scatter/2.json",
-          "sha256": "95146b9ee070b9af86738a491ef6aee4f854417b19aa54aa842b7334348dc387"
+          "sha256": "873b0e13c954c81e1f160f70c342dfb27adbdd7d36fe56a9b118499569c3e51e"
         },
         {
           "version": 1,
@@ -3139,14 +2977,13 @@
       "family": "statistics",
       "name": "stem-leaf",
       "title": "Stem-and-leaf diagram",
-      "tagline": "Stem-and-leaf from raw data; derives stems, ordered leaves, key, median/mode/range; answer on the model — complete the leaves, or fully construct the stems, leaves and key.",
       "current": 3,
       "versions": [
         {
           "version": 3,
           "status": "current",
           "interface": "models/statistics/stem-leaf/3.json",
-          "sha256": "442829120418ecc4cb2a5770f515755684cfae12fca36996f4f74c5f4667d849"
+          "sha256": "49d1e43cde946040bb65ed9ef6a1b40cea17d2c456cd61001c7067fb29772882"
         },
         {
           "version": 2,
@@ -3167,14 +3004,13 @@
       "family": "statistics",
       "name": "tally-chart",
       "title": "Tally chart",
-      "tagline": "Gated five-bar tally chart; marks derived from each row's count; occlude a frequency, mismatch one to pose the error, or draw a blank row's tally on the model, auto-marked.",
       "current": 2,
       "versions": [
         {
           "version": 2,
           "status": "current",
           "interface": "models/statistics/tally-chart/2.json",
-          "sha256": "12975d3b58aa8e0aeb2ac03b1c2448ae7f7cc46ded50ffc3c686fab56cbd89ac"
+          "sha256": "43c596128405c43207fe90462d26cd9a6729610d9be668f536c7ccc03a1bd2da"
         },
         {
           "version": 1,
@@ -3189,14 +3025,13 @@
       "family": "statistics",
       "name": "time-series",
       "title": "Time-series graph",
-      "tagline": "Time-series line graph; derives a centred moving average, a least-squares trend and season bands; series in blue, trend in teal; occlude to question.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/statistics/time-series/1.json",
-          "sha256": "368b9e81bc6c9798e726dab3a791c57ab667b5af530418c8a9bec7acbbb24632"
+          "sha256": "5d6dafc9cf2741d3a28da2bc6e6332f354e2f18d970232c8a8de74db5ef60a8e"
         }
       ]
     },
@@ -3205,14 +3040,13 @@
       "family": "statistics",
       "name": "two-way-table",
       "title": "Two-way table",
-      "tagline": "Two-way frequency table with derived row, column and grand totals and an optional P(event) readout including conditional; cells and totals occlude.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/statistics/two-way-table/1.json",
-          "sha256": "4c0b3334f28eeaf69576abe35fde41c7a1eea439e5570f79e3973eaf7e66501d"
+          "sha256": "776a1ca72e1c4dc466541dcfeb54839843f23c39b64a3ca893dce81e21788418"
         }
       ]
     },
@@ -3221,14 +3055,13 @@
       "family": "time",
       "name": "calendar",
       "title": "Calendar",
-      "tagline": "A one-month calendar grid whose day-count (leap rule) and the weekday of the 1st (derived) lay out the dates; mark dates and step this/next/last with wrap.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/time/calendar/1.json",
-          "sha256": "be3387e86250dd76bd387a5736d2bad84bf872c5505722d1f6388159715288ea"
+          "sha256": "ad9de30c1d455df7f16fcbef5377b935b23c22337a059843b9ca050e2215d4c0"
         }
       ]
     },
@@ -3237,14 +3070,13 @@
       "family": "time",
       "name": "cycle-wheel",
       "title": "Cycle wheel",
-      "tagline": "Periodic sequence as a labelled ring with a pointer — months, days of the week, seasons or a custom cycle; this/prev/next and step-and-wrap all derived.",
       "current": 1,
       "versions": [
         {
           "version": 1,
           "status": "current",
           "interface": "models/time/cycle-wheel/1.json",
-          "sha256": "9478e25fae4de6eb3d5fd0d81b0ff31341b0dc41c37c412e928e570ddd1b2165"
+          "sha256": "b3dafe1fdec42fe8641d6deb711e96e3a96cba17ada574769335dc76bf374183"
         }
       ]
     }

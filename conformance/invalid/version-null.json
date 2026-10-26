@@ -1,0 +1,17 @@
+{
+  "clause": "OR-VER-003: schemaVersion is a string when present",
+  "reason": "schemaVersion: null",
+  "schemaDetectable": true,
+  "path": "meta.schemaVersion",
+  "document": {
+    "id": "res-1",
+    "type": "resource",
+    "title": "A resource",
+    "meta": {
+      "schemaVersion": null
+    },
+    "blocks": {},
+    "sections": {},
+    "sequence": []
+  }
+}

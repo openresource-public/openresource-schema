@@ -4,44 +4,7 @@
   "name": "shape-dissection",
   "version": 1,
   "title": "Shape dissection",
-  "tagline": "A polygon cut into named child-shape pieces, then rearranged by rigid moves into a same-area shape; piece areas, shape names and the area-conservation check are derived.",
-  "description": "A shape dissected into pieces — the child shapes a polygon is cut into — drawn as bold-bordered, light-filled tiles, with the same piece-set shown in up to three arrangements side by side: original (the pieces tiling the whole shape, their abutting borders the cut lines), rearranged (each piece moved by a rigid transform — slide / rotate / flip), and exploded (the pieces pushed apart). You give only the pieces (each a ring of [x, y] vertices in real units) and, per piece, an optional rigid transform; the model derives each piece's area (by the shoelace formula), its shape-type name (\"right-angled triangle\", \"rectangle\", \"trapezium\"…), its right-angle squares and equal-side ticks, the rearranged and exploded positions, and the area-conservation readout. Because only isometries are allowed (translation, rotation, reflection — never an enlargement), every rearrangement keeps the pieces congruent and the total area the same — so \"12 cm² = 12 cm²\" is a derived truth, and the model flags the non-example where pieces overlap (the area would be double-counted). This is the manipulative for cut-and-rearrange reasoning and for deriving the parallelogram and triangle area formulae; it pairs with geometry/compound-area (split-and-sum).",
-  "whenToUse": "Reach for this to dissect a shape into smaller shapes, to compose / rearrange pieces, and to teach area conservation and the area formulae by rearrangement (KS1–KS3). Author only the pieces — each a ring of [x, y] vertices going round the piece once, y increasing upward (as on a coordinate grid) — so a right triangle is 3 points, a rectangle 4. The pieces should tile the whole shape (share edges, no gaps, no overlaps) when shown in the original arrangement; the model never writes a measurement, it derives each area and each shape name. show chooses the arrangement panels, laid out left to right with a derived area-conservation readout: [\"original\"] alone is just the dissection (the readout adds the piece areas, \"6 + 6 = 12 cm²\" — the split-and-sum link to compound-area); add \"rearranged\" to move each piece by its transform and show \"12 cm² = 12 cm²\" (same pieces, same area); add \"exploded\" to pull the pieces apart so each child shape is seen on its own. To rearrange a piece, give it a transform: an ordered list of rigid moves — { \"type\": \"translation\", \"vector\": [6, 0] } slides it, { \"type\": \"rotation\", \"centre\": [3, 2], \"angle\": 180 } turns it, { \"type\": \"reflection\", \"mirror\": \"y-axis\" } flips it. The classic figures: a parallelogram cut into a corner right-triangle + a quad, the triangle slid across to make a rectangle of the same base × height (derives the parallelogram area formula); two congruent triangles forming a parallelogram (so a triangle is half base × height); a shape exploded into its pieces and recomposed. Set morph between 0 and 1 to show a rearrangement part-way (0 = original positions, 1 = fully moved) — a staged build that steps morph 0 → 0.5 → 1 makes the piece slide or turn frame by frame. display toggles the labels and marks: areas (each piece's area, on by default), names (the derived shape-type name), rightAngles (small squares where edges meet at 90°), equalTicks (matching ticks on equal-length sides), invariant (the area readout, on by default). Per piece, occlude renders its area as \"?\" (the \"what is this piece's area?\" hook — the total then hides too so it cannot leak), highlight ambers the piece under discussion (e.g. the one that moves), label overrides the derived name. For an answer space set display.areas false (or occlude every piece) and ask \"find the area of each piece, then the whole\" in the caption. The non-example: arrange pieces so they overlap and the model detects it, replacing the readout with \"pieces overlap — the area is not conserved\" — use it to show why you cannot just pile pieces on top of each other. Keep the unit (default \"cm\") and the same pieces across the blocks of one lesson so pupils track one shape. Switch model when the teaching changes — for split-and-sum of a compound shape's area and perimeter use geometry/compound-area; for an object and its image under a transformation on a coordinate grid use geometry/transformations; for area by counting unit squares use geometry/area-grid. Synonyms a teacher might use: dissect, dissection, cut up a shape, cut into pieces, split a shape, compose and decompose shapes, rearrange, recompose, tangram, area is conserved / stays the same, derive the area of a parallelogram / triangle, congruent pieces, half a rectangle.",
   "responseModes": [],
-  "tags": [
-    "shape dissection",
-    "dissect",
-    "cut up shapes",
-    "cut into pieces",
-    "compose",
-    "decompose",
-    "compose and decompose",
-    "rearrange",
-    "recompose",
-    "area conservation",
-    "conservation of area",
-    "area is conserved",
-    "area formula",
-    "parallelogram area",
-    "triangle area",
-    "derive the area",
-    "congruent",
-    "congruent pieces",
-    "tangram",
-    "rigid transformation",
-    "slide",
-    "rotate",
-    "flip",
-    "reflect",
-    "right-angled triangle",
-    "trapezium",
-    "rectangle",
-    "square",
-    "geometry",
-    "shape",
-    "maths",
-    "primary"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -50,7 +13,6 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 8,
-        "description": "The child shapes the polygon is cut into. Each piece is its own ring of [x, y] vertices in real units (y UPWARD), going round the piece once — do NOT repeat the first vertex. For the original arrangement the pieces should TILE the whole shape (share edges, no gaps or overlaps). The model fills each piece a distinct categorical colour and derives its area and shape-type name.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -59,22 +21,19 @@
               "type": "array",
               "minItems": 3,
               "maxItems": 8,
-              "description": "This piece's vertices as [x, y] pairs in order (real units, y up). A triangle is 3 points, a rectangle 4. e.g. a right triangle: [[0,0],[2,0],[2,4]]. The area is derived by the shoelace formula; the shape-type name from the vertices and angles.",
               "items": {
                 "type": "array",
                 "minItems": 2,
                 "maxItems": 2,
                 "items": {
                   "type": "number"
-                },
-                "description": "An [x, y] vertex of this piece, in real units (y up)."
+                }
               }
             },
             "transform": {
               "type": "array",
               "minItems": 1,
               "maxItems": 3,
-              "description": "How this piece MOVES in the rearranged arrangement: an ordered list of rigid moves (translation / rotation / reflection) applied in order. Only isometries, so the piece stays congruent and the area is conserved. Omit for a piece that does not move. For a single move give a one-item list, e.g. [{ \"type\": \"translation\", \"vector\": [6, 0] }].",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
@@ -85,8 +44,7 @@
                       "translation",
                       "rotation",
                       "reflection"
-                    ],
-                    "description": "Which rigid move this step is. translation reads vector; rotation reads centre + angle; reflection reads mirror (or line). All three keep the piece congruent, so the area never changes."
+                    ]
                   },
                   "vector": {
                     "type": "array",
@@ -94,8 +52,7 @@
                       "type": "number"
                     },
                     "minItems": 2,
-                    "maxItems": 2,
-                    "description": "translation: the column vector [dx, dy], in the same real units as the piece points (y up). e.g. [6, 0] slides a piece 6 to the right."
+                    "maxItems": 2
                   },
                   "centre": {
                     "type": "array",
@@ -103,16 +60,13 @@
                       "type": "number"
                     },
                     "minItems": 2,
-                    "maxItems": 2,
-                    "description": "rotation: the centre of rotation [x, y], in real units. e.g. the midpoint of the edge the two triangles share."
+                    "maxItems": 2
                   },
                   "angle": {
-                    "type": "number",
-                    "description": "rotation: degrees ANTICLOCKWISE (use −90 for a quarter-turn clockwise, 180 for a half-turn). Half-turns (180) are the common dissection case."
+                    "type": "number"
                   },
                   "mirror": {
-                    "type": "string",
-                    "description": "reflection: a named mirror — \"x-axis\", \"y-axis\", \"y=x\", \"y=-x\", or an offset line \"x=k\" / \"y=k\" (e.g. \"x=4\"). For a mirror that is not axis-aligned use line instead."
+                    "type": "string"
                   },
                   "line": {
                     "type": "array",
@@ -125,8 +79,7 @@
                       "maxItems": 2
                     },
                     "minItems": 2,
-                    "maxItems": 2,
-                    "description": "reflection: an arbitrary mirror given as TWO points [[x1, y1], [x2, y2]] the line passes through — e.g. a diagonal of the shape. Use instead of mirror for a slanted mirror."
+                    "maxItems": 2
                   }
                 },
                 "required": [
@@ -135,16 +88,13 @@
               }
             },
             "label": {
-              "type": "string",
-              "description": "Override the name written for this piece (e.g. \"A\", \"B\", or a custom name). By default the derived shape-type name is used when display.names is on. Does not change the derived area."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this piece's area as \"?\" — the \"what is the area of this piece?\" hook. The piece still draws; the value is hidden here AND the area-conservation total hides too (so it cannot leak). Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this piece with an amber border — e.g. the piece that moves, or the answer piece. Its categorical fill stays. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -164,53 +114,42 @@
             "rearranged",
             "exploded"
           ]
-        },
-        "description": "Which arrangement panels to draw, left to right (a derived area-conservation readout sits between/below them). \"original\" = the pieces in their authored positions, tiling the whole shape (the cut). \"rearranged\" = each piece moved by its transform (slide / rotate / flip into a new shape of the same area). \"exploded\" = the pieces pushed apart so each child shape is seen alone. Default [\"original\"]. Two panels are the cut-and-rearrange comparison; keep to one or two for legible text."
+        }
       },
       "morph": {
         "type": "number",
         "minimum": 0,
-        "maximum": 1,
-        "description": "How far through the rearrangement to draw the moved pieces, 0 = original positions, 1 = fully transformed. Only affects the \"rearranged\" panel. Translations and rotations interpolate smoothly (so a staged build that steps morph 0 → 0.5 → 1 slides or turns a piece frame by frame); a reflection is applied in full whenever morph is above 0 (you cannot half-flip a piece). Default 1."
+        "maximum": 1
       },
       "display": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Toggles for the derived labels and property marks.",
         "properties": {
           "areas": {
-            "type": "boolean",
-            "description": "Write each piece's derived area inside it (\"6 cm²\"). false leaves the pieces unlabelled — an answer space. Default true."
+            "type": "boolean"
           },
           "names": {
-            "type": "boolean",
-            "description": "Write each piece's derived shape-type name (\"right-angled triangle\", \"rectangle\", \"trapezium\"…) — or its label override. Default false."
+            "type": "boolean"
           },
           "rightAngles": {
-            "type": "boolean",
-            "description": "Draw a small square at every vertex where two of a piece's edges meet at 90° — the right-angle property tag. Default false."
+            "type": "boolean"
           },
           "equalTicks": {
-            "type": "boolean",
-            "description": "Mark equal-length sides of a piece with matching tick dashes (one group of ticks per distinct length that repeats) — shows isosceles / equal sides. Default false."
+            "type": "boolean"
           },
           "invariant": {
-            "type": "boolean",
-            "description": "Show the derived area readout beneath the panels — the sum of the piece areas for a single arrangement (\"6 + 6 = 12 cm²\"), or the conservation statement when rearranged (\"12 cm² = 12 cm²\"), or the overlap warning for a non-example. Default true."
+            "type": "boolean"
           }
         }
       },
       "unit": {
-        "type": "string",
-        "description": "Unit of length, squared for the areas (\"12 cm²\"). Default \"cm\". Set \"\" for bare numbers (no unit)."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -219,7 +158,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — parallelogram cut and slid into a rectangle (same area)",
       "params": {
         "header": "Parallelogram → rectangle",
         "pieces": [
@@ -283,7 +221,6 @@
       }
     },
     {
-      "label": "Two congruent triangles make a parallelogram (a triangle is half of it)",
       "params": {
         "header": "Two triangles → a parallelogram",
         "pieces": [
@@ -333,7 +270,6 @@
       }
     },
     {
-      "label": "Answer space — an L-shape cut into two rectangles, find each area",
       "params": {
         "pieces": [
           {
@@ -387,7 +323,6 @@
       }
     },
     {
-      "label": "Occluded question — one piece's area hidden, find it and the whole",
       "params": {
         "pieces": [
           {
@@ -443,7 +378,6 @@
       }
     },
     {
-      "label": "Exploded — a square cut along its diagonal into two equal triangles",
       "params": {
         "header": "Cut and separate",
         "pieces": [
@@ -494,7 +428,6 @@
       }
     },
     {
-      "label": "Non-example — pieces piled up overlapping (area not conserved)",
       "params": {
         "header": "Not a fair rearrangement",
         "pieces": [

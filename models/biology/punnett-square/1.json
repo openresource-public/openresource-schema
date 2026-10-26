@@ -4,31 +4,7 @@
   "name": "punnett-square",
   "version": 1,
   "title": "Punnett square",
-  "tagline": "Punnett square for a monohybrid or dihybrid cross: gametes head the axes, every offspring cell and the genotype/phenotype ratios are derived; cells, gametes and ratios occlude.",
-  "description": "A Punnett square for a genetic cross. You author only the two parent genotypes (e.g. \"Bb\" × \"Bb\", or \"RrYy\" × \"RrYy\" for a dihybrid) and, for each gene, which allele letter is dominant together with the dominant and recessive phenotype words. The model derives each parent's gametes and heads the top row and left column with them, fills every interior cell by combining the gamete heading its column with the gamete heading its row (writing the dominant allele first per gene, the usual \"Bb\" convention), and works out the genotype ratio (tally of the offspring genotypes, reduced — 1:2:1, 9:3:3:1) and the phenotype ratio (a genotype shows the dominant trait if it carries at least one dominant allele — 3:1, 1:1, 9:3:3:1) beneath the grid, each with a legend of its classes. You never write a cell or a ratio, so the figure cannot disagree with the cross. Occlude any cell (renders \"?\") for \"complete the Punnett square\"; the two ratios then hide automatically so they cannot give the missing cell away. Occlude a gamete to ask \"what are the gametes?\" — its row or column of cells blanks so a shown cell cannot reveal it. Occlude a ratio (genotype or phenotype) for \"what is the ratio of offspring?\" while the completed square stays visible. Highlight a cell, a gamete or a phenotype class in amber. Optionally colour every cell by the phenotype it expresses (the categorical palette) so the 3:1 or 9:3:3:1 grouping is visible at a glance. A static model with teacher-led staged builds — fill the gametes, then the cells, then reveal the ratio.",
-  "whenToUse": "Reach for this to teach genetic crosses at GCSE: the Punnett square, monohybrid and dihybrid crosses, gametes, genotype and phenotype, dominant and recessive alleles, homozygous and heterozygous, and the offspring ratios (3:1, 1:1, 1:2:1, 9:3:3:1). Author the two parent genotypes and the gene(s): parents [\"Bb\", \"Bb\"]; genes [{ dominant: \"B\", dominantPhenotype: \"Brown\", recessivePhenotype: \"Blue\" }]. Each parent string is two allele letters per gene, in the same gene order as the genes array — a dihybrid parent is \"RrYy\" with genes for R and Y. The dominant letter must be an uppercase letter and its recessive partner is the same letter lowercased; write the alleles in the parent strings with those letters. The gametes, every cell and both ratios are worked out for you. Complete the square: give the full cross, then occlude the cells to find (cells: [{ row, col, occlude: true }], 1-based, row 1 = top offspring row, col 1 = left offspring column) — the ratios hide themselves so they cannot leak a missing cell. What are the gametes: occlude a gamete (gametes: [{ side: \"top\"|\"left\", index: 1, occlude: true }]) and the cells that would reveal it blank out. What is the ratio: set show.genotypeRatio or show.phenotypeRatio with { occlude: true } (ratios: { phenotype: { occlude: true } }) to hide just the ratio while the square stays. Highlight the answer cell, a gamete, or a whole phenotype class (ratios.phenotype.highlightClass: 1) in amber. colorByPhenotype: true tints every cell by the trait it shows so the grouping reads at a glance (categorical hues, not amber). Keep the same letters and trait across a lesson so pupils track one cross. Staged builds read well: base = the labelled empty grid, then fill the gametes, then the cells, then reveal a ratio (the base grid always stands alone). Switch primitive when the picture changes: for a family pedigree chart use a pedigree model, for DNA base pairing use a different model, for a plain data table use a content table. Synonyms a teacher might use: Punnett square, Punnett grid, genetic cross, monohybrid cross, dihybrid cross, test cross, back cross, genotype, phenotype, allele, dominant, recessive, homozygous, heterozygous, gamete, genetic diagram, ratio of offspring, 3 to 1.",
   "responseModes": [],
-  "tags": [
-    "punnett square",
-    "punnett grid",
-    "genetic cross",
-    "genetics",
-    "monohybrid",
-    "dihybrid",
-    "test cross",
-    "genotype",
-    "phenotype",
-    "allele",
-    "dominant",
-    "recessive",
-    "homozygous",
-    "heterozygous",
-    "gamete",
-    "inheritance",
-    "genetic diagram",
-    "ratio",
-    "biology"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -39,33 +15,27 @@
         "maxItems": 2,
         "items": {
           "type": "string"
-        },
-        "description": "The two parent genotypes, e.g. [\"Bb\", \"Bb\"] for a monohybrid cross or [\"RrYy\", \"RrYy\"] for a dihybrid. Each string is TWO allele letters per gene, written in the same order as the genes array (a dihybrid parent is gene-1 pair then gene-2 pair, \"RrYy\"). Use the dominant letter uppercase and the recessive letter lowercased (Bb, bb, BB). One string heads the top of the square, the other the left side."
+        }
       },
       "genes": {
         "type": "array",
         "minItems": 1,
         "maxItems": 2,
-        "description": "One entry per gene, in the order the allele pairs appear in the parent strings. A single gene is a monohybrid cross (2×2 square); two genes is a dihybrid (4×4 square).",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "dominant": {
-              "type": "string",
-              "description": "The DOMINANT allele — a single uppercase letter (e.g. \"B\", \"R\"). Its recessive partner is the same letter lowercased (\"b\", \"r\"); write the parent genotypes with these two letters."
+              "type": "string"
             },
             "dominantPhenotype": {
-              "type": "string",
-              "description": "The phenotype (observable trait) shown when at least one dominant allele is present, e.g. \"Brown eyes\", \"Round\". Used in the phenotype ratio legend."
+              "type": "string"
             },
             "recessivePhenotype": {
-              "type": "string",
-              "description": "The phenotype shown only when both alleles are recessive, e.g. \"Blue eyes\", \"Wrinkled\"."
+              "type": "string"
             },
             "trait": {
-              "type": "string",
-              "description": "Optional short name for the characteristic this gene controls, e.g. \"Eye colour\", \"Seed shape\". Shown as a small caption; omit to leave it out."
+              "type": "string"
             }
           },
           "required": [
@@ -77,7 +47,6 @@
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question and staging flags. Every cell always exists and its genotype is always computed — list a cell here only to occlude, blank, or highlight it. Addressing: row/col are 1-based into the OFFSPRING grid, row 1 = the top offspring row, col 1 = the left offspring column (a 2×2 monohybrid has rows/cols 1..2, a dihybrid 1..4).",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -85,26 +54,21 @@
             "row": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 4,
-              "description": "Offspring row, 1-based (1 = top)."
+              "maximum": 4
             },
             "col": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 4,
-              "description": "Offspring column, 1-based (1 = left)."
+              "maximum": 4
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's genotype as \"?\" — the \"complete the square\" hook. Both derived ratios hide automatically so they cannot leak the missing value. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render nothing in this cell — for staged builds that fill the square one stage at a time. Different from occlude (\"?\" poses a question, blank poses nothing yet). If both are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber fill and text for this cell — draw the eye to a result. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -115,7 +79,6 @@
       },
       "gametes": {
         "type": "array",
-        "description": "Per-gamete flags for the derived allele headers. Each gamete is addressed by which axis it heads and its 1-based position. Occluding a gamete poses \"what are the gametes?\" and blanks its whole row/column of cells so a shown cell cannot reveal it.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -125,22 +88,18 @@
               "enum": [
                 "top",
                 "left"
-              ],
-              "description": "\"top\" for a gamete of the parent heading the columns, \"left\" for the parent heading the rows."
+              ]
             },
             "index": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 4,
-              "description": "Position along that axis, 1-based (left-to-right for top, top-to-bottom for left)."
+              "maximum": 4
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this gamete as \"?\" and blank its row/column of cells (anti-leak). Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this gamete header. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -152,84 +111,67 @@
       "ratios": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Flags for the two derived ratio readouts beneath the square. Both are always computed; use these only to occlude or highlight them.",
         "properties": {
           "genotype": {
             "type": "object",
             "additionalProperties": false,
-            "description": "The genotype ratio (e.g. 1:2:1), with its class legend (BB, Bb, bb).",
             "properties": {
               "occlude": {
-                "type": "boolean",
-                "description": "Render the genotype ratio as \"?\" (the completed square stays). Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the genotype ratio line. Default false."
+                "type": "boolean"
               }
             }
           },
           "phenotype": {
             "type": "object",
             "additionalProperties": false,
-            "description": "The phenotype ratio (e.g. 3:1, 9:3:3:1), with its class legend of phenotype words.",
             "properties": {
               "occlude": {
-                "type": "boolean",
-                "description": "Render the phenotype ratio as \"?\". Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the phenotype ratio line. Default false."
+                "type": "boolean"
               },
               "highlightClass": {
                 "type": "integer",
                 "minimum": 1,
-                "maximum": 4,
-                "description": "Amber-highlight one phenotype class (1-based, in the order shown) and every cell that expresses it — for walking a class through. Default none."
+                "maximum": 4
               }
             }
           }
         }
       },
       "colorByPhenotype": {
-        "type": "boolean",
-        "description": "Tint every cell by the phenotype it expresses, using the categorical palette (not amber), so the 3:1 / 9:3:3:1 grouping reads at a glance and the legend swatches match. Default false (all cells accent blue)."
+        "type": "boolean"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles. All default true unless stated.",
         "properties": {
           "cellValues": {
-            "type": "boolean",
-            "description": "Show the offspring genotypes. false empties every cell (keep the gamete headers as a \"fill in the square\" answer space). Default true."
+            "type": "boolean"
           },
           "gametes": {
-            "type": "boolean",
-            "description": "Show the gamete headers on the two axes. Default true. Turn off for an unlabelled grid, or stage them on."
+            "type": "boolean"
           },
           "genotypeRatio": {
-            "type": "boolean",
-            "description": "Show the genotype ratio readout. Default true for a monohybrid; consider turning it off for a dihybrid where the phenotype ratio is the teaching point (nine genotype classes read long)."
+            "type": "boolean"
           },
           "phenotypeRatio": {
-            "type": "boolean",
-            "description": "Show the phenotype ratio readout. Default true."
+            "type": "boolean"
           },
           "parents": {
-            "type": "boolean",
-            "description": "Show the parent genotype label on each axis. Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the square; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below everything, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -239,7 +181,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — heterozygous monohybrid cross Bb × Bb → 3:1",
       "params": {
         "header": "Cross two heterozygous brown-eyed parents",
         "parents": [
@@ -258,7 +199,6 @@
       }
     },
     {
-      "label": "Blank answer space — complete the Punnett square",
       "params": {
         "parents": [
           "Tt",
@@ -280,7 +220,6 @@
       }
     },
     {
-      "label": "Occluded question — one offspring cell hidden, ratios hidden with it",
       "params": {
         "parents": [
           "Rr",
@@ -304,7 +243,6 @@
       }
     },
     {
-      "label": "Test cross — Bb × bb → 1:1",
       "params": {
         "header": "Test cross with a homozygous recessive parent",
         "parents": [
@@ -324,7 +262,6 @@
       }
     },
     {
-      "label": "What is the ratio — phenotype ratio occluded, square shown",
       "params": {
         "parents": [
           "Gg",
@@ -350,7 +287,6 @@
       }
     },
     {
-      "label": "Hard case — dihybrid cross RrYy × RrYy → 9:3:3:1",
       "params": {
         "header": "Dihybrid cross: seed shape and colour",
         "parents": [

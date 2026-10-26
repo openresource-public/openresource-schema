@@ -4,38 +4,15 @@
   "name": "symmetry",
   "version": 1,
   "title": "Symmetry",
-  "tagline": "Shape with its symmetry marked — dashed mirror lines and rotational order with a turn arrow; counts derived, occlude or hide for find-them / draw-them.",
-  "description": "A single 2-D shape with its symmetry marked: the lines of symmetry (mirror lines) drawn as dashed lines through it, and/or its order of rotational symmetry shown by a marked centre, a curved rotational arrow and a derived count. Give the shape as a regular polygon (\"regular\": 5 → a regular pentagon) and the model derives its mirror lines (a regular n-gon has n) and its order (n); or give an irregular shape as \"vertices\" and mark its symmetry — which mirror lines it has and its rotational order — for a not-to-scale sketch. The \"Lines of symmetry: k\" and \"Order of rotational symmetry: k\" readouts are computed and can be occluded as \"?\" to ask for them; mirror lines can be hidden for a \"draw them yourself\" answer space; a shape can be folded across a chosen line to \"complete the shape to a given symmetry\". On the web a handle rotates the shape onto itself so pupils can find the order by counting the coincidences in one turn.",
-  "whenToUse": "Reach for this for symmetry of a single shape: counting and drawing lines of symmetry (mirror lines / axes of symmetry), and rotational symmetry (the order, with the centre marked). For a standard shape use \"regular\": n (3 = equilateral triangle, 4 = square, 5 = pentagon, 6 = hexagon …) and the n mirror lines and order n are drawn automatically. For any other shape give \"vertices\" as [x, y] pairs (y points up, any scale — sketches are fine) and mark its symmetry yourself: list its mirrorLines by direction (angle 90 = a vertical line, 0 = horizontal, 45/135 = diagonals) and give rotational.order. Include the \"reflective\" object (even with an empty lines list) to discuss reflective symmetry — a parallelogram authoring reflective:{ lines: [] } correctly reads \"Lines of symmetry: 0\"; include \"rotational\" to discuss rotational symmetry. Common configurations: worked — a regular polygon with every line and the order shown; answer space — reflective.showLines false and the counts occluded (\"draw the lines of symmetry and state the order\"); count it — lines shown but reflective.occludeCount / rotational.occlude true (\"how many lines? what order?\"); complete the shape — completion:{ angle } shows half the shape against the fold line, completion.reveal true shows the finished shape with the second half in amber. The two classic traps: a parallelogram (rotational order 2, no lines of symmetry) and a kite / isosceles triangle (one line, order 1) — both author as vertices. Set draggable to let pupils rotate the shape onto itself and discover the order. Keep the same shape across a lesson so pupils track one figure. Switch primitive when the teaching is about moving a shape — reflecting or rotating an object to a separate image is geometry/transformations; interior/exterior angles of a polygon is geometry/polygon-angles. Synonyms a teacher might use: symmetry, line of symmetry, lines of symmetry, mirror line, axis of symmetry, axes of symmetry, reflective symmetry, rotational symmetry, order of rotational symmetry, order of symmetry, centre of rotation, regular polygon, complete the shape, symmetrical.",
   "responseModes": [],
-  "tags": [
-    "symmetry",
-    "line of symmetry",
-    "lines of symmetry",
-    "mirror line",
-    "axis of symmetry",
-    "reflective symmetry",
-    "rotational symmetry",
-    "order of rotational symmetry",
-    "order of symmetry",
-    "regular polygon",
-    "parallelogram",
-    "kite",
-    "complete the shape",
-    "symmetrical",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
-    "description": "Provide a shape as EITHER \"regular\" (a regular n-gon, symmetry derived) OR \"vertices\" (an irregular sketch, symmetry marked), then annotate it with \"reflective\" and/or \"rotational\".",
     "properties": {
       "regular": {
         "type": "integer",
         "minimum": 3,
-        "maximum": 12,
-        "description": "Generate a regular n-gon with this many sides (3 = equilateral triangle, 4 = square, 5 = pentagon, 6 = hexagon, …, drawn sitting flat on its base). The model DERIVES its n lines of symmetry and its order n — you do not mark them. Use \"vertices\" instead for any non-regular shape."
+        "maximum": 12
       },
       "vertices": {
         "type": "array",
@@ -48,13 +25,11 @@
           },
           "minItems": 2,
           "maxItems": 2
-        },
-        "description": "An irregular shape as [x, y] vertex pairs in order around the outline, y pointing UP (any scale — exam shapes are \"not to scale\"). Mark its symmetry with the \"reflective\" and \"rotational\" objects. Ignored when \"regular\" is given. Use a shape whose form shows its symmetry (a kite, a parallelogram, an L); avoid coordinates so lopsided they contradict the symmetry you mark."
+        }
       },
       "reflective": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Reflective (mirror-line) symmetry. Include this object to discuss it — even with an empty \"lines\" list, which reads \"Lines of symmetry: 0\" (the parallelogram case). For a \"regular\" shape the lines are derived; \"lines\" is ignored. Omit the whole object to leave reflective symmetry out of the figure.",
         "properties": {
           "lines": {
             "type": "array",
@@ -64,87 +39,69 @@
               "additionalProperties": false,
               "properties": {
                 "angle": {
-                  "type": "number",
-                  "description": "Direction of the mirror line in degrees: 0 = horizontal, 90 = vertical, 45 = the \"/\" diagonal, 135 = the \"\\\" diagonal. The line is drawn through the shape's centre (every line of symmetry passes through it) at this angle, clipped to the shape with a small overshoot. Give the line's direction, never pixel coordinates."
+                  "type": "number"
                 },
                 "label": {
-                  "type": "string",
-                  "description": "Optional short text drawn beside this line (e.g. \"line of symmetry\"). Omit for an unlabelled line."
+                  "type": "string"
                 },
                 "highlight": {
-                  "type": "boolean",
-                  "description": "Draw this one line in amber — draw the eye to a single mirror line. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
                 "angle"
               ]
-            },
-            "description": "The mirror lines of an IRREGULAR shape, each given by its direction (see MIRROR_LINE). An empty list means the shape has none. Ignored for a \"regular\" shape (its lines are derived). The \"Lines of symmetry: k\" readout counts these."
+            }
           },
           "showLines": {
-            "type": "boolean",
-            "description": "Draw the mirror lines on the shape. Set false for a \"draw the lines of symmetry yourself\" answer space (the shape shows, the lines do not). Default true."
+            "type": "boolean"
           },
           "showCount": {
-            "type": "boolean",
-            "description": "Show the \"Lines of symmetry: k\" readout below the figure. Default true."
+            "type": "boolean"
           },
           "occludeCount": {
-            "type": "boolean",
-            "description": "Render the lines-of-symmetry count as \"?\" — the \"how many lines of symmetry?\" question hook. The lines (if shown) stay visible. Default false."
+            "type": "boolean"
           },
           "highlightCount": {
-            "type": "boolean",
-            "description": "Amber the lines-of-symmetry count — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "rotational": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Rotational symmetry. Include this object to discuss it. For a \"regular\" shape the order is derived (= number of sides); for an irregular shape give \"order\". Omit the whole object to leave rotational symmetry out of the figure.",
         "properties": {
           "order": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 12,
-            "description": "The order of rotational symmetry of an IRREGULAR shape — how many times it maps onto itself in one full turn (1 = no rotational symmetry, e.g. a kite; 2 = a parallelogram or rectangle). Required for an irregular shape; ignored for a \"regular\" shape (its order is its number of sides)."
+            "maximum": 12
           },
           "showCentre": {
-            "type": "boolean",
-            "description": "Mark the centre of rotational symmetry with a dot. Default true."
+            "type": "boolean"
           },
           "showArrow": {
-            "type": "boolean",
-            "description": "Draw a curved arrow around the centre indicating rotation. Default true; suppressed automatically when the order is 1 (there is no rotational symmetry to indicate)."
+            "type": "boolean"
           },
           "showCount": {
-            "type": "boolean",
-            "description": "Show the \"Order of rotational symmetry: k\" readout below the figure. Default true."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the order as \"?\" — the \"what is the order of rotational symmetry?\" question hook. The centre and arrow stay visible. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the centre, arrow and order readout — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "completion": {
         "type": "object",
         "additionalProperties": false,
-        "description": "\"Complete the shape to a given symmetry.\" Folds the shape across a line through its centre: only the half on one side is drawn, against the dashed fold line, leaving the other half to be completed. Author the WHOLE (symmetric) shape — the model hides one half.",
         "properties": {
           "angle": {
-            "type": "number",
-            "description": "Direction of the fold line (the intended line of symmetry) in degrees, like a mirror line: 90 = vertical, 0 = horizontal. The shape is shown only on one side of this line."
+            "type": "number"
           },
           "reveal": {
-            "type": "boolean",
-            "description": "false (default) = answer space: show one half against the fold line for the pupil to complete. true = worked: show the whole shape with the completed (second) half in amber."
+            "type": "boolean"
           }
         },
         "required": [
@@ -152,24 +109,19 @@
         ]
       },
       "vertexLabels": {
-        "type": "boolean",
-        "description": "Label the vertices A, B, C, … outward from the centre. Default false."
+        "type": "boolean"
       },
       "notToScale": {
-        "type": "boolean",
-        "description": "Print a small \"Not to scale\" note below the figure — for an irregular sketch. Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a statement of the result. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. A handle lets pupils rotate the shape about its own centre; a faint ghost of the start position stays and the shape turns amber each time it lands back on the ghost (every 360/order degrees), so they discover the order by counting the coincidences in one full turn. Default false."
+        "type": "boolean"
       }
     },
     "anyOf": [
@@ -187,14 +139,12 @@
   },
   "examples": [
     {
-      "label": "Worked example — a regular pentagon: 5 lines of symmetry, order 5",
       "params": {
         "regular": 5,
         "header": "Symmetry of a regular pentagon"
       }
     },
     {
-      "label": "Blank answer space — a square with the lines hidden and both counts occluded",
       "params": {
         "regular": 4,
         "reflective": {
@@ -207,7 +157,6 @@
       }
     },
     {
-      "label": "Occluded question — a regular hexagon, lines drawn but the counts hidden",
       "params": {
         "regular": 6,
         "reflective": {
@@ -219,7 +168,6 @@
       }
     },
     {
-      "label": "The hard case — a parallelogram: order 2, no lines of symmetry",
       "params": {
         "vertices": [
           [
@@ -250,7 +198,6 @@
       }
     },
     {
-      "label": "A kite — a single line of symmetry, order 1",
       "params": {
         "vertices": [
           [
@@ -285,7 +232,6 @@
       }
     },
     {
-      "label": "Complete the shape — half a shape against a vertical line of symmetry",
       "params": {
         "vertices": [
           [

@@ -1,4 +1,4 @@
-# Open Resource schema v0.12.1
+# Open Resource schema v0.12.2
 
 A data model for educational resources.
 
@@ -21,7 +21,7 @@ A data model for educational resources.
   assumedKnowledge: AssumedKnowledge[],
 
   meta: {
-    schemaVersion: '0.12.1',
+    schemaVersion: '0.12.2',
     credits?: string,       // optional provenance line for the resource as a whole
     version?: number,       // the resource's own edition, from 1 — see Editions
     status?: 'draft' | 'published' | 'retired',
@@ -36,7 +36,7 @@ A resource is a flat dictionary of blocks and sections referenced by id. The top
 
 `meta.schemaVersion` names the schema version the document is shaped to. What a version promises, what counts as a breaking change, and what readers and writers must do are set out in [VERSIONING.md](VERSIONING.md).
 
-The other `meta` fields above are the resource's own **edition**: the schema version says how to read a document, the edition says which document it is. `version` counts the author's editions from 1, `status` is the edition's state, `supersedes` names the edition it replaces, `derivedFrom` names the resource it was adapted from, and `dateModified` is when it last changed. All are optional; Open Resource writes `derivedFrom` for an adaptation and `dateModified` on every read (VERSIONING.md, editions).
+The other `meta` fields above are the resource's own **edition**: the schema version says how to read a document, the edition says which document it is. `version` counts the author's editions from 1, `status` is the edition's state, `supersedes` names the edition it replaces, `derivedFrom` names the resource it was adapted from, and `dateModified` is when it last changed. All are optional. In documents Open Resource serves, `derivedFrom` is set for an adaptation and `dateModified` is the time of the last save (OR-VER-082).
 
 ## Sections
 
@@ -160,7 +160,7 @@ Some blocks can carry a **computed model** (also called a primitive) as their fi
 
 ```ts
 type PrimitiveRef = {
-  ref: string,        // 'family/name@version', e.g. 'graphing/coordinate-grid@1'
+  ref: string,        // 'family/name@version', e.g. 'graphing/coordinate-grid@4'
   params: object,     // matches the model's published interface
   altText: string,    // accessibility, search, and render-failure fallback
   steps?: { id: string, params: object }[]   // staged build — see below

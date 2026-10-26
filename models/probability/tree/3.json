@@ -4,31 +4,8 @@
   "name": "tree",
   "version": 3,
   "title": "Tree diagram",
-  "tagline": "Probability or frequency tree, 2–3 stages; labels every branch; derives the missing branch, end probabilities and totals; occludes; answer on the model to complete the tree.",
-  "description": "A tree diagram for sequential events, two or three stages — the model for probability trees and frequency trees. A root fans into stage-1 branches (the first event) and each of those optionally fans into stage-2 branches (the second event); every branch carries a value and an event label drawn at its OWN end node at EVERY stage (matching exam convention — e.g. Red/Blue appear on the second draw too, not only in the outcomes column), and an optional end-of-path column to the right gives each combined outcome and its probability as a separate element. You write only the scenario — the outcomes and their values — and everything else is computed: every node position and branch line, a single missing sibling value (the complement: 1 − the other branches, or in frequency mode the parent total − the others), each end-of-path probability (the product of the branch values along the path), the joined outcome names (\"Red, Blue\"), and the frequency total. mode \"probability\" takes fractions (\"3/5\") or decimals (0.6) on the branches; mode \"frequency\" takes whole-number counts and shows the total at the root. Branches and end values occlude to \"?\" independently — and an occluded branch turns every end value on its path \"?\" too — so one tree asks \"complete the tree\", \"find the missing probability\", or \"work out P(this outcome)\". Conditional (without-replacement) trees are authored by giving each stage-1 outcome its own stage-2 values. Because every branch is labelled at both stages, keep the event names SHORT — abbreviate long outcomes (e.g. \"does not win\" → \"NW\") and add a key (an abbr→meaning list drawn as a caption below the tree) so the shorthand stays clear; never rely on the outcomes column alone to name the second action. Hosted as a marked model tile with responseMode \"fill-derived\", the same blank / occluded branches become a complete-the-tree answer surface: each missing branch value is one typed slot, the pupil enters the probability (or, in frequency mode, the count), and the model checks it against the value it derives (1 − Σ siblings, or the given value) — probability slots accept any equivalent form (0.4 = 2/5 = 40%). A blank / occluded outcome becomes a slot too (the product along the path). Nothing is authored as a key; the derivation is the key.",
-  "whenToUse": "Reach for this whenever two events happen in sequence and the teaching lives on a tree: probability trees, conditional probability, with- and without-replacement, independent vs dependent events, and frequency trees. Build the tree as the scenario: branches is the first event (each entry a { label, p }), and each branch's children is the second event. Put a fraction \"3/5\", a decimal 0.6, or — in mode \"frequency\" — a count 30 on each branch as p. Derive-first: leave one branch in a group without p and it is filled as the complement (1 − the others, or the parent total − the others in frequency mode); add the outcomes object to show the end-of-path column, where each outcome's probability is the product of its branch values. Common configurations: complete the tree — show: { values: false } blanks every branch for pupils to fill (label the branches, keep the structure); find the missing probability — occlude one branch (\"?\"), pupils use the complement; find P(outcome) — give a leaf result: { occlude: true } so its end value shows \"?\" (occluding a branch already hides every end value on its path); trace a path — highlight the branches along it and the leaf's result. Complete the tree ON the model (auto-marked) — the same blank / occluded branches on a MARKED model tile with responseMode \"fill-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } }: every missing branch value becomes a typed slot, the pupil enters each probability (as a fraction \"3/5\", decimal 0.6, or percent 60% — equivalent forms all accepted) or, in frequency mode, the count, and the model checks each against the value it derives (occlude the branches you want asked and leave the given ones showing, or show: { values: false } to blank them all; add result: { occlude: true } / outcomes: { showValues: false } to also make the end-of-path values typed slots). Put the scenario in the question text. Conditional / without replacement — give each stage-1 outcome its own stage-2 values (the second-stage denominators change: 3/5 then 2/4); this is the hard, exam-grade case. Frequency tree — mode \"frequency\", whole-number counts, the root total auto-sums from the stage-1 counts (or set root.label); read probabilities by dividing a leaf count by the total. Cross-block convention in a lesson: keep the same mode, the same event on the same branch, and the same structure across the blocks so pupils track one diagram — change only what is filled, occluded or highlighted. A staged build reads well: add a branch per stage, or reveal the working then the answer. Three stages are supported too: give a stage-2 branch its own children (e.g. a coin flipped three times, or three successive draws). Labelling convention (important): every branch is labelled at its OWN end node at every stage, so keep event names SHORT — a full phrase like \"Hannah does not win\" collides once both stages are labelled. Abbreviate long outcomes (\"does not win\" → \"NW\", \"Bus is not late\" → \"NL\", \"Black Tie\" → \"B\") and pass a key: [{ abbr, meaning }] to draw a small legend below the tree; short names like Red/Blue/Win/Draw/Lose need no key. The outcomes column is a SEPARATE optional element — it never substitutes for labelling the branches themselves. Synonyms a teacher might use: tree diagram, probability tree, frequency tree, conditional probability, with replacement, without replacement, independent events, dependent events, sample space, and rule, or rule, multiply along the branches, add the outcomes, two events, combined outcomes.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "tree diagram",
-    "probability tree",
-    "frequency tree",
-    "probability",
-    "conditional probability",
-    "with replacement",
-    "without replacement",
-    "independent events",
-    "dependent events",
-    "combined events",
-    "sample space",
-    "and rule",
-    "or rule",
-    "multiply probabilities",
-    "branches",
-    "outcomes",
-    "two events",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -37,19 +14,15 @@
       "result": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The end-of-path readout for this branch when it is a LEAF (it has no children) and the outcomes column is shown. Ignored on a branch that has children. The outcome name and value are computed — use this only to override the name or to hide/emphasise the result.",
         "properties": {
           "label": {
-            "type": "string",
-            "description": "Override the derived outcome name (the path's event labels joined with \", \", e.g. \"Red, Blue\"). Use for a compact form like \"RR\". Omit to use the derived name."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render this path's end value as \"?\" — the \"work out P(this outcome)\" hook — even when every branch on the path is shown. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber this path's end readout — answer emphasis (usually paired with highlight on the branches that lead to it). Default false."
+            "type": "boolean"
           }
         }
       }
@@ -60,17 +33,14 @@
         "enum": [
           "probability",
           "frequency"
-        ],
-        "description": "What the branch values mean. \"probability\" (default): values are probabilities — fractions (\"3/5\") or decimals (0.6); sibling branches sum to 1, a missing one is filled as 1 − the others, and each end-of-path value is the PRODUCT of its branch probabilities (multiply along the path). \"frequency\": values are whole-number counts; sibling branches sum to their parent's count, a missing one is filled as parent − the others, the root shows the total (auto-summed from stage 1), and each leaf count is its own end value. The tree shape is identical either way."
+        ]
       },
       "root": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The root node at the left, where the branches begin.",
         "properties": {
           "label": {
-            "type": "string",
-            "description": "Text shown at the root. In frequency mode, the total (it auto-sums from the stage-1 counts, so set this only to override or when the stage-1 counts are incomplete). In probability mode, an optional context label. Omit for the default (auto-sum, or nothing)."
+            "type": "string"
           }
         }
       },
@@ -80,26 +50,21 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "A stage-1 branch from the root (the first event), optionally fanning into stage-2 children (the second event).",
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The event name for this branch, drawn at its end node — e.g. \"Red\", \"Heads\", \"Member\". Omit for an unlabelled branch."
+              "type": "string"
             },
             "p": {
               "type": [
                 "string",
                 "number"
-              ],
-              "description": "The value ON this branch. In probability mode: a fraction string like \"3/5\" or a decimal number like 0.6. In frequency mode: a whole-number count like 30. OMIT to DERIVE it as the complement (1 − the other stage-1 branches in probability mode; the root total − the other stage-1 branches in frequency mode) when it is the only one missing. Set occlude to show it as \"?\" instead."
+              ]
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this branch's value as \"?\" — the find-the-missing-value hook. The branch and node stay visible, and any end value whose path runs through it shows \"?\" too. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this branch — line, value and event label — to trace a path. Default false."
+              "type": "boolean"
             },
             "result": {
               "$ref": "#/$defs/result"
@@ -110,26 +75,21 @@
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "description": "A stage-2 branch (the second event). May optionally fan into a third stage of children; omit children for a two-stage tree.",
                 "properties": {
                   "label": {
-                    "type": "string",
-                    "description": "The event name for this branch, drawn at its end node — e.g. \"Red\", \"Heads\", \"Late\". Omit for an unlabelled branch."
+                    "type": "string"
                   },
                   "p": {
                     "type": [
                       "string",
                       "number"
-                    ],
-                    "description": "The value ON this branch. In probability mode: a fraction string like \"3/5\" (drawn as a stacked fraction) or a decimal number like 0.6. In frequency mode: a whole-number count like 30. OMIT to DERIVE it as the complement — when exactly one branch in a sibling group has no p it is filled automatically (1 − the other siblings in probability mode; the parent count − the other siblings in frequency mode). Set occlude to show it as \"?\" (the find-the-missing-value question) instead."
+                    ]
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Render this branch's value as \"?\" — the question hook (\"find the missing probability / frequency\"). The branch and its node stay visible, and any end value whose path runs through this branch also shows \"?\" so the outcomes column cannot leak it. Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Amber this branch — its line, value and event label — to trace a path through the tree. Default false."
+                    "type": "boolean"
                   },
                   "result": {
                     "$ref": "#/$defs/result"
@@ -140,92 +100,73 @@
                     "items": {
                       "type": "object",
                       "additionalProperties": false,
-                      "description": "A leaf branch with no children of its own — the end of a path. Same shape as any branch; this is as deep as the tree goes.",
                       "properties": {
                         "label": {
-                          "type": "string",
-                          "description": "The event name for this branch, drawn at its end node — e.g. \"Red\", \"Heads\", \"Late\". Omit for an unlabelled branch."
+                          "type": "string"
                         },
                         "p": {
                           "type": [
                             "string",
                             "number"
-                          ],
-                          "description": "The value ON this branch. In probability mode: a fraction string like \"3/5\" (drawn as a stacked fraction) or a decimal number like 0.6. In frequency mode: a whole-number count like 30. OMIT to DERIVE it as the complement — when exactly one branch in a sibling group has no p it is filled automatically (1 − the other siblings in probability mode; the parent count − the other siblings in frequency mode). Set occlude to show it as \"?\" (the find-the-missing-value question) instead."
+                          ]
                         },
                         "occlude": {
-                          "type": "boolean",
-                          "description": "Render this branch's value as \"?\" — the question hook (\"find the missing probability / frequency\"). The branch and its node stay visible, and any end value whose path runs through this branch also shows \"?\" so the outcomes column cannot leak it. Default false."
+                          "type": "boolean"
                         },
                         "highlight": {
-                          "type": "boolean",
-                          "description": "Amber this branch — its line, value and event label — to trace a path through the tree. Default false."
+                          "type": "boolean"
                         },
                         "result": {
                           "$ref": "#/$defs/result"
                         }
                       }
-                    },
-                    "description": "An optional THIRD stage fanning from this node (the third event) — e.g. a coin flipped three times, or three successive draws. Omit to stop at two stages. Up to 4 outcomes."
+                    }
                   }
                 }
-              },
-              "description": "The stage-2 branches fanning from this node (the second event). Omit for a one-stage tree, or for a path that stops at stage 1 (its own result then becomes a leaf). Up to 4 outcomes."
+              }
             }
           }
-        },
-        "description": "The stage-1 branches fanning from the root (the first event), left to right top to bottom. Each branch carries a value and label and may fan into stage-2 children. Up to 4 outcomes. Every node position and branch line is derived from this structure — you never place anything in pixels."
+        }
       },
       "outcomes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this object to draw the end-of-path column to the right of the leaves (each combined outcome and its value); omit it for a tree with no outcome column. Both the outcome names and the values are computed.",
         "properties": {
           "showLabels": {
-            "type": "boolean",
-            "description": "Show the derived outcome name beside each end value (the path's event labels joined, e.g. \"Red, Blue\"). Default true."
+            "type": "boolean"
           },
           "showValues": {
-            "type": "boolean",
-            "description": "Show the end-of-path value — the product of the path's branch probabilities, or the leaf frequency. false leaves a value-less outcome column (an answer space). Default true."
+            "type": "boolean"
           },
           "header": {
-            "type": "string",
-            "description": "A small heading above the outcome column, e.g. \"Outcome\" or \"P(outcome)\". Omit for none."
+            "type": "string"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "values": {
-            "type": "boolean",
-            "description": "Show the value on every branch. false renders all branch lines empty — the answer space for \"complete the tree\" (pupils write the probabilities in). Per-branch occlude poses \"?\" instead, one branch at a time. Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "key": {
         "type": "array",
         "maxItems": 8,
-        "description": "Optional legend, drawn as a compact caption below the tree: each entry reads \"abbr = meaning\" (e.g. R = Red, NW = does not win). Use it whenever branch labels are abbreviated so the shorthand stays clear — because every branch is labelled at every stage, long event names must be shortened. Omit for short, self-explanatory labels (Red, Win, Heads).",
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One legend entry mapping an abbreviation used on the branches to its full meaning.",
           "properties": {
             "abbr": {
-              "type": "string",
-              "description": "The short form written on the branches, e.g. \"NW\", \"R\", \"NL\"."
+              "type": "string"
             },
             "meaning": {
-              "type": "string",
-              "description": "What the abbreviation stands for, e.g. \"does not win\", \"Red\", \"Bus is not late\"."
+              "type": "string"
             }
           },
           "required": [
@@ -241,7 +182,6 @@
   },
   "examples": [
     {
-      "label": "Blank answer space — complete a two-spin tree (values and outcomes empty)",
       "params": {
         "branches": [
           {
@@ -277,7 +217,6 @@
       }
     },
     {
-      "label": "Worked example — a 1/4-Red spinner spun twice (independent), products shown",
       "params": {
         "header": "A spinner lands on Red with probability 1/4. It is spun twice.",
         "branches": [
@@ -316,7 +255,6 @@
       }
     },
     {
-      "label": "Occluded question (decimals) — two bulbs tested: missing branch and P(both work)",
       "params": {
         "header": "Each bulb is faulty with probability 0.1",
         "branches": [
@@ -360,7 +298,6 @@
       }
     },
     {
-      "label": "Hard case — 3 red, 2 blue, two taken WITHOUT replacement (conditional; find P(red, red))",
       "params": {
         "header": "Bag: 3 red, 2 blue. Two counters taken without replacement.",
         "branches": [
@@ -404,7 +341,6 @@
       }
     },
     {
-      "label": "Frequency tree (worked) — 120 gym survey, one count left to derive",
       "params": {
         "mode": "frequency",
         "header": "Gym survey of 120 members and non-members",
@@ -440,7 +376,6 @@
       }
     },
     {
-      "label": "Frequency tree (question) — find the missing counts",
       "params": {
         "mode": "frequency",
         "root": {
@@ -479,7 +414,6 @@
       }
     },
     {
-      "label": "Every branch labelled, short names — a coin then a spinner (no outcomes column)",
       "params": {
         "header": "Flip a coin, then spin a Win/Lose spinner",
         "branches": [
@@ -515,7 +449,6 @@
       }
     },
     {
-      "label": "Abbreviated labels + key — Hannah plays two games (long names shortened)",
       "params": {
         "header": "Hannah plays two games",
         "branches": [
@@ -565,7 +498,6 @@
       }
     },
     {
-      "label": "Complete on the model (fill-derived tile) — a spinner spun twice, find the missing probabilities (marked model tile: responseMode \"fill-derived\", correctAnswer { derived: true })",
       "params": {
         "branches": [
           {
@@ -600,7 +532,6 @@
       }
     },
     {
-      "label": "Complete on the model (fill-derived, hard case) — bag without replacement: type the missing branches and P(Red, Red)",
       "params": {
         "branches": [
           {

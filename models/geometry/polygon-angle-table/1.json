@@ -4,37 +4,8 @@
   "name": "polygon-angle-table",
   "version": 1,
   "title": "Polygon angle table",
-  "tagline": "Regular-polygon angle facts as a table — sides, interior sum, each interior, each exterior; one seed back-derives the rest both ways; cells occlude.",
-  "description": "Regular-polygon angle facts drawn as a working table: one row per polygon and four derived columns — Sides (n), Interior angle sum ((n−2)×180), Each interior angle ((n−2)×180/n) and Each exterior angle (360/n). You give each polygon exactly one seed — n, the interior-angle sum, each interior angle, or each exterior angle — and the model resolves the whole number of sides n and computes every other cell, so any one fact derives the rest in both directions (forward from n, and reverse: \"each interior angle is 156°\" → exterior 24° → n = 15). Any cell occludes to \"?\" for complete-the-table and find-the-number-of-sides questions, and any cell highlights amber for the answer. An optional derived name column labels each row (Triangle … Dodecagon, else \"n-gon\"); an optional formula line under each header recalls (n−2)×180 and 360/n. Stack several polygons for a comparison table. The tabular cousin of geometry/polygon-angles, which draws the polygon diagram itself.",
-  "whenToUse": "Reach for this whenever the teaching tabulates a regular polygon's angle facts rather than marking them on a drawn shape: recalling the interior-angle sum (n − 2) × 180°, working out each interior or each exterior angle of a regular polygon, the rule \"exterior = 360 ÷ n\", and especially the reverse direction — given each interior or each exterior angle, find the number of sides. Author the semantics: list `polygons`, each with exactly one seed — `n` (forward), `sum` (the interior-angle sum), `interior` (each interior angle) or `exterior` (each exterior angle) — and the model resolves n and computes every other cell. You never write a derived value. To pose a question, give a row `occlude: [\"n\"]` to ask for the number of sides, `occlude: [\"interior\"]` to ask for each interior angle, or `occlude: [\"sum\",\"interior\",\"exterior\"]` for a blank \"complete the table\" row; `highlight: [\"n\"]` (etc.) ambers the answer. Show the working in stages with host steps (reveal exterior, then n, then the row). Common configurations: worked fact — one polygon by `n` with `show: { formulae: true }` so the (n−2)×180 and 360/n reminders sit under the headers; find each angle — one polygon by `n`, occlude+highlight the interior (or exterior) column; find the number of sides — one polygon by `interior` or `exterior`, occlude+highlight `n`; comparison — several polygons stacked with `show: { names: true }` to see the pattern (exterior angle shrinking as n grows). Non-integer angles (a heptagon's 128.6° / 51.4°) round to `show.decimals` places (default 1); the sum and n are always whole. An impossible seed (an exterior that does not divide 360, e.g. interior 128°) renders an invalid row with \"—\" in the derived cells — fix the seed. Cross-block convention: keep the same columns and the same polygon order across one lesson so pupils track one table; change only what is seeded, occluded or asked. Switch model when the teaching is the polygon diagram — angles marked by arcs on the shape, the triangle-split proof of the sum, an irregular polygon, a missing-angle equation in x, or dragging a vertex — use geometry/polygon-angles; for angles at a point or on a line use geometry/angles-at-a-point. Synonyms a teacher might use: polygon angles, interior angle, exterior angle, angle sum, sum of interior angles, (n − 2) × 180, 360 ÷ n, regular polygon, number of sides, find n, each angle, pentagon, hexagon, heptagon, octagon, nonagon, decagon, dodecagon, angle facts table.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "polygon",
-    "polygons",
-    "regular polygon",
-    "interior angle",
-    "exterior angle",
-    "angle sum",
-    "sum of interior angles",
-    "interior angle sum",
-    "n-2 180",
-    "360 over n",
-    "number of sides",
-    "find n",
-    "each angle",
-    "pentagon",
-    "hexagon",
-    "heptagon",
-    "octagon",
-    "nonagon",
-    "decagon",
-    "dodecagon",
-    "angle facts",
-    "table",
-    "geometry",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -47,29 +18,23 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One regular polygon = one ROW. Give EXACTLY ONE seed (n / sum / interior / exterior) to fix the polygon; the model resolves the canonical integer n and DERIVES every other cell. Precedence if more than one is given: n > sum > interior > exterior. A seed that does not resolve to a whole number of sides ≥ 3 (e.g. an exterior that does not divide 360) renders an invalid row — the derived cells show \"—\".",
           "properties": {
             "n": {
               "type": "integer",
               "minimum": 3,
-              "maximum": 100,
-              "description": "Seed by NUMBER OF SIDES: a whole number 3..100 (3 triangle, 4 square, 5 pentagon, 6 hexagon, 8 octagon …). The forward direction — sum, each interior and each exterior are computed from it."
+              "maximum": 100
             },
             "sum": {
-              "type": "number",
-              "description": "Seed by INTERIOR ANGLE SUM in degrees — (n−2)×180 (360 for a quadrilateral, 540 a pentagon, 720 a hexagon, 1080 an octagon). Resolves n = sum/180 + 2; must be a positive multiple of 180."
+              "type": "number"
             },
             "interior": {
-              "type": "number",
-              "description": "Seed by EACH INTERIOR ANGLE in degrees (108 pentagon, 120 hexagon, 156 → n = 15). The reverse direction: exterior = 180 − interior, then n = 360/exterior. Must lie strictly between 0 and 180 and give a whole number of sides."
+              "type": "number"
             },
             "exterior": {
-              "type": "number",
-              "description": "Seed by EACH EXTERIOR ANGLE in degrees (72 pentagon, 60 hexagon, 24 → n = 15). The reverse direction: n = 360/exterior. Must divide 360 into a whole number of sides ≥ 3 (so ≤ 120)."
+              "type": "number"
             },
             "name": {
-              "type": "string",
-              "description": "Optional row-label override shown in the left name column (which appears when show.names is true or any row sets a name). Defaults to the name derived from n (\"Hexagon\", \"Octagon\", \"15-gon\"). Use it for a custom label like \"Stop sign\" or a not-named \"Shape A\"."
+              "type": "string"
             },
             "occlude": {
               "type": "array",
@@ -81,10 +46,8 @@
                   "sum",
                   "interior",
                   "exterior"
-                ],
-                "description": "A column: \"n\" = number of sides, \"sum\" = interior angle sum, \"interior\" = each interior angle, \"exterior\" = each exterior angle."
-              },
-              "description": "Which of this row's cells to hide as \"?\" — the question hook (\"complete the table\", \"find the number of sides\", \"find each angle\"). The hidden value appears nowhere else (cell, name, aria), so the visible cells are the scaffold for finding it, not a giveaway. e.g. [\"n\"] to ask for the number of sides; [\"sum\",\"interior\",\"exterior\"] for a blank answer row."
+                ]
+              }
             },
             "highlight": {
               "type": "array",
@@ -96,10 +59,8 @@
                   "sum",
                   "interior",
                   "exterior"
-                ],
-                "description": "A column: \"n\" = number of sides, \"sum\" = interior angle sum, \"interior\" = each interior angle, \"exterior\" = each exterior angle."
-              },
-              "description": "Which of this row's cells to amber — answer emphasis (the result of a find question). Default none. Amber is the result colour; use it on the cell the question asks for."
+                ]
+              }
             }
           },
           "anyOf": [
@@ -124,49 +85,39 @@
               ]
             }
           ]
-        },
-        "description": "The rows of the table, top to bottom (one to eight regular polygons). A single polygon is the core derivation row; stack several for a comparison table. Each polygon carries EXACTLY ONE seed and is back-derived to a whole number of sides n."
+        }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Column and furniture toggles.",
         "properties": {
           "names": {
-            "type": "boolean",
-            "description": "Add a left name column (Triangle, Square, Pentagon … Dodecagon, else \"n-gon\", or a row's `name` override). Default false. Turn it on for a comparison table."
+            "type": "boolean"
           },
           "sum": {
-            "type": "boolean",
-            "description": "Show the Interior angle sum column. Default true."
+            "type": "boolean"
           },
           "interior": {
-            "type": "boolean",
-            "description": "Show the Each interior angle column. Default true."
+            "type": "boolean"
           },
           "exterior": {
-            "type": "boolean",
-            "description": "Show the Each exterior angle column. Default true."
+            "type": "boolean"
           },
           "formulae": {
-            "type": "boolean",
-            "description": "Print the formula reminder under each column header — \"(n−2)×180\", \"(n−2)×180 ÷ n\", \"360 ÷ n\". Default false. The n column shows \"sides\". Pairs well with a worked example."
+            "type": "boolean"
           },
           "decimals": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 3,
-            "description": "Decimal places for NON-integer angles (a regular heptagon's 128.6° / 51.4°). Default 1. Exact angles, the interior-angle sum, and n never show a decimal point regardless."
+            "maximum": 3
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -175,7 +126,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a regular hexagon, every fact with its formula",
       "params": {
         "header": "Angles of a regular hexagon",
         "polygons": [
@@ -191,7 +141,6 @@
       }
     },
     {
-      "label": "Blank answer space — complete the table for a regular pentagon",
       "params": {
         "polygons": [
           {
@@ -210,7 +159,6 @@
       }
     },
     {
-      "label": "Occluded question — find each interior angle of a regular octagon",
       "params": {
         "polygons": [
           {
@@ -226,7 +174,6 @@
       }
     },
     {
-      "label": "Hard case — an interior angle is 156°, find the number of sides (reverse)",
       "params": {
         "polygons": [
           {
@@ -243,7 +190,6 @@
       }
     },
     {
-      "label": "Comparison table — five regular polygons, names shown",
       "params": {
         "header": "Regular polygons",
         "polygons": [
@@ -270,7 +216,6 @@
       }
     },
     {
-      "label": "Each angle of a regular heptagon — recurring decimals to 1 d.p.",
       "params": {
         "polygons": [
           {

@@ -4,32 +4,7 @@
   "name": "parallelogram-angles",
   "version": 1,
   "title": "Parallelogram angles",
-  "tagline": "Parallelogram from three placed corners; interior angles derived (opposite equal, co-interior 180) plus optional extended-side triangle and diagonal-cevian angle-chase constructs.",
-  "description": "A single parallelogram ABCD drawn from three placed corners (the fourth is computed so the figure is always a true parallelogram), with any of its interior angles, side lengths, equal-side ticks and diagonals marked, plus two optional angle-chase constructs. The EXTERNAL construct extends one side beyond a corner to a new point and joins it to another corner, forming an attached triangle (the \"CBE is a straight line, find angle BAE\" figure). The CEVIAN construct drops a line from a corner to a point on a drawn diagonal, deriving the angle where they meet (the \"diagonal DB, cevian AE, find angle AEB\" figure). You place the corners as a sketch in any units; the model derives every interior angle (opposite angles equal, co-interior angles add to 180), every side length (opposite sides equal), every diagonal length, and the triangle / intersection angles of the two constructs, then auto-fits the figure. Angles are marked by their vertex — a corner's interior angle needs only its vertex; any other angle (an angle inside the attached triangle, the angle a cevian makes with a diagonal, the angle a diagonal makes with a side) is named by its vertex plus the two points its arms run to. Per-element occlusion (\"find x\" → \"?\"), highlighting (amber), equal-side ticks, a length unit, a \"not to scale\" note, an optional caption, and draggable corners on the web. Override any displayed value with a label for the given data of a not-to-scale exam figure. Placed to scale, every derived value equals the true answer, so a reconstruction can be checked against the boxed result.",
-  "whenToUse": "Reach for this whenever the teaching lives on a parallelogram and its angles: naming opposite / co-interior angles, the angle a diagonal makes (alternate angles across the parallel sides), and the classic angle-chase figures where a side is extended past a corner into a triangle, or a diagonal and a second line meet inside the shape. Place THREE consecutive corners as [x, y] points making a sketch, IN ORDER around the perimeter (A, then B, then C); the fourth corner D is computed to close the parallelogram (override its printed letter with fourthLabel). Reference a corner's interior angle by its vertex ({ at: \"A\" }); reference any other angle by its vertex and the two points its arms reach ({ at: \"E\", from: \"A\", to: \"B\" } marks angle AEB). Reference a side by its two corner labels; a diagonal by its two opposite corners. The model derives every measure, so for a to-scale sketch just mark the element and the right number shows; for a not-to-scale exam figure place a rough parallelogram, set notToScale: true, and override the given values with labels. Common configurations: OPPOSITE / CO-INTERIOR — mark all four interior angles (opposite come out equal, adjacent add to 180), or give one and occlude another. DIAGONAL + ALTERNATE ANGLES — draw a diagonal (diagonals: [{ between: [\"A\",\"C\"] }]) and mark the two alternate angles it makes with the parallel sides ({ at: \"A\", from: \"B\", to: \"C\" } and { at: \"C\", from: \"A\", to: \"D\" }) — they derive equal. EXTENDED SIDE (attached triangle) — external: { onSide: [\"C\",\"B\"], by: 3, toVertex: \"A\", label: \"E\" } extends side CB beyond B to E and joins A to E; mark the triangle's angles at E, B and A by naming their arms, occlude the unknown. DIAGONAL + CEVIAN — draw the diagonal, then cevian: { from: \"A\", onDiagonal: [\"D\",\"B\"], at: 0.55, label: \"E\" } drops AE onto DB at a fraction along it; mark the intersection angle ({ at: \"E\", from: \"A\", to: \"B\" }) and occlude it. Keep the same parallelogram shape and labels across the blocks of one lesson so pupils track one figure — change only what is given, occluded or highlighted; a chase builds up naturally in stages (bare parallelogram → givens → construction line → the answer). Occlude renders a value as \"?\"; the element stays drawn. UNITS — set unit: \"cm\" once to append it to bare-number length labels. EXAM FIGURES with no letters — vertexLabels: false stops the letters printing; addressing still uses A/B/C/D. Synonyms a teacher might use: parallelogram, opposite angles, co-interior angles, allied angles, angles on parallel sides, alternate angles, diagonal of a parallelogram, angle chase, find the missing angle, straight line, exterior angle, not to scale.",
   "responseModes": [],
-  "tags": [
-    "parallelogram",
-    "angles",
-    "opposite angles",
-    "co-interior angles",
-    "allied angles",
-    "alternate angles",
-    "parallel lines",
-    "parallel sides",
-    "diagonal",
-    "cevian",
-    "angle chase",
-    "extended side",
-    "straight line",
-    "exterior angle",
-    "triangle",
-    "find the missing angle",
-    "not to scale",
-    "quadrilateral",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -38,7 +13,6 @@
         "type": "array",
         "minItems": 3,
         "maxItems": 3,
-        "description": "THREE consecutive corners of the parallelogram, IN ORDER around the perimeter — A, then B, then C. Each is a point in any units; place them as a SKETCH of the parallelogram you want. The FOURTH corner D is computed (D = A + C − B) so the figure is always a true parallelogram — you never place it. The order fixes the default labels: first corner A, second B, third C (fourth D). Only the shape matters; the model auto-fits the figure to the canvas.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -49,12 +23,10 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "Position of this corner as [x, y] in your own units (y up). Only the SHAPE matters — the figure is scaled to fit."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Display name for this corner, drawn just outside it. Defaults to A, B, C by order. Override for different names (then reference this corner by the new label everywhere)."
+              "type": "string"
             }
           },
           "required": [
@@ -63,47 +35,37 @@
         }
       },
       "fourthLabel": {
-        "type": "string",
-        "description": "Display name for the computed fourth corner. Default \"D\". Reference this corner by whatever label you set here."
+        "type": "string"
       },
       "angles": {
         "type": "array",
-        "description": "The angles to MARK — an arc + value, or a right-angle square. TWO forms. Interior corner angle: give only `at` (the vertex label) — the angle between the two sides meeting there is derived (opposite corners come out equal, adjacent add to 180). ANY OTHER angle: give `at` plus `from` and `to`, the two points its arms run to — e.g. { at: \"E\", from: \"A\", to: \"B\" } marks angle AEB, { at: \"A\", from: \"D\", to: \"E\" } marks angle DAE. Points may be corners (A, B, C, D), the external point, or the cevian point. The measure is DERIVED; override with `label`. Omit an angle to leave it unmarked.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "string",
-              "description": "The vertex the angle sits at — a corner label, the external point, or the cevian point."
+              "type": "string"
             },
             "from": {
-              "type": "string",
-              "description": "One arm of the angle: the point the first arm runs to. Omit (with `to`) only for a corner's interior angle, which uses the two adjacent corners automatically."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "The other arm of the angle: the point the second arm runs to. Omit (with `from`) only for a corner's interior angle."
+              "type": "string"
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed value — the given measure of a not-to-scale figure (\"124°\") or an unknown (\"x\"). Omit to show the measure derived from the sketch."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this angle's value as \"?\" — the \"find the missing angle\" hook. The arc still shows. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this angle (amber arc + value) — the answer, or the angle in question. Default false."
+              "type": "boolean"
             },
             "bare": {
-              "type": "boolean",
-              "description": "Mark this angle with the arc ONLY — no value text. Use when the figure marks an angle without giving its size. occlude beats bare. Default false."
+              "type": "boolean"
             },
             "rightAngle": {
-              "type": "boolean",
-              "description": "Mark this angle as a right angle: a small square instead of an arc and value. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -113,7 +75,6 @@
       },
       "sides": {
         "type": "array",
-        "description": "The parallelogram sides to LABEL with a length and/or tick as equal. Address each by its two corner labels (they must be consecutive corners). The length is DERIVED (opposite sides come out equal); override with `label`. Omit a side to leave it bare.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -124,26 +85,21 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two endpoint corner labels of this side, e.g. [\"A\",\"B\"] (order does not matter). Must be a genuine side — two consecutive corners."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed length — the given value (\"8 cm\", \"x\"). Omit to show the derived length."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this side's length as \"?\" — the \"find the missing side\" hook. The side stays drawn. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this side (amber). Default false."
+              "type": "boolean"
             },
             "ticks": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 3,
-              "description": "Draw this many small equal-length ticks across the side. Sides with the SAME tick count read as equal (opposite sides of a parallelogram). Omit for no tick."
+              "maximum": 3
             }
           },
           "required": [
@@ -154,7 +110,6 @@
       "diagonals": {
         "type": "array",
         "maxItems": 2,
-        "description": "Diagonals to DRAW — a straight line between two OPPOSITE corners ([\"A\",\"C\"] or [\"B\",\"D\"]). The length is DERIVED; show it with showLength, occlude it, highlight it, or override with a label. A diagonal is needed for the alternate-angle figure (mark the two alternate angles it makes with the parallel sides) and for the cevian construct (the cevian meets a drawn diagonal). Omit for a plain parallelogram. At most two.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -165,24 +120,19 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two OPPOSITE corner labels this diagonal joins, e.g. [\"A\",\"C\"] or [\"B\",\"D\"] (order does not matter)."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed length (\"8 m\", \"x\"). Omit to leave the diagonal unlabelled unless showLength / occlude is set."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the diagonal's length as \"?\". The line still shows. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to the diagonal and its length (amber). Default false."
+              "type": "boolean"
             },
             "showLength": {
-              "type": "boolean",
-              "description": "Show the derived length even with no label. Default false — a bare diagonal draws just the line."
+              "type": "boolean"
             }
           },
           "required": [
@@ -193,7 +143,6 @@
       "external": {
         "type": "object",
         "additionalProperties": false,
-        "description": "ONE external point on an extended side, forming an attached triangle — the \"CBE is a straight line, find angle BAE\" figure. The side is extended beyond one of its corners to a new point, which is then joined to another corner. Mark the triangle's angles through `angles` (naming their arms, e.g. { at: \"E\", from: \"A\", to: \"B\" }). Omit for no external construct.",
         "properties": {
           "onSide": {
             "type": "array",
@@ -201,20 +150,16 @@
               "type": "string"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "The side to extend, named in the DIRECTION of extension: [from, through]. The new point sits beyond the SECOND corner. [\"C\",\"B\"] extends side CB out past B (so C, B and the new point are a straight line, in that order)."
+            "maxItems": 2
           },
           "by": {
-            "type": "number",
-            "description": "How far beyond the second corner the new point sits, as a distance in your own units (the same units as the vertices). Positive."
+            "type": "number"
           },
           "toVertex": {
-            "type": "string",
-            "description": "Which corner to JOIN the new point to, drawing the third side of the attached triangle (e.g. \"A\" draws the line from A to the new point)."
+            "type": "string"
           },
           "label": {
-            "type": "string",
-            "description": "Display name for the new external point (e.g. \"E\"). Reference it by this label in `angles`. Default \"E\"."
+            "type": "string"
           }
         },
         "required": [
@@ -226,11 +171,9 @@
       "cevian": {
         "type": "object",
         "additionalProperties": false,
-        "description": "ONE cevian meeting a diagonal at an interior point — the \"diagonal DB, cevian AE with E on DB, find angle AEB\" figure. A line is drawn from a corner to a point ON a diagonal; the angle where they meet is derived. Draw the diagonal too (in `diagonals`) so the figure reads. Mark the intersection angle through `angles` ({ at: \"E\", from: \"A\", to: \"B\" }). Omit for no cevian.",
         "properties": {
           "from": {
-            "type": "string",
-            "description": "The corner the cevian starts from (e.g. \"A\")."
+            "type": "string"
           },
           "onDiagonal": {
             "type": "array",
@@ -238,18 +181,15 @@
               "type": "string"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "The two opposite corners of the diagonal the cevian lands on, e.g. [\"D\",\"B\"] (order sets the direction of `at`: 0 at the first corner, 1 at the second)."
+            "maxItems": 2
           },
           "at": {
             "type": "number",
             "minimum": 0,
-            "maximum": 1,
-            "description": "Where on the diagonal the cevian meets it, as a fraction from the first named corner (0) to the second (1). 0.5 is the midpoint."
+            "maximum": 1
           },
           "label": {
-            "type": "string",
-            "description": "Display name for the meeting point (e.g. \"E\"). Reference it by this label in `angles`. Default \"E\"."
+            "type": "string"
           }
         },
         "required": [
@@ -259,28 +199,22 @@
         ]
       },
       "unit": {
-        "type": "string",
-        "description": "The figure's length unit (\"cm\", \"m\", \"mm\"). Appended to every length label that is a BARE NUMBER — a derived length or a purely numeric authored label (\"12\" → \"12 cm\"). A label with any other text (\"12 cm\", \"x\") is shown verbatim. Angle labels never take it. Default \"\" (labels stay bare)."
+        "type": "string"
       },
       "vertexLabels": {
-        "type": "boolean",
-        "description": "Whether to PRINT the corner letters. Set false for exam figures drawn without letters — addressing still uses the default A/B/C/D (and construct labels); only the printing is suppressed. Default true."
+        "type": "boolean"
       },
       "notToScale": {
-        "type": "boolean",
-        "description": "Print a \"Not to scale\" note by the figure. Only when the source figure prints one. Default false."
+        "type": "boolean"
       },
       "caption": {
-        "type": "string",
-        "description": "An optional line of text centred below the figure — the rule or fact being taught, e.g. \"Opposite angles of a parallelogram are equal\". Omit for none."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "draggablePoints": {
-        "type": "boolean",
-        "description": "Web-only. Let pupils drag a corner (A, B or C) to reshape the parallelogram; the fourth corner, every derived angle, and both constructs recompute live. Best on a to-scale figure (no overridden labels). Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -289,7 +223,6 @@
   },
   "examples": [
     {
-      "label": "Blank parallelogram frame (label A, B, C, D) — answer space",
       "params": {
         "vertices": [
           {
@@ -314,7 +247,6 @@
       }
     },
     {
-      "label": "Worked — opposite angles equal, co-interior add to 180 (all four marked)",
       "params": {
         "vertices": [
           {
@@ -354,7 +286,6 @@
       }
     },
     {
-      "label": "Occluded question — one angle given, find the co-interior angle",
       "params": {
         "vertices": [
           {
@@ -389,7 +320,6 @@
       }
     },
     {
-      "label": "Diagonal + alternate angles — the two derive equal",
       "params": {
         "vertices": [
           {
@@ -435,7 +365,6 @@
       }
     },
     {
-      "label": "Extended side (attached triangle) — find angle AEB (occluded)",
       "params": {
         "vertices": [
           {
@@ -482,7 +411,6 @@
       }
     },
     {
-      "label": "The hard case — diagonal + cevian meeting inside, find angle AEB (occluded)",
       "params": {
         "vertices": [
           {

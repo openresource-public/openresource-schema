@@ -4,26 +4,7 @@
   "name": "decision-walk",
   "version": 1,
   "title": "Decision walk (branching scenario)",
-  "tagline": "Branching 'choose-your-path' scenario — labelled options lead to outcome cards; drawn as a branching tree, static or staged; labels occludable.",
-  "description": "A branching-decision scenario — a \"choose your path\" / decision-tree diagram. Decision boxes each pose a question and carry two-or-more labelled options; each option leads to the next decision or to a terminal outcome card (a title plus a short recommendation sentence). You author only the scenario — each decision with its options (a label and the id it leads to) and each outcome with its text — and the model derives every box position (a layered auto-layout, so converging paths merge into one box), the box sizes, every option arrow, the entry node, and — from a chosen `walk` — the highlighted route and a breadcrumb of the chosen option labels. The static render shows the whole map of choices (a faithful decision tree); set `walk` to highlight one route through it, and step that `walk` across staged `steps` to trace the route frame by frame. Any node or option label occludes to \"?\" for \"which option / which outcome?\", and nodes/edges highlight in amber. For an algorithm with loops and merging arrows use diagram/flowchart; for a static classification hierarchy with no walk use diagram/tree.",
-  "whenToUse": "Reach for this to lay out a branching decision — a \"choose your path\" scenario, a decision tree, a routing/diagnostic flow, a \"which method/strategy should I use?\" guide. A question leads, via one of its options, to the next question and on to an outcome (a recommendation); a chosen route can be highlighted and traced. Author the scenario: list the nodes; a \"decision\" node has a `label` (the question) and an `options` array (each option a `label` and the id it leads `to`); an \"outcome\" node has a `label` (the result title) and an optional `detail` (the recommendation sentence). Positions, arrows, the entry point and the route are all derived, so you never place anything; two options may lead to the same node (the paths converge into one box). Set `start` to choose the entry decision (default: the node nothing points at). Static vs staged: leave `walk` off for the whole map; or set `walk` to an ordered list of node ids (entry first) and step it across `steps` to trace one route frame by frame (the chosen labels show as a breadcrumb, the route ambers). A staged `walk` build is frame-stable (the full map is always reserved). Questions: occlude a node's or an option's label to ask \"which outcome does this path reach?\" / \"what choice leads here?\" (the rest stays visible); highlight a node to mark the answer outcome. Keep the same scenario across the blocks of one lesson. Common maths uses: \"which average — mean, median or mode?\", \"how should I solve this quadratic?\", \"is this number prime?\", \"what type of correlation?\", classifying a quadrilateral by walking the questions; also careers routers, biology identification keys, any branching \"if… then…\" pathway. This is a teaching/illustration surface, not an auto-marked question (a graded \"walk the route\" response mode is not built). Switch model when the picture changes: a step-by-step algorithm with loops or arrows that merge back is diagram/flowchart; a static top-down classification you read rather than walk is diagram/tree; a single hub with one ring of ideas is diagram/mind-map. Synonyms a teacher might use: decision tree, branching scenario, choose your path, flow, pathway, routing, diagnostic, decision diagram, \"which one should I use\", identification key, choose-your-own-adventure.",
   "responseModes": [],
-  "tags": [
-    "decision walk",
-    "decision tree",
-    "branching scenario",
-    "choose your path",
-    "pathway",
-    "flow",
-    "routing",
-    "diagnostic",
-    "decision diagram",
-    "identification key",
-    "which method",
-    "guided choice",
-    "walk",
-    "diagram"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -38,24 +19,20 @@
           "properties": {
             "id": {
               "type": "string",
-              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-              "description": "Unique kebab-case id for this node, referenced by options' `to` and by `start`/`walk` (e.g. \"enjoy-maths\", \"outcome-median\"). Not shown to pupils — the wiring handle."
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
             },
             "kind": {
               "type": "string",
               "enum": [
                 "decision",
                 "outcome"
-              ],
-              "description": "What this node is. \"decision\" → a question box that branches (give it an `options` array). \"outcome\" → a terminal result card (no options; carries a `label` title and an optional `detail` recommendation sentence). The shape and colour are derived from this."
+              ]
             },
             "label": {
-              "type": "string",
-              "description": "The text inside the box, wrapped to fit. A decision's label is the question (\"Is the data skewed?\"); an outcome's label is the result title (\"Use the median\")."
+              "type": "string"
             },
             "detail": {
-              "type": "string",
-              "description": "OUTCOME ONLY — a short recommendation/explanation sentence drawn under the outcome title (\"Resistant to outliers, so it represents a skewed set best.\"). Wraps inside the card. Ignored on a decision. Default none."
+              "type": "string"
             },
             "options": {
               "type": "array",
@@ -66,41 +43,33 @@
                 "additionalProperties": false,
                 "properties": {
                   "label": {
-                    "type": "string",
-                    "description": "The choice text drawn on this option's arrow (e.g. \"Higher education\", \"Yes, I enjoy it\", \"Score ≥ 70\"). Wraps to fit; keep it short — the rich description belongs on the outcome it leads to."
+                    "type": "string"
                   },
                   "to": {
-                    "type": "string",
-                    "description": "Id of the node this option leads to — the next decision, or an outcome. Must name a node in this list. Two options may point at the SAME node (paths converge — drawn as one merged box)."
+                    "type": "string"
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Render this option's label as \"?\" — the \"which choice leads here?\" hook. The arrow stays drawn and the hidden word never leaks into the aria. Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Amber this option's arrow — mark the answer route, or trace a chosen branch. Usually you instead set `walk` and let the chosen route highlight itself. Default false."
+                    "type": "boolean"
                   }
                 },
                 "required": [
                   "label",
                   "to"
                 ]
-              },
-              "description": "DECISION ONLY — the choices leaving this question, each a label + the id it leads to. Give a real decision two or more. Ignored on an outcome."
+              }
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this node's label (and an outcome's detail) as \"?\" — the \"what question / which outcome goes here?\" hook. The box and arrows stay drawn; the hidden words never leak into the aria. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this node — the answer outcome, or a box on a traced route. When `walk` is set the chosen route highlights itself, so use this only for a static \"the answer is here\" figure. Default false."
+              "type": "boolean"
             },
             "color": {
               "type": "string",
-              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-              "description": "Override THIS node's BASE colour (decision boxes default blue, outcome cards teal). Wins over the figure-wide `colors.decisions`/`colors.outcomes`. IMPORTANT: the walked-route highlight and the breadcrumb stay amber regardless (the chosen path is reserved), and a highlighted node stays amber — `color` only affects the un-walked, un-highlighted appearance. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour) is honoured exactly and opts this box OUT of brand reskinning."
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             }
           },
           "required": [
@@ -108,59 +77,48 @@
             "kind",
             "label"
           ]
-        },
-        "description": "The nodes of the scenario: decision boxes (a question + an `options` array) and outcome cards (a title + optional `detail`). Order does not matter — positions are derived from the options. Give the scenario at least one decision and one outcome."
+        }
       },
       "start": {
-        "type": "string",
-        "description": "Id of the entry decision (where the walk begins). Optional — defaults to the node nothing points at (the root); set it when the auto-detected entry is ambiguous."
+        "type": "string"
       },
       "walk": {
         "type": "array",
         "items": {
           "type": "string"
-        },
-        "description": "An ordered list of node ids (entry first) naming a chosen route — the model highlights that route, shows a breadcrumb of the chosen option labels and marks the frontier (last node). Use it to TRACE one path, stepping it across staged `steps` ([\"start\"], [\"start\",\"a\"], [\"start\",\"a\",\"out\"]). Leave it off for the whole map."
+        }
       },
       "direction": {
         "type": "string",
         "enum": [
           "down",
           "right"
-        ],
-        "description": "Reading flow: \"down\" (default) lays the scenario top-to-bottom; \"right\" lays a short one left-to-right. Keep it consistent across a lesson."
+        ]
       },
       "showBreadcrumb": {
-        "type": "boolean",
-        "description": "Show the \"Your path: A › B › C\" strip of chosen option labels below the figure when a `walk` is set (or being walked). Default true."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "colors": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional figure-wide colour overrides — set ONLY on an explicit author/teacher request. These recolour the BASE appearance only; the walked-route highlight, the breadcrumb and any `highlight` stay amber (reserved). A per-node `color` overrides these for one box.",
         "properties": {
           "decisions": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Default colour of every (un-walked) decision box, replacing accent blue. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           },
           "outcomes": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Default colour of every (un-reached) outcome card, replacing teal. Same value space as `decisions`. A reached outcome stays amber (the result is reserved)."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           },
           "options": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Default colour of the (un-walked) option arrows and their labels, replacing the construction grey. Same value space as `decisions`."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           }
         }
       }
@@ -171,7 +129,6 @@
   },
   "examples": [
     {
-      "label": "Worked — \"Which average should I use?\" with a chosen path traced (converging outcome)",
       "params": {
         "header": "Which average should I use?",
         "walk": [
@@ -232,7 +189,6 @@
       }
     },
     {
-      "label": "Static map — the whole decision tree (trace a path to a shape)",
       "params": {
         "header": "Sort the quadrilateral",
         "nodes": [
@@ -305,7 +261,6 @@
       }
     },
     {
-      "label": "Occluded question — which outcome does this route reach? (outcome title hidden)",
       "params": {
         "walk": [
           "start",
@@ -344,7 +299,6 @@
       }
     },
     {
-      "label": "Hard case — convergence (two routes reach Median), a wide decision, long outcome detail",
       "params": {
         "header": "Choosing an average",
         "nodes": [
@@ -393,7 +347,6 @@
       }
     },
     {
-      "label": "Left-to-right router — how to solve a quadratic",
       "params": {
         "direction": "right",
         "header": "Solving a quadratic",
@@ -450,7 +403,6 @@
       }
     },
     {
-      "label": "Author-set colours — green outcomes + grey options (figure-wide), one decision picked out",
       "params": {
         "header": "Which average should I use?",
         "colors": {

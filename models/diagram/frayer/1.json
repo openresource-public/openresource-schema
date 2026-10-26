@@ -4,31 +4,7 @@
   "name": "frayer",
   "version": 1,
   "title": "Frayer model",
-  "tagline": "Frayer model: a central concept title above a 2×2 grid of four quadrants (Definition, Characteristics, Examples, Non-examples, or custom); bodies occlude as an answer space.",
-  "description": "A Frayer model: one central concept word as a prominent title above a 2×2 grid of four labelled quadrants. You author only the semantics — the central concept, and the four quadrants, each a heading plus either a bulleted `items` list or a paragraph of `text`. The model derives the 2×2 grid, the central concept title (sized from the wrapped concept, above the grid), each quadrant's heading band and tint, the wrapping and bulleting of the body, the row heights (which size to the tallest quadrant in each row, so unequal lists no longer clip), and the canonical default headings (Definition, Characteristics, Examples, Non-examples) for any quadrant whose heading is omitted. The rendered width is params-independent. The concept, a whole quadrant body, or a single item each occlude to \"?\" (anti-leak — the row still reserves the real height, so a staged reveal never reflows), highlight ambers them, and per-quadrant `color` colour-codes the frames. It is the fixed four-quadrant vocabulary/concept frame — diagram/mind-map is a radial hub with no fixed quadrants, and statistics/carroll-diagram / two-way-table are data grids whose cells are computed.",
-  "whenToUse": "Reach for this for the Frayer model — the classic vocabulary / concept-builder graphic organiser: a word in the middle, framed by four boxes. The default four are Definition, Characteristics (or Facts), Examples and Non-examples, but teachers swap in their own (Picture, Synonyms, Antonyms, Use it in a sentence, Formula, Real-life use) — just set each quadrant's `heading`, or omit it to take the canonical default for that position (1 top-left, 2 top-right, 3 bottom-left, 4 bottom-right). Author the `concept` (the word) and the four `quadrants`; each quadrant's body is either a bulleted `items` list (best for Examples / Characteristics) or a `text` paragraph (best for a Definition). Common configurations: worked — fill every quadrant in. Blank answer space — give the concept and the headings and occlude (or blank) every body, so pupils fill in the frame; the boxes still reserve room to write. Occluded question — occlude one quadrant (\"complete the non-examples\"), or occlude a single item, or occlude the concept itself (\"what word fits this frame?\", the four quadrants are the clues). Colour-code — set a quadrant's `color` to read Examples and Non-examples apart at a glance. Staged builds read very well: open on the blank/occluded frame and reveal one quadrant per stage (build it up), or pose the concept occluded and reveal the four quadrants as clues before revealing the word — the boxes never move as content appears. Keep the same concept and headings across the blocks of one lesson and change only what is hidden or highlighted. Switch model when the shape changes: a central idea with free branches fanning out and no fixed quadrants is a diagram/mind-map; a grid whose cells hold sorted numbers/shapes or frequencies with derived totals is statistics/carroll-diagram or statistics/two-way-table. Synonyms a teacher might use: Frayer model, Frayer diagram, vocabulary organiser, word map, concept map (four-box), definition / characteristics / examples / non-examples, four-square, graphic organiser.",
   "responseModes": [],
-  "tags": [
-    "frayer",
-    "frayer model",
-    "frayer diagram",
-    "vocabulary",
-    "word map",
-    "concept",
-    "concept builder",
-    "graphic organiser",
-    "graphic organizer",
-    "four square",
-    "four-box",
-    "definition",
-    "characteristics",
-    "examples",
-    "non-examples",
-    "organiser",
-    "diagram",
-    "literacy",
-    "revision"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -36,15 +12,12 @@
       "image": {
         "type": "object",
         "additionalProperties": false,
-        "description": "An optional photo (the diagram/cycle image-node pattern). On a quadrant it fills the body — the classic \"Picture\" quadrant — centred in the box, with any text stacking below it; on the central concept it sits as a thumbnail above the concept title. The model reserves a fixed slot and crops the photo to fill it; the row grows to fit. Photos display on the live web/slide; a static PNG/print/PPTX export shows a labelled placeholder frame until asset-rasterisation lands.",
         "properties": {
           "url": {
-            "type": "string",
-            "description": "Absolute image URL — e.g. a Wikimedia Commons upload.wikimedia.org thumbnail. Must be a real, reachable image."
+            "type": "string"
           },
           "alt": {
-            "type": "string",
-            "description": "A short description of the photo, for accessibility and the figure aria."
+            "type": "string"
           },
           "aspect": {
             "type": "string",
@@ -52,8 +25,7 @@
               "square",
               "landscape",
               "portrait"
-            ],
-            "description": "Shape of the image slot the photo is cropped to fill. Default \"landscape\" (4:3)."
+            ]
           }
         },
         "required": [
@@ -65,31 +37,25 @@
       "concept": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The central concept — the word or term the frame is about, drawn as the title above the grid.",
         "properties": {
           "label": {
-            "type": "string",
-            "description": "The concept text — the word/term/idea (\"Photosynthesis\", \"Prime number\", \"Metaphor\")."
+            "type": "string"
           },
           "image": {
             "$ref": "#/$defs/image"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the concept as \"?\" — \"what word fits this frame?\" (the four quadrants are the clues). The real word never leaks into the aria. Default false."
+            "type": "boolean"
           },
           "occludeImage": {
-            "type": "boolean",
-            "description": "Blank the concept thumbnail to a \"?\" placeholder. Ignored when there is no concept image. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the concept title. Default false."
+            "type": "boolean"
           },
           "color": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Override the concept title's colour (default neutral grey). Wins over the figure-wide `colors.concept`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the title OUT of brand reskinning. Ignored when the concept is highlighted. Omit for the neutral default."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           }
         },
         "required": [
@@ -102,36 +68,29 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One of the four quadrants. Give a `heading` (omit to take the canonical default for this position) and a body — EITHER `items` (a bulleted list) OR `text` (a paragraph). If you give both, `items` wins. Order is reading order: 1 = top-left, 2 = top-right, 3 = bottom-left, 4 = bottom-right (default headings Definition / Characteristics / Examples / Non-examples).",
           "properties": {
             "heading": {
-              "type": "string",
-              "description": "The quadrant label drawn in the heading band — \"Definition\", \"Characteristics\", \"Examples\", \"Non-examples\", or a custom one teachers use (\"Picture\", \"Synonyms\", \"Antonyms\", \"Use it in a sentence\"). Omit to use the canonical default for this position."
+              "type": "string"
             },
             "items": {
               "type": "array",
               "items": {
                 "oneOf": [
                   {
-                    "type": "string",
-                    "description": "A bullet line — the common case (\"dog\", \"a square has four equal sides\")."
+                    "type": "string"
                   },
                   {
                     "type": "object",
                     "additionalProperties": false,
-                    "description": "A bullet line you can occlude or highlight on its own.",
                     "properties": {
                       "text": {
-                        "type": "string",
-                        "description": "The bullet text."
+                        "type": "string"
                       },
                       "occlude": {
-                        "type": "boolean",
-                        "description": "Render THIS one item as \"?\" (the others stay visible) — \"which example is missing?\". Default false."
+                        "type": "boolean"
                       },
                       "highlight": {
-                        "type": "boolean",
-                        "description": "Amber this one item. Default false."
+                        "type": "boolean"
                       }
                     },
                     "required": [
@@ -139,63 +98,50 @@
                     ]
                   }
                 ]
-              },
-              "description": "The body as a BULLETED LIST — best for Examples / Non-examples / Characteristics (\"four sides\", \"all angles 90°\"). Each entry is a string, or an object to occlude/highlight one line. Use this OR `text`, not both."
+              }
             },
             "text": {
-              "type": "string",
-              "description": "The body as a PARAGRAPH that wraps — best for a Definition or a sentence. Use this OR `items`, not both."
+              "type": "string"
             },
             "image": {
               "$ref": "#/$defs/image"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this quadrant's whole body as a single \"?\" — the answer-space hook (\"what goes in this quadrant?\"). The heading and frame stay drawn; the body never leaks into the aria. The row still reserves the body's real height (so a staged reveal does not reflow). Default false."
+              "type": "boolean"
             },
             "occludeImage": {
-              "type": "boolean",
-              "description": "Blank this quadrant's picture to a \"?\" placeholder (the photo would otherwise give the answer away) while keeping any text body visible. Ignored when there is no image. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render this quadrant's body EMPTY (no \"?\", no content) — an unfilled frame for a staged build that fills the quadrants one at a time. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. The row still reserves the real height. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this quadrant (band tint + frame) — the answer, or the quadrant in focus. Default false."
+              "type": "boolean"
             },
             "color": {
               "type": "string",
-              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-              "description": "Override THIS quadrant's colour — colour-code by intent (\"make Examples green, Non-examples red\"). Quadrants default to a single neutral grey; `color` recolours this one's heading band + frame. Wins over the figure-wide `colors.quadrants`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\" or \"darkgreen\") is honoured exactly and opts this quadrant OUT of brand reskinning. Ignored when the quadrant is highlighted (amber is reserved). Omit for the neutral default."
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             }
           }
-        },
-        "description": "The four quadrants in reading order (1 top-left, 2 top-right, 3 bottom-left, 4 bottom-right). Omit a quadrant's `heading` to take the canonical default for its position (Definition / Characteristics / Examples / Non-examples). Give fewer than four (or omit this entirely) and the rest are filled in as empty default-headed frames — a blank Frayer template."
+        }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "colors": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"colour-code the quadrants\", \"make the concept teal\"). Omit to keep the themeable neutral-grey defaults (which follow a brand reskin). A per-quadrant `color` (or the concept's own `color`) overrides this for one box.",
         "properties": {
           "concept": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Colour of the central concept title, replacing the neutral-grey default. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the title OUT of brand reskinning. The concept's own `color` overrides this."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           },
           "quadrants": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Colour of every (non-highlighted) quadrant's heading band + frame, replacing the neutral-grey default. Same value space as `concept`. A single quadrant can still differ via its own `color`."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           }
         }
       }
@@ -206,7 +152,6 @@
   },
   "examples": [
     {
-      "label": "Worked — Frayer for \"Prime number\" (definition paragraph + bulleted lists)",
       "params": {
         "header": "Prime number",
         "concept": {
@@ -248,7 +193,6 @@
       }
     },
     {
-      "label": "Blank answer space — concept + headings, every body occluded (\"fill in the frame\")",
       "params": {
         "concept": {
           "label": "Prime number"
@@ -293,7 +237,6 @@
       }
     },
     {
-      "label": "Occluded question — \"what word fits this frame?\" (concept hidden, quadrants are the clues)",
       "params": {
         "concept": {
           "label": "Metaphor",
@@ -330,7 +273,6 @@
       }
     },
     {
-      "label": "Hard case — long, unequal lists wrap and the rows size to the tallest quadrant",
       "params": {
         "header": "Photosynthesis",
         "concept": {
@@ -366,7 +308,6 @@
       }
     },
     {
-      "label": "Custom headings — a Picture / Synonyms / Antonyms vocabulary frame",
       "params": {
         "header": "Vocabulary: enormous",
         "concept": {
@@ -402,7 +343,6 @@
       }
     },
     {
-      "label": "Picture quadrant — a photo earns the fourth box",
       "params": {
         "header": "Bird",
         "concept": {
@@ -443,7 +383,6 @@
       }
     },
     {
-      "label": "Colour-coded — Examples green, Non-examples red, with one example highlighted",
       "params": {
         "header": "Equilateral triangle",
         "concept": {

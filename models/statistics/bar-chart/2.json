@@ -4,30 +4,8 @@
   "name": "bar-chart",
   "version": 2,
   "title": "Bar chart",
-  "tagline": "Bar chart of categorical data with separated bars; derives the value-axis scale, total and mode; a second series compares; occlude to read a value off, or draw the blank bars.",
-  "description": "A bar chart of categorical data — the model for comparing frequencies across categories. You give the categories and their values; the model draws separated bars whose height is the frequency/value and derives the value-axis scale, the total and the mode. Add a second series for a side-by-side comparison (with a legend). Label the bars with their values, hide a value to ask pupils to read it off the axis, or highlight a category (e.g. the mode). For \"complete / draw the bar chart\" as a MARKED question, mark the blank bars with series[].draw and host with responseMode \"place-derived\": each blank bar starts at zero and the pupil drags its top up the value axis (snapping to axes.ySnap) until it is at the right height — the correct height is the authored value, checked at marking time and never pre-drawn on the posed figure. By default no number is shown while dragging: the pupil reads the bar top against the gridlines, which is the assessed skill. Set axes.dragReadout true only to scaffold a first practice — it prints the live height, which lets the pupil drag until it matches the given value instead of reading the scale. For a \"what is wrong with this graph?\" critique, author the faults directly: hideLegend for no key on a two-series chart, omit axes.yLabel for no axis label, and axes.yTicks for a non-uniform value scale. For continuous grouped data — touching bars, frequency density — use the histogram model instead.",
-  "whenToUse": "Reach for this for bar charts of categorical or discrete data: comparing frequencies across named categories, the most common category (mode), and side-by-side comparison bar charts. Give categories: [{ label }] and series: [{ values: [...] }] where values line up with the categories; bars are separated (gaps between them) and the height is the frequency/value. For a comparative chart give two series with names (e.g. [{ name: \"2022\", values: [...] }, { name: \"2023\", values: [...] }]) — they draw side by side with a legend. Set showValues to print each bar's value, occlude on a category to hide its value (pupils read it off the axis), highlight a category to draw the eye (e.g. the tallest bar). Set axes.yLabel (\"Frequency\", \"Number of pupils\") and axes.xLabel; axes.yMax fixes the scale across a lesson. Omit series for a plain, unmarked answer space — the category axis with no bars to draw on. DRAW THE BAR CHART as a MARKED question: give the full data in series[].values, then mark the bars the pupil must draw with series[].draw (a boolean per category, true = blank/to-draw) and host on a marked model tile with responseMode \"place-derived\" and correctAnswer { derived: true }. Those bars render blank (posed) on paper and start at zero on screen; the pupil drags each top up to the correct height, snapping to axes.ySnap (default half a value-step). No live height number is shown by default — the pupil reads the top against the gridlines; set axes.dragReadout true only to scaffold (it prints the dragged height, so the pupil can match the number rather than read the scale — leave it off for assessment). Use per-cell draw for \"complete the chart\" (some bars given, some blank) and set draw true on every category for a from-scratch chart. Keep axes.yMax / yStep fixed so the scale is stable, and choose them so every value is a whole number of ySnap steps. Put the COMPLETED chart (all bars given, no draw flags) in the worked-solution block. SPOILED chart for a \"write down what is wrong with this graph\" critique: author the faults — hideLegend: true (a two-series chart with no key), omit axes.yLabel (no y-axis label), and axes.yTicks: [...] (explicit tick values placed at EQUAL spacing, so an irregular jump like 16 then 18 among gaps of 4 is a non-uniform scale). The bars draw against the ladder you give. A staged build reads well: draw the bars one at a time, or add the comparison series. Switch primitive when the data is not categorical — for continuous grouped data (touching bars, frequency density, unequal widths) use statistics/histogram; for parts of a whole as sectors use statistics/pie-chart; for bivariate data use statistics/scatter. Synonyms a teacher might use: bar chart, bar graph, bar diagram, frequency, categorical data, compare, comparison, dual bar chart, comparative bar chart, mode, most common, tallest bar, complete the bar chart, draw the bar chart, what is wrong with this graph.",
   "responseModes": [
     "place-derived"
-  ],
-  "tags": [
-    "bar chart",
-    "bar graph",
-    "bar diagram",
-    "frequency",
-    "categorical",
-    "compare",
-    "comparison",
-    "dual bar chart",
-    "comparative",
-    "mode",
-    "most common",
-    "draw the bar chart",
-    "complete the bar chart",
-    "what is wrong with this graph",
-    "statistics",
-    "data",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -36,68 +14,55 @@
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The value (y) axis and axis titles. The category (x) axis comes from the categories.",
         "properties": {
           "yMax": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Top of the value axis. Default: just above the tallest bar. Ignored when yTicks is given."
+            "exclusiveMinimum": 0
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between value gridlines / numbers. Default: a sensible round value. Ignored when yTicks is given."
+            "exclusiveMinimum": 0
           },
           "yTicks": {
             "type": "array",
             "minItems": 2,
             "items": {
               "type": "number"
-            },
-            "description": "Explicit tick VALUES placed at EQUAL physical spacing up the axis (ascending; the first is the axis base, usually 0). Use this to author a NON-UNIFORM value scale — e.g. [0,4,8,12,16,18,22,26,30], where the 16→18 jump of 2 sits among gaps of 4 — for a \"what is wrong with this graph?\" critique. Bar heights are mapped piecewise-linearly through the ladder. Overrides yMax and yStep. Leave unset for a normal, uniform scale."
+            }
           },
           "ySnap": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Draw mode only: the increment (in value units) the dragged bar tops snap to, and the marking grain. Default: half of yStep (half a small square). Choose it so every target value is a whole number of ySnap steps. Ignored outside place-derived draw mode."
+            "exclusiveMinimum": 0
           },
           "dragReadout": {
-            "type": "boolean",
-            "description": "Draw mode only: SHOW the current dragged height as a number above each blank bar's grip. Default false — the pupil reads the bar top against the gridlines (the assessed skill). Set true only as a deliberate scaffold (e.g. a first practice), because a live number lets the pupil drag until it matches the given value instead of reading the scale. Ignored outside place-derived draw mode."
+            "type": "boolean"
           },
           "yLabel": {
-            "type": "string",
-            "description": "The value-axis title, e.g. \"Frequency\", \"Number of pupils\". OMIT to author a chart with no y-axis label (a fault for a \"what is wrong with this graph?\" question)."
+            "type": "string"
           },
           "xLabel": {
-            "type": "string",
-            "description": "The category-axis title, e.g. \"Favourite sport\". Omit if the categories speak for themselves."
+            "type": "string"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show horizontal gridlines (help read values off the axis). Default true."
+        "type": "boolean"
       },
       "categories": {
         "type": "array",
         "minItems": 1,
-        "description": "The categories along the x-axis. Each value in a series lines up with these in order.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The category name shown under its bar(s), e.g. \"Football\"."
+              "type": "string"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this category's bar(s) in amber (e.g. the mode / the answer). Default false."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide this category's value label as \"?\" (pupils read it off the axis). The bar still shows at its correct height. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -108,29 +73,25 @@
       "series": {
         "type": "array",
         "maxItems": 2,
-        "description": "The data: one series for a simple bar chart, two for a side-by-side comparison (with a legend). Each series's values line up with the categories. OMIT for a plain answer space (category axis, no bars).",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "name": {
-              "type": "string",
-              "description": "The series name, shown in the legend (needed when there are two series). Ignored when hideLegend is true."
+              "type": "string"
             },
             "values": {
               "type": "array",
               "items": {
                 "type": "number",
                 "minimum": 0
-              },
-              "description": "One value (frequency) per category, in the same order as categories. In draw mode these are the CORRECT heights (the target the pupil drags each blank bar to); they are given data (stated in the prompt), never pre-drawn on a blank bar."
+              }
             },
             "draw": {
               "type": "array",
               "items": {
                 "type": "boolean"
-              },
-              "description": "Draw mode only (host responseMode \"place-derived\"): a flag per category, true = this bar is BLANK for the pupil to draw. Blank bars start at zero and are dragged up to values[i]; given bars (false/absent) are drawn at their value and not marked. Per-cell, so a dual chart can have one blank bar (e.g. Rose's Thursday) while the rest are given. Every to-draw value must be above zero."
+              }
             }
           },
           "required": [
@@ -139,20 +100,16 @@
         }
       },
       "hideLegend": {
-        "type": "boolean",
-        "description": "Suppress the legend/key on a two-series chart — you can no longer tell the two series apart. A deliberate fault for a \"what is wrong with this graph?\" question. Default false (a two-series chart shows a legend)."
+        "type": "boolean"
       },
       "showValues": {
-        "type": "boolean",
-        "description": "Print each bar's value on top of it. Default false. Occluded categories show \"?\" instead; blank draw-bars show nothing until dragged."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -161,7 +118,6 @@
   },
   "examples": [
     {
-      "label": "Simple bar chart (worked, values shown)",
       "params": {
         "axes": {
           "yLabel": "Number of pupils",
@@ -200,7 +156,6 @@
       }
     },
     {
-      "label": "The hard case — a comparative (dual) bar chart with a legend",
       "params": {
         "axes": {
           "yLabel": "Number sold",
@@ -244,7 +199,6 @@
       }
     },
     {
-      "label": "Read a value off the axis (occluded question)",
       "params": {
         "axes": {
           "yLabel": "Frequency",
@@ -280,7 +234,6 @@
       }
     },
     {
-      "label": "Draw the bar chart (place-derived question — three blank bars)",
       "params": {
         "axes": {
           "yLabel": "Frequency",
@@ -321,7 +274,6 @@
       }
     },
     {
-      "label": "Draw a dual bar chart (place-derived — one blank bar in a comparison)",
       "params": {
         "axes": {
           "yLabel": "Distance (miles)",
@@ -378,7 +330,6 @@
       }
     },
     {
-      "label": "The spoiled chart — what is wrong with this graph? (no key, no y-label, non-uniform scale)",
       "params": {
         "axes": {
           "yTicks": [

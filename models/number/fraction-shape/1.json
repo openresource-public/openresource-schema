@@ -4,33 +4,7 @@
   "name": "fraction-shape",
   "version": 1,
   "title": "Fraction of a shape",
-  "tagline": "Bar, circle or grid split into equal parts and shaded for a fraction; a common-denominator partition derived for adding, equivalence and of-amount.",
-  "description": "A shape — a bar, a circle or a grid — split into equal parts and shaded to show a fraction of the whole. You choose the shape and write the fractions as n/d; the model derives the partition (the lowest common denominator of the fractions, so 1/3 and 1/4 split the shape into twelfths), shades each fraction's parts in a distinct colour, builds a running sum or difference, renders an improper result across extra whole-shape copies as a mixed number, and — given a `whole` amount — works out each part's value and the shaded total. One fraction draws \"shade 3/4 of this shape\"; two fractions on the common partition draw \"1/3 + 1/4 = 4/12 + 3/12 = 7/12\" with the common denominator made visual; a fraction on a finer partition draws equivalence (1/2 = 3/6); a fraction with `subtract` is taken away. Occlude a fraction's label or the result for a question, highlight the answer, or leave the fractions out for a blank partitioned shape to shade. v1 is static (the host can step a staged build); shading is not yet interactive.",
-  "whenToUse": "Reach for this whenever a fraction is taught as part of a whole shape: shade a fraction of a bar / circle / grid, a fraction of an amount, add or subtract fractions on one shape, show equivalent fractions, or turn an improper fraction into a mixed number. Write the shape and the fractions; every shaded count, the partition, the sum and the mixed form are derived. Common configurations: fraction of a shape — one fraction, e.g. shape \"circle\", fractions [{ n: 3, d: 4 }] (shade 3/4); leave fractions empty (or omit) with `parts` set for a blank answer space to shade. Add on a common denominator — two or more fractions with different denominators, e.g. [{ n: 1, d: 3 }, { n: 1, d: 4 }]; omit `parts` and the shape is cut into their LCM (12), each addend shaded in its own colour, and the result line shows \"1/3 + 1/4 = 4/12 + 3/12 = 7/12\". Subtract — set `subtract: true` on the fraction being taken away. Fraction of an amount — add `whole` (and `unit`): \"3/4 of 20 = 15\", with show.partValues to write each part's worth. Equivalence — one fraction on a deliberately finer partition, e.g. fractions [{ n: 1, d: 2 }] with parts 6 → the half reads as 3/6 (\"1/2 = 3/6\"). Mixed and improper — an improper fraction such as [{ n: 7, d: 3 }] fills two whole shapes and a third; result.mixed (default on) prints \"7/3 = 2 1/3\". Questions — occlude a fraction label (\"what fraction is shaded?\") or result.occlude (\"what is the total?\"), highlight the answer. Keep the same shape and partition across a lesson so pupils track one picture; change only what is shaded, occluded or highlighted. A staged build reads well: open on the empty partitioned shape, shade one fraction per stage, reveal the sum last. Switch model to compare or order fractions by aligning several whole bars (number/fraction-wall), for a ratio share or an authored-segment \"of an amount\" bar (number/bar-model), or to read a percentage off a 100-square (number/percentage-square). Synonyms a teacher might use: fraction of a shape, shade the fraction, parts shaded, fraction of an amount, adding fractions, common denominator, equivalent fractions, mixed number, improper fraction, top-heavy fraction, numerator, denominator, halves thirds quarters fifths.",
   "responseModes": [],
-  "tags": [
-    "fraction",
-    "fractions",
-    "fraction of a shape",
-    "fraction of an amount",
-    "shade the fraction",
-    "parts shaded",
-    "numerator",
-    "denominator",
-    "adding fractions",
-    "subtracting fractions",
-    "common denominator",
-    "equivalent fractions",
-    "mixed number",
-    "improper fraction",
-    "top-heavy fraction",
-    "bar",
-    "circle",
-    "grid",
-    "pie",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -41,14 +15,12 @@
           "bar",
           "circle",
           "grid"
-        ],
-        "description": "The figure split into equal parts. \"bar\" — a rectangle cut into equal vertical strips (the default; clearest for adding and for amounts). \"circle\" — a disc cut into equal sectors from 12 o'clock clockwise (the pie/pizza picture). \"grid\" — a rectangular array of equal cells filled in reading order (good for larger denominators). Default \"bar\"."
+        ]
       },
       "parts": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 100,
-        "description": "How many equal parts the whole is divided into — the partition, i.e. the common denominator made visible. OMIT to derive it as the lowest common multiple of every fraction's denominator (1/3 and 1/4 → 12; a single 3/4 → 4). Set it to draw a deliberately COARSER common denominator (1/2 + 1/4 on parts 8) or, with no fractions, a blank shape of this many parts to shade. A value that is not a common multiple of every denominator is ignored in favour of the derived LCM."
+        "maximum": 100
       },
       "fractions": {
         "type": "array",
@@ -56,126 +28,101 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One fraction drawn on the shape: its n parts of d shade a contiguous block in a distinct colour. Several fractions tile the same shape in reading order (left→right on a bar, clockwise on a circle, row by row on a grid) so a sum is built piece by piece. Each fraction is re-expressed over the shared partition automatically (1/3 on twelfths shows as 4 parts).",
           "properties": {
             "n": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Numerator — how many of this fraction's OWN d parts it represents. n may exceed d (an improper fraction such as 7/3): the shaded run then spills into extra whole-shape copies. 0 shades nothing."
+              "minimum": 0
             },
             "d": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 100,
-              "description": "Denominator — how many equal parts this fraction divides the whole into. The shape's actual partition is the LCM of every fraction's d (or the `parts` override), and this fraction shades n × partition ÷ d of those parts."
+              "maximum": 100
             },
             "subtract": {
-              "type": "boolean",
-              "description": "Take this fraction AWAY instead of adding it: its parts are removed from the end of the shaded run and drawn struck-through (dashed grey), and the result line subtracts it (\"3/4 − 1/4\"). The first fraction should be an added (minuend) fraction. Default false."
+              "type": "boolean"
             },
             "label": {
-              "type": "string",
-              "description": "Override this fraction's block label. By default the label is the DERIVED \"n/d\" stacked fraction. Pass an \"a/b\" string for a different stacked fraction, or plain words. Omit to use the derived value."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this fraction's label as \"?\" — the \"name this fraction\" hook. The parts stay shaded and correct; only the printed value is hidden (and it shows as \"?\" inside the result line so the total cannot leak it). Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Shade this fraction amber instead of its categorical colour — result/answer emphasis (e.g. the part the question is about). Default false; reserve for emphasis, not as a default fill."
+              "type": "boolean"
             }
           },
           "required": [
             "n",
             "d"
           ]
-        },
-        "description": "The fractions to draw, combined left to right. One fraction shades a single block; several tile the shape in reading order so a sum (or, with `subtract`, a difference) is built piece by piece, each in its own colour. Omit or leave empty for a blank partitioned shape (an answer space to shade)."
+        }
       },
       "whole": {
         "type": "number",
-        "exclusiveMinimum": 0,
-        "description": "The amount the WHOLE shape is worth — turns the figure into \"a fraction of an amount\". Each part is then worth whole ÷ parts, and the result line reads e.g. \"3/4 of 20 = 15\". Pair with show.partValues to print each part's value inside the cells. Omit for a pure fraction (no amount)."
+        "exclusiveMinimum": 0
       },
       "unit": {
-        "type": "string",
-        "description": "Unit for the `whole` amount, shown in the readout — \"£\", \"cm\", \"kg\", \"marbles\". A \"£\" prefixes its number (\"£15\"); other units follow it (\"15 cm\"). Only meaningful with `whole`. Omit for a bare number."
+        "type": "string"
       },
       "result": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The derived readout line beneath the figure — the sum/difference of the fractions, the equivalence, or the \"of an amount\" value. Include to control it; sensible defaults apply when omitted.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the result line. Default: true when there is something to derive (a sum of two or more fractions, a fraction on a finer partition, or a `whole` amount); false for a single plain fraction whose value is already its block label. Set false to suppress it, true to force it."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the final result as \"?\" — \"what is the total?\" / \"what is 3/4 of 20?\". The steps before it (e.g. \"4/12 + 3/12 =\") stay visible; occluded fractions stay \"?\" within them. Default false."
+            "type": "boolean"
           },
           "mixed": {
-            "type": "boolean",
-            "description": "Render an improper result (numerator ≥ denominator) as a MIXED number — 7/3 shown as \"2 1/3\". Default true. Set false to keep the top-heavy form (7/3). No effect on a proper result."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the final result for answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "grid": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Layout for shape \"grid\" only — how the `parts` cells are arranged. Omit to derive a near-square arrangement (12 → 4×3, 100 → 10×10). Ignored for bar and circle.",
         "properties": {
           "cols": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 20,
-            "description": "Number of columns. With rows omitted, the rows are derived as ⌈parts ÷ cols⌉. A 10 for 100 parts gives the hundred-square look."
+            "maximum": 20
           },
           "rows": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 20,
-            "description": "Number of rows. With cols omitted, the columns are derived as ⌈parts ÷ rows⌉."
+            "maximum": 20
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "fractionLabels": {
-            "type": "boolean",
-            "description": "Print each fraction's value on its shaded block. Default true when any fraction is drawn. Set false for a bare shaded picture (e.g. when the result line carries all the labelling, or for an answer space where pupils name it)."
+            "type": "boolean"
           },
           "partLabels": {
-            "type": "boolean",
-            "description": "Write the unit fraction 1/parts inside EVERY part — the \"count the parts\" view that names each piece. Default false (clean). Dropped automatically where a part is too narrow for the label."
+            "type": "boolean"
           },
           "partValues": {
-            "type": "boolean",
-            "description": "With `whole` set, write each part's value (whole ÷ parts) inside every part — so pupils see the amount one part is worth. Default false. Ignored without `whole`."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked example — three quarters of a bar shaded",
       "params": {
         "shape": "bar",
         "fractions": [
@@ -187,14 +134,12 @@
       }
     },
     {
-      "label": "Blank answer space — a circle in quarters to shade",
       "params": {
         "shape": "circle",
         "parts": 4
       }
     },
     {
-      "label": "The hard case — 1/3 + 1/4 on a common twelfth partition",
       "params": {
         "header": "Adding with a common denominator",
         "shape": "bar",
@@ -211,7 +156,6 @@
       }
     },
     {
-      "label": "Occluded question — name the fraction shaded on a grid",
       "params": {
         "shape": "grid",
         "parts": 10,
@@ -225,7 +169,6 @@
       }
     },
     {
-      "label": "Fraction of an amount — 3/4 of 20 with each part worth 5",
       "params": {
         "shape": "bar",
         "fractions": [
@@ -245,7 +188,6 @@
       }
     },
     {
-      "label": "Mixed and improper — seven thirds across whole circles",
       "params": {
         "header": "Seven thirds",
         "shape": "circle",

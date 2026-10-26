@@ -4,93 +4,61 @@
   "name": "short-division",
   "version": 1,
   "title": "Short division (bus-stop method)",
-  "tagline": "Division by the short (bus-stop) method; derives every quotient digit, carried remainders and the decimal by an exact engine; staged reveal, cells occlude.",
-  "description": "A division worked by the short (bus-stop) method: the divisor written to the left of a right-angle bracket, the dividend under the bar, and the quotient built digit-by-digit directly above the bar (one quotient digit per dividend digit), with the small carried remainders tucked before the next digit and the decimal point carried straight up. You give only the two numbers and how to present the answer — every quotient digit, every carried remainder, the final remainder, the decimal point and the appended decimal zeros are computed by an exact integer engine. form \"remainder\" stops at the whole-number quotient and reports \"r R\"; form \"decimal\" carries on past the point, appending zeros until the division terminates (capped at decimalPlaces). A decimal divisor is handled the way it is taught — both numbers are scaled ×10ⁿ to make the divisor whole (5.1 ÷ 0.4 becomes 51 ÷ 4), with the rescale shown. Occlude the quotient or remainder for a question, hide the quotient entirely for a blank answer space, show or hide the carries, and reveal the columns one at a time for a staged build.",
-  "whenToUse": "Reach for this whenever a division is taught or worked by the short / bus-stop method: short division, dividing a multi-digit number by a single-digit (or small) number, division with remainders, decimal division (carrying on past the decimal point), and dividing by a decimal. Give the two numbers as `dividend` and `divisor` and pick a `form`: \"remainder\" (the default) stops at the whole-number quotient and shows \"r R\"; \"decimal\" continues past the point, appending zeros until it terminates or hits `decimalPlaces`. A decimal divisor (0.3, 0.04) is rescaled automatically — both numbers ×10ⁿ until the divisor is whole — and the rescale step is shown (turn it off with show.rescale:false). Common configurations: worked example — defaults, show.carries true so pupils see the method; blank answer space — show.quotient:false leaves the space above the bar empty for the pupil to fill; occluded question — occlude:{quotient:true, remainder:true} marks the answer \"?\", optionally show.carries:false for a clean stem; complete the division — occlude:{quotient:[1]} hides one quotient digit; find the remainder — occlude:{remainder:true}. Highlight ambers the answer (quotient + remainder). Staged builds read very well: open on reveal:0 (just the divisor, bar and dividend — a clean \"to be divided\" frame) and raise `reveal` one column per stage so a quotient digit and its carry appear together, left to right, with the remainder last. Keep the same `form` and the same show.carries choice across a lesson so pupils compare like with like; introduce remainders before moving on to decimals. Sibling boundary: this is the written division method — for written addition / subtraction (carrying / borrowing) reach for number/column-arithmetic, for a multiplication grid algebra/area-model, for ×÷ by powers of ten as digit shifts number/place-value. v1 is short division only; long division (the subtract-and-bring-down layout) is a planned separate mode. Synonyms a teacher might use: short division, bus stop method, bus-stop, dividing, divide, ÷, quotient, remainder, \"how many times does it go in\", carrying the remainder, decimal division, dividing by a decimal.",
   "responseModes": [],
-  "tags": [
-    "short division",
-    "bus stop method",
-    "bus-stop",
-    "division",
-    "divide",
-    "dividing",
-    "quotient",
-    "remainder",
-    "remainders",
-    "decimal division",
-    "dividing by a decimal",
-    "written method",
-    "carrying",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
       "dividend": {
         "type": "number",
-        "minimum": 0,
-        "description": "The number being divided (it goes UNDER the bar). May be a decimal, e.g. 196, 7.2. In decimal form the model appends its own trailing zeros, so write the number as given — do not pad it."
+        "minimum": 0
       },
       "divisor": {
         "type": "number",
-        "exclusiveMinimum": 0,
-        "description": "What you divide BY (it sits to the LEFT of the bracket). Short division suits a single-digit or small divisor. A decimal divisor (0.3, 0.04) is allowed: both numbers are scaled ×10ⁿ until the divisor is whole and the division is performed on the scaled numbers (the quotient is unchanged)."
+        "exclusiveMinimum": 0
       },
       "form": {
         "type": "string",
         "enum": [
           "remainder",
           "decimal"
-        ],
-        "description": "\"remainder\" (default): stop at the whole-number quotient and report the leftover as \"r R\" (suppressed when it divides exactly). \"decimal\": carry on past the decimal point, appending zeros to the dividend until the division terminates or `decimalPlaces` is reached."
+        ]
       },
       "decimalPlaces": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 8,
-        "description": "Decimal form only: the most decimal places to carry the quotient to. A terminating division stops on its own; a non-terminating one is TRUNCATED here (not rounded). Default 4."
+        "maximum": 8
       },
       "method": {
         "type": "string",
         "enum": [
           "short"
-        ],
-        "description": "The division method. v1 supports only \"short\" (the bus-stop layout) — the default. A future \"long\" mode (the subtract-and-bring-down stack below the dividend) is planned; this field reserves the seam."
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles. All default true.",
         "properties": {
           "quotient": {
-            "type": "boolean",
-            "description": "Show the quotient digits above the bar. false leaves the space above the bar EMPTY (no \"?\") — a clean answer space for the pupil to complete. Default true."
+            "type": "boolean"
           },
           "carries": {
-            "type": "boolean",
-            "description": "Show the small carried remainders tucked before each dividend digit (the method working). false shows only the bare quotient and dividend. Default true."
+            "type": "boolean"
           },
           "remainder": {
-            "type": "boolean",
-            "description": "Show the \"r R\" remainder readout after the quotient (remainder form, when the division is not exact). Default true."
+            "type": "boolean"
           },
           "rescale": {
-            "type": "boolean",
-            "description": "When the divisor is a decimal, show the \"× 10ⁿ\" rescale line that turns it into a whole-number division. Default true. Ignored when the divisor is already whole."
+            "type": "boolean"
           },
           "decimalCarry": {
-            "type": "boolean",
-            "description": "Draw the faint dashed guide that links the dividend's decimal point up to the quotient's, showing the point is carried straight up. Default true. Ignored when there is no decimal point."
+            "type": "boolean"
           }
         }
       },
       "occlude": {
         "type": "object",
         "additionalProperties": false,
-        "description": "What a question hides as \"?\" — the figure stays drawn, only the listed values become \"?\". (Use show.quotient:false instead for a truly empty answer space.)",
         "properties": {
           "quotient": {
             "oneOf": [
@@ -104,35 +72,28 @@
                   "minimum": 0
                 }
               }
-            ],
-            "description": "Hide quotient digits as \"?\". true hides EVERY quotient digit (the \"work out the answer\" hook); an array hides only the digits at those 0-based left-to-right positions (digit columns only, the decimal point is not counted) — e.g. [1] gives \"4?7\" for \"complete the division\". Default: nothing hidden."
+            ]
           },
           "remainder": {
-            "type": "boolean",
-            "description": "Hide the remainder as \"r ?\" — the \"find the remainder\" hook. Default false."
+            "type": "boolean"
           },
           "carries": {
-            "type": "boolean",
-            "description": "Hide every carried remainder as \"?\" — \"fill in the carries\". Default false."
+            "type": "boolean"
           }
         }
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Staged build: fill only the FIRST N dividend columns — each revealed column shows its quotient digit and the carry it produces, the rest stay blank. reveal:0 is the opening frame (divisor, bar and dividend only); reveal at or above the column count shows the whole worked division including the remainder. Omit (or set high) for the finished figure. Never combine with occlude — staging and questioning are different jobs."
+        "minimum": 0
       },
       "highlight": {
-        "type": "boolean",
-        "description": "Amber the ANSWER — the quotient digits and the remainder — for result emphasis. Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -142,7 +103,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — 196 ÷ 7 = 28 (exact), carries shown",
       "params": {
         "dividend": 196,
         "divisor": 7,
@@ -153,7 +113,6 @@
       }
     },
     {
-      "label": "Blank answer space — work out 162 ÷ 3 (quotient empty)",
       "params": {
         "header": "Short division",
         "dividend": 162,
@@ -164,7 +123,6 @@
       }
     },
     {
-      "label": "Occluded question — 437 ÷ 8: quotient and remainder hidden",
       "params": {
         "dividend": 437,
         "divisor": 8,
@@ -179,7 +137,6 @@
       }
     },
     {
-      "label": "Hard case — 5.1 ÷ 0.4 in decimals: scale ×10, then 51 ÷ 4 = 12.75",
       "params": {
         "dividend": 5.1,
         "divisor": 0.4,
@@ -192,7 +149,6 @@
       }
     },
     {
-      "label": "Decimal worked example — 7 ÷ 8 = 0.875 (carry past the point)",
       "params": {
         "dividend": 7,
         "divisor": 8,
@@ -205,7 +161,6 @@
       }
     },
     {
-      "label": "Remainder, answer highlighted — 74 ÷ 5 = 14 r 4",
       "params": {
         "dividend": 74,
         "divisor": 5,

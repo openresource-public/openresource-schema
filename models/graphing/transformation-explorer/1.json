@@ -4,37 +4,7 @@
   "name": "transformation-explorer",
   "version": 1,
   "title": "Transformation explorer",
-  "tagline": "Parent curve in grey + its derived image y = a·f(x−b)+c (with f(−x), −f(x) reflections); derived mapped points + arrows show the base-to-image correspondence.",
-  "description": "A base curve y = f(x) drawn in construction grey and its transformed image y = a·f(x − b) + c drawn in the accent colour on one pair of numbered axes — the model for teaching graph transformations as a RELATION between a parent and its image, not as an isolated curve. You choose the parent from a closed set of standard shapes (x², x³, |x|, 1/x, sin x, cos x, √x), the transformation numbers a (vertical stretch / scale), b (horizontal translation), c (vertical translation), and optional reflections in the y-axis (f(−x)) or x-axis (−f(x)); the image curve is derived point-by-point, never authored. To make the correspondence visible you give sample x-values on the base and the model marks each base point (x, f(x)), computes its image and draws an arrow from one to the other, with coordinate readouts. Both equations are labelled and a plain-English description of the transformation is composed automatically (\"translation 3 right and 2 up, stretch ×2, reflected in the x-axis\"). Occlude the description (\"describe the transformation\") or the mapped image coordinates (\"where does this point map to?\") to pose a question. Web: drag the a, b and c handles (or the compact sliders) and the image moves while the base stays put — the invariant that the image is always the transform of the same parent. Staged builds apply one transformation at a time (f → f(x−2) → f(x−2)+3). This is a sibling of graphing/function-graph, which sketches and reads a single curve's features — see whenToUse.",
-  "whenToUse": "Reach for this to TEACH or QUESTION graph transformations as the relationship between a parent curve and its image: y = a·f(x − b) + c and the two reflections y = f(−x) (in the y-axis) and y = −f(x) (in the x-axis). Set base to the parent shape (\"quadratic\" x², \"cubic\" x³, \"modulus\" |x|, \"reciprocal\" 1/x, \"sine\", \"cosine\", \"sqrt\" √x), then give the transformation: a scales/stretches vertically (a = 2 doubles heights, a = 0.5 squashes, a negative a also reflects in the x-axis), b translates horizontally (b = 3 moves the curve 3 RIGHT — note the minus sign inside f(x − b)), c translates vertically (c = 2 moves it 2 UP). reflectX flips in the x-axis, reflectY flips in the y-axis. Add samples: [x1, x2, x3] (2–3 x-values on the base) so the mapped points and arrows show exactly where chosen points go — pick points that move visibly (a turning point, an intercept, a peak). Frame the window with axes so both the base and the image fit with a little room. Common configurations: SHOW a transformation — base + a/b/c, samples marking two or three key points, showDescription true. DESCRIBE it (question) — set occlude: \"equation\" so the image label and the written description read \"?\" (\"describe the transformation that maps the grey curve to the blue one\"). FIND the image of a point — set occlude: \"points\" so the image coordinates read \"?\" (\"the point (2, 4) is on y = f(x); where is it on y = f(x) + 3?\"). EXPLORE — set draggable: true (or add sliders) and let pupils sweep a, b or c live. Cross-block convention: keep the SAME base and window across the blocks of one lesson so pupils compare transformations on a fixed frame; introduce one parameter at a time (translate, then stretch, then reflect). A staged build reads well: the base alone → after the horizontal shift → after the vertical shift → after the stretch. Switch primitive when the teaching changes: to sketch or read a single curve's roots / turning point / asymptote, or to plot an arbitrary y = f(x) expression, use graphing/function-graph; to reflect a SHAPE (triangle/quadrilateral) or rotate/translate/enlarge it, use geometry/transformations; to plot discrete points use graphing/coordinate-grid. Synonyms a teacher might use: graph transformation, transforming graphs, translate a graph, translation, stretch, vertical stretch, scale factor, reflect a graph, reflection, f(x), y = f(x), f(x) + a, f(x + a), f(x − a), a·f(x), f(−x), −f(x), parent function, mapping, image, describe the transformation.",
   "responseModes": [],
-  "tags": [
-    "graph transformation",
-    "transformations",
-    "transforming graphs",
-    "translate",
-    "translation",
-    "stretch",
-    "vertical stretch",
-    "scale factor",
-    "reflect",
-    "reflection",
-    "f(x)",
-    "y = f(x)",
-    "f(x)+a",
-    "f(x+a)",
-    "a f(x)",
-    "f(-x)",
-    "-f(x)",
-    "parent function",
-    "parent curve",
-    "mapping",
-    "image",
-    "combined",
-    "describe the transformation",
-    "graphing",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -49,41 +19,33 @@
           "sine",
           "cosine",
           "sqrt"
-        ],
-        "description": "The parent curve f(x) (drawn in construction grey): 'quadratic' = x², 'cubic' = x³, 'modulus' = |x|, 'reciprocal' = 1/x, 'sine' = sin x (radians), 'cosine' = cos x (radians), 'sqrt' = √x (x ≥ 0). Default 'quadratic'."
+        ]
       },
       "a": {
-        "type": "number",
-        "description": "Vertical scale / stretch factor applied OUTSIDE f: y = a·f(x). a = 2 stretches heights ×2, a = 0.5 squashes, a = 1 leaves the height unchanged. A negative a also reflects in the x-axis (a = −1 is the same as reflectX). Default 1."
+        "type": "number"
       },
       "b": {
-        "type": "number",
-        "description": "Horizontal translation, written INSIDE as f(x − b): a POSITIVE b moves the curve b units to the RIGHT (y = f(x − 3) is 3 right), a negative b moves it left. Default 0."
+        "type": "number"
       },
       "c": {
-        "type": "number",
-        "description": "Vertical translation added OUTSIDE: y = f(x) + c. Positive c moves the curve UP, negative DOWN. Default 0."
+        "type": "number"
       },
       "reflectX": {
-        "type": "boolean",
-        "description": "Reflect in the x-axis, y = −f(x) (flips the curve upside down). Applied together with the scale a, so a = 2 with reflectX gives y = −2·f(x). Default false."
+        "type": "boolean"
       },
       "reflectY": {
-        "type": "boolean",
-        "description": "Reflect in the y-axis, y = f(−x) (flips the curve left-to-right). Applied to the input before the horizontal translation. Default false."
+        "type": "boolean"
       },
       "samples": {
         "type": "array",
         "items": {
           "type": "number"
         },
-        "maxItems": 4,
-        "description": "x-values of points ON THE BASE curve to map across to the image. For each, the model marks the base point (x, f(x)), computes its image under the transformation and draws an arrow between them with coordinate readouts — this is what makes the base-to-image correspondence visible. Choose 2–3 points that move noticeably (a peak, an intercept, the vertex). Omit for no mapped points."
+        "maxItems": 4
       },
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The window — the rectangle of the plane shown. Frame it so BOTH the base and the transformed image fit with a little room.",
         "properties": {
           "x": {
             "type": "array",
@@ -91,8 +53,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis. Default [-6, 6]."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -100,18 +61,15 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the y-axis. Default [-6, 6]."
+            "maxItems": 2
           },
           "xStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between x gridlines / axis numbers. Default: a sensible round value for the range."
+            "exclusiveMinimum": 0
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between y gridlines / axis numbers. Default: a sensible round value for the range."
+            "exclusiveMinimum": 0
           }
         }
       },
@@ -120,50 +78,39 @@
         "enum": [
           "equation",
           "points"
-        ],
-        "description": "The question hook — hide one derived readout as '?'. 'equation' hides the image equation label AND the written description ('describe the transformation'). 'points' hides the mapped image coordinates ('where does each point map to?'). Omit to show everything (a worked example). The curves themselves always stay visible."
+        ]
       },
       "highlight": {
-        "type": "boolean",
-        "description": "Draw the eye to the transformed image curve with the amber emphasis colour instead of the default accent blue (use when the image is the thing the lesson is about). Default false."
+        "type": "boolean"
       },
       "showBase": {
-        "type": "boolean",
-        "description": "Draw the parent curve f(x) in construction grey. Default true. Set false to show only the image (e.g. an answer space for \"sketch the transform\")."
+        "type": "boolean"
       },
       "showImage": {
-        "type": "boolean",
-        "description": "Draw the transformed image curve. Default true. Set false with showBase true for a blank \"sketch the image yourself\" answer space."
+        "type": "boolean"
       },
       "showPoints": {
-        "type": "boolean",
-        "description": "Draw the mapped sample points and their arrows. Default true (when samples are given)."
+        "type": "boolean"
       },
       "showDescription": {
-        "type": "boolean",
-        "description": "Show the composed plain-English description of the transformation below the figure (\"translation 3 right and 2 up\"). Default true."
+        "type": "boolean"
       },
       "showGrid": {
-        "type": "boolean",
-        "description": "Show the background grid. Default true."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line of text centred below the figure, e.g. the equation being transformed. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Show draggable handles for a, b and c above the graph; dragging one re-derives and re-draws the image live while the base stays fixed. Default false."
+        "type": "boolean"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked — vertical translation f(x) + 3 with two mapped points",
       "params": {
         "base": "quadratic",
         "c": 3,
@@ -184,7 +131,6 @@
       }
     },
     {
-      "label": "Describe the transformation (occluded) — a horizontal shift",
       "params": {
         "base": "quadratic",
         "b": 2,
@@ -206,7 +152,6 @@
       }
     },
     {
-      "label": "Answer space — base only, sketch the image of f(x) − 2",
       "params": {
         "base": "cubic",
         "c": -2,
@@ -225,7 +170,6 @@
       }
     },
     {
-      "label": "Find the image of a point (occluded points) — vertical stretch ×2",
       "params": {
         "base": "sine",
         "a": 2,
@@ -249,7 +193,6 @@
       }
     },
     {
-      "label": "The hard case — y = −2·f(x − 3) + 1 on √x, all four at once",
       "params": {
         "base": "sqrt",
         "a": 2,
@@ -274,7 +217,6 @@
       }
     },
     {
-      "label": "Explore — drag a, b, c on a cosine curve",
       "params": {
         "base": "cosine",
         "a": 1,

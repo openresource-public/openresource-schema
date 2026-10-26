@@ -2,13 +2,13 @@
 
 What a version of the Open Resource schema promises. Each clause has a stable identifier (`OR-VER-nnn`); later versions add clauses and never renumber.
 
-The current schema version is **0.12.1**.
+The current schema version is **0.12.2**.
 
 ## Three version lines
 
 | Line | Answers | Form | Where |
 |---|---|---|---|
-| Schema version | can I parse this? | semver, `0.12.0` | `meta.schemaVersion` |
+| Schema version | can I parse this? | semver, `0.12.1` | `meta.schemaVersion` |
 | Model version | can I render this? | integer pin, `family/name@6` | the `ref` of a model slot |
 | Resource edition | is this the latest, and where did it come from? | integer | `meta.version`, with `status`, `supersedes`, `derivedFrom`, `dateModified` |
 
@@ -61,12 +61,6 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 - **OR-VER-064.** An improvement for everyone pinning a version lands in that version with no bump: a marker that accepts a correct answer it used to refuse, a fixed rendering fault, clearer text, a faster engine. The test is whether every lesson pinning the version would want the change; if any would not, it is a new version.
 - **OR-VER-065.** `models/catalogue.json` lists every published model and every version it has had, with status; `models/<family>/<name>/<version>.json` is the interface a pin resolves to. A resolve for a superseded version says so and names the current one.
 
-## Editions
-
-- **OR-VER-080.** A resource may carry its own edition: `meta.version`, an integer from 1; `meta.status`, one of `draft`, `published`, `retired`; `meta.supersedes`, the id of the edition it replaces; `meta.derivedFrom`, the id of the resource it was adapted from; `meta.dateModified`, ISO 8601. All optional; constrained when present.
-- **OR-VER-081.** The edition is the author's line. The schema version says how to read a document; the edition says which document it is. Neither moves the other.
-- **OR-VER-082.** Open Resource writes `derivedFrom` for an adaptation and `dateModified` on every read. `version`, `status` and `supersedes` are the author's to write until an edition flow exists; a reader treats them as absent, never invents them.
-
 ## History
 
 - **OR-VER-070.** History is append-only. Each release is tagged `v<version>`; tags are never moved or deleted.
@@ -74,3 +68,10 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 - **OR-VER-072.** `versions.json` lists every version with date, status (`current`, `supported`, `retired`), support end, tag and breaking flag; `CHANGELOG.md` describes each. The newest entry in both is the current version.
 - **OR-VER-073.** Each tag has a GitHub release whose notes are that version's changelog entry. Nothing is attached.
 - **OR-VER-074.** Every copy of this repository carries `PROVENANCE.json`: the schema version and the source commit it was cut from.
+- **OR-VER-075.** Between releases, a push to this repository may change documentation and repository files only. A schema file, a clause in this document, or a published model contract changes only in a release.
+
+## Editions
+
+- **OR-VER-080.** A resource may carry its own edition: `meta.version`, an integer from 1; `meta.status`, one of `draft`, `published`, `retired`; `meta.supersedes`, the id of the edition it replaces; `meta.derivedFrom`, the id of the resource it was adapted from; `meta.dateModified`, ISO 8601. All optional; constrained when present.
+- **OR-VER-081.** The edition is the author's line. The schema version says how to read a document; the edition says which document it is. Neither moves the other.
+- **OR-VER-082.** In documents Open Resource serves, `derivedFrom` is set for an adaptation and `dateModified` is the time of the last save. `version`, `status` and `supersedes` are the author's to write until an edition flow exists; when they are absent, a reader does not invent them.

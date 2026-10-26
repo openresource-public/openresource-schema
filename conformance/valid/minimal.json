@@ -5,7 +5,7 @@
     "type": "resource",
     "title": "A resource",
     "meta": {
-      "schemaVersion": "0.12.1"
+      "schemaVersion": "0.12.2"
     },
     "blocks": {},
     "sections": {},

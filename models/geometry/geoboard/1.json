@@ -4,47 +4,7 @@
   "name": "geoboard",
   "version": 1,
   "title": "Geoboard",
-  "tagline": "Peg board — square, isometric or circular pin-ring — with polygons formed by joining pegs; the band, fills and right-angle/parallel/equal-side marks all derived.",
-  "description": "A geoboard / pin-board — a primary manipulative for constructing 2-D shapes and reading their properties. Pick a board: a square dot lattice (square-dots / square-lines), an isometric (triangular) dot lattice for isometric drawing (iso-dots / iso-lines), or a circular ring of pegs joined by chords (circular). For each shape you list the pegs the elastic band joins; the model derives the polygon outline, the shaded interior, and the property marks — right angles (corner squares), parallel sides (matching chevron arrows) and equal sides (matching ticks) — none of which can be authored, so a shape's marked properties always tell the truth. Multiple shapes overlap, each in its own colour; label a shape and occlude the label for a \"name this shape\" question, highlight one in amber, or show a derived property summary. v1 is static (with host-driven staged builds): no drag, no answer-on-the-board mode yet.",
-  "whenToUse": "Reach for this to construct polygons on a grid and to teach the properties of 2-D shapes — sides, corners (vertices), right angles, parallel sides and equal sides — the way a geoboard / pin-board / dotty-paper lesson does. Choose the board with board.type: \"square-dots\" (plain square pin lattice), \"square-lines\" (the same with a faint square grid), \"iso-dots\" / \"iso-lines\" (an isometric / triangular lattice — for equilateral triangles, rhombi, hexagons, parallelograms and isometric drawing of 2-D polygons), or \"circular\" (a ring of board.pins pegs, e.g. 8 or 12, joined by chords). Set board.cols / board.rows (pegs across / up) for grid boards, board.pins for a circular board. Then write shapes: each shape's points are the pegs the band visits, in order — [x, y] on a grid (x right, y up, [0,0] bottom-left) or [pin] (0…pins−1, from the top, clockwise) on a circular board. Everything else is derived: turn on marks.rightAngles / marks.parallel / marks.equalSides to draw the property marks (matching chevrons for parallel families, matching ticks for equal-length families, corner squares for right angles), set fill to shade the interior, properties for a derived sides/angles summary line. Common configurations: properties — a labelled quadrilateral with marks.rightAngles + marks.parallel + properties (square, rectangle, rhombus, parallelogram, trapezium, kite); construct — an empty board (no shapes) with a caption (\"make a triangle with one right angle\") as an answer space; name it — label the shape and set occludeLabel, showing the marks so pupils name it from its properties; isometric — an iso board with a triangle / parallelogram / hexagon; circular — an inscribed square or triangle on a 12-pin ring; overlap / compare — two or three shapes, each its own colour. Keep the same board (type and size) across the blocks of one lesson so pupils track one board. A staged build reads well: open on the empty board, then add one peg / side per stage until the shape is closed, then shade it and add the marks (give later stages a larger points list, then fill / marks). Switch model when the teaching changes: for coordinates and reading/plotting points use graphing/coordinate-grid; for area by counting squares use a squared-grid area model; for a solid drawn from unit cubes use geometry/isometric-cubes; for reflection symmetry use geometry/symmetry. Synonyms a teacher might use: geoboard, geo-board, pin board, pinboard, nail board, dotty paper, dot paper, square dots, isometric paper, triangular dots, elastic band, rubber band, make a shape, construct a polygon, properties of shapes, sides and corners, right angle, parallel sides, equal sides, quadrilaterals, triangles, circular geoboard, pin-circle, chords.",
   "responseModes": [],
-  "tags": [
-    "geoboard",
-    "geo-board",
-    "pin board",
-    "pinboard",
-    "nail board",
-    "dotty paper",
-    "dot paper",
-    "square dots",
-    "isometric paper",
-    "triangular dots",
-    "elastic band",
-    "rubber band",
-    "construct polygon",
-    "polygon",
-    "properties of shapes",
-    "sides",
-    "corners",
-    "vertices",
-    "right angle",
-    "parallel sides",
-    "equal sides",
-    "quadrilateral",
-    "triangle",
-    "square",
-    "rectangle",
-    "rhombus",
-    "parallelogram",
-    "trapezium",
-    "kite",
-    "hexagon",
-    "circular geoboard",
-    "chord",
-    "isometric drawing",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -52,7 +12,6 @@
       "board": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The peg board. Defaults to a 5×5 square dot lattice if omitted.",
         "properties": {
           "type": {
             "type": "string",
@@ -62,26 +21,22 @@
               "iso-dots",
               "iso-lines",
               "circular"
-            ],
-            "description": "\"square-dots\": a square lattice of pegs. \"square-lines\": the same with a faint square grid drawn through the pegs. \"iso-dots\": an isometric (triangular) lattice of pegs — vertical columns, the standard isometric dot paper for drawing 2-D polygons. \"iso-lines\": the same with the faint triangular grid drawn. \"circular\": a ring of pegs (no lattice), joined by chords. Default \"square-dots\"."
+            ]
           },
           "cols": {
             "type": "integer",
             "minimum": 2,
-            "maximum": 12,
-            "description": "Number of pegs ACROSS the board (the x range is 0…cols−1). Grid boards only. Default 5."
+            "maximum": 12
           },
           "rows": {
             "type": "integer",
             "minimum": 2,
-            "maximum": 12,
-            "description": "Number of pegs UP the board (the y range is 0…rows−1). Grid boards only. Default 5."
+            "maximum": 12
           },
           "pins": {
             "type": "integer",
             "minimum": 3,
-            "maximum": 24,
-            "description": "Number of pegs evenly spaced around the RING — circular board only (e.g. 8 or 12). Pin 0 is at the top (12 o'clock); pins are numbered clockwise. Default 12."
+            "maximum": 24
           }
         }
       },
@@ -100,76 +55,60 @@
                   "type": "integer"
                 },
                 "minItems": 1,
-                "maxItems": 2,
-                "description": "One peg the band hooks on. On a GRID board (square-*/iso-*) write [x, y] — column then row, x to the right, y UPWARD, origin [0, 0] at the bottom-left peg. On a CIRCULAR board write [pin] — a single index 0…pins−1 starting at the top (12 o'clock) and going clockwise."
+                "maxItems": 2
               },
               "minItems": 2,
-              "maxItems": 16,
-              "description": "The pegs the elastic band visits, in order. Two pegs draw a single segment; three or more draw a polygon (closed back to the first by default). Each entry is a peg reference — [x, y] on a grid board, [pin] on a circular board."
+              "maxItems": 16
             },
             "closed": {
-              "type": "boolean",
-              "description": "Join the last peg back to the first (a closed polygon). Default true for 3+ pegs. Set false for an OPEN path / polyline — the band hooked across pegs without closing (e.g. demonstrating the open-polygon misconception, or a path being built up). Ignored for a 2-peg segment."
+              "type": "boolean"
             },
             "fill": {
-              "type": "boolean",
-              "description": "Shade the polygon's interior (bold border + light tinted fill, in the shape's own colour). Default false (outline only). Only meaningful for a closed polygon of 3+ pegs."
+              "type": "boolean"
             },
             "label": {
-              "type": "string",
-              "description": "A name drawn at the polygon's centroid — e.g. \"A\", \"R\", or a shape name like \"trapezium\". The TEXT is authored (a shape's name cannot be derived); its POSITION is computed. Omit for an unlabelled shape."
+              "type": "string"
             },
             "occludeLabel": {
-              "type": "boolean",
-              "description": "Render the label as \"?\" — the \"name this shape\" / \"which shape is it?\" hook. The shape and its marks stay visible. Default false. Only meaningful with label."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this shape's band (and fill, if any) in amber — emphasis / \"this is the answer\". Reserved colour; use sparingly. Default false."
+              "type": "boolean"
             },
             "marks": {
               "type": "object",
               "additionalProperties": false,
-              "description": "Which DERIVED property marks to draw on this shape. Each is computed from the geometry, never authored — so they always tell the truth about the shape.",
               "properties": {
                 "rightAngles": {
-                  "type": "boolean",
-                  "description": "Mark every interior right angle with a small square corner symbol (detected where two sides meet at 90°). Default false."
+                  "type": "boolean"
                 },
                 "parallel": {
-                  "type": "boolean",
-                  "description": "Mark parallel sides with matching chevron arrows — one arrow on the first parallel family, two on the second, and so on (detected from the side directions; only families of 2+ parallel sides are marked). Default false."
+                  "type": "boolean"
                 },
                 "equalSides": {
-                  "type": "boolean",
-                  "description": "Mark equal-length sides with matching tick hatches — one tick on the first equal-length family, two on the second, and so on (detected from the side lengths; only families of 2+ equal sides are marked). Default false."
+                  "type": "boolean"
                 }
               }
             },
             "properties": {
-              "type": "boolean",
-              "description": "Show a DERIVED one-line property summary for this shape beneath the figure — its number of sides, right angles, pairs of parallel sides and equal sides (the verbal twin of the marks). Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "points"
           ]
-        },
-        "description": "The shapes on the board, each an elastic band joining pegs. Omit (or pass an empty array) for an EMPTY board — an answer space for pupils to make a shape themselves. Multiple shapes are drawn in distinct colours (the first blue, then teal, purple, coral) so overlapping shapes read apart; use highlight to amber the one that matters."
+        }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the board; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure (wraps), e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked example — a labelled rectangle on a square grid, right-angle + parallel marks, properties",
       "params": {
         "board": {
           "type": "square-lines",
@@ -209,7 +148,6 @@
       }
     },
     {
-      "label": "Blank answer space — an empty board to construct on",
       "params": {
         "board": {
           "type": "square-dots",
@@ -220,7 +158,6 @@
       }
     },
     {
-      "label": "Occluded question — name this shape from its marked properties",
       "params": {
         "board": {
           "type": "square-dots",
@@ -258,7 +195,6 @@
       }
     },
     {
-      "label": "Hard case — a tilted square: prove it from four equal sides and four right angles",
       "params": {
         "board": {
           "type": "square-dots",
@@ -297,7 +233,6 @@
       }
     },
     {
-      "label": "Isometric — a parallelogram on an isometric board, parallel + equal-side marks",
       "params": {
         "board": {
           "type": "iso-lines",
@@ -336,7 +271,6 @@
       }
     },
     {
-      "label": "Circular pin-board — a square inscribed in 12 pins (chords), derived right angles",
       "params": {
         "board": {
           "type": "circular",

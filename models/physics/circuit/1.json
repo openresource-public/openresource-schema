@@ -4,37 +4,7 @@
   "name": "circuit",
   "version": 1,
   "title": "Circuit",
-  "tagline": "Series / parallel circuit in BS/IEC symbols whose currents, pds, meter readings and bulb brightness are all derived by solving it; occludable readings, clickable switches.",
-  "description": "An electrical circuit drawn with the standard school (BS / IEC) symbols — one cell or battery driving a series chain of sections, where each section is a single in-line component or a parallel group of series branches. Components are bulbs and resistors (each a given resistance), switches (open or closed), ammeters (ideal in-line current meters) and voltmeters (ideal meters connected across a named component). Everything except the structure is computed by really solving the circuit with Ohm's law and the series / parallel rules: the total resistance, the main current, the current in every branch (dividing in parallel and adding back), the potential difference across every component, every ammeter and voltmeter reading, and each bulb's brightness (∝ the power dissipated in it, shown as a glow). A branch broken by an open switch carries no current and draws as a dead grey wire. Any reading can be occluded to \"?\" for a question — and the hidden value is suppressed everywhere else so the figure cannot leak it — and any component highlighted. With \"toggleable\" set, pupils click a switch to open or close it and watch every reading, wire state and brightness recompute live.",
-  "whenToUse": "Reach for this whenever a lesson draws an electrical circuit and reasons about its readings: a single series loop (cell + bulbs / resistors, one current everywhere, the pds adding to the supply), parallel branches (the current splitting between branches and adding back in the main line, each branch getting the full supply pd), ammeters and voltmeters (where to place them and what they read), switches and their effect, series-vs-parallel comparisons, and bulb-brightness reasoning. Author the STRUCTURE only — the cell voltage, the sections in series order, the components in each — and every current, pd, reading and brightness is solved for you. Common configurations: worked example — show.readings and show.totals true so every derived value is labelled; a question — occlude the meter or component whose reading is asked for (\"what does A₁ read?\"), leaving the rest visible; a blank answer space — occlude several readings at once; compare series and parallel — two blocks with the same components wired the two ways, brightness on; the current-divides figure — two unequal parallel branches with an ammeter in each branch and one in the main line (A_main = A₁ + A₂). Give every component a \"label\" (L₁, R₂, A₁, V₁) and, where a voltmeter is used, an \"id\" on the component it measures with the voltmeter's \"across\" pointing at it. Keep the same cell voltage and component order across the blocks of one lesson so pupils track one circuit. Switches: set \"closed\" per switch and let \"toggleable\" true drive live exploration. Synonyms teachers use: circuit, circuit diagram, series circuit, parallel circuit, cell, battery, EMF, potential difference, voltage, current, ammeter, voltmeter, resistor, bulb, lamp, switch, Ohm's law, resistance, current divides, brightness, series and parallel.",
   "responseModes": [],
-  "tags": [
-    "circuit",
-    "circuit diagram",
-    "series circuit",
-    "parallel circuit",
-    "series and parallel",
-    "electricity",
-    "electric circuit",
-    "cell",
-    "battery",
-    "EMF",
-    "potential difference",
-    "voltage",
-    "current",
-    "ammeter",
-    "voltmeter",
-    "resistor",
-    "resistance",
-    "ohm",
-    "ohms law",
-    "bulb",
-    "lamp",
-    "switch",
-    "brightness",
-    "physics",
-    "GCSE physics"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -45,8 +15,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "pattern": "^[a-z][a-z0-9-]*$",
-            "description": "Kebab-case id a voltmeter's \"across\" points at, e.g. \"l1\". Optional for components nothing measures. Not drawn — use \"label\" for the on-figure name."
+            "pattern": "^[a-z][a-z0-9-]*$"
           },
           "type": {
             "type": "string",
@@ -56,33 +25,26 @@
               "switch",
               "ammeter",
               "voltmeter"
-            ],
-            "description": "The component and its symbol. \"bulb\" = lamp (circle with a cross), a resistance that lights ∝ its power; \"resistor\" = rectangle, a fixed resistance; \"switch\" = a hinged blade, open or closed; \"ammeter\" = circle \"A\", an ideal (zero-resistance) in-line current meter; \"voltmeter\" = circle \"V\", an ideal (infinite-resistance) meter connected ACROSS a component (it draws no current and never sits in the series chain)."
+            ]
           },
           "resistance": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Resistance in ohms (Ω) — a bulb or resistor property. Required for \"bulb\" and \"resistor\"; ignored for switches and meters (ammeter = 0 Ω, voltmeter = infinite, both ideal). This is a GIVEN, not derived — the pd and current across it are what the model computes."
+            "exclusiveMinimum": 0
           },
           "closed": {
-            "type": "boolean",
-            "description": "Switch only — is the switch closed (conducting)? true = closed (its branch carries current), false = open (that branch is broken, carries 0, and draws as a dead grey wire). Default true. Toggle it live with the top-level \"toggleable\" flag."
+            "type": "boolean"
           },
           "across": {
-            "type": "string",
-            "description": "Voltmeter only — the id of the component (or \"cell\") this voltmeter reads the potential difference ACROSS. The voltmeter draws in parallel with that component and reads its derived pd. A voltmeter with no valid \"across\" reads nothing."
+            "type": "string"
           },
           "label": {
-            "type": "string",
-            "description": "Display name drawn beside the component — \"L₁\", \"R₁\", \"A₁\", \"V₁\". Conventionally bulbs L, resistors R, ammeters A, voltmeters V, switches S, numbered in reading order. Omit for an unlabelled component."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render this component's READING as \"?\" — the question hook (\"what does A₁ read?\", \"what is the pd across R₂?\"). The component still draws and the circuit still solves; only its own readout is hidden, and the same value is suppressed anywhere else it would leak (totals line, aria). Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber ring on this component — draw the eye to one meter, bulb or branch. Reserved for emphasis / the element in question. Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -94,28 +56,22 @@
       "cell": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The source — a single cell or battery on the left, driving the whole circuit. Its voltage is the EMF the circuit is solved against.",
         "properties": {
           "voltage": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The cell / battery EMF in volts (V). The one authored electrical quantity — every current and pd is derived from it and the resistances."
+            "exclusiveMinimum": 0
           },
           "battery": {
-            "type": "boolean",
-            "description": "Draw the multi-cell battery symbol (two cell pairs) instead of a single cell. Cosmetic — the voltage is what matters. Default false (single cell)."
+            "type": "boolean"
           },
           "label": {
-            "type": "string",
-            "description": "Optional name beside the cell (e.g. \"6 V\"). Omit to show just the derived voltage readout when show.readings is on."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Hide the cell's voltage readout as \"?\" — \"what is the supply voltage?\" (derivable from the readings). Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the cell. Default false."
+            "type": "boolean"
           }
         },
         "required": [
@@ -126,24 +82,20 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 6,
-        "description": "The circuit as a SERIES chain of sections, drawn left to right then back to the cell. Each section is EITHER a single in-line component ({ \"component\": … }) OR a parallel group ({ \"parallel\": [ branch, … ] }). A plain series loop is a list of single-component sections; a parallel circuit puts a \"parallel\" section in the chain. Sections in series share one current; a parallel section splits it.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "component": {
-              "$ref": "#/$defs/component",
-              "description": "A single in-line component occupying this section of the series chain (all the current flows through it)."
+              "$ref": "#/$defs/component"
             },
             "parallel": {
               "type": "array",
               "minItems": 2,
               "maxItems": 3,
-              "description": "A parallel group: 2–3 branches wired between the same two nodes, so the current divides between them and rejoins. Each branch is a series string of components. Every branch sees the same pd (the node-to-node pd); the branch currents add to the current entering the group. One level of parallel only (a branch cannot itself hold a parallel group).",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "description": "One branch of a parallel group — a series string of components.",
                 "properties": {
                   "components": {
                     "type": "array",
@@ -151,12 +103,10 @@
                     "maxItems": 4,
                     "items": {
                       "$ref": "#/$defs/component"
-                    },
-                    "description": "The components along this branch, in series order. A branch with an open switch carries no current (a dead branch) but still draws."
+                    }
                   },
                   "label": {
-                    "type": "string",
-                    "description": "Optional name for the branch as a whole (rarely needed — usually the components carry the labels)."
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -192,37 +142,29 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Readout toggles.",
         "properties": {
           "readings": {
-            "type": "boolean",
-            "description": "Show the derived readings — each meter's value, each resistor / bulb's pd and the current in each wire. false leaves the bare circuit (symbols and labels only). Occluded components show \"?\" regardless. Default true."
+            "type": "boolean"
           },
           "totals": {
-            "type": "boolean",
-            "description": "Show the total-resistance and total-current readout beneath the circuit (\"Rtotal = 1.2 Ω, I = 5 A\"). A value derivable from an occluded reading is suppressed here too. Default false."
+            "type": "boolean"
           },
           "brightness": {
-            "type": "boolean",
-            "description": "Draw each bulb's brightness as a glow whose strength tracks the power it dissipates (P = I²R) — off / dim / normal / bright. false draws every bulb as a plain symbol. Default true."
+            "type": "boolean"
           },
           "current": {
-            "type": "boolean",
-            "description": "Draw small conventional-current arrows on the wires (positive → negative, out of the + terminal). false leaves the wires unarrowed. Default false."
+            "type": "boolean"
           }
         }
       },
       "toggleable": {
-        "type": "boolean",
-        "description": "Web-only. Pupils click a switch to open or close it; the whole circuit re-solves and every reading, wire state and bulb brightness updates live. Exploration only. Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -232,7 +174,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — series loop, one cell and two bulbs, all readings + totals",
       "params": {
         "cell": {
           "voltage": 6,
@@ -264,7 +205,6 @@
       }
     },
     {
-      "label": "Blank answer space — series circuit with an ammeter, its reading hidden",
       "params": {
         "cell": {
           "voltage": 12,
@@ -302,7 +242,6 @@
       }
     },
     {
-      "label": "Voltmeter across one resistor of a series pair — potential divider reading",
       "params": {
         "cell": {
           "voltage": 9,
@@ -340,7 +279,6 @@
       }
     },
     {
-      "label": "Occluded question — parallel branches, the pd across a bulb hidden",
       "params": {
         "cell": {
           "voltage": 6,
@@ -381,7 +319,6 @@
       }
     },
     {
-      "label": "Hard case — two unequal parallel branches, ammeter in each branch and the main line (current splits)",
       "params": {
         "header": "The current divides",
         "cell": {
@@ -436,7 +373,6 @@
       }
     },
     {
-      "label": "Switch controls a parallel branch — open switch makes a dead branch",
       "params": {
         "cell": {
           "voltage": 4,

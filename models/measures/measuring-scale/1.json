@@ -4,47 +4,7 @@
   "name": "measuring-scale",
   "version": 1,
   "title": "Measuring scale",
-  "tagline": "Graduated instrument read against an indicator — ruler, capacity jug or dial scale; ticks and the reading derived, occlude to \"?\" for reading off.",
-  "description": "A graduated measuring instrument read against an indicator, in one of three forms chosen by kind: a horizontal ruler (cm/mm ticks with an object lying along the scale — the reading is the object’s length, so an object that does not start at zero gives the read-the-difference case), a vertical capacity jug (litre/millilitre ticks with a blue fill level), or a rotary dial weighing scale (a needle on a 0–max face). The author writes the scale (min, max, the numbered-tick interval and any subdivisions, and the unit) and the true measurement (an object’s span on a ruler, or a value on a jug/dial); the tick positions and numbers, the indicator’s position, the reading, the bracketing “between two ticks” values and a ruler’s endpoint readings are all derived. Tick numbers thin and minor ticks drop out when the scale gets dense, so the marks never collide. The reading occludes to “?” for a question (the indicator stays visible to be read), highlights amber for the answer, and is echoed by an optional fill-in stem sentence (“The pencil is 8 cm long”) and a free caption.",
-  "whenToUse": "Reach for this whenever a lesson reads a measuring instrument: measuring length with a ruler (including the read-the-difference case where the object starts part-way along, not at 0), reading a measuring jug or cylinder for capacity, and reading a kitchen/dial scale for mass. Pick kind: \"ruler\" for length, \"jug\" for capacity, \"dial\" for mass (any unit string works — cm, mm, ml, l, g, kg). Author the scale and the true measurement; never write the reading. Common configurations — read the scale (a question): reading.occlude true hides the number while the object/fill/needle stays visible (\"how long / how much / how heavy?\"); add reading.highlight to amber the answer once revealed. Read the difference (the key ruler case): give object.from a non-zero start and show.endValues true so both ends are read, then the length to − from is the derived answer — occlude it for the question. Between two ticks: reading.interval true adds \"between {lo} and {hi}\" using the numbered ticks bracketing the reading (for a partial-unit needle or fill level). Stem sentence: stem { noun, measure } renders Oak’s fill-in twin \"The {noun} is {reading} {unit} {measure}\" (measure = long / tall / full / heavy…), with the value occlusion-aware. Cross-block conventions: keep the same scale (min/max/major/minor/unit) across the blocks of one lesson so pupils read a steady instrument; choose a major interval that leaves the numbered ticks legible (the model thins labels if you overshoot, but a sensible major reads best); use minor for the subdivisions a real instrument shows (10 for cm→mm, 5 for 100→every-20). Staged builds: open on the object/fill/needle with the reading occluded, then over stages show the endpoints (ruler), reveal the reading, and highlight it — the base state (a labelled scale with the indicator) stands alone as a sensible figure. Synonyms teachers use: measuring scale, reading scales, ruler, measuring jug, measuring cylinder, weighing scale, dial, gauge, length, capacity, volume, mass, weight, graduations, divisions, read the difference, between the marks.",
   "responseModes": [],
-  "tags": [
-    "measuring scale",
-    "reading scales",
-    "read a scale",
-    "ruler",
-    "measuring length",
-    "cm",
-    "mm",
-    "measuring jug",
-    "measuring cylinder",
-    "capacity",
-    "volume",
-    "litres",
-    "millilitres",
-    "ml",
-    "jug",
-    "weighing scale",
-    "dial",
-    "gauge",
-    "needle",
-    "mass",
-    "weight",
-    "grams",
-    "kilograms",
-    "graduations",
-    "divisions",
-    "read the difference",
-    "non-zero start",
-    "between the marks",
-    "partial unit",
-    "measures",
-    "measurement",
-    "primary",
-    "KS1",
-    "KS2",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -55,36 +15,29 @@
           "ruler",
           "jug",
           "dial"
-        ],
-        "description": "Which instrument to draw. \"ruler\": a horizontal cm/mm scale with an object lying along it (reading = the object’s length). \"jug\": a vertical capacity container with a blue fill level (reading = the fill value). \"dial\": a rotary weighing scale with a needle on a 0–max face (reading = the needle value). Use \"object\" with a ruler and \"value\" with a jug or dial."
+        ]
       },
       "scale": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The graduated scale: where the numbered ticks fall and what they measure. The same shape for all three kinds (a ruler’s scale runs left→right, a jug’s bottom→top, a dial’s clockwise from the top).",
         "properties": {
           "min": {
-            "type": "number",
-            "description": "Value at the start of the scale (the left end / the bottom / the top of the dial). Default 0 — almost always 0 for a primary instrument."
+            "type": "number"
           },
           "max": {
-            "type": "number",
-            "description": "Value at the end of the scale (the right end / the top / back to the top of the dial, one full turn). Must be greater than min."
+            "type": "number"
           },
           "major": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Interval between NUMBERED (major) ticks, e.g. 1 for a cm ruler, 100 for a 0–500 ml jug, 100 for a 0–1000 g dial. Numbered ticks fall at min, min+major, … up to max."
+            "exclusiveMinimum": 0
           },
           "minor": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 20,
-            "description": "Number of equal SUBDIVISIONS between consecutive numbered ticks — the small unnumbered marks (a real instrument’s fine graduations). 10 turns a cm ruler’s gaps into mm; 5 turns a 100-unit gap into 20s. 0 = no minor ticks. Minor ticks drop out automatically if they would be too close to read."
+            "maximum": 20
           },
           "unit": {
-            "type": "string",
-            "description": "Unit symbol shown on the scale and in the reading, e.g. \"cm\", \"mm\", \"ml\", \"l\", \"g\", \"kg\". Free text — the model does not convert units."
+            "type": "string"
           }
         },
         "required": [
@@ -96,19 +49,15 @@
       "object": {
         "type": "object",
         "additionalProperties": false,
-        "description": "RULER ONLY: the thing lying along the ruler. The reading is its LENGTH (to − from), computed — so an object whose from is not 0 gives the read-the-difference case automatically. Ignored for jug/dial.",
         "properties": {
           "from": {
-            "type": "number",
-            "description": "Scale value at the LEFT end of the object. Default 0 (aligned to the start of the ruler, the simple case). Set a non-zero from for the read-the-difference / non-zero-start case."
+            "type": "number"
           },
           "to": {
-            "type": "number",
-            "description": "Scale value at the RIGHT end of the object. Must be greater than from. The reading is to − from."
+            "type": "number"
           },
           "label": {
-            "type": "string",
-            "description": "Name of the object drawn on it (e.g. \"pencil\", \"ribbon\", \"leaf\"). Used in the stem sentence too if stem.noun is omitted."
+            "type": "string"
           },
           "fill": {
             "type": "string",
@@ -118,8 +67,7 @@
               "purple",
               "coral",
               "green"
-            ],
-            "description": "Categorical colour of the object — a primary manipulative reads warmer in colour. Default \"teal\". (Blue here is the categorical blue; the amber result colour is reserved for highlight.)"
+            ]
           }
         },
         "required": [
@@ -127,77 +75,61 @@
         ]
       },
       "value": {
-        "type": "number",
-        "description": "JUG/DIAL ONLY: the true reading — the jug’s fill level or the dial’s needle value, in scale units. The fill height / needle angle is computed from it. Ignored for a ruler (which uses object)."
+        "type": "number"
       },
       "reading": {
         "type": "object",
         "additionalProperties": false,
-        "description": "How the derived reading (the answer) is presented. The reading itself is always computed — this object only controls its display.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the reading readout (the number + unit) beside/below the figure. Default true. false hides the readout entirely — use when only the stem sentence should carry the value."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render every derived value as \"?\" — the readout, the stem-sentence value and the between-phrase — so the figure poses \"read the scale\". The object/fill/needle stays visible (it is what the pupil reads). Endpoint readings are controlled separately by show.endValues. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the reading — answer emphasis once revealed. Default false. Reserve for the result, not for default display."
+            "type": "boolean"
           },
           "interval": {
-            "type": "boolean",
-            "description": "Also state \"between {lo} and {hi}\" using the numbered ticks bracketing the reading — the partial-unit phrasing for a needle/level that sits between two marks. Omitted automatically when the reading lands exactly on a numbered tick. Default false."
+            "type": "boolean"
           },
           "places": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 3,
-            "description": "Decimal places for the displayed reading. Default: just enough to show the value exactly (no trailing zeros). Set e.g. 1 to force \"2.0 l\"."
+            "maximum": 3
           }
         }
       },
       "stem": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional fill-in STEM SENTENCE — the verbal twin of the figure (Oak’s \"The __ is __ cm long\"). Rendered in a warm caption band; the value is occlusion-aware (shows \"?\" when reading.occlude).",
         "properties": {
           "noun": {
-            "type": "string",
-            "description": "The subject of the sentence, e.g. \"pencil\", \"water\", \"apple\". Falls back to object.label, else \"reading\". The sentence reads \"The {noun} is {reading} {unit} {measure}\"."
+            "type": "string"
           },
           "measure": {
-            "type": "string",
-            "description": "The trailing descriptor, e.g. \"long\" (length), \"tall\"/\"full\" (capacity), \"heavy\" (mass). Omit for none — \"The water is 350 ml\"."
+            "type": "string"
           }
         }
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line in a warm band below the figure, e.g. a short context note. Distinct from the auto stem sentence. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "endValues": {
-            "type": "boolean",
-            "description": "RULER: show the scale reading at each END of the object (e.g. 3 and 11) — the scaffold for the read-the-difference case. Default false (the simple case shows just the length)."
+            "type": "boolean"
           },
           "minorTicks": {
-            "type": "boolean",
-            "description": "Draw the minor (subdivision) ticks set by scale.minor. Default true. false keeps only the numbered ticks."
+            "type": "boolean"
           },
           "tickLabels": {
-            "type": "boolean",
-            "description": "Number the major ticks. Default true. false gives a bare graduated scale (the marks without numbers) — a harder read."
+            "type": "boolean"
           }
         }
       }
@@ -242,7 +174,6 @@
   },
   "examples": [
     {
-      "label": "Worked ruler — a crayon 0–8 cm with the stem sentence",
       "params": {
         "kind": "ruler",
         "scale": {
@@ -265,7 +196,6 @@
       }
     },
     {
-      "label": "Hard case — read the difference: a ribbon from 3 to 11 cm (length occluded)",
       "params": {
         "kind": "ruler",
         "scale": {
@@ -290,7 +220,6 @@
       }
     },
     {
-      "label": "Worked jug — 350 ml between the 300 and 400 marks",
       "params": {
         "kind": "jug",
         "scale": {
@@ -311,7 +240,6 @@
       }
     },
     {
-      "label": "Occluded question — dial scale: what is the mass of the apple?",
       "params": {
         "kind": "dial",
         "scale": {
@@ -328,7 +256,6 @@
       }
     },
     {
-      "label": "Worked dial — a partial-unit reading of 250 g, answer highlighted",
       "params": {
         "kind": "dial",
         "scale": {
@@ -349,7 +276,6 @@
       }
     },
     {
-      "label": "Blank answer space — how long is the pencil? (length occluded)",
       "params": {
         "kind": "ruler",
         "scale": {

@@ -4,29 +4,7 @@
   "name": "vectors",
   "version": 1,
   "title": "Vectors",
-  "tagline": "Column vectors as arrows on a grid plus their algebra; scalar multiples and resultants drawn tip-to-tail or by the parallelogram rule, components derived.",
-  "description": "Column vectors drawn as directed arrows on a squared grid, plus their algebra. Each vector is a column vector [dx, dy] rendered as an arrow from a chosen grid point; vectors can be defined as scalar multiples of one another (2a, −b) so the relationship is computed, not authored. A resultant combines named vectors as a linear combination (a + b, a − b, a + 2b − c) and is drawn tip-to-tail — each scaled term chained head-to-tail with the single resultant arrow spanning them — or by the parallelogram rule for two vectors. The resultant's components and its label are derived; a closed path whose vectors sum to zero is shown as the zero vector. Every column-vector readout can be shown, occluded (\"?\") or highlighted, so one figure draws a vector, adds or subtracts vectors, shows a scalar multiple, finds the resultant of a journey, or asks pupils to spot parallel and equal vectors. Web-only: drag a vector's tip to change it and watch the resultant update.",
-  "whenToUse": "Reach for this whenever vectors are drawn as arrows and combined: drawing or reading a column vector, adding vectors tip-to-tail or by the parallelogram rule, subtracting vectors, scalar multiplication, the resultant of a journey, and recognising parallel or equal vectors. Author the named vectors and how they combine; every arrow, the path, the parallelogram and the resultant are computed. Common configurations: single vector — one entry in vectors with showComponents true. Addition (tip-to-tail) — define a and b, add resultant { terms: [{ of: \"a\", scalar: 1 }, { of: \"b\", scalar: 1 }] }; a and b are drawn as the path (head to tail) and the amber a + b arrow spans them. Subtraction — terms with scalar −1 (a − b = a + (−b)). Parallelogram — the same two-term resultant with method \"parallelogram\": both vectors from one point, the dashed copies completing the parallelogram, the diagonal as the resultant. Scalar multiple — define 2a as { label: \"2a\", of: \"a\", scalar: 2 } and draw it beside a. Resultant of a path (the hard case) — terms a + 2b − c, drawn tip-to-tail with one resultant arrow. Parallel / equal — draw several vectors (some defined as multiples of others, or with matching components placed at different \"from\" points) with showComponents true and ask which are parallel/equal. Questions — occlude a vector or the resultant to hide its column vector as \"?\"; an answer space leaves the path visible with showResultant false for pupils to add the resultant. Keep the same axes window across the blocks of one lesson so pupils track one grid; frame the window to contain every tail, tip and the resultant. Set draggable to let pupils drag a base vector's tip and watch the resultant recompute. Switch model when the teaching is plotting points or shapes by coordinates (use graphing/coordinate-grid) or transforming a shape by a translation vector (use geometry/transformations) — this model is about directed vector arrows and their algebra. Synonyms a teacher might use: vector, column vector, directed line segment, resultant, tip to tail, nose to tail, triangle law, parallelogram law, adding vectors, scalar multiple, parallel vectors, equal vectors, magnitude (direction).",
   "responseModes": [],
-  "tags": [
-    "vector",
-    "vectors",
-    "column vector",
-    "resultant",
-    "tip to tail",
-    "nose to tail",
-    "triangle law",
-    "parallelogram law",
-    "vector addition",
-    "vector subtraction",
-    "scalar multiple",
-    "parallel vectors",
-    "equal vectors",
-    "directed line segment",
-    "displacement",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -34,7 +12,6 @@
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The squared-grid window. Frame it so every tail, every tip and the resultant fall inside.",
         "properties": {
           "x": {
             "type": "array",
@@ -42,8 +19,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis. Default [-1, 6]."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -51,24 +27,20 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the y-axis. Default [-1, 6]."
+            "maxItems": 2
           },
           "step": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Spacing of the grid squares. Default 1."
+            "exclusiveMinimum": 0
           },
           "labelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Spacing of the numbers on the axes (may be coarser than the grid — count in 2s over a unit grid). Default: same as step."
+            "exclusiveMinimum": 0
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the squared-paper background grid. Default true."
+        "type": "boolean"
       },
       "vectors": {
         "type": "array",
@@ -79,8 +51,7 @@
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "Display name drawn beside the arrow, e.g. \"a\", \"b\", \"2a\". Required if a resultant's terms refer to this vector. Omit for an unlabelled arrow."
+              "type": "string"
             },
             "components": {
               "type": "array",
@@ -88,16 +59,13 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The column vector [dx, dy] — the displacement right (dx) and up (dy). A base vector: a = [3, 2] points 3 right and 2 up. Use this OR (of + scalar), never both."
+              "maxItems": 2
             },
             "of": {
-              "type": "string",
-              "description": "Define this vector as a scalar multiple of another by its label: of \"a\" with scalar 2 makes 2a, whose components are computed as 2 × a — so \"2a is twice a\" cannot be authored wrong. Use with scalar, instead of components."
+              "type": "string"
             },
             "scalar": {
-              "type": "number",
-              "description": "The multiplier for \"of\": 2 → 2a, −1 → −a (same length, reversed), 0.5 → half a. Required when of is set."
+              "type": "number"
             },
             "from": {
               "type": "array",
@@ -105,24 +73,19 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "Grid coordinate [x, y] of the arrow's TAIL. Default [0, 0] (the origin). Use it to place a vector anywhere — e.g. two equal vectors at different spots for \"are these equal?\"."
+              "maxItems": 2
             },
             "showComponents": {
-              "type": "boolean",
-              "description": "Show this vector's column vector (dx over dy in brackets) beside it. Default false. Useful for reading off a vector or comparing two for parallelism. Default true when occlude is set."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the column-vector readout as \"?\" — the \"what is this vector?\" hook. The arrow itself stays drawn. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this vector amber instead of blue — emphasis, e.g. one of a parallel pair. Default false."
+              "type": "boolean"
             },
             "draw": {
-              "type": "boolean",
-              "description": "Whether to draw this vector standalone from its \"from\" anchor. Default: drawn UNLESS it is referenced by a resultant's terms (then it appears only inside the tip-to-tail path, not also from the origin). Set true to also draw a path ingredient on its own; set false to define a vector used only by the resultant."
+              "type": "boolean"
             }
           },
           "required": [],
@@ -139,30 +102,25 @@
               ]
             }
           ]
-        },
-        "description": "The named column vectors. Each is a base vector (components) or a scalar multiple of another (of + scalar). A vector referenced by the resultant's terms is, by default, drawn only inside the tip-to-tail path; all others are drawn standalone from their \"from\" anchor."
+        }
       },
       "resultant": {
         "type": "object",
         "additionalProperties": false,
-        "description": "OPTIONAL. Combine the named vectors into a resultant. Omit for a figure that just draws the vectors (single vector, scalar multiple, parallel/equal recognition).",
         "properties": {
           "terms": {
             "type": "array",
             "minItems": 1,
             "maxItems": 6,
-            "description": "The linear combination, in order. Each term scales a named vector: [{ of: \"a\", scalar: 1 }, { of: \"b\", scalar: 2 }, { of: \"c\", scalar: -1 }] is a + 2b − c. The order is the tip-to-tail drawing order.",
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
                 "of": {
-                  "type": "string",
-                  "description": "Label of the vector this term scales (must match a vector's label)."
+                  "type": "string"
                 },
                 "scalar": {
-                  "type": "number",
-                  "description": "Multiplier for this term. Default 1; −1 gives the reversed vector (subtraction)."
+                  "type": "number"
                 }
               },
               "required": [
@@ -176,40 +134,32 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "Grid coordinate [x, y] where the construction and the resultant arrow START. Default [0, 0]."
+            "maxItems": 2
           },
           "method": {
             "type": "string",
             "enum": [
               "tip-to-tail",
               "parallelogram"
-            ],
-            "description": "\"tip-to-tail\" (default) chains each term head-to-tail and spans them with the resultant. \"parallelogram\" (exactly two terms) draws both from the start point with the dashed completing copies and the diagonal as the resultant."
+            ]
           },
           "label": {
-            "type": "string",
-            "description": "Override the resultant's name. Default is derived from the terms (e.g. \"a + 2b − c\"). Use to call it \"r\" or similar."
+            "type": "string"
           },
           "showPath": {
-            "type": "boolean",
-            "description": "Draw the tip-to-tail construction arrows (or the parallelogram). Default true. Set false to show only the resultant arrow."
+            "type": "boolean"
           },
           "showResultant": {
-            "type": "boolean",
-            "description": "Draw the resultant arrow itself. Default true. Set false for an ANSWER SPACE — the path is shown for pupils to add the resultant."
+            "type": "boolean"
           },
           "showComponents": {
-            "type": "boolean",
-            "description": "Show the resultant's computed column vector beside it. Default false. Default true when occlude is set."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the resultant's label and column vector as \"?\" — \"what is the resultant?\". The arrow stays drawn. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Draw the resultant amber (the default result colour). Set false to draw it in blue like the path. Default true."
+            "type": "boolean"
           }
         },
         "required": [
@@ -217,16 +167,13 @@
         ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Each base vector (one with components) gets a tip handle pupils can drag to change the vector; the path, the parallelogram and the resultant all recompute live. The figure never rescales mid-drag. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -235,7 +182,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a + b tip-to-tail, resultant and column vector shown",
       "params": {
         "axes": {
           "x": [
@@ -280,7 +226,6 @@
       }
     },
     {
-      "label": "Answer space — path drawn, add the resultant a + b yourself",
       "params": {
         "axes": {
           "x": [
@@ -326,7 +271,6 @@
       }
     },
     {
-      "label": "Occluded question — what is the resultant a − b?",
       "params": {
         "axes": {
           "x": [
@@ -371,7 +315,6 @@
       }
     },
     {
-      "label": "Hard case — resultant a + 2b − c built tip-to-tail",
       "params": {
         "axes": {
           "x": [
@@ -427,7 +370,6 @@
       }
     },
     {
-      "label": "Parallelogram rule — a + b as the diagonal",
       "params": {
         "axes": {
           "x": [
@@ -473,7 +415,6 @@
       }
     },
     {
-      "label": "Parallel and equal vectors — which are scalar multiples?",
       "params": {
         "axes": {
           "x": [

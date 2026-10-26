@@ -4,36 +4,7 @@
   "name": "cycle",
   "version": 1,
   "title": "Cycle",
-  "tagline": "Ring of sequenced nodes joined by directed arrows that loop back to the start — life cycles, water/rock cycle; optional photo per node, positions and arrows all derived.",
-  "description": "A process or life-cycle shown as a ring: an ordered set of stage nodes placed evenly round a circle, each joined to the next by a directed arrow, and (for a true cycle) the last looping back to the first. Each node is a text caption, optionally with a photo above it (a Monarch egg, a tadpole, a rock sample) — the first library model to carry images. You author only the ordered nodes and any transition labels; the model derives every node angle (evenly spaced from the chosen start, clockwise or anticlockwise), the ring radius (grown from the node count and box sizes so nothing overlaps), each box size, every arrow arc and arrowhead trimmed to the box edges, and the closing arrow. Any caption occludes to \"?\" for a question (and `occludeImage` blanks the photo, which would otherwise leak the answer); nodes highlight in amber; `reveal` draws the stages one at a time for a build-it-up sequence with positions fixed from the full count. The photo is opaque author content — the layout around it is fully derived, so the ring cannot be drawn out of order. For a hub of related ideas with no sequence use diagram/mind-map; for an algorithm with decisions and branches use diagram/flowchart; for cyclic-time counting (months, days, \"3 months after November\") use time/cycle-wheel.",
-  "whenToUse": "Reach for this to draw a cycle or repeating process — anything that goes round and returns to where it began: a life cycle (butterfly egg → caterpillar → chrysalis → butterfly; frog; plant), the water cycle, the rock cycle, the carbon or nitrogen cycle, the cardiac cycle, a product or business cycle, any feedback loop. Author the stages as an ordered `nodes` list (each an id + a label); give a node an `image` { url, alt } to show a photo above its caption (omit for a clean text-only ring — then it draws like a labelled mind-map box). The model places the stages evenly, sizes the ring so nothing collides, and draws the flowing arrows including the loop back to the start. Conventions: keep captions short (a word or two reads best on a ring); keep one image aspect across a cycle so the tiles match; use `edgeLabel` on a node to name the transition that leaves it (\"evaporates\", \"hatches into\"). Questions: `occlude` a caption to ask \"which stage?\" (and add `occludeImage` so the photo does not give it away); `highlight` to mark an answer or the stage in focus. Staged build: set `reveal` to add the stages one at a time (the ring never moves as they appear), or walk a highlight round the loop. Set `closed` false for a one-way chain that does not loop back (a linear sequence). Synonyms a teacher might use: cycle, life cycle, life-cycle, water cycle, rock cycle, carbon/nitrogen cycle, stages, process, sequence, loop, goes round, repeats. Switch model when the shape changes: a central idea with ideas fanning out (no order, no arrows) is diagram/mind-map; a flow with yes/no decisions and branches is diagram/flowchart; naming the months/days/seasons and counting on round them is time/cycle-wheel.",
   "responseModes": [],
-  "tags": [
-    "cycle",
-    "life cycle",
-    "life-cycle",
-    "lifecycle",
-    "water cycle",
-    "rock cycle",
-    "carbon cycle",
-    "nitrogen cycle",
-    "cardiac cycle",
-    "process",
-    "sequence",
-    "stages",
-    "loop",
-    "feedback loop",
-    "diagram",
-    "biology",
-    "science",
-    "goes round",
-    "repeats",
-    "image",
-    "photo",
-    "primary",
-    "ks1",
-    "ks2"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -47,25 +18,20 @@
           "properties": {
             "id": {
               "type": "string",
-              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-              "description": "Unique kebab-case id for this stage (e.g. \"egg\", \"caterpillar\"). Referenced by `start`. Not shown to pupils — the wiring handle."
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
             },
             "label": {
-              "type": "string",
-              "description": "The caption naming this stage, wrapped to fit (e.g. \"Caterpillar\"). Sits under the photo when there is one."
+              "type": "string"
             },
             "image": {
               "type": "object",
               "additionalProperties": false,
-              "description": "An optional photo shown above the caption. The model reserves a fixed slot and crops the photo to fill it (preserveAspectRatio \"slice\"); the photo is opaque author content — only the layout around it is derived. Omit for a text-only stage (the node then draws as a plain rounded box, like a mind map). Photos display on the live web/slide; a static PNG/print/PPTX export of the photo is a parked follow-up — until then a labelled placeholder frame shows in its place.",
               "properties": {
                 "url": {
-                  "type": "string",
-                  "description": "Absolute image URL — e.g. a Wikimedia Commons upload.wikimedia.org thumbnail. Must be a real, reachable image."
+                  "type": "string"
                 },
                 "alt": {
-                  "type": "string",
-                  "description": "A short description of the photo, used for accessibility and woven into the figure aria label."
+                  "type": "string"
                 },
                 "aspect": {
                   "type": "string",
@@ -73,8 +39,7 @@
                     "square",
                     "landscape",
                     "portrait"
-                  ],
-                  "description": "The shape of the image slot the photo is cropped to fill. Default \"landscape\" (4:3). Keep ONE aspect across a cycle so the ring of tiles stays regular."
+                  ]
                 }
               },
               "required": [
@@ -82,85 +47,69 @@
               ]
             },
             "edgeLabel": {
-              "type": "string",
-              "description": "Optional short text riding the arrow that LEAVES this node — the transition to the next stage (\"hatches into\", \"evaporates\", \"erodes to\"). Omit for a plain arrow."
+              "type": "string"
             },
             "edgeColor": {
               "type": "string",
-              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-              "description": "Override the colour of the arrow LEAVING this node and its transition label — so a single step can be picked out without recolouring the whole flow (\"make the evaporation arrow red\"). Wins over the figure-wide `colors.arrows`. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts that arrow OUT of brand reskinning. Omit to use `colors.arrows` or the default accent blue."
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this stage's caption as \"?\" — the \"which stage goes here?\" hook. The node box and arrows stay drawn and the hidden word never leaks into the aria. Default false."
+              "type": "boolean"
             },
             "occludeImage": {
-              "type": "boolean",
-              "description": "Blank this stage's photo to a \"?\" placeholder. The photo usually gives the answer away more than the caption, so hide it too for a genuine question. Ignored on a text-only node. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this node — the answer, or the stage in focus. Default false."
+              "type": "boolean"
             },
             "color": {
               "type": "string",
-              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-              "description": "Override THIS node's colour (an explicit author/teacher request — \"make this box dark green\"). Wins over the figure-wide `colors.nodes` and the default categorical palette. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) keeps it brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\" or \"aquamarine\") is honoured exactly and opts this box OUT of brand reskinning. Ignored on a highlighted node (amber is reserved for the answer). Omit to use the palette."
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             }
           },
           "required": [
             "id",
             "label"
           ]
-        },
-        "description": "The stages of the cycle IN ORDER, 2–8 of them. Placed evenly round a ring; an arrow joins each to the next, and (when `closed`) the last back to the first. The list order sets the going-round sequence from the start node."
+        }
       },
       "direction": {
         "type": "string",
         "enum": [
           "clockwise",
           "anticlockwise"
-        ],
-        "description": "Which way the arrows flow round the ring. Default \"clockwise\"."
+        ]
       },
       "closed": {
-        "type": "boolean",
-        "description": "Draw the closing arrow from the last stage back to the first — a true cycle. Default true. Set false for an open chain: a one-way sequence with no loop back."
+        "type": "boolean"
       },
       "start": {
         "type": [
           "string",
           "integer"
-        ],
-        "description": "Which node sits at the top (12 o'clock): a node id, or its 1-based position in the list. Default the first node."
+        ]
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Draw only the first N stages and the arrows leading into them — a staged \"build the cycle\". Omit to show all. Use across steps (0, 1, 2, …) to add stages one at a time; positions are fixed from the full count, so nothing moves as they appear."
+        "minimum": 0
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "colors": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional figure-wide colour overrides — set ONLY when an author/teacher explicitly asks (\"make the arrows aquamarine\", \"the boxes should be dark green\"). Omit to keep the themeable defaults (accent-blue arrows, the categorical palette for boxes), which follow a brand reskin. A per-node `color` overrides this for one box.",
         "properties": {
           "arrows": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Colour of every flow arrow and its transition label. A reserved role keyword (accent, accent-2…accent-5, ink, muted, scaffold) stays brand-themeable; a colour literal (#hex, rgb()/rgba(), hsl()/hsla(), or a CSS named colour like \"teal\") is honoured exactly and opts the arrows OUT of brand reskinning."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           },
           "nodes": {
             "type": "string",
-            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-            "description": "Colour of every (non-highlighted) node box, replacing the categorical palette. Same value space as `arrows`. A single box can still differ via its own `color`."
+            "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
           }
         }
       }
@@ -171,7 +120,6 @@
   },
   "examples": [
     {
-      "label": "Worked — the water cycle (text nodes + transition labels)",
       "params": {
         "header": "The water cycle",
         "nodes": [
@@ -199,7 +147,6 @@
       }
     },
     {
-      "label": "Worked with photos — the life cycle of a butterfly",
       "params": {
         "header": "Life cycle of a butterfly",
         "nodes": [
@@ -239,7 +186,6 @@
       }
     },
     {
-      "label": "Occluded question — which stage comes next? (caption hidden)",
       "params": {
         "nodes": [
           {
@@ -263,7 +209,6 @@
       }
     },
     {
-      "label": "Blank / answer space — name the four stages",
       "params": {
         "header": "Life cycle of a plant",
         "nodes": [
@@ -291,7 +236,6 @@
       }
     },
     {
-      "label": "Hard case — an eight-stage cycle with mixed-length labels",
       "params": {
         "header": "The nitrogen cycle",
         "nodes": [
@@ -331,7 +275,6 @@
       }
     },
     {
-      "label": "Two-stage cycle (the degenerate loop) — day and night",
       "params": {
         "header": "Day and night",
         "direction": "clockwise",
@@ -348,7 +291,6 @@
       }
     },
     {
-      "label": "Author-set colours — figure-wide default + per-arrow + per-box overrides",
       "params": {
         "header": "The water cycle",
         "colors": {

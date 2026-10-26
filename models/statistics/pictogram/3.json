@@ -4,36 +4,8 @@
   "name": "pictogram",
   "version": 3,
   "title": "Pictogram",
-  "tagline": "Pictogram read against a key; part-symbols as wedges or grid cells; occlude a frequency or the KEY itself; blank rows complete on the model in quarter steps, auto-marked.",
-  "description": "A pictogram: one row per category, each row a line of repeated symbols standing for the category frequency, read against a key that gives the multiplier (\"each ⬤ = 5\"). You give the key value, a symbol shape and each category's frequency; the model derives the number of whole symbols and the size of the part-symbol per row (frequency ÷ key value). A part-symbol is drawn as a RADIAL SECTOR — a pie wedge subtending the fraction of a full turn, so a quarter reads as a quarter wedge, a half as the left semicircle and three-quarters as a \"pac-man\" — for every round or picture icon. The grid-square icon is different: a square divided into a grid of cells, its part-symbols shading whole CELLS left-to-right, top-to-bottom (a quarter = one of four cells) — the \"square split into four\" idiom. The model aligns the icon columns and writes the key. Show or hide the numeric frequency beside each row, occlude one row's frequency so pupils read it from the symbols (including a part-symbol), highlight a row to compare, or blank a row's symbols for a \"complete the pictogram\" answer space. Set occludeKey and the key itself becomes the unknown — it renders \"each ⬤ = ▢\" and every drawn row's frequency is forced to \"?\" so the multiplier cannot be read off; the caption or question text carries the given total. Hosted as a marked model tile with responseMode \"fill-derived\", each blank row is completed ON the figure by clicking: a click on the faint next-symbol slot adds a whole symbol, a click on the last symbol cycles it through quarter, half, three-quarter and whole (the wedge redraws live), and a click on an earlier symbol trims the row back. The model self-checks each row's committed count against frequency ÷ key value, and the occluded key's typed blank against the key value — marking is the sentinel { derived: true }, one observation per row. Completion rows must land on quarter steps (frequency ÷ key a multiple of ¼). The multiplier is the teaching point — for data shown as bar heights use the bar-chart model, for grouped continuous data use the histogram model.",
-  "whenToUse": "Reach for this for pictograms (also called pictographs or symbol charts): reading a pictogram, the key / multiplier (each symbol stands for 2, 5, 10 …), drawing or completing a pictogram from a frequency table — including half, quarter and three-quarter part symbols — deriving an unknown key, and comparing categories. Give key: { value, icon } and categories: [{ label, frequency }]; the model draws frequency ÷ value symbols per row — the whole part as whole icons and any remainder as one part-symbol drawn as a radial sector (a wedge subtending that fraction of a turn): frequency 18 with value 8 → two whole symbols and a quarter wedge. Halves render as the left semicircle. Choose a key value that keeps each row to roughly ten symbols or fewer. For the \"square split into four cells\" pictogram, set key.icon to grid-square (optionally key.gridN, default 2×2): part-symbols shade whole cells, so a quarter is one filled cell. Common configurations: read a pictogram — showFrequencies true with occlude on one category, so its symbols show but its number is \"?\"; complete a pictogram ON the model (auto-marked) — blank: true on the target rows (they start genuinely EMPTY, the given rows print as authored) on a MARKED model tile with responseMode \"fill-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } }: the pupil clicks symbols into each blank row in quarter steps and the model self-checks each row's count against frequency ÷ key value — keep every blank row's frequency ÷ key on quarter steps (¼, ½, ¾ or whole symbols), and put the given frequencies in the row readouts or the question text; derive the key — occludeKey: true renders \"each ⬤ = ▢\" and hides every drawn row's frequency (anti-leak), the question text states a total (\"the three days shown had 48 wheels in total\"), and on a fill-derived tile the blank is typed and checked against key.value — combine with blank rows for the classic \"work out the key, then complete the pictogram\"; compare — highlight the most / fewest row; hard case — occludeKey with quarter wedges drawn and two blank rows to complete, one observation covering key + rows. As a STATIC figure (no response mode) blank rows are a paper answer space and occludeKey is a posed unknown. Keep the same key and icon across the blocks of one lesson, and keep showFrequencies / showKey constant across the frames of a staged build so the layout does not jump. Switch model when the picture is not symbols-against-a-key: for bars whose height is the frequency use statistics/bar-chart, for grouped continuous data use statistics/histogram, for parts of a whole as sectors use statistics/pie-chart, and for a tally chart (gated five-bar marks) use statistics/tally-chart. Synonyms a teacher might use: pictogram, pictograph, picture graph, symbol chart, key, each symbol represents, half a symbol, quarter symbol, part symbol, complete the pictogram, work out the key, how many does each picture stand for.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "pictogram",
-    "pictograph",
-    "picture graph",
-    "symbol chart",
-    "key",
-    "multiplier",
-    "each symbol represents",
-    "half symbol",
-    "quarter symbol",
-    "three-quarter symbol",
-    "part symbol",
-    "sector",
-    "wedge",
-    "grid square",
-    "complete the pictogram",
-    "work out the key",
-    "unknown key",
-    "frequency",
-    "categorical",
-    "compare",
-    "statistics",
-    "data",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -42,12 +14,10 @@
       "key": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The key: how many one whole symbol represents, and which symbol to repeat. The multiplier IS the teaching point — every row's symbol count is derived from it.",
         "properties": {
           "value": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "How many one WHOLE symbol stands for — the multiplier (2, 5, 10 …). A frequency of 12 with value 5 draws two whole symbols and a two-fifths part-symbol (12 ÷ 5 = 2.4). Pick a value that keeps each row to roughly ten symbols or fewer. Always authored, even when occludeKey hides it — it stays the truth the drawn rows and the typed answer are checked against."
+            "exclusiveMinimum": 0
           },
           "icon": {
             "type": "string",
@@ -61,14 +31,12 @@
               "apple",
               "flower",
               "grid-square"
-            ],
-            "description": "The symbol repeated along every row and shown in the key. One of: circle, square, triangle, star, heart, person, apple, flower, grid-square. Default circle. Part-symbols of the picture icons draw as radial sector wedges (¼ / ½ / ¾); grid-square is a divided square whose part-symbols shade whole cells instead — use it for the \"square split into four\" idiom. Keep it the same across a lesson."
+            ]
           },
           "gridN": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 6,
-            "description": "Only for icon \"grid-square\": the square is divided into gridN × gridN cells and part-symbols shade whole cells (a quarter = one of gridN² cells). Default 2 (a 2×2 square of four cells). Ignored for every other icon. Pick gridN so the key value is a multiple of gridN² for clean cell fractions (key 8 with a 2×2 grid → each cell worth 2)."
+            "maximum": 6
           }
         },
         "required": [
@@ -78,31 +46,25 @@
       "categories": {
         "type": "array",
         "minItems": 1,
-        "description": "The categories, one row each, top to bottom. Each carries its frequency; the symbols drawn for it are computed (frequency ÷ key.value).",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "label": {
-              "type": "string",
-              "description": "The category name shown at the start of its row, e.g. \"Monday\" or \"Oak\"."
+              "type": "string"
             },
             "frequency": {
               "type": "number",
-              "minimum": 0,
-              "description": "The category's frequency (a non-negative count). The number of whole symbols and the part-symbol are derived as frequency ÷ key.value — never author a symbol count. For a blank row completed on a fill-derived tile this stays the truth the pupil's drawn count is checked against, so keep frequency ÷ key.value on quarter steps there."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this row's numeric frequency as \"?\" — the reading hook (\"how many is this?\"). The symbols (part-symbol included) stay visible and correct, so they ARE the question. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this row's symbols and label in amber — the most / fewest category, or the answer. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Leave this row's symbol track EMPTY (a faint guide line) — the \"complete the pictogram\" answer space; completion rows start genuinely empty, as on the source paper. Different from occlude: blank hides the symbols, occlude hides only the number. On a MARKED model tile with responseMode \"fill-derived\" every blank row becomes a click-to-draw counter (whole symbols plus a ¼/½/¾ last symbol) self-checked against frequency ÷ key.value. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -112,28 +74,22 @@
         }
       },
       "showFrequencies": {
-        "type": "boolean",
-        "description": "Print the numeric frequency at the end of each row. Default false. A row with occlude shows \"?\" here regardless, so you can keep a clean picture with a single \"?\" row. Under occludeKey every SYMBOL-BEARING row also shows \"?\" (anti-leak — a frequency beside visible symbols reveals the key); blank rows keep their numbers (the data to draw from)."
+        "type": "boolean"
       },
       "showKey": {
-        "type": "boolean",
-        "description": "Show the key (\"each ⬤ = 5\") below the rows. Default true — a pictogram without its key cannot be read. Forced true by occludeKey (the blank key line IS that question)."
+        "type": "boolean"
       },
       "occludeKey": {
-        "type": "boolean",
-        "description": "Render the key's VALUE as a blank slot — \"each ⬤ = ▢\" — so the multiplier itself is the unknown (\"work out what one symbol represents\"). Forces showKey on, forces every symbol-bearing row's readout to \"?\" and keeps the key value and those frequencies out of the accessible description (anti-leak); state the given total in the caption or question text. On a MARKED model tile with responseMode \"fill-derived\" the blank becomes a typed slot checked against key.value. Default false."
+        "type": "boolean"
       },
       "showIcons": {
-        "type": "boolean",
-        "description": "Draw the derived symbols. false leaves every row's track empty (faint guide lines) — the whole-figure \"draw the pictogram\" answer space. (Per-row blank does the same one row at a time.) Default true."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -143,7 +99,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — books read, each ⬤ = 2, frequencies shown",
       "params": {
         "header": "Books read this term",
         "key": {
@@ -173,7 +128,6 @@
       }
     },
     {
-      "label": "Blank answer space — draw the pictogram, each ⭐ = 10",
       "params": {
         "header": "Trees planted",
         "key": {
@@ -203,7 +157,6 @@
       }
     },
     {
-      "label": "Occluded reading question — each 🙂 = 5, one row hidden",
       "params": {
         "key": {
           "value": 5,
@@ -233,7 +186,6 @@
       }
     },
     {
-      "label": "Hard case — occluded KEY with quarter wedges drawn, two rows to complete",
       "params": {
         "header": "Stickers collected",
         "key": {
@@ -270,7 +222,6 @@
       }
     },
     {
-      "label": "Complete the pictogram — two rows blank, quarter-step targets",
       "params": {
         "header": "Kilometres cycled",
         "key": {
@@ -301,7 +252,6 @@
       }
     },
     {
-      "label": "Derive the key — \"each ▲ = ▢\", the total given in the caption",
       "params": {
         "header": "Trees planted by each class",
         "key": {
@@ -326,7 +276,6 @@
       }
     },
     {
-      "label": "Quarter & three-quarter wedges — each ⬤ = 8, a 2¼ row read back",
       "params": {
         "header": "Miles run each day",
         "key": {
@@ -357,7 +306,6 @@
       }
     },
     {
-      "label": "Grid-square icon — each ▦ = 8 (2×2 cells), quarters as one cell",
       "params": {
         "header": "Cupcakes baked",
         "key": {
@@ -388,7 +336,6 @@
       }
     },
     {
-      "label": "Compare categories — each 🍎 = 4, most highlighted",
       "params": {
         "header": "Apples sold",
         "key": {
@@ -422,7 +369,6 @@
       }
     },
     {
-      "label": "Half symbols — each ❤ = 10, a clean picture with no numbers",
       "params": {
         "key": {
           "value": 10,

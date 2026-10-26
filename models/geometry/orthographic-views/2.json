@@ -4,49 +4,16 @@
   "name": "orthographic-views",
   "version": 2,
   "title": "Orthographic views (plan and elevations)",
-  "tagline": "Plan/front/side views of a non-cube solid (rectangle, triangle, trapezium, circle, pentagon, polygon) on squared paper; dimensions derived, panels occludable, marked draw answer.",
-  "description": "Composes up to three orthographic 2-D views — the plan, the front elevation and the side elevation — of a solid, laid in a row and captioned. Each panel is an arbitrary shape you name (rectangle, square, triangle, trapezium, circle, a \"house\" pentagon, or a general polygon) with its semantic dimensions; the model derives every vertex, the circle, and all dimension labels, drawn on a squared centimetre grid. It is the non-cube counterpart to geometry/plan-elevation: use that for a solid made of unit cubes (a height map + isometric); use THIS for a prism, cylinder, cone or pyramid whose views are trapezia, circles, triangles or pentagons. Occlude any panel to a \"?\" placeholder for a \"which solid?\" question (the others stay truthful), highlight a panel as the answer, add a scale note (\"2 cm represents 1 m\"), or hide the squared grid. Static plus staged (reveal or emphasise the views one at a time). NEW in @2 — a MARKED \"draw the elevation\" answer: give ONE panel draw:true and set construct:true, and host the tile with responseMode \"construct\" and correctAnswer { derived: true }; the pupil sketches that view's outline on the grid (dragging a deliberately size-wrong start into shape, or a circle's radius handle), and the model self-checks the drawing against the view it derives from the panel's shape — translation-invariant, binary verdict, nothing authored.",
-  "whenToUse": "Reach for this for the plan and elevations of a NON-cube solid — a prism, cylinder, cone or pyramid — where the views are trapezia, circles, triangles, rectangles or pentagons: \"draw the plan, front and side elevation of this cone\", \"the diagram shows three views — which solid is it?\", and the reverse \"draw the elevations\" answer figure. For a solid made of unit cubes use geometry/plan-elevation instead (it derives the views from a height map and draws the isometric); for the 3-D solid itself use geometry/solid or geometry/prism; this model draws the 2-D views only. Author panels: include panels.plan / panels.front / panels.side to show that view, omit a key to hide it (at least one required); the panels draw in the order plan, front, side. Each panel sets a shape and its dimensions — rectangle {width, height}, square {side}, triangle {base, height, apex}, trapezium {base, top, height, align}, circle {diameter}, house {width, wallHeight, height} (a wall-plus-roof pentagon), or polygon {points:[[x,y]…]} for anything else (its edge lengths are labelled). Dimensions are in grid units (centimetres); the squared grid shows them off — keep it on (grid:true, the default) for exam-style squared paper, or set grid:false for a plain figure. FOR A \"WHICH SOLID HAS THESE VIEWS?\" question, show plan+front+side and identify the solid in the question text (an MCQ), optionally occlude:true one panel; this is the stimulus. FOR A MARKED \"DRAW THE …\" ANSWER, put the ONE asked view in a single panel with draw:true, set construct:true, and host on a marked model tile with responseMode \"construct\" and correctAnswer { derived: true } — the pupil sketches it and it auto-marks (a question asking for TWO views seats TWO draw tiles, one panel each). Keep the panel's authored shape correct — it is the marking key and the answer reveal, and is never drawn on the answer space. Set diagonals:true on a square/rectangle plan to draw its diagonals (the square-pyramid plan), and lines for edges seen inside an outline (the eaves line on a side elevation); in a draw question whose view has lines inside it, set drawLines:true on the panel so the pupil draws and is marked on every line. highlight a panel to amber it as the answer in a worked example; add scale:\"2 cm represents 1 m\" as a note under the figure when the views are drawn to scale; set showLabels:false to drop the captions on a bare answer space, or a panel's showDims:false to drop its dimension numbers. Keep the same unit and scale across the panels of one lesson. Synonyms a teacher might use: plan, elevation, elevations, front elevation, side elevation, end elevation, plan view, bird's eye view, orthographic, orthographic projection, views of a solid, draw the plan, draw the elevation, prism, cylinder, cone, pyramid, cross-section, drawn to scale, squared paper.",
   "responseModes": [
     "construct"
-  ],
-  "tags": [
-    "plan",
-    "elevation",
-    "elevations",
-    "front elevation",
-    "side elevation",
-    "end elevation",
-    "plan view",
-    "orthographic",
-    "projection",
-    "views",
-    "draw the plan",
-    "draw the elevation",
-    "draw a plan",
-    "construct",
-    "prism",
-    "cylinder",
-    "cone",
-    "pyramid",
-    "cross-section",
-    "trapezium",
-    "pentagon",
-    "scale drawing",
-    "squared paper",
-    "geometry",
-    "2D",
-    "maths"
   ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
-    "description": "Up to three orthographic panels (plan / front / side) of a solid, each an arbitrary named shape with derived dimensions, on a squared grid. Occlude a panel to \"?\" for a \"which solid?\" question; give ONE panel draw:true with construct:true for a marked draw-the-elevation answer.",
     "$defs": {
       "panel": {
         "type": "object",
         "additionalProperties": false,
-        "description": "One orthographic panel. Set `shape` and the dimensions that shape uses; the outline, the circle and all dimension labels are derived. Occlude it to \"?\" for a question; highlight it to amber it as the answer; set draw:true (with top-level construct:true) to make it a marked answer space the pupil sketches.",
         "properties": {
           "shape": {
             "type": "string",
@@ -58,43 +25,35 @@
               "circle",
               "house",
               "polygon"
-            ],
-            "description": "The panel figure. rectangle: uses width, height. square: uses side. triangle: uses base, height, apex (isosceles when apex \"centre\", right-angled when \"left\"/\"right\"). trapezium: uses base (bottom), top, height, align (isosceles when \"centre\"). circle: uses diameter. house: a rectangle-plus-roof pentagon — uses width, wallHeight (height to the eaves) and height (to the ridge). polygon: a general outline from points (grid units); its edge lengths are labelled. Rectangle and square may set diagonals:true to draw both corner-to-corner diagonals (the plan-of-a-square-pyramid idiom)."
+            ]
           },
           "width": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Width in grid units (cm). Used by rectangle and house."
+            "exclusiveMinimum": 0
           },
           "height": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Total height in grid units. Used by rectangle, triangle (perpendicular height to the apex), trapezium (perpendicular height) and house (height to the ridge)."
+            "exclusiveMinimum": 0
           },
           "side": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Side length in grid units. Used by square."
+            "exclusiveMinimum": 0
           },
           "base": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Base (bottom edge) length in grid units. Used by triangle and trapezium."
+            "exclusiveMinimum": 0
           },
           "top": {
             "type": "number",
-            "minimum": 0,
-            "description": "Top edge length in grid units (0 collapses to a triangle). Used by trapezium."
+            "minimum": 0
           },
           "diameter": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Diameter in grid units. Used by circle."
+            "exclusiveMinimum": 0
           },
           "wallHeight": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Height to the eaves in grid units (must be < height). Used by house."
+            "exclusiveMinimum": 0
           },
           "apex": {
             "type": "string",
@@ -102,8 +61,7 @@
               "centre",
               "left",
               "right"
-            ],
-            "description": "Where the triangle apex sits over the base: \"centre\" (isosceles, default), \"left\" or \"right\" (right-angled, the vertical edge on that side)."
+            ]
           },
           "align": {
             "type": "string",
@@ -111,17 +69,14 @@
               "centre",
               "left",
               "right"
-            ],
-            "description": "How the trapezium top edge sits over the base: \"centre\" (isosceles, default), \"left\" or \"right\" (a right-angled trapezium, the vertical edge on that side)."
+            ]
           },
           "diagonals": {
-            "type": "boolean",
-            "description": "Draw both corner-to-corner diagonals as dashed construction lines (rectangle/square only) — the plan of a square-based pyramid. Default false. (In a draw question the OUTLINE alone is marked, unless the panel sets drawLines:true, which marks the diagonals too.)"
+            "type": "boolean"
           },
           "lines": {
             "type": "array",
             "maxItems": 8,
-            "description": "Edges seen INSIDE the outline, drawn solid like the outline: the line where the roof meets the walls on the side elevation of a house-shaped prism, a step on an L-shaped face. Each is [[x, y], [x, y]] in grid units, in the shape's own frame (origin at its bottom-left corner, y upward). Polygon outlines and the named shapes only, not circle. A drawLines answer marks them.",
             "items": {
               "type": "array",
               "minItems": 2,
@@ -133,14 +88,12 @@
                 "items": {
                   "type": "number"
                 }
-              },
-              "description": "One line: its two ends, [[x, y], [x, y]]."
+              }
             }
           },
           "optionalLines": {
             "type": "array",
             "maxItems": 8,
-            "description": "Lines a drawLines answer may draw or leave out, never shown: the joins between cubes of equal height on a view of a solid made of cubes, which a pupil who draws every cube adds. Same form and frame as lines.",
             "items": {
               "type": "array",
               "minItems": 2,
@@ -152,48 +105,39 @@
                 "items": {
                   "type": "number"
                 }
-              },
-              "description": "One line: its two ends, [[x, y], [x, y]]."
+              }
             }
           },
           "points": {
             "type": "array",
             "minItems": 3,
             "maxItems": 12,
-            "description": "polygon shape only: the outline vertices as [x, y] pairs in grid units, y upward, in order round the ring. Each edge length is labelled (derived). Ignored for the named shapes.",
             "items": {
               "type": "array",
               "minItems": 2,
               "maxItems": 2,
               "items": {
                 "type": "number"
-              },
-              "description": "An [x, y] vertex in grid units."
+              }
             }
           },
           "showDims": {
-            "type": "boolean",
-            "description": "Show this panel's dimension labels (widths, heights, diameter, edge lengths). Default true. Set false for a bare answer-space outline."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render this panel as a \"?\" placeholder instead of the figure — the \"which solid has these views?\" question hook. The other panels stay visible and correct; the \"?\" box does not reveal the hidden figure's size. Default false. (For a DRAW answer space use draw:true instead — occlude just hides, draw marks.)"
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Draw the eye to this panel — its outline, fill and caption go amber (result/emphasis, e.g. the answer view in a worked example). Default false."
+            "type": "boolean"
           },
           "draw": {
-            "type": "boolean",
-            "description": "Make this panel the MARKED answer space the pupil sketches (needs top-level construct:true and a host tile with responseMode \"construct\", correctAnswer { derived: true }). The panel's authored shape is the ANSWER — it is NEVER drawn on the answer space: the posed/print surface shows a blank grid with a deliberately size-WRONG outline of the same kind, and the pupil reshapes it (grid-snap) until it matches the derived view. Exactly one panel may set draw:true. Default false."
+            "type": "boolean"
           },
           "drawLines": {
-            "type": "boolean",
-            "description": "With draw:true: the pupil draws the view line by line on a BLANK grid (click a grid line to draw or remove that one square's length; drag from grid point to grid point for any line, sloping ones included; click a sloping line to remove it) instead of reshaping a wrong outline, and the marking checks every edge: the outline, the diagonals and the interior lines, nothing missing and nothing extra, wherever it sits on the grid. Use it whenever the view has lines inside its outline (a pyramid's plan, the eaves line of a house-shaped prism's side elevation), which an outline-only answer cannot mark. Not for circle. Default false."
+            "type": "boolean"
           },
           "label": {
-            "type": "string",
-            "description": "Override the default caption under this panel (\"Plan\" / \"Front elevation\" / \"Side elevation\"). Omit for the default. Only shown when showLabels is true."
+            "type": "string"
           }
         },
         "required": [
@@ -206,55 +150,43 @@
         "type": "object",
         "additionalProperties": false,
         "minProperties": 1,
-        "description": "Which of the three views to draw and how. INCLUDE a key to show that panel; OMIT it to hide it. At least one panel is required. Panels are always drawn in the order plan, front, side.",
         "properties": {
           "plan": {
-            "$ref": "#/$defs/panel",
-            "description": "The plan — the view looking straight down on the solid. One orthographic panel. Set `shape` and the dimensions that shape uses; the outline, the circle and all dimension labels are derived. Occlude it to \"?\" for a question; highlight it to amber it as the answer; set draw:true (with top-level construct:true) to make it a marked answer space the pupil sketches."
+            "$ref": "#/$defs/panel"
           },
           "front": {
-            "$ref": "#/$defs/panel",
-            "description": "The front elevation — the view looking horizontally at the front. One orthographic panel. Set `shape` and the dimensions that shape uses; the outline, the circle and all dimension labels are derived. Occlude it to \"?\" for a question; highlight it to amber it as the answer; set draw:true (with top-level construct:true) to make it a marked answer space the pupil sketches."
+            "$ref": "#/$defs/panel"
           },
           "side": {
-            "$ref": "#/$defs/panel",
-            "description": "The side elevation — the view looking horizontally from the side. One orthographic panel. Set `shape` and the dimensions that shape uses; the outline, the circle and all dimension labels are derived. Occlude it to \"?\" for a question; highlight it to amber it as the answer; set draw:true (with top-level construct:true) to make it a marked answer space the pupil sketches."
+            "$ref": "#/$defs/panel"
           }
         }
       },
       "construct": {
-        "type": "boolean",
-        "description": "Arm the DRAW-THE-VIEW question state (validator-required when the tile uses responseMode \"construct\"). Exactly one panel must set draw:true. The pupil is shown a blank grid with a deliberately size-WRONG outline of that panel's shape kind and drags it — snapping to grid intersections — until it matches the view the model derives from the panel's shape. The correct outline is NEVER rendered on the answer space; the verdict is self-checked at response time against the derived view (host with correctAnswer { derived: true }). On web the outline follows the drag with amber handles; print and static slides show the same wrong start (no live dimension readouts). Default false."
+        "type": "boolean"
       },
       "tolerance": {
         "type": "number",
         "minimum": 0,
-        "maximum": 5,
-        "description": "Construct mode only: the acceptance allowance (grid units) on the drawn outline — a vertex is accepted within this of the derived target, a circle within this of the target radius. Default 0.05 — grid drags land on exact whole-cm positions, so keep it tiny."
+        "maximum": 5
       },
       "unit": {
-        "type": "string",
-        "description": "The unit appended to every derived dimension label (\"4 cm\"). Default \"cm\". Set \"\" for bare numbers."
+        "type": "string"
       },
       "grid": {
-        "type": "boolean",
-        "description": "Draw the squared centimetre grid behind each panel (exam squared paper). Default true. Set false for a plain figure with no grid."
+        "type": "boolean"
       },
       "showLabels": {
-        "type": "boolean",
-        "description": "Show the caption under each panel (\"Plan\", \"Front elevation\", \"Side elevation\"). Default true. Set false for an unlabelled answer figure."
+        "type": "boolean"
       },
       "scale": {
-        "type": "string",
-        "description": "An optional scale note centred under the figure, e.g. \"2 cm represents 1 m\", shown when the views are drawn to scale. Omit for a full-size (or unscaled) figure."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the whole figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Sits below the scale note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -263,7 +195,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a cuboid, all three rectangular views",
       "params": {
         "header": "The plan and elevations of a cuboid",
         "panels": {
@@ -287,7 +218,6 @@
       }
     },
     {
-      "label": "Answer space — a cylinder: circular plan, rectangular elevations",
       "params": {
         "panels": {
           "plan": {
@@ -309,7 +239,6 @@
       }
     },
     {
-      "label": "Occluded question — which solid has these views? (front hidden)",
       "params": {
         "panels": {
           "plan": {
@@ -334,7 +263,6 @@
       }
     },
     {
-      "label": "Hard case — square-pyramid answer: diagonalled plan + isosceles triangle front, to scale",
       "params": {
         "header": "A square-based pyramid",
         "panels": {
@@ -355,7 +283,6 @@
       }
     },
     {
-      "label": "Which solid? — three views of a triangular prism, no answer given",
       "params": {
         "panels": {
           "plan": {
@@ -377,7 +304,6 @@
       }
     },
     {
-      "label": "To scale — a cylinder answer, no dimensions on the answer space",
       "params": {
         "panels": {
           "plan": {
@@ -402,7 +328,6 @@
       }
     },
     {
-      "label": "Draw question — sketch the side elevation of a cuboid (rectangle)",
       "params": {
         "panels": {
           "side": {
@@ -417,7 +342,6 @@
       }
     },
     {
-      "label": "Draw question — sketch the plan of a cylinder (circle)",
       "params": {
         "panels": {
           "plan": {
@@ -431,7 +355,6 @@
       }
     },
     {
-      "label": "Draw question — sketch the front elevation of a pyramid (isosceles triangle)",
       "params": {
         "panels": {
           "front": {
@@ -446,7 +369,6 @@
       }
     },
     {
-      "label": "Draw question (hard) — sketch the plan of an L-shaped prism (polygon)",
       "params": {
         "panels": {
           "plan": {

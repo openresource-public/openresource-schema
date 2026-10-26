@@ -4,30 +4,8 @@
   "name": "frequency-polygon",
   "version": 2,
   "title": "Frequency polygon",
-  "tagline": "Frequency polygon of grouped data — derives midpoints, plots × at (midpoint, frequency) and joins; overlays up to three; occludable points; draw-it-on marking via place-derived.",
-  "description": "A frequency polygon of grouped continuous data — points plotted at each class MIDPOINT against frequency, joined in order by straight line segments (an open polyline, never closed back to the axis), on arrowed, numbered axes with a light grid. You give the class intervals and their frequencies; the model derives every midpoint ((from + to) ÷ 2), plots a × at (midpoint, frequency), joins consecutive points, and scales both axes to fit (override with axes). Up to three polygons overlay on one grid for comparison, in distinct hues with a key. Occlude a class to leave its point UN-drawn (and the segments that would touch it) — the \"complete the frequency polygon\" question, with nothing on the canvas to leak where the point goes. Highlight rings a plotted point in amber (e.g. the modal class). showPolygons false draws just the labelled empty grid (the answer space); axes.showNumbers false suppresses the axis numbers too, for a \"choose your own scale\" grid. Hosted as a marked model tile with responseMode \"place-derived\", the blank answer space (showPolygons false, one series, numbered axes) becomes \"draw the frequency polygon\" answered ON the figure: a ghost handle per class waits on the x-axis at the class's lower boundary, the pupil drags one point per class into the grid (snapped to a tenth of a step on both axes, the live value shown under the pointer), placed points join in class order as they land, and each point is checked against the derived (midpoint, frequency) — both coordinates, no authored key.",
-  "whenToUse": "Reach for this whenever grouped data is shown as a frequency polygon: \"draw a frequency polygon\", \"complete the frequency polygon\", comparing two distributions on one grid, or reading a frequency / the modal class off a polygon. Give each polygon as a series with classes [{ from, to, frequency }] — write the INTERVALS, never the midpoints; the model computes (from + to) ÷ 2 and plots the point there. Common configurations: answer space — showPolygons false for the labelled empty grid pupils draw on (keep the classes in params so the axes scale to the data; add axes.showNumbers false when the pupil should also choose and label the scale); draw the polygon ON the model (auto-marked) — the same showPolygons false answer space on a MARKED model tile with responseMode \"place-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } } — one series with numbered axes only; a ghost handle per class sits on the x-axis at the class's lower boundary and the pupil drags one point per class into place (a tenth-of-a-step snap on both axes, live value under the pointer, points join in class order as they are placed), each point marked against the derived midpoint and frequency within half a small square each way (the frequencies belong in the question's table, the intervals in the stem — the figure gives nothing away); the choose-your-own-scale grid (axes.showNumbers false) CANNOT be marked this way — an unnumbered grid has no scale to snap or read, so keep that variant a posed answer space; complete the polygon — occlude true on some classes (their points and adjoining segments are simply absent; the completed figure belongs in the explanation or a later stage, never beside the question); worked example — series[].showValues true prints each frequency beside its point; comparison — two series with names, on by-default key, same grid (state comparisons in the block text: medians/spread in words). Staged builds read well: showPolygons false (the grid) → join false (points plotted) → the joined polygon → a second series added. Keep axes identical across blocks in one lesson so figures line up. The polygon is OPEN — it is never closed down to the x-axis at the ends, and points join in midpoint order. Switch primitive when the teaching changes: bars whose AREA is frequency (frequency density, unequal widths) → statistics/histogram; categorical gapped bars → statistics/bar-chart; a value over TIME with moving averages → statistics/time-series; cumulative frequency curve or box plot → statistics/box-cf; the working table (midpoint, f×x, estimated mean) → statistics/averages-table. Synonyms teachers use: frequency polygon, frequency diagram, midpoint, class interval, grouped frequency table, plot at the midpoint, join with straight lines, compare distributions, modal class.",
   "responseModes": [
     "place-derived"
-  ],
-  "tags": [
-    "frequency polygon",
-    "frequency diagram",
-    "midpoint",
-    "midpoints",
-    "class interval",
-    "grouped data",
-    "grouped frequency",
-    "plot",
-    "join the points",
-    "draw a frequency polygon",
-    "plot the points",
-    "compare distributions",
-    "comparison",
-    "modal class",
-    "statistics",
-    "data",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -36,43 +14,35 @@
       "series": {
         "type": "array",
         "maxItems": 3,
-        "description": "The polygon(s), one entry per data set. One series is the standard figure; two (occasionally three) overlay for comparison in distinct hues — give each a name so the derived key can label them.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "name": {
-              "type": "string",
-              "description": "Display name for this data set, e.g. \"Boys\", \"Year 7\". Shown in the key (the key appears by default when there are two or more series). Omit for a single unnamed polygon."
+              "type": "string"
             },
             "classes": {
               "type": "array",
               "maxItems": 12,
-              "description": "The grouped data — class intervals in order with their frequencies. The point is plotted at the DERIVED midpoint (from + to) ÷ 2 at height = frequency; consecutive points join with straight segments. Write the intervals, never the midpoints.",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
                   "from": {
-                    "type": "number",
-                    "description": "The lower class boundary, e.g. 15 for the class 15 < t ≤ 20."
+                    "type": "number"
                   },
                   "to": {
-                    "type": "number",
-                    "description": "The upper class boundary. The point plots at the midpoint (from + to) ÷ 2."
+                    "type": "number"
                   },
                   "frequency": {
                     "type": "number",
-                    "minimum": 0,
-                    "description": "The frequency (count) in this class — the plotted height."
+                    "minimum": 0
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Leave this class's point UN-drawn — no ×, and no segment touching where it would go — the \"complete the frequency polygon\" hook. Nothing marks the position, so the figure cannot leak the answer; the class still counts towards the axis scale, so the completed figure (in a later stage or the explanation) lines up exactly. Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Ring this plotted point in amber — the modal class, the answer, a point under discussion. Default false."
+                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -83,12 +53,10 @@
               }
             },
             "join": {
-              "type": "boolean",
-              "description": "Join the plotted points with straight segments. Default true. Set false for the points-only frame of a staged build (\"plot the midpoints first…\")."
+              "type": "boolean"
             },
             "showValues": {
-              "type": "boolean",
-              "description": "Print each plotted frequency beside its point (worked/labelled version). Occluded classes print nothing. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -97,13 +65,11 @@
         }
       },
       "showPolygons": {
-        "type": "boolean",
-        "description": "Draw the polygons. Default true. false renders ONLY the numbered axes and grid, scaled to the data — the answer space for \"draw a frequency polygon\" (and the stage-0 frame of a staged build; the window still comes from the classes, so later stages align exactly). On a marked model tile with responseMode \"place-derived\" (one series, numbered axes), this same answer space becomes the response surface: the pupil drags one point per class into the grid and the polygon forms as points are placed."
+        "type": "boolean"
       },
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Axis windows, steps and titles. Everything here has a sensible derived default — set values to match a source figure or to keep several blocks on the same scale.",
         "properties": {
           "x": {
             "type": "array",
@@ -111,63 +77,50 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis. Default: the span of the classes (e.g. classes 15–35 give [15, 35] — the axis starts at the first boundary, not 0, exactly like exam grids)."
+            "maxItems": 2
           },
           "xStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between x gridlines/ticks. Default: the smallest class width (doubled while the grid would exceed ~16 lines)."
+            "exclusiveMinimum": 0
           },
           "xLabelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between printed x-axis numbers. Default: xStep. Use a multiple of xStep when every gridline numbered would crowd."
+            "exclusiveMinimum": 0
           },
           "xLabel": {
-            "type": "string",
-            "description": "The x-axis title — the variable with its unit, e.g. \"Time (minutes)\", \"Height (cm)\"."
+            "type": "string"
           },
           "yMax": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Top of the frequency axis. Default: the largest frequency rounded up to a step multiple."
+            "exclusiveMinimum": 0
           },
           "yStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between frequency gridlines/numbers. Default: a sensible round value."
+            "exclusiveMinimum": 0
           },
           "yLabelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Gap between printed frequency numbers. Default: yStep."
+            "exclusiveMinimum": 0
           },
           "yLabel": {
-            "type": "string",
-            "description": "The y-axis title. Default \"Frequency\"."
+            "type": "string"
           },
           "showNumbers": {
-            "type": "boolean",
-            "description": "Print the axis numbers. Default true. false keeps the ticks and grid but hides every number — the \"choose and label your own scale\" answer grid (pair with showPolygons false). An unnumbered grid cannot host the place-derived response mode: with no scale to snap to or read, there is nothing honest to mark — keep that variant posed."
+            "type": "boolean"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the background grid. Default true (pupils read midpoints and frequencies off it)."
+        "type": "boolean"
       },
       "showKey": {
-        "type": "boolean",
-        "description": "Show a key naming each series. Default: on when there are two or more series, off for one. Set explicitly to override."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -176,7 +129,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — one polygon, frequencies printed at the midpoints",
       "params": {
         "header": "Length of phone calls",
         "axes": {
@@ -218,7 +170,6 @@
       }
     },
     {
-      "label": "Blank answer space — labelled empty grid, draw the polygon",
       "params": {
         "axes": {
           "xLabel": "Mass (grams)",
@@ -263,7 +214,6 @@
       }
     },
     {
-      "label": "Draw the polygon ON the model — place-derived (marked model tile: responseMode \"place-derived\", marking { mode: \"auto\", correctAnswer: { derived: true } }; the class table goes in the question text)",
       "params": {
         "axes": {
           "xLabel": "Time on homework (minutes)",
@@ -309,7 +259,6 @@
       }
     },
     {
-      "label": "Occluded question — complete the frequency polygon (two points missing)",
       "params": {
         "axes": {
           "xLabel": "Time (seconds)"
@@ -346,7 +295,6 @@
       }
     },
     {
-      "label": "The hard case — two polygons compared on one grid, non-zero origin, key",
       "params": {
         "header": "Heights of pupils",
         "axes": {
@@ -422,7 +370,6 @@
       }
     },
     {
-      "label": "Points plotted, not yet joined (the staged middle frame)",
       "params": {
         "axes": {
           "xLabel": "Distance (km)"
@@ -458,7 +405,6 @@
       }
     },
     {
-      "label": "Unnumbered answer grid — pupil chooses and labels the scale (posed only: an unnumbered grid cannot host place-derived)",
       "params": {
         "axes": {
           "xLabel": "Wingspan (cm)",
@@ -494,7 +440,6 @@
       }
     },
     {
-      "label": "Modal class highlighted — which class is the mode?",
       "params": {
         "axes": {
           "xLabel": "Score"

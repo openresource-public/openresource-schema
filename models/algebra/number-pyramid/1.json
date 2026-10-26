@@ -4,30 +4,8 @@
   "name": "number-pyramid",
   "version": 1,
   "title": "Number pyramid",
-  "tagline": "Brick pyramid where each brick is the sum (or difference) of the two below; numeric or algebraic; bricks occlude for complete, find-the-top or work-back puzzles.",
-  "description": "A pyramid of bricks in which every brick is the sum (or, in \"subtract\" mode, the signed difference) of the two bricks directly below it — from an authored base row up to a single apex. The base bricks are the only authored values; each brick above is computed from its two children, like terms collected and decimals kept exact, so a number pyramid (3, 5, 2 → 8, 7 → 15) and an algebra pyramid (x, 2x, 5 → 3x, 2x + 5 → 5x + 5) are the same figure. Bricks occlude independently (rendered \"?\") and highlight in amber, so one figure asks \"complete the pyramid\", \"find the top\", or — by occluding most bricks and leaving the apex with a base brick — a \"work back down to the missing brick\" puzzle. Optional + / − operator signs show the rule, and filledRows reveals the rows one at a time for a staged build.",
-  "whenToUse": "Reach for this for addition pyramids / number pyramids / pyramid puzzles, algebra pyramids (collecting like terms up the stack), difference pyramids, and missing-brick puzzles. Write only the base row, left to right, as numbers or linear-expression strings: [3, 5, 2, 4] for a number pyramid; [\"x\", \"2x\", \"5\"] or [\"3x\", \"x - 2\", \"5\", \"2x\"] for algebra (a brick may itself be a small expression like \"x - 2\"; use ^ for a power, e.g. \"x^2\", and keep to one variable letter across the figure). Every brick above the base is computed as the sum of the two below it (operation \"subtract\" makes each brick the left child minus the right child — for difference pyramids and signed work). Address any brick by { row, pos }: row 0 is the base, counting up, so the apex is row (base length − 1); pos 0 is the leftmost brick in that row. Use occlude to hide a brick as \"?\" (the question hook) and highlight to amber it (the apex result, or the target brick to find). Common configurations: complete the pyramid — leave the base filled and set every upper brick blank, or filledRows: 1, for an answer space; find the top — occlude (and usually highlight) the apex; missing-brick / work back down — author the full, correct base, then occlude every brick except the apex and one or two base bricks, and highlight the brick to find (you are responsible for leaving enough visible bricks that the puzzle has a single answer); show the rule — show.operators true draws a + (or −) between each pair of children. Staged build: step filledRows from 1 up to the full height to fill the pyramid one row at a time, bringing the apex (highlighted) in last — the base state (base row filled, empty slots above) stands alone as a sensible figure. Cross-block: keep the same base and variable letter across the blocks of one lesson so pupils track one pyramid, and keep operation consistent. Synonyms a teacher might use: number pyramid, addition pyramid, pyramid puzzle, brick wall, number wall, algebra pyramid, collecting like terms, difference pyramid, missing number, work backwards.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "number pyramid",
-    "addition pyramid",
-    "pyramid",
-    "pyramid puzzle",
-    "brick wall",
-    "number wall",
-    "algebra pyramid",
-    "collecting like terms",
-    "like terms",
-    "difference pyramid",
-    "missing number",
-    "missing brick",
-    "work backwards",
-    "sum",
-    "adding",
-    "algebra",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -37,13 +15,11 @@
         "type": "array",
         "minItems": 2,
         "maxItems": 6,
-        "description": "The BASE row, left to right — the only authored values; everything above is computed. Each item is a number (3, -2, 0.5) or a linear-expression string parsed into terms: \"2x\", \"x\", \"-3\", \"x - 2\", \"2x + 3\", \"0.5x\", \"x^2\". Use ONE variable letter across the whole figure. A number pyramid is all-numeric ([3, 5, 2, 4]); an algebra pyramid mixes terms ([\"3x\", \"x - 2\", \"5\", \"2x\"]). 2 to 6 bricks (a taller base crowds the apex text).",
         "items": {
           "type": [
             "string",
             "number"
-          ],
-          "description": "One base brick: a number, or a linear expression in a single variable as a string (\"2x\", \"x - 2\", \"-3\", \"x^2\")."
+          ]
         }
       },
       "operation": {
@@ -51,42 +27,34 @@
         "enum": [
           "add",
           "subtract"
-        ],
-        "description": "How each brick is formed from the two below it. \"add\" (default): brick = left child + right child (the standard addition / number pyramid). \"subtract\": brick = LEFT child − RIGHT child (a signed difference pyramid; results can be negative). The same operation applies to the whole figure."
+        ]
       },
       "filledRows": {
         "type": "integer",
-        "minimum": 0,
-        "description": "How many rows, counting UP from the base, are filled in; rows above render as empty slots (outline only). Default: all rows filled. Use it to stage a build — filledRows 1 shows just the base, then step it up to the full height (base length) to fill one row at a time. Per-brick blank flags still apply on top of this."
+        "minimum": 0
       },
       "bricks": {
         "type": "array",
-        "description": "Per-brick question and staging flags. Every brick always exists and its value is always computed — list a brick here only to occlude, highlight, or blank it. Addresses outside the pyramid are ignored.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "row": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Row of the brick, counted from 0 at the BASE and increasing UPWARD. The apex is row (base length − 1)."
+              "minimum": 0
             },
             "pos": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Position of the brick within its row, counted from 0 at the LEFT. Row r has (base length − r) bricks, so pos runs 0 … (base length − r − 1)."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this brick's value as \"?\" — the question hook (\"what goes here?\"). The brick stays drawn and its value stays hidden everywhere (figure and aria-label). Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber this brick (bold amber border, light amber fill) — the result/emphasis: the apex you build to, or the missing brick to find. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render this brick as an empty slot (outline, no value) — an unfilled brick for a staged build. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -98,21 +66,17 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "operators": {
-            "type": "boolean",
-            "description": "Draw the operator sign (+ for add, − for subtract) between each pair of children, showing the rule that builds the brick above them. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Omit for none. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -121,7 +85,6 @@
   },
   "examples": [
     {
-      "label": "Worked number pyramid — base 3, 5, 2, 4 with + signs, top highlighted",
       "params": {
         "base": [
           3,
@@ -142,7 +105,6 @@
       }
     },
     {
-      "label": "Blank answer space — base given, complete the pyramid",
       "params": {
         "base": [
           4,
@@ -154,7 +116,6 @@
       }
     },
     {
-      "label": "Find the top — base shown, apex occluded and highlighted",
       "params": {
         "base": [
           7,
@@ -174,7 +135,6 @@
       }
     },
     {
-      "label": "Missing-brick puzzle — top known, work back down to the highlighted base brick",
       "params": {
         "base": [
           5,
@@ -206,7 +166,6 @@
       }
     },
     {
-      "label": "Hard case — algebra pyramid collecting like terms to 8x + 9",
       "params": {
         "base": [
           "3x",
@@ -227,7 +186,6 @@
       }
     },
     {
-      "label": "Difference pyramid — base 12, 3, 8, 2, each brick the signed difference",
       "params": {
         "header": "Difference pyramid (left − right)",
         "base": [

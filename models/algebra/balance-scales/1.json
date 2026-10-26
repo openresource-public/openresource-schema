@@ -4,27 +4,7 @@
   "name": "balance-scales",
   "version": 1,
   "title": "Balance scales (equations)",
-  "tagline": "Linear equation as a level two-pan balance of boxes and unit weights; derives the equation, the solution and same-to-both-sides steps for solving.",
-  "description": "A linear equation drawn as a level two-pan balance: each pan carries a number of unknown-boxes (the coefficient) and unit weights (the constant), and the beam is level because the two sides are equal — the balance is the equals sign. You give each side as counts ({boxes, units}); the model derives the tiles and their layout, the equation string above the beam (e.g. \"3x + 2 = 14\"), the solved value of the unknown below it (reduced to a fraction when it is not whole), and — given an operation — the same-to-both-sides step as an overlay: \"remove\" strikes equal tiles from each pan (\"− 2\" or \"− x\"), \"group\" splits each pan into equal groups and highlights one (\"÷ 3\"). Built for solving one- and two-step equations and equations with unknowns on both sides, frame by frame, by keeping the balance level. v1 holds non-negative whole tiles and a level (true-equation) beam.",
-  "whenToUse": "Reach for this to teach solving linear equations with the balance metaphor: representing ax + b = c (and unknowns on both sides) as weights on a balance, and solving by doing the same to both sides — removing equal amounts, and dividing/halving both sides. Write the equation as two sides of counts: 3x + 2 = 14 is left {boxes:3, units:2}, right {boxes:0, units:14}; 2x + 1 = x + 5 is left {boxes:2, units:1}, right {boxes:1, units:5}. The equation string and the solved value are computed — you never type them. Common configurations: solve (omit solution; the balance and equation are the question, and \"Solve for x\" goes in the block text); show the answer (add solution to print \"x = 4\", solution.highlight to amber it); ask for the answer (solution.occlude → \"x = ?\"); write the equation (show.equation:false, so the picture alone is the prompt \"what equation does this balance show?\"). This model is naturally staged — each stage does one operation to both pans. Build a solve as a sequence of frames: frame = the current equation, optionally with an operation overlay marking the step, then the next frame is the simplified equation. operation {type:\"remove\", units:2} strikes 2 unit weights from each pan (use boxes to strike x-boxes, e.g. {type:\"remove\", boxes:1} for unknowns-on-both-sides); operation {type:\"group\", groups:3} splits each pan into 3 equal groups and highlights one — the divide step. The base frame (no operation) must read as a sensible balance on its own (a slide opens on it). Cross-block convention: keep the unknown letter and the unit style the same across one lesson so pupils track one balance; keep each pan within a comfortable width (a couple of boxes plus a row or two of units) so a staged build does not resize between frames. Switch model when the teaching changes: for sequential operations on one number (a number going in, operations applied, a number out) use algebra/function-machine; for a part-whole / ratio bar or an equation as a segmented bar use number/bar-model; for expanding or factorising brackets use algebra/area-model. Synonyms a teacher might use: balance, balance scales, scales, weighing scales, balancing equations, solve the equation, do the same to both sides, isolate x, one-step / two-step equations, unknowns on both sides, inverse operations.",
   "responseModes": [],
-  "tags": [
-    "balance",
-    "balance scales",
-    "scales",
-    "balancing equations",
-    "solve equations",
-    "linear equation",
-    "one-step equation",
-    "two-step equation",
-    "unknowns on both sides",
-    "inverse operations",
-    "do the same to both sides",
-    "isolate x",
-    "equation",
-    "algebra",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -32,41 +12,34 @@
       "equation": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The equation the balance models, as its two pans. The beam is drawn level because the equation asserts the sides are equal — give an equation that has a solution (a side may be all boxes, all units, or both).",
         "properties": {
           "left": {
             "type": "object",
             "additionalProperties": false,
-            "description": "The LEFT pan. One pan of the balance. boxes is the coefficient of the unknown (the number of x-boxes); units is the constant (the number of unit weights). Side {boxes:3, units:2} reads 3x + 2; {boxes:0, units:14} reads 14; {boxes:1, units:0} reads x.",
             "properties": {
               "boxes": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 8,
-                "description": "How many unknown-boxes sit on this pan — the coefficient of the unknown. 0 = no boxes on this side. Each box is drawn the same and labelled with the unknown letter."
+                "maximum": 8
               },
               "units": {
                 "type": "number",
-                "minimum": 0,
-                "description": "The constant on this pan — the number of unit weights. A whole number ≤ 25 is drawn as that many small unit cubes (so \"take 2 off both sides\" is concrete); a larger or non-whole value is drawn as a single weight labelled with the number (see unitMode to force either)."
+                "minimum": 0
               }
             }
           },
           "right": {
             "type": "object",
             "additionalProperties": false,
-            "description": "The RIGHT pan. One pan of the balance. boxes is the coefficient of the unknown (the number of x-boxes); units is the constant (the number of unit weights). Side {boxes:3, units:2} reads 3x + 2; {boxes:0, units:14} reads 14; {boxes:1, units:0} reads x.",
             "properties": {
               "boxes": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 8,
-                "description": "How many unknown-boxes sit on this pan — the coefficient of the unknown. 0 = no boxes on this side. Each box is drawn the same and labelled with the unknown letter."
+                "maximum": 8
               },
               "units": {
                 "type": "number",
-                "minimum": 0,
-                "description": "The constant on this pan — the number of unit weights. A whole number ≤ 25 is drawn as that many small unit cubes (so \"take 2 off both sides\" is concrete); a larger or non-whole value is drawn as a single weight labelled with the number (see unitMode to force either)."
+                "minimum": 0
               }
             }
           }
@@ -78,36 +51,30 @@
       },
       "unknown": {
         "type": "string",
-        "pattern": "^[a-z]$",
-        "description": "The single lowercase letter the boxes represent. Default \"x\". Use the same letter across one lesson."
+        "pattern": "^[a-z]$"
       },
       "operation": {
         "type": "object",
         "additionalProperties": false,
-        "description": "An optional overlay showing the ONE step about to be done to BOTH pans — it annotates the current equation, it does not change it (author the next frame as the simplified equation). Omit for a plain balance.",
         "properties": {
           "type": {
             "type": "string",
             "enum": [
               "remove",
               "group"
-            ],
-            "description": "\"remove\" strikes equal tiles from each pan (the subtract step) — set boxes and/or units to say how many of each. \"group\" splits each pan into equal groups and highlights one group (the divide/halve step) — set groups."
+            ]
           },
           "boxes": {
             "type": "integer",
-            "minimum": 0,
-            "description": "remove: how many x-boxes to strike from EACH pan (e.g. 1 to take an x off both sides). Ignored for \"group\". Default 0."
+            "minimum": 0
           },
           "units": {
             "type": "integer",
-            "minimum": 0,
-            "description": "remove: how many unit weights to strike from EACH pan (e.g. 2 to take 2 off both sides). Ignored for \"group\". Default 0."
+            "minimum": 0
           },
           "groups": {
             "type": "integer",
-            "minimum": 2,
-            "description": "group: the number of equal groups to split EACH pan into (e.g. 3 to divide both sides by 3); one group is highlighted as the result. Required for \"group\"."
+            "minimum": 2
           }
         },
         "required": [
@@ -117,26 +84,21 @@
       "solution": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this to print the solved value of the unknown beneath the balance (e.g. \"x = 4\", or a reduced fraction like \"x = 3/2\"). Omit it for a plain balance the pupil solves themselves. The value is computed from the two sides — you never type it.",
         "properties": {
           "occlude": {
-            "type": "boolean",
-            "description": "Render the value as \"?\" (\"x = ?\") — the \"what is the unknown?\" hook. The balance and equation stay visible. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the solved value — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "equation": {
-            "type": "boolean",
-            "description": "Show the derived equation string (e.g. \"3x + 2 = 14\") above the beam. Set false to ask \"what equation does this balance show?\" — the picture alone is then the prompt. Default true."
+            "type": "boolean"
           }
         }
       },
@@ -145,16 +107,13 @@
         "enum": [
           "cubes",
           "weight"
-        ],
-        "description": "How a pan's constant is drawn. Omit for auto: a whole number ≤ 25 becomes that many unit cubes (concrete for \"remove 2\"), anything larger or non-whole becomes a single labelled weight. \"cubes\" forces individual cubes; \"weight\" forces a single block labelled with the number (cleaner for big constants)."
+        ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -163,7 +122,6 @@
   },
   "examples": [
     {
-      "label": "Worked one-step — x + 3 = 8 with the answer shown",
       "params": {
         "equation": {
           "left": {
@@ -182,7 +140,6 @@
       }
     },
     {
-      "label": "Blank answer space — solve 2x + 3 = 11 (no answer shown)",
       "params": {
         "equation": {
           "left": {
@@ -197,7 +154,6 @@
       }
     },
     {
-      "label": "Occluded question — 3x + 2 = 14, \"x = ?\"",
       "params": {
         "equation": {
           "left": {
@@ -215,7 +171,6 @@
       }
     },
     {
-      "label": "Hard case (two-step), step 1 — remove 2 units from both sides of 3x + 2 = 14",
       "params": {
         "equation": {
           "left": {
@@ -234,7 +189,6 @@
       }
     },
     {
-      "label": "Hard case (two-step), step 2 — split both sides of 3x = 12 into 3 groups",
       "params": {
         "equation": {
           "left": {
@@ -256,7 +210,6 @@
       }
     },
     {
-      "label": "Hard case (unknowns both sides) — 2x + 1 = x + 5, remove an x from each",
       "params": {
         "equation": {
           "left": {

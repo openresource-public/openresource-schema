@@ -4,36 +4,8 @@
   "name": "averages-table",
   "version": 2,
   "title": "Averages from a frequency table",
-  "tagline": "Frequency-table working surface; derives midpoint, f×x, cumulative f, mean, modal class, median; cells occlude to \"?\" or a symbol; open \"4 or more\" rows; both interval styles.",
-  "description": "A frequency-table working surface for the averages: one row per value (discrete) or per class interval (grouped), a Frequency column, and the derived working columns Midpoint x, f×x and a running Cumulative f. Below a Σ totals row (Σf and Σf×x), the model works the mean = Σf×x ÷ Σf (an estimate for grouped data, because midpoints stand in for the real values), names the modal class (the row with the greatest frequency) and finds the median by position (n+1)/2 — the class/value whose cumulative frequency first reaches it. You author only the classes and the frequencies; every midpoint, product, total, mean, modal class and median is computed, so the table cannot disagree with its own data. Occlude any cell (it renders \"?\") to pose \"complete the table\", \"find the mean\" or \"which class holds the median?\"; an occluded frequency automatically hides the cells that would directly give it away. Inverse questions need no special mode — give the complete data, occlude one frequency, and show the total (find a missing frequency from Σf) or the mean (find it from the estimated mean), both of which the model derives from the real data. A static model with teacher-led staged builds (reveal a column at a time; work the mean; find the median class). The cells are highlightable and the maths is derived, which makes it a model, not a plain content table. An occluded cell can render an authored algebraic symbol instead of \"?\" (cells[].symbol or the rows[].symbol shorthand) so the table prints the same letter the stem names — \"the frequency is x; find the value of x\". A row can be an open category rather than a number (\"4 or more\"): give it rows[].label and the class cell renders the label verbatim; with f = 0 it joins every derivation (its f×x is exactly 0), and with f > 0 the mean needs an authored rows[].midpoint (the representative value), else the mean renders as a dash with a visible note — never a silently wrong number. Class labels follow intervalStyle: lowerInclusive \"a ≤ x < b\" (default) or upperInclusive \"a < x ≤ b\" — opposite endpoint membership, matched to how the source data was grouped.",
-  "whenToUse": "Reach for this for the averages-from-a-frequency-table working table: mean, median and mode from a frequency table, estimating the mean of grouped data with midpoints, identifying the class that contains the median, and finding a missing frequency from a total or a mean. Choose the data shape with mode: \"discrete\" (each row is a single value — set value) or \"grouped\" (each row is a class interval — set lower and upper); if you omit mode it is inferred from whether the rows carry value or lower/upper. Author the rows (the value or the lower/upper bounds, plus f) — the Midpoint x (the value itself when discrete, (lower+upper)/2 when grouped), the f×x column, the running Cumulative f, Σf, Σf×x, the mean, the modal class and the median are all worked out for you. Choose the columns with show: show.midpoint (default on for grouped, off for discrete since x is the value), show.fx (f×x, default on), show.cumulative (default off — turn on for median work), show.totalsRow (the Σ row, default on). Turn on the averages with the mean / modal / median objects ({ show: true }); the mean line reads \"Estimated mean = Σf×x ÷ Σf = …\" for grouped data (set mean.estimateNote false to drop the \"it is an estimate\" note), the modal row is ambered, and the median line shows the position (n+1)/2 and the class/value it lands in. Occlude to make a question: per row, occlude/blank/highlight is shorthand for that row's frequency cell; for any other column use cells: [{ row, col, occlude }] with col one of \"class\", \"frequency\", \"midpoint\", \"fx\", \"cumulative\" (row 1..N for a body row, row 0 for the Σ totals row). Occlude the mean / modal / median object ({ occlude: true }) to ask for that average (\"find the mean\", \"which class is modal?\", \"which class holds the median?\"). A fully blank answer space comes from show.workings false — every derived cell and the totals empty out, leaving the classes and frequencies as the given. Missing frequency (inverse): give the complete, true data, occlude the one unknown frequency, and show the given — for \"from the total\" keep show.totalsRow on so Σf is visible (turn the f×x / cumulative columns off so it stays a clean adding problem); for \"from the mean\" turn show.totalsRow off and set mean.show true so the mean is the only aggregate shown (the model never prints the hidden frequency anywhere); when the given total is of the VALUES not the frequencies (\"the team scored 55 goals in total\"), keep it in the stem text and hide the totals row. When the stem names the unknown (\"the frequency is x — find the value of x\"), set symbol on the occluded row/cell ({ occlude: true, symbol: \"x\" }, or just { symbol: \"x\" } — a symbol implies occlusion) so the table prints the same italic letter; the true frequency stays authored and drives every derived value exactly as with \"?\". An open category row (\"4 or more\", \"other\") takes label instead of value/lower/upper — the class cell renders it verbatim; leave its midpoint out when f is 0 (the row still contributes exactly 0 to Σf×x), and author rows[].midpoint when f > 0 and the mean is wanted (the mean then reads \"Estimated mean\"); without one the mean renders \"—\" with a note rather than a wrong value. Match the class-label convention to the source with intervalStyle: the default lowerInclusive reads \"a ≤ x < b\"; set upperInclusive for tables grouped as \"a < x ≤ b\" (exam boards use both — they are different statements about which class the boundary value belongs to, so copy the source, don't restyle it). Keep the same classes and columns across one lesson so pupils track one table. Staged builds read well: open on the labelled class+frequency table, then reveal the midpoint column, the f×x column, the Σ row and finally the mean; or open on a \"?\" mean and reveal the working. Switch primitive when the picture changes: for the cumulative-frequency graph, the median by interpolation, quartiles or a box plot use statistics/box-cf; for frequency density / unequal class widths use statistics/histogram; for a bar chart of the frequencies use statistics/bar-chart; for a plain non-mathematical table use a content table. Synonyms a teacher might use: frequency table, grouped frequency table, mean from a frequency table, estimate the mean, estimated mean, midpoint, mid-value, modal class, mode, median class, median position, cumulative frequency, fx, sum of fx, Σfx, missing frequency, find the missing frequency, find the value of x, open category, \"4 or more\", averages.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "averages",
-    "frequency table",
-    "grouped frequency table",
-    "mean from a frequency table",
-    "estimate the mean",
-    "estimated mean",
-    "mean median mode",
-    "modal class",
-    "mode",
-    "median class",
-    "median",
-    "cumulative frequency",
-    "midpoint",
-    "mid-value",
-    "fx",
-    "sum of fx",
-    "missing frequency",
-    "find the value of x",
-    "open category",
-    "4 or more",
-    "statistics",
-    "data",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -44,74 +16,59 @@
         "enum": [
           "discrete",
           "grouped"
-        ],
-        "description": "The data shape. \"discrete\" — each row is a single value (set value), midpoint = the value. \"grouped\" — each row is a class interval (set lower and upper), midpoint = (lower+upper)/2 and the mean is an ESTIMATE. Optional: if omitted it is inferred from whether the rows carry value (discrete) or lower/upper (grouped)."
+        ]
       },
       "variable": {
-        "type": "string",
-        "description": "The symbol used in the class labels and column headers — class intervals read \"lower ≤ <variable> < upper\", the midpoint header is \"Midpoint, <variable>\", the product header is \"f × <variable>\". Default \"x\". Use a context letter such as \"t\", \"h\" or \"m\" to match the quantity."
+        "type": "string"
       },
       "intervalStyle": {
         "type": "string",
         "enum": [
           "lowerInclusive",
           "upperInclusive"
-        ],
-        "description": "GROUPED class-label convention — which endpoint belongs to the class. \"lowerInclusive\" (default): \"lower ≤ x < upper\". \"upperInclusive\": \"lower < x ≤ upper\". These are different statements about where a boundary value is counted, so match the source table's convention rather than restyling it. Midpoints are (lower+upper)/2 either way."
+        ]
       },
       "valueHeader": {
-        "type": "string",
-        "description": "The header over the first (class / value) column, naming the quantity and its units, e.g. \"Goals scored, x\", \"Height, h (cm)\", \"Time, t (seconds)\". Defaults to \"Value\" (discrete) / \"Class\" (grouped)."
+        "type": "string"
       },
       "rows": {
         "type": "array",
         "maxItems": 12,
-        "description": "The table body, one entry per value (discrete) or class interval (grouped), top to bottom. Give the COMPLETE, true data (including any frequency a question will later hide) — every total, mean, modal class and median is summed from it.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "value": {
-              "type": "number",
-              "description": "DISCRETE rows only: the single value this row counts (e.g. 0, 1, 2 goals; shoe size 7). Its midpoint x is the value itself. Ignore for grouped rows."
+              "type": "number"
             },
             "lower": {
-              "type": "number",
-              "description": "GROUPED rows only: the lower bound of the class interval (inclusive — the label reads \"lower ≤ x < upper\"). Ignore for discrete rows."
+              "type": "number"
             },
             "upper": {
-              "type": "number",
-              "description": "GROUPED rows only: the upper bound of the class interval (exclusive under the default intervalStyle, inclusive under \"upperInclusive\"). The midpoint x is (lower+upper)/2. Ignore for discrete rows."
+              "type": "number"
             },
             "label": {
-              "type": "string",
-              "description": "Makes this an OPEN/LABELLED category row: the class cell renders this text verbatim (e.g. \"4 or more\", \"other\") and value/lower/upper are ignored. The row counts fully in Σf, cumulative f, mode and median-by-position. It has no derivable midpoint: with f = 0 its f×x is exactly 0 (0 × anything), so the mean still works; with f > 0 author rows[].midpoint to include it in the mean, else the mean renders as a dash with a visible note."
+              "type": "string"
             },
             "midpoint": {
-              "type": "number",
-              "description": "LABELLED rows only: the representative value standing in for this open category in the mean working (fills the Midpoint and f×x cells; the mean then reads \"Estimated mean\"). Ignored on value/interval rows — their midpoint is always derived."
+              "type": "number"
             },
             "f": {
               "type": "number",
-              "minimum": 0,
-              "description": "The frequency for this value/class — how many data items fall in it. Non-negative; negative values are clamped to 0."
+              "minimum": 0
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Shorthand: render THIS row's frequency as \"?\" (the question hook). The model auto-hides the cells it would directly leak — this row's f×x and the cumulative f from this row down. Equivalent to cells: [{ row, col: \"frequency\", occlude: true }]. Default false."
+              "type": "boolean"
             },
             "symbol": {
               "type": "string",
-              "maxLength": 3,
-              "description": "Shorthand: render THIS row's frequency as this algebraic symbol (italic) instead of \"?\" — use when the stem names the unknown (\"the frequency is x; find the value of x\"). Implies occlude, with the same auto-hiding; the true f stays authored and drives every derived value."
+              "maxLength": 3
             },
             "blank": {
-              "type": "boolean",
-              "description": "Shorthand: leave THIS row's frequency cell empty (nothing shown), for staged builds that fill the table one row at a time. Different from occlude: \"?\" poses a question, blank poses nothing yet. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Shorthand: amber THIS row's frequency cell to draw the eye. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -121,7 +78,6 @@
       },
       "cells": {
         "type": "array",
-        "description": "Fine-grained per-cell question/staging flags for any column (the row-level shorthand only reaches the frequency cell). List a cell only to occlude, blank or highlight it; every cell's value is always computed. ADDRESSING: row is 1..N for a body row (1 = top) or 0 for the Σ totals row; col names the column.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -129,8 +85,7 @@
             "row": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 12,
-              "description": "Row address: 1..N for a body row (1 = top), or 0 for the Σ totals row along the bottom (its frequency cell is Σf, its f×x cell is Σf×x)."
+              "maximum": 12
             },
             "col": {
               "type": "string",
@@ -140,25 +95,20 @@
                 "midpoint",
                 "fx",
                 "cumulative"
-              ],
-              "description": "Which column: \"class\" (the value / interval label), \"frequency\" (f), \"midpoint\" (x), \"fx\" (f × x) or \"cumulative\" (the running cumulative frequency)."
+              ]
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's value as \"?\" — the question hook. The cell stays in place; the true value is printed nowhere else. Default false."
+              "type": "boolean"
             },
             "symbol": {
               "type": "string",
-              "maxLength": 3,
-              "description": "Render this cell's value as this algebraic symbol (italic) instead of \"?\" — the letter the question stem names. Implies occlude; the true value still drives every derived cell."
+              "maxLength": 3
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render nothing in this cell (an unfilled cell, for staged builds). If both blank and occlude are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber fill and value for this cell — draw the eye to a result. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -170,104 +120,82 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Column and totals toggles.",
         "properties": {
           "midpoint": {
-            "type": "boolean",
-            "description": "Show the Midpoint (x) column. Default ON for grouped data, OFF for discrete (where the midpoint is just the value)."
+            "type": "boolean"
           },
           "fx": {
-            "type": "boolean",
-            "description": "Show the f × x column (frequency times midpoint). Default true — it is the core of the mean."
+            "type": "boolean"
           },
           "cumulative": {
-            "type": "boolean",
-            "description": "Show the running Cumulative frequency column. Default false; turn on for median work."
+            "type": "boolean"
           },
           "totalsRow": {
-            "type": "boolean",
-            "description": "Show the Σ totals row along the bottom (Σf under the frequency column, Σf×x under the f×x column). Default true."
+            "type": "boolean"
           },
           "workings": {
-            "type": "boolean",
-            "description": "When false, EMPTY every derived cell — the midpoint, f×x and cumulative columns and the Σ totals — leaving the classes and frequencies as a blank \"complete the table\" answer space. The frequency column (the data) stays. Default true."
+            "type": "boolean"
           }
         }
       },
       "mean": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The mean readout below the table: \"Mean = Σf×x ÷ Σf = …\" (or \"Estimated mean = …\" for grouped data). Omit for no mean line. Both totals and the result are COMPUTED.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the mean line. Default true when the mean object is present."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the mean as \"?\" — the \"find the mean\" hook. The label still shows. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the mean readout. Default false."
+            "type": "boolean"
           },
           "estimateNote": {
-            "type": "boolean",
-            "description": "For GROUPED data, append the note that the mean is an estimate (midpoints assume an even spread within each class). Default true for grouped, ignored for discrete."
+            "type": "boolean"
           },
           "decimals": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 4,
-            "description": "Decimal places for the mean when it does not terminate (the line then reads \"≈\"). Default 2."
+            "maximum": 4
           }
         }
       },
       "modal": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The modal-class readout — names the row(s) with the greatest frequency (ambered) and reads \"Modal class: …\" (grouped) / \"Mode: …\" (discrete). Omit for none.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the modal readout and amber the modal row. Default true when present."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the modal class as \"?\" — \"which class is modal?\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the modal frequency cell(s). Default true when the modal object is shown."
+            "type": "boolean"
           }
         }
       },
       "median": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The median readout — \"Median position = (n+1)/2 = … → class/value\". The median CLASS (grouped) or median VALUE (discrete) is the row whose cumulative frequency first reaches the position. Omit for none.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the median readout. Default true when present."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the median class/value as \"?\" — \"which class holds the median?\" (the position working still shows). Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the median row (its cumulative cell). Default true when the median object is shown."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below everything, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -276,7 +204,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — mean, median and mode from a discrete frequency table",
       "params": {
         "header": "Goals scored in 30 football matches",
         "mode": "discrete",
@@ -320,7 +247,6 @@
       }
     },
     {
-      "label": "Blank answer space — complete the grouped table",
       "params": {
         "header": "Time to solve a puzzle",
         "mode": "grouped",
@@ -357,7 +283,6 @@
       }
     },
     {
-      "label": "Occluded question — estimate the mean of grouped data",
       "params": {
         "header": "Mass of 40 apples",
         "mode": "grouped",
@@ -396,7 +321,6 @@
       }
     },
     {
-      "label": "Median class — which interval contains the median?",
       "params": {
         "header": "Heights of 35 sunflowers",
         "mode": "grouped",
@@ -441,7 +365,6 @@
       }
     },
     {
-      "label": "Missing frequency from the total (discrete inverse)",
       "params": {
         "header": "Shoe sizes in a class of 40",
         "mode": "discrete",
@@ -478,7 +401,6 @@
       }
     },
     {
-      "label": "Hard case — the frequency is n, with an open \"4 or more\" row (find n from the stem's total)",
       "params": {
         "header": "Points scored per quiz round",
         "mode": "discrete",
@@ -516,7 +438,6 @@
       }
     },
     {
-      "label": "Upper-inclusive intervals — estimate the mean of a \"a < w ≤ b\" table",
       "params": {
         "header": "Masses of 60 pumpkins",
         "mode": "grouped",
@@ -555,7 +476,6 @@
       }
     },
     {
-      "label": "Hard case — missing frequency from the estimated mean (grouped)",
       "params": {
         "header": "Minutes spent reading per day",
         "mode": "grouped",

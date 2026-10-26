@@ -4,38 +4,7 @@
   "name": "cycle-wheel",
   "version": 1,
   "title": "Cycle wheel",
-  "tagline": "Periodic sequence as a labelled ring with a pointer — months, days of the week, seasons or a custom cycle; this/prev/next and step-and-wrap all derived.",
-  "description": "A periodic sequence shown as a ring — a circle split into equal labelled segments (the months of the year, the days of the week, the four seasons, or any custom cycle) with a central pointer at the current item. The wrap-aware modular arithmetic is derived, never authored: the pointer's this / previous / next neighbours; a jump of so many steps forward or back and the item it lands on, counting how many whole cycles it wraps (\"3 months after November is February\"); and the number of steps from one item right round to another (\"April to April = 12 months = 1 year\"). Segment positions, the pointer and the jump arc are all computed from the cycle and the chosen item. The pointed item, the highlighted segments and the jump readout occlude independently to \"?\" for questions, and a warm stem sentence restates the figure in words. (The one-month calendar grid is a separate model, time/calendar.)",
-  "whenToUse": "Reach for this for the cyclic-time topics of KS1/KS2 that loop round: naming the months, the days of the week and the seasons in order; \"what comes next / what came before\"; counting on or back round a cycle and wrapping past the end (\"what month is 3 months after November?\"); and a full cycle as a period (\"from one April to the next is a year\"). Author the cycle by name wherever it is canonical — preset \"months\", \"days\" or \"seasons\" — so the order is correct by construction; use cycle.items only for a genuinely custom cycle (a class rotation, the stages of the water cycle). Common configurations: name the sequence — a plain ring, show.neighbours to label the items either side of the pointer; what comes next — pointer.at on the current item with a jump by 1 (or −1 for \"last\"), jump.occlude \"target\" to hide the answer; count on and wrap — jump.by a larger signed number from a chosen item; a full cycle — jump.to back to the start so the derived count is the whole cycle, shown as \"= 1 year\" / \"= 1 week\". Keep the same cycle across a lesson so pupils compare like with like. Staged builds suit this model: open on the bare ring and reveal the pointer, the neighbours or the jump arc one stage at a time (the base frame stands alone). Set draggable true to let pupils drag the pointer round the segments (web only). For reading a calendar month, finding a date or \"the same day next week\", use the time/calendar model instead. Synonyms teachers use: months of the year, days of the week, seasons, cyclic, this/next/last, what comes after, count on, count back, wrap round, a year, a week.",
   "responseModes": [],
-  "tags": [
-    "time",
-    "cycle",
-    "cyclic",
-    "months",
-    "months of the year",
-    "days of the week",
-    "seasons",
-    "this next last",
-    "next",
-    "previous",
-    "after",
-    "before",
-    "count on",
-    "count back",
-    "wrap",
-    "wrap around",
-    "period",
-    "year",
-    "week",
-    "ordering time",
-    "ring",
-    "wheel",
-    "primary",
-    "ks1",
-    "ks2",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -43,7 +12,6 @@
       "cycle": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The periodic sequence the ring draws. Give a preset for a canonical sequence (its order is then correct by construction), OR items for a custom cycle. If neither is given the ring defaults to the twelve months.",
         "properties": {
           "preset": {
             "type": "string",
@@ -51,83 +19,68 @@
               "months",
               "days",
               "seasons"
-            ],
-            "description": "A canonical, correctly-ordered sequence: \"months\" (January…December, 12 segments), \"days\" (Monday…Sunday, 7), \"seasons\" (Spring, Summer, Autumn, Winter, 4). Preferred over items for these — the model owns the order so it cannot be wrong. Takes precedence if items is also given."
+            ]
           },
           "items": {
             "type": "array",
             "items": {
-              "type": "string",
-              "description": "One segment label, in cycle order."
-            },
-            "description": "A custom cycle as an explicit ordered list of labels (e.g. [\"Wash\",\"Rinse\",\"Spin\"], a 6-day class rotation). Use only when no preset fits. The segments are drawn equally spaced in the order given; the cycle wraps from the last back to the first."
+              "type": "string"
+            }
           },
           "short": {
-            "type": "boolean",
-            "description": "For \"months\" / \"days\", label segments with the three-letter short form (Jan, Mon). Default true — full names crowd the ring; set false to show full names (the ring widens to fit them). Ignored for seasons and custom items."
+            "type": "boolean"
           },
           "periodName": {
-            "type": "string",
-            "description": "What one whole cycle is called, used in a full-loop jump readout (\"= 1 ___\"). Derived automatically for presets (months/seasons → \"year\", days → \"week\"); set this for a custom cycle (e.g. \"rotation\"). Omit to show just the step count."
+            "type": "string"
           }
         }
       },
       "pointer": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The central pointer that marks the current item — the \"this\" the neighbours and a jump are measured from.",
         "properties": {
           "at": {
             "type": [
               "string",
               "integer"
-            ],
-            "description": "A cycle item, named or by position. A string matches an item label case-insensitively (full or short form, so \"Sep\" finds \"September\"); an integer is the 1-based position round the cycle (1 = the first item). Out-of-range integers wrap (position 13 of 12 months = January). Which item the pointer indicates. Default the first item."
+            ]
           },
           "show": {
-            "type": "boolean",
-            "description": "Draw the pointer arrow and tint its segment. Default true. Set false for a bare unmarked ring (e.g. \"name the months\")."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the pointed segment's label as \"?\" — \"which month is the pointer on?\". The segment, arrow and other labels stay visible. Default false."
+            "type": "boolean"
           }
         }
       },
       "jump": {
         "type": "object",
         "additionalProperties": false,
-        "description": "A step round the cycle, drawn as an arc from a start segment to the derived target, with a readout. Use by for \"count on/back\" and to for \"how far round\". Give one of by / to (if both, to wins).",
         "properties": {
           "from": {
             "type": [
               "string",
               "integer"
-            ],
-            "description": "A cycle item, named or by position. A string matches an item label case-insensitively (full or short form, so \"Sep\" finds \"September\"); an integer is the 1-based position round the cycle (1 = the first item). Out-of-range integers wrap (position 13 of 12 months = January). Where the step starts. Default pointer.at (or the first item)."
+            ]
           },
           "by": {
-            "type": "integer",
-            "description": "Signed number of steps to count on (positive = forward/clockwise) or back (negative). The target item and how many whole cycles it wraps are derived (\"November + 3 = February, into the next year\"). Use to instead to specify the destination and derive the count."
+            "type": "integer"
           },
           "to": {
             "type": [
               "string",
               "integer"
-            ],
-            "description": "A cycle item, named or by position. A string matches an item label case-insensitively (full or short form, so \"Sep\" finds \"September\"); an integer is the 1-based position round the cycle (1 = the first item). Out-of-range integers wrap (position 13 of 12 months = January). The destination item; the number of forward steps from \"from\" round to here is derived (from an item back to itself = a full cycle). Overrides by if both are given."
+            ]
           },
           "occlude": {
             "type": "string",
             "enum": [
               "target",
               "count"
-            ],
-            "description": "Hide the answer for a question. \"target\": the landed-on item shows \"?\" (\"count on 3 — where do you land?\"). \"count\": the number of steps shows \"?\" (\"how many months from April round to April?\"). Default neither — both shown."
+            ]
           },
           "label": {
-            "type": "string",
-            "description": "Override the derived arc readout text. Omit to use the computed readout (the target item, the step count, and the period name for a full loop)."
+            "type": "string"
           }
         }
       },
@@ -137,43 +90,34 @@
           "type": [
             "string",
             "integer"
-          ],
-          "description": "A cycle item, named or by position. A string matches an item label case-insensitively (full or short form, so \"Sep\" finds \"September\"); an integer is the 1-based position round the cycle (1 = the first item). Out-of-range integers wrap (position 13 of 12 months = January)."
-        },
-        "description": "Items to draw the eye to with an amber segment (e.g. [\"June\",\"July\",\"August\"] to ring the summer months). Each entry is a label or 1-based position. The pointer and jump highlighting are automatic and separate from this."
+          ]
+        }
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web only. Let the pupil drag the pointer round the segments; it snaps to the nearest item and the neighbours/readout follow. Exploratory. Default false."
+        "type": "boolean"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "neighbours": {
-            "type": "boolean",
-            "description": "Tag the segments either side of the pointer faintly as \"last\" and \"next\" — the this/prev/next context. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional terse line below the figure, e.g. a short context note. Distinct from stem. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "stem": {
-        "type": "string",
-        "description": "Optional stem sentence in a warm band below the figure — the verbal twin of the model, in a child's reading voice. Use \"?\" where the figure occludes the answer so the sentence never leaks it (e.g. \"3 months after November is ?\")."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked — months wheel, pointer on April, next & last labelled",
       "params": {
         "cycle": {
           "preset": "months"
@@ -189,7 +133,6 @@
       }
     },
     {
-      "label": "Blank / answer space — name the days of the week (bare ring)",
       "params": {
         "cycle": {
           "preset": "days"
@@ -201,7 +144,6 @@
       }
     },
     {
-      "label": "Occluded question — what comes next? (jump by 1, target hidden)",
       "params": {
         "cycle": {
           "preset": "seasons"
@@ -217,7 +159,6 @@
       }
     },
     {
-      "label": "Hard case — count on and WRAP: 3 months after November is February",
       "params": {
         "cycle": {
           "preset": "months"
@@ -233,7 +174,6 @@
       }
     },
     {
-      "label": "Full cycle — April round to April = 12 months = 1 year",
       "params": {
         "cycle": {
           "preset": "months"
@@ -249,7 +189,6 @@
       }
     },
     {
-      "label": "Custom cycle — a six-day timetable rotation (the engine is not months-only)",
       "params": {
         "cycle": {
           "items": [

@@ -4,32 +4,7 @@
   "name": "frustum",
   "version": 1,
   "title": "Cone frustum (truncated cone)",
-  "tagline": "Conical frustum (truncated cone) drawn front-on — author R, r, h; derives the slant, the apex extension and the right-angled similar triangles for the difference-of-cones method.",
-  "description": "A conical frustum — a cone with its top sliced off parallel to the base — drawn front-on (a low-elevation view, not top-down), with its dimensions labelled and its slant height derived. A bucket, plant pot, lampshade or cup. You give only the bottom radius R, the smaller top radius r and the perpendicular height h; the model draws both circular cross-sections joined by the slant (visible edges solid, hidden edges dashed), labels each dimension, and derives and labels the slant height l = √((R−r)²+h²). It can show the perpendicular height with its right-angle mark, and — for the difference-of-cones method — extend the slant lines up to the apex of the whole cone (full height H = hR/(R−r)) so the frustum reads as a big cone minus the small one that was cut off. It can also draw the 2-D axial cross-section (a trapezium) beneath the solid, optionally with the two right-angled similar triangles — the big cone (legs R and H) and the small cone (legs r and H−h) — that derive H. Any dimension can be occluded to \"?\" for a reverse \"find the missing length\" problem, or highlighted in amber. The figure is a clean labelled diagram: the volume and surface-area formulas and their working go in the lesson text beside it, not on the drawing.",
-  "whenToUse": "Reach for this whenever a lesson shows a truncated cone — a conical frustum — to label its dimensions or to set up a volume / surface-area / slant-height problem: buckets, plant pots, lampshades, drinking cups and the difference-of-cones method. Fill the three dimensions: R (bottom radius), r (the smaller top radius) and h (perpendicular height). The height is always the perpendicular height (top centre straight above the base centre); the model derives the slant for you — set show.slant to draw and label it (the slant uses the surface, not the perpendicular height). Set show.difference to extend the cone to its apex (the full cone, height H = hR/(R−r)) so it reads as a big cone minus the cut-off small one — the picture behind the difference-of-cones method. For the 2-D companion, set show.crossSection to draw the axial cross-section (a trapezium) beneath the solid, and show.similarTriangles to mark the two right-angled similar triangles (big cone legs R, H; small cone legs r, H−h) that derive H — perfect for a staged worked example (3-D solid → reveal the cross-section → mark the similar triangles), with the ratio algebra (R/H = r/(H−h)) walked through in the block text. To pose a reverse problem (\"the volume is …, find h\") list the unknown in occlude (e.g. occlude:[\"h\"]) — its label shows \"?\". show.shadeBottom / show.shadeTop tint the base or the top opening; use unit for the length unit (default \"cm\"). Keep the maths in the block text — write the volume / curved- or total-surface-area formula and working as prose beside the figure (V = ⅓πh(R²+Rr+r²), curved SA = π(R+r)l, total SA = π(R+r)l + πR² + πr²); the model draws the labelled diagram, the text does the calculation. Omit the show flags for a plain labelled frustum (an answer space). A staged build reads well: open on the labelled frustum, reveal the slant, then extend to the apex / show the similar triangles — with the working walked through in the accompanying text. Keep the unit consistent across a lesson. Synonyms a teacher might use: frustum, truncated cone, conical frustum, bucket, plant pot, lampshade, cup, truncated, slant height, curved surface area, difference of cones, similar triangles. This model is cone-only (no pyramidal frustums). Switch primitive when the teaching changes: for a whole cone, pyramid, cylinder, cuboid, prism or sphere use geometry/solid (it deliberately excludes the frustum); for the unfolded net use geometry/net.",
   "responseModes": [],
-  "tags": [
-    "frustum",
-    "truncated cone",
-    "conical frustum",
-    "bucket",
-    "plant pot",
-    "lampshade",
-    "cup",
-    "truncated",
-    "volume",
-    "surface area",
-    "curved surface area",
-    "slant height",
-    "difference of cones",
-    "similar triangles",
-    "isometric",
-    "3d shape",
-    "solid",
-    "mensuration",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -37,22 +12,18 @@
       "dims": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The raw measurements, in the chosen unit, as plain numbers. The slant height is DERIVED from these and labelled on the figure. The bottom is the larger section: R > r.",
         "properties": {
           "R": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The BOTTOM (larger) radius. Must be greater than r."
+            "exclusiveMinimum": 0
           },
           "r": {
             "type": "number",
-            "minimum": 0,
-            "description": "The TOP (smaller) radius. Must be less than R. (r = 0 is a whole cone — use geometry/solid for that.)"
+            "minimum": 0
           },
           "h": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The PERPENDICULAR height (top centre straight above the base centre) — NOT the slant height, which is derived."
+            "exclusiveMinimum": 0
           }
         },
         "required": [
@@ -62,8 +33,7 @@
         ]
       },
       "unit": {
-        "type": "string",
-        "description": "The linear unit for the dimension labels, e.g. \"cm\", \"m\", \"mm\". Default \"cm\"."
+        "type": "string"
       },
       "occlude": {
         "type": "array",
@@ -76,8 +46,7 @@
             "l",
             "H"
           ]
-        },
-        "description": "Dimension labels to hide as \"?\" — the reverse-problem hook (give the volume in the text, hide a length: occlude:[\"h\"]). Keys: \"R\", \"r\", \"h\", plus the derived \"l\" (slant height) and \"H\" (full cone height for the difference method). The element stays drawn; only its number is hidden. (When a length the slant/apex depends on is hidden, the slant label and the apex extension are suppressed so they cannot leak the answer.)"
+        }
       },
       "highlight": {
         "type": "array",
@@ -90,59 +59,46 @@
             "l",
             "H"
           ]
-        },
-        "description": "Dimension labels to draw in amber for emphasis — e.g. highlight:[\"l\"] to draw the eye to the slant height. Same keys as occlude."
+        }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Figure furniture toggles.",
         "properties": {
           "solid": {
-            "type": "boolean",
-            "description": "Draw the 3-D cone-frustum solid. Set false to OMIT the solid and show ONLY the 2-D panel(s) — the cross-section / similar triangles / separated triangles — e.g. a staged build that drops the solid to focus on the triangles. Falls back to the solid if no panel is enabled. Default true."
+            "type": "boolean"
           },
           "dimensions": {
-            "type": "boolean",
-            "description": "Label each dimension on the figure (\"6 cm\" etc.). false draws the bare frustum with no measurements. Default true."
+            "type": "boolean"
           },
           "slant": {
-            "type": "boolean",
-            "description": "Draw and label the derived slant height l = √((R−r)²+h²) along the sloping surface, with the right-angle mark. Use it when teaching that the volume uses the perpendicular height but the curved surface uses the slant. Default false."
+            "type": "boolean"
           },
           "difference": {
-            "type": "boolean",
-            "description": "Extend the 3-D cone with dashed lines up to the apex of the WHOLE cone (full height H = hR/(R−r), labelled) — the picture behind the difference-of-cones method (frustum = big cone − cut-off small cone). The maths itself goes in the block text. Default false."
+            "type": "boolean"
           },
           "crossSection": {
-            "type": "boolean",
-            "description": "Add the 2-D axial CROSS-SECTION beneath the solid — the trapezium you get slicing through the axis (bottom radius R, top radius r, height h), labelled. The companion 2-D view of the same frustum; pair with similarTriangles for the similar-triangles derivation. Default false."
+            "type": "boolean"
           },
           "similarTriangles": {
-            "type": "boolean",
-            "description": "On the cross-section (auto-enables crossSection), extend to the apex and mark the two RIGHT-ANGLED SIMILAR TRIANGLES on the right half — the big cone (legs R and the full height H) and the small cut-off cone (legs r and H−h), both right-angled at the axis and sharing the apex angle. This is the 2-D similar-triangles picture that derives H; the ratio working (R/H = r/(H−h)) goes in the block text. Ideal as the last stage of a staged worked example: 3-D solid → cross-section → similar triangles. Default false."
+            "type": "boolean"
           },
           "separateTriangles": {
-            "type": "boolean",
-            "description": "Draw the two similar right-angled triangles PULLED APART and compared, beneath the solid — the small cut-off cone (legs r and H−h) on the left and the whole cone (legs R and H) on the right, in the same orientation at true relative scale, with the equal apex angle and corresponding sides labelled. This is the \"redraw the two similar triangles separately and match the sides\" step; the ratio R/H = r/(H−h) goes in the block text. Best as its OWN block/figure (or after the cross-section), not mixed into a width-locked staged build. occlude:[\"H\"] hides the answer for a find-H question. Default false."
+            "type": "boolean"
           },
           "hiddenEdges": {
-            "type": "boolean",
-            "description": "Draw the edges hidden behind the solid as dashed construction lines. false omits them for a cleaner figure. Default true."
+            "type": "boolean"
           },
           "shadeBottom": {
-            "type": "boolean",
-            "description": "Tint the bottom base face (amber). Default false."
+            "type": "boolean"
           },
           "shadeTop": {
-            "type": "boolean",
-            "description": "Tint the top section face (amber) — e.g. the open top of a bucket. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional SHORT caption centred above the figure (e.g. \"A plant pot\"). For instructions and the maths working, use the block text instead. Wraps if long; the top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -151,7 +107,6 @@
   },
   "examples": [
     {
-      "label": "Cone frustum, labelled with the derived slant height (l = 5)",
       "params": {
         "dims": {
           "R": 5,
@@ -165,7 +120,6 @@
       }
     },
     {
-      "label": "Blank answer space — a plant pot, top opening shaded",
       "params": {
         "header": "A plant pot",
         "dims": {
@@ -180,7 +134,6 @@
       }
     },
     {
-      "label": "Reverse problem — height occluded (give the volume in the text, find h)",
       "params": {
         "dims": {
           "R": 9,
@@ -194,7 +147,6 @@
       }
     },
     {
-      "label": "Hard case — extended to the apex (the difference-of-cones picture, H = 8)",
       "params": {
         "dims": {
           "R": 6,
@@ -209,7 +161,6 @@
       }
     },
     {
-      "label": "Cross-section + right-angled similar triangles — the 2-D derivation of H",
       "params": {
         "dims": {
           "R": 6,
@@ -225,7 +176,6 @@
       }
     },
     {
-      "label": "Similar triangles pulled apart — the small cut-off cone vs the whole cone",
       "params": {
         "dims": {
           "R": 6,
@@ -239,7 +189,6 @@
       }
     },
     {
-      "label": "Just the similar triangles (solid hidden) — for a staged derivation",
       "params": {
         "dims": {
           "R": 6,

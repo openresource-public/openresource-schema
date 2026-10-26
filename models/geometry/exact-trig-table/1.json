@@ -4,33 +4,7 @@
   "name": "exact-trig-table",
   "version": 1,
   "title": "Exact trig values table",
-  "tagline": "Exact sin, cos and tan at 0–90° as a reference table, values rendered as stacked surds; degrees or radians; cells occlude for recall.",
-  "description": "The exact values of sin, cos and tan at the special angles 0°, 30°, 45°, 60° and 90°, drawn as a styled reference table — angles across the top (one column each), functions down the side (one row each). Every cell value is computed and rendered as a proper stacked surd fraction or radical (½, √2⁄2, √3⁄2, 1, √3, 0) with tan 90° shown as the word \"undefined\"; you never author a value, only which functions (rows) and angles (columns) appear. Headers read in degrees (30°) or radians (π⁄6); irrational values can be written rationalised (√2⁄2, √3⁄3) or in pre-rationalised surd-denominator form (1⁄√2, 1⁄√3); an optional decimal approximation sits under each value (√3⁄2 ≈ 0.866). Cells occlude to \"?\" for \"complete the exact-values table\" recall, blank for staged builds, or highlight in amber.",
-  "whenToUse": "Reach for this for the exact trig values that pupils must memorise: the sin/cos/tan table at 0°, 30°, 45°, 60°, 90°. Use it as a reference (show every value), as a recall question (show.values false hides every value as \"?\" — \"complete the table of exact values from memory\"), or as a partial-gap question (occlude chosen cells while others are given). Author the table by selecting: functions [\"sin\",\"cos\",\"tan\"] (any subset/order — e.g. [\"tan\"] for the tangent row alone, [\"sin\",\"cos\"] to contrast the mirror pair) and angles [0,30,45,60,90] given in degrees (any subset/order). Every value, header and label is computed. Common configurations: full reference — defaults (all functions, all angles); complete the table — show.values false (whole table \"?\") or occlude specific cells; find one value — occlude+highlight a single cell with a caption; worked — show.approx true to pair each surd with its decimal. angleUnit \"radians\" rewrites the headers as 0, π⁄6, π⁄4, π⁄3, π⁄2 for A-level (the values are identical). form \"surd-denominator\" writes the pre-rationalised forms sin45 = 1⁄√2, tan30 = 1⁄√3 (only those three cells change). Staged builds fit well: open on a blank or \"?\" table (the base must stand alone) and reveal one row or column per stage — build sin then cos then tan, derive tan = sin ÷ cos, or reveal recall answers row by row. Keep the same functions and angles across the blocks of one lesson so pupils track one table. Synonyms a teacher might use: exact values, exact trig values, special angles, surd values, trig table, sin cos tan table, complete the table, 30 45 60, unit circle values, exact ratios. Switch model when the teaching changes — for a triangle with marked sides/angles (SOHCAHTOA, Pythagoras) use geometry/triangle; to plot or read y = sin x use graphing/function-graph; for the clock-angle / fractions-of-a-turn picture use geometry/clock.",
   "responseModes": [],
-  "tags": [
-    "exact values",
-    "exact trig values",
-    "trig table",
-    "special angles",
-    "surds",
-    "sin",
-    "cos",
-    "tan",
-    "sine",
-    "cosine",
-    "tangent",
-    "sin cos tan",
-    "30 45 60",
-    "complete the table",
-    "recall",
-    "rationalise",
-    "radians",
-    "unit circle",
-    "trigonometry",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -46,8 +20,7 @@
             "cos",
             "tan"
           ]
-        },
-        "description": "Which trig functions to show — one ROW each, top to bottom. Default [\"sin\",\"cos\",\"tan\"]. Pick a subset/order to focus a lesson: [\"tan\"] for the tangent row alone, [\"sin\",\"cos\"] to contrast the mirror pair. The exact value in every cell is computed — you never write a value. Duplicates are de-duplicated."
+        }
       },
       "angles": {
         "type": "array",
@@ -62,28 +35,24 @@
             60,
             90
           ]
-        },
-        "description": "Which special angles to show — one COLUMN each, left to right, given in DEGREES (the canonical exact-value angles). Default [0,30,45,60,90]. v1 covers the first-quadrant special angles only. angleUnit controls whether a header reads \"30°\" or \"π⁄6\"; you always list the angle here in degrees. Duplicates are de-duplicated."
+        }
       },
       "angleUnit": {
         "type": "string",
         "enum": [
           "degrees",
           "radians"
-        ],
-        "description": "How the angle column headers are written: \"degrees\" (default) → 0°, 30°, 45°, 60°, 90°; \"radians\" → 0, π⁄6, π⁄4, π⁄3, π⁄2. The exact values are identical either way — this changes only the header notation. Use radians for A-level."
+        ]
       },
       "form": {
         "type": "string",
         "enum": [
           "rationalised",
           "surd-denominator"
-        ],
-        "description": "How the irrational values are written. \"rationalised\" (default) gives the rationalised-denominator forms every exam mark scheme uses: sin45 = cos45 = √2⁄2, tan30 = √3⁄3. \"surd-denominator\" gives the pre-rationalised forms sin45 = cos45 = 1⁄√2, tan30 = 1⁄√3. Only those three cells differ between the forms; every other value is identical."
+        ]
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question / staging flags. Every cell value is always computed — list a cell here only to occlude it (\"?\"), blank it (empty), or highlight it (amber). Address by function + angle; an address outside the chosen table (a function or angle you did not include) is ignored.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -94,8 +63,7 @@
                 "sin",
                 "cos",
                 "tan"
-              ],
-              "description": "Which function row the cell is in."
+              ]
             },
             "angle": {
               "type": "integer",
@@ -105,20 +73,16 @@
                 45,
                 60,
                 90
-              ],
-              "description": "Which angle column the cell is in, in DEGREES (matching the angles array)."
+              ]
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's value as \"?\" — the \"complete the exact-values table\" recall hook. The cell stays visible; only the value is hidden. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render nothing in this cell — an unfilled cell, for staged builds that reveal the table a row or column at a time. Differs from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber the cell's value and give the cell a light amber fill — the answer, or the value under discussion. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -130,31 +94,25 @@
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "values": {
-            "type": "boolean",
-            "description": "Show the computed exact value in every cell. false hides ALL of them as \"?\" — the whole-table \"complete the exact values\" recall in one flag (equivalent to occluding every cell). Per-cell occlude/blank still apply for partial hiding. Default true."
+            "type": "boolean"
           },
           "approx": {
-            "type": "boolean",
-            "description": "Below each exact value show its decimal approximation to 3 decimal places (√3⁄2 ≈ 0.866) in small grey text — connects the surd form to a calculator value. Hidden, blank or occluded cells show no approximation (it would leak the answer); tan 90° (undefined) has none. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the table, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Full reference — the exact values you must know (degrees)",
       "params": {
         "header": "Exact values to memorise",
         "functions": [
@@ -172,7 +130,6 @@
       }
     },
     {
-      "label": "Occluded recall — complete the whole table from memory",
       "params": {
         "functions": [
           "sin",
@@ -192,7 +149,6 @@
       }
     },
     {
-      "label": "Worked — exact values paired with their decimal approximations",
       "params": {
         "functions": [
           "sin",
@@ -219,7 +175,6 @@
       }
     },
     {
-      "label": "Hard case — full table in radians with approximations (tan π⁄2 undefined)",
       "params": {
         "header": "Exact values (radians)",
         "functions": [
@@ -241,7 +196,6 @@
       }
     },
     {
-      "label": "Question — complete the cosine row using sin θ = cos(90° − θ)",
       "params": {
         "functions": [
           "sin",
@@ -274,7 +228,6 @@
       }
     },
     {
-      "label": "Pre-rationalised form — 1⁄√2 and 1⁄√3 before rationalising",
       "params": {
         "functions": [
           "sin",

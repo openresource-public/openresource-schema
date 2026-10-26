@@ -4,41 +4,7 @@
   "name": "array",
   "version": 1,
   "title": "Array",
-  "tagline": "Discrete objects in rows×cols groups; derives the total, repeated-addition sentence, commutativity, factors and fraction of a set; a KS1/2 manipulative.",
-  "description": "A set of discrete countable objects (dots, unit tiles, counters or stars) arranged into rows equal groups of cols — drawn either as a tight rows × cols array or as separated, ringed clusters of objects. The total, the rows × cols product, the repeated-addition sentence (cols + cols + … = total), the commuted reading, the fraction of the set when groups are selected (k/rows), the of-amount value (k × cols), the one-part division (total ÷ rows) and the factor / prime verdict are all computed from the two factors — you never author a count or a result. Equal groups, repeated addition, times-table arrays, commutativity, factors versus primes, and fraction of a set are all one figure: a primary (KS1/KS2) manipulative with chunky tactile objects, a categorical colour per group, and a fill-in stem sentence. Readouts and factors occlude to \"?\" for questions; counting the objects is always the method. Distinct from the area model, which is a measured rectangle rather than countable objects.",
-  "whenToUse": "Reach for this for the discrete multiplicative structure of primary number: an array of objects for a times table, equal groups with rings for \"lots of\" / repeated addition, a fraction of a set, or a factor rectangle. Author the two factors: rows is the number of equal groups (and, for a fraction of a set, the fraction's denominator); cols is the number of objects in each group. Everything else is derived. Choose layout: \"array\" draws a tight rows × cols grid (the array picture — best for times tables, commutativity and factor rectangles); layout: \"groups\" draws rows separated clusters, each ringed, of cols objects each (the equal-groups / repeated-addition picture). Common configurations: count it — show: { total: true } with occlude: [\"total\"] for a \"how many?\" answer space (the objects stay, only the number is \"?\"); times table — show: { product: true, addition: true } to pair 3 × 4 = 12 with 4 + 4 + 4 = 12; commutativity — show: { commute: true } appends 4 × 3 to the same picture, and a second block draws the partner orientation; equal groups — layout: \"groups\", rings: true, show: { addition: true, product: true } (\"4 groups of 3\"); fraction of a set — set rows to the denominator, cols to total ÷ denominator, select to the numerator k (the first k groups go amber), labelEachGroup: true to tag each group \"1/denominator\", and show: { fraction: true, ofAmount: true, division: true } for ¾ of 20 = 15 worked through 20 ÷ 4 = 5; factors / primes — show: { factors: true } states \"12 = 3 × 4\" for a rectangle, or \"7 is prime (only 1 × 7)\" for a 1-wide strip; missing factor — occlude: [\"rows\"] or [\"cols\"] hides one factor everywhere it appears (\"? × 4 = 12\"); the stem sentence \"__ groups of __ is __\" rides along when stem: true and blanks the occluded value. Keep rows, cols, object and layout steady across one lesson so pupils track one picture; build richer flows by sequencing blocks (staged build → worked → question), never by combining a staged steps array with anything else. Staged builds come in two shapes: construct it — start with reveal: 0 (an empty frame of ghost groups), step reveal up one group at a time, then turn the readouts on at the end; or work the calculation — start with the full figure and no readouts, then reveal the product, the repeated addition and the stem over the stages. Synonyms teachers use: array, arrays, rows and columns, equal groups, groups of, lots of, repeated addition, times tables, multiplication, commutative, commutativity, factors, factor pairs, prime, composite, fraction of a set, fraction of an amount, fraction of a quantity, sharing into equal groups.",
   "responseModes": [],
-  "tags": [
-    "array",
-    "arrays",
-    "rows and columns",
-    "equal groups",
-    "groups of",
-    "lots of",
-    "repeated addition",
-    "times tables",
-    "multiplication",
-    "commutative",
-    "commutativity",
-    "factors",
-    "factor pairs",
-    "prime",
-    "composite",
-    "fraction of a set",
-    "fraction of an amount",
-    "fraction of a quantity",
-    "division",
-    "sharing",
-    "dots",
-    "counters",
-    "tiles",
-    "unit squares",
-    "primary",
-    "KS1",
-    "KS2",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -46,22 +12,19 @@
       "rows": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 12,
-        "description": "The number of equal GROUPS (drawn top to bottom). In a tight array these are the rows; in \"groups\" layout these are the separate clusters. For a fraction of a set this is the fraction's DENOMINATOR (the set is split into `rows` equal groups). The first factor of the product rows × cols."
+        "maximum": 12
       },
       "cols": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 12,
-        "description": "The number of objects IN EACH group (drawn left to right in a tight array; arranged compactly inside each cluster in \"groups\" layout). The second factor of the product, and the size of one equal part (total ÷ rows)."
+        "maximum": 12
       },
       "layout": {
         "type": "string",
         "enum": [
           "array",
           "groups"
-        ],
-        "description": "How the groups are drawn. \"array\" (default): a tight rows × cols grid of objects — the array picture, for times tables, commutativity and factor rectangles. \"groups\": rows separated clusters, each holding cols objects arranged compactly — the equal-groups / repeated-addition picture. Same maths either way (total = rows × cols); pick the picture the lesson wants."
+        ]
       },
       "object": {
         "type": "string",
@@ -71,30 +34,24 @@
           "counter",
           "star",
           "heart"
-        ],
-        "description": "The countable glyph. \"dot\" (default) a filled disc; \"tile\" a rounded unit square (the unit-squares picture); \"counter\" a two-ring disc; \"star\" and \"heart\" friendlier shapes for younger pupils. Purely how each object looks — every object is one unit regardless."
+        ]
       },
       "colorByGroup": {
-        "type": "boolean",
-        "description": "Give each group its own colour from the categorical palette (blue, teal, purple, coral, green, cycling). Helps pupils SEE the groups as distinct — the default in \"groups\" layout, off (single blue) in \"array\" layout. Amber is never used here; it is reserved for the selected part / result. Selected groups are amber regardless of this flag."
+        "type": "boolean"
       },
       "rings": {
-        "type": "boolean",
-        "description": "Draw a soft rounded loop around each group — the \"equal groups\" scaffolding. Default true in \"groups\" layout, false in \"array\" layout (set true to ring each ROW of a tight array, bridging array ↔ equal groups). Rings are construction-grey, not amber."
+        "type": "boolean"
       },
       "select": {
         "type": "integer",
-        "minimum": 0,
-        "description": "How many groups are CHOSEN — the first `select` groups go amber (the fraction numerator). With select = k the model derives the fraction k/rows of the set, the of-amount value k × cols and shows them by default. select 0 (default) chooses nothing. Clamped to rows. Use for \"find k/rows of the set\" and for highlighting \"one group of cols\"."
+        "minimum": 0
       },
       "labelEachGroup": {
-        "type": "boolean",
-        "description": "Tag every group with its share of the whole (\"1/rows\") beneath it — the fraction-of-a-set labelling. Selected groups' tags go amber. Default false."
+        "type": "boolean"
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "How many groups (rows) have their objects drawn; the rest show faint \"ghost\" outlines — a \"to be filled\" frame for the STAGED construct build (groups appear one at a time). The figure size never changes between stages (the empty frame is always there), so a staged build stays aligned. Default: all groups drawn. Clamped to rows."
+        "minimum": 0
       },
       "occlude": {
         "type": "array",
@@ -108,63 +65,49 @@
             "ofAmount",
             "division"
           ]
-        },
-        "description": "Which derived readouts to hide as \"?\" — the question hook. A hidden value blanks in EVERY readout it appears in, so a visible readout never leaks the answer (anti-leak): \"total\" hides the product / addition / stem RESULT together; \"rows\" or \"cols\" hides that factor wherever it is shown (a missing-factor question — \"cols\" also blanks each addend and the division quotient, which equal cols); \"fraction\" hides k/rows; \"ofAmount\" hides the k × cols value; \"division\" hides the total ÷ rows quotient. The objects themselves always stay visible — counting them is the method."
+        }
       },
       "highlight": {
-        "type": "boolean",
-        "description": "Amber the result readouts (the product / fraction / of-amount answer line) for emphasis once revealed. Default false. Does not change which objects are selected."
+        "type": "boolean"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Which derived readouts to render beneath the figure.",
         "properties": {
           "product": {
-            "type": "boolean",
-            "description": "The product equation \"rows × cols = total\". Default true."
+            "type": "boolean"
           },
           "addition": {
-            "type": "boolean",
-            "description": "The repeated-addition sentence \"cols + cols + … = total\" (cols added rows times) — the bridge from equal groups to multiplication. Capped at a sensible number of addends; long sums abbreviate with \"…\". Default false."
+            "type": "boolean"
           },
           "commute": {
-            "type": "boolean",
-            "description": "Append the commuted product \"= cols × rows\" to the product line — the commutativity reading of the same array. Default false."
+            "type": "boolean"
           },
           "fraction": {
-            "type": "boolean",
-            "description": "The fraction of the set \"k/rows of the set\" (k = select). Auto-on when select > 0; set false to suppress. No effect when select is 0."
+            "type": "boolean"
           },
           "ofAmount": {
-            "type": "boolean",
-            "description": "The of-amount equation \"k/rows of total = value\" (value = k × cols). Auto-on when select > 0; set false to suppress."
+            "type": "boolean"
           },
           "division": {
-            "type": "boolean",
-            "description": "The one-part division \"total ÷ rows = cols\" — the size of one equal group. Pairs with a fraction of a set. Default false."
+            "type": "boolean"
           },
           "factors": {
-            "type": "boolean",
-            "description": "The factor / prime verdict: \"total = rows × cols\" for a rectangle, or \"total is prime (only 1 × total)\" when the array is a single 1-wide strip of a prime. Default false."
+            "type": "boolean"
           },
           "total": {
-            "type": "boolean",
-            "description": "A plain total chip \"total in all\" / \"= total\" beneath the figure — for a \"how many altogether?\" answer space (pair with occlude: [\"total\"]). Default false."
+            "type": "boolean"
           },
           "stem": {
-            "type": "boolean",
-            "description": "The fill-in stem sentence in a warm band: \"rows groups of cols is total\" (\"rows rows of cols is total\" in array layout). Occluded values show \"?\" so it stays leak-safe. Default false."
+            "type": "boolean"
           }
         }
       },
       "caption": {
-        "type": "string",
-        "description": "A free line beneath the figure for words it can't compute, e.g. a short context note. Plain text, not derived. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -174,7 +117,6 @@
   },
   "examples": [
     {
-      "label": "Blank answer space — count the array (4 × 6 dots, total hidden)",
       "params": {
         "rows": 4,
         "cols": 6,
@@ -188,7 +130,6 @@
       }
     },
     {
-      "label": "Worked example — 3 × 4 array with product, repeated addition and stem",
       "params": {
         "rows": 3,
         "cols": 4,
@@ -200,7 +141,6 @@
       }
     },
     {
-      "label": "Occluded question — missing factor (? × 4 = 12), the row count hidden",
       "params": {
         "rows": 3,
         "cols": 4,
@@ -214,7 +154,6 @@
       }
     },
     {
-      "label": "Hard case — three quarters of 20: 4 ringed groups of 5, three selected, division and of-amount worked",
       "params": {
         "rows": 4,
         "cols": 5,
@@ -232,7 +171,6 @@
       }
     },
     {
-      "label": "Equal groups — 4 groups of 3 stars, rings and repeated addition",
       "params": {
         "header": "4 groups of 3",
         "rows": 4,
@@ -249,7 +187,6 @@
       }
     },
     {
-      "label": "Factor array — 12 = 3 × 4 = 4 × 3 (commutativity and factors)",
       "params": {
         "rows": 3,
         "cols": 4,

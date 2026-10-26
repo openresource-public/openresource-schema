@@ -4,29 +4,8 @@
   "name": "two-way-table",
   "version": 1,
   "title": "Two-way table",
-  "tagline": "Two-way frequency table with derived row, column and grand totals and an optional P(event) readout including conditional; cells and totals occlude.",
-  "description": "A two-way (contingency) frequency table: rows are the values of one category, columns the values of another, and each body cell is the joint frequency. The row totals, column totals and the grand total are all derived by summing the authored data — you never write a total, so it cannot disagree with the cells. Occlude any body cell or any derived total (it renders \"?\" in place) to pose \"complete the table\" and \"find the total\" questions; the pupil recovers a hidden cell from the totals (gap = row total − the other cells). Highlight cells or totals for emphasis (amber). An optional probability block reads an event straight off the table — P(event) = favourable count / total, reduced to lowest terms, including conditional probability (favourable cell over its row or column total) — and is computed from the data, so it stays correct as the table changes. A static model with teacher-led staged builds (reveal the totals one margin at a time; complete a gap; work a probability); the cells are highlightable, which makes it a model, not a plain content table.",
-  "whenToUse": "Reach for this for two-way tables (contingency / cross-tabulation tables): reading them, completing them, totals, and probability from a table. Author the row labels, the column labels and the full grid of counts — every row total, column total and the grand total is worked out for you and shown in a \"Total\" margin (toggle them with show.rowTotals / show.colTotals / show.grandTotal). Complete the table: give the complete, consistent data, then occlude the cells you want found (cells: [{ row, col, occlude: true }]) and leave the totals showing — the pupil derives each gap from a total; the hidden value never appears anywhere, and because a total is a sum it does not give a single missing cell away. Address the totals too: in the cells list, row 0 is the totals row, col 0 is the totals column and { row: 0, col: 0 } is the grand total — so { row: 0, col: 2, occlude: true } hides the column-2 total (\"find the total\"). Blank answer space: show.values false empties every body cell (keep the totals margins as the frame), or set per-cell blank: true to leave cells unfilled for a staged build. Probability: add a probability block naming the event by its cell — { row, col } selects one cell, { row } a whole row, { col } a whole column — with over \"grand\" (default), \"row\" or \"col\" choosing the denominator; over \"row\"/\"col\" with a single cell gives conditional probability P(A | B). Write the event name in probability.label (\"P(cycles)\", \"P(walk | Year 8)\") or let it auto-build; occlude it to ask for it, highlight it to walk through it (the favourable cells and the denominator total light up automatically). Keep the same categories and layout across a lesson so pupils track one table. Staged builds read well: reveal the totals one margin at a time (construct it), or open on a \"?\" gap / occluded probability and reveal the working (work it out) — the base state (the labelled table) always stands alone. Switch primitive when the picture changes: for a sample-space outcome grid of two events use statistics/sample-space-grid, for set membership and unions use probability/venn, for a probability tree use probability/tree, for a plain non-mathematical table use a content table. Synonyms a teacher might use: two-way table, contingency table, cross-tabulation, frequency table, complete the table, fill in the table, totals, row total, column total, grand total, probability from a table, conditional probability.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "two-way table",
-    "two way table",
-    "contingency table",
-    "cross-tabulation",
-    "frequency table",
-    "complete the table",
-    "totals",
-    "row total",
-    "column total",
-    "grand total",
-    "probability",
-    "conditional probability",
-    "frequency",
-    "statistics",
-    "data",
-    "maths"
   ],
   "interface": {
     "type": "object",
@@ -38,8 +17,7 @@
         "maxItems": 6,
         "items": {
           "type": "string"
-        },
-        "description": "The row category values, top to bottom — one table ROW each, e.g. [\"Boys\", \"Girls\"] or [\"Year 7\", \"Year 8\", \"Year 9\"]. These head the rows down the left side."
+        }
       },
       "cols": {
         "type": "array",
@@ -47,14 +25,12 @@
         "maxItems": 6,
         "items": {
           "type": "string"
-        },
-        "description": "The column category values, left to right — one table COLUMN each, e.g. [\"Walk\", \"Bus\", \"Cycle\"]. These head the columns across the top."
+        }
       },
       "data": {
         "type": "array",
         "minItems": 1,
         "maxItems": 6,
-        "description": "The body frequencies as a grid of numbers, one inner array per ROW (matching rows) and one number per COLUMN (matching cols): data[r][c] is the count for rows[r] and cols[c]. Give the COMPLETE, consistent data — every total is summed from it. Negative values are clamped to 0. Example for 2 rows × 3 cols: [[6, 10, 4], [8, 12, 10]].",
         "items": {
           "type": "array",
           "minItems": 1,
@@ -66,7 +42,6 @@
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question and staging flags. Cells and totals always exist and their values are always computed — list a cell here only to occlude, blank, or highlight it. ADDRESSING: row/col are 1-based into the body; row 0 is the totals row, col 0 is the totals column, and { row: 0, col: 0 } is the grand total — so totals occlude/highlight with the same scheme as body cells.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -74,26 +49,21 @@
             "row": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 6,
-              "description": "Row address: 1..N for a body row (1 = top), or 0 for the totals row along the bottom."
+              "maximum": 6
             },
             "col": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 6,
-              "description": "Column address: 1..N for a body column (1 = left), or 0 for the totals column on the right."
+              "maximum": 6
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell's value as \"?\" — the question hook (\"what goes here?\"). The cell stays in place and the value appears nowhere else (the surrounding totals do not leak it). Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render nothing in this cell — an unfilled cell, for staged builds that fill the table one stage at a time. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber fill and value for this cell — draw the eye to a result (the answer cell, a total being explained). Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -105,19 +75,16 @@
       "probability": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional. Read a probability straight off the table, shown as a line beneath it: P(event) = favourable / total, reduced to lowest terms. Both parts are COMPUTED from the data. Omit for no probability.",
         "properties": {
           "row": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 6,
-            "description": "Favourable ROW (1-based). With col → a single cell; alone → the whole row (its row total). Omit with col present to mean a single column."
+            "maximum": 6
           },
           "col": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 6,
-            "description": "Favourable COLUMN (1-based). With row → a single cell; alone → the whole column (its column total)."
+            "maximum": 6
           },
           "over": {
             "type": "string",
@@ -125,61 +92,48 @@
               "grand",
               "row",
               "col"
-            ],
-            "description": "The denominator. \"grand\" (default) = the grand total — an ordinary probability. \"row\" = the favourable cell's row total, \"col\" = its column total — these give CONDITIONAL probability P(A | B) when the favourable is a single cell."
+            ]
           },
           "label": {
-            "type": "string",
-            "description": "The event name shown before the \"=\", e.g. \"P(cycles)\" or \"P(walk | Year 8)\". Omit to auto-build a sensible label from the selected categories."
+            "type": "string"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the probability value as \"?\" — the \"work out the probability\" hook. The label still shows. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the readout AND automatically highlight the favourable cells and the denominator total that feed it — for walking the calculation through. Default false."
+            "type": "boolean"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles. All default true.",
         "properties": {
           "values": {
-            "type": "boolean",
-            "description": "Show the worked-out values. false empties the whole interior — every body cell AND every total — leaving the labelled frame and the \"Total\" margins as a \"fill in every cell and every total\" answer space (use when pupils build the table from a list or tally). To leave only SOME cells blank (the usual complete-the-table), keep this true and occlude the specific cells instead. Per-cell blank flags blank one cell at a time. Default true."
+            "type": "boolean"
           },
           "rowTotals": {
-            "type": "boolean",
-            "description": "Show the \"Total\" column on the right (each row's total). Default true. Turn off (with colTotals/grandTotal) for an intro table without totals, or stage them on one margin at a time."
+            "type": "boolean"
           },
           "colTotals": {
-            "type": "boolean",
-            "description": "Show the \"Total\" row along the bottom (each column's total). Default true."
+            "type": "boolean"
           },
           "grandTotal": {
-            "type": "boolean",
-            "description": "Show the grand total in the bottom-right corner. Default true. Only meaningful when at least one of rowTotals / colTotals is on."
+            "type": "boolean"
           }
         }
       },
       "totalLabel": {
-        "type": "string",
-        "description": "The word used in the total margins. Default \"Total\"."
+        "type": "string"
       },
       "cornerLabel": {
-        "type": "string",
-        "description": "Optional text for the empty top-left corner cell, e.g. a short name for the variables. Default empty."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the table (and below the probability), e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -190,7 +144,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — how 60 students travel to school, all totals shown",
       "params": {
         "header": "How students travel to school",
         "rows": [
@@ -217,7 +170,6 @@
       }
     },
     {
-      "label": "Blank answer space — complete the two-way table",
       "params": {
         "rows": [
           "Adults",
@@ -246,7 +198,6 @@
       }
     },
     {
-      "label": "Occluded question — complete the table from the totals",
       "params": {
         "rows": [
           "Cats",
@@ -284,7 +235,6 @@
       }
     },
     {
-      "label": "Probability from a table — P(chose drama)",
       "params": {
         "rows": [
           "Year 9",
@@ -317,7 +267,6 @@
       }
     },
     {
-      "label": "Conditional probability — P(cycles | girl) off a row total",
       "params": {
         "rows": [
           "Boys",
@@ -351,7 +300,6 @@
       }
     },
     {
-      "label": "Hard case — complete the table from totals, then a probability is hidden",
       "params": {
         "header": "Left- or right-handed?",
         "rows": [

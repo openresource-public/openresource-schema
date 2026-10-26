@@ -4,35 +4,7 @@
   "name": "algebra-tiles",
   "version": 1,
   "title": "Algebra tiles",
-  "tagline": "x²/x/unit algebra tiles in positive/negative colours, as a collection or a rectangle; the collected expression, zero pairs and rectangle area/factors are derived by counting.",
-  "description": "The concrete algebra-tile manipulative: large x² squares, x-by-1 rectangles and unit squares, each positive (blue) or negative (coral), drawn either loosely (collection mode) to model and collect an expression, or packed edge-to-edge into a rectangle (rectangle mode) to model an expansion or a factorisation. In collection mode you author the tiles present and the model counts them, cancels zero pairs (a positive and negative tile of the same type), and reads off the collected expression (2x² + 3x − 1). In rectangle mode you author the two side factors as terms and the model paves each region term × term with the right tiles in the right colour, then collects them into the rectangle's area (the expanded form) — the edges carry the factors. Every count, colour, zero pair, area and factor is derived from the tiles; there is nowhere to author a total, so the figure cannot lie. Occlude the result for \"what expression is this?\" or occlude the factors for \"what are the brackets?\" (factorising).",
-  "whenToUse": "Reach for this to teach algebra with the physical tiles pupils know: collecting like terms, simplifying an expression, modelling and cancelling zero pairs, expanding a single or double bracket as the area of a rectangle, and factorising by arranging tiles into a rectangle and reading the sides. Author the tiles (collection mode) or the two bracket factors (rectangle mode) — never the answer; the collected expression, the zero-pair cancellations and the rectangle's area and factors are all counted from the tiles. Common configurations: collect like terms — collection mode with several groups, show.zeroPairs true so a +x / −x pair is seen cancelling, occlude:\"result\" to ask \"what does this simplify to?\"; what expression is this — collection mode, occlude:\"result\", for a read-the-tiles question; expand a rectangle — rectangle mode with factors { top, side }, show.collected true for the area line; factorise — rectangle mode with occlude:\"factors\" so the tiles are given and the edges are \"?\". Positive tiles are blue, negative coral — keep that convention across a lesson. The three tile types are told apart by size (x² biggest, unit smallest), so keep show.grid on where the unit-square reference helps pupils read the x-tile as x. Distinct from the area model (algebra/area-model), which is the abstract partial-products grid — reach for algebra tiles when the CONCRETE, countable, cancellable tile is the teaching point (zero pairs, \"why the middle term\", the physical factorising rectangle). Synonyms teachers use: algebra tiles, algebra tile mat, like terms, collecting terms, simplify, zero pair, additive inverse, expand, expanding brackets, factorise, factorising, completing the square, x-squared tile.",
   "responseModes": [],
-  "tags": [
-    "algebra tiles",
-    "algebra tile",
-    "like terms",
-    "collecting like terms",
-    "simplify",
-    "simplifying",
-    "zero pair",
-    "zero pairs",
-    "additive inverse",
-    "expand",
-    "expanding brackets",
-    "factorise",
-    "factorising",
-    "factoring",
-    "completing the square",
-    "x squared",
-    "x-squared tile",
-    "manipulative",
-    "concrete",
-    "quadratic",
-    "binomial",
-    "algebra",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -42,13 +14,11 @@
         "enum": [
           "collection",
           "rectangle"
-        ],
-        "description": "The arrangement. \"collection\": author the tiles present (the \"tiles\" array) and the model collects them into an expression, cancelling zero pairs. \"rectangle\": author the two side factors (\"factors\") and the model paves the rectangle with tiles and derives the area (expanded form). Default \"collection\"."
+        ]
       },
       "tiles": {
         "type": "array",
         "maxItems": 8,
-        "description": "collection mode only — the groups of tiles on the mat. Each group is some count of one type and sign. Order left to right. The collected expression is counted from these; a positive and negative group of the same type make a zero pair and cancel. Ignored in rectangle mode.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -59,30 +29,25 @@
                 "x2",
                 "x",
                 "unit"
-              ],
-              "description": "Which tile: \"x2\" the large x-squared square, \"x\" the x-by-1 rectangle, \"unit\" the 1-by-1 square. Size tells the types apart, not colour."
+              ]
             },
             "sign": {
               "type": "string",
               "enum": [
                 "positive",
                 "negative"
-              ],
-              "description": "Positive tiles take the accent (blue) colour, negative tiles the coral colour — the classic two-colour tile convention. Default \"positive\"."
+              ]
             },
             "count": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 12,
-              "description": "How many tiles of this type and sign are present. Each is drawn as one tile; a positive-and-negative pair of the SAME type is a zero pair and cancels in the collected result."
+              "maximum": 12
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber-ring this group of tiles — draw the eye to one term while collecting. Default false."
+              "type": "boolean"
             },
             "hidden": {
-              "type": "boolean",
-              "description": "Reserve this group's space but draw nothing — for a staged build that adds tiles one group at a time. The figure is always SIZED from every group (hidden or not), so the canvas never grows between stages; hidden groups just are not drawn yet, and are excluded from the collected expression. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -94,7 +59,6 @@
       "factors": {
         "type": "object",
         "additionalProperties": false,
-        "description": "rectangle mode only — the two factors whose product the rectangle models, each a short list of edge terms. Every tile inside is derived as top term × side term; the area (expanded form) and the edge factors are computed. Ignored in collection mode.",
         "properties": {
           "top": {
             "type": "array",
@@ -107,12 +71,10 @@
                 "coeff": {
                   "type": "integer",
                   "minimum": -6,
-                  "maximum": 6,
-                  "description": "Signed integer coefficient of the term, non-zero. With \"x\" true it is that many x-tiles along the edge (coeff 2 → length 2x); without, that many unit-tiles (coeff 3 → length 3). Negative flips the tile colours in every region the term paves."
+                  "maximum": 6
                 },
                 "x": {
-                  "type": "boolean",
-                  "description": "True for an x-term (an x length along the edge), false/omitted for a constant (a unit length). One \"x\" term and one constant per edge is the (x + a) bracket. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -129,8 +91,7 @@
                   }
                 }
               ]
-            },
-            "description": "Terms along the TOP edge, left to right — the first factor. (x + 2) is [{ \"coeff\": 1, \"x\": true }, { \"coeff\": 2 }]."
+            }
           },
           "side": {
             "type": "array",
@@ -143,12 +104,10 @@
                 "coeff": {
                   "type": "integer",
                   "minimum": -6,
-                  "maximum": 6,
-                  "description": "Signed integer coefficient of the term, non-zero. With \"x\" true it is that many x-tiles along the edge (coeff 2 → length 2x); without, that many unit-tiles (coeff 3 → length 3). Negative flips the tile colours in every region the term paves."
+                  "maximum": 6
                 },
                 "x": {
-                  "type": "boolean",
-                  "description": "True for an x-term (an x length along the edge), false/omitted for a constant (a unit length). One \"x\" term and one constant per edge is the (x + a) bracket. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -165,8 +124,7 @@
                   }
                 }
               ]
-            },
-            "description": "Terms down the LEFT edge, top to bottom — the second factor. Same shape as top. For a single bracket (expanding k(x + a)) make one edge a single constant term."
+            }
           }
         },
         "required": [
@@ -180,24 +138,20 @@
           "none",
           "result",
           "factors"
-        ],
-        "description": "\"result\" hides the collected expression / rectangle area as \"?\" (the \"what expression is this?\" hook — tiles stay visible). \"factors\" (rectangle mode) hides the edge factor labels as \"?\" (the factorising hook — tiles given, brackets asked). \"none\" (default) shows everything."
+        ]
       },
       "groups": {
         "type": "array",
-        "description": "collection mode only — optional labels drawn under runs of tiles, to name the like-term groups being collected (e.g. \"x² terms\", \"x terms\", \"units\"). Each entry labels one tile group by its index in \"tiles\". Purely a teaching annotation; the collected result is unaffected.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "tile": {
               "type": "integer",
-              "minimum": 0,
-              "description": "Zero-based index into \"tiles\" of the group to label."
+              "minimum": 0
             },
             "label": {
-              "type": "string",
-              "description": "Short label drawn beneath that group."
+              "type": "string"
             }
           },
           "required": [
@@ -208,29 +162,23 @@
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "rectangle mode only — draw only the first N regions (reading left-to-right, top-to-bottom), for a staged build that paves the rectangle region by region. The rectangle is always SIZED to the full factors, so the canvas never grows between stages; later regions are simply not drawn yet, and the area line stays hidden until the last region is placed. Omit (or set to the region count) to draw the whole rectangle."
+        "minimum": 0
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "collected": {
-            "type": "boolean",
-            "description": "Show the derived collected expression / rectangle area beneath the tiles. false hides it — an answer space, or when the question is purely \"read the tiles\". Default true."
+            "type": "boolean"
           },
           "zeroPairs": {
-            "type": "boolean",
-            "description": "collection mode — outline the cancelling +/− pairs of the same type and strike the collected result accordingly (the pair contributes 0). Draws the eye to why some tiles disappear. Default false."
+            "type": "boolean"
           },
           "factorLabels": {
-            "type": "boolean",
-            "description": "rectangle mode — label each edge with its factor term (x, 2, …) and brace the whole edge with the recomposed factor (x + 2). Occlude \"factors\" overrides these to \"?\". Default true."
+            "type": "boolean"
           },
           "grid": {
-            "type": "boolean",
-            "description": "rectangle mode — draw the internal grid inside each partial-product region, dividing it into its coefficient-many cells (|top coeff| columns × |side coeff| rows). An x² region (1×1) shows no internal grid; a 2x region shows two cells; a 3x·2y region a 3-by-2 grid. The divisions match the coefficient, not the unit length. Collection tiles are always clean blocks. Default true."
+            "type": "boolean"
           }
         }
       },
@@ -240,18 +188,15 @@
           "none",
           "result",
           "zero-pairs"
-        ],
-        "description": "Amber emphasis: \"result\" ambers the collected expression / area; \"zero-pairs\" ambers the cancelling pairs (collection mode). Per-group tile highlighting is set on each tile's own \"highlight\" flag. Default \"none\"."
+        ]
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked — collect like terms: 2x² + 3x − 1 laid out (with group labels)",
       "params": {
         "mode": "collection",
         "tiles": [
@@ -291,7 +236,6 @@
       }
     },
     {
-      "label": "Zero pairs — 3x and −x cancel to leave 2x + 2",
       "params": {
         "header": "Cancel the zero pairs",
         "mode": "collection",
@@ -320,7 +264,6 @@
       }
     },
     {
-      "label": "Occluded question — what expression is this? (x² + 2x − 3)",
       "params": {
         "mode": "collection",
         "tiles": [
@@ -344,7 +287,6 @@
       }
     },
     {
-      "label": "Expansion as a rectangle — (x + 2)(x + 3) = x² + 5x + 6",
       "params": {
         "mode": "rectangle",
         "factors": {
@@ -374,7 +316,6 @@
       }
     },
     {
-      "label": "Hard case — factorise x² − x − 6 = (x + 2)(x − 3): tiles given, factors occluded",
       "params": {
         "mode": "rectangle",
         "factors": {
@@ -404,7 +345,6 @@
       }
     },
     {
-      "label": "Completing the square — x² + 6x arranged toward (x + 3)²",
       "params": {
         "header": "Completing the square: x² + 6x",
         "mode": "rectangle",

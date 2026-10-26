@@ -4,30 +4,7 @@
   "name": "number-cards",
   "version": 1,
   "title": "Number cards",
-  "tagline": "Row of bordered card tiles with authored faces (digits, numbers, letters, symbols); one to three labelled groups; cards occlude to \"?\", blank for answer spaces, highlight amber.",
-  "description": "The classic \"number cards\" exam figure: a row of separate bordered card tiles, each showing a short authored face — a digit, a number (negatives and decimals render properly), a letter or a symbol — drawn as chunky uniform tiles sized to the longest face. Cards can be grouped into up to three labelled sets shown side by side (stacking automatically when too wide), the \"Box A / Box B\" picture. A card can be occluded (its face renders \"?\" — the hidden / mystery card), blanked (an empty answer card; its authored face still sizes it and never renders) or highlighted (amber). Header above, caption below. Static: the figure is a stimulus — pupils answer in text, not on the figure.",
-  "whenToUse": "Reach for this whenever a question deals cards: \"here are three number cards — write down all the three-digit numbers that can be made\", make the largest / smallest number, arrangements and systematic listing, letter cards, \"Box A contains cards numbered … and Box B contains …\" (draw each box as a labelled set), choose-two-cards puzzles with negative faces, and the averages \"hidden card\" figure (a row of value cards with one occluded — \"the mean is 6, what is the hidden card?\"). Author the faces exactly as the source question prints them, in the same order, one card object per card; use occlude for a hidden card, blank for cards pupils fill in, highlight for the card(s) under discussion. A worked \"rearrange the cards\" answer reads well as a second labelled set (e.g. label \"Largest number\") with its cards highlighted. Keep the same set(s), in the same order, across every part of a multi-part question. Switch model when the teaching changes: the outcome grid/listing of taking one card from each of two boxes is statistics/sample-space-grid (this model draws the boxes' cards, not the combinations); digits in place-value columns are number/place-value; a contiguous counting track is number/number-track; coins and notes are number/money. Synonyms teachers use: number cards, digit cards, letter cards, boxed numbers, \"here are four cards\", mystery card, hidden card, make the largest number, arrangements, box of cards.",
   "responseModes": [],
-  "tags": [
-    "number cards",
-    "digit cards",
-    "letter cards",
-    "cards",
-    "card",
-    "boxed numbers",
-    "mystery card",
-    "hidden card",
-    "arrangements",
-    "systematic listing",
-    "make the largest number",
-    "make the smallest number",
-    "box of cards",
-    "box a",
-    "box b",
-    "stimulus",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -36,15 +13,13 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 3,
-        "description": "The groups of cards, drawn left to right (stacked vertically when side-by-side would be too wide). Most questions have ONE set (omit its label); two-box questions have two labelled sets. Every card in the figure shares one derived size.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "label": {
               "type": "string",
-              "maxLength": 24,
-              "description": "Display name above this group, e.g. \"Box A\". Omit for an unlabelled row (the common single-set case)."
+              "maxLength": 24
             },
             "cards": {
               "type": "array",
@@ -57,27 +32,22 @@
                   "face": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 8,
-                    "description": "The text on the card: a digit (\"5\"), a number (\"12\", \"-4\", \"0.5\"), a letter (\"A\") or a symbol (\"+\"). Write negatives with an ASCII hyphen — it renders as a proper minus sign. Every card in the figure takes the same derived size, fitted to the longest face."
+                    "maxLength": 8
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Render the face as \"?\" — the hidden / mystery card (\"the mean of the five cards is 6; what is the hidden card?\"). The card itself stays visible and keeps the size its real face would take, so nothing leaks and a staged reveal never reflows. Default false."
+                    "type": "boolean"
                   },
                   "blank": {
-                    "type": "boolean",
-                    "description": "Draw this card empty — an answer space (\"write your digits on the cards\") or a not-yet-filled card in a staged build. The authored face still sizes the card and is NEVER rendered. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Amber this card — the answer card, the card just placed, the one being discussed. Default false."
+                    "type": "boolean"
                   }
                 },
                 "required": [
                   "face"
                 ]
-              },
-              "description": "This group's cards, left to right, in the source question's order."
+              }
             }
           },
           "required": [
@@ -86,12 +56,10 @@
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -100,7 +68,6 @@
   },
   "examples": [
     {
-      "label": "Three digit cards — the systematic-listing stimulus",
       "params": {
         "sets": [
           {
@@ -120,7 +87,6 @@
       }
     },
     {
-      "label": "Worked example — largest number: the cards, then the arrangement highlighted",
       "params": {
         "sets": [
           {
@@ -158,7 +124,6 @@
       }
     },
     {
-      "label": "Occluded question — the hidden card: mean of the five cards is 6",
       "params": {
         "sets": [
           {
@@ -185,7 +150,6 @@
       }
     },
     {
-      "label": "Blank answer space — write your three digits on the cards",
       "params": {
         "header": "Make a 3-digit number",
         "sets": [
@@ -209,7 +173,6 @@
       }
     },
     {
-      "label": "Hard case — two labelled boxes side by side",
       "params": {
         "sets": [
           {
@@ -242,7 +205,6 @@
       }
     },
     {
-      "label": "Negative faces — choose two cards to make the smallest total",
       "params": {
         "sets": [
           {

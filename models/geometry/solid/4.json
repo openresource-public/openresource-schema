@@ -4,61 +4,7 @@
   "name": "solid",
   "version": 4,
   "title": "3D solid (isometric)",
-  "tagline": "3-D solid in isometric — 8 shapes; round by radius/diameter; cone by height/slant; derived volume, surface area, slant; symbolic labels; letter a pyramid ABCDE; drag-to-rotate.",
-  "description": "A single three-dimensional solid drawn in isometric projection — choose cuboid, triangular prism, cylinder, cone, sphere, pyramid, hemisphere or tetrahedron (a triangular-based pyramid) — with its dimensions labelled and its volume and surface area derived. You give the shape and its raw measurements (width, depth, height, radius); the model draws the solid (visible edges solid, hidden edges dashed), labels each dimension, and computes the volume and surface area, optionally showing the full working \"formula = substitution = result\". For cones, pyramids and tetrahedra it can also draw and derive the slant height alongside the perpendicular height — the classic l-vs-h distinction — with the right-angle mark where the perpendicular meets the base; for a hemisphere it derives the curved (2πr²), flat (πr²) and total (3πr²) surface areas. Volume and surface area occlude independently (hide the answer for a question) or highlight (answer emphasis), and any dimension can be occluded for a reverse \"find the missing length\" problem; nothing derived is ever authored, so the figure cannot contradict the maths. Optionally set rotatable to let pupils drag a single solid to turn it in 3-D on the web (a static-figure exploration that never changes the printed/slide figure or the answer). Any dimension label can be overridden with a SYMBOL instead of its number (labels: { radius: \"r\" } prints just \"r\" on the radius arrow — the GCSE formula-box sphere; { width: \"x\", depth: \"2x\" } prints algebra on the edges) while dims keep the drawn proportions true; the working substitutes the symbols, so \"the volume is 40 cm³, find x\" figures derive honestly. A round solid (cylinder, cone, sphere, hemisphere) may be measured by its DIAMETER instead of its radius — give dims.diameter and the figure labels a double-headed arrow spanning the full base with the diameter value (the standard cue for a question that gives the diameter and expects the pupil to halve it), while the radius (= diameter ÷ 2) and every derived volume / surface area / slant still compute correctly; with working shown the readout derives r = d ÷ 2 first, and labels.diameter prints a symbol (\"d\") that the working substitutes as \"(d/2)\". A CONE may instead be given by its SLANT height (dims.slant) rather than its perpendicular height — for the common exam cone shown with its slant edge and base radius labelled but no perpendicular height (\"the slant height is 12 cm, the base radius is 6.5 cm, find the total surface area\"): the perpendicular height is derived as √(l² − r²), the figure draws a double-headed arrow along the slant edge labelled with the given value (and omits the perpendicular-height line and its right-angle mark), the curved/total surface area uses the given slant directly, and the volume derives the perpendicular height first (an h = √(l² − r²) bridge, the mirror of r = d ÷ 2); slant combines with diameter for a cone given by its slant and base diameter. A pyramid or tetrahedron can be LETTERED by its vertices (vertexLabels: { base: [\"A\",\"B\",\"C\",\"D\"], apex: \"E\" }) — a letter derived-positioned just outside each base corner and the apex — for the GCSE \"pyramid ABCDE, base ABCD is a square\" figure whose measurements live in the surrounding text; show.baseDiagonals adds the two dashed base diagonals crossing at the centre (optionally lettered M), so the figure can carry the angle a 3-D-Pythagoras question names between a slant edge and a base diagonal (angle EAC, angle PAC).",
-  "whenToUse": "Reach for this whenever a lesson shows a 3D solid to label its dimensions or to find its volume or surface area: cuboids, triangular prisms, cylinders, cones, spheres, pyramids, hemispheres and tetrahedra (triangular-based pyramids). Set shape and fill the dimensions it needs — cuboid & pyramid use width, depth, height; triangular prism uses width (the triangle base), height (the triangle height) and depth (the prism length); cylinder & cone use radius and height; cone also derives its slant height; sphere and hemisphere use radius only; tetrahedron uses width (the base-triangle base), depth (the base-triangle front-to-back height), height (the pyramid's perpendicular height) and optional apexOffset (default isosceles). Heights for cones, pyramids and tetrahedra are the perpendicular height (apex straight up over the base centre/centroid); the model derives the slant height for you — set show.slantHeight to draw and label it (essential when teaching that V uses h but the curved/lateral surface uses l; for a tetrahedron it is the front face's slant). Include a volume object to show the volume line and a surfaceArea object to show the surface-area line; both default to showing the working — set working:false and occlude:true for a clean \"find it\" question, or leave working on for a worked example. For cones, cylinders and hemispheres, surfaceArea.kind chooses \"total\" (default) or \"curved\" (the curved/lateral surface only — what exam questions often ask; a hemisphere's curved surface is 2πr² and its total is 3πr²). To pose a reverse problem (\"the volume is 60, find the height\") list the unknown dimension in occlude (e.g. occlude:[\"height\"]) — its label shows \"?\" and the working substitutes \"?\" for it. Use unit for the length unit (default \"cm\"); the model writes cm² and cm³ itself. Omit both volume and surfaceArea for a plain labelled solid (an answer space). Set rotatable:true on a single solid to let pupils drag it round in 3-D on the web — use it to build spatial sense or spot hidden edges, never for a plain mensuration question; the static figure is unchanged and is what prints and what a slide opens on, and rotation is never saved (a two-solid comparison ignores it). A staged build reads well: open on the labelled solid, bring in the formula, then the substitution, then highlight the result; or reveal the slant height before the surface-area working. To print a SYMBOL on a dimension instead of its measurement — the formula-box sphere labelled r, a cuboid labelled x and 2x, a cylinder in terms of r and h — set labels (e.g. labels: { radius: \"r\" }): the string replaces the whole \"value + unit\" label, dims still shape the figure (choose them consistent with the symbols, e.g. width 2 for \"x\" with depth 4 for \"2x\"), and occlude is ignored on an overridden dimension. For a pure formula or write-an-expression figure omit volume/surfaceArea and put the formula in the block text; include them and the working substitutes the symbols while the result comes from dims — the \"the volume is 40, find x\" question. When a round-solid question GIVES the diameter (very common: \"the diameter of the cylinder is 40 cm, find the volume\"), author dims.diameter instead of dims.radius: the figure draws a double-headed arrow across the whole base labelled with the diameter — the cue that tells the pupil to halve it — and the radius (diameter ÷ 2), volume, surface area and slant all still derive correctly (with working shown the readout begins r = d ÷ 2 = … before the volume/SA chain). Do NOT pre-halve into radius yourself — that hides the halving step and changes the question. Occlude [\"diameter\"] for the reverse \"volume given, find the diameter\", and labels: { diameter: \"d\" } for an \"in terms of d\" figure (the working substitutes (d/2) for r). Radius and diameter are mutually exclusive per solid; give exactly one. When a CONE question gives the SLANT height and the base radius but NOT the perpendicular height (very common for surface area: \"the slant height is 12 cm, the base radius is 6.5 cm, find the total surface area\"), author dims.slant instead of dims.height: the figure draws the slant as a double-headed arrow along the lateral edge labelled with the given value and does NOT draw the perpendicular height or its right-angle (it is derived as √(l² − r²)). The curved/total surface area then uses the given slant directly (πrl); the volume derives the perpendicular height first. Do NOT pre-compute the perpendicular height into dims.height yourself — that draws a height the source never shows and hides the \"curved SA needs the slant\" idiom. slant is cone-only, must be greater than the radius, takes precedence over height, and can be combined with diameter (a cone given by its slant and base diameter). Occlude [\"slant\"] for a reverse \"the surface area is …, find the slant\". Keep the unit consistent across a lesson. To draw the GCSE 3-D-Pythagoras pyramid — a solid NAMED by its vertices with the measurements in the text — set vertexLabels on a pyramid (base: the four base-corner letters in order, e.g. [\"A\",\"B\",\"C\",\"D\"]; apex: the top letter, e.g. \"E\" or \"P\") or a tetrahedron (base: three letters), and set show.dimensions:false with no volume/surfaceArea for a bare lettered figure (the side, height or angle are given in the block text). Add show.baseDiagonals:true to draw the two dashed base diagonals AC and BD crossing at the centre — do this whenever the question names the angle between a slant edge and a base diagonal (angle EAC = between edge EA and diagonal AC; angle PAC) so the diagonal it refers to is on the figure; vertexLabels.centre (\"M\") letters that crossing (the foot of the perpendicular height). Keep vertexLabels for a lettered WORKED figure too (leave show.dimensions on / include volume). For a lettered cuboid or any prism use geometry/prism (front/back ABCDEFGH) — solid letters only the apex solids (pyramid, tetrahedron) prism cannot form; the round solids have no natural vertices. Synonyms a teacher might use: volume, surface area, total surface area, curved surface area, capacity, net (use geometry/net for the unfolded net), cuboid, cube, box, prism, cross-section, cylinder, cone, slant height, sphere, hemisphere, dome, pyramid, tetrahedron, triangular-based pyramid, apex, isometric, 3D shape, solid, rotate, turn, drag to rotate, 3D view, in terms of r, in terms of x, algebraic dimensions, expression for the volume, formula figure. Switch primitive when the teaching changes: for a prism with any other cross-section (regular polygon, trapezium, L-shape, semicircle, sector) use geometry/prism; for a truncated cone/pyramid (a bucket or lampshade) use geometry/frustum; for two or more solids joined into one (a cone on a hemisphere, a cylinder + cone) use geometry/composite-solid; for the unfolded net use geometry/net; for plan and elevation views use geometry/plan-elevation; for a 2D compound area use geometry/compound-area.",
   "responseModes": [],
-  "tags": [
-    "solid",
-    "3d shape",
-    "three dimensional",
-    "isometric",
-    "volume",
-    "surface area",
-    "total surface area",
-    "curved surface area",
-    "capacity",
-    "cuboid",
-    "cube",
-    "box",
-    "prism",
-    "triangular prism",
-    "cross-section",
-    "cylinder",
-    "cone",
-    "slant height",
-    "sphere",
-    "pyramid",
-    "apex",
-    "hemisphere",
-    "dome",
-    "tetrahedron",
-    "triangular-based pyramid",
-    "radius",
-    "diameter",
-    "halve the diameter",
-    "diameter given",
-    "vertex labels",
-    "lettered pyramid",
-    "pyramid ABCDE",
-    "apex",
-    "base diagonal",
-    "3d pythagoras",
-    "3d trigonometry",
-    "angle EAC",
-    "angle between edge and base",
-    "rotate",
-    "drag to rotate",
-    "3d view",
-    "symbolic label",
-    "in terms of",
-    "algebra",
-    "expression",
-    "formula figure",
-    "mensuration",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -74,54 +20,44 @@
           "pyramid",
           "hemisphere",
           "tetrahedron"
-        ],
-        "description": "Which solid to draw. \"cuboid\" = a rectangular box (a cube when all three dimensions are equal). \"triangular-prism\" = a triangular cross-section extruded along its length (a \"toblerone\"). \"cylinder\", \"cone\", \"sphere\" as named. \"pyramid\" = a rectangular-based pyramid with its apex above the base centre (square-based when width = depth). \"hemisphere\" = half a sphere (a dome) — uses radius only; surfaceArea.kind picks total (curved 2πr² + flat πr² = 3πr²) or curved (2πr²) only. \"tetrahedron\" = a TRIANGULAR-based pyramid: a triangular base (width × depth, apex at apexOffset) with its apex above the base centroid (use this when the base is a triangle, not a rectangle — the rectangular-based pyramid is \"pyramid\")."
+        ]
       },
       "dims": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The raw measurements, in the chosen unit. Supply the ones the shape needs; others are ignored. All are plain numbers — the volume, surface area and (in the usual height-given case) slant height are derived from them. A round solid may be given by its `diameter` instead of its `radius`; a CONE may be given by its `slant` height instead of its perpendicular `height` (the perpendicular height is then derived).",
         "properties": {
           "width": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The left-right base dimension. cuboid & pyramid: the base width. triangular-prism: the base of the triangular cross-section. tetrahedron: the base of the triangular base. (Unused by cylinder, cone, sphere, hemisphere.)"
+            "exclusiveMinimum": 0
           },
           "depth": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The front-to-back dimension. cuboid & pyramid: the base depth. triangular-prism: the LENGTH of the prism (how far the triangle is extruded). tetrahedron: the front-to-back height of the triangular base (its own perpendicular height). (Unused by cylinder, cone, sphere, hemisphere.)"
+            "exclusiveMinimum": 0
           },
           "height": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The vertical height. cuboid & cylinder: the height of the solid. triangular-prism: the perpendicular height of the triangular cross-section. cone, pyramid & tetrahedron: the PERPENDICULAR height (apex straight up above the base centre/centroid) — NOT the slant height, which is derived. (Unused by sphere, hemisphere.) For a CONE you may instead give the SLANT height and let the perpendicular height be derived — see `slant`."
+            "exclusiveMinimum": 0
           },
           "radius": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The radius. cylinder & cone: the base radius. sphere: the sphere radius. hemisphere: the radius of the half-sphere. (Unused by cuboid, triangular-prism, pyramid, tetrahedron.) For a round solid you may instead give the DIAMETER — see `diameter`."
+            "exclusiveMinimum": 0
           },
           "diameter": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "ROUND SOLIDS ONLY (cylinder, cone, sphere, hemisphere) — the base/great-circle DIAMETER, an alternative to `radius` for a question that GIVES the diameter (the pupil must halve it: \"the diameter is 40 cm\"). When set it takes precedence over `radius`, the radius is derived as diameter ÷ 2, and the figure labels a DOUBLE-HEADED ARROW spanning the full base with the diameter value (not the single centre-to-rim radius arrow) — the standard textbook cue that the given is a diameter. Volume, surface area and slant still compute from the radius, so the maths stays correct; with working shown the readout derives r = d ÷ 2 first. Use `labels.diameter` to print a symbol (e.g. \"d\") and occlude/highlight the \"diameter\" key like any other dimension. Ignored by the non-round shapes (they have no radius)."
+            "exclusiveMinimum": 0
           },
           "apexOffset": {
             "type": "number",
-            "minimum": 0,
-            "description": "triangular-prism & tetrahedron only: where the triangle apex sits, measured from the LEFT end of the base. triangular-prism default 0 = a right-angled triangle (the left side vertical, the right side the sloping hypotenuse); width/2 = isosceles. tetrahedron default width/2 = an isosceles base triangle. Must lie between 0 and width. (Ignored by every other shape.)"
+            "minimum": 0
           },
           "slant": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "CONE ONLY — the SLANT height l (apex to the base rim along the sloping lateral surface) as the GIVEN, an alternative to `height` and the mirror of `diameter`. Author it for the common exam cone shown with its slant edge and base radius labelled but NO perpendicular height (e.g. \"the slant height is 12 cm, the base radius is 6.5 cm, find the total surface area\"). When set (and greater than the radius) it takes precedence over `height`: the perpendicular height is DERIVED as √(l² − r²), the figure labels a DOUBLE-HEADED ARROW along the slant edge with this value and does NOT draw the perpendicular-height line or its right-angle mark. Every derived quantity still computes correctly — the curved surface area πrl uses this slant directly, and the volume ⅓πr²h uses the derived perpendicular height (with working shown the readout derives h = √(l² − r²) first, the mirror of the diameter r = d ÷ 2 bridge). Combine with `diameter` for a cone given by its slant and its base diameter. Use `labels.slant` for a symbol (\"l\"), and occlude/highlight the \"slant\" key like any other dimension. Ignored unless shape is \"cone\", and ignored if ≤ the radius (no real cone)."
+            "exclusiveMinimum": 0
           }
         }
       },
       "unit": {
-        "type": "string",
-        "description": "The linear unit for the dimensions, e.g. \"cm\", \"m\", \"mm\". Dimension labels read \"5 cm\"; the model writes the area unit (cm²) and volume unit (cm³) itself. Default \"cm\". Keep the SAME unit on both solids when using a comparison readout, so cm³ + cm³ totals cleanly."
+        "type": "string"
       },
       "occlude": {
         "type": "array",
@@ -135,8 +71,7 @@
             "diameter",
             "slant"
           ]
-        },
-        "description": "Dimension labels to hide as \"?\" — the reverse-problem hook (\"the volume is 60 cm³, find the height\" → occlude:[\"height\"]). Keys: \"width\", \"depth\", \"height\", \"radius\", \"diameter\" (when the round solid is measured by its diameter), \"slant\" (the derived slant height). The dimension stays drawn; only its number is hidden, and any working substitutes \"?\" for it. To hide a derived ANSWER instead, use volume.occlude / surfaceArea.occlude."
+        }
       },
       "highlight": {
         "type": "array",
@@ -150,134 +85,107 @@
             "diameter",
             "slant"
           ]
-        },
-        "description": "Dimension labels to draw in amber for emphasis — e.g. highlight:[\"slant\"] to draw the eye to the slant height while teaching πrl. Same keys as occlude."
+        }
       },
       "labels": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Symbolic label overrides, one per dimension: print this exact STRING on the dimension arrow instead of the numeric \"value + unit\" — the GCSE formula-box figure (a sphere whose radius arrow reads just \"r\") or algebra on solids ({ width: \"x\", depth: \"2x\" }). Same keys as occlude/highlight. dims stay required and still set the drawn proportions, so choose them to match the symbols (width 2 labelled \"x\" with depth 4 labelled \"2x\" draws the true 1 : 2 shape). An overridden dimension ignores occlude (the symbol IS the display; there is no number to hide); highlight still ambers it; no unit is printed. Any volume/surface-area working substitutes the symbol into the chain while the result still computes from dims — the \"the volume is 40 cm³, find x\" form. For a pure formula or write-an-expression figure with no numbers anywhere, omit volume and surfaceArea and put the formula in the block text.",
         "properties": {
           "width": {
-            "type": "string",
-            "description": "Symbol or expression printed for the width, e.g. \"x\" or \"2x + 1\"."
+            "type": "string"
           },
           "depth": {
-            "type": "string",
-            "description": "Symbol or expression printed for the depth / prism length, e.g. \"2x\"."
+            "type": "string"
           },
           "height": {
-            "type": "string",
-            "description": "Symbol or expression printed for the (perpendicular) height, e.g. \"h\"."
+            "type": "string"
           },
           "radius": {
-            "type": "string",
-            "description": "Symbol or expression printed for the radius, e.g. \"r\" — the arrow reads just \"r\", no \"r =\" prefix and no unit."
+            "type": "string"
           },
           "diameter": {
-            "type": "string",
-            "description": "Symbol or expression printed on the diameter double-arrow of a diameter-measured round solid, e.g. \"d\" — the \"in terms of d\" figure. dims.diameter still sets the drawn size; the working substitutes the radius as \"(d/2)\" so a \"find the volume in terms of d\" figure derives honestly. No unit is printed."
+            "type": "string"
           },
           "slant": {
-            "type": "string",
-            "description": "Symbol or expression printed for the slant height, e.g. \"l\" (needs show.slantHeight on a cone/pyramid/tetrahedron). When a dimension FEEDING the slant is itself symbolic the slant label falls back to a bare \"l\" automatically, so you rarely need this key."
+            "type": "string"
           }
         }
       },
       "volume": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this object to show the volume line beneath the figure; omit it for no volume. The formula, substitution and result are all computed for the chosen shape (cuboid w×d×h, cylinder πr²h, cone ⅓πr²h, sphere ⁴⁄₃πr³, prism cross-section×length, pyramid ⅓×base area×h, hemisphere ⅔πr³, tetrahedron ⅓×½wd×h); π answers are given exactly and as a decimal.",
         "properties": {
           "working": {
-            "type": "boolean",
-            "description": "Show the full chain \"formula = substitution = result\" (e.g. \"V = w × d × h = 4 × 3 × 5 = 60 cm³\"). false shows only \"V = result\" — use it for a clean find-the-answer question (pair with occlude). Default true."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the RESULT as \"?\" — the \"find the volume / surface area\" hook. The figure and its dimensions stay visible and correct; only the answer is hidden. For a clean question set working:false so the substitution does not give the answer away. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the result line — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "surfaceArea": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Include this object to show the surface-area line beneath the figure; omit it for none. All face areas (and any derived slant sides or hypotenuse) are computed and summed.",
         "properties": {
           "kind": {
             "type": "string",
             "enum": [
               "total",
               "curved"
-            ],
-            "description": "cylinder, cone & hemisphere only: \"total\" (default) = whole surface (cylinder 2πr²+2πrh, cone πr²+πrl, hemisphere 2πr²+πr² = 3πr²); \"curved\" = the curved/lateral surface only (cylinder 2πrh, cone πrl, hemisphere 2πr²) — what many exam questions ask for. Ignored by the other shapes."
+            ]
           },
           "working": {
-            "type": "boolean",
-            "description": "Show the full chain \"formula = substitution = result\" (e.g. \"V = w × d × h = 4 × 3 × 5 = 60 cm³\"). false shows only \"V = result\" — use it for a clean find-the-answer question (pair with occlude). Default true."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the RESULT as \"?\" — the \"find the volume / surface area\" hook. The figure and its dimensions stay visible and correct; only the answer is hidden. For a clean question set working:false so the substitution does not give the answer away. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the result line — answer emphasis. Default false."
+            "type": "boolean"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Figure furniture toggles.",
         "properties": {
           "dimensions": {
-            "type": "boolean",
-            "description": "Label each dimension on the figure (\"5 cm\" etc.). false draws the bare solid with no measurements. Default true."
+            "type": "boolean"
           },
           "slantHeight": {
-            "type": "boolean",
-            "description": "HEIGHT-GIVEN mode, cone/pyramid/tetrahedron only: draw and label the DERIVED slant height l (apex to the base edge) alongside the perpendicular height. For the tetrahedron it is the slant of the FRONT triangular face (apex to the foot of the perpendicular on the front base edge — not the midpoint unless the base is isosceles). Use it when teaching that the volume uses the perpendicular height but the curved/lateral surface uses the slant height. Default false. (In cone SLANT-given mode — dims.slant — the slant is the given and is ALWAYS drawn; this toggle is not needed.)"
+            "type": "boolean"
           },
           "hiddenEdges": {
-            "type": "boolean",
-            "description": "Draw the edges hidden behind the solid as dashed construction lines. false omits them for a cleaner figure. Default true."
+            "type": "boolean"
           },
           "baseDiagonals": {
-            "type": "boolean",
-            "description": "pyramid only: draw the two BASE DIAGONALS (AC and BD) as dashed construction lines, crossing at the base centre directly below the apex. Draw them for the 3-D-Pythagoras \"angle between a slant edge and the base diagonal\" figure — the named angle (e.g. EAC / PAC) is the angle between a drawn slant edge (EA) and the drawn diagonal (AC), so the diagonal must be visible for the question to refer to it. Pair with vertexLabels to letter the corners. Default false. (Ignored by every non-pyramid shape.)"
+            "type": "boolean"
           }
         }
       },
       "vertexLabels": {
         "type": "object",
         "additionalProperties": false,
-        "description": "pyramid & tetrahedron only: LETTER the corners of an apex solid — the GCSE \"pyramid ABCDE, base ABCD is a square\" convention. A small letter is drawn just outside each base corner and the apex; every position is DERIVED from the isometric projection (you supply only the letters). Use it when a question NAMES the solid by its vertices and gives the dimensions in the surrounding TEXT (angle EAC, angle PAC, apex over the base centre) rather than on the figure — so the figure shows the letters but not the numbers the pupil must deduce: pair with show.dimensions:false (and omit volume/surfaceArea) for a bare lettered figure, or keep them for a lettered worked example. Omit for an unlettered figure. For a lettered CUBOID or any prism use geometry/prism (vertexLabels front/back ABCDEFGH); solid letters the apex solids prism cannot form.",
         "properties": {
           "base": {
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "description": "Letters for the BASE corners, in vertex order: base[0] labels the front corner, then round the base — a square/rectangular pyramid takes FOUR (\"A\",\"B\",\"C\",\"D\"), a tetrahedron (triangular base) takes THREE (\"A\",\"B\",\"C\"). The order matches the base ring, so base ABCD makes AC and BD the two base diagonals. An empty string \"\" skips a corner."
+            }
           },
           "apex": {
-            "type": "string",
-            "description": "Letter for the APEX (the top vertex above the base centre), e.g. \"E\" for a square pyramid ABCDE or \"P\" for pyramid ABCDP. Omit or \"\" to letter the base only."
+            "type": "string"
           },
           "centre": {
-            "type": "string",
-            "description": "OPTIONAL letter for the base CENTRE — the point directly below the apex where the base diagonals cross (usually \"M\"). Only drawn when show.baseDiagonals is true (M is the diagonals' intersection). Use it when the working refers to M (the foot of the perpendicular height, the midpoint of a diagonal). Omit for no centre label."
+            "type": "string"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short caption centred above THIS solid. In single-solid mode it titles the whole figure; in two-solid mode it captions just this panel (e.g. \"Prism A\" above solid A, with \"Prism B\" set on second.header) — use it to name each solid in a comparison. The top padding grows to clear it."
+        "type": "string"
       },
       "view": {
         "type": "object",
@@ -286,41 +194,34 @@
           "turn",
           "tilt"
         ],
-        "description": "Straight-edged solids only (cuboid, triangular-prism, pyramid, tetrahedron): look at the solid from a chosen angle instead of standard isometric, to match a source figure. turn: degrees the camera swings round the vertical from square-on to the front (45 = isometric, showing the left-hand side; a NEGATIVE turn shows the right-hand side, the front face running down to the right and the depth receding up-right; nearer 0 is more front-on). tilt: degrees it looks down (isometric 35; 20 reads flatter, more front-on). The textbook view on many GCSE plans-and-elevations figures is about { turn: -32, tilt: 21 }. Omit for isometric. Ignored by the round solids.",
         "properties": {
           "turn": {
             "type": "number",
             "minimum": -80,
-            "maximum": 80,
-            "description": "Degrees round the vertical from square-on to the front; negative shows the right-hand side."
+            "maximum": 80
           },
           "tilt": {
             "type": "number",
             "minimum": 5,
-            "maximum": 60,
-            "description": "Degrees the camera looks down."
+            "maximum": 60
           }
         }
       },
       "arrows": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Straight-edged solids only: viewing-direction arrows, the plans-and-elevations \"front\" / \"side\" marks. front:true draws an arrow labelled \"front\" looking at the front face (the face nearest the viewer); side:true one labelled \"side\" looking at the side face in view. Use them whenever a question asks for a named elevation, so the pupil knows which way \"front\" is.",
         "properties": {
           "front": {
-            "type": "boolean",
-            "description": "Draw the \"front\" arrow."
+            "type": "boolean"
           },
           "side": {
-            "type": "boolean",
-            "description": "Draw the \"side\" arrow."
+            "type": "boolean"
           }
         }
       },
       "second": {
         "type": "object",
         "additionalProperties": false,
-        "description": "OPTIONAL second solid — supply it to draw TWO solids side by side on one diagram for a comparison question (\"which prism has the greater volume?\", similar-solid scale factor, combined volume of two parts). It takes the SAME properties as the top-level solid (shape, dims, unit, occlude, highlight, volume, surfaceArea, show, header), describing solid B; the top-level properties describe solid A. Each panel keeps its own dimension labels and its own derived volume / surface-area readouts; give each a header (\"Prism A\" / \"Prism B\") to name it. Omit `second` entirely for the ordinary single-solid figure (fully backward compatible). When present, pair with `compare` for a shared relationship line and `title` for an overall heading.",
         "properties": {
           "shape": {
             "$ref": "#/properties/shape"
@@ -370,15 +271,13 @@
       "compare": {
         "type": "object",
         "additionalProperties": false,
-        "description": "OPTIONAL shared comparison readout drawn once, centred below BOTH solids — only used when `second` is present. Relates the two solids' derived values: a ratio V(A) : V(B), a total V(A) + V(B), or a difference V(A) − V(B). The values come from the same derivation engine the panels use, so the line can never contradict the per-solid readouts. Omit it for two independent solids with no shared line.",
         "properties": {
           "quantity": {
             "type": "string",
             "enum": [
               "volume",
               "surfaceArea"
-            ],
-            "description": "Which derived quantity to relate: \"volume\" (default) compares the two volumes; \"surfaceArea\" compares the two TOTAL surface areas. The two solids need not be the same shape."
+            ]
           },
           "op": {
             "type": "string",
@@ -386,26 +285,21 @@
               "ratio",
               "total",
               "difference"
-            ],
-            "description": "\"ratio\" (default) = A : B in lowest integer terms when both are whole (e.g. similar solids give the volume scale factor k³), else \"1 : k\". \"total\" = A + B (combined volume of two parts). \"difference\" = A − B (\"how much greater\"). For a ratio/total/difference to read with a unit, give both solids the same unit."
+            ]
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the comparison RESULT as \"?\" — \"find the ratio / total / difference\" hook. The two per-solid readouts stay as set. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the comparison result (the answer the question is driving at). Default true — set false to keep it in the ordinary accent colour."
+            "type": "boolean"
           }
         }
       },
       "title": {
-        "type": "string",
-        "description": "OPTIONAL overall heading centred above BOTH solids in two-solid mode (e.g. \"Which has the greater volume?\"). Distinct from each solid's own header/caption. Ignored when there is no second solid (use header for a single-solid title)."
+        "type": "string"
       },
       "rotatable": {
-        "type": "boolean",
-        "description": "OPTIONAL web-only enhancement: when true, the SINGLE solid can be turned in 3-D by dragging it (turntable — drag left/right to spin, up/down to tilt), so pupils can see the shape from any angle. The static figure is unchanged and pedagogically complete on its own — it is what prints and what a slide opens on; rotation is exploration that returns to the labelled static figure on release, and is never saved. OFF by default. Ignored for a two-solid comparison (those stay static) and on print/slide exports. Use it only when seeing the solid TURN is the point (visualising a net, spotting hidden edges, building spatial sense), not for a plain mensuration question."
+        "type": "boolean"
       }
     },
     "required": [
@@ -415,7 +309,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — cuboid 5 × 3 × 4, volume and surface area with working",
       "params": {
         "shape": "cuboid",
         "dims": {
@@ -433,7 +326,6 @@
       }
     },
     {
-      "label": "Blank answer space — labelled cylinder, find the volume and surface area yourself",
       "params": {
         "shape": "cylinder",
         "dims": {
@@ -444,7 +336,6 @@
       }
     },
     {
-      "label": "Occluded question — cylinder, find the volume (answer hidden)",
       "params": {
         "shape": "cylinder",
         "dims": {
@@ -459,7 +350,6 @@
       }
     },
     {
-      "label": "Hard case — cone r = 6, h = 8: slant height derived (l = 10), volume and curved surface area",
       "params": {
         "shape": "cone",
         "dims": {
@@ -481,7 +371,6 @@
       }
     },
     {
-      "label": "Right-triangular prism — surface area with the hypotenuse derived by Pythagoras",
       "params": {
         "shape": "triangular-prism",
         "dims": {
@@ -500,7 +389,6 @@
       }
     },
     {
-      "label": "Reverse problem — square pyramid: volume given, find the height (height occluded)",
       "params": {
         "shape": "pyramid",
         "dims": {
@@ -518,7 +406,6 @@
       }
     },
     {
-      "label": "Two solids — which cuboid has the greater volume? (side-by-side, each volume derived)",
       "params": {
         "title": "Which has the greater volume?",
         "shape": "cuboid",
@@ -550,7 +437,6 @@
       }
     },
     {
-      "label": "Two solids — combined volume of a cylinder and a cone (total comparison readout)",
       "params": {
         "title": "Total volume of both solids",
         "shape": "cylinder",
@@ -582,7 +468,6 @@
       }
     },
     {
-      "label": "Two similar prisms — volume scale factor as a ratio (k = 2 → k³ = 8)",
       "params": {
         "title": "Comparing similar triangular prisms",
         "shape": "triangular-prism",
@@ -618,7 +503,6 @@
       }
     },
     {
-      "label": "Hemisphere r = 6 — volume and total surface area (3πr²) in terms of π",
       "params": {
         "header": "Hemisphere",
         "shape": "hemisphere",
@@ -636,7 +520,6 @@
       }
     },
     {
-      "label": "Tetrahedron — triangular-based pyramid: volume and surface area, slant of the front face",
       "params": {
         "header": "Triangular-based pyramid",
         "shape": "tetrahedron",
@@ -659,7 +542,6 @@
       }
     },
     {
-      "label": "Drag-to-rotate — a labelled cone pupils can turn in 3-D (web-only; static figure unchanged)",
       "params": {
         "header": "Turn the cone to see it from any angle",
         "shape": "cone",
@@ -672,7 +554,6 @@
       }
     },
     {
-      "label": "Symbolic label — the GCSE formula-box sphere: dashed equator, radius arrow labelled just \"r\" (no numbers)",
       "params": {
         "shape": "sphere",
         "dims": {
@@ -684,7 +565,6 @@
       }
     },
     {
-      "label": "Algebra on a solid — cuboid labelled x, 2x and 5 cm; the working substitutes the symbols (\"find x\")",
       "params": {
         "header": "The volume is 40 cm³. Find x.",
         "shape": "cuboid",
@@ -704,7 +584,6 @@
       }
     },
     {
-      "label": "Diameter given — cylinder d = 10 cm, find the volume (double-arrow across the base; answer hidden)",
       "params": {
         "header": "The diameter is 10 cm. Find the volume.",
         "shape": "cylinder",
@@ -720,7 +599,6 @@
       }
     },
     {
-      "label": "Diameter worked — cylinder d = 12 cm: the readout halves it (r = d ÷ 2 = 6) before V = πr²h",
       "params": {
         "shape": "cylinder",
         "dims": {
@@ -734,7 +612,6 @@
       }
     },
     {
-      "label": "Diameter given — cone d = 16 cm, h = 15 cm: slant l = 17 derived, curved surface area",
       "params": {
         "shape": "cone",
         "dims": {
@@ -753,7 +630,6 @@
       }
     },
     {
-      "label": "Diameter given — sphere d = 14 cm, surface area (radius derived as 7)",
       "params": {
         "header": "Diameter 14 cm",
         "shape": "sphere",
@@ -767,7 +643,6 @@
       }
     },
     {
-      "label": "Symbolic diameter — sphere labelled just \"d\"; write the volume in terms of d (working substitutes (d/2))",
       "params": {
         "shape": "sphere",
         "dims": {
@@ -783,7 +658,6 @@
       }
     },
     {
-      "label": "Lettered pyramid ABCDE with base diagonals — the 3-D-Pythagoras \"angle EAC\" figure (measurements in the text)",
       "params": {
         "shape": "pyramid",
         "dims": {
@@ -809,7 +683,6 @@
       }
     },
     {
-      "label": "Lettered worked pyramid — square pyramid ABCDE, letters AND dimensions with the volume worked",
       "params": {
         "header": "Pyramid ABCDE",
         "shape": "pyramid",
@@ -834,7 +707,6 @@
       }
     },
     {
-      "label": "Lettered tetrahedron ABCD — a triangular-based pyramid named by its vertices (bare figure)",
       "params": {
         "shape": "tetrahedron",
         "dims": {
@@ -858,7 +730,6 @@
       }
     },
     {
-      "label": "Slant given (hard case) — cone slant l = 17 cm, base radius 8 cm, no perpendicular height: total surface area",
       "params": {
         "shape": "cone",
         "dims": {
@@ -873,7 +744,6 @@
       }
     },
     {
-      "label": "Slant given — cone slant l = 10 cm, radius 6 cm: find the curved surface area (answer hidden)",
       "params": {
         "shape": "cone",
         "dims": {
@@ -889,7 +759,6 @@
       }
     },
     {
-      "label": "Slant given — cone slant l = 25 cm, radius 7 cm: volume, deriving h = √(l² − r²) = 24 first",
       "params": {
         "shape": "cone",
         "dims": {
@@ -903,7 +772,6 @@
       }
     },
     {
-      "label": "Slant AND diameter given — cone slant l = 25 cm, base diameter 14 cm: total surface area (both bridges)",
       "params": {
         "shape": "cone",
         "dims": {

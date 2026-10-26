@@ -4,73 +4,24 @@
   "name": "blocks-editor",
   "version": 3,
   "title": "Block programming",
-  "tagline": "Block programs that really run, Scratch-grade: sprites, events, loops, clones, sound, lists and custom blocks; task-sized toolbox, Parsons tray, run-marked answers.",
-  "description": "A block programming environment in the register KS2/3 computing actually teaches, with the whole Scratch 3 core palette and Pen underneath. A project is a stage and one or more sprites, each with scripts headed by hats (when ▶ clicked, when a key is pressed, when clicked, when I receive, when the timer passes, when I start as a clone, custom-block definitions). Run executes them for real with a frame scheduler that behaves like the real thing — 30 frames a second, loops that yield each pass, parallel scripts taking turns, waits and glides on the clock — and draws everything from the run: movement, pen ink and stamps, say and think bubbles, costume changes, graphic effects, clones, backdrops, sounds, variable and list watchers. Step walks one block at a time; the speed dial runs from \"watch\" (a block every 0.7 s, each one acted out) to turbo; Stop is the stop sign. Nothing on the stage is authored: a figure OPENS UNRUN — sprites at their starting poses — on screen and on paper, so nothing is answered before a pupil presses anything. Every white slot, dropdown and colour is editable in place on the data dial; editable: true adds a Build tab whose palette is TASK-SIZED — derived from the marking key on a marked figure (the categories, the block types, or a Parsons tray of the answer's own pieces) — with drag-and-drop across scripts, make-a-variable / list / block, adding sprites, and a full-screen builder for open-ended projects. An optional panel (show.text) prints the same program as AQA pseudo-code when it has an AQA reading. Marked answers: run-figure (the drawing must make a shape) and run-program (the program must behave like a reference over tests). Original sprites, costumes, backdrops and sounds; collisions are shape-based.",
-  "whenToUse": "Reach for this whenever a lesson wants pupils to READ, RUN, EDIT or BUILD a block program rather than look at a screenshot of one: KS2/KS3 sequence, selection and iteration in the block-code register, events and broadcasts, animation with costumes, games (forever loops, key presses, touching, score variables, clones), lists, custom blocks, predict-the-output, fix-the-bug, pen drawing, and the blocks-to-text transition. TWO SHAPES: `script` (+ `sprite`, `start`) for ONE sprite with ONE green-flag script — most figures; `sprites` (+ `stage`) for anything more — several sprites, other hats, custom blocks, backdrops. Conventions: direction 90 = right; the pen starts UP (put pen down first) and 3 wide; variables start at 0 and lists empty, for all sprites, and get watchers (show.variables / show.lists); an ask STOPS its script until the pupil types — it cannot be pre-answered on the figure (to fix a value, set a variable instead); pick random is seeded by `seed`; Run always restarts from the authored start, so a run is reproducible. Name other sprites exactly as their `name` (default the capitalised character). Common configurations: worked example — a short program on the \"data\" dial (the default), pupils press Run and retune values; predict-the-output — editable: false with show.controls: false, the same program WITH controls in the explanation; build-it — editable: true, marked with run-figure (markFigure: a shape) or run-program (markProgram: a reference + tests), toolbox left to derive from the key; Parsons — toolbox \"pieces\" (the answer's own blocks, each used once; add `distractors` to taunt); a fix-it task — the buggy program on editable: true with a key, so the palette offers what the fix needs; open-ended projects — editable: true with toolbox \"all\" (the default when unmarked) and the full-screen builder. A figure is a stage, not an IDE: a dozen blocks per script reads well on a slide; the scripts column shows ONE sprite at a time (a strip under the stage switches). This model owns its run state: no staged `steps`, no draggable params — sequence blocks for predict → run → discuss. Synonyms: blocks, block code, visual programming, Scratch-style coding, sprite, stage, costume, backdrop, broadcast, forever, clone, when flag clicked, my blocks, custom block, game, animation.",
   "responseModes": [
     "run-figure",
     "run-program"
-  ],
-  "tags": [
-    "blocks",
-    "block programming",
-    "block code",
-    "visual programming",
-    "scratch-style",
-    "sprite",
-    "stage",
-    "script",
-    "sequence",
-    "selection",
-    "iteration",
-    "repeat",
-    "forever",
-    "loops",
-    "events",
-    "broadcast",
-    "clones",
-    "costumes",
-    "animation",
-    "game",
-    "sound",
-    "variables",
-    "lists",
-    "custom blocks",
-    "pen",
-    "say",
-    "ask",
-    "predict the output",
-    "fix the bug",
-    "parsons",
-    "blocks to text",
-    "pseudo-code",
-    "programming",
-    "coding",
-    "computing",
-    "computer science",
-    "cs",
-    "ks2",
-    "ks3",
-    "algorithm"
   ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "$defs": {
       "expr": {
-        "description": "A value slot: a plain number, string or boolean, or a reporter block object that computes one. Reporters nest.",
         "oneOf": [
           {
-            "type": "number",
-            "description": "A number literal."
+            "type": "number"
           },
           {
-            "type": "string",
-            "description": "A text literal."
+            "type": "string"
           },
           {
-            "type": "boolean",
-            "description": "A boolean literal (rare)."
+            "type": "boolean"
           },
           {
             "type": "object",
@@ -93,8 +44,7 @@
                   "mouse-y",
                   "timer",
                   "days-since-2000"
-                ],
-                "description": "x: \"x position\". y: \"y position\". direction: \"direction\". size: \"size\". volume: \"volume\". answer: \"answer\" — the last reply typed. mouse-down: \"mouse down?\". mouse-x: \"mouse x\". mouse-y: \"mouse y\". timer: \"timer\" — seconds since Run (or since reset timer). days-since-2000: \"days since 2000\"."
+                ]
               }
             }
           },
@@ -111,16 +61,14 @@
                 "enum": [
                   "costume",
                   "backdrop"
-                ],
-                "description": "costume: \"costume [number / name]\". backdrop: \"backdrop [number / name]\"."
+                ]
               },
               "prop": {
                 "type": "string",
                 "enum": [
                   "number",
                   "name"
-                ],
-                "description": "Report the number (1-based) or the name."
+                ]
               }
             }
           },
@@ -136,13 +84,11 @@
                 "type": "string",
                 "enum": [
                   "touching"
-                ],
-                "description": "touching: \"touching [ ]?\"."
+                ]
               },
               "what": {
                 "type": "string",
-                "maxLength": 60,
-                "description": "\"edge\", \"mouse-pointer\", or the name of another sprite in the project (touching any of its clones counts too)."
+                "maxLength": 60
               }
             }
           },
@@ -158,13 +104,11 @@
                 "type": "string",
                 "enum": [
                   "touching-color"
-                ],
-                "description": "touching-color: \"touching color [ ]?\" — against pen ink, stamps, other sprites and the backdrop (a backdrop colour counts only where it is the top paint, so a sprite on the grass is not touching the sky behind it)."
+                ]
               },
               "color": {
                 "type": "string",
-                "pattern": "^#[0-9a-fA-F]{6}$",
-                "description": "A colour as #rrggbb."
+                "pattern": "^#[0-9a-fA-F]{6}$"
               }
             }
           },
@@ -181,18 +125,15 @@
                 "type": "string",
                 "enum": [
                   "color-touching"
-                ],
-                "description": "color-touching: \"color [ ] is touching [ ]?\" — the first colour is part of this sprite."
+                ]
               },
               "color": {
                 "type": "string",
-                "pattern": "^#[0-9a-fA-F]{6}$",
-                "description": "A colour as #rrggbb."
+                "pattern": "^#[0-9a-fA-F]{6}$"
               },
               "color2": {
                 "type": "string",
-                "pattern": "^#[0-9a-fA-F]{6}$",
-                "description": "A colour as #rrggbb."
+                "pattern": "^#[0-9a-fA-F]{6}$"
               }
             }
           },
@@ -208,13 +149,11 @@
                 "type": "string",
                 "enum": [
                   "distance"
-                ],
-                "description": "distance: \"distance to [ ]\"."
+                ]
               },
               "to": {
                 "type": "string",
-                "maxLength": 60,
-                "description": "\"mouse-pointer\", or the name of another sprite in the project."
+                "maxLength": 60
               }
             }
           },
@@ -230,13 +169,11 @@
                 "type": "string",
                 "enum": [
                   "key-pressed"
-                ],
-                "description": "key-pressed: \"key [ ] pressed?\"."
+                ]
               },
               "key": {
                 "type": "string",
-                "maxLength": 12,
-                "description": "A key: \"space\", \"up arrow\", \"down arrow\", \"left arrow\", \"right arrow\", \"any\", a letter a–z or a digit 0–9."
+                "maxLength": 12
               }
             }
           },
@@ -253,18 +190,15 @@
                 "type": "string",
                 "enum": [
                   "of"
-                ],
-                "description": "of: \"[property] of [sprite / Stage]\"."
+                ]
               },
               "prop": {
                 "type": "string",
-                "maxLength": 30,
-                "description": "For a sprite: \"x position\", \"y position\", \"direction\", \"costume #\", \"costume name\", \"size\", \"volume\", or one of that sprite's own variables. For \"Stage\": \"backdrop #\", \"backdrop name\", \"volume\", or a variable for all sprites."
+                "maxLength": 30
               },
               "target": {
                 "type": "string",
-                "maxLength": 20,
-                "description": "\"Stage\" or a sprite's name."
+                "maxLength": 20
               }
             }
           },
@@ -280,8 +214,7 @@
                 "type": "string",
                 "enum": [
                   "current"
-                ],
-                "description": "current: \"current [ ]\"."
+                ]
               },
               "unit": {
                 "type": "string",
@@ -293,8 +226,7 @@
                   "hour",
                   "minute",
                   "second"
-                ],
-                "description": "Part of the current date and time (inside marking runs the date is fixed, so it is reproducible)."
+                ]
               }
             }
           },
@@ -315,15 +247,12 @@
                   "mul",
                   "div",
                   "mod"
-                ],
-                "description": "add: a + b (non-numbers count as 0). sub: a − b. mul: a × b. div: a / b (÷0 gives Infinity). mod: a mod b — floored, taking the sign of b."
+                ]
               },
               "a": {
-                "description": "First operand.",
                 "$ref": "#/$defs/expr"
               },
               "b": {
-                "description": "Second operand.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -341,15 +270,12 @@
                 "type": "string",
                 "enum": [
                   "random"
-                ],
-                "description": "random: \"pick random (from) to (to)\" — SEEDED by `seed`; whole-number bounds give a whole number."
+                ]
               },
               "from": {
-                "description": "Lower bound.",
                 "$ref": "#/$defs/expr"
               },
               "to": {
-                "description": "Upper bound / destination.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -370,15 +296,12 @@
                   "lt",
                   "eq",
                   "join"
-                ],
-                "description": "gt: a > b (numbers numerically, text case-insensitively). lt: a < b. eq: a = b. join: \"join (a) (b)\" — both as text, stuck together."
+                ]
               },
               "a": {
-                "description": "First operand.",
                 "$ref": "#/$defs/expr"
               },
               "b": {
-                "description": "Second operand.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -397,15 +320,12 @@
                 "enum": [
                   "and",
                   "or"
-                ],
-                "description": "and: both. or: either."
+                ]
               },
               "a": {
-                "description": "First operand.",
                 "$ref": "#/$defs/expr"
               },
               "b": {
-                "description": "Second operand.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -422,11 +342,9 @@
                 "type": "string",
                 "enum": [
                   "not"
-                ],
-                "description": "not: not."
+                ]
               },
               "a": {
-                "description": "First operand.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -444,15 +362,12 @@
                 "type": "string",
                 "enum": [
                   "letter"
-                ],
-                "description": "letter: \"letter (n) of ( )\" — 1-based."
+                ]
               },
               "index": {
-                "description": "A 1-based position.",
                 "$ref": "#/$defs/expr"
               },
               "text": {
-                "description": "Text (or any value).",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -469,11 +384,9 @@
                 "type": "string",
                 "enum": [
                   "length"
-                ],
-                "description": "length: \"length of ( )\"."
+                ]
               },
               "text": {
-                "description": "Text (or any value).",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -491,15 +404,12 @@
                 "type": "string",
                 "enum": [
                   "contains"
-                ],
-                "description": "contains: \"( ) contains ( )?\" — case-insensitive."
+                ]
               },
               "text": {
-                "description": "Text (or any value).",
                 "$ref": "#/$defs/expr"
               },
               "part": {
-                "description": "The text to look for.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -516,11 +426,9 @@
                 "type": "string",
                 "enum": [
                   "round"
-                ],
-                "description": "round: \"round ( )\"."
+                ]
               },
               "a": {
-                "description": "First operand.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -538,8 +446,7 @@
                 "type": "string",
                 "enum": [
                   "math"
-                ],
-                "description": "math: \"[abs / sqrt / sin …] of ( )\"."
+                ]
               },
               "fn": {
                 "type": "string",
@@ -558,11 +465,9 @@
                   "log",
                   "e ^",
                   "10 ^"
-                ],
-                "description": "The maths function. Trig works in DEGREES."
+                ]
               },
               "a": {
-                "description": "First operand.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -579,11 +484,9 @@
                 "type": "string",
                 "enum": [
                   "var"
-                ],
-                "description": "var: A variable's value."
+                ]
               },
               "name": {
-                "description": "The variable's name, e.g. \"score\". Variables need no declaring: a name used here starts at 0, for all sprites, unless declared in a sprite's `variables`.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -602,11 +505,9 @@
                 "type": "string",
                 "enum": [
                   "list"
-                ],
-                "description": "list: A list's contents as text."
+                ]
               },
               "name": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -626,15 +527,12 @@
                 "type": "string",
                 "enum": [
                   "item"
-                ],
-                "description": "item: \"item ( ) of [list]\" — 1-based; \"last\" and \"random\" work too."
+                ]
               },
               "index": {
-                "description": "A 1-based position.",
                 "$ref": "#/$defs/expr"
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -654,15 +552,12 @@
                 "type": "string",
                 "enum": [
                   "item-num"
-                ],
-                "description": "item-num: \"item # of ( ) in [list]\" — 0 when absent."
+                ]
               },
               "item": {
-                "description": "The item.",
                 "$ref": "#/$defs/expr"
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -681,11 +576,9 @@
                 "type": "string",
                 "enum": [
                   "list-length"
-                ],
-                "description": "list-length: \"length of [list]\"."
+                ]
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -705,17 +598,14 @@
                 "type": "string",
                 "enum": [
                   "list-contains"
-                ],
-                "description": "list-contains: \"[list] contains ( )?\"."
+                ]
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
               },
               "item": {
-                "description": "The item.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -732,25 +622,21 @@
                 "type": "string",
                 "enum": [
                   "arg"
-                ],
-                "description": "arg: An input of the custom block being defined (use it inside the definition only)."
+                ]
               },
               "name": {
-                "description": "The input's name, as the definition's params name it.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
               },
               "bool": {
-                "type": "boolean",
-                "description": "true when the input is a true/false input (draws as a hexagon)."
+                "type": "boolean"
               }
             }
           }
         ]
       },
       "block": {
-        "description": "One statement block. Categories: motion, looks, sound, events, control, sensing, operators, variables, lists, my blocks, pen.",
         "oneOf": [
           {
             "type": "object",
@@ -764,11 +650,9 @@
                 "type": "string",
                 "enum": [
                   "move"
-                ],
-                "description": "move: \"move (steps) steps\" — along the current direction (negative moves backwards)."
+                ]
               },
               "steps": {
-                "description": "How far, in steps (stage units).",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -786,11 +670,9 @@
                 "enum": [
                   "turn-right",
                   "turn-left"
-                ],
-                "description": "turn-right: \"turn ↻ (degrees)\" — clockwise. turn-left: \"turn ↺ (degrees)\" — anticlockwise."
+                ]
               },
               "degrees": {
-                "description": "How far to turn, in degrees.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -807,13 +689,11 @@
                 "type": "string",
                 "enum": [
                   "go-to-target"
-                ],
-                "description": "go-to-target: \"go to (random position / mouse-pointer / a sprite)\"."
+                ]
               },
               "to": {
                 "type": "string",
-                "maxLength": 60,
-                "description": "\"random position\", \"mouse-pointer\", or the name of another sprite in the project."
+                "maxLength": 60
               }
             }
           },
@@ -830,15 +710,12 @@
                 "type": "string",
                 "enum": [
                   "go-to"
-                ],
-                "description": "go-to: \"go to x: ( ) y: ( )\" — jump there (the pen draws the jump if down)."
+                ]
               },
               "x": {
-                "description": "x (−240…240, right positive).",
                 "$ref": "#/$defs/expr"
               },
               "y": {
-                "description": "y (−180…180, up positive).",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -856,17 +733,14 @@
                 "type": "string",
                 "enum": [
                   "glide-to-target"
-                ],
-                "description": "glide-to-target: \"glide (secs) secs to (…)\" — moves smoothly over that time."
+                ]
               },
               "secs": {
-                "description": "Seconds.",
                 "$ref": "#/$defs/expr"
               },
               "to": {
                 "type": "string",
-                "maxLength": 60,
-                "description": "\"random position\", \"mouse-pointer\", or the name of another sprite in the project."
+                "maxLength": 60
               }
             }
           },
@@ -884,19 +758,15 @@
                 "type": "string",
                 "enum": [
                   "glide"
-                ],
-                "description": "glide: \"glide (secs) secs to x: y:\"."
+                ]
               },
               "secs": {
-                "description": "Seconds.",
                 "$ref": "#/$defs/expr"
               },
               "x": {
-                "description": "x (−240…240, right positive).",
                 "$ref": "#/$defs/expr"
               },
               "y": {
-                "description": "y (−180…180, up positive).",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -913,11 +783,9 @@
                 "type": "string",
                 "enum": [
                   "point"
-                ],
-                "description": "point: \"point in direction ( )\" — 0 up, 90 right, 180 down, −90 left."
+                ]
               },
               "direction": {
-                "description": "Heading in degrees.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -934,13 +802,11 @@
                 "type": "string",
                 "enum": [
                   "point-towards"
-                ],
-                "description": "point-towards: \"point towards (mouse-pointer / random direction / a sprite)\"."
+                ]
               },
               "towards": {
                 "type": "string",
-                "maxLength": 60,
-                "description": "\"mouse-pointer\", \"random direction\", or the name of another sprite in the project."
+                "maxLength": 60
               }
             }
           },
@@ -960,11 +826,9 @@
                   "change-size",
                   "change-volume",
                   "change-pen-size"
-                ],
-                "description": "change-x: \"change x by ( )\". change-y: \"change y by ( )\". change-size: \"change size by ( )\" (percent). change-volume: \"change volume by ( )\". change-pen-size: \"change pen size by ( )\"."
+                ]
               },
               "by": {
-                "description": "How much to change it by.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -985,11 +849,9 @@
                   "set-size",
                   "set-volume",
                   "set-pen-size"
-                ],
-                "description": "set-x: \"set x to ( )\". set-y: \"set y to ( )\". set-size: \"set size to ( ) %\". set-volume: \"set volume to ( ) %\". set-pen-size: \"set pen size to ( )\" (the pen starts 3 wide)."
+                ]
               },
               "value": {
-                "description": "The new value.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1018,8 +880,7 @@
                   "stamp",
                   "pen-down",
                   "pen-up"
-                ],
-                "description": "bounce: \"if on edge, bounce\". next-costume: \"next costume\" — in a loop it animates (the five characters' costumes are walk frames). next-backdrop: \"next backdrop\". clear-effects: \"clear graphic effects\". show: \"show\". hide: \"hide\" — a hidden sprite still runs its scripts (and still draws with the pen). stop-sounds: \"stop all sounds\". clear-sound-effects: \"clear sound effects\". delete-clone: \"delete this clone\" — ends its stack; nothing happens on an original sprite. reset-timer: \"reset timer\". erase-all: \"erase all\". stamp: \"stamp\" — leaves a picture of the sprite on the pen layer. pen-down: \"pen down\" — the pen starts UP; while down, every move draws. pen-up: \"pen up\"."
+                ]
               }
             }
           },
@@ -1035,8 +896,7 @@
                 "type": "string",
                 "enum": [
                   "rotation-style"
-                ],
-                "description": "rotation-style: \"set rotation style [ ]\"."
+                ]
               },
               "style": {
                 "type": "string",
@@ -1044,8 +904,7 @@
                   "left-right",
                   "don't rotate",
                   "all around"
-                ],
-                "description": "Rotation style."
+                ]
               }
             }
           },
@@ -1063,15 +922,12 @@
                 "enum": [
                   "say-for",
                   "think-for"
-                ],
-                "description": "say-for: \"say ( ) for ( ) seconds\" — the bubble clears after that time. think-for: \"think ( ) for ( ) seconds\" — a thought cloud."
+                ]
               },
               "text": {
-                "description": "Text (or any value).",
                 "$ref": "#/$defs/expr"
               },
               "secs": {
-                "description": "Seconds.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1089,11 +945,9 @@
                 "enum": [
                   "say",
                   "think"
-                ],
-                "description": "say: \"say ( )\" — the bubble stays until replaced; say \"\" clears it. What is said is the program's OUTPUT. A typed value shows as typed; a COMPUTED number that is not whole shows to two decimal places, as the real thing shows it (say (10 / 3) says 3.33). think: \"think ( )\"."
+                ]
               },
               "text": {
-                "description": "Text (or any value).",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1110,11 +964,9 @@
                 "type": "string",
                 "enum": [
                   "switch-costume"
-                ],
-                "description": "switch-costume: \"switch costume to [ ]\"."
+                ]
               },
               "costume": {
-                "description": "A costume NAME of this sprite's character (e.g. \"penguin-b\"), a 1-based number, or a reporter.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1132,11 +984,9 @@
                 "enum": [
                   "switch-backdrop",
                   "switch-backdrop-wait"
-                ],
-                "description": "switch-backdrop: \"switch backdrop to [ ]\" — wakes \"when backdrop switches to\" scripts. switch-backdrop-wait: \"switch backdrop to [ ] and wait\" (stage only) — waits for the scripts it wakes."
+                ]
               },
               "backdrop": {
-                "description": "A backdrop NAME from the stage's list, \"next backdrop\" / \"previous backdrop\" / \"random backdrop\", a 1-based number, or a reporter.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1154,8 +1004,7 @@
                 "type": "string",
                 "enum": [
                   "change-effect"
-                ],
-                "description": "change-effect: \"change [effect] effect by ( )\"."
+                ]
               },
               "effect": {
                 "type": "string",
@@ -1167,11 +1016,9 @@
                   "mosaic",
                   "brightness",
                   "ghost"
-                ],
-                "description": "Graphic effect. color cycles hue over 0–200; ghost 0–100 fades out; brightness −100…100."
+                ]
               },
               "by": {
-                "description": "How much to change it by.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1189,8 +1036,7 @@
                 "type": "string",
                 "enum": [
                   "set-effect"
-                ],
-                "description": "set-effect: \"set [effect] effect to ( )\"."
+                ]
               },
               "effect": {
                 "type": "string",
@@ -1202,11 +1048,9 @@
                   "mosaic",
                   "brightness",
                   "ghost"
-                ],
-                "description": "Graphic effect. color cycles hue over 0–200; ghost 0–100 fades out; brightness −100…100."
+                ]
               },
               "value": {
-                "description": "The new value.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1223,16 +1067,14 @@
                 "type": "string",
                 "enum": [
                   "go-layer"
-                ],
-                "description": "go-layer: \"go to [front / back] layer\"."
+                ]
               },
               "layer": {
                 "type": "string",
                 "enum": [
                   "front",
                   "back"
-                ],
-                "description": "Which layer."
+                ]
               }
             }
           },
@@ -1249,19 +1091,16 @@
                 "type": "string",
                 "enum": [
                   "go-layers"
-                ],
-                "description": "go-layers: \"go [forward / backward] ( ) layers\"."
+                ]
               },
               "way": {
                 "type": "string",
                 "enum": [
                   "forward",
                   "backward"
-                ],
-                "description": "Which way."
+                ]
               },
               "layers": {
-                "description": "How many layers.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1279,11 +1118,9 @@
                 "enum": [
                   "play-sound-wait",
                   "play-sound"
-                ],
-                "description": "play-sound-wait: \"play sound [ ] until done\". play-sound: \"start sound [ ]\" — carries straight on."
+                ]
               },
               "sound": {
-                "description": "A sound: pop, boing, chime, drum, clap, whoosh, beep, zap, coin, bell or buzz — or its 1-based number, or a reporter.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1301,19 +1138,16 @@
                 "type": "string",
                 "enum": [
                   "change-sound-effect"
-                ],
-                "description": "change-sound-effect: \"change [pitch / pan] effect by ( )\"."
+                ]
               },
               "effect": {
                 "type": "string",
                 "enum": [
                   "pitch",
                   "pan"
-                ],
-                "description": "pitch: 10 = a semitone up (−360…360); pan: −100 left … 100 right."
+                ]
               },
               "by": {
-                "description": "How much to change it by.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1331,19 +1165,16 @@
                 "type": "string",
                 "enum": [
                   "set-sound-effect"
-                ],
-                "description": "set-sound-effect: \"set [pitch / pan] effect to ( )\"."
+                ]
               },
               "effect": {
                 "type": "string",
                 "enum": [
                   "pitch",
                   "pan"
-                ],
-                "description": "pitch: 10 = a semitone up (−360…360); pan: −100 left … 100 right."
+                ]
               },
               "value": {
-                "description": "The new value.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1361,14 +1192,12 @@
                 "enum": [
                   "broadcast",
                   "broadcast-wait"
-                ],
-                "description": "broadcast: \"broadcast [ ]\" — starts every \"when I receive\" script for that message, and carries on. broadcast-wait: \"broadcast [ ] and wait\" — waits until those scripts finish."
+                ]
               },
               "message": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 20,
-                "description": "The broadcast message name, e.g. \"game over\". Messages need no declaring: any name used here and in a \"receive\" hat is the same message."
+                "maxLength": 20
               }
             }
           },
@@ -1384,11 +1213,9 @@
                 "type": "string",
                 "enum": [
                   "wait"
-                ],
-                "description": "wait: \"wait ( ) seconds\"."
+                ]
               },
               "secs": {
-                "description": "Seconds.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1406,11 +1233,9 @@
                 "type": "string",
                 "enum": [
                   "repeat"
-                ],
-                "description": "repeat: \"repeat ( )\" — a C-block; the count is rounded to the nearest whole number, with no limit."
+                ]
               },
               "times": {
-                "description": "How many times.",
                 "$ref": "#/$defs/expr"
               },
               "body": {
@@ -1418,8 +1243,7 @@
                 "maxItems": 60,
                 "items": {
                   "$ref": "#/$defs/block"
-                },
-                "description": "A sequence of blocks, run top to bottom. May be empty (an empty C-mouth)."
+                }
               }
             }
           },
@@ -1435,16 +1259,14 @@
                 "type": "string",
                 "enum": [
                   "forever"
-                ],
-                "description": "forever: \"forever\" — a C-block that never ends (Stop ends it). Nothing goes under it."
+                ]
               },
               "body": {
                 "type": "array",
                 "maxItems": 60,
                 "items": {
                   "$ref": "#/$defs/block"
-                },
-                "description": "A sequence of blocks, run top to bottom. May be empty (an empty C-mouth)."
+                }
               }
             }
           },
@@ -1461,11 +1283,9 @@
                 "type": "string",
                 "enum": [
                   "if"
-                ],
-                "description": "if: \"if < > then\" — include `else` for the two-armed \"if … then … else\"."
+                ]
               },
               "condition": {
-                "description": "A condition — a hexagon (boolean) reporter.",
                 "$ref": "#/$defs/expr"
               },
               "then": {
@@ -1473,16 +1293,14 @@
                 "maxItems": 60,
                 "items": {
                   "$ref": "#/$defs/block"
-                },
-                "description": "A sequence of blocks, run top to bottom. May be empty (an empty C-mouth)."
+                }
               },
               "else": {
                 "type": "array",
                 "maxItems": 60,
                 "items": {
                   "$ref": "#/$defs/block"
-                },
-                "description": "A sequence of blocks, run top to bottom. May be empty (an empty C-mouth)."
+                }
               }
             }
           },
@@ -1498,11 +1316,9 @@
                 "type": "string",
                 "enum": [
                   "wait-until"
-                ],
-                "description": "wait-until: \"wait until < >\"."
+                ]
               },
               "condition": {
-                "description": "A condition — a hexagon (boolean) reporter.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1520,11 +1336,9 @@
                 "type": "string",
                 "enum": [
                   "repeat-until"
-                ],
-                "description": "repeat-until: \"repeat until < >\" — checks before each pass."
+                ]
               },
               "condition": {
-                "description": "A condition — a hexagon (boolean) reporter.",
                 "$ref": "#/$defs/expr"
               },
               "body": {
@@ -1532,8 +1346,7 @@
                 "maxItems": 60,
                 "items": {
                   "$ref": "#/$defs/block"
-                },
-                "description": "A sequence of blocks, run top to bottom. May be empty (an empty C-mouth)."
+                }
               }
             }
           },
@@ -1549,8 +1362,7 @@
                 "type": "string",
                 "enum": [
                   "stop"
-                ],
-                "description": "stop: \"stop [ ]\". \"all\" and \"this script\" end their stack."
+                ]
               },
               "stop": {
                 "type": "string",
@@ -1559,8 +1371,7 @@
                   "this script",
                   "other scripts in sprite",
                   "other scripts in stage"
-                ],
-                "description": "\"all\" is the stop sign (every script ends and every clone goes); \"this script\" ends this script; \"other scripts in sprite\" ends the sprite's other scripts and carries on."
+                ]
               }
             }
           },
@@ -1576,13 +1387,11 @@
                 "type": "string",
                 "enum": [
                   "create-clone"
-                ],
-                "description": "create-clone: \"create clone of [myself / a sprite]\" — at most 300 clones; each runs \"when I start as a clone\"."
+                ]
               },
               "of": {
                 "type": "string",
-                "maxLength": 60,
-                "description": "\"myself\" (a sprite cloning itself), or the name of another sprite in the project."
+                "maxLength": 60
               }
             }
           },
@@ -1598,11 +1407,9 @@
                 "type": "string",
                 "enum": [
                   "ask"
-                ],
-                "description": "ask: \"ask ( ) and wait\" — the run WAITS for the pupil to type; there is no answering it in advance on the figure."
+                ]
               },
               "prompt": {
-                "description": "The question.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1619,16 +1426,14 @@
                 "type": "string",
                 "enum": [
                   "set-drag"
-                ],
-                "description": "set-drag: \"set drag mode [ ]\"."
+                ]
               },
               "drag": {
                 "type": "string",
                 "enum": [
                   "draggable",
                   "not draggable"
-                ],
-                "description": "Whether pupils can drag the sprite on the stage while the program runs."
+                ]
               }
             }
           },
@@ -1645,17 +1450,14 @@
                 "type": "string",
                 "enum": [
                   "set"
-                ],
-                "description": "set: \"set [var] to ( )\"."
+                ]
               },
               "name": {
-                "description": "The variable's name, e.g. \"score\". Variables need no declaring: a name used here starts at 0, for all sprites, unless declared in a sprite's `variables`.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
               },
               "value": {
-                "description": "The new value.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1673,17 +1475,14 @@
                 "type": "string",
                 "enum": [
                   "change"
-                ],
-                "description": "change: \"change [var] by ( )\"."
+                ]
               },
               "name": {
-                "description": "The variable's name, e.g. \"score\". Variables need no declaring: a name used here starts at 0, for all sprites, unless declared in a sprite's `variables`.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
               },
               "by": {
-                "description": "How much to change it by.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1701,11 +1500,9 @@
                 "enum": [
                   "show-var",
                   "hide-var"
-                ],
-                "description": "show-var: \"show variable [ ]\" — its watcher on the stage. hide-var: \"hide variable [ ]\"."
+                ]
               },
               "name": {
-                "description": "The variable's name, e.g. \"score\". Variables need no declaring: a name used here starts at 0, for all sprites, unless declared in a sprite's `variables`.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -1725,15 +1522,12 @@
                 "type": "string",
                 "enum": [
                   "list-add"
-                ],
-                "description": "list-add: \"add ( ) to [list]\" (at most 200,000 items)."
+                ]
               },
               "item": {
-                "description": "The item.",
                 "$ref": "#/$defs/expr"
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -1753,15 +1547,12 @@
                 "type": "string",
                 "enum": [
                   "list-delete"
-                ],
-                "description": "list-delete: \"delete ( ) of [list]\" — a number, \"last\" or \"all\"."
+                ]
               },
               "index": {
-                "description": "A 1-based position.",
                 "$ref": "#/$defs/expr"
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -1782,11 +1573,9 @@
                   "list-clear",
                   "show-list",
                   "hide-list"
-                ],
-                "description": "list-clear: \"delete all of [list]\". show-list: \"show list [ ]\". hide-list: \"hide list [ ]\"."
+                ]
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -1807,19 +1596,15 @@
                 "type": "string",
                 "enum": [
                   "list-insert"
-                ],
-                "description": "list-insert: \"insert ( ) at ( ) of [list]\"."
+                ]
               },
               "item": {
-                "description": "The item.",
                 "$ref": "#/$defs/expr"
               },
               "index": {
-                "description": "A 1-based position.",
                 "$ref": "#/$defs/expr"
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
@@ -1840,21 +1625,17 @@
                 "type": "string",
                 "enum": [
                   "list-replace"
-                ],
-                "description": "list-replace: \"replace item ( ) of [list] with ( )\"."
+                ]
               },
               "index": {
-                "description": "A 1-based position.",
                 "$ref": "#/$defs/expr"
               },
               "list": {
-                "description": "The list's name. Lists need no declaring: a name used here starts empty, for all sprites.",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 20
               },
               "item": {
-                "description": "The item.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1871,22 +1652,19 @@
                 "type": "string",
                 "enum": [
                   "call"
-                ],
-                "description": "call: Run a custom block this sprite DEFINES (a script with when: \"define\"); args fill its inputs in order."
+                ]
               },
               "proc": {
                 "type": "string",
                 "minLength": 1,
-                "maxLength": 40,
-                "description": "The custom block's name — the `proc` of this sprite's \"define\" script."
+                "maxLength": 40
               },
               "args": {
                 "type": "array",
                 "maxItems": 8,
                 "items": {
                   "$ref": "#/$defs/expr"
-                },
-                "description": "Values for the definition's inputs, in order."
+                }
               }
             }
           },
@@ -1902,13 +1680,11 @@
                 "type": "string",
                 "enum": [
                   "set-pen-color"
-                ],
-                "description": "set-pen-color: \"set pen color to [ ]\"."
+                ]
               },
               "color": {
                 "type": "string",
-                "pattern": "^#[0-9a-fA-F]{6}$",
-                "description": "A colour as #rrggbb."
+                "pattern": "^#[0-9a-fA-F]{6}$"
               }
             }
           },
@@ -1925,8 +1701,7 @@
                 "type": "string",
                 "enum": [
                   "change-pen"
-                ],
-                "description": "change-pen: \"change pen [ ] by ( )\"."
+                ]
               },
               "param": {
                 "type": "string",
@@ -1935,11 +1710,9 @@
                   "saturation",
                   "brightness",
                   "transparency"
-                ],
-                "description": "Pen setting, each on a 0–100 dial (color wraps round the hue wheel)."
+                ]
               },
               "by": {
-                "description": "How much to change it by.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1957,8 +1730,7 @@
                 "type": "string",
                 "enum": [
                   "set-pen"
-                ],
-                "description": "set-pen: \"set pen [ ] to ( )\"."
+                ]
               },
               "param": {
                 "type": "string",
@@ -1967,11 +1739,9 @@
                   "saturation",
                   "brightness",
                   "transparency"
-                ],
-                "description": "Pen setting, each on a 0–100 dial (color wraps round the hue wheel)."
+                ]
               },
               "value": {
-                "description": "The new value.",
                 "$ref": "#/$defs/expr"
               }
             }
@@ -1984,7 +1754,6 @@
         "required": [
           "blocks"
         ],
-        "description": "One script: a HAT (`when`) and the blocks under it. Omit `when` for a loose stack that never runs by itself.",
         "properties": {
           "when": {
             "type": "string",
@@ -1997,39 +1766,32 @@
               "receive",
               "clone",
               "define"
-            ],
-            "description": "The hat: \"flag\" (when ▶ clicked — Run fires it), \"key\" (when [key] key pressed — needs `key`), \"clicked\" (when this sprite / the stage is clicked), \"backdrop\" (when backdrop switches to — needs `backdrop`), \"timer\" (when timer > `value` seconds), \"receive\" (when I receive — needs `message`), \"clone\" (when I start as a clone — sprites only), \"define\" (a custom block — needs `proc`; `params` and `warp` optional)."
+            ]
           },
           "key": {
             "type": "string",
-            "maxLength": 12,
-            "description": "A key: \"space\", \"up arrow\", \"down arrow\", \"left arrow\", \"right arrow\", \"any\", a letter a–z or a digit 0–9."
+            "maxLength": 12
           },
           "message": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 20,
-            "description": "The broadcast message name, e.g. \"game over\". Messages need no declaring: any name used here and in a \"receive\" hat is the same message."
+            "maxLength": 20
           },
           "backdrop": {
             "type": "string",
-            "maxLength": 20,
-            "description": "For a \"backdrop\" hat: the backdrop name."
+            "maxLength": 20
           },
           "value": {
-            "type": "number",
-            "description": "For a \"timer\" hat: the seconds the timer must pass."
+            "type": "number"
           },
           "proc": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 40,
-            "description": "For \"define\": the custom block's name, e.g. \"draw square\". Calls name it in `proc`."
+            "maxLength": 40
           },
           "params": {
             "type": "array",
             "maxItems": 8,
-            "description": "For \"define\": the block's inputs, in order. Read them inside the definition with { op: \"arg\", name }.",
             "items": {
               "type": "object",
               "additionalProperties": false,
@@ -2038,7 +1800,6 @@
               ],
               "properties": {
                 "name": {
-                  "description": "The input's name.",
                   "type": "string",
                   "minLength": 1,
                   "maxLength": 20
@@ -2048,23 +1809,20 @@
                   "enum": [
                     "value",
                     "boolean"
-                  ],
-                  "description": "value (default) or boolean (a hexagon slot)."
+                  ]
                 }
               }
             }
           },
           "warp": {
-            "type": "boolean",
-            "description": "For \"define\": \"run without screen refresh\" — its loops do not wait for the screen, so the whole block runs in one frame."
+            "type": "boolean"
           },
           "blocks": {
             "type": "array",
             "maxItems": 60,
             "items": {
               "$ref": "#/$defs/block"
-            },
-            "description": "A sequence of blocks, run top to bottom. May be empty (an empty C-mouth)."
+            }
           }
         }
       },
@@ -2078,8 +1836,7 @@
           "name": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 20,
-            "description": "The sprite's name (default: its character, capitalised). Other blocks name it this way: touching, go to, of, create clone of. Unique; not \"Stage\", \"edge\", \"mouse-pointer\", \"random position\" or \"myself\"."
+            "maxLength": 20
           },
           "character": {
             "type": "string",
@@ -2096,41 +1853,34 @@
               "heart",
               "arrow",
               "button"
-            ],
-            "description": "Who it is — ORIGINAL art. Five characters (robot, penguin, frog, rocket, invader) whose costumes -a/-b/-c are walk frames, and props for games: ball (costumes ball-blue/-green/-red/-yellow/-purple), apple (apple-red/-green), star (star, star-glow), paddle, heart (heart, heart-empty), arrow, button (button, button-pressed)."
+            ]
           },
           "costume": {
             "type": [
               "string",
               "integer"
-            ],
-            "description": "Starting costume — a costume name (e.g. \"ball-red\") or a 1-based number. Default the first."
+            ]
           },
           "x": {
             "type": "number",
             "minimum": -240,
-            "maximum": 240,
-            "description": "Starting x (default 0)."
+            "maximum": 240
           },
           "y": {
             "type": "number",
             "minimum": -180,
-            "maximum": 180,
-            "description": "Starting y (default 0)."
+            "maximum": 180
           },
           "direction": {
-            "type": "number",
-            "description": "Starting heading (default 90, facing right)."
+            "type": "number"
           },
           "size": {
             "type": "number",
             "minimum": 5,
-            "maximum": 500,
-            "description": "Starting size in percent (default 100)."
+            "maximum": 500
           },
           "visible": {
-            "type": "boolean",
-            "description": "Shown at the start (default true)."
+            "type": "boolean"
           },
           "rotationStyle": {
             "type": "string",
@@ -2138,20 +1888,17 @@
               "left-right",
               "don't rotate",
               "all around"
-            ],
-            "description": "Rotation style."
+            ]
           },
           "draggable": {
-            "type": "boolean",
-            "description": "Pupils can drag it on the stage while the program runs (default false)."
+            "type": "boolean"
           },
           "scripts": {
             "type": "array",
             "maxItems": 24,
             "items": {
               "$ref": "#/$defs/script"
-            },
-            "description": "This sprite's scripts."
+            }
           },
           "variables": {
             "type": "object",
@@ -2165,8 +1912,7 @@
                 "string",
                 "boolean"
               ]
-            },
-            "description": "Declared variables and their starting values, e.g. { \"score\": 0 }. Undeclared names used by blocks start at 0 anyway."
+            }
           },
           "lists": {
             "type": "object",
@@ -2183,15 +1929,13 @@
                   "string"
                 ]
               }
-            },
-            "description": "Declared lists and their starting items, e.g. { \"fruit\": [\"apple\", \"kiwi\"] }."
+            }
           }
         }
       },
       "stage": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The stage: its backdrops, its own scripts, and the variables and lists for all sprites.",
         "properties": {
           "backdrops": {
             "type": "array",
@@ -2208,23 +1952,20 @@
                 "maze",
                 "desert"
               ]
-            },
-            "description": "The backdrop list, in order (default [\"plain\"]). Original art: plain, sky, night, space, grass (ground from y −60 down), sea (water up to y 20), maze (slate walls #5c6672, a green goal patch bottom-right), desert."
+            }
           },
           "backdrop": {
             "type": [
               "string",
               "integer"
-            ],
-            "description": "The starting backdrop — a name from the list or a 1-based number (default the first)."
+            ]
           },
           "scripts": {
             "type": "array",
             "maxItems": 24,
             "items": {
               "$ref": "#/$defs/script"
-            },
-            "description": "The stage's scripts (no motion blocks: the stage does not move)."
+            }
           },
           "variables": {
             "type": "object",
@@ -2238,8 +1979,7 @@
                 "string",
                 "boolean"
               ]
-            },
-            "description": "Declared variables and their starting values, e.g. { \"score\": 0 }. Undeclared names used by blocks start at 0 anyway."
+            }
           },
           "lists": {
             "type": "object",
@@ -2256,8 +1996,7 @@
                   "string"
                 ]
               }
-            },
-            "description": "Declared lists and their starting items, e.g. { \"fruit\": [\"apple\", \"kiwi\"] }."
+            }
           }
         }
       }
@@ -2280,8 +2019,7 @@
         "maxItems": 60,
         "items": {
           "$ref": "#/$defs/block"
-        },
-        "description": "The ONE-SPRITE shape: the program as one green-flag script (drawn under a \"when ▶ clicked\" hat). Use with `sprite` and `start`. An empty array poses just the hat — the blank answer space for a build task (editable: true). For several sprites, other hats or custom blocks use `sprites` instead."
+        }
       },
       "sprite": {
         "type": "string",
@@ -2298,29 +2036,24 @@
           "heart",
           "arrow",
           "button"
-        ],
-        "description": "The one-sprite shape's character (default robot). See sprites[].character for the cast."
+        ]
       },
       "start": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The one-sprite shape's starting pose. Default (0, 0) facing 90.",
         "properties": {
           "x": {
             "type": "number",
             "minimum": -240,
-            "maximum": 240,
-            "description": "Starting x. Default 0."
+            "maximum": 240
           },
           "y": {
             "type": "number",
             "minimum": -180,
-            "maximum": 180,
-            "description": "Starting y. Default 0."
+            "maximum": 180
           },
           "direction": {
-            "type": "number",
-            "description": "Starting heading: 0 up, 90 right (default), 180 down, −90 left."
+            "type": "number"
           }
         }
       },
@@ -2329,15 +2062,13 @@
         "maxItems": 10,
         "items": {
           "$ref": "#/$defs/sprite"
-        },
-        "description": "The PROJECT shape: every sprite, back to front, each with its own scripts. The first sprite's scripts show on load."
+        }
       },
       "stage": {
         "$ref": "#/$defs/stage"
       },
       "seed": {
-        "type": "integer",
-        "description": "Seed for pick random and random positions (default 1). The same seed always rolls the same numbers."
+        "type": "integer"
       },
       "target": {
         "type": "object",
@@ -2346,38 +2077,31 @@
           "x",
           "y"
         ],
-        "description": "An amber target star on the stage at (x, y) — the \"get the sprite to the star\" goal. Mark it with run-program, observe [\"position\"], and a reference that lands on it.",
         "properties": {
           "x": {
             "type": "number",
             "minimum": -240,
-            "maximum": 240,
-            "description": "Target x."
+            "maximum": 240
           },
           "y": {
             "type": "number",
             "minimum": -180,
-            "maximum": 180,
-            "description": "Target y."
+            "maximum": 180
           }
         }
       },
       "editable": {
         "oneOf": [
           {
-            "const": false,
-            "description": "Read-only: pupils read, Run and Step but change nothing."
+            "const": false
           },
           {
-            "const": "data",
-            "description": "Values-in-slots: pupils retype numbers and text, pick from dropdowns and colours, but cannot add, move or delete blocks. The DEFAULT."
+            "const": "data"
           },
           {
-            "const": true,
-            "description": "Adds a BUILD tab (and the full-screen builder): the palette (see toolbox), drag and drop across scripts, make a variable / list / block, add sprites, delete, Undo. The figure still opens on Run."
+            "const": true
           }
-        ],
-        "description": "The read / write / edit dial. Default \"data\". Use true only when building is the task."
+        ]
       },
       "toolbox": {
         "oneOf": [
@@ -2398,16 +2122,14 @@
               "maxLength": 30
             }
           }
-        ],
-        "description": "What the Build tab offers (editable: true). Default: \"categories\" on a MARKED figure — the whole categories its key uses — and \"all\" on an unmarked one. \"blocks\": only the block types the key uses. \"pieces\": a Parsons tray — the key's own blocks with their values filled in, each used once, slots fixed (the easiest rung). \"all\": every block. Or a list of category keys (motion, looks, sound, events, control, sensing, operators, variables, lists, myblocks, pen) and/or block op names and hat names."
+        ]
       },
       "distractors": {
         "type": "array",
         "maxItems": 8,
         "items": {
           "$ref": "#/$defs/block"
-        },
-        "description": "Extra wrong blocks mixed into a \"pieces\" tray."
+        }
       },
       "markFigure": {
         "type": "object",
@@ -2415,7 +2137,6 @@
         "required": [
           "shape"
         ],
-        "description": "Turns the figure into an AUTO-MARKED drawing task (responseMode run-figure; correctAnswer { derived: true }; editable must not be false). The pupil builds a program and presses Run; the drawing their pen makes is compared with this SHAPE — any program that draws it passes (a repeat or unrolled moves, any colour), by default at any position and orientation. The question text must say what to draw: the model never draws the target. The target's ink comes from running the block program the shape implies, so it is always drawable.",
         "properties": {
           "shape": {
             "type": "string",
@@ -2424,44 +2145,37 @@
               "rectangle",
               "star",
               "path"
-            ],
-            "description": "regular-polygon (sides, length), rectangle (width, height), star (points, length, step), path (segments)."
+            ]
           },
           "sides": {
             "type": "integer",
             "minimum": 3,
-            "maximum": 100,
-            "description": "regular-polygon: how many sides."
+            "maximum": 100
           },
           "length": {
             "type": "number",
             "minimum": 0.1,
-            "maximum": 10000,
-            "description": "regular-polygon / star: side length in steps."
+            "maximum": 10000
           },
           "width": {
             "type": "number",
             "minimum": 0.1,
-            "maximum": 10000,
-            "description": "rectangle: width in steps."
+            "maximum": 10000
           },
           "height": {
             "type": "number",
             "minimum": 0.1,
-            "maximum": 10000,
-            "description": "rectangle: height in steps."
+            "maximum": 10000
           },
           "points": {
             "type": "integer",
             "minimum": 5,
-            "maximum": 24,
-            "description": "star: how many points."
+            "maximum": 24
           },
           "step": {
             "type": "integer",
             "minimum": 2,
-            "maximum": 100,
-            "description": "star: how many points each side skips (default 2; must share no factor with points)."
+            "maximum": 100
           },
           "segments": {
             "type": "array",
@@ -2473,27 +2187,23 @@
               "items": {
                 "type": "number"
               }
-            },
-            "description": "path: the lines the drawing must have, [x1, y1, x2, y2] in stage coordinates (y up). Use whole numbers pupils can reach with go to / glide."
+            }
           },
           "anchored": {
-            "type": "boolean",
-            "description": "true pins the drawing to the figure's start pose (a task that says where to draw). Default false: any position and orientation."
+            "type": "boolean"
           },
           "require": {
             "type": "array",
             "maxItems": 6,
             "items": {
               "type": "string"
-            },
-            "description": "Method facts that must hold: uses-repeat, uses-forever, uses-if, uses-variable, uses-list, uses-procedure (a custom block defined AND called), uses-broadcast, uses-clone, uses-event (a hat other than the flag), max-blocks:n."
+            }
           }
         }
       },
       "markProgram": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Turns the figure into an AUTO-MARKED program task (responseMode run-program; correctAnswer { derived: true }). The pupil builds a program and presses Run; the model runs THEIR program and the REFERENCE over every test and compares what they DID — so any program that behaves the same passes, and one that hard-codes the shown case fails a hidden test. The reference is never shown (except as Parsons pieces when toolbox is \"pieces\"). Keep the visible program the TASK — empty, half-built or buggy — never the answer.",
         "properties": {
           "reference": {
             "oneOf": [
@@ -2502,8 +2212,7 @@
                 "maxItems": 60,
                 "items": {
                   "$ref": "#/$defs/block"
-                },
-                "description": "A correct program as one green-flag script (the `script` shape)."
+                }
               },
               {
                 "type": "object",
@@ -2519,11 +2228,9 @@
                   "stage": {
                     "$ref": "#/$defs/stage"
                   }
-                },
-                "description": "A correct program in the project shape (several sprites or scripts)."
+                }
               }
-            ],
-            "description": "A correct answer — required unless every test carries `out`. A reference that fails to run leaves the tile unmarked with an authoring error, never a wrong pupil."
+            ]
           },
           "tests": {
             "type": "array",
@@ -2537,8 +2244,7 @@
                   "maxItems": 12,
                   "items": {
                     "type": "string"
-                  },
-                  "description": "Typed replies to the program's asks, in order."
+                  }
                 },
                 "events": {
                   "type": "array",
@@ -2553,24 +2259,20 @@
                       "at": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 120,
-                        "description": "When, in seconds after Run."
+                        "maximum": 120
                       },
                       "key": {
                         "type": "string",
-                        "maxLength": 12,
-                        "description": "Press this key."
+                        "maxLength": 12
                       },
                       "hold": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 30,
-                        "description": "Hold the key this long (default 0.1 s) — for programs that poll \"key pressed?\"."
+                        "maximum": 30
                       },
                       "click": {
                         "type": "string",
-                        "maxLength": 20,
-                        "description": "Click this sprite (by name), or \"Stage\"."
+                        "maxLength": 20
                       },
                       "mouse": {
                         "type": "array",
@@ -2578,24 +2280,20 @@
                         "maxItems": 2,
                         "items": {
                           "type": "number"
-                        },
-                        "description": "Move the mouse to [x, y]."
+                        }
                       }
                     }
-                  },
-                  "description": "A timeline of input for event-driven programs."
+                  }
                 },
                 "out": {
                   "type": "array",
                   "maxItems": 40,
                   "items": {
                     "type": "string"
-                  },
-                  "description": "Optional authored expectation of what is SAID (say/think lines, in order); when absent it is derived by running the reference. Write a computed number as the bubble shows it: two decimal places when it is not whole (3.33, 0.50)."
+                  }
                 }
               }
-            },
-            "description": "The test battery (default one test with no input). The first is conventionally the case the question shows; later ones catch hard-coding."
+            }
           },
           "observe": {
             "type": "array",
@@ -2609,70 +2307,57 @@
                 "lists",
                 "drawing"
               ]
-            },
-            "description": "What must agree with the reference (default [\"says\"]): says (say/think lines in order), position (where each sprite ends), variables and lists (final values), drawing (the pen ink, exactly where the reference drew it)."
+            }
           },
           "seconds": {
             "type": "number",
             "minimum": 0.1,
-            "maximum": 120,
-            "description": "Virtual seconds each run gets (default 10). A forever program is observed over this window."
+            "maximum": 120
           },
           "require": {
             "type": "array",
             "maxItems": 6,
             "items": {
               "type": "string"
-            },
-            "description": "Method facts that must hold: uses-repeat, uses-forever, uses-if, uses-variable, uses-list, uses-procedure (a custom block defined AND called), uses-broadcast, uses-clone, uses-event (a hat other than the flag), max-blocks:n."
+            }
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles.",
         "properties": {
           "text": {
-            "type": "boolean",
-            "description": "Show the derived AQA pseudo-code under the scripts — shown only when the program has an AQA reading (one sprite, one green-flag script, custom blocks as SUBROUTINEs). Default false."
+            "type": "boolean"
           },
           "grid": {
-            "type": "boolean",
-            "description": "Faint coordinate grid with edge numbers on the stage. Default false."
+            "type": "boolean"
           },
           "variables": {
-            "type": "boolean",
-            "description": "Variable watchers on the stage (default true). Set false when they would give a predict question away."
+            "type": "boolean"
           },
           "lists": {
-            "type": "boolean",
-            "description": "List watchers on the stage (default true)."
+            "type": "boolean"
           },
           "controls": {
-            "type": "boolean",
-            "description": "The Run / Step / Stop / Reset / Speed row and its full-screen button (default true). false (with editable: false) for a predict question that must not answer itself; ignored when editable is true."
+            "type": "boolean"
           },
           "stage": {
-            "type": "boolean",
-            "description": "Only matters on a locked figure (editable false and controls false): default shows the stage only when there is something to read before running (motion, pen or pose blocks, several sprites, a backdrop, a target or grid). true / false overrides."
+            "type": "boolean"
           },
           "ran": {
-            "type": "boolean",
-            "description": "Rest on the stage as the program leaves it, its drawing and the final pose, instead of the start: a solution figure that shows its answer without pressing Run. Run still replays it from the start. Default false."
+            "type": "boolean"
           }
         }
       },
       "header": {
         "type": "string",
-        "maxLength": 60,
-        "description": "Optional short title above the figure."
+        "maxLength": 60
       }
     }
   },
   "examples": [
     {
-      "label": "Worked example — pen square: repeat 4 [move 100, turn 90]",
       "params": {
         "sprite": "robot",
         "script": [
@@ -2701,7 +2386,6 @@
       }
     },
     {
-      "label": "Answer space (data dial) — edit the numbers so it draws a regular hexagon",
       "params": {
         "header": "Make it a hexagon",
         "sprite": "frog",
@@ -2728,7 +2412,6 @@
       }
     },
     {
-      "label": "Occluded question — predict what it says (count in threes); no controls",
       "params": {
         "sprite": "penguin",
         "editable": false,
@@ -2765,7 +2448,6 @@
       }
     },
     {
-      "label": "Hard case — a two-sprite catch game: arrow keys, clones, touching, a score and a timed broadcast",
       "params": {
         "header": "Catch the apples",
         "editable": "data",
@@ -2952,7 +2634,6 @@
       }
     },
     {
-      "label": "Build it, marked (run-figure) — an empty script and a derived palette: draw a regular pentagon with a loop",
       "params": {
         "header": "Build a pentagon",
         "sprite": "rocket",
@@ -2972,7 +2653,6 @@
       }
     },
     {
-      "label": "Parsons — the answer's own pieces, each used once, plus one distractor (run-program on what it says)",
       "params": {
         "header": "Put the pieces in order",
         "sprite": "penguin",
@@ -3020,7 +2700,6 @@
       }
     },
     {
-      "label": "Events and costumes — a key walks the penguin with next costume; clicking it changes colour",
       "params": {
         "editable": "data",
         "stage": {
@@ -3088,7 +2767,6 @@
       }
     },
     {
-      "label": "Blocks-to-text bridge — a custom block with inputs and its AQA pseudo-code (SUBROUTINE)",
       "params": {
         "header": "Blocks and text",
         "editable": "data",

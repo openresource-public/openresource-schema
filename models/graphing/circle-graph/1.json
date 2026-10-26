@@ -4,28 +4,7 @@
   "name": "circle-graph",
   "version": 1,
   "title": "Circle on coordinate axes",
-  "tagline": "A circle on numbered axes: derives the centre–radius equation, the tangent at a point (⊥ to the radius, exact equation) and where a line meets the circle.",
-  "description": "A circle drawn on numbered, square coordinate axes — centred at the origin (x² + y² = r²) or at (a, b) — together with the coordinate-geometry of circles: mark a point on the circle, draw the radius to it and the tangent there (perpendicular to the radius, its equation derived in exact form), mark the radius⊥tangent right angle, and draw a straight line whose intersection point(s) with the circle are derived by solving the quadratic. You write only the circle (centre + radius), the points (their coordinates), and any lines (as equation strings); the circle equation, every point's exact on-circle position, the radius, the tangent and its equation, the right-angle mark and the line∩circle points are all computed. Occlude a point's coordinates, a tangent equation, the circle equation or the intersection coordinates to pose a question. v1 covers straight-line tangents and secants (not parabola∩circle, not two tangents from an external point).",
-  "whenToUse": "Reach for this for the coordinate geometry of a circle on numbered axes: the equation of a circle (x² + y² = r² centred at the origin, or (x − a)² + (y − b)² = r² centred at (a, b)), the equation of a tangent to a circle at a given point, the fact that the radius is perpendicular to the tangent, and a line meeting a circle (solving the quadratic simultaneously — graphically). Author circle.center (default the origin [0, 0]) and circle.radius; the axes window auto-fits the circle if you omit axes. Add points: each point.at is the [x, y] coordinates of a point on the circle (choose lattice points so the figure is exact — e.g. (3, 4), (6, 8), (5, 12) on radius-5/10/13 circles, or (5, 5) on the circle centred (2, 1) radius 5); set point.radius to draw the radius to it, point.tangent to draw the tangent there, and the radius⊥tangent right angle is marked automatically when both are on. The tangent equation is shown next to the line — tangentForm \"gradient-intercept\" gives y = mx + c (default), \"normal\" gives the integer form px + qy = c, \"both\" shows each. Add lines: each lines[].expr is a straight-line equation string — \"y = 2x + 1\", \"y = -x + 5\", \"x = 3\", \"2x + 3y = 12\" — and the model marks where it cuts the circle (two points, one if the line is itself a tangent, none if it misses). Pose questions by occluding: point.occlude hides a point's coordinates as \"(?, ?)\"; point.occludeTangent hides its tangent equation; occludeEquation hides the circle equation; lines[].occludeIntersections hides the intersection coordinates. Leave a point with no tangent (and the equation hidden) as an answer space — \"draw the tangent and find its equation\". Set draggable to let pupils slide a point around the circle and watch the radius, the tangent and its equation stay perpendicular and update live. Keep the same window across a lesson so pupils track one diagram, and a staged build reads well (plot the circle → mark the point → draw the radius → draw the tangent → state the equation). Switch primitive when the teaching changes: a single curve y = f(x), its roots / turning points, use graphing/function-graph; a circle theorem (angle at the centre, cyclic quadrilateral, alternate segment, two tangents from a point) not on axes, use geometry/circle-theorems; arc length / sector or segment area, use geometry/circle-parts. Synonyms a teacher might use: equation of a circle, centre-radius form, tangent to a circle, equation of the tangent, radius perpendicular to tangent, line meets circle, points of intersection, circle and line, x squared plus y squared.",
   "responseModes": [],
-  "tags": [
-    "circle",
-    "equation of a circle",
-    "centre-radius form",
-    "tangent",
-    "equation of the tangent",
-    "tangent to a circle",
-    "radius",
-    "perpendicular",
-    "radius perpendicular to tangent",
-    "line meets circle",
-    "points of intersection",
-    "quadratic simultaneous",
-    "coordinate geometry",
-    "x squared plus y squared",
-    "graphing",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -33,7 +12,6 @@
       "circle": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The circle. Its equation and outline are derived; you give only its centre and radius.",
         "properties": {
           "center": {
             "type": "array",
@@ -41,17 +19,14 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "Centre [a, b]. Default [0, 0] — the origin, giving x² + y² = r²."
+            "maxItems": 2
           },
           "radius": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Radius r (> 0). The equation x² + y² = r² (or (x − a)² + (y − b)² = r²) is derived from it."
+            "exclusiveMinimum": 0
           },
           "centerLabel": {
-            "type": "string",
-            "description": "Optional name for the centre (e.g. \"C\"), drawn beside the centre dot. Omit for an unlabelled centre; the origin needs none (the axes show 0)."
+            "type": "string"
           }
         },
         "required": [
@@ -61,7 +36,6 @@
       "axes": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The window. OMIT to auto-fit a square window around the circle with a small margin. Always square-scaled so the circle is round.",
         "properties": {
           "x": {
             "type": "array",
@@ -69,8 +43,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -78,29 +51,24 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the y-axis."
+            "maxItems": 2
           },
           "step": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Grid-line spacing. Default 1 so every lattice point sits on a crossing (helps read coordinates)."
+            "exclusiveMinimum": 0
           },
           "labelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Spacing of the numbers along the axes. Default: auto (a multiple of step coarse enough that the numbers do not crowd)."
+            "exclusiveMinimum": 0
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show the background grid. Default true."
+        "type": "boolean"
       },
       "points": {
         "type": "array",
         "maxItems": 4,
-        "description": "Points ON the circle. Each is given by its coordinates; the position is snapped exactly onto the circle, and the radius, tangent and tangent equation are derived from it.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -111,40 +79,31 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "Coordinates [x, y] of a point on the circle. Pick a lattice point so the figure and the derived tangent equation are exact, e.g. (3, 4) on x² + y² = 25, or (5, 5) on (x − 2)² + (y − 1)² = 25."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Short name drawn beside the point, e.g. \"P\" or \"A\". Omit for none."
+              "type": "string"
             },
             "radius": {
-              "type": "boolean",
-              "description": "Draw the radius (centre → point) as a dashed construction line. Default false."
+              "type": "boolean"
             },
             "tangent": {
-              "type": "boolean",
-              "description": "Draw the tangent at this point (perpendicular to the radius). Its equation is shown unless occludeTangent or showTangentEquation false. Default false."
+              "type": "boolean"
             },
             "rightAngle": {
-              "type": "boolean",
-              "description": "Mark the radius⊥tangent right angle. Defaults to true when BOTH radius and tangent are drawn; set false to suppress it."
+              "type": "boolean"
             },
             "showCoords": {
-              "type": "boolean",
-              "description": "Show the (x, y) readout beside the point. Default true."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide this point's coordinates as \"(?, ?)\" — the \"what are its coordinates?\" hook. The point itself stays visible. Default false."
+              "type": "boolean"
             },
             "occludeTangent": {
-              "type": "boolean",
-              "description": "Hide this point's tangent equation as \"?\" — the \"find the equation of the tangent\" hook. The tangent line still draws. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the point (and its readout) in amber — result/emphasis. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -155,30 +114,24 @@
       "lines": {
         "type": "array",
         "maxItems": 3,
-        "description": "Straight lines drawn across the window; the model derives and marks where each meets the circle.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "expr": {
-              "type": "string",
-              "description": "A straight-line equation: \"y = 2x + 1\", \"y = -x + 5\", \"x = 3\" (vertical), \"2x + 3y = 12\". The intersection point(s) with the circle are derived by solving the quadratic."
+              "type": "string"
             },
             "label": {
-              "type": "string",
-              "description": "Text drawn along the line (defaults to the equation). Omit to label it with its own equation; set \"\" for no label."
+              "type": "string"
             },
             "showIntersections": {
-              "type": "boolean",
-              "description": "Mark the point(s) where the line meets the circle, with coordinate readouts. Default true."
+              "type": "boolean"
             },
             "occludeIntersections": {
-              "type": "boolean",
-              "description": "Hide the intersection coordinates as \"(?, ?)\" — the \"find where the line meets the circle\" hook. The points still mark. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this line in amber. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -192,36 +145,28 @@
           "gradient-intercept",
           "normal",
           "both"
-        ],
-        "description": "Which written form of a derived tangent equation to show. \"gradient-intercept\" → y = mx + c (default; m, c as exact fractions, with the special cases x = k and y = k for vertical/horizontal tangents). \"normal\" → the integer form px + qy = c. \"both\" → both, stacked."
+        ]
       },
       "showTangentEquation": {
-        "type": "boolean",
-        "description": "Show the equation beside every drawn tangent. Default true (use point.occludeTangent to hide one as a question)."
+        "type": "boolean"
       },
       "showEquation": {
-        "type": "boolean",
-        "description": "Show the circle's equation. Default true."
+        "type": "boolean"
       },
       "occludeEquation": {
-        "type": "boolean",
-        "description": "Hide the circle's equation as \"?\" — the \"what is the equation of this circle?\" hook. Default false."
+        "type": "boolean"
       },
       "showRadiusLength": {
-        "type": "boolean",
-        "description": "Label each drawn radius with its length r. Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Each point gets a handle pupils can drag to SLIDE it around the circle; the radius, the tangent, its equation and the right-angle mark all recompute live. The point stays on the circle. Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -230,7 +175,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — tangent at (3, 4) on x² + y² = 25, radius and right angle",
       "params": {
         "axes": {
           "x": [
@@ -260,7 +204,6 @@
       }
     },
     {
-      "label": "Answer space — circle and point given, draw the tangent and find its equation",
       "params": {
         "axes": {
           "x": [
@@ -288,7 +231,6 @@
       }
     },
     {
-      "label": "Occluded question — find the equation of the tangent at (6, 8)",
       "params": {
         "axes": {
           "x": [
@@ -320,7 +262,6 @@
       }
     },
     {
-      "label": "Hard case — off-origin circle, tangent at (5, 5) on (x − 2)² + (y − 1)² = 25",
       "params": {
         "axes": {
           "x": [
@@ -357,7 +298,6 @@
       }
     },
     {
-      "label": "Line meets circle — y = x + 1 cuts x² + y² = 25 at two derived points",
       "params": {
         "axes": {
           "x": [
@@ -381,7 +321,6 @@
       }
     },
     {
-      "label": "Drag P around the circle — the tangent stays perpendicular to the radius",
       "params": {
         "axes": {
           "x": [

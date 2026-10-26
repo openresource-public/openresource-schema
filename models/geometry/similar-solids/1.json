@@ -4,43 +4,7 @@
   "name": "similar-solids",
   "version": 1,
   "title": "Similar solids (pair)",
-  "tagline": "a pair of similar 3-D solids (cylinder, cone, frustum, sphere) — B = k × A drawn genuinely larger; label the given dimension on A, B or both; area k², volume k³.",
-  "description": "Two mathematically similar three-dimensional solids of the same kind — a cylinder, cone, conical frustum or sphere — drawn side by side front-on at TRUE relative scale, so solid B is solid A enlarged by a scale factor k and is drawn genuinely k times larger (the figure geometry/solid's two-solid mode cannot draw — that draws the two solids the same display size). You give solid A's raw dimensions and the scale factor k; the model draws A, derives B as A × k, picks one shared drawing scale from the combined span, and labels whichever dimension the question gives — on either solid, or both. Cylinders can be drawn upright (a standing tube, its axial dimension the \"height/length\") or lying on their side (a horizontal tube, length running left-to-right). Each dimension can be labelled with its value, occluded to \"?\" for a reverse \"find this length\" question, highlighted in amber, or overridden with an algebraic symbol; only the dimensions you list are labelled, so you can show just the one measurement the source gives (a frustum by its base radius alone). An optional \"× k\" enlargement arrow can be drawn between the solids for teaching the scale factor. Nothing about B or any label value is authored — B is exactly k × A and every label is the true derived dimension — so the two solids can never be drawn un-similar and a label can never contradict the picture. The figure is a clean labelled diagram; the scale-factor working (length ratio k, area ratio k², volume ratio k³) goes in the lesson text beside it, not on the canvas.",
-  "whenToUse": "Reach for this for the Similar Shapes (Area and Volume) topic: two mathematically similar 3-D solids where B is a visible enlargement of A and the question uses the area (k²) or volume (k³) scale-factor law. Set `shape` (both solids are this kind), `k` (the scale factor B = A × k), and `a.dims` (solid A's raw measurements the shape needs). Solid B is derived (A × k) — never author B's dimensions; give solid B only its display choices under `b`. Fill the dimensions per shape: cylinder → radius (or diameter) + length; cone → radius (or diameter) + height; sphere → radius (or diameter); frustum → baseRadius (R) + topRadius (r) + height (h). For a cylinder set `orientation` to \"upright\" (standing tube) or \"lying\" (horizontal tube — the \"length\" of a lying tube, as in questions about a rolled pipe); it is ignored by the other shapes. Choose which dimension to LABEL with each solid's `label` array — only those keys are annotated, so you can reproduce a source that gives just one measurement (label only the base radius of a frustum, or only the length of a cylinder), and the given dimension can sit on either solid (label A only, B only, or both). Name the solids with `a.letter` / `b.letter` (\"A\"/\"B\", \"P\"/\"Q\"). To pose a reverse problem list the unknown dimension in that solid's `occlude` (its label shows \"?\"); highlight the emphasised dimension with `highlight`; override a dimension with an algebraic `symbol`. Set `show.scaleArrow` to draw the \"× k\" enlargement arrow (teaching / worked examples — off by default, since exam figures rarely draw it); set `show.second` false to reveal the enlargement in stages (base = solid A, later stages bring B in — the figure width is reserved so a staged build never swells). Keep the maths in the block text — write the LSF → ASF (k²) → VSF (k³) working as prose beside the figure; the model draws the labelled diagram, the text does the calculation. Use `unit` for the length unit (default \"cm\"). Synonyms a teacher might use: similar solids, similar shapes area and volume, scale factor, length scale factor, area scale factor, volume scale factor, enlargement, k squared, k cubed, ratio of areas, ratio of volumes, similar cylinders, similar cones, similar frustums, similar spheres, bucket, pipe, tube. Switch primitive when the teaching changes: for two similar FLAT (2-D) figures use geometry/similar-shapes; for a single solid's volume or surface area use geometry/solid; for one truncated cone (bucket, lampshade) use geometry/frustum; for a compound solid such as a cone on a frustum (assembled/exploded) use geometry/composite-solid.",
   "responseModes": [],
-  "tags": [
-    "similar solids",
-    "similar shapes",
-    "area and volume",
-    "scale factor",
-    "length scale factor",
-    "area scale factor",
-    "volume scale factor",
-    "k squared",
-    "k cubed",
-    "ratio of areas",
-    "ratio of volumes",
-    "enlargement",
-    "similar cylinders",
-    "similar cones",
-    "similar frustums",
-    "similar spheres",
-    "cylinder",
-    "cone",
-    "frustum",
-    "sphere",
-    "bucket",
-    "pipe",
-    "tube",
-    "lying cylinder",
-    "horizontal cylinder",
-    "3d shape",
-    "solid",
-    "front-on",
-    "mensuration",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -52,67 +16,55 @@
           "cone",
           "frustum",
           "sphere"
-        ],
-        "description": "The kind of solid — BOTH solids are this kind (that is what \"similar\" means). \"cylinder\" = a circular tube (upright or lying, see orientation). \"cone\" = a right circular cone, apex above the base centre. \"frustum\" = a conical frustum (a cone with its top sliced off parallel to the base — a bucket / lampshade). \"sphere\" = a ball."
+        ]
       },
       "k": {
         "type": "number",
-        "exclusiveMinimum": 0,
-        "description": "The scale factor from solid A to solid B: every linear dimension of B is k × the matching dimension of A, and B is DRAWN k times larger. k = 2 draws B twice the size of A; k = 1.5 draws B half as big again. Use k > 1 so B is the enlargement (the usual figure). The area ratio is k² and the volume ratio k³ — but those are the block text's job, not drawn. Default 2."
+        "exclusiveMinimum": 0
       },
       "orientation": {
         "type": "string",
         "enum": [
           "upright",
           "lying"
-        ],
-        "description": "CYLINDER only (ignored by cone, frustum, sphere): \"upright\" (default) draws standing tubes with the length running vertically; \"lying\" draws horizontal tubes resting on their side with the length running left-to-right (a rolled pipe / log). Choose \"lying\" when the question labels the \"length\" of a tube lying down."
+        ]
       },
       "a": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Solid A — the first (smaller) solid. Its raw dimensions define the shape; solid B is derived as A × k.",
         "properties": {
           "dims": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Solid A's raw measurements, in the chosen unit, as plain numbers. Supply the ones the shape needs; others are ignored. cylinder: radius (or diameter) + length. cone: radius (or diameter) + height. sphere: radius (or diameter). frustum: baseRadius (R, the larger bottom radius) + topRadius (r, the smaller top radius) + height (h). Solid B's dimensions are these × k — never author them.",
             "properties": {
               "radius": {
                 "type": "number",
-                "exclusiveMinimum": 0,
-                "description": "cylinder / cone / sphere base or great-circle radius. Give this OR diameter, not both."
+                "exclusiveMinimum": 0
               },
               "diameter": {
                 "type": "number",
-                "exclusiveMinimum": 0,
-                "description": "cylinder / cone / sphere DIAMETER — an alternative to radius for a question that gives the diameter; the figure labels a double-headed arrow across the full width. The radius (diameter ÷ 2) sets the drawn size."
+                "exclusiveMinimum": 0
               },
               "length": {
                 "type": "number",
-                "exclusiveMinimum": 0,
-                "description": "cylinder axial length (the \"height\" of an upright tube, the \"length\" of a lying one)."
+                "exclusiveMinimum": 0
               },
               "height": {
                 "type": "number",
-                "exclusiveMinimum": 0,
-                "description": "cone perpendicular height (apex straight above the base centre); frustum perpendicular height h."
+                "exclusiveMinimum": 0
               },
               "baseRadius": {
                 "type": "number",
-                "exclusiveMinimum": 0,
-                "description": "frustum base radius R (the larger, bottom radius). Must be greater than topRadius."
+                "exclusiveMinimum": 0
               },
               "topRadius": {
                 "type": "number",
-                "exclusiveMinimum": 0,
-                "description": "frustum top radius r (the smaller, top radius). Must be less than baseRadius."
+                "exclusiveMinimum": 0
               }
             }
           },
           "letter": {
-            "type": "string",
-            "description": "The caption letter drawn above this solid to name it, e.g. \"A\" and \"B\", or \"P\" and \"Q\". Default \"A\" for the first solid and \"B\" for the second. Keep it short (1–2 chars)."
+            "type": "string"
           },
           "label": {
             "type": "array",
@@ -126,8 +78,7 @@
                 "baseRadius",
                 "topRadius"
               ]
-            },
-            "description": "Which dimensions to annotate on THIS solid with their value + unit (e.g. \"8 cm\"). Only the keys you list are labelled; every other dimension draws unlabelled — this is how you show ONLY the dimension the question gives (the frustum labelled by its base radius alone, a cylinder by its length alone). Valid keys for the shape: cylinder → \"radius\" (or \"diameter\") and \"length\"; cone → \"radius\" (or \"diameter\") and \"height\"; sphere → \"radius\" (or \"diameter\"); frustum → \"baseRadius\", \"topRadius\" and \"height\". A label reads just the value and unit — no \"r =\" prefix (use `symbol` for that). Independent per solid, so the given dimension can sit on either solid (label A only, B only, or both)."
+            }
           },
           "occlude": {
             "type": "array",
@@ -141,8 +92,7 @@
                 "baseRadius",
                 "topRadius"
               ]
-            },
-            "description": "Dimensions on THIS solid whose label shows \"?\" instead of the value — the reverse \"find this length\" hook. The key must also be in `label` (you occlude a label that is drawn). The dimension stays drawn at its true size; only its number is hidden. Same keys as `label`."
+            }
           },
           "highlight": {
             "type": "array",
@@ -156,37 +106,29 @@
                 "baseRadius",
                 "topRadius"
               ]
-            },
-            "description": "Dimensions on THIS solid to draw in amber for emphasis (the dimension the question is driving at). Same keys as `label`."
+            }
           },
           "symbol": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Symbolic label overrides for THIS solid: print this exact string on the dimension instead of its number + unit — an algebraic figure (radius labelled \"r\", length \"2x\"). The drawn size is still the true dimension, so proportions stay honest. A symbol-labelled dimension ignores occlude (the symbol is the display). No unit is printed.",
             "properties": {
               "radius": {
-                "type": "string",
-                "description": "Symbol printed for the radius, e.g. \"r\"."
+                "type": "string"
               },
               "diameter": {
-                "type": "string",
-                "description": "Symbol printed on the diameter arrow, e.g. \"d\"."
+                "type": "string"
               },
               "length": {
-                "type": "string",
-                "description": "Symbol printed for the length (cylinder axial dimension), e.g. \"l\"."
+                "type": "string"
               },
               "height": {
-                "type": "string",
-                "description": "Symbol printed for the height, e.g. \"h\"."
+                "type": "string"
               },
               "baseRadius": {
-                "type": "string",
-                "description": "Symbol printed for the frustum base radius R, e.g. \"R\"."
+                "type": "string"
               },
               "topRadius": {
-                "type": "string",
-                "description": "Symbol printed for the frustum top radius r, e.g. \"r\"."
+                "type": "string"
               }
             }
           }
@@ -198,7 +140,6 @@
       "b": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Solid B — the second (enlarged) solid. Its dimensions are DERIVED (solid A × k) and cannot be authored; this object carries only B's display choices (letter, which dimensions to label / occlude / highlight, symbol overrides). Omit it to accept the defaults (letter \"B\", no labels on B).",
         "properties": {
           "letter": {
             "$ref": "#/properties/a/properties/letter"
@@ -218,31 +159,25 @@
         }
       },
       "unit": {
-        "type": "string",
-        "description": "The linear unit for the dimensions, e.g. \"cm\", \"m\", \"mm\". Labels read \"8 cm\". Default \"cm\"."
+        "type": "string"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Figure furniture toggles.",
         "properties": {
           "scaleArrow": {
-            "type": "boolean",
-            "description": "Draw a \"× k\" enlargement arrow between solid A and solid B (amber) — the scale-factor cue, for teaching and worked examples. Default false (exam figures usually omit it)."
+            "type": "boolean"
           },
           "second": {
-            "type": "boolean",
-            "description": "Draw solid B. Default true. Set false to draw only solid A while still reserving B's space (the figure width is unchanged) — the base frame of a staged build that brings the enlargement in. Rarely authored directly; used by staged showcases."
+            "type": "boolean"
           },
           "hiddenEdges": {
-            "type": "boolean",
-            "description": "Draw the edges hidden behind each solid as dashed construction lines. Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short caption centred above the whole figure (e.g. \"Two similar cylinders\"). The top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -253,7 +188,6 @@
   },
   "examples": [
     {
-      "label": "Blank answer space — two similar cones, heights labelled (find the volume of B)",
       "params": {
         "header": "Cone B is similar to cone A",
         "shape": "cone",
@@ -278,7 +212,6 @@
       }
     },
     {
-      "label": "Worked example — two similar cylinders with the × k enlargement arrow (k = 1.5)",
       "params": {
         "shape": "cylinder",
         "orientation": "upright",
@@ -309,7 +242,6 @@
       }
     },
     {
-      "label": "Occluded question — two similar cones, B height hidden (\"find the height of B\")",
       "params": {
         "shape": "cone",
         "k": 3,
@@ -339,7 +271,6 @@
       }
     },
     {
-      "label": "Hard case — two similar frustums, base-radius-only labels (k = 2, R only given)",
       "params": {
         "header": "Two similar buckets",
         "shape": "frustum",
@@ -365,7 +296,6 @@
       }
     },
     {
-      "label": "Lying cylinders — two horizontal tubes, lengths labelled (k = 1.5)",
       "params": {
         "header": "Two similar pipes",
         "shape": "cylinder",
@@ -391,7 +321,6 @@
       }
     },
     {
-      "label": "Sphere pair — radii labelled, × k arrow (k = 3)",
       "params": {
         "shape": "sphere",
         "k": 3,

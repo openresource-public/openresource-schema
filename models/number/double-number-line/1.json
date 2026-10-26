@@ -4,37 +4,7 @@
   "name": "double-number-line",
   "version": 1,
   "title": "Double number line",
-  "tagline": "Two aligned 0-based scales in direct proportion; one correspondence derives the scaling and every partner value — recipes, rates, percentages, unitary.",
-  "description": "Two parallel horizontal scales drawn one above the other and aligned, both starting at 0 on the left, in direct proportion — the model for proportional reasoning. You name the two quantities (top and bottom) and give one correspondence between them (ratio, e.g. top 3 ↔ bottom 75); the model derives the scaling k = bottom ÷ top, the bottom scale's whole extent and every bottom number, the aligned tick positions, and each marked point's value on the other scale. Mark points by their value on either scale and the partner value is computed; occlude a point's top or bottom readout to pose the question (\"how much for 5?\", \"find 100%\"), and the answer derives — never authored. Optional graduated ticks turn it into a conversion ruler, and an optional \"× k\" annotation shows the scaling. Covers recipes and ratio/proportion, percentages of an amount, rates (speed, currency and unit conversion) and the unitary method.",
-  "whenToUse": "Reach for this whenever two quantities are in direct proportion (both zero together) and the teaching is reading one against the other: recipes and scaling (\"3 lemons make 75 ml — how much for 5?\"), best buys (one product per line), percentages of an amount (a 0–100 percent scale against the amount: \"35 is 70%, find 100%\"), rates — speed (distance against time), currency and unit conversion (miles ↔ km, £ ↔ €) — and the unitary method (find the value of one, then scale). Set top and bottom to the two quantities (label + optional unit). Give one correspondence in ratio: ratio.top of the top quantity lines up with ratio.bottom of the bottom quantity — this fixes the scaling; every other bottom value is derived, so choose a correspondence that makes the bottom numbers tidy (or just mark the landmark points you need). Add points to mark values: each point gives top or bottom (the value you know on that scale) and the partner is computed and shown; give occludeBottom (or occludeTop) to hide the value being found behind \"?\", and highlight the answer. The known correspondence is usually one of your points. Set top.max to fix the line's length (it is clamped up so points never run off the end); omit it to auto-fit. Set ticks.step for a graduated conversion ruler (the bottom mirrors the top's tick positions with derived numbers); use ticks.labelStep to number every few ticks on a wide line. showScaling draws \"× k\" between the scales — a worked-method scaffold, so leave it off for a question (it would give the answer away). Set draggable to let pupils slide a point and watch both quantities grow together. Cross-block convention: keep the same two quantities, ratio and range across a lesson so pupils read the proportion, not a redrawn pair of lines. Switch model when the teaching changes — for a single line of values, jumps or inequalities use number/number-line; for sharing one amount in a ratio or a fraction of an amount as parts of a whole use number/bar-model. Synonyms a teacher might use: double number line, ratio number line, proportion, proportional reasoning, scaling, recipe, best buy, unit rate, unitary method, percentage of an amount, find 100%, rate, conversion, exchange rate, miles to km, scale factor.",
   "responseModes": [],
-  "tags": [
-    "double number line",
-    "ratio number line",
-    "proportion",
-    "proportional reasoning",
-    "ratio",
-    "rate",
-    "unit rate",
-    "unitary method",
-    "scaling",
-    "scale factor",
-    "recipe",
-    "best buy",
-    "percentage",
-    "percentage of an amount",
-    "find 100 percent",
-    "conversion",
-    "unit conversion",
-    "currency",
-    "exchange rate",
-    "miles",
-    "kilometres",
-    "speed",
-    "distance time",
-    "number",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -42,52 +12,42 @@
       "top": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The TOP scale — the quantity drawn on the upper line. Runs from 0 on the left to its maximum on the right; its values are the ones you author (the bottom scale is derived from them through the ratio).",
         "properties": {
           "label": {
-            "type": "string",
-            "description": "Name of the top quantity, shown to the right of the line, e.g. \"lemons\", \"percent (%)\", \"miles\", \"time (hours)\". Omit for an unnamed scale."
+            "type": "string"
           },
           "unit": {
-            "type": "string",
-            "description": "Optional short unit appended to top values, e.g. \"ml\", \"%\", \"km\", \"£\". Use when the number alone is ambiguous; omit when the label already carries the unit."
+            "type": "string"
           },
           "max": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The value at the RIGHT end of the top scale — sets the line's length. Clamped UP if a marked point or the ratio sits beyond it, so points never run off the end. Omit to auto-fit a little past the furthest marked value. For a percent scale set 100."
+            "exclusiveMinimum": 0
           }
         }
       },
       "bottom": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The BOTTOM scale — the quantity drawn on the lower line. You only name it: its extent and EVERY number are derived from the top scale through the ratio (bottom = top × k). There is deliberately no way to author a bottom value — the proportionality is the lesson.",
         "properties": {
           "label": {
-            "type": "string",
-            "description": "Name of the bottom quantity, shown to the right of the lower line, e.g. \"juice (ml)\", \"amount\", \"kilometres\", \"distance (km)\". Omit for an unnamed scale."
+            "type": "string"
           },
           "unit": {
-            "type": "string",
-            "description": "Optional short unit appended to bottom values, e.g. \"ml\", \"km\", \"€\". Omit when the label already carries the unit."
+            "type": "string"
           }
         }
       },
       "ratio": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The ONE known correspondence that fixes the scaling: ratio.top of the top quantity lines up with ratio.bottom of the bottom quantity (e.g. { top: 3, bottom: 75 } ⇒ 3 lemons ↔ 75 ml ⇒ × 25). This is the only authored source of the proportion — k = bottom ÷ top, and every other bottom value follows. Both must be positive.",
         "properties": {
           "top": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The top-quantity value in the correspondence (e.g. 3 lemons, 70 percent, 5 miles)."
+            "exclusiveMinimum": 0
           },
           "bottom": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "The bottom-quantity value it lines up with (e.g. 75 ml, 35, 8 km)."
+            "exclusiveMinimum": 0
           }
         },
         "required": [
@@ -98,21 +58,17 @@
       "ticks": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Optional regular graduation of the top scale (the bottom mirrors the SAME positions with its derived numbers) — turns the figure into a conversion ruler. Omit for a landmark figure where only the marked points carry ticks.",
         "properties": {
           "step": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Spacing of tick marks on the top scale, in top-quantity units (e.g. 1 mile, 10 percent). Ticks run from 0 to the top maximum."
+            "exclusiveMinimum": 0
           },
           "labelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Number the scale every this many units while ticks stay at step — e.g. step 1 with labelStep 5 ticks every unit but numbers every 5. Use a multiple of step. Default: every tick is numbered (auto-thinned if they would crowd)."
+            "exclusiveMinimum": 0
           },
           "show": {
-            "type": "boolean",
-            "description": "Show the graduated ticks and their numbers. Default true when ticks is present. Set false to keep the tick positions for alignment but draw no numbers (a bare ruler)."
+            "type": "boolean"
           }
         },
         "required": [
@@ -121,36 +77,29 @@
       },
       "points": {
         "type": "array",
-        "description": "Values marked ON the line. Each point is anchored by its value on ONE scale — give top (the value you know on the top quantity) OR bottom (the value you know on the bottom quantity) — and the partner value on the other scale is computed and shown. A point given BOTH top and bottom is a fully-known correspondence (both shown). Occlude the top or bottom readout to pose the question; highlight the answer. The known correspondence is usually one of these points.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "top": {
               "type": "number",
-              "minimum": 0,
-              "description": "The point's value on the TOP scale. Give this to anchor the point by the top quantity (its bottom value is then derived). 0 marks the shared origin."
+              "minimum": 0
             },
             "bottom": {
               "type": "number",
-              "minimum": 0,
-              "description": "The point's value on the BOTTOM scale. Give this (instead of top) to anchor the point by the bottom quantity (its top value is then derived). If both top and bottom are given the point is a fully-known correspondence."
+              "minimum": 0
             },
             "label": {
-              "type": "string",
-              "description": "Optional caption beside the point (e.g. \"best buy\", \"target\"). The numeric readouts show regardless; this names the point."
+              "type": "string"
             },
             "occludeTop": {
-              "type": "boolean",
-              "description": "Render the point's TOP readout as \"?\" — the question hook when the top quantity is the unknown. The dot stays visible. Default false."
+              "type": "boolean"
             },
             "occludeBottom": {
-              "type": "boolean",
-              "description": "Render the point's BOTTOM readout as \"?\" — the usual question hook (\"how much / how many?\"). The dot stays visible. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber the point (dot, connector and readouts) — answer / result emphasis. Default false."
+              "type": "boolean"
             }
           },
           "anyOf": [
@@ -168,20 +117,16 @@
         }
       },
       "showScaling": {
-        "type": "boolean",
-        "description": "Draw the derived multiplier \"× k\" between the two scales (bottom = top × k), with a small arrow from the top line to the bottom. A worked-method scaffold — leave OFF for a question, where it would give the answer away. Default false."
+        "type": "boolean"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. the context (\"3 lemons give 75 ml\"). Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only exploration. Each marked point becomes a handle a pupil can slide along the line (snapped to a sensible increment); its position and BOTH derived readouts recompute live, so the two quantities are seen to grow together in proportion. Exploratory only — the drag is not saved."
+        "type": "boolean"
       }
     },
     "required": [
@@ -192,7 +137,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — recipe proportion: 3 lemons ↔ 75 ml, find 5 lemons (× 25 shown)",
       "params": {
         "top": {
           "label": "lemons"
@@ -217,7 +161,6 @@
       }
     },
     {
-      "label": "Blank answer space — the recipe scaffold with the target unmarked",
       "params": {
         "top": {
           "label": "lemons",
@@ -238,7 +181,6 @@
       }
     },
     {
-      "label": "Occluded question — speed/rate: 150 km in 2 hours, how far in 5?",
       "params": {
         "top": {
           "label": "time (hours)"
@@ -263,7 +205,6 @@
       }
     },
     {
-      "label": "Hard case — percentage of an amount: 35 is 70%, find 100%",
       "params": {
         "top": {
           "label": "percent",
@@ -295,7 +236,6 @@
       }
     },
     {
-      "label": "Conversion ruler (graduated) — miles ↔ km, 5 miles ≈ 8 km",
       "params": {
         "top": {
           "label": "miles",
@@ -322,7 +262,6 @@
       }
     },
     {
-      "label": "Unitary method — non-integer unit value: 4 pancakes need 250 g, find 1 then 9",
       "params": {
         "top": {
           "label": "pancakes",

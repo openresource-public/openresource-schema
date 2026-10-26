@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.1/bento-content.schema.json",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.2/bento-content.schema.json",
   "title": "block content",
   "description": "The `content` object of a block (`type: 'bento'`, the fixed discriminator): an optional stem, a list of tiles on the 12-column grid, and an optional beat timeline. Generated from the runtime validator — regenerate rather than edit. Prose documentation: blocks/bento.md.",
   "type": "object",
@@ -14,7 +14,7 @@
           "$ref": "#/$defs/richTextDoc"
         }
       },
-      "description": "Optional framing line in a reserved band ABOVE the grid (\"The diagrams show examples of…\"). Text only — stimulus figures are grid tiles."
+      "description": "An optional line of text above the grid that frames the block, such as the stem of a question. Figures belong in tiles, not here."
     },
     "tiles": {
       "type": "array",
@@ -25,15 +25,15 @@
           "id": {
             "type": "string",
             "minLength": 1,
-            "description": "Stable id, unique within the block. Beat ops and dialogue `about` anchors reference it."
+            "description": "An id unique within the block. Beats and dialogue turns refer to a tile by it."
           },
           "part": {
             "type": "string",
-            "description": "Optional part tag grouping tiles into labelled question parts — a lowercase letter or roman numeral (\"a\", \"b\", \"i\", …). Every surface renders the \"(a)\" label FROM this field; never write the label into the tile text. Keep a part's tiles contiguous in the list."
+            "description": "Groups tiles into the lettered or numbered parts of a question: a lowercase letter or roman numeral. Surfaces render the part label from this field, so the tile text does not repeat it. A part's tiles are contiguous in the list."
           },
           "speaker": {
             "type": "string",
-            "description": "Optional speaker id (of some dialogue tile in this block) who \"owns\" this tile — renders avatar chrome beside it with no speech bubble (\"Sofia's data\")."
+            "description": "The id of a speaker in a dialogue tile of this block. The tile is shown as that speaker's, with their avatar beside it and no speech bubble."
           },
           "cell": {
             "type": "object",
@@ -43,24 +43,24 @@
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 12,
-                "description": "1-based leftmost column (grid is 12 columns: w=3 quarter, w=4 third, w=6 half, w=12 full)."
+                "description": "The leftmost column, counting from 1 of 12."
               },
               "row": {
                 "type": "integer",
                 "minimum": 1,
-                "description": "1-based top band. Bands are unbounded; a slide-page is 6 bands and taller blocks paginate at band boundaries."
+                "description": "The top band, counting from 1. Bands are unbounded; a slide shows six, and a taller block paginates at band boundaries."
               },
               "w": {
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 12,
-                "description": "Column span. Prefer 3/4/6/12 (quarter/third/half/full). Prose narrower than 3 draws a warning."
+                "description": "The width in columns. Spans of 3, 4, 6 and 12 are a quarter, a third, a half and the full width."
               },
               "h": {
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 6,
-                "description": "Band span, max 6 (a tile must fit one slide-page of 6 bands)."
+                "description": "The height in bands, at most 6, so that a tile fits one slide."
               }
             },
             "required": [
@@ -69,7 +69,7 @@
               "w",
               "h"
             ],
-            "description": "The rect this tile occupies on the 12-column grid. No two tiles may overlap; holes are fine."
+            "description": "The rectangle the tile occupies on the 12-column grid. Tiles do not overlap; empty cells are allowed."
           },
           "marking": {
             "oneOf": [
@@ -98,7 +98,7 @@
                       "equivalent",
                       "same-form"
                     ],
-                    "description": "latex match only: equivalent (default) accepts any algebraically-equal form; same-form assesses the written form structurally."
+                    "description": "For LaTeX keys only: \"equivalent\" accepts any algebraically equal form; \"same-form\" compares the written form."
                   },
                   "tolerance": {
                     "type": "number",
@@ -144,7 +144,7 @@
                         }
                       }
                     },
-                    "description": "Cross-slot constraints on typed kinds. blanks + anyOrder grades the group by one-to-one assignment (either order accepted); distinct requires the entries to differ; sum requires the entries to total exactly this number. pairs (ordered slot-id tuples, e.g. [[\"x1\",\"y1\"],[\"x2\",\"y2\"]] with anyOrder: true) grades whole tuples by assignment — solution pairs in either order, never mixed across pairs; a group carries blanks or pairs, not both."
+                    "description": "Constraints across several typed answers. A group of blanks with anyOrder is marked by one-to-one assignment, so either order is accepted; distinct requires the entries to differ; sum requires them to total the given number. A group of pairs lists ordered tuples of blank ids and is marked tuple by tuple. A group carries blanks or pairs, not both."
                   }
                 },
                 "required": [
@@ -327,7 +327,7 @@
                 ]
               }
             ],
-            "description": "How this tile is scored. mode \"auto\" (machine key) sits on markable kinds only (options / matching / ordering / gaps / table / model); mode \"rubric\" (human-marked extended response — scheme + marks, never auto-scored) sits on a `text` or `working` tile carrying the task statement. A marked tile requires block role \"question\" (or \"worked-example\"); answers persist keyed (blockId, tileId)."
+            "description": "How the tile is scored. Mode \"auto\" carries a machine-checked key and sits on an options, matching, ordering, gaps, table or model tile. Mode \"rubric\" carries a scheme a person marks against and sits on a text or working tile that states the task. Mode \"none\" is unmarked. A marked tile's block declares role \"question\" or \"worked-example\". Answers are stored against the block id and tile id."
           },
           "response": {
             "type": "object",
@@ -339,19 +339,19 @@
                   "free-text",
                   "working"
                 ],
-                "description": "free-text: ruled prose lines. working: squared/working space for stepped maths."
+                "description": "\"free-text\" gives ruled prose lines; \"working\" gives squared space for stepped mathematics."
               },
               "lines": {
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 30,
-                "description": "Answer-space size in lines. Omit for the default: 2 lines per rubric mark, clamped 4–12."
+                "description": "The size of the answer space in lines. When omitted, two lines per rubric mark, between 4 and 12."
               }
             },
             "required": [
               "kind"
             ],
-            "description": "Rubric-marked tiles only: the answer space the pupil gets — rendered as input on web, ruled/working space in print and DOCX. Display + capture furniture; nothing machine-marks the response (rubric scoring is human/AI, out of scope)."
+            "description": "The answer space of a rubric-marked tile: an input on the web, ruled lines or working space in print and in Word export. Nothing marks what is written here by machine."
           },
           "responseMode": {
             "type": "string",
@@ -382,23 +382,23 @@
               "sketch-curve",
               "draw-tangent"
             ],
-            "description": "Answer-on-the-model tiles only (a marked `model` tile): the interaction the pupil uses on the figure — place-point (drag a point to a coordinate; correctAnswer { x, y } + optional tolerance), select-point (tap a rendered point; correctAnswer a label or labels), select-region (tap an area; correctAnswer a set of region ids), run-value (a runtime model reports one computed value as an observation; correctAnswer { value, require?, exemplar? } + optional tolerance), run-sheet (\"fill the column with the right formula\" / \"format the prices as currency\" on cs/spreadsheet — the SKILLS its gestures make performable, over a REGION rather than one cell. A fill check marks CELL CONTENT, not the values on show: each marked cell must hold a formula whose references adjust like the pattern's, row by row, with $ anchors holding, so typing the answers as literals fails at once while any correct route — dragged or hand-typed — passes. A format check marks the resulting format, which is exactly what it asked for. correctAnswer { derived: true }, and the model params must carry markSheet ({ fill, format }) with the marked cells left unfilled, so static surfaces pose the tinted answer region and an authored pattern is never rendered), run-program (\"write a program/function that…\" on cs/code-editor — the model executes the pupil's code AND an authored reference over the same tests and marks agreement of what they DO: printed lines per stdin test in program mode (Python), or the named function's return values in function mode (Python or JavaScript, and the reference may be a different language from the pupil); correctAnswer { derived: true }, and the model params must carry markProgram with the visible code param left as the task, so static surfaces pose a blank answer space and the reference is never rendered), run-query (\"write a query that returns…\" on cs/sql-playground — the model runs the pupil's query AND an authored reference query over its own tables plus derived variants of that data, and marks agreement of the result-sets, so every equivalent query passes and one that hard-codes rows read off the table fails; correctAnswer { derived: true }, and the model params must carry markQuery.reference with the visible query param left as the task, so static surfaces pose a blank answer space and the reference is never rendered), run-figure (\"write a program that draws…\" on cs/turtle — the model RUNS the pupil's program and compares the path it draws with the target shape in markFigure (regular-polygon / rectangle / star / path), by default at any position and orientation, so every program that draws the right figure passes and nothing about the wording is marked except the optional method facts in markFigure.require (uses-repeat, uses-procedure, max-lines:n); correctAnswer { derived: true }, the visible code param stays the task, and the question text must SAY what to draw, since the model never draws the target), fill-derived (a derive-first model — two-way-table, frequency-tree, stem-leaf — makes every hidden cell/node/row an editable box and self-checks each typed value against the value it derives from its own data; correctAnswer { derived: true }, no authored values), place-derived (fill-derived's positional twin — the pupil DRAGS role-named markers onto the figure's scale instead of typing; the model self-checks each placed position against the value it derives — box-cf box-plot completion; correctAnswer { derived: true }), construct (fill-derived's shape-the-figure twin — the pupil drags the figure itself into proportion, e.g. pie-chart sector boundaries from an equal-sector start; the model self-checks each part against the value it derives, within its tolerance param; correctAnswer { derived: true }, and the model params must also set construct: true so print/static surfaces pose the question instead of drawing the answer), place-line (\"draw the line …\" on a coordinate grid — a complete but WRONG line is pre-placed as two draggable handle points snapping to the grid; the model self-checks the committed points against the target line in its placeLine param — any two distinct points on the correct line pass; correctAnswer { derived: true }, and the model params must carry placeLine ({m, c} | {x} | {y}) so print/static surfaces pose a blank answer space instead of drawing the answer), show-inequality (\"show the inequality on a number line\" — a complete but WRONG interval is pre-drawn as draggable endpoints and the pupil reshapes it to the target; the model self-checks each component against the constructInequality param; correctAnswer { derived: true }, and the model params must carry constructInequality ({ from, to, fromClosed, toClosed }) so static surfaces pose the wrong start, not the answer — construct's rule, number-line's param), mark-cross (\"mark with a cross the probability that…\" — one or more crosses start PARKED off the scale and the pupil drags each onto the line; the model self-checks each placed cross against the markCrosses param; correctAnswer { derived: true }, and the model params must carry a non-empty markCrosses ([{ at, label? }]) so static surfaces pose the blank scale), plot-curve (\"draw the graph of y = f(x)\" — one handle per tabulated x parks on the x-axis and the pupil drags it up; the model self-checks each placed height against the derived f(x) from its plotCurve param; correctAnswer { derived: true }, and the model params must carry plotCurve ({ fn, xs }) with curves left empty so static surfaces pose the blank grid), transform-curve (\"sketch the graph of y = -f(x)\" — an amber COPY of the shown source curve starts as the identity; the pupil drags it to translate (half-step snap), taps a reflect icon-button to flip it about an axis (one tap = f(-x) or -f(x)), or drags an edge grip to stretch it; the model self-checks the final curve against the transform in its transformCurve param by sampling; correctAnswer { derived: true }, and the model params must carry transformCurve ({ curve?, target: { dx, dy, sx, sy } }) with the source curve drawn in curves — static surfaces pose the source curve alone), sketch-curve (\"sketch y = f(x)\" from RECALL on graphing/function-graph@6 — no base curve is drawn and no table is given, so neither transform-curve nor plot-curve fits: the pupil picks a parent shape from a palette of unnamed shape glyphs and drags/reflects/stretches it into place; the model self-checks each placed curve against the target's derived branch count, asymptote positions and turning points, never pointwise y; correctAnswer { derived: true }, and the model params must carry sketchCurve ({ fns: [{ fn }] }, up to 3 targets so \"both on the same axes\" marks as one figure) with curves left empty unless a curve is genuinely given — static surfaces pose blank answer axes), draw-histogram (\"draw a histogram for the information in the table\" — the class intervals are fixed on the x-axis and the pupil drags each bar's top to its frequency density; the model self-checks each height against the density it derives, frequency ÷ class width; correctAnswer { derived: true }, and the model params must set drawHistogram: true with the full classes so static surfaces pose the blank grid — bars marked given: true are pre-printed context and are not marked), draw-tangent (\"draw a tangent to the curve at x = a\" — the science-rates staple on graphing/first-principles: a deliberately wrong pre-placed line through the marked point pivots as the pupil drags anywhere along it, and the model self-checks their gradient against the derived f′(a) within its gradientTolerance param (or a ±5° by-eye band); correctAnswer { derived: true }, and the model params must set drawTangent: true with point (the touch point) so static surfaces pose the curve + marked point as a blank answer space — the true tangent is never drawn on any surface). The model must support the mode (its library meta responseModes)."
+            "description": "For a marked model tile: how the answer is given on the figure. Each mode names an interaction and what the key is. place-point: a point is placed; the key is coordinates. select-point: a drawn point is chosen; the key is its label. select-region: an area is chosen; the key is a set of region ids. run-value: the model reports a computed value; the key is a value. run-sheet, run-program, run-query and run-figure: the model runs what was written and marks the result; the key is derived from the model's parameters. fill-derived, place-derived and construct: hidden values are typed, placed or shaped and checked against what the model derives from its own data. place-line, show-inequality, mark-cross, plot-curve, transform-curve, sketch-curve, draw-histogram and draw-tangent: a line, interval, cross, curve, bar or tangent is drawn or moved into place and checked against the target named in the model's parameters. For every derived mode the key is { derived: true } and the model's parameters carry the target. The model must list the mode among those it supports."
           },
           "text": {
             "$ref": "#/$defs/richTextDoc",
-            "description": "Prose payload (tiptap). Body paragraphs, bullets."
+            "description": "Prose: paragraphs and lists as a rich-text document."
           },
           "working": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Stepped written maths — equation chains, simultaneous elimination, proofs with reasons, balance method. Use instead of `text` when the content is a multi-line working. Alignment is derived: write each statement as a plain equation, never alignment markup. Prompt prose and given equations are leading lines with align:false. Annotations (label / note / arcs / rule) are the exception, not the default: most lines carry none — annotate only the step a pupil would question, or when reasons are explicitly wanted (a proof, a teacher request). Lists/headings belong in a text block; place-value layouts (column arithmetic, bus stop) in models.",
+            "description": "Stepped written mathematics: equation chains, elimination, proofs with reasons, the balance method. Lines are aligned on their relation automatically from plain equations. Annotations are optional and used sparingly.",
             "properties": {
               "lhsAlign": {
                 "enum": [
                   "right",
                   "left"
                 ],
-                "description": "Alignment of the LHS cell. Default \"right\" (equation chains, elimination — line ends meet the relation). \"left\" suits balance-method layouts where coefficients stack in a column."
+                "description": "How the left-hand side of each line is aligned. \"right\" (the default) suits equation chains; \"left\" suits balance-method layouts."
               },
               "lines": {
                 "type": "array",
@@ -408,52 +408,52 @@
                   "properties": {
                     "statement": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "The line: one paragraph of inline text and/or math runs. A maths line is usually one math node (\"4b-5a=7\")."
+                      "description": "The line: one paragraph of text and mathematics. A mathematical line is usually a single math node."
                     },
                     "label": {
                       "type": "string",
-                      "description": "Gutter lead-in for equation annotations only. Parenthesised integers render as circled equation references — \"(1)\", \"(1)+(2)\", \"3×(1)\"; operation notes (\"×100\", \"∴\") render as written. Labels render in the annotation accent outside the alignment column — never use them as part tags, names or column headings: put \"(b) \" / \"Melvin: \" as a leading text run in the statement, and head a comparison column with a leading align:false text line."
+                      "description": "A short lead-in in the gutter, for equation references and operation notes. Parenthesised integers such as \"(1)\" render as circled references; notes such as \"×100\" render as written."
                     },
                     "note": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Right-column reason (\"angles in a triangle sum to 180°\"). Muted, smaller; may contain math. Sparingly — not a running commentary."
+                      "description": "A reason shown in a right-hand column, smaller and muted; it may contain mathematics."
                     },
                     "rule": {
                       "enum": [
                         "above",
                         "below"
                       ],
-                      "description": "Thick combining rule. \"above\" goes on the result line of an elimination/column sum (reveals with that line); \"below\" underlines this line."
+                      "description": "A thick rule: \"above\" sits on a result line, as in column addition; \"below\" underlines the line."
                     },
                     "align": {
                       "type": "boolean",
-                      "description": "Join the relation-alignment group. Default true; set false for prose lines (\"Case 1: x > 0\") and full-width givens."
+                      "description": "Whether the line joins the relation alignment. Default true; false for prose lines and full-width givens."
                     },
                     "alignAt": {
                       "type": "integer",
-                      "description": "Manual alignment point (character offset in the statement latex) when derivation misjudges. Rarely needed."
+                      "description": "A manual alignment point, as a character offset into the statement, for the rare case where the derived alignment is wrong."
                     },
                     "arcs": {
                       "type": "array",
-                      "description": "Term-link arcs (FOIL expansion pairings and similar): each arc joins two term marks authored in this line's statement latex via \\htmlClass{lv-wkm-<id>}{term}, drawn above or below in the annotation colour.",
+                      "description": "Arcs linking terms in the statement, as in an expansion. Each arc joins two term marks authored in the statement's LaTeX.",
                       "items": {
                         "type": "object",
                         "additionalProperties": false,
                         "properties": {
                           "from": {
                             "type": "string",
-                            "description": "Mark id of the arc's first term."
+                            "description": "The mark id of the first term."
                           },
                           "to": {
                             "type": "string",
-                            "description": "Mark id of the arc's second term."
+                            "description": "The mark id of the second term."
                           },
                           "side": {
                             "enum": [
                               "above",
                               "below"
                             ],
-                            "description": "Which side of the terms the arc bows. Default above."
+                            "description": "Whether the arc bows above or below the terms. Default above."
                           }
                         },
                         "required": [
@@ -471,7 +471,7 @@
               "result": {
                 "type": "object",
                 "additionalProperties": false,
-                "description": "Answer lines: one latex string per line, each centred on a grey dotted answer line (exam-paper style), under the statement columns. Reveals as the final stage.",
+                "description": "Answer lines: one LaTeX string per line, each shown centred on a dotted answer line beneath the working, revealed last.",
                 "properties": {
                   "lines": {
                     "type": "array",
@@ -539,20 +539,20 @@
               "ref": {
                 "type": "string",
                 "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                "description": "Pinned model reference — `family/name@version`, e.g. \"graphing/coordinate-grid@1\" (or a user-lane `user:<id>` ref from the model workshop)."
+                "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
               },
               "params": {
                 "type": "object",
-                "description": "Parameters for the model, matching its published interface. Validated at write time — invalid params are rejected with the failing paths so you can correct and retry."
+                "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
               },
               "altText": {
                 "type": "string",
-                "description": "Agent-authored description of what the rendered model shows, written from the params. Lead with kind: \"Coordinate grid showing points A (3,2) and B (7,5)\", \"Area model for (x+3)(x+2)\". Required — it is the accessibility text, the search surface, and the fallback if the model cannot render."
+                "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
               },
               "caption": {
                 "type": "object",
                 "additionalProperties": true,
-                "description": "Optional figure caption — a tiptap richText doc shown as a small line directly below the model. Use for a gloss that adds teaching value (\"Figure 2: the region x + y < 4\"), not to restate what altText already says. A figure's caption belongs here, on the model — never on a separate tile."
+                "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
               },
               "width": {
                 "type": "number"
@@ -570,25 +570,25 @@
                     "id": {
                       "type": "string",
                       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-                      "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
+                      "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
                     },
                     "ref": {
                       "type": "string",
                       "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                      "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                      "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
                     },
                     "params": {
                       "type": "object",
-                      "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
+                      "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
                     },
                     "altText": {
                       "type": "string",
-                      "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
+                      "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
                     },
                     "revealAt": {
                       "type": "integer",
                       "minimum": 1,
-                      "description": "Answer-synced staging only (a model on a QUESTION, e.g. a marked tile's figure). The answer-reveal BEAT (1-based: 1 = the first \"next\" press, 2 = the second, …) at which this figure stage activates — peg it to whichever beat reveals the matching part of the answer (e.g. the beat that fills the last gap, or reveals the correct option). Between pegs the figure holds. Omit `revealAt` on all steps for the default: the figure completes on the FINAL reveal."
+                      "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
                     }
                   },
                   "required": [
@@ -596,7 +596,7 @@
                     "params"
                   ]
                 },
-                "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
+                "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
               }
             },
             "required": [
@@ -604,7 +604,7 @@
               "params",
               "altText"
             ],
-            "description": "Optional computed-model slot — renders a parameterised, versioned visual from the model library. A peer of `image`: same envelope position, but the model is generated from `params` rather than bound to an asset."
+            "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
           },
           "video": {
             "type": "object",
@@ -612,19 +612,19 @@
             "properties": {
               "url": {
                 "type": "string",
-                "description": "Video url. A YouTube or Vimeo watch/share link, a direct video file (.mp4/.webm/.ogg/.mov), or an uploaded video. The renderer detects the source and embeds the right player. Pin a stable, shareable url."
+                "description": "The video's URL: a YouTube or Vimeo link, a direct video file, or a video uploaded to Open Resource. The renderer chooses the player from the URL."
               },
               "altText": {
                 "type": "string",
-                "description": "Agent-authored description of what the video shows or teaches. Lead with kind: \"Video explaining …\", \"Screencast demonstrating …\", \"Clip of …\". Required — it is the accessibility text, the search surface, and the fallback shown where a video cannot play (print and export surfaces)."
+                "description": "A description of what the video shows or teaches. It is the accessibility text, the text that search sees, and what is shown where a video cannot play, as in print."
               },
               "title": {
                 "type": "string",
-                "description": "Optional short title rendered above the player, e.g. \"Tutorial: balancing equations\"."
+                "description": "An optional short title shown above the player."
               },
               "caption": {
                 "$ref": "#/$defs/richTextDoc",
-                "description": "Optional figcaption (a tiptap richText doc) shown beneath the video — a source credit (\"Source: Khan Academy\"), an author gloss, or both. Agent-authored directly."
+                "description": "An optional caption as a rich-text document, shown beneath the video, such as a source credit."
               },
               "width": {
                 "type": "number"
@@ -637,7 +637,7 @@
               "url",
               "altText"
             ],
-            "description": "Optional embedded-video slot — a playable video from a url (YouTube / Vimeo / direct file / uploaded). A peer of `image` and `primitive`: same envelope position, the figure is a video. Fully agent-authored (url + altText) — no element ref, no hydration."
+            "description": "An embedded video from a URL, in the position an image would take."
           },
           "dialogue": {
             "type": "object",
@@ -717,14 +717,14 @@
                     },
                     "speaker": {
                       "type": "string",
-                      "description": "Must match a speakers[].id."
+                      "description": "The id of one of the tile's speakers."
                     },
                     "text": {
                       "$ref": "#/$defs/richTextDoc"
                     },
                     "about": {
                       "type": "string",
-                      "description": "Optional id of a sibling tile this turn comments on — draws the bubble pointing at that tile. Omit when the turn addresses the whole block."
+                      "description": "Optionally, the id of another tile in the block this turn comments on; the bubble points at it."
                     }
                   },
                   "required": [
@@ -738,7 +738,7 @@
               "speakers",
               "turns"
             ],
-            "description": "Speech: named speakers with avatar chrome, ordered turns. One bubble per turn. A single speaker with one turn is the \"character commenting on a figure\" pattern."
+            "description": "Speech between named speakers, each shown with an avatar, as ordered turns with one bubble per turn."
           },
           "table": {
             "type": "object",
@@ -760,7 +760,7 @@
                         "properties": {
                           "id": {
                             "type": "string",
-                            "description": "Optional cell id. Required only on gap cells of an auto-marked table — marking.correctAnswer keys the accepted answer by this id (survives row/col edits)."
+                            "description": "An optional cell id, required on the gap cells of an auto-marked table so that the key can name them."
                           },
                           "text": {
                             "$ref": "#/$defs/richTextDoc"
@@ -810,7 +810,7 @@
                           },
                           "gap": {
                             "type": "boolean",
-                            "description": "Pose-and-reveal: the cell's content is withheld. Teacher-led → a beat reveals it (target the cell with op reveal). Auto-marked → the pupil types into it (give the cell an id and a marking.correctAnswer entry)."
+                            "description": "The cell's content is withheld. On a teaching surface a beat reveals it; on an auto-marked table the pupil types into it."
                           }
                         }
                       }
@@ -831,7 +831,7 @@
             "required": [
               "rows"
             ],
-            "description": "A rectangular grid of cells (every row the same length). Header semantics via hasHeaderRow / hasHeaderCol. Marking on the tile turns gap cells into typed-answer inputs."
+            "description": "A rectangular grid of cells, every row the same length, with optional header row and column. With marking on the tile, gap cells become typed-answer inputs."
           },
           "options": {
             "type": "object",
@@ -844,7 +844,7 @@
                   "multi",
                   "boolean"
                 ],
-                "description": "single: one correct option. multi: several. boolean: fixed True/False pair (author no options)."
+                "description": "\"single\" has one correct option, \"multi\" several, and \"boolean\" is a fixed true-or-false pair with no authored options."
               },
               "options": {
                 "type": "array",
@@ -908,20 +908,20 @@
                         "ref": {
                           "type": "string",
                           "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                          "description": "Pinned model reference — `family/name@version`, e.g. \"graphing/coordinate-grid@1\" (or a user-lane `user:<id>` ref from the model workshop)."
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
                         },
                         "params": {
                           "type": "object",
-                          "description": "Parameters for the model, matching its published interface. Validated at write time — invalid params are rejected with the failing paths so you can correct and retry."
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
                         },
                         "altText": {
                           "type": "string",
-                          "description": "Agent-authored description of what the rendered model shows, written from the params. Lead with kind: \"Coordinate grid showing points A (3,2) and B (7,5)\", \"Area model for (x+3)(x+2)\". Required — it is the accessibility text, the search surface, and the fallback if the model cannot render."
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
                         },
                         "caption": {
                           "type": "object",
                           "additionalProperties": true,
-                          "description": "Optional figure caption — a tiptap richText doc shown as a small line directly below the model. Use for a gloss that adds teaching value (\"Figure 2: the region x + y < 4\"), not to restate what altText already says. A figure's caption belongs here, on the model — never on a separate tile."
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
                         },
                         "width": {
                           "type": "number"
@@ -939,25 +939,25 @@
                               "id": {
                                 "type": "string",
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-                                "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
                               },
                               "ref": {
                                 "type": "string",
                                 "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
                               },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
                               },
                               "revealAt": {
                                 "type": "integer",
                                 "minimum": 1,
-                                "description": "Answer-synced staging only (a model on a QUESTION, e.g. a marked tile's figure). The answer-reveal BEAT (1-based: 1 = the first \"next\" press, 2 = the second, …) at which this figure stage activates — peg it to whichever beat reveals the matching part of the answer (e.g. the beat that fills the last gap, or reveals the correct option). Between pegs the figure holds. Omit `revealAt` on all steps for the default: the figure completes on the FINAL reveal."
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
                               }
                             },
                             "required": [
@@ -965,7 +965,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
                         }
                       },
                       "required": [
@@ -973,25 +973,25 @@
                         "params",
                         "altText"
                       ],
-                      "description": "Optional computed-model slot — renders a parameterised, versioned visual from the model library. A peer of `image`: same envelope position, but the model is generated from `params` rather than bound to an asset."
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
                     },
                     "shapeCluster": {
                       "type": "object"
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
                     }
                   },
                   "required": [
                     "id"
                   ]
                 },
-                "description": "The choices (omit for boolean)."
+                "description": "The options. Omitted for the boolean variant."
               },
               "justification": {
                 "type": "object",
@@ -1009,7 +1009,7 @@
                         },
                         "correctWhen": {
                           "type": "boolean",
-                          "description": "Which truth value this justification is correct for."
+                          "description": "The truth value this justification is correct for."
                         },
                         "text": {
                           "$ref": "#/$defs/richTextDoc"
@@ -1025,10 +1025,10 @@
                 "required": [
                   "options"
                 ],
-                "description": "Boolean variant only: the \"justify your answer\" secondary options."
+                "description": "For the boolean variant: the secondary options that justify the answer."
               }
             },
-            "description": "Choice question payload. Marking on the tile: single → option id, multi → id array, boolean → boolean."
+            "description": "A choice question. The key is one option id for \"single\", an array of ids for \"multi\", and a boolean for \"boolean\"."
           },
           "matching": {
             "type": "object",
@@ -1040,7 +1040,7 @@
                   "pairs",
                   "categorise"
                 ],
-                "description": "pairs: 1-to-1 (equal columns). categorise: many-to-one (right column = buckets)."
+                "description": "\"pairs\" matches one to one between equal columns; \"categorise\" matches many left items to each right item."
               },
               "leftColumn": {
                 "type": "array",
@@ -1105,20 +1105,20 @@
                         "ref": {
                           "type": "string",
                           "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                          "description": "Pinned model reference — `family/name@version`, e.g. \"graphing/coordinate-grid@1\" (or a user-lane `user:<id>` ref from the model workshop)."
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
                         },
                         "params": {
                           "type": "object",
-                          "description": "Parameters for the model, matching its published interface. Validated at write time — invalid params are rejected with the failing paths so you can correct and retry."
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
                         },
                         "altText": {
                           "type": "string",
-                          "description": "Agent-authored description of what the rendered model shows, written from the params. Lead with kind: \"Coordinate grid showing points A (3,2) and B (7,5)\", \"Area model for (x+3)(x+2)\". Required — it is the accessibility text, the search surface, and the fallback if the model cannot render."
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
                         },
                         "caption": {
                           "type": "object",
                           "additionalProperties": true,
-                          "description": "Optional figure caption — a tiptap richText doc shown as a small line directly below the model. Use for a gloss that adds teaching value (\"Figure 2: the region x + y < 4\"), not to restate what altText already says. A figure's caption belongs here, on the model — never on a separate tile."
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
                         },
                         "width": {
                           "type": "number"
@@ -1136,25 +1136,25 @@
                               "id": {
                                 "type": "string",
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-                                "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
                               },
                               "ref": {
                                 "type": "string",
                                 "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
                               },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
                               },
                               "revealAt": {
                                 "type": "integer",
                                 "minimum": 1,
-                                "description": "Answer-synced staging only (a model on a QUESTION, e.g. a marked tile's figure). The answer-reveal BEAT (1-based: 1 = the first \"next\" press, 2 = the second, …) at which this figure stage activates — peg it to whichever beat reveals the matching part of the answer (e.g. the beat that fills the last gap, or reveals the correct option). Between pegs the figure holds. Omit `revealAt` on all steps for the default: the figure completes on the FINAL reveal."
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
                               }
                             },
                             "required": [
@@ -1162,7 +1162,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
                         }
                       },
                       "required": [
@@ -1170,18 +1170,18 @@
                         "params",
                         "altText"
                       ],
-                      "description": "Optional computed-model slot — renders a parameterised, versioned visual from the model library. A peer of `image`: same envelope position, but the model is generated from `params` rather than bound to an asset."
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
                     },
                     "shapeCluster": {
                       "type": "object"
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
                     }
                   },
                   "required": [
@@ -1252,20 +1252,20 @@
                         "ref": {
                           "type": "string",
                           "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                          "description": "Pinned model reference — `family/name@version`, e.g. \"graphing/coordinate-grid@1\" (or a user-lane `user:<id>` ref from the model workshop)."
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
                         },
                         "params": {
                           "type": "object",
-                          "description": "Parameters for the model, matching its published interface. Validated at write time — invalid params are rejected with the failing paths so you can correct and retry."
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
                         },
                         "altText": {
                           "type": "string",
-                          "description": "Agent-authored description of what the rendered model shows, written from the params. Lead with kind: \"Coordinate grid showing points A (3,2) and B (7,5)\", \"Area model for (x+3)(x+2)\". Required — it is the accessibility text, the search surface, and the fallback if the model cannot render."
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
                         },
                         "caption": {
                           "type": "object",
                           "additionalProperties": true,
-                          "description": "Optional figure caption — a tiptap richText doc shown as a small line directly below the model. Use for a gloss that adds teaching value (\"Figure 2: the region x + y < 4\"), not to restate what altText already says. A figure's caption belongs here, on the model — never on a separate tile."
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
                         },
                         "width": {
                           "type": "number"
@@ -1283,25 +1283,25 @@
                               "id": {
                                 "type": "string",
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-                                "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
                               },
                               "ref": {
                                 "type": "string",
                                 "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
                               },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
                               },
                               "revealAt": {
                                 "type": "integer",
                                 "minimum": 1,
-                                "description": "Answer-synced staging only (a model on a QUESTION, e.g. a marked tile's figure). The answer-reveal BEAT (1-based: 1 = the first \"next\" press, 2 = the second, …) at which this figure stage activates — peg it to whichever beat reveals the matching part of the answer (e.g. the beat that fills the last gap, or reveals the correct option). Between pegs the figure holds. Omit `revealAt` on all steps for the default: the figure completes on the FINAL reveal."
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
                               }
                             },
                             "required": [
@@ -1309,7 +1309,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
                         }
                       },
                       "required": [
@@ -1317,18 +1317,18 @@
                         "params",
                         "altText"
                       ],
-                      "description": "Optional computed-model slot — renders a parameterised, versioned visual from the model library. A peer of `image`: same envelope position, but the model is generated from `params` rather than bound to an asset."
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
                     },
                     "shapeCluster": {
                       "type": "object"
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
                     }
                   },
                   "required": [
@@ -1341,7 +1341,7 @@
               "leftColumn",
               "rightColumn"
             ],
-            "description": "Matching payload. Marking.correctAnswer maps left item id → right item id."
+            "description": "A matching question. The key maps each left item id to a right item id."
           },
           "ordering": {
             "type": "object",
@@ -1410,20 +1410,20 @@
                         "ref": {
                           "type": "string",
                           "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                          "description": "Pinned model reference — `family/name@version`, e.g. \"graphing/coordinate-grid@1\" (or a user-lane `user:<id>` ref from the model workshop)."
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
                         },
                         "params": {
                           "type": "object",
-                          "description": "Parameters for the model, matching its published interface. Validated at write time — invalid params are rejected with the failing paths so you can correct and retry."
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
                         },
                         "altText": {
                           "type": "string",
-                          "description": "Agent-authored description of what the rendered model shows, written from the params. Lead with kind: \"Coordinate grid showing points A (3,2) and B (7,5)\", \"Area model for (x+3)(x+2)\". Required — it is the accessibility text, the search surface, and the fallback if the model cannot render."
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
                         },
                         "caption": {
                           "type": "object",
                           "additionalProperties": true,
-                          "description": "Optional figure caption — a tiptap richText doc shown as a small line directly below the model. Use for a gloss that adds teaching value (\"Figure 2: the region x + y < 4\"), not to restate what altText already says. A figure's caption belongs here, on the model — never on a separate tile."
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
                         },
                         "width": {
                           "type": "number"
@@ -1441,25 +1441,25 @@
                               "id": {
                                 "type": "string",
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-                                "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
                               },
                               "ref": {
                                 "type": "string",
                                 "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
                               },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
                               },
                               "revealAt": {
                                 "type": "integer",
                                 "minimum": 1,
-                                "description": "Answer-synced staging only (a model on a QUESTION, e.g. a marked tile's figure). The answer-reveal BEAT (1-based: 1 = the first \"next\" press, 2 = the second, …) at which this figure stage activates — peg it to whichever beat reveals the matching part of the answer (e.g. the beat that fills the last gap, or reveals the correct option). Between pegs the figure holds. Omit `revealAt` on all steps for the default: the figure completes on the FINAL reveal."
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
                               }
                             },
                             "required": [
@@ -1467,7 +1467,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
                         }
                       },
                       "required": [
@@ -1475,18 +1475,18 @@
                         "params",
                         "altText"
                       ],
-                      "description": "Optional computed-model slot — renders a parameterised, versioned visual from the model library. A peer of `image`: same envelope position, but the model is generated from `params` rather than bound to an asset."
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
                     },
                     "shapeCluster": {
                       "type": "object"
                     },
                     "feedback": {
                       "$ref": "#/$defs/richTextDoc",
-                      "description": "Optional per-item note: on a distractor, why it tempts and where it goes wrong; on the right answer, why it is right. The authoring record of the item's reasoning, never shown to the pupil on any surface. The worked solution a pupil reads is the block's explanation."
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
                     },
                     "misconceptionId": {
                       "type": "string",
-                      "description": "Optional id of the lesson-level misconceptions registry entry this distractor embodies — connects the registry to the option that operationalises it (analytics). Teacher-facing: never shown to the pupil."
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
                     }
                   },
                   "required": [
@@ -1498,7 +1498,7 @@
             "required": [
               "items"
             ],
-            "description": "Ordering payload. Marking.correctAnswer is the item ids in correct sequence."
+            "description": "An ordering question. The key is the item ids in the correct sequence."
           },
           "gaps": {
             "type": "object",
@@ -1519,7 +1519,7 @@
                       "enum": [
                         "math"
                       ],
-                      "description": "math: this blank is a math field (MathLive keyboard) and its key is an accepted set of LaTeX forms matched structurally — cosmetic notation folds (\\times/\\cdot, braces, \\frac vs /), a different mathematical form does not. REQUIRED whenever the answer is mathematical notation: π forms (300\\pi), powers (3x^2), surds (\\frac{\\sqrt{2}}{2}), rearranged formulae. Omit for plain typed input."
+                      "description": "\"math\" makes the blank a mathematics field whose key is a set of LaTeX forms compared structurally, so that notational variants match and a different mathematical form does not. Omitted for a plain typed blank."
                     },
                     "intent": {
                       "type": "string",
@@ -1527,7 +1527,7 @@
                         "equivalent",
                         "same-form"
                       ],
-                      "description": "Math blanks only. same-form (default): the written form is assessed — simplify, factorise, standard form, \"in the form …\" — and a different or unsimplified form rejects. equivalent: any algebraically equal answer marks, including a rearranged equation or inequality (2x + y = 26 for y = −2x + 26) — use it when the question does not pin a form (make x the subject, find an equation of the line, write an expression)."
+                      "description": "For mathematics blanks: \"same-form\" (the default) assesses the written form, so an unsimplified or rearranged answer is wrong; \"equivalent\" accepts any algebraically equal answer."
                     }
                   },
                   "required": [
@@ -1572,7 +1572,7 @@
                     }
                   }
                 ],
-                "description": "The cloze. Author a plain string with ___ runs or {{blankId}} markers; stored as the tokenised [{text}|{blank}] array."
+                "description": "The cloze text, stored as an array of text runs and blanks."
               },
               "wordBank": {
                 "type": "array",
@@ -1585,7 +1585,7 @@
               "blanks",
               "template"
             ],
-            "description": "Gap-fill payload. A blank whose answer is mathematical notation (π forms, powers, surds, rearranged formulae) MUST declare input: 'math' — the pupil answers on the math keyboard and the key is an accepted set of LaTeX forms matched structurally (never a plain typed blank, never numeric equivalence). Marking.correctAnswer: blank id → string, accepted-strings array, a set key { members: [{ variants: [form, …] } | { tuple: [[form, …], …] }], multiset?: true, choose?: K } when the answer is a collection typed into one blank (both roots, list the factors, solution pairs; choose K = \"any K of these\") — every member (or any K) matched one-to-one, any order, no extras/duplicates; a tuple member is order-bearing inside and typed parenthesised — or a precision key { values: [form, …], dp | sf } when the written precision is assessed (\"to 2 dp\"). Cross-blank constraints (either-order roots, distinct answers) go in marking.groups."
+            "description": "A cloze: text with typed blanks. The key maps each blank id to a string, an array of accepted strings, a set key when one blank takes a collection, or a precision key when the written precision is assessed. A blank whose answer is mathematical notation declares input \"math\" and its key is a set of LaTeX forms compared structurally."
           },
           "items": {
             "type": "object",
@@ -1595,7 +1595,7 @@
                 "type": "integer",
                 "minimum": 2,
                 "maximum": 6,
-                "description": "Force a column count; omit to auto-balance."
+                "description": "A fixed column count. When omitted the grid balances itself."
               },
               "numbered": {
                 "type": "boolean"
@@ -1663,20 +1663,20 @@
                         "ref": {
                           "type": "string",
                           "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                          "description": "Pinned model reference — `family/name@version`, e.g. \"graphing/coordinate-grid@1\" (or a user-lane `user:<id>` ref from the model workshop)."
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
                         },
                         "params": {
                           "type": "object",
-                          "description": "Parameters for the model, matching its published interface. Validated at write time — invalid params are rejected with the failing paths so you can correct and retry."
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
                         },
                         "altText": {
                           "type": "string",
-                          "description": "Agent-authored description of what the rendered model shows, written from the params. Lead with kind: \"Coordinate grid showing points A (3,2) and B (7,5)\", \"Area model for (x+3)(x+2)\". Required — it is the accessibility text, the search surface, and the fallback if the model cannot render."
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
                         },
                         "caption": {
                           "type": "object",
                           "additionalProperties": true,
-                          "description": "Optional figure caption — a tiptap richText doc shown as a small line directly below the model. Use for a gloss that adds teaching value (\"Figure 2: the region x + y < 4\"), not to restate what altText already says. A figure's caption belongs here, on the model — never on a separate tile."
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
                         },
                         "width": {
                           "type": "number"
@@ -1694,25 +1694,25 @@
                               "id": {
                                 "type": "string",
                                 "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-                                "description": "Kebab-case stage name, e.g. \"rays-on\", \"image-appears\"."
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
                               },
                               "ref": {
                                 "type": "string",
                                 "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
-                                "description": "Optional: this stage draws a different model (pinned like the slot ref). Omitted = the slot's model. Every stage of the second model repeats its ref."
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
                               },
                               "params": {
                                 "type": "object",
-                                "description": "FULL paramset for this stage (not a patch) — validated against this stage's model interface exactly like the base params. Within one model, keep axes/ranges identical so the figure never jumps between stages."
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
                               },
                               "altText": {
                                 "type": "string",
-                                "description": "Optional per-stage accessibility text describing what changed. Falls back to the slot altText; set it when the stage switches model."
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
                               },
                               "revealAt": {
                                 "type": "integer",
                                 "minimum": 1,
-                                "description": "Answer-synced staging only (a model on a QUESTION, e.g. a marked tile's figure). The answer-reveal BEAT (1-based: 1 = the first \"next\" press, 2 = the second, …) at which this figure stage activates — peg it to whichever beat reveals the matching part of the answer (e.g. the beat that fills the last gap, or reveals the correct option). Between pegs the figure holds. Omit `revealAt` on all steps for the default: the figure completes on the FINAL reveal."
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
                               }
                             },
                             "required": [
@@ -1720,7 +1720,7 @@
                               "params"
                             ]
                           },
-                          "description": "Optional staged progression of the figure in one place: each entry is a complete paramset reached sequentially after the base params (stage 0), on the slot's model unless the step names its own `ref`. On a MODEL tile, the beat timeline advances the figure: a beat op { tile, op: \"stage\", stage: n } jumps the model to steps[n] (occlusion release is a stage whose params un-occlude). On a question, the stages advance in sync with the ANSWER reveal — the same \"next\" that reveals the answer also advances the figure; peg each stage to a beat with `revealAt`, or omit it everywhere for the default (the figure completes on the final reveal). Use when the figure builds up or changes (same axes, same shape, things added, moved or changed), or when figures take turns in one place (a step with its own `ref`); not for unrelated figures."
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
                         }
                       },
                       "required": [
@@ -1728,14 +1728,14 @@
                         "params",
                         "altText"
                       ],
-                      "description": "Optional computed-model slot — renders a parameterised, versioned visual from the model library. A peer of `image`: same envelope position, but the model is generated from `params` rather than bound to an asset."
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
                     },
                     "shapeCluster": {
                       "type": "object"
                     },
                     "icon": {
                       "type": "string",
-                      "description": "FontAwesome icon accent (coexists with image)."
+                      "description": "An icon accent on the card, which may sit beside an image."
                     }
                   },
                   "required": [
@@ -1747,7 +1747,7 @@
             "required": [
               "items"
             ],
-            "description": "Uniform tile collection. Never marked. Per-item reveal via beats with an `item` sub-address."
+            "description": "A uniform collection of cards, never marked. Beats can reveal one item at a time."
           },
           "glossary": {
             "type": "object",
@@ -1779,14 +1779,14 @@
             "required": [
               "items"
             ],
-            "description": "Vocabulary list. Never marked; drives the vocab category when no question signal is present."
+            "description": "A list of terms and definitions, never marked."
           }
         },
         "required": [
           "id",
           "cell"
         ],
-        "description": "One composed tile. Set EXACTLY ONE payload slot — the kind is derived from which is present. Content kinds: text / working / image / model / video / dialogue / table. Markable kinds (carry `marking`): options / matching / ordering / gaps / table. Collections (never marked): items / glossary.",
+        "description": "One tile. Exactly one payload slot is set, and that slot is the tile's kind: text, working, image, model, video, dialogue, table, options, matching, ordering, gaps, items or glossary. Options, matching, ordering, gaps and table tiles may carry marking; items and glossary never do.",
         "oneOf": [
           {
             "required": [
@@ -1867,7 +1867,7 @@
           "properties": {
             "tile": {
               "type": "string",
-              "description": "Target tile id."
+              "description": "The id of the tile the op targets."
             },
             "op": {
               "type": "string",
@@ -1877,50 +1877,50 @@
                 "stage"
               ],
               "default": "reveal",
-              "description": "reveal (default): show the target (targets of reveal start hidden). hide: remove it (swap = hide + reveal in one beat). stage: advance a model to steps[stage] (occlusion release is a stage whose params un-occlude)."
+              "description": "\"reveal\" (the default) shows the target; \"hide\" removes it; \"stage\" advances a model to the step named by stage."
             },
             "turn": {
               "type": "integer",
               "minimum": 0,
-              "description": "Dialogue tiles: 0-based turn index. Omit to target the whole tile."
+              "description": "For a dialogue tile: the zero-based turn. Omitted to target the whole tile."
             },
             "paragraph": {
               "type": "integer",
               "minimum": 0,
-              "description": "Text tiles: 0-based paragraph index. Omit to target the whole tile."
+              "description": "For a text tile: the zero-based paragraph. Omitted to target the whole tile."
             },
             "line": {
               "type": "integer",
               "minimum": 0,
-              "description": "Working tiles: 0-based statement-line index — lines reveal one per beat. A tile-level op (no line) reveals the rest, including the result."
+              "description": "For a working tile: the zero-based statement line. A tile-level op with no line reveals the rest of the working, including the result."
             },
             "result": {
               "type": "boolean",
-              "description": "Working tiles: reveal the exam-style result box on its own — pair with line ops so line 0 stays the landing hook (a tile-level \"rest\" op would hide it)."
+              "description": "For a working tile: reveals the result box on its own."
             },
             "stage": {
               "type": "integer",
               "minimum": 0,
-              "description": "Model tiles with op \"stage\": 0-based index into model.steps (0 = first step after base params)."
+              "description": "For a model tile with op \"stage\": the zero-based index into the model's steps."
             },
             "tableRow": {
               "type": "integer",
               "minimum": 0,
-              "description": "Table tiles: 0-based row of a target cell (pair with tableCol)."
+              "description": "For a table tile: the zero-based row of the target cell, with tableCol."
             },
             "tableCol": {
               "type": "integer",
               "minimum": 0,
-              "description": "Table tiles: 0-based column of a target cell (pair with tableRow)."
+              "description": "For a table tile: the zero-based column of the target cell, with tableRow."
             },
             "item": {
               "type": "integer",
               "minimum": 0,
-              "description": "Items tiles: 0-based index of one grid item — reveals appear one card at a time. Omit to target the whole tile. Markable kinds (options / ordering / matching) play as one tile."
+              "description": "For an items tile: the zero-based item, so that cards reveal one at a time. Omitted to target the whole tile. Options, ordering and matching tiles reveal as one."
             },
             "answer": {
               "type": "boolean",
-              "description": "Marks this op as revealing an ANSWER rather than pacing teaching. Withheld on student-facing surfaces: quiz mode (behind Show answer) and workbook print (to the answers section). An in-sequence block with an answer-flagged op is a posed question — flag it role \"question\"."
+              "description": "Marks the op as revealing an answer rather than pacing the teaching. Such ops are withheld on pupil-facing surfaces: behind \"Show answer\" in quiz mode and in the answers section of a printed workbook. A block in a sequence with an answer-flagged op is a posed question and carries role \"question\"."
             }
           },
           "required": [
@@ -1928,7 +1928,7 @@
           ]
         }
       },
-      "description": "The reveal timeline: an ordered list of beats, each beat a set of ops that happen TOGETHER on one click. Anything targeted by a reveal op starts hidden; untargeted tiles are visible from the start. A block opens showing everything that isn't held back for a beat. If it opens on a question, hold back the answer and anything else that reveals reasoning about it. The LANDING frame (before any click) must show something — leave the question visible, never its answer; an empty landing reads as a broken slide. Slides play the timeline; web and print show it played through, answer-flagged ops held for the answers."
+      "description": "The reveal timeline: an ordered list of beats, each a set of ops that happen together on one click. Anything an op targets starts hidden; everything else is visible from the start. Slides play the timeline; the web and print surfaces show it played through, with answer-flagged ops held back for the answers."
     },
     "projection": {
       "type": "object",
@@ -1943,10 +1943,10 @@
             "type": "string",
             "minLength": 1
           },
-          "description": "Registry entry ids to render. Omit `projection` entirely to render the whole registry."
+          "description": "The registry entry ids to render. When projection is omitted the whole registry renders."
         }
       },
-      "description": "Projection-role blocks only (role \"objectives\" / \"glossary\"): optional subset filter over the registry the block renders."
+      "description": "For a projection block (role objectives, glossary, assumed-knowledge, misconceptions or teacher-tips): an optional subset of the registry the block renders."
     }
   },
   "required": [

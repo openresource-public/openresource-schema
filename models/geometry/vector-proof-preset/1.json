@@ -4,31 +4,7 @@
   "name": "vector-proof-preset",
   "version": 1,
   "title": "Vector proof (preset shapes)",
-  "tagline": "Not-to-scale triangle/parallelogram/hexagon with base vectors a, b and symbolic points (ratio, midpoint, extended); derives routes in a,b, the scalar k, collinearity and reverse.",
-  "description": "The GCSE grade-9 vector-geometry proof figure. A triangle OAB, a parallelogram, or a regular hexagon ABCDEF with centre O, drawn schematic (not to scale), with the base vectors a and b labelled on the edges from O — OA = a / 2a / 5a, OB = b / 3b / 2b — as mid-edge arrows. Points are defined symbolically: a ratio point on a segment (P on AB with AP:PB = 1:3), a midpoint (M of BC), or a point on an extended line beyond a vertex (X on AB extended with AB:BX = 3:2; OB extended to D). The engine derives every point's position vector, then expresses any target route between two named points (OP, EM, BE) in terms of a and b in simplest form, finds the scalar k when the target is written k(3a + b), proves three points collinear (one route is a scalar multiple of another sharing a point → \"C, M and D lie on a straight line\"), and does the reverse — given three points collinear, solve the unknown scalar and the requested vector (find BE). The whole figure is laid out from one affine frame so the not-to-scale drawing is internally consistent (collinear points really line up) and its size is independent of the coefficients. The target answer occludes for a question; the worked route reveals one line at a time for a staged build.",
-  "whenToUse": "Reach for this for the whole GCSE grade-9 vector-proof topic — the abstract a,b figure, not column vectors on a grid (for those use geometry/vectors). Author: figure (\"triangle\" | \"parallelogram\" | \"hexagon\"); base.a.coeff / base.b.coeff for OA = 2a, OB = 3b etc. (default 1; a regular hexagon forces 1); and points, each a construction — divide (ratio point on a segment: of [\"A\",\"B\"], ratio [1,3] = \"P on AB, AP:PB = 1:3\"; also \"C with OC:CA = 4:1\" as of [\"O\",\"A\"], ratio [4,1]), midpoint ([\"B\",\"C\"]), extend (point on a segment extended beyond its end: of [\"A\",\"B\"], ratio [3,2] = \"X on AB extended, AB:BX = 3:2\"), ray (point on a ray by whole:whole ratio: of [\"O\",\"B\"], ratio [3,4] = \"D with OB:OD = 3:4\"), or unknown (an unspecified point on a ray, solved by a collinearity condition). Then a task: { find: \"OP\" } expresses the route OP in terms of a and b; { find: \"OP\", as: \"scalar\" } writes OP = k(3a + b) and finds k; { prove: [\"C\",\"M\",\"D\"] } proves those three points lie on a straight line; { prove: [\"C\",\"D\",\"E\"], find: \"BE\" } solves the reverse (E is the unknown point — given the three are collinear, find BE). occlude the answer for a question; solution.show renders the worked route below the figure, and solution.reveal limits it to the first N lines for a staged build (one line per stage; base stage = figure + question, then AB = …, then AP = …, then the simplified answer, then k or the conclusion). Relabel the base vectors with base.a.label / base.b.label (e.g. \"p\", \"q\") and scale a hexagon with base.a.coeff (OA = 2p, OB = 2q, with every vertex derived — 2q − 2p, …). For the \"two regular hexagons\" figure set show.inner: true on a coeff-2 hexagon — a concentric unit hexagon is drawn inside the 2× one, the inner ring showing p, q and the outer vertices 2p, 2q. To express several vectors at once — the position vectors of a polygon's vertices — use task.express: [\"OA\",\"OB\",\"OC\",\"OD\",\"OE\",\"OF\"] with solution.show, then stage them one per click with solution.reveal or showcase frames. Keep the same figure and base coefficients across a lesson so pupils track one diagram. It covers the whole GCSE grade-9 vector-proof topic — express a route, find k, prove three points collinear, and the reverse solve. Synonyms a teacher might use: vector proof, vectors in terms of a and b, express the vector, ratio point, midpoint, point on the line extended, prove collinear, show points lie on a straight line, parallel vectors, scalar multiple, find the value of k, grade 9 vectors.",
   "responseModes": [],
-  "tags": [
-    "vector",
-    "vectors",
-    "vector proof",
-    "vector geometry",
-    "a and b",
-    "in terms of a and b",
-    "ratio point",
-    "midpoint",
-    "collinear",
-    "straight line",
-    "parallel",
-    "scalar multiple",
-    "find k",
-    "triangle",
-    "parallelogram",
-    "hexagon",
-    "grade 9",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -37,12 +13,10 @@
         "type": "array",
         "items": {
           "type": "string",
-          "pattern": "^[A-Z]$",
-          "description": "A single uppercase point name."
+          "pattern": "^[A-Z]$"
         },
         "minItems": 2,
-        "maxItems": 2,
-        "description": "An ordered pair of existing point names [start, end]."
+        "maxItems": 2
       },
       "ratio": {
         "type": "array",
@@ -51,8 +25,7 @@
           "exclusiveMinimum": 0
         },
         "minItems": 2,
-        "maxItems": 2,
-        "description": "Two positive whole numbers [first, second] — the two parts of the ratio, read in the order the construction names them."
+        "maxItems": 2
       }
     },
     "properties": {
@@ -62,13 +35,11 @@
           "triangle",
           "parallelogram",
           "hexagon"
-        ],
-        "description": "The base shape. \"triangle\" → vertices O, A, B (OA = a-edge, OB = b-edge). \"parallelogram\" → O, A, B and the derived opposite corner C (OC = OA + OB; the diagonal OC is drawn). \"hexagon\" → a regular hexagon A B C D E F with centre O, OA = a, OB = b drawn as interior arrows; the other vertices are derived (OC = b − a, OD = −a, OE = −b, OF = a − b). A hexagon scales UNIFORMLY by base.a.coeff (b mirrors it, keeping it regular): coeff 2 gives OA = 2a, OB = 2b, OC = 2b − 2a, OD = −2a, OE = −2b, OF = 2a − 2b."
+        ]
       },
       "base": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The two base vectors a (along the edge to A) and b (along the edge to B): their integer coefficients (default 1) and, optionally, the letters they are drawn with. On a hexagon the coefficient scales the whole figure uniformly (b mirrors a, so it stays a regular hexagon).",
         "properties": {
           "a": {
             "type": "object",
@@ -76,15 +47,12 @@
             "properties": {
               "coeff": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "OA = coeff·a. e.g. 2 → OA = 2a, 5 → OA = 5a. Default 1. On a hexagon this also sets the uniform scale of the whole figure."
+                "minimum": 1
               },
               "label": {
-                "type": "string",
-                "description": "The letter drawn for this base vector, e.g. \"p\" for OA = 2p. Default \"a\". Threaded through every label, route line and the answer — so \"2p\" reads as a genuine vector, not just text on the arrow."
+                "type": "string"
               }
-            },
-            "description": "The a base vector, OA = coeff·a (drawn with base.a.label, default \"a\")."
+            }
           },
           "b": {
             "type": "object",
@@ -92,15 +60,12 @@
             "properties": {
               "coeff": {
                 "type": "integer",
-                "minimum": 1,
-                "description": "OB = coeff·b. e.g. 3 → OB = 3b. Default 1. Ignored on a hexagon (b mirrors a to keep the figure regular)."
+                "minimum": 1
               },
               "label": {
-                "type": "string",
-                "description": "The letter drawn for this base vector, e.g. \"q\" for OB = 2q. Default \"b\"."
+                "type": "string"
               }
-            },
-            "description": "The b base vector, OB = coeff·b (drawn with base.b.label, default \"b\")."
+            }
           }
         }
       },
@@ -113,12 +78,10 @@
           "properties": {
             "name": {
               "type": "string",
-              "pattern": "^[A-Z]$",
-              "description": "The point's single-letter name (e.g. \"P\", \"M\", \"X\", \"D\"). Must NOT clash with a base vertex of the figure (triangle has O A B; parallelogram O A B C; hexagon O A B C D E F)."
+              "pattern": "^[A-Z]$"
             },
             "midpoint": {
-              "$ref": "#/$defs/pair",
-              "description": "This point is the MIDPOINT of the segment between the two named points, e.g. [\"B\",\"C\"] for \"M is the midpoint of BC\"."
+              "$ref": "#/$defs/pair"
             },
             "divide": {
               "type": "object",
@@ -134,8 +97,7 @@
               "required": [
                 "of",
                 "ratio"
-              ],
-              "description": "This point divides a segment INTERNALLY. of [\"A\",\"B\"] with ratio [1,3] means \"P on AB with AP:PB = 1:3\" — the ratio is (start→point):(point→end). Also encodes \"C such that OC:CA = 4:1\" as of [\"O\",\"A\"], ratio [4,1]."
+              ]
             },
             "extend": {
               "type": "object",
@@ -151,8 +113,7 @@
               "required": [
                 "of",
                 "ratio"
-              ],
-              "description": "This point lies on a segment EXTENDED beyond its end. of [\"A\",\"B\"] with ratio [3,2] means \"X on AB extended with AB:BX = 3:2\" — the ratio is (whole segment start→end):(end→point). A dashed extension is drawn from the end vertex out to the point."
+              ]
             },
             "ray": {
               "type": "object",
@@ -168,8 +129,7 @@
               "required": [
                 "of",
                 "ratio"
-              ],
-              "description": "This point lies on the RAY from the first named point through the second, located by a whole-length ratio. of [\"O\",\"B\"] with ratio [3,4] means \"D such that OB:OD = 3:4\" — the ratio is (start→through):(start→point), so OD = (4/3)·OB (D beyond B). Use for \"OB extended to D\" given as a whole:whole ratio."
+              ]
             },
             "unknown": {
               "type": "object",
@@ -181,12 +141,10 @@
               },
               "required": [
                 "on"
-              ],
-              "description": "An UNSPECIFIED point on a ray, whose position is solved from a collinearity condition (the reverse question). on [\"O\",\"B\"] means \"the line OB is extended to point E\" — E sits somewhere on ray OB; pair this point with task.prove + task.find so the engine solves how far. Exactly one unknown point per figure."
+              ]
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw this point (its dot + label) in amber. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -219,18 +177,15 @@
               ]
             }
           ]
-        },
-        "description": "The points defined ON the figure beyond its base vertices — ratio points, midpoints, extended-line points, and at most one unknown point for the reverse question. Each names exactly one construction and may reference any base vertex or an EARLIER point in this list (they resolve top to bottom). All are drawn (dot + label) regardless of which the task uses."
+        }
       },
       "task": {
         "type": "object",
         "additionalProperties": false,
-        "description": "What the figure asks. Omit for a plain labelled diagram.",
         "properties": {
           "find": {
             "type": "string",
-            "pattern": "^[A-Z][A-Z]$",
-            "description": "A target route as two point names, e.g. \"OP\", \"EM\", \"BE\" (from the first letter's point to the second's). With prove omitted: express this vector in terms of a and b. With prove present and an unknown point: solve the collinearity, then find this vector."
+            "pattern": "^[A-Z][A-Z]$"
           },
           "express": {
             "type": "array",
@@ -238,78 +193,63 @@
               "type": "string",
               "pattern": "^[A-Z][A-Z]$"
             },
-            "maxItems": 8,
-            "description": "A LIST of routes to express in terms of the base letters — e.g. [\"OA\",\"OB\",\"OC\",\"OD\",\"OE\",\"OF\"] for the position vectors of a hexagon's vertices. Each becomes one answer line (\"OA = 2p\", \"OC = 2q − 2p\"). Pair with solution.show and stage them with solution.reveal (or showcase frames) to reveal one position vector per click — exactly the \"write each vector in terms of p and q\" build. Use INSTEAD of find when the figure asks for several vectors rather than one analysed route; no k / collinearity here, just the derived vectors."
+            "maxItems": 8
           },
           "as": {
             "type": "string",
             "enum": [
               "vector",
               "scalar"
-            ],
-            "description": "\"vector\" (default): express find as pa + qb. \"scalar\": write find as k(…) over a coprime integer bracket and give k — the \"find the value of k\" question."
+            ]
           },
           "scalarName": {
-            "type": "string",
-            "description": "The letter for the scalar in as:\"scalar\". Default \"k\"."
+            "type": "string"
           },
           "prove": {
             "type": "array",
             "items": {
               "type": "string",
-              "pattern": "^[A-Z]$",
-              "description": "A single uppercase point name."
+              "pattern": "^[A-Z]$"
             },
             "minItems": 3,
-            "maxItems": 3,
-            "description": "Three point names to prove collinear, e.g. [\"C\",\"M\",\"D\"]. The engine takes the first as the shared point, derives the two routes from it, and shows one is a scalar multiple of the other → the three lie on a straight line. With find + an unknown point, instead SOLVES the unknown so they are collinear."
+            "maxItems": 3
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Hide the final answer (k, the vector, or the route value) as \"?\" — the question hook. The figure and any shown working up to the answer stay visible. Default false."
+            "type": "boolean"
           }
         }
       },
       "solution": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The worked route shown below the figure (also the answer panel for task.express). Omit (or show:false) for a question / answer space.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Render the worked route lines (the derivation in terms of a and b), or — with task.express — the list of position vectors. Default false — figure + question only."
+            "type": "boolean"
           },
           "reveal": {
             "type": "integer",
-            "minimum": 0,
-            "description": "Show only the first N lines — for a STAGED build (one line per stage; with task.express, one position vector per stage). Default: all lines. N = 0 shows the figure and question with no working (a sensible base stage)."
+            "minimum": 0
           },
           "highlightAnswer": {
-            "type": "boolean",
-            "description": "Amber the final answer line. Default false."
+            "type": "boolean"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles (all default true).",
         "properties": {
           "vertexLabels": {
-            "type": "boolean",
-            "description": "Label the base vertices (O, A, B, …). Default true."
+            "type": "boolean"
           },
           "pointLabels": {
-            "type": "boolean",
-            "description": "Label the constructed points (P, M, X, …). Default true."
+            "type": "boolean"
           },
           "arrows": {
-            "type": "boolean",
-            "description": "Draw the base-vector arrows on the OA and OB edges with their labels (a, 2a, b, 3b). Default true."
+            "type": "boolean"
           },
           "inner": {
-            "type": "boolean",
-            "description": "Hexagon only: draw a concentric INNER hexagon at scale 1 inside the coefficient-scaled main hexagon, with the three main diagonals (the spokes through O) — the \"two regular hexagons\" figure. Meaningful with base.a.coeff ≥ 2: the named outer vertices read 2p, 2q while the inner ring shows the unit vectors p, q (the inner vertices ARE a, b, b−a, …). The base-vector arrows then sit on the inner ring and read just p, q. Default false."
+            "type": "boolean"
           }
         }
       },
@@ -323,16 +263,13 @@
           },
           "minItems": 2,
           "maxItems": 2
-        },
-        "description": "Segments to draw an amber HIGHLIGHTER behind (a thick translucent stroke under the line) — the \"highlight these line sections\" cue. Each entry is a [start, end] pair of existing point names (a base vertex O/A/B/… or a constructed point), e.g. [[\"E\",\"D\"],[\"O\",\"C\"]] to mark the two segments in \"show ED is parallel to OC\". Result/emphasis semantics; pairs with a prove / express task."
+        }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -341,7 +278,6 @@
   },
   "examples": [
     {
-      "label": "Answer space — triangle, express OP (answer hidden for the pupil)",
       "params": {
         "figure": "triangle",
         "points": [
@@ -367,7 +303,6 @@
       }
     },
     {
-      "label": "Worked example — triangle OA = 2a, OB = b, express OP with the full route",
       "params": {
         "figure": "triangle",
         "base": {
@@ -401,7 +336,6 @@
       }
     },
     {
-      "label": "Occluded question — find the value of k, OP = k(a + 9b)",
       "params": {
         "figure": "triangle",
         "base": {
@@ -433,7 +367,6 @@
       }
     },
     {
-      "label": "Hard case — regular hexagon, midpoint of EF and a point on CD extended, express MX",
       "params": {
         "figure": "hexagon",
         "points": [
@@ -468,7 +401,6 @@
       }
     },
     {
-      "label": "Prove collinear — triangle, C, M and D lie on a straight line",
       "params": {
         "figure": "triangle",
         "base": {
@@ -527,7 +459,6 @@
       }
     },
     {
-      "label": "Reverse — given C, D, E collinear, find BE (E on OB extended, unknown)",
       "params": {
         "figure": "triangle",
         "base": {
@@ -582,7 +513,6 @@
       }
     },
     {
-      "label": "Two regular hexagons — express the position vectors, OA = 2p, OB = 2q (worked)",
       "params": {
         "figure": "hexagon",
         "base": {

@@ -2,11 +2,21 @@
 
 Every schema version, newest first, with whether it breaks documents of the previous version ([VERSIONING.md](VERSIONING.md), OR-VER-010). The date is when the version became current in Open Resource. The same list is machine-readable in [versions.json](versions.json).
 
+## 0.12.2 (2026-10-26, tagged 2026-10-26)
+
+- Every description in `bento-content.schema.json` rewritten for a reader; the shape is unchanged.
+- Model contracts carry response modes, the params schema without prose, and example paramsets; the guidance text written for Open Resource's authoring agent is no longer published.
+- `meta.schemaVersion` must be a string with nothing around it; `null` and padding are refused, with conformance documents for each.
+- `migrate()` reports `current`, `migrated`, `newer` or `unknown`, and the chain checks every step at load.
+- OR-VER-075: between releases a push changes documentation only. The 0.12.0 entry corrected to what its tag holds.
+
 ## 0.12.1 (2026-10-26, tagged 2026-10-26)
 
-- The resource's own edition on `meta`: `version`, `status`, `supersedes`, `derivedFrom`, `dateModified`. All optional. Open Resource writes `derivedFrom` for an adaptation and `dateModified` on read.
-- `models/catalogue.json` lists every published model and version; one interface document per current version. A resolve for a superseded version says so.
-- The migration chain under `migrations/` with a fixture per step; the conformance corpus under `conformance/` with a runner.
+- The resource's own edition on `meta`: `version`, `status`, `supersedes`, `derivedFrom`, `dateModified`. All optional.
+- This changelog, versions.json, `schemas/<version>/` directories with versioned `$id`s, `schemas/index.json` with digests, GitHub Pages serving them, and `PROVENANCE.json`.
+- `models/catalogue.json` lists every published model and version; one contract document per current version.
+- The migration chain under `migrations/` with a fixture per step; the conformance corpus under `conformance/` with a runner; `scripts/check.mjs` and its workflow.
+- OR-VER-061 and OR-VER-064 restated: only a breaking change bumps a model version, and a version may start accepting a correct answer it refused. OR-VER-073 (releases are tags with notes) and OR-VER-074 (provenance) added.
 
 ## 0.12.0 (2026-08-02, tagged 2026-10-26) · breaking
 
@@ -15,8 +25,8 @@ Every schema version, newest first, with whether it breaks documents of the prev
 - Declared block roles on the envelope, including `assumed-knowledge`, `misconceptions` and `teacher-tips`.
 - Multi-block questions share a `question` group id.
 - Response modes `construct-region`, `run-sheet`, `run-statement`, `run-figure`.
-- Semver in `meta.schemaVersion`; VERSIONING.md; tiptap schema under `schemas/`; this changelog and versions.json.
-- Published under the 0.11 label from 2026-08-02 until the tag.
+- Semver in `meta.schemaVersion`; VERSIONING.md; tiptap schema under `schemas/`.
+- Published under the 0.11 label from 2026-08-02 until the tag. The tag was cut before this changelog, versions.json, the versioned `$id`s and `schemas/0.12.0/` existed; they were added to the repository between the tag and 0.12.1, and the 0.12.0 schema files were re-published under `schemas/0.12.0/` with versioned `$id`s and the same shape.
 
 ## 0.11.0 (2026-06-07)
 

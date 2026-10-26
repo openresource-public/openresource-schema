@@ -4,45 +4,8 @@
   "name": "turtle",
   "version": 3,
   "title": "Turtle graphics",
-  "tagline": "Turtle editor beside a canvas, in Python 3 or classroom LOGO: loops, procedures, variables, arithmetic. Run executes the program, so the drawing comes from the code, not an author.",
-  "description": "A turtle-graphics runner in the app's coding window: one header row with three coloured window circles, the title, Run, Step, Reset, a Speed slider (watch, slow, 1×, turbo) and full screen; the program with its file tab and line numbers on the left, and a drawing canvas on the right where a turtle traces the path when pupils press Run; and a footer naming the language, with the step count while the turtle walks (\"Step 4 of 12\"). It comes in seven colour themes (`theme`), and the default pen draws in the theme's own ink. Run ANIMATES the drawing — the turtle waddles along each FORWARD and turns on each RIGHT and LEFT, command by command, the way the blocks editor's sprites act out their scripts; Step (beside Run in the header) executes one command at a time, so a class can trace a program line by line and watch the turtle act it out. It speaks TWO languages, chosen with `language`. PYTHON 3 turtle (language:\"python\") is what most UK classrooms run: `import turtle` / `t = turtle.Turtle()` / `t.forward(50)`, `from turtle import *`, or the bare `forward(50)` worksheets print — forward/backward, right/left, penup/pendown, goto, setheading, circle, color and fillcolor, pensize, begin_fill/end_fill, hideturtle — with ordinary Python around them (for/range, while, def, variables, arithmetic) and the random and math modules (random is seeded, so a random drawing is the same on every surface), run by the SAME interpreter cs/code-editor uses, so the language and its errors are identical in both models. The default language is classroom LOGO — FORWARD/BACK, RIGHT/LEFT (degrees), PENUP/PENDOWN, SETCOLOUR, SETPENSIZE, REPEAT n [ … ] which nests (with REPCOUNT inside), arithmetic in any argument (RIGHT 360/6), TO name :inputs … END procedures, MAKE \"name variables, CLEARSCREEN/HOME/SETXY/SETHEADING, CIRCLE and ARC centred on the turtle, and BEGINFILL/ENDFILL — executed by a hand-rolled interpreter (no JavaScript execution of pupil text) with an instruction cap so a runaway REPEAT or runaway recursion stops safely. The drawing is never authored: it is produced by running the program, so the figure cannot show a shape the code would not draw. The canvas auto-fits the finished path, shows a faint grid and the turtle at its end pose, and reports line-numbered errors in either language (\"line 2: I don’t know the command FORWRD\", \"line 4: NameError: name \"sise\" is not defined\") for both parse and run-time slips, and names anything outside the subset rather than quietly drawing nothing. Use it as a live worked build of a regular polygon, a blank editor for \"write a program that draws a square\", a read-only predict-the-drawing listing, or a debugging exercise. A write-a-program block becomes AUTO-MARKED by adding `markFigure`: the pupil's program is run and the path it draws is compared with the target shape, so every correct program passes and only what the code DOES is marked — and because the comparison is on the drawing, one key marks answers in either language. On paper every surface embeds a screenshot of the live window as it stands on load — the canvas empty until Run — so predict questions never leak their answer.",
-  "whenToUse": "Reach for this whenever a lesson wants pupils to WRITE or READ a turtle program rather than look at a static picture of one: KS2/KS3 computing (sequencing, repetition, procedures, variables, debugging) and the geometry crossover (exterior angles, regular polygons — the division really runs — total turn 360°, star polygons via exterior angle). FIRST DECIDE THE LANGUAGE with `language`. Choose \"python\" when the class is taught Python, which most secondary schemes of work now are, and for anything that leads towards GCSE code: the program is real Python turtle (`import turtle`, `t = turtle.Turtle()`, `t.forward(50)`; `from turtle import *`; or the bare `forward(50)` a worksheet prints), and the loops, functions and variables pupils write here are the same ones they will write in cs/code-editor, because it is the same interpreter. Choose \"logo\" (the default) for KS2/KS3 LOGO, for a floor-turtle successor lesson, or when TO … END procedures, REPCOUNT and MAKE are themselves the content. Both languages draw on the same canvas and are marked the same way, so a scheme can move from one to the other without changing anything else. The Python vocabulary: forward/fd and backward/bk move in steps; right/rt and left/lt turn in degrees (anticlockwise-positive, as Python measures); penup/pendown lift and lower the pen; goto(x, y) / setpos jumps (y grows UP); setheading/seth faces an absolute direction (0 = right); home and reset return to the start; circle(radius) makes the turtle TRAVEL a circle centred to its left, with circle(r, extent) for an arc and circle(r, extent, steps) for a polygon; pensize/width sets thickness (0.5–24); color(name) sets pen and fill together, pencolor and fillcolor set them apart; begin_fill() … end_fill() fills the shape walked out between them; hideturtle/showturtle; speed(n) sets how fast Run walks, on real turtle's scale (1 slowest to 10 fastest, 0 or \"fastest\" draws at once), and done(), mainloop() and exitonclick() are accepted and ignored so a worksheet program runs unedited. Around them, ordinary Python: for i in range(n), while, def with parameters, variables, if/else and arithmetic. print() and input() are refused by name — this window is a canvas, not a console, so send text work to cs/code-editor. The Python turtle starts at the centre facing RIGHT, pen down, blue. The LOGO language: FORWARD n / BACK n move in steps (FD/BK work too); RIGHT d / LEFT d turn in degrees (RT/LT); PENUP / PENDOWN (PU/PD) lift and lower the pen; SETCOLOUR name changes the pen (red, orange, yellow, green, teal, cyan, blue, purple, magenta, pink, brown, grey, white, black — SETCOLOR is accepted); SETPENSIZE n changes the line thickness (PENSIZE and SETWIDTH work too); REPEAT n [ commands ] repeats a block and NESTS, and inside it REPCOUNT is the current pass (1, 2, 3, …); anywhere a number goes, an arithmetic expression works — RIGHT 360/6, FORWARD :side * 2, with + - * / and brackets; TO name :input1 :input2 … END defines a procedure pupils call by name from anywhere in the program (POLYGON 5 90 — definition order never matters; recursion is allowed but bounded); MAKE \"name value sets a variable, read back as :name; CLEARSCREEN / CS wipes the canvas and sends the turtle home; HOME returns to the start, drawing on the way if the pen is down; SETXY x y (SETPOS) jumps to a coordinate — y grows UP, the maths convention; SETHEADING d / SETH d faces an absolute direction (0 = up, clockwise); CIRCLE r and ARC angle r draw centred ON the turtle, which stays put (they draw only with the pen down; ARC starts in the facing direction, positive = clockwise); BEGINFILL … ENDFILL fills the shape the turtle walks out between them, in the pen colour at BEGINFILL, painted beneath the ink lines; a semicolon starts a comment to the end of the line. Commands are case-insensitive; numbers may be negative or decimal. The turtle starts at the centre facing up, pen down, drawing in blue. Author the starter program in `code`; set `header` to the filename on the file tab (defaults to turtle.logo), `title` for a header title, and `theme` (one per lesson, varied between lessons); set editable:false for a listing pupils read but do not change (predict-the-drawing, trace) — it keeps Run and Step, because predicting and then watching the turtle walk it is the point; the live canvas always starts empty until Run, and paper carries a screenshot of that same on-load state, so the drawing never leaks before it is run. show.grid and show.turtle (default true) toggle the canvas furniture; show.state (default false) puts a readout in the footer — end position, heading, TOTAL TURN (the exterior-angle payoff: any closed convex shape turns 360° in total) and step count — updating as the turtle walks, so pupils watch the total turn climb 144°, 288°, … to 720° on a star. A runaway loop or runaway recursion is safe: execution stops after a few thousand steps with a message, and mistakes at run time (an unset :variable, dividing by zero) get the same line-numbered teaching-voice errors as typos. Common patterns, in either language — in Python: a worked regular polygon (for i in range(6): forward(70); right(360/6)), a polygon FUNCTION (def polygon(n, size): … right(360/n), then polygon(5, 90)), a growing spiral (forward(i * 4) inside for i in range(…)), a blank answer space marked with markFigure, predict-the-drawing (editable:false), fix-the-bug. In LOGO: a worked regular polygon (REPEAT 6 [ FORWARD 70 RIGHT 360/6 ]), a polygon PROCEDURE (TO POLYGON :n :size … RIGHT 360/:n … END, then POLYGON 5 90), a growing spiral (FORWARD REPCOUNT * 4 inside a REPEAT), a blank answer space (\"write a program that draws a square\") — AUTO-MARKED when you add `markFigure` on a run-figure tile, which marks the DRAWING the program produces rather than its wording, and can also require the method (REPEAT, a procedure, a line budget) — predict-the-drawing (editable:false, ask pupils to sketch their prediction before pressing Run), fix-the-bug (a triangle drawn with RIGHT 60 instead of RIGHT 120 — markable too: the target is the shape it SHOULD draw). This model owns its own mutable state (the editor and the run), so it does not support staged `steps`, draggable params or response modes — build predict→run→discuss flows by SEQUENCING blocks. Synonyms teachers use: turtle, Python turtle, import turtle, turtle graphics, LOGO, Bee-Bot (the on-screen successor), floor turtle, screen turtle, forward/right/repeat, drawing shapes with code, programming shapes, exterior angles by turning, turtle procedures, drawing with Python.",
   "responseModes": [
     "run-figure"
-  ],
-  "tags": [
-    "turtle",
-    "python turtle",
-    "import turtle",
-    "logo",
-    "turtle graphics",
-    "python",
-    "forward",
-    "repeat",
-    "programming",
-    "coding",
-    "computing",
-    "computer science",
-    "cs",
-    "sequencing",
-    "repetition",
-    "loops",
-    "debugging",
-    "algorithm",
-    "exterior angle",
-    "regular polygon",
-    "polygons",
-    "turns",
-    "angles",
-    "star polygon",
-    "draw with code",
-    "screen turtle",
-    "floor turtle",
-    "procedures",
-    "variables",
-    "subroutines",
-    "decomposition",
-    "abstraction"
   ],
   "interface": {
     "type": "object",
@@ -53,20 +16,16 @@
         "enum": [
           "logo",
           "python"
-        ],
-        "description": "Which language the program is written in. \"logo\" (default) is the classroom LOGO dialect described under `code`. \"python\" is Python 3 turtle — what most UK classrooms actually run — on the same canvas, with the same marking. All four styles worksheets print will run: `import turtle` then `t = turtle.Turtle()` and `t.forward(50)`; `import turtle` then `turtle.forward(50)`; `from turtle import *`; and the bare `forward(50)` with no import at all (the verbs are always in scope, because a lesson about drawing a square should not fail on the line that is not the lesson). Vocabulary: forward/fd, backward/bk/back, right/rt, left/lt, penup/pu/up, pendown/pd/down, goto/setpos (y grows UP), setx, sety, setheading/seth, home, clear, reset, circle(radius, extent, steps), pensize/width, color (sets pen and fill), pencolor, fillcolor, begin_fill/end_fill, hideturtle/showturtle, and the read-backs position/xcor/ycor/heading; speed(n) sets how fast Run walks (1 slowest to 10 fastest; 0 draws at once), and done, mainloop and exitonclick are accepted and ignored so a worksheet program runs unedited. Ordinary Python comes free — for/range, while, def with parameters, variables, arithmetic, if — because this is the same interpreter cs/code-editor runs. Two differences from LOGO, both faithful to real Python rather than convenient: the turtle starts facing RIGHT and measures angles anticlockwise (the same square is drawn a quarter-turn round, and since the canvas auto-fits it looks the same), and circle(r) makes the turtle TRAVEL a circle centred to its left rather than draw one centred on itself. Anything outside the subset fails with a named, line-numbered message; print() and input() are refused because this window has a canvas, not a console — reach for cs/code-editor when the output is text."
+        ]
       },
       "code": {
-        "type": "string",
-        "description": "The starter program shown in the editor, as a plain string (use \\n for new lines). This is the only authored content — the drawing is NOT written anywhere, it is produced by running this program. With language:\"python\", write ordinary Python turtle (the vocabulary is listed under `language`). LOGO commands (case-insensitive): FORWARD n / FD n, BACK n / BK n (move n steps), RIGHT d / RT d, LEFT d / LT d (turn d degrees), PENUP / PU, PENDOWN / PD, SETCOLOUR name / SETCOLOR name (red, orange, yellow, green, teal, cyan, blue, purple, magenta, pink, brown, grey, white, black), SETPENSIZE n (PENSIZE / SETWIDTH; line thickness, 0.5–24), REPEAT n [ commands ] (nests; REPCOUNT inside is the current pass), TO name :inputs … END (define a procedure, call it by name with its inputs; order of definition never matters), MAKE \"name value (set a variable, read it as :name), CLEARSCREEN / CS, HOME, SETXY x y / SETPOS x y (y grows up), SETHEADING d / SETH d (0 = up, clockwise), CIRCLE r and ARC angle r (centred on the turtle, which stays put; pen must be down), BEGINFILL … ENDFILL (fill the shape walked out between them with the pen colour at BEGINFILL). Anywhere a number goes, arithmetic works: + - * / and brackets, e.g. RIGHT 360/6 or FORWARD :side * 2. \";\" starts a comment to the end of the line. Numbers may be negative or decimal. The turtle starts at the centre facing up, pen down, blue (in Python it starts facing right, as the real turtle module does). A comment-only or empty program is a blank answer space. Keep lines to about 30 characters where you can, and break a long comment over two: the editor never wraps, so the window sizes itself to the longest line and one very long line stretches the figure out of its natural landscape shape. Required."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "The filename on the program's file tab (e.g. \"hexagon.logo\", \"square.py\"). Defaults to \"turtle.logo\", or \"turtle.py\" when language is python. Purely cosmetic — it does not affect execution."
+        "type": "string"
       },
       "title": {
-        "type": "string",
-        "description": "An optional title in the window's header row (e.g. \"A regular hexagon\"). Omit it for a plain window."
+        "type": "string"
       },
       "theme": {
         "type": "string",
@@ -78,17 +37,14 @@
           "terminal",
           "aubergine",
           "amber"
-        ],
-        "description": "The window's colour theme. Light: \"platinum\" (default, warm grey), \"paper\" (white chrome, ink colours), \"contrast\" (black on white, every colour at least 7:1 — for pupils who need it or a weak projector). Dark: \"chalkboard\" (dark green, chalk colours), \"terminal\" (warm dark), \"aubergine\" (deep plum), \"amber\" (an old amber monitor). Use ONE theme for every coding window in a lesson, and VARY it between lessons rather than leaving every lesson on platinum. Dark themes print as paper automatically."
+        ]
       },
       "skin": {
-        "type": "string",
-        "description": "Retired (the old glossy and bevel window skins). Accepted so older lessons still validate; ignored — use theme."
+        "type": "string"
       },
       "markFigure": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Turns the editor into an AUTO-MARKED answer space (\"write a program that draws a square with sides of 80 steps\"). Set it on a marked model tile whose responseMode is run-figure; correctAnswer is { derived: true }. The pupil writes a program and presses Run; the model runs THEIR program and compares the path it actually draws with the target named here — so every correct program passes (REPEAT or unrolled, a procedure or a straight list of moves, any colour or pen size, drawn anywhere on the canvas), and a program that draws something else fails. Nothing about the wording is marked except the facts in `require`. Keep the visible `code` param as the TASK (a comment, a stub, or the buggy program to fix), never the answer — the target is a shape description, not a program, so no surface can leak it. Describe the target in the question text: pupils need to know what to draw, and the model does not draw it for them. A program that breaks is a wrong answer, but a program that reaches for something this editor does not run (a Python module it lacks, a list comprehension, `t.write()`, a colour outside the palette) leaves the tile UNMARKED and says so, rather than failing a pupil for a gap they could not have known about.",
         "properties": {
           "shape": {
             "type": "string",
@@ -97,32 +53,25 @@
               "rectangle",
               "star",
               "path"
-            ],
-            "description": "What the drawing must be. \"regular-polygon\" (+ sides, length) — the classroom staple, and the equilateral triangle is sides 3. \"rectangle\" (+ width, height) — a square is either shape. \"star\" (+ points, length, step?) — the star polygon drawn by turning past the point each time. \"path\" (+ segments) — the escape hatch for any other figure (a staircase, a letter, a triangle with given vertices), written as explicit lines. Required."
+            ]
           },
           "sides": {
-            "type": "integer",
-            "description": "regular-polygon: how many sides (3 to 100)."
+            "type": "integer"
           },
           "length": {
-            "type": "number",
-            "description": "regular-polygon / star: the length of one side, in turtle steps (0.1 to 10000)."
+            "type": "number"
           },
           "width": {
-            "type": "number",
-            "description": "rectangle: width in steps."
+            "type": "number"
           },
           "height": {
-            "type": "number",
-            "description": "rectangle: height in steps."
+            "type": "number"
           },
           "points": {
-            "type": "integer",
-            "description": "star: how many points (5 to 24)."
+            "type": "integer"
           },
           "step": {
-            "type": "integer",
-            "description": "star: how many points each side skips — 2 by default, the ordinary five-pointed star. It must share no factor with `points`, or the path is several separate shapes rather than one star (6 points with step 2 is two triangles, and is refused). The twelve-pointed star of REPEAT 12 [ FORWARD n RIGHT 150 ] is points 12, step 5. Note the pupil must write the division (RIGHT 2*360/7) rather than a rounded angle for any star whose turn is not exact."
+            "type": "integer"
           },
           "segments": {
             "type": "array",
@@ -131,19 +80,16 @@
               "items": {
                 "type": "number"
               }
-            },
-            "description": "path: the lines the drawing must have, each [x1, y1, x2, y2] in turtle coordinates with y growing UP from the start point (the coordinates SETXY takes). Order and direction do not matter — this is the ink, not a route. Use whole numbers a pupil can hit exactly with FORWARD/turns or SETXY."
+            }
           },
           "anchored": {
-            "type": "boolean",
-            "description": "Whether the drawing must sit exactly where the target does. Default false: a correct figure passes at ANY position and orientation, because the skill is the program, not where the drawing lands. Set true only when the task specifies the pose (\"starting at the origin, facing up\" or \"with corners at these coordinates\") — and then prefer shape \"path\", whose coordinates say so."
+            "type": "boolean"
           },
           "require": {
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "description": "Method requirements, read off the pupil's program: \"uses-repeat\" (a REPEAT anywhere, including inside a procedure — in Python, a for or while loop), \"uses-procedure\" (a procedure defined AND called — in Python, a def that is called), \"max-lines:n\" (at most n lines carrying commands — blank and comment-only lines are free). So \"draw a square using REPEAT\" fails an unrolled eight-line answer that draws a perfect square. Omit for \"draw it however you like\"."
+            }
           }
         },
         "required": [
@@ -151,25 +97,20 @@
         ]
       },
       "editable": {
-        "type": "boolean",
-        "description": "Whether pupils can edit the program (either language). true (default) is a live editor they can change and re-run; false is a read-only listing they can read and Run but not change — use false for predict-the-drawing and read-and-trace. A marked question must stay editable."
+        "type": "boolean"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Canvas furniture toggles.",
         "properties": {
           "grid": {
-            "type": "boolean",
-            "description": "Faint background grid on the drawing canvas (with slightly darker lines through the start point), helping pupils judge distances. Default true."
+            "type": "boolean"
           },
           "turtle": {
-            "type": "boolean",
-            "description": "Show the turtle marker (a small green arrowhead) at its current position and heading. Default true."
+            "type": "boolean"
           },
           "state": {
-            "type": "boolean",
-            "description": "A readout in the footer: end position, final heading, total turn and step count — updating as the turtle walks, and standing at the finished values after the run. The total-turn line is the exterior-angle teaching hook (a closed convex path always turns 360° in total). Default false."
+            "type": "boolean"
           }
         }
       }
@@ -180,7 +121,6 @@
   },
   "examples": [
     {
-      "label": "Python — a regular hexagon from six 60-degree turns",
       "params": {
         "language": "python",
         "header": "hexagon.py",
@@ -188,7 +128,6 @@
       }
     },
     {
-      "label": "Python — a function that draws any regular polygon",
       "params": {
         "language": "python",
         "header": "polygon.py",
@@ -196,7 +135,6 @@
       }
     },
     {
-      "label": "Python — filled shape, the bare style worksheets print",
       "params": {
         "language": "python",
         "header": "flag.py",
@@ -204,7 +142,6 @@
       }
     },
     {
-      "label": "Python — write a program that draws a square (marked)",
       "params": {
         "language": "python",
         "header": "square.py",
@@ -220,21 +157,18 @@
       }
     },
     {
-      "label": "Worked regular polygon — a hexagon from six 60-degree turns",
       "params": {
         "header": "hexagon.logo",
         "code": "; a regular hexagon\n; exterior angle = 360 / 6 = 60\nREPEAT 6 [\n  FORWARD 70\n  RIGHT 60\n]"
       }
     },
     {
-      "label": "Blank answer space — write a program that draws a square",
       "params": {
         "header": "square.logo",
         "code": "; Write a program that draws\n; a square with sides 80 steps.\n"
       }
     },
     {
-      "label": "Predict the drawing — read-only staircase listing",
       "params": {
         "header": "predict.logo",
         "editable": false,
@@ -242,42 +176,36 @@
       }
     },
     {
-      "label": "Hard case — a five-pointed star via exterior angle 144",
       "params": {
         "header": "star.logo",
         "code": "; 5 turns of 144 = 720 degrees\n; = two full turns\nREPEAT 5 [\n  FORWARD 100\n  RIGHT 144\n]"
       }
     },
     {
-      "label": "Nested REPEAT — a rosette of eight rotated squares",
       "params": {
         "header": "rosette.logo",
         "code": "REPEAT 8 [\n  REPEAT 4 [\n    FORWARD 45\n    RIGHT 90\n  ]\n  RIGHT 45\n]"
       }
     },
     {
-      "label": "Pen control and colour — two separated squares",
       "params": {
         "header": "pens.logo",
         "code": "SETCOLOUR red\nREPEAT 4 [ FORWARD 60 RIGHT 90 ]\nPENUP\nRIGHT 90\nFORWARD 90\nLEFT 90\nPENDOWN\nSETCOLOUR teal\nREPEAT 4 [ FORWARD 60 RIGHT 90 ]"
       }
     },
     {
-      "label": "Procedure with inputs — any regular polygon from one definition",
       "params": {
         "header": "polygon.logo",
         "code": "TO POLYGON :n :size\n  REPEAT :n [\n    FORWARD :size\n    RIGHT 360 / :n\n  ]\nEND\n\nPOLYGON 5 90"
       }
     },
     {
-      "label": "Variables and arithmetic — a growing square spiral",
       "params": {
         "header": "spiral.logo",
         "code": "MAKE \"side 4\nREPEAT 40 [\n  FORWARD :side\n  RIGHT 90\n  MAKE \"side :side + 4\n]"
       }
     },
     {
-      "label": "Marked question — write a program that draws a square, using REPEAT",
       "params": {
         "header": "square.logo",
         "code": "; Write a program that draws a square\n; with sides of 80 steps. Use REPEAT.\n",
@@ -292,7 +220,6 @@
       }
     },
     {
-      "label": "Housekeeping, CIRCLE and fill — a scene without FORWARD",
       "params": {
         "header": "scene.logo",
         "code": "; a filled star and a moon\nSETCOLOUR yellow\nBEGINFILL\nREPEAT 5 [ FORWARD 80 RIGHT 144 ]\nENDFILL\nPENUP\nSETXY 110 70\nPENDOWN\nSETPENSIZE 4\nSETCOLOUR cyan\nCIRCLE 22"

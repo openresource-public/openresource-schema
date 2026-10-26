@@ -4,34 +4,7 @@
   "name": "quadrilateral",
   "version": 2,
   "title": "Quadrilateral",
-  "tagline": "Quadrilateral from four vertices with derived sides, angles, right angles and an optional splitting diagonal for two-triangle Pythagoras figures; occludable/highlightable.",
-  "description": "A single simple (convex) quadrilateral drawn from four ordered vertices, with any of its side lengths, interior angles, equal-side ticks and right angles marked, plus an optional drawn diagonal that splits it into two triangles. One figure for rectangles and squares (with a diagonal), right-angled trapeziums, and the general \"split it with a diagonal into two right-angled triangles\" Pythagoras figures. You place the four vertices as a sketch in any units, in order around the perimeter; the model derives every side length, interior angle and diagonal length from them and auto-fits the figure, so the marks stay correct. The optional diagonal is drawn between two named non-adjacent vertices; its length is derived and can be occluded (\"find the diagonal first\") or highlighted (the answer). Where the diagonal meets a side at a right angle — the two right triangles of a split figure often have their right angles at different vertices, between the diagonal and a side — mark that right angle on the diagonal entry (diagonals[].angles), not on angles[] (a whole-vertex interior mark would sweep across the diagonal). Interior corner right angles (a rectangle, a right-angled trapezium) are marked on angles[]. Per-element occlusion (\"find x\"), highlighting, a \"not to scale\" note and draggable vertices on the web. Override any displayed value with a label for the given data of a not-to-scale exam figure. Place a to-scale sketch and the derived diagonal / fourth side equals the Pythagoras answer, so it can be cross-checked against the boxed value.",
-  "whenToUse": "Reach for this whenever the teaching lives on a four-sided figure: a rectangle or square (usually with a diagonal), a right-angled trapezium, a kite, or the general Pythagoras figure where a diagonal splits the quadrilateral into two right-angled triangles. Place four vertices as [x, y] points making a sketch of the quadrilateral, IN ORDER around the perimeter (clockwise or anticlockwise — consecutive vertices must be joined sides); the vertices default to labels A, B, C, D in the order given (override a vertex's label for different names). Reference a side by its two endpoint labels (between: [\"A\",\"B\"]) and an interior angle by its vertex (at: \"A\"). The model derives each side length, interior angle and diagonal from the vertices, so for a to-scale figure (e.g. a rectangle placed at [0,0],[12,0],[12,5],[0,5]) just mark the element and the right number shows; for a not-to-scale exam figure place a rough sketch, set notToScale: true, and override each shown value with a label (the given data, e.g. \"8 cm\", \"x\"). Common configurations: RECTANGLE / SQUARE with a diagonal — place the four corners to scale, add a diagonals entry (diagonals: [{ between: [\"A\",\"C\"] }]), mark an interior right angle at a corner if you want the right-triangle explicit, and occlude the diagonal (find AC) or, for a square given its diagonal, label the diagonal and occlude a side. RIGHT-ANGLED TRAPEZIUM — the two right angles are interior corners, so mark them on angles[] ({ at: \"A\", rightAngle: true }); label the parallel sides and the slant, occlude the unknown side. THE SPLIT FIGURE (two right-angled triangles off one diagonal) — draw the diagonal, then put its right angle(s) on the diagonal: diagonals: [{ between: [\"A\",\"C\"], angles: [{ at: \"C\", toward: \"B\", rightAngle: true }] }] marks the right angle at C between the diagonal CA and the side CB (toward names the adjacent vertex the side reaches). If one triangle's right angle is a genuine corner of the quadrilateral, mark THAT one on angles[] instead. Occlude the diagonal to say \"find it first\", then occlude the final unknown side and highlight it. Keep the sketch convex and simple (vertices in perimeter order); reflex / self-intersecting quadrilaterals are out of scope in v1. Occlude renders a value as \"?\"; the element itself stays drawn. EXAM FIGURES with no vertex letters — set vertexLabels: false; the letters stop printing but you still address sides/angles/diagonals by the default A/B/C/D. Mark a right angle with rightAngle: true (a small square instead of an arc + value). Tick equal sides with ticks (1, 2 or 3 — sides with the same count read as equal, as on a kite or square). Cross-block convention: keep the same quadrilateral shape and vertex labels across the blocks of one lesson so pupils track the figure, not a redrawn sketch — change only what is given, occluded or highlighted. A split figure builds up naturally in stages (empty quadrilateral → add the givens → draw the diagonal → solve triangle 1 for the diagonal → solve triangle 2 for the answer). UNITS — set unit: \"cm\" once per figure to append it to every bare-number length label (derived or authored \"12\"); a label carrying its own text (\"12 cm\", \"x\") stays verbatim. Synonyms a teacher might use: quadrilateral, rectangle, square, oblong, trapezium, trapezoid, right-angled trapezium, kite, parallelogram, four-sided shape, diagonal, diagonal of a rectangle, split into two triangles, drop a perpendicular, Pythagoras, right-angled triangle, hypotenuse, find the diagonal, perimeter of a square from its diagonal, not to scale.",
   "responseModes": [],
-  "tags": [
-    "quadrilateral",
-    "rectangle",
-    "square",
-    "oblong",
-    "trapezium",
-    "trapezoid",
-    "right-angled trapezium",
-    "kite",
-    "parallelogram",
-    "four-sided",
-    "diagonal",
-    "diagonal of a rectangle",
-    "split into two triangles",
-    "pythagoras",
-    "hypotenuse",
-    "right angle",
-    "right-angled",
-    "not to scale",
-    "find the diagonal",
-    "perimeter from diagonal",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -40,7 +13,6 @@
         "type": "array",
         "minItems": 4,
         "maxItems": 4,
-        "description": "The four corners of the quadrilateral, IN ORDER around the perimeter (clockwise or anticlockwise). Each is a point in any units — place them as a SKETCH of the shape you want; the model derives the side lengths, interior angles and diagonals from them and auto-fits the figure. The order fixes both the sides (consecutive vertices are joined) and the default labels: the first corner is A, the second B, the third C, the fourth D. Keep the shape simple and convex (v1 does not support reflex or self-intersecting quadrilaterals).",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -51,12 +23,10 @@
                 "type": "number"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "Position of this corner as [x, y] in your own units (y up). Only the SHAPE matters — the figure is scaled to fit."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Display name for this corner, drawn just outside it. Defaults to A, B, C, D by order. Override for different names (then reference this corner by the new label in sides/angles/diagonals)."
+              "type": "string"
             }
           },
           "required": [
@@ -66,7 +36,6 @@
       },
       "sides": {
         "type": "array",
-        "description": "The sides to LABEL with a length and/or tick as equal. Address each by its two endpoint vertex labels (they must be consecutive corners). The length is DERIVED from the vertices; override with label for the given value or an unknown. Omit a side to leave it bare.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -77,26 +46,21 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two endpoint vertex labels of this side, e.g. [\"A\",\"B\"] (order does not matter). Must be a genuine side — two consecutive corners."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed length — the given value (\"8 cm\", \"x\"). Omit to show the length derived from the vertices."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this side's length as \"?\" — the \"find the missing side\" hook. The side stays drawn. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this side (amber) — the answer, or the side in question. Default false."
+              "type": "boolean"
             },
             "ticks": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 3,
-              "description": "Draw this many small equal-length ticks across the side. Sides with the SAME tick count read as equal (a square uses 1 on each; a kite pairs sides with 1 and 2). Omit for no tick."
+              "maximum": 3
             }
           },
           "required": [
@@ -106,34 +70,27 @@
       },
       "angles": {
         "type": "array",
-        "description": "The INTERIOR angles to MARK — an arc + value, or a right-angle square. Address each by its vertex label. The measure is DERIVED from the vertices (the angle between the two sides meeting at that corner); override with label. Use rightAngle for a corner right angle (a rectangle, a right-angled trapezium). Omit a vertex to leave its angle unmarked. (For the right angle a DIAGONAL makes with a side, use diagonals[].angles instead — a corner mark would be wrong there.)",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "string",
-              "description": "Which corner this angle sits at — the vertex label (e.g. \"A\")."
+              "type": "string"
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed value — the given measure on a not-to-scale figure (\"110°\") or an unknown (\"x\"). Omit to show the measure derived from the vertices."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this angle's value as \"?\" — the \"find the missing angle\" hook. The arc still shows. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to this angle (amber arc + value). Default false."
+              "type": "boolean"
             },
             "bare": {
-              "type": "boolean",
-              "description": "Mark this angle with the arc ONLY — no value text. Use when the figure marks an angle without giving its size. occlude beats bare. Default false."
+              "type": "boolean"
             },
             "rightAngle": {
-              "type": "boolean",
-              "description": "Mark this corner as a right angle: a small square instead of an arc and value. Use for a rectangle/square corner or the right angles of a right-angled trapezium. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -144,7 +101,6 @@
       "diagonals": {
         "type": "array",
         "maxItems": 2,
-        "description": "Diagonals to DRAW — a straight line between two NON-adjacent corners (e.g. [\"A\",\"C\"] or [\"B\",\"D\"]), which splits the quadrilateral into two triangles. The length is DERIVED; occlude it (\"find the diagonal first\") or highlight it (the answer). A diagonal can carry right-angle / angle marks at its ends where it meets a side (diagonals[].angles) — the split figures' two right triangles usually have their right angles here, at different vertices, between the diagonal and a side. Omit for a plain quadrilateral. At most two.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -155,60 +111,47 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two NON-adjacent corner labels this diagonal joins, e.g. [\"A\",\"C\"] (order does not matter)."
+              "maxItems": 2
             },
             "label": {
-              "type": "string",
-              "description": "Override the displayed length of the diagonal — a given value (\"8 m\") or an unknown (\"x\"). Omit to leave the diagonal unlabelled unless showLength / occlude is set."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the diagonal's length as \"?\" (the \"find the diagonal\" hook) and show its length position. The line still shows. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Draw the eye to the diagonal and its length (amber) — the answer, or the diagonal a question is about. Default false."
+              "type": "boolean"
             },
             "showLength": {
-              "type": "boolean",
-              "description": "Show the derived length of the diagonal even with no label. Default false — a bare diagonal draws just the line. (label or occlude also force the length to show.)"
+              "type": "boolean"
             },
             "angles": {
               "type": "array",
               "maxItems": 2,
-              "description": "Angle marks at this diagonal's ends, between the diagonal and one of the sides meeting there — the right angle of a split figure's right triangle. At most one per end. Omit for none.",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
                   "at": {
-                    "type": "string",
-                    "description": "Which END of this diagonal the angle sits at — one of the diagonal's two corner labels (e.g. \"C\")."
+                    "type": "string"
                   },
                   "toward": {
-                    "type": "string",
-                    "description": "Which side bounds this angle: the adjacent corner that side reaches (e.g. toward \"B\" marks the angle between the diagonal and the side at→B). Must be a corner adjacent to `at`."
+                    "type": "string"
                   },
                   "label": {
-                    "type": "string",
-                    "description": "Override the displayed value — a given measure (\"35°\") or an unknown (\"x°\"). Omit to show the measure derived from the sketch."
+                    "type": "string"
                   },
                   "occlude": {
-                    "type": "boolean",
-                    "description": "Render this angle's value as \"?\". The arc still shows. Default false."
+                    "type": "boolean"
                   },
                   "highlight": {
-                    "type": "boolean",
-                    "description": "Draw the eye to this angle (amber). Default false."
+                    "type": "boolean"
                   },
                   "bare": {
-                    "type": "boolean",
-                    "description": "Arc only, no value text. occlude beats bare. Default false."
+                    "type": "boolean"
                   },
                   "rightAngle": {
-                    "type": "boolean",
-                    "description": "Mark this as a right angle: a small square between the diagonal and the side, instead of an arc + value. The usual mark for a split figure. Default false."
+                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -224,28 +167,22 @@
         }
       },
       "unit": {
-        "type": "string",
-        "description": "The figure's length unit, e.g. \"cm\", \"m\", \"mm\". Appended to every length label that is a BARE NUMBER — a derived length or a purely numeric authored label (\"12\" → \"12 cm\"). A label with any other text (\"12 cm\", \"x\", \"2x + 1\") is shown verbatim — an authored override always wins. Angle labels never take it. Default \"\" (labels stay bare). Set it once per figure and keep it consistent across a lesson. @2."
+        "type": "string"
       },
       "vertexLabels": {
-        "type": "boolean",
-        "description": "Whether to PRINT the vertex letters beside the corners. Set false for exam figures drawn without letters — addressing in sides/angles/diagonals still uses the default A/B/C/D (or custom labels); only the printing is suppressed. Default true."
+        "type": "boolean"
       },
       "notToScale": {
-        "type": "boolean",
-        "description": "Print a \"Not to scale\" note by the figure. Only when the source figure prints one — most exam figures don't. Default false."
+        "type": "boolean"
       },
       "caption": {
-        "type": "string",
-        "description": "An optional line of text centred below the figure — the rule or fact being taught, e.g. \"The diagonal of a rectangle splits it into two right-angled triangles\". Omit for none."
+        "type": "string"
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "draggablePoints": {
-        "type": "boolean",
-        "description": "Web-only. Let pupils drag a corner to reshape the quadrilateral; the derived side lengths, angles and any diagonal recompute live. Best on a to-scale figure (no overridden labels). Default false."
+        "type": "boolean"
       }
     },
     "required": [
@@ -254,7 +191,6 @@
   },
   "examples": [
     {
-      "label": "Blank quadrilateral frame (label A, B, C, D) — answer space",
       "params": {
         "vertices": [
           {
@@ -285,7 +221,6 @@
       }
     },
     {
-      "label": "Rectangle with a diagonal (to scale) — worked, diagonal shown",
       "params": {
         "vertices": [
           {
@@ -350,7 +285,6 @@
       }
     },
     {
-      "label": "Square from its diagonal (not to scale) — find a side",
       "params": {
         "vertices": [
           {
@@ -423,7 +357,6 @@
       }
     },
     {
-      "label": "Right-angled trapezium — find the fourth side (occluded question)",
       "params": {
         "vertices": [
           {
@@ -497,7 +430,6 @@
       }
     },
     {
-      "label": "The hard case — diagonal splits it into two right triangles (find AB)",
       "params": {
         "vertices": [
           {
@@ -582,7 +514,6 @@
       }
     },
     {
-      "label": "Split figure — fully worked (both triangles solved)",
       "params": {
         "vertices": [
           {

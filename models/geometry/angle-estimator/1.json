@@ -4,33 +4,7 @@
   "name": "angle-estimator",
   "version": 1,
   "title": "Angle estimator",
-  "tagline": "One angle from two rays at an authored size, for estimating by eye and classifying (acute/right/obtuse/reflex/straight); size and type derived, reading occludable, guides optional.",
-  "description": "Two rays from a common vertex draw a single angle at the size you author, for building angle sense WITHOUT a protractor: estimate the angle by eye and classify it. You write only the angle's size in degrees (and optionally how the whole figure is rotated); the model draws the two arms and the arc between them, derives the reading, and derives the classification — acute (< 90), right (= 90, drawn as a square not an arc), obtuse (90–180), straight (= 180), or reflex (> 180, the arc sweeping the long way round). There is nowhere to author the reading or the type, so a 127° angle always reads 127° and always classifies as obtuse. Occlude the reading (it shows \"?\") for \"estimate this angle\" or \"is this acute or obtuse?\"; reveal it to check. Turn on faint benchmark guides (a right-angle marker at 90°, a straight-line marker at 180°) as an estimation scaffold. Highlight the angle, name it (∠ABC, x°), or show the arm-point letters for the three-letter naming convention. v1 draws exactly one angle per figure as a static stimulus — classifying or estimating is answered in the question block's text, not on the figure.",
-  "whenToUse": "Reach for this whenever the lesson is angle SENSE by eye rather than measuring with an instrument: estimate the size of an angle, classify an angle as acute / right / obtuse / reflex / straight, compare an angle against the benchmark angles 45 / 90 / 180, and the three-letter angle-naming convention ∠ABC. Author only `size` (the angle in degrees) and optionally `rotate` (turn the whole figure so the angle is not always sitting on the horizontal — good practice, since real angles are not axis-aligned). Common configurations: a worked labelled example — `size` with the reading and the derived type shown; an \"estimate this angle\" question — set `occlude: true` so the reading shows \"?\" (the type is hidden too so nothing leaks), optionally with `guides: [\"right-angle\"]` so pupils have 90° to judge against; a \"classify this angle\" set — several blocks at different sizes with `show.reading: false` and `show.type: false`, asking acute/obtuse/reflex; a hard discrimination pair — 88° and 92° with the right-angle guide, so pupils must decide just-acute vs just-obtuse. For the naming convention set `armLabels` to the three point letters (vertex letter shown in the middle of ∠ABC). A reflex angle is just `size` over 180 — the arc sweeps the long way and the type reads \"reflex\"; do not use a protractor's subtract-from-360 method here (that is geometry/protractor). Keep `rotate` and the show-flags consistent across the blocks of one lesson so pupils compare like with like. Switch primitive when the teaching changes: to lay a graduated instrument on the angle and read the scale use geometry/protractor; for angle facts at a point (vertically opposite, angles on a line, angle sums, forming equations) use geometry/angles-at-a-point; for a fraction of a full turn (quarter / half / three-quarter turn, clockwise) use geometry/turn or geometry/clock. Synonyms a teacher might use: estimate an angle, guess the angle, angle sense, classify angles, name the angle, acute, right angle, obtuse, reflex, straight angle, types of angle, benchmark angles, without a protractor, ∠ABC naming.",
   "responseModes": [],
-  "tags": [
-    "estimate angles",
-    "estimating angles",
-    "angle sense",
-    "classify angles",
-    "types of angle",
-    "acute",
-    "right angle",
-    "obtuse",
-    "reflex angle",
-    "straight angle",
-    "benchmark angles",
-    "without a protractor",
-    "name the angle",
-    "angle naming",
-    "ABC",
-    "degrees",
-    "geometry",
-    "angles",
-    "KS2",
-    "KS3",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -38,24 +12,19 @@
       "size": {
         "type": "number",
         "exclusiveMinimum": 0,
-        "exclusiveMaximum": 360,
-        "description": "The angle in DEGREES between the two rays (0 to 360, exclusive). This is the ONE semantic input: the arm directions, the arc, the reading and the classification are all derived from it. Under 90 is acute; exactly 90 is a right angle (drawn as a square); over 90 to under 180 is obtuse; exactly 180 is a straight angle; over 180 is reflex (the arc sweeps the long way round). Whole degrees read most naturally."
+        "exclusiveMaximum": 360
       },
       "rotate": {
-        "type": "number",
-        "description": "Rotate the WHOLE figure, in degrees anticlockwise from east: the first (baseline) arm points along `rotate`, the second arm at `rotate + size`. 0 sits the baseline arm horizontally to the right. Tilt it (e.g. 20, 155) so the angle is not always axis-aligned — pupils should judge an angle in any orientation, not just off the horizontal. Default 0."
+        "type": "number"
       },
       "label": {
-        "type": "string",
-        "description": "Name shown beside the arc instead of the derived reading — e.g. \"∠ABC\", \"x°\", or \"a\". Omit to show the derived reading (\"127°\"). An occluded angle shows \"?\" regardless of this."
+        "type": "string"
       },
       "occlude": {
-        "type": "boolean",
-        "description": "Hide the answer: the reading shows \"?\" AND the derived type is suppressed (nothing leaks in the figure or the aria-label) — the \"estimate this angle / is it acute or obtuse?\" hook. The angle itself stays drawn. Default false."
+        "type": "boolean"
       },
       "highlight": {
-        "type": "boolean",
-        "description": "Draw the eye to this angle — its arc and reading go amber (the result / emphasis colour). Default false."
+        "type": "boolean"
       },
       "armLabels": {
         "type": "array",
@@ -63,8 +32,7 @@
           "type": "string"
         },
         "minItems": 3,
-        "maxItems": 3,
-        "description": "Three point letters for the three-letter naming convention: [firstArmTip, vertex, secondArmTip], e.g. [\"A\",\"B\",\"C\"] draws A at the first arm's end, B at the vertex, C at the second arm's end — so the angle is read ∠ABC (vertex in the middle). Omit for an unlabelled angle."
+        "maxItems": 3
       },
       "guides": {
         "type": "array",
@@ -74,33 +42,26 @@
             "right-angle",
             "straight"
           ]
-        },
-        "description": "Faint benchmark markers to judge against, drawn in construction grey from the baseline arm: \"right-angle\" adds a 90° guide ray with a small square, \"straight\" adds a 180° guide ray along the straight line. A scaffold for estimation (\"is it more or less than a right angle?\"). Their directions are derived from `rotate`. Omit for none."
+        }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional sentence centred below the figure: a stem sentence (\"The angle is about ___ degrees\"). Rendered in a warm band. An occluded value referenced here should be written as \"?\" by the author. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles, all default true.",
         "properties": {
           "reading": {
-            "type": "boolean",
-            "description": "Show the derived reading (e.g. \"127°\") beside the arc. false hides the number (a pure classify / estimate figure). Per-angle occlude shows \"?\" instead. Default true."
+            "type": "boolean"
           },
           "type": {
-            "type": "boolean",
-            "description": "Show the derived classification word (acute / right angle / obtuse / straight / reflex) below the reading. false hides it so pupils name it themselves. Auto-hidden when occluded. Default true."
+            "type": "boolean"
           },
           "arc": {
-            "type": "boolean",
-            "description": "Draw the arc (or right-angle square) between the two arms. false leaves just the two bare rays. Default true."
+            "type": "boolean"
           }
         }
       }
@@ -111,7 +72,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a labelled 55° acute angle, reading and type shown",
       "params": {
         "header": "Types of angle",
         "size": 55,
@@ -120,7 +80,6 @@
       }
     },
     {
-      "label": "Blank / classify answer space — reading and type hidden, name it yourself",
       "params": {
         "size": 118,
         "rotate": 200,
@@ -131,7 +90,6 @@
       }
     },
     {
-      "label": "Occluded question — estimate this angle (\"?\"), right-angle guide as a scaffold",
       "params": {
         "size": 68,
         "rotate": 25,
@@ -142,7 +100,6 @@
       }
     },
     {
-      "label": "Hard case — a reflex angle (255°), arc sweeps the long way, type \"reflex\"",
       "params": {
         "size": 255,
         "rotate": 200,
@@ -150,7 +107,6 @@
       }
     },
     {
-      "label": "Three-letter naming — ∠ABC with the arm letters, obtuse 130°",
       "params": {
         "size": 130,
         "rotate": 8,
@@ -164,7 +120,6 @@
       }
     },
     {
-      "label": "Near-benchmark discrimination — a just-obtuse 96° against the right-angle guide, highlighted",
       "params": {
         "size": 96,
         "rotate": 30,

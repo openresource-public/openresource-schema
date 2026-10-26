@@ -4,72 +4,43 @@
   "name": "map-extract",
   "version": 2,
   "title": "Map extract",
-  "tagline": "Exam-style map extract from the plate atlas: numbered km grid, derived contours, 4/6-figure refs; refs occlude into questions.",
-  "description": "An exam-style map extract on a numbered kilometre grid, rendered from a plate in the map atlas. The plate carries the terrain (an elevation grid), the features (rivers, woods, settlements, roads, symbols) and the names; the params carry the question: highlighted kilometre squares, and lettered marks with derived 4- or 6-figure grid references. Contours are derived from the plate's elevation at your chosen interval, the scale bar comes from the kilometre grid, and the key lists exactly the symbols present — every symbol is our own redrawn generic convention, and pupils answer from the key. The key sits in its own column beside the extract on every surface. On web a control pill at the map's top-right zooms the map inside its frame and opens it full screen — neither is ever part of a question. Set keyOnly to make the key the whole figure. Occlude a grid reference for a question (\"give the six-figure grid reference of A\"). The colour scheme follows the standard cartographic grammar (brown contours, blue water, classified-road colours, pale-blue grid); \"tonal\" is the greyscale print variant.",
-  "whenToUse": "Reach for this for GCSE map-skills work: four- and six-figure grid references, reading map symbols from a key, and reading contours and relief. Pick the plate FIRST from the atlas index by topic (a V-shaped valley and confluence: hebden-bridge; a corrie and arête: helvellyn; a recurved spit: spurn-head; a city centre: sheffield-centre), then author only the question. Squares: set squares [\"9927\"] to tint and reference a whole kilometre square — this is what \"describe the physical geography of square 9927\" and every compare-two-squares question point at; tag a square and occlude it to ask for its reference instead. Decisions: hide [\"parking\", \"settlement\"] leaves those categories off the drawing AND out of the key, which is what turns a reading exercise into \"where would you site a car park?\" or \"suggest a route for a bypass\"; a staged sequence of shorter hide lists builds a land-use map up in front of the class. Symbols: set occludeSymbol on a mark to cover the symbol under it with a \"?\" for \"what is the symbol at A?\", and give key a short candidate list so the pupil has something to choose between — with an auto key the covered symbol's own row is removed, or it could be named by elimination. Marks: letters at features or [east, north] positions; add ref 4 or ref 6 to write the derived grid reference, occlude it to ask for it. Relief: contours draw by default at a 10 m interval (25 m fits mountain extracts — set contours.interval). key \"quiz\" blanks the symbol names for a name-the-symbols starter; keyOnly true drops the map and makes the key the whole figure — key \"all\" for the full vocabulary to teach from, \"quiz\" for the blank-name test; grid false hides the kilometre grid for a symbols-only extract. Keep the same plate across a lesson's blocks so pupils work one map. Answer by CLICKING: set select \"square\" and host the tile with responseMode \"select-point\" — the pupil taps a kilometre square and their four-figure reference marks against correctAnswer on the tile; select \"point\" reports the SIX-figure reference of wherever they tapped, which is how a six-figure question is answered by pointing rather than typing (accept the true reference and its eight neighbours); select \"feature\" (or a list of feature ids) makes features the target instead. That mode is screen only, and the printed figure carries an instruction to tick or ring the choice, so the same block still works on paper. Answer ON the model: host a marked model tile with responseMode \"fill-derived\" and marking { mode: \"auto\", correctAnswer: { derived: true } } — every occluded grid reference becomes a typed slot, self-checked with the exam tolerances (4-figure exact, 6-figure accepts the neighbouring square). Synonyms teachers use: map skills, grid reference, four-figure, six-figure, map symbols, key, scale, contour lines, relief, topographic map.",
   "responseModes": [
     "fill-derived",
     "select-point"
-  ],
-  "tags": [
-    "map skills",
-    "grid reference",
-    "four-figure",
-    "six-figure",
-    "map symbols",
-    "key",
-    "scale",
-    "contour",
-    "contour lines",
-    "relief",
-    "topographic",
-    "geography",
-    "fieldwork",
-    "river valley",
-    "spit",
-    "settlement"
   ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
       "plate": {
-        "type": "string",
-        "description": "Which map extract to draw, by plate id (e.g. \"hebden-bridge\", \"helvellyn\", \"spurn-head\"). See the atlas index for each plate's topics, features and names."
+        "type": "string"
       },
       "plateData": {
         "type": "object",
-        "additionalProperties": true,
-        "description": "The resolved plate. Supplied by the HOST from the plate ref — never authored by hand."
+        "additionalProperties": true
       },
       "contours": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Contour derivation. Omit for the default: shown, 10 m interval, index contours every 50 m, labelled.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Draw contours at all. false gives a flat-looking extract for pure symbol/grid-reference work. Default true."
+            "type": "boolean"
           },
           "interval": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Metres between contours. 10 suits most extracts; 5 for very flat coastal plates, 25 for mountains. Default 10."
+            "exclusiveMinimum": 0
           },
           "index": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Index-contour spacing in metres — drawn heavier and labelled with the height. Should be a multiple of interval. Default 50."
+            "exclusiveMinimum": 0
           },
           "labels": {
-            "type": "boolean",
-            "description": "Write heights on the index contours. Default true."
+            "type": "boolean"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Draw the kilometre grid with its two-digit numbering (from the plate's grid origin). Default true — grid references need it."
+        "type": "boolean"
       },
       "squares": {
         "type": "array",
@@ -84,7 +55,6 @@
               "additionalProperties": false,
               "properties": {
                 "at": {
-                  "description": "Which square: a FOUR-FIGURE reference exactly as printed on this extract (\"9927\"), or anything `at` accepts — a feature id, a mark id, or [east, north] metres — in which case it is the square CONTAINING that point (so you can highlight \"the square the church is in\" without looking its reference up). Four bare digits are always read as a reference.",
                   "oneOf": [
                     {
                       "type": "string"
@@ -100,20 +70,16 @@
                   ]
                 },
                 "tag": {
-                  "type": "string",
-                  "description": "A letter drawn in the square (A, B, C…), so a question can say \"square A\" without naming its reference."
+                  "type": "string"
                 },
                 "ref": {
-                  "type": "boolean",
-                  "description": "Write the square's four-figure reference on it. Defaults to true for an untagged square (it has to be identifiable somehow) and false for a tagged one — set it true to show both, as in a worked \"A = 9927\" example."
+                  "type": "boolean"
                 },
                 "occlude": {
-                  "type": "boolean",
-                  "description": "Render the four-figure reference as \"?\" — the \"give the grid reference of square A\" question. With responseMode fill-derived the \"?\" becomes a typed answer slot, marked exactly (4-figure references have no tolerance). Give the square a tag as well, or there is no way to refer to it. Default false."
+                  "type": "boolean"
                 },
                 "highlight": {
-                  "type": "boolean",
-                  "description": "Amber the square instead of the question-ink blue — the answer, or the square under discussion. Default false."
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -121,16 +87,14 @@
               ]
             }
           ]
-        },
-        "description": "Tint and outline whole kilometre grid squares — the anchor for the commonest extended map question there is (\"describe the physical geography of square 9927\", \"compare land use in 9927 and 0025\"). A bare string is the short form for { at }: squares: [\"9927\"]. The tint is deliberately weak, because the question is usually about what is INSIDE the square. A reference this extract does not carry is an error naming the ones it does — call get_plate for the range."
+        }
       },
       "hide": {
         "type": "array",
         "maxItems": 12,
         "items": {
           "type": "string"
-        },
-        "description": "Leave whole categories OFF the drawing. A scope token is a key category (\"relief\", \"water\", \"vegetation\", \"settlement\", \"transport\", \"services\"), a single kind id (\"parking\", \"river\"), or a prefix like \"woodland\" that takes every kind starting with it. This is what makes a decision question possible: hide [\"parking\", \"settlement\"] and ask where a car park should go; hide [\"a-road\", \"b-road\"] and ask pupils to suggest a route for a bypass. The key omits every hidden kind and so does the accessible description, so the answer cannot be read off the legend. Also the way to stage a land-use build: give each stage a shorter hide list and the map fills in. Note that an explicit key list is still honoured as written, which is how \"which of these is NOT on the map?\" stays possible."
+        }
       },
       "marks": {
         "type": "array",
@@ -140,11 +104,9 @@
           "additionalProperties": false,
           "properties": {
             "id": {
-              "type": "string",
-              "description": "The letter drawn at the mark (A, B, C…) — also how other params (a square's `at`) refer back to it."
+              "type": "string"
             },
             "at": {
-              "description": "Where the mark sits: a feature id from the plate, the id of a mark defined in `marks`, or a raw [east, north] position in METRES from the extract's south-west corner (e.g. [2120, 1180]). Feature ids come from get_plate — call it for the plate you are using and copy them exactly. They read like \"pla-st-james-s-church-sd98432744\" or \"r-river-calder-sd98002687-se00992617\": a kind, the name where there is one, and the feature's own grid reference. Never invent or shorten one — an id this plate does not carry is a render error that lists the ids it does.",
               "oneOf": [
                 {
                   "type": "string"
@@ -164,35 +126,28 @@
               "enum": [
                 4,
                 6
-              ],
-              "description": "Write the mark's DERIVED grid reference beside it: 4-figure (the square) or 6-figure (to 100 m). Omit for a bare letter."
+              ]
             },
             "label": {
-              "type": "string",
-              "description": "Optional name written with the letter (e.g. \"church\"). The grid reference stays derived."
+              "type": "string"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render the grid-reference readout as \"?\" — the \"give the grid reference of A\" question. With responseMode fill-derived the \"?\" becomes a typed answer slot, self-checked with the exam tolerance (4-figure exact; 6-figure accepts the neighbouring square). Default false."
+              "type": "boolean"
             },
             "occludeSymbol": {
-              "type": "boolean",
-              "description": "Cover the MAP SYMBOL at this mark with a \"?\" — the \"what is the symbol at A?\" question, posed on the figure; the mark's own ring is what makes it findable. Point `at` at a point feature's id to cover exactly that symbol; a mark at a position covers the nearest symbol within 250 m, and nothing at all if there is none. The symbol's name is withheld from the map and from the accessible description, and a kind whose ONLY feature is covered is dropped from an \"auto\" key — otherwise the legend names the covered symbol by elimination. That is why a well-formed version supplies its own candidates: set key to a short list ([\"station\", \"bus-station\", \"parking\"]) and ask which of them is at A, since an explicit key list is honoured as written. The answer is a name, so mark it on a text tile beside the figure, not on the model. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber the mark — the answer, or the feature under discussion. Default false."
+              "type": "boolean"
             }
           },
           "required": [
             "id",
             "at"
           ]
-        },
-        "description": "Lettered marks on the map — the anchors questions point at."
+        }
       },
       "select": {
-        "description": "What the pupil CLICKS when this model is hosted in a marked tile with responseMode \"select-point\". \"square\" (the default for that mode) makes every kilometre square clickable and reports the FOUR-figure reference of the one chosen — the answering half of \"which square is the steepest?\" or \"which square would you site the car park in?\". \"point\" makes the whole extract clickable and reports the SIX-figure reference of wherever the pupil clicked, floored to the 100 m square: this is how \"give a six-figure reference for the church\" is answered by POINTING instead of typing, and it is the only mode whose answer is a position rather than a thing. \"feature\" makes the drawn features clickable and reports the feature id; OR give an ARRAY of feature ids to narrow the candidates to those, which is usually the better question (\"click the spit\" is fairer when there are four things it could be than when there are four hundred). The accepted answer lives on the TILE (correctAnswer), never in these params — and for \"point\" list the true reference AND its eight neighbours, the same ±1 tolerance the typed six-figure answer gets, because reading to 100 m by eye is ±1. Screen only: on paper the figure prints an instruction to tick, mark or ring the choice instead, and nothing else about the extract changes.",
         "oneOf": [
           {
             "type": "string",
@@ -207,13 +162,11 @@
             "maxItems": 12,
             "items": {
               "type": "string"
-            },
-            "description": "Feature ids to make clickable, e.g. [\"sp-saltmere\", \"m-lagoon\", \"w-holt\"]."
+            }
           }
         ]
       },
       "key": {
-        "description": "Which symbols the key lists. \"auto\" (default) lists exactly the kinds present on this extract — pupils answer from the key, as in the exam. \"all\" lists the whole vocabulary. \"none\" omits the key. \"quiz\" is \"auto\" with the names blanked. OR give an ARRAY of kind ids to list just those — the right choice when a busy extract would otherwise produce a twenty-row key and the question only turns on a few symbols (e.g. [\"campsite\", \"parking\", \"public footpath\"]). A kind the extract does not carry is still listed if you ask for it, so \"which of these is NOT on the map?\" works. The key draws in its own column beside the extract.",
         "oneOf": [
           {
             "type": "string",
@@ -229,35 +182,29 @@
             "maxItems": 24,
             "items": {
               "type": "string"
-            },
-            "description": "Kind ids to list, e.g. [\"river\", \"campsite\", \"viewpoint\"]."
+            }
           }
         ]
       },
       "keyQuiz": {
-        "type": "boolean",
-        "description": "Blank the names in the key, leaving a line to write on — the name-the-symbols task. Works with any key scope, including an explicit subset. Default false."
+        "type": "boolean"
       },
       "keyOnly": {
-        "type": "boolean",
-        "description": "Draw the key ALONE as the figure — no map — for teaching or testing the symbols on their own. Pair with key \"all\" for the whole vocabulary, or an array for a focused set; add keyQuiz for blank name lines. Default false."
+        "type": "boolean"
       },
       "scheme": {
         "type": "string",
         "enum": [
           "colour",
           "tonal"
-        ],
-        "description": "\"colour\" (default) is the standard cartographic grammar — brown contours, blue water, classified-road colours, pale-blue kilometre grid. \"tonal\" is the greyscale print variant, graded so the layers still separate."
+        ]
       },
       "reveal": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Staged build: draw only the first N annotations, in order — squares, then marks. Layout is solved for the FULL set, so nothing moves as stages reveal more."
+        "minimum": 0
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the extract."
+        "type": "string"
       }
     },
     "required": [
@@ -266,14 +213,12 @@
   },
   "examples": [
     {
-      "label": "Worked reference — a real extract with contours, key and scale bar",
       "params": {
         "plate": "hebden-town",
         "header": "Hebden Bridge — 1 km grid squares"
       }
     },
     {
-      "label": "Grid references — A given as 4-figure, B occluded as a 6-figure question",
       "params": {
         "plate": "hebden-town",
         "marks": [
@@ -293,7 +238,6 @@
       }
     },
     {
-      "label": "Grid squares — one named for description, one occluded as a question",
       "params": {
         "plate": "hebden-town",
         "squares": [
@@ -309,7 +253,6 @@
       }
     },
     {
-      "label": "Decision question — the car parks are left off, so pupils site one",
       "params": {
         "plate": "keswick",
         "hide": [
@@ -324,7 +267,6 @@
       }
     },
     {
-      "label": "Name the symbol — the symbol at A is covered, the key gives the candidates",
       "params": {
         "plate": "hebden-town",
         "marks": [
@@ -343,14 +285,12 @@
       }
     },
     {
-      "label": "Click the answer — every kilometre square clickable (screen only)",
       "params": {
         "plate": "sheffield-centre",
         "select": "square"
       }
     },
     {
-      "label": "Point to it — a click anywhere reports its six-figure reference",
       "params": {
         "plate": "hebden-town",
         "select": "point",
@@ -363,7 +303,6 @@
       }
     },
     {
-      "label": "Symbol quiz — the key's names blanked for a starter",
       "params": {
         "plate": "malham",
         "key": "quiz",
@@ -374,7 +313,6 @@
       }
     },
     {
-      "label": "Focused key — only the symbols the question turns on",
       "params": {
         "plate": "spurn-head",
         "key": [
@@ -394,7 +332,6 @@
       }
     },
     {
-      "label": "Key only — the whole symbol vocabulary, no map",
       "params": {
         "plate": "hebden-town",
         "keyOnly": true,
@@ -403,7 +340,6 @@
       }
     },
     {
-      "label": "Key only, blanked — name the symbols with no map to read them off",
       "params": {
         "plate": "hebden-town",
         "keyOnly": true,

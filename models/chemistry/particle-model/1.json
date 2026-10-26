@@ -4,33 +4,7 @@
   "name": "particle-model",
   "version": 1,
   "title": "Particle model (states of matter)",
-  "tagline": "Container of particles whose arrangement and spacing derive from the state — solid lattice, close liquid, sparse gas; state from substance + temperature, name occludable.",
-  "description": "A rectangular container of round particles drawn as the states-of-matter particle model. You author the STATE — solid, liquid or gas — and the model derives the whole picture: a solid is a regular close-packed lattice of touching particles; a liquid is close-packed but irregular (the lattice loosened and jittered); a gas is a sparse, widely-spaced scatter. Instead of a bare state you may author a substance (its melting and boiling points) and a temperature, and the state is DERIVED by comparing the temperature to the fixed points — the \"is water at 120 °C a solid, liquid or gas?\" construction. The particle count and the container are authored; every particle position, the arrangement descriptor (regular / random) and the spacing descriptor (touching / close together / far apart) are computed from the state, and the state name can be occluded to ask \"which state is this?\". Gas and liquid scatter is produced by a seeded generator, so the layout is identical every render. A staged build morphs the field solid → liquid → gas one state at a time. v1 is static (no particle motion) with a rectangular container.",
-  "whenToUse": "Reach for this for the KS3 (and GCSE) states-of-matter particle model — the \"solid, liquid, gas\" arrangement-and-spacing diagram. Author state directly (\"state\": \"solid\" | \"liquid\" | \"gas\") for an abstract figure, or author a substance with its melting and boiling points plus a temperature and let the state be derived — the stronger construction for \"what state is this substance at this temperature?\" (the picture then agrees with the fixed points by construction). Set count for the sample size (a lattice reads well at 16–36; a gas at 6–12). Occlude the state name (occlude: \"state\") for \"which state of matter is this?\"; highlight for emphasis. show.descriptors toggles the arrangement/spacing labels, show.temperature the T/melt/boil readout, show.stateName the named state. Common configurations: a clean worked solid/liquid/gas; a \"which state?\" question with the name hidden and descriptors off; the same substance at three temperatures as THREE separate blocks side by side (one figure per state — do not try to draw three states in one figure). Staged builds read very well here: open on the solid and add heat one state at a time (solid → liquid → gas), the field loosening and spreading at each beat, with the melting/boiling narration in the block TEXT — the figure only morphs the particles. Keep count and container steady across a lesson so pupils compare like with like, and keep the melting/boiling story in the surrounding prose, not on the canvas. Synonyms a teacher might use: particle model, states of matter, solid liquid gas, particle arrangement, particle diagram, kinetic theory (arrangement/spacing only), close packed, lattice, melting, boiling, changes of state.",
   "responseModes": [],
-  "tags": [
-    "particle model",
-    "states of matter",
-    "solid",
-    "liquid",
-    "gas",
-    "solid liquid gas",
-    "particle arrangement",
-    "particle diagram",
-    "kinetic theory",
-    "close packed",
-    "lattice",
-    "spacing",
-    "melting point",
-    "boiling point",
-    "changes of state",
-    "change of state",
-    "chemistry",
-    "physics",
-    "science",
-    "ks3",
-    "gcse"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -41,25 +15,20 @@
           "solid",
           "liquid",
           "gas"
-        ],
-        "description": "The state of matter to draw. Author this for an abstract figure (\"here is a solid\"). If a substance AND temperature are also authored, the DERIVED state (from comparing temperature to the fixed points) wins and this is ignored — so use one construction or the other. Solid = regular lattice, touching; liquid = close but irregular; gas = sparse, seeded scatter."
+        ]
       },
       "substance": {
         "type": "object",
         "additionalProperties": false,
-        "description": "A named substance with its melting and boiling points, so the STATE can be derived by comparing an authored temperature against them. Author this WITH temperature for the \"substance at T °C → which state?\" construction (the state cannot then lie about the fixed points); omit it and author state directly for an abstract \"here is a solid\" figure.",
         "properties": {
           "name": {
-            "type": "string",
-            "description": "The substance name, shown in the readout and used in the caption/aria (e.g. \"Water\", \"Oxygen\", \"Iron\"). Display only — no chemistry is looked up from it."
+            "type": "string"
           },
           "melt": {
-            "type": "number",
-            "description": "Melting point in °C. At or above it the substance is no longer solid. e.g. water 0, oxygen −219, iron 1538."
+            "type": "number"
           },
           "boil": {
-            "type": "number",
-            "description": "Boiling point in °C — must be greater than melt. At or above it the substance is a gas. e.g. water 100, oxygen −183, iron 2862."
+            "type": "number"
           }
         },
         "required": [
@@ -68,36 +37,30 @@
         ]
       },
       "temperature": {
-        "type": "number",
-        "description": "The temperature in °C. Only meaningful WITH a substance: the state is derived by comparison — below melt → solid, at/above boil → gas, otherwise liquid. Shown in the readout when show.temperature is on."
+        "type": "number"
       },
       "count": {
         "type": "integer",
         "minimum": 3,
-        "maximum": 60,
-        "description": "How many particles to draw. A solid/liquid reads well at 16–36 (a near-square lattice); a gas at 6–14. The solid arranges into the nearest tidy grid for this count; the gas scatters this many with spacing. Default 25."
+        "maximum": 60
       },
       "seed": {
         "type": "integer",
-        "minimum": 0,
-        "description": "Seed for the deterministic layout generator that places liquid jitter and gas scatter (no Math.random is ever used). The same seed gives the same picture every render; change it to get a different-looking but equivalent arrangement. Default 1."
+        "minimum": 0
       },
       "container": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The vessel the particles sit in. v1 supports a rectangle only.",
         "properties": {
           "shape": {
             "type": "string",
             "enum": [
               "rectangle"
-            ],
-            "description": "Container shape. v1: \"rectangle\" (default)."
+            ]
           },
           "aspect": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Width ÷ height of the container. Default 1 (a square). Use ~1.4 for a wide tray."
+            "exclusiveMinimum": 0
           }
         }
       },
@@ -105,49 +68,39 @@
         "type": "string",
         "enum": [
           "state"
-        ],
-        "description": "Hide a derived answer as \"?\". \"state\" renders the state NAME as \"?\" — the \"which state of matter is this?\" hook; the particle picture (the evidence) stays fully visible. Default: nothing occluded."
+        ]
       },
       "highlight": {
-        "type": "boolean",
-        "description": "Draw the eye: the container border and the descriptor labels render in amber. Result/emphasis semantics. Default false."
+        "type": "boolean"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles (all default true unless stated).",
         "properties": {
           "container": {
-            "type": "boolean",
-            "description": "Draw the container outline. Default true."
+            "type": "boolean"
           },
           "stateName": {
-            "type": "boolean",
-            "description": "Show the derived state name (\"Solid\" / \"Liquid\" / \"Gas\") as a heading below the figure. Default true. (Occlude it with occlude: \"state\" to keep the heading but hide the word.)"
+            "type": "boolean"
           },
           "descriptors": {
-            "type": "boolean",
-            "description": "Show the derived arrangement and spacing descriptors (\"regular · touching\", \"random · far apart\"). Arrangement/spacing only — motion and energy are deliberately kept off the figure (put them in the block text). Default true."
+            "type": "boolean"
           },
           "temperature": {
-            "type": "boolean",
-            "description": "Show the temperature readout (the authored temperature, and the melt/boil fixed points) when a substance is authored. Default true when a substance is given, otherwise nothing to show."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "label": {
-        "type": "string",
-        "description": "Optional italic caption centred below the figure (e.g. the question or the substance name)."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Worked example — a solid (regular lattice, touching)",
       "params": {
         "state": "solid",
         "count": 25,
@@ -155,7 +108,6 @@
       }
     },
     {
-      "label": "Worked example — a liquid (close but irregular)",
       "params": {
         "state": "liquid",
         "count": 25,
@@ -163,7 +115,6 @@
       }
     },
     {
-      "label": "Worked example — a gas (sparse, widely spaced)",
       "params": {
         "state": "gas",
         "count": 9,
@@ -171,7 +122,6 @@
       }
     },
     {
-      "label": "Derived state — water at 120 °C is a gas (substance + temperature)",
       "params": {
         "substance": {
           "name": "Water",
@@ -184,7 +134,6 @@
       }
     },
     {
-      "label": "Occluded question — which state is this? (a liquid, name hidden)",
       "params": {
         "state": "liquid",
         "count": 30,
@@ -196,7 +145,6 @@
       }
     },
     {
-      "label": "Hard case — the same substance (oxygen) at three temperatures, block 1 of 3: solid at −230 °C",
       "params": {
         "substance": {
           "name": "Oxygen",

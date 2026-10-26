@@ -4,36 +4,7 @@
   "name": "clock",
   "version": 1,
   "title": "Clock face",
-  "tagline": "Analogue clock with hands placed faithfully from a time (3:30 is mid-way); derived angle arc between two arms in degrees or as a fraction of a turn.",
-  "description": "An analogue clock face with an hour hand and a minute hand placed from a stated time, hour and minute ticks, and the 1–12 numerals. The hand positions are computed from the time — the hour hand moves 30° per hour plus 0.5° per minute, the minute hand 6° per minute — so the figure is always faithful (at 3:30 the hour hand sits half-way between 3 and 4, not on the 3). An optional angle arc marks the angle between two arms — the hour hand, the minute hand, or the 12 o'clock reference — and its size is derived: the minor angle by default, the reflex (major) angle on request, read out in degrees and/or as a fraction of a turn (75° = 5/24 of a turn, 90° = 1/4). The digital time can be shown or occluded for telling-the-time questions, and the angle value occluded for \"find the angle\" questions. The marked angle is drawn in amber (the result); the hands are accent-blue content told apart by length and weight.",
-  "whenToUse": "Reach for this whenever a clock face is the figure: the angle between the hands at a given time, telling the time, and fractions / multiples of a turn. Author the time as { hour, minute } (hour 0–23, taken mod 12 for the dial; minute 0–59) — every hand position and angle is computed from it, you never place a hand. Angle between the hands: add angle: { from: \"hour\", to: \"minute\" } to mark and measure it — this is the case to teach carefully, because the hour hand drifts (at 3:30 the angle is 75°, not 90°; at 3:00 it is exactly 90° — show both). angle.show chooses the readout: \"degrees\" (default) labels the arc \"75°\", \"fraction\" labels it as a fraction of a turn, \"both\" shows \"75° = 5/24 of a turn\", \"none\" draws the wedge with no value (a measure-it answer space). angle.reflex: true marks the major (reflex) angle instead — use it for three-quarter / 270° turns. angle.occlude renders the value as \"?\" for a \"find the angle\" question. Fractions / multiples of a turn: set the time so a hand lands on the target (12:15 puts the minute hand on the 3) and mark angle: { from: \"twelve\", to: \"minute\", show: \"both\" } to read \"90° = 1/4 of a turn\"; hide the hour hand with show: { hourHand: false } for a clean single-pointer turn; the 12 o'clock arm is drawn as a dashed reference ray. Telling the time: leave the angle off; digital: { show: true } reveals \"3:30\" beneath, digital: { show: true, occlude: true } shows \"?\" so pupils read the hands and state the time. Furniture: show.minuteTicks false leaves only the 12 hour ticks (a simpler KS2 dial); show.numerals false bares the dial for a turn demo. Keep the same time-of-day framing and the same show settings across a lesson so pupils track one clock. Synonyms a teacher might use: clock, clock face, analogue clock, telling the time, o'clock, half past, quarter past / to, angle between the hands, angle on a clock, turn, full turn, quarter turn, half turn, fraction of a turn, right angle, reflex angle, degrees.",
   "responseModes": [],
-  "tags": [
-    "clock",
-    "clock face",
-    "analogue clock",
-    "time",
-    "telling the time",
-    "o'clock",
-    "half past",
-    "quarter past",
-    "angle between the hands",
-    "angle on a clock",
-    "hands",
-    "hour hand",
-    "minute hand",
-    "turn",
-    "full turn",
-    "quarter turn",
-    "half turn",
-    "fraction of a turn",
-    "right angle",
-    "reflex angle",
-    "degrees",
-    "rotation",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -41,19 +12,16 @@
       "time": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The time the hands show. Both hand positions are computed from it — you never place a hand. The hour hand drifts with the minutes (30° per hour PLUS 0.5° per minute), so half past three really does sit the hour hand half-way to four.",
         "properties": {
           "hour": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 23,
-            "description": "The hour, 0–23 (taken mod 12 for the dial, so 15 and 3 draw identically; 0 and 12 both show 12 on the digital readout)."
+            "maximum": 23
           },
           "minute": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 59,
-            "description": "The minutes past the hour, 0–59."
+            "maximum": 59
           }
         },
         "required": [
@@ -64,7 +32,6 @@
       "angle": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Mark and measure the angle between two arms. Omit this for a plain clock (telling the time, or an answer space with no angle). The arc is drawn in amber (the result); its size is computed from the arms — you never write an angle value.",
         "properties": {
           "from": {
             "type": "string",
@@ -72,8 +39,7 @@
               "hour",
               "minute",
               "twelve"
-            ],
-            "description": "One arm of the angle: the \"hour\" hand, the \"minute\" hand, or \"twelve\" (the 12 o'clock reference, drawn as a dashed construction ray). Default \"hour\"."
+            ]
           },
           "to": {
             "type": "string",
@@ -81,12 +47,10 @@
               "hour",
               "minute",
               "twelve"
-            ],
-            "description": "The other arm — \"hour\", \"minute\" or \"twelve\". Default \"minute\" (so the default angle is hour-hand to minute-hand). Must differ from \"from\"."
+            ]
           },
           "reflex": {
-            "type": "boolean",
-            "description": "Mark the REFLEX (major) angle — the long way round — instead of the minor angle. Use for three-quarter / 270° turns and reflex-angle questions. Default false (the minor angle, ≤ 180°)."
+            "type": "boolean"
           },
           "show": {
             "type": "string",
@@ -95,60 +59,48 @@
               "fraction",
               "both",
               "none"
-            ],
-            "description": "\"degrees\" (default) labels the arc with the angle in degrees (\"75°\"); \"fraction\" reads it as a fraction of a turn beneath the clock (\"5/24 of a turn\"); \"both\" shows degrees on the arc AND \"75° = 5/24 of a turn\" beneath; \"none\" draws the wedge with no value (a measure-it answer space)."
+            ]
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the angle value as \"?\" — the \"find the angle\" hook. The arc still shows; only the number hides. Default false."
+            "type": "boolean"
           }
         }
       },
       "digital": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The digital time readout beneath the clock (e.g. \"3:30\"). Omit for none.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the digital time beneath the clock. Default false (the hands alone are the figure)."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the digital time as \"?\" — the telling-the-time hook (\"read the hands; what time is it?\"). Implies the readout is shown. Default false."
+            "type": "boolean"
           }
         }
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles — all default true.",
         "properties": {
           "numerals": {
-            "type": "boolean",
-            "description": "Show the 1–12 numerals around the dial. Default true. False bares the dial (a turn demo)."
+            "type": "boolean"
           },
           "minuteTicks": {
-            "type": "boolean",
-            "description": "Show the 60 minute ticks. Default true. False leaves only the 12 hour ticks (a simpler dial)."
+            "type": "boolean"
           },
           "hourHand": {
-            "type": "boolean",
-            "description": "Draw the hour hand. Default true. False for a single-pointer (minute-hand) turn demo."
+            "type": "boolean"
           },
           "minuteHand": {
-            "type": "boolean",
-            "description": "Draw the minute hand. Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the clock; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the clock, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -157,7 +109,6 @@
   },
   "examples": [
     {
-      "label": "Worked example & hard case — the angle between the hands at 3:30 is 75°, not 90°",
       "params": {
         "time": {
           "hour": 3,
@@ -175,7 +126,6 @@
       }
     },
     {
-      "label": "Contrast — at 3 o'clock the angle between the hands is exactly 90°",
       "params": {
         "time": {
           "hour": 3,
@@ -193,7 +143,6 @@
       }
     },
     {
-      "label": "Blank answer space — read the angle between the hands at 1:50",
       "params": {
         "time": {
           "hour": 1,
@@ -202,7 +151,6 @@
       }
     },
     {
-      "label": "Occluded question — find the angle between the hands at 9 o'clock",
       "params": {
         "time": {
           "hour": 9,
@@ -216,7 +164,6 @@
       }
     },
     {
-      "label": "Fraction of a turn — the minute hand turns a quarter turn from 12 to 3",
       "params": {
         "time": {
           "hour": 12,
@@ -234,7 +181,6 @@
       }
     },
     {
-      "label": "Reflex angle — the major angle between the hands at 8 o'clock is 240°",
       "params": {
         "time": {
           "hour": 8,

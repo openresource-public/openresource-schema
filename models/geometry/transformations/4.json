@@ -4,60 +4,8 @@
   "name": "transformations",
   "version": 4,
   "title": "Transformations",
-  "tagline": "Object and derived image on a grid under one transformation or a sequence; shapes nameable A/B; construct mode: pupils place the image's vertices, marked as an exact set.",
-  "description": "A shape (object) and its image on a coordinate grid under one transformation or a sequence of transformations (combined / composite transformations). One transformation can be a rotation about a centre, a reflection in a mirror line (axes, y=x, y=−x, or any x=k / y=k), an enlargement from a centre (negative and fractional scale factors included), or a translation by a column vector. A sequence (transforms) applies its steps in order and the image is their composition — e.g. \"reflect in the x-axis, then translate\" — which is how GCSE Higher \"combined transformations\" questions are drawn (shape A and shape B, where B is A under two transformations, including the glide-reflection case that no single transformation can produce). The image — single or composite — is always computed from the object, never authored. Toggleable construction furniture (centre marks, mirror line, ray lines, vector arrow) and an optional view of the intermediate image after each step; object/centre/image draggable on the web. Each whole shape can carry a NAME drawn at its centre — shape.label on the object (e.g. \"A\", \"P\", \"T\") and imageLabel on the final image (e.g. \"B\", \"Q\") — the \"shape A / shape B\" labelling of \"describe the transformation\" figures, independent of and distinct from the A/B/C vertex letters. For PERFORM-the-transformation questions (\"reflect shape A in y = x\", \"rotate 90° anticlockwise about O — draw the image\") set construct: true and host on a marked tile with responseMode \"construct\" and correctAnswer { derived: true }: the image is not drawn — the pupil clicks grid intersections to place its vertices one by one (click a placed vertex to remove it; the polygon closes itself at the object's vertex count), and the model marks the placed set against the derived image's vertex set as an unordered exact match — the image's position and orientation IS the answer.",
-  "whenToUse": "Any teaching of transformations: rotations, reflections, enlargements, translations, and combined (composite / successive) transformations (KS3/GCSE; combined transformations are GCSE Higher). For a single transformation give transform; for two or more in order give transforms (an array of the same step objects) and the image is their composition — step 1 maps the object, step 2 maps that result, and so on. Combined-transformation questions usually show just the object and the final image (set show.construction: false and ask \"describe fully the single transformation equivalent to these two\" in the stem) — the classic glide reflection (a reflection followed by a translation along the mirror) has no single rotation/reflection/enlargement/translation equivalent, while two reflections in parallel mirrors give a translation and in perpendicular mirrors give a 180° rotation. To teach a composite, set show.intermediate: true to reveal the image after each step (the intermediate is drawn in a distinct colour, not the amber result) — pairs naturally with a staged build that adds one step at a time. NAMING THE SHAPES: \"describe the transformation\" questions label the whole shapes, not their vertices — \"the single transformation that maps shape A onto shape B\" (or trapezium P onto Q). Give shape.label: \"A\" to name the object and imageLabel: \"B\" to name the final image; each is drawn large at the shape's centre. These are DISTINCT from and INDEPENDENT of the vertex letters — set show.vertexLabels: false for MG's usual describe look (just the two shape letters, no A/B/C clutter), or leave vertex labels on to show both. Any strings work (A/B, P/Q, T/A); the letter need not be A. imageLabel is ignored when show.image is false (a \"draw the image\" answer space names only the object). Other hooks carry over: show.image: false for a blank \"draw the image\" answer space; show.construction: false with both shapes visible for \"describe the transformation\"; rays on for enlargement structure; negative scale factors for the SF −1 vs 180° rotation equivalence. Many booklet \"describe the transformation\" and enlargement figures use a trapezium or parallelogram as the object (asymmetric, so the orientation is unambiguous), not just triangles and L-shapes — author those for those questions; an enlargement scaleFactor may be a decimal such as 1.5 or 2.5 just as readily as a whole number, a unit fraction or a negative (see the trapezium-describe and decimal-enlargement examples). On wide ranges number the axes in 2s (axes.labelStep) rather than every line. draggable lets pupils drag the object (the whole chain follows) or, for a single transformation, the centre or — for a translation — the image itself. Size axes so every shape (object, intermediate, image) fits with about a unit of margin for the vertex labels, and keep the same shape and window across a lesson so pupils track the object, not the diagram. MARKED \"draw the image\" question (perform the transformation, auto-marked): set construct: true and host the model on a marked tile with responseMode \"construct\" and correctAnswer { derived: true }. The pupil clicks grid intersections to drop the image's vertices one at a time (a click on a placed vertex removes it; the polygon closes itself once the count matches the object's), with the snapped coordinate shown under the pointer while aiming. Marking is an unordered EXACT match of the placed vertex set against the image the model derives from the transform — position and orientation count, so a reflected shape offered for a rotation is wrong even though it is congruent. State the transformation in the stem or header (\"Reflect shape A in the line y = x\"); the mirror line / centre cross still draw, but the image, the enlargement rays, the rotation arc and the vector arrow never render in construct mode (they would give the answer away). AUTHORING RULE: choose the object and transform so every image vertex lands on a grid intersection — the click gesture can only place lattice points (for a fractional scale factor like 2.5 give the object even coordinates; size the window so the whole image fits). When the SOURCE fixes an object whose image lands on half squares (scale factor −1.5 from O), keep it and set constructSnap: 0.5 instead. NO CENTRE GIVEN (\"draw an enlargement of the shaded shape with scale factor 3\" on a plain grid): set constructAnywhere: true (marked up to translation), axes.show: false for the plain grid, and show.construction: false; pick the centre that puts the worked image where the source shows it. show.image is ignored while construct is on; use show.image: false WITHOUT construct for the unmarked paper answer space.",
   "responseModes": [
     "construct"
-  ],
-  "tags": [
-    "transformation",
-    "transformations",
-    "rotation",
-    "rotate",
-    "reflection",
-    "reflect",
-    "mirror",
-    "enlargement",
-    "enlarge",
-    "scale factor",
-    "translation",
-    "translate",
-    "vector",
-    "column vector",
-    "image",
-    "object",
-    "combined transformations",
-    "composite transformation",
-    "successive transformations",
-    "compound transformation",
-    "glide reflection",
-    "sequence of transformations",
-    "congruent",
-    "similar",
-    "maths",
-    "geometry",
-    "coordinates",
-    "trapezium",
-    "parallelogram",
-    "quadrilateral",
-    "describe the transformation",
-    "decimal scale factor",
-    "shape A",
-    "shape B",
-    "shape label",
-    "name the shape",
-    "maps A onto B",
-    "draw the image",
-    "plot the image",
-    "perform the transformation",
-    "place vertices",
-    "construct",
-    "auto-marked transformation",
-    "no centre",
-    "plain grid",
-    "squared grid",
-    "half squares"
   ],
   "interface": {
     "type": "object",
@@ -74,8 +22,7 @@
               "reflection",
               "enlargement",
               "translation"
-            ],
-            "description": "Which transformation this step is. The other properties are read according to this: rotation needs centre + angle, reflection needs mirror, enlargement needs centre + scaleFactor, translation needs vector."
+            ]
           },
           "centre": {
             "type": "array",
@@ -83,20 +30,16 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "rotation / enlargement: the centre, e.g. [0, 0]."
+            "maxItems": 2
           },
           "angle": {
-            "type": "number",
-            "description": "rotation: degrees ANTICLOCKWISE (use −90 for 90° clockwise). The construction label states direction in words."
+            "type": "number"
           },
           "mirror": {
-            "type": "string",
-            "description": "reflection: \"x-axis\", \"y-axis\", \"y=x\", \"y=-x\", or an offset line like \"x=2\" / \"y=-1\"."
+            "type": "string"
           },
           "scaleFactor": {
-            "type": "number",
-            "description": "enlargement: any non-zero factor — fractional (0.5) and negative (−1, −2) included."
+            "type": "number"
           },
           "vector": {
             "type": "array",
@@ -104,8 +47,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "translation: column vector [dx, dy]."
+            "maxItems": 2
           }
         },
         "required": [
@@ -124,8 +66,7 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the x-axis. Default [-8, 8]. Size the range so EVERY shape (object, any intermediate, image) fits with room for labels."
+            "maxItems": 2
           },
           "y": {
             "type": "array",
@@ -133,28 +74,23 @@
               "type": "number"
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "[min, max] for the y-axis. Default [-8, 8]."
+            "maxItems": 2
           },
           "step": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Grid spacing. Default 1."
+            "exclusiveMinimum": 0
           },
           "labelStep": {
             "type": "number",
-            "exclusiveMinimum": 0,
-            "description": "Number the axes every this many units while the grid stays at step — e.g. step 1 with labelStep 2 counts in 2s. Use a multiple of step. Default: every grid line is numbered, which CROWDS on wide ranges — if a range spans more than ~15 units, set labelStep so numbers stay clearly separated."
+            "exclusiveMinimum": 0
           },
           "show": {
-            "type": "boolean",
-            "description": "false draws only the squared grid: no axis lines, arrows or numbers — the plain-grid figure of \"draw an enlargement of the shaded shape with scale factor 3\" (no centre, no coordinates). x/y still set the window, in grid squares. A construct readout then shows only the crosshair, never a coordinate. Default true."
+            "type": "boolean"
           }
         }
       },
       "grid": {
-        "type": "boolean",
-        "description": "Show grid lines. Default true."
+        "type": "boolean"
       },
       "shape": {
         "type": "object",
@@ -170,12 +106,10 @@
               },
               "minItems": 2,
               "maxItems": 2
-            },
-            "description": "Object polygon vertices as [x, y] pairs in order. A simple L-shape or right triangle reads orientation best (avoid squares — their symmetry hides rotations and reflections)."
+            }
           },
           "label": {
-            "type": "string",
-            "description": "Whole-shape NAME for the object, drawn large at its centre — e.g. \"A\", \"P\", \"T\" (the \"shape A\" / \"trapezium P\" convention). DISTINCT from and independent of the A/B/C vertex letters (show.vertexLabels): use it for \"describe the transformation\" figures, typically with show.vertexLabels:false. Any string; omit for no object name. Pair with imageLabel to name the image."
+            "type": "string"
           }
         },
         "required": [
@@ -183,8 +117,7 @@
         ]
       },
       "transform": {
-        "$ref": "#/$defs/transformStep",
-        "description": "A SINGLE transformation. Backwards compatible with v1. For two or more transformations applied in order, use transforms instead. Provide exactly one of transform or transforms."
+        "$ref": "#/$defs/transformStep"
       },
       "transforms": {
         "type": "array",
@@ -192,55 +125,44 @@
         "maxItems": 4,
         "items": {
           "$ref": "#/$defs/transformStep"
-        },
-        "description": "A SEQUENCE of transformations applied IN ORDER — the image is their COMPOSITION (step 1 maps the object, step 2 maps that result, …). Use this for combined / successive transformations, e.g. [{ \"type\": \"reflection\", \"mirror\": \"x-axis\" }, { \"type\": \"translation\", \"vector\": [6, 0] }]. Each item has the same shape as transform. Provide exactly one of transform or transforms, not both."
+        }
       },
       "imageLabel": {
-        "type": "string",
-        "description": "Whole-shape NAME for the FINAL image, drawn large at its centre — e.g. \"B\", \"Q\". The image counterpart of shape.label: use them together for \"the single transformation that maps shape A onto shape B\". DISTINCT from the primed A′/B′/C′ vertex letters. Ignored when show.image is false (an answer space names only the object). Any string; omit for no image name. Names only the final image — intermediate stages of a composite are not named."
+        "type": "string"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "image": {
-            "type": "boolean",
-            "description": "Show the (final) transformed image. false = answer space for \"draw the image\". Default true."
+            "type": "boolean"
           },
           "intermediate": {
-            "type": "boolean",
-            "description": "For a SEQUENCE (transforms): also show the image after EACH step, not just the final image — the \"construct it\" / teaching view. Each intermediate is drawn in a distinct categorical colour (not the amber result) with one more prime than the shape before it (A′, A″). Ignored for a single transform. Default false — a combined-transformation figure usually shows only the object and the final image."
+            "type": "boolean"
           },
           "construction": {
-            "type": "boolean",
-            "description": "Show the furniture: centre cross + angle arc (rotation), mirror line (reflection), ray lines (enlargement), vector arrow + column vector (translation) — one set per step. false + image visible = the \"describe the transformation\" variant. Default true."
+            "type": "boolean"
           },
           "vertexLabels": {
-            "type": "boolean",
-            "description": "Label object vertices A, B, C… and each image A′, B′, C′ (a further prime per shown image). Independent of the whole-shape names (shape.label / imageLabel). Default true — set false for a \"describe\" figure that shows only the shape names."
+            "type": "boolean"
           }
         }
       },
       "construct": {
-        "type": "boolean",
-        "description": "Arm the PLACE-THE-IMAGE question state (validator-required when the tile uses responseMode \"construct\"). The image is NOT drawn: the pupil clicks grid intersections to place its vertices one by one — a click on a placed vertex removes it, and the polygon closes itself when the count reaches the object's vertex count. Marking compares the placed set against the vertex set of the image the model DERIVES from the transform, as an unordered EXACT match of grid points (host with correctAnswer { derived: true }); position and orientation count. The correct image never renders while construct is on — show.image and show.intermediate are ignored, and the enlargement rays / rotation arc / vector arrow are suppressed (the mirror line and centre cross still draw: they are the question's furniture). Author the object and transform so every image vertex lands on a grid intersection (a fractional scale factor needs an object whose image stays on the lattice), or set constructSnap when the source puts it on half squares. Print and static slides pose the same figure with no image. Default false."
+        "type": "boolean"
       },
       "constructAnywhere": {
-        "type": "boolean",
-        "description": "Construct only: mark the placed image up to TRANSLATION — the right size and orientation anywhere in the window is correct. For an enlargement question that gives NO centre (\"draw an enlargement of the shaded shape with scale factor 2\"), where the image may be drawn anywhere. The transform still needs a centre: choose one that puts the worked image where the source draws it (it may lie outside the window). The centre never reaches the question — set show.construction false so no centre cross draws; the construct aria omits it. Default false (position counts)."
+        "type": "boolean"
       },
       "constructSnap": {
         "type": "number",
-        "exclusiveMinimum": 0,
-        "description": "Construct only: the placement lattice, finer than the grid — 0.5 lets the pupil place vertices on half squares (an enlargement by scale factor −1.5 from O puts vertices at (−3, −1.5)). The grid itself stays at axes.step. Default: axes.step."
+        "exclusiveMinimum": 0
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title rendered above the grid."
+        "type": "string"
       },
       "draggable": {
-        "type": "boolean",
-        "description": "Web-only. Drag the object and the image (whole chain) follows — single or sequence. For a SINGLE transformation also: drag the centre cross (rotation / enlargement); drag the IMAGE to change the vector (translation — the inverse manipulation). Snaps to the grid. (Per-step centre/vector handles are not offered for a sequence.)"
+        "type": "boolean"
       }
     },
     "required": [
@@ -261,7 +183,6 @@
   },
   "examples": [
     {
-      "label": "Single transformation (v1 form) — rotation 90° anticlockwise about the origin",
       "params": {
         "shape": {
           "vertices": [
@@ -290,7 +211,6 @@
       }
     },
     {
-      "label": "Describe the transformation — shape A onto shape B, named at each centre, vertex letters off (the MG look)",
       "params": {
         "axes": {
           "x": [
@@ -334,7 +254,6 @@
       }
     },
     {
-      "label": "The hard case — trapezium P onto trapezium Q (non-A/B letters, describe a 90° rotation)",
       "params": {
         "axes": {
           "x": [
@@ -383,7 +302,6 @@
       }
     },
     {
-      "label": "Name the shape AND its vertices — object T labelled, vertex letters kept (a worked reflection)",
       "params": {
         "axes": {
           "x": [
@@ -420,7 +338,6 @@
       }
     },
     {
-      "label": "Draw the image (answer space) — only the object is named \"A\" (imageLabel ignored while image hidden)",
       "params": {
         "axes": {
           "x": [
@@ -465,7 +382,6 @@
       }
     },
     {
-      "label": "Combined → describe the single equivalent — shape A onto shape B under a glide reflection",
       "params": {
         "axes": {
           "x": [
@@ -516,7 +432,6 @@
       }
     },
     {
-      "label": "Combined, worked — reflect in the y-axis then translate (0, −3), intermediate shown",
       "params": {
         "axes": {
           "x": [
@@ -563,7 +478,6 @@
       }
     },
     {
-      "label": "Decimal scale factor — enlarge a parallelogram by 1.5 from the centre O (rays shown, worked)",
       "params": {
         "header": "Scale factor 1.5, centre O",
         "axes": {
@@ -608,7 +522,6 @@
       }
     },
     {
-      "label": "Describe the enlargement — shape A onto shape B, named, furniture off (positive SF from a centre)",
       "params": {
         "axes": {
           "x": [
@@ -653,7 +566,6 @@
       }
     },
     {
-      "label": "Construct question — place the vertices of the image after a reflection in y = x (marked; host with responseMode \"construct\")",
       "params": {
         "axes": {
           "x": [
@@ -697,7 +609,6 @@
       }
     },
     {
-      "label": "Construct question — fractional scale factor: place the image of an enlargement SF 2.5 about O (object on even coordinates so the image stays on the lattice)",
       "params": {
         "header": "Scale factor 2.5, centre O",
         "axes": {
@@ -743,7 +654,6 @@
       }
     },
     {
-      "label": "Construct question — no centre given: enlarge an L-shape by scale factor 2 anywhere on a plain grid (constructAnywhere, axes.show false)",
       "params": {
         "axes": {
           "x": [
@@ -801,7 +711,6 @@
       }
     },
     {
-      "label": "Construct question — negative fractional scale factor −1.5 from O, the image on half squares (constructSnap 0.5)",
       "params": {
         "header": "Scale factor −1.5, centre O",
         "axes": {

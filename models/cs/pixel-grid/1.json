@@ -4,36 +4,7 @@
   "name": "pixel-grid",
   "version": 1,
   "title": "Pixel grid",
-  "tagline": "Bitmap image as its stored numbers: a code grid beside the picture those codes look up, with derived resolution, colour depth and file size; either side blanks for the question.",
-  "description": "A bitmap image shown as a grid of pixels drawn twice side by side — once as the stored code for each pixel and once as the picture, each cell filled with the colour its code looks up in the palette key. The author writes the artwork as one hex character per pixel (one string per row) plus the palette; the grid size, every cell colour, every displayed code (binary, padded to the derived bit width, or denary), the colour depth in bits per pixel, the pixel count and the file size in bits and bytes are all computed. Either panel can be hidden or left as an empty answer space, so one figure poses both directions of the same skill: given the codes, colour the picture; given the picture, write the codes. Individual pixels occlude to \"?\" in both panels at once, and a partial reveal walks a decode or encode row by row for a staged build.",
-  "whenToUse": "Reach for this whenever an image has to be shown as data: bitmap/raster representation, the meaning of resolution and colour depth, and calculating an image file size. It is the \"the image IS the numbers\" figure — a grid of bits beside the mono icon it draws, then the same icon re-encoded with a bigger palette. Common configurations: the duality (both panels + the key + all three readouts) for teaching; codes given and blank.image true for \"colour in the picture\"; the picture given and blank.codes true for \"write the code for each pixel\"; the picture alone (show.codes false) with readouts.fileSize for \"calculate the file size of this image\"; a few cells occluded with show.coordinates true for \"what is the code of the pixel in row 3, column 5?\". The colour-depth comparison the textbooks draw is a PAIR of figures, not one — author the same artwork twice, once with a 2-colour palette and once with a 4-colour palette, and put them side by side in an items grid; do NOT try to stage from one depth to the other (the codes change width, so the figure would resize between frames). Watch two things. Width: a binary code is as wide as the colour depth, so the two panels side by side stay a comfortable size up to about 8 pixels wide (about 11 with codeBase \"denary\") — beyond that show ONE panel at a time (show.codes false for the picture, show.image false for the numbers), which renders at the same size for any grid up to 24 × 24. And leaks: occluding the depth readout while binary codes are on show gives the answer away, because a code is exactly as wide as the depth — for that question use denary codes, or hide the key and make the class count the colours; and if the resolution is the question, leave show.coordinates off, because the last row and column numbers state the answer. Keep the palette and the grid size identical across the blocks of one lesson so pupils compare like with like. Staged builds: open on the codes beside an empty picture and reveal the picture a row at a time (or the reverse), or show the whole figure with the readouts occluded and reveal resolution, then depth, then file size. Synonyms teachers use: bitmap, raster image, pixel, pixels, pixel art, bit map, image representation, resolution, colour depth, bit depth, bits per pixel, colour palette, file size, sprite, icon.",
   "responseModes": [],
-  "tags": [
-    "pixel",
-    "pixels",
-    "pixel grid",
-    "bitmap",
-    "bit map",
-    "raster",
-    "image",
-    "image representation",
-    "resolution",
-    "colour depth",
-    "color depth",
-    "bit depth",
-    "bits per pixel",
-    "palette",
-    "colour palette",
-    "file size",
-    "monochrome",
-    "greyscale",
-    "binary",
-    "encoding",
-    "sprite",
-    "pixel art",
-    "computer science",
-    "data representation"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -41,29 +12,24 @@
       "pixels": {
         "type": "array",
         "maxItems": 24,
-        "description": "The artwork: one string per ROW, top row first, one character per pixel giving that pixel's palette index as a hex digit (0-9 then A-F, so index 0 is \"0\" and index 12 is \"C\"). A 7×7 monochrome heart is [\"0110110\", \"1111111\", \"1111111\", \"1111111\", \"0111110\", \"0011100\", \"0001000\"]. Width is the longest row (short rows are padded with index 0); an index beyond the palette clamps to the last entry.",
         "items": {
           "type": "string",
-          "pattern": "^[0-9A-Fa-f]{1,24}$",
-          "description": "One row of pixels, left to right, one hex character each."
+          "pattern": "^[0-9A-Fa-f]{1,24}$"
         }
       },
       "palette": {
         "type": "array",
         "maxItems": 16,
-        "description": "The colour each code stands for, in index order — entry 0 is the colour of code 0. This is what sets the COLOUR DEPTH: 2 entries is 1 bit per pixel, 4 entries is 2 bits, 16 entries is 4 bits (a palette of 3 also needs 2 bits, which is worth showing). Give 2 entries for a monochrome image, and keep the same palette across the blocks of one lesson.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "colour": {
               "type": "string",
-              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$",
-              "description": "The colour this code displays as. Use a plain CSS colour name (\"white\", \"black\", \"crimson\", \"gold\") or a #hex — for a pixel image the colour IS the content, so it is honoured exactly. The reserved role keywords (accent, accent-2…accent-5, ink, muted, scaffold) also work if you want the swatch to follow a brand reskin. Defaults down the list are white, black, then the categorical hues."
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             },
             "label": {
-              "type": "string",
-              "description": "Short name for this colour, shown beside its swatch in the key and used in the figure description — e.g. \"white\", \"dark red\". Omit for swatch-only key rows (better for palettes of 8 or more)."
+              "type": "string"
             }
           }
         }
@@ -73,92 +39,74 @@
         "enum": [
           "binary",
           "denary"
-        ],
-        "description": "How each stored code is written. \"binary\" (default) pads to the derived colour depth, so a 2-bit image shows 00, 01, 10, 11 — the textbook form. \"denary\" writes 0, 1, 2, 3, which keeps the columns narrow on a wide grid or a deep palette."
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles. All default true except coordinates.",
         "properties": {
           "codes": {
-            "type": "boolean",
-            "description": "Draw the stored-code panel (the numbers). false leaves the picture and the key alone — the \"calculate the file size of this image\" figure. Default true."
+            "type": "boolean"
           },
           "image": {
-            "type": "boolean",
-            "description": "Draw the displayed-image panel (the picture). false leaves the codes alone. Default true."
+            "type": "boolean"
           },
           "key": {
-            "type": "boolean",
-            "description": "Draw the palette key to the right — one row per palette entry, its code beside its colour swatch, headed by the number of colours. This is the lookup table, so leave it on unless the palette is obvious (or you are hiding it to make the pupil count the colours). Default true."
+            "type": "boolean"
           },
           "coordinates": {
-            "type": "boolean",
-            "description": "Number the rows and columns of each panel from 1, so a question can name a pixel (\"row 3, column 5\"). Pair with an occluded or highlighted cell. Default false."
+            "type": "boolean"
           },
           "panelLabels": {
-            "type": "boolean",
-            "description": "Caption each panel with what it is (\"stored codes\" / \"displayed image\"). Turn off once a class knows the figure, or when only one panel is drawn. Default true."
+            "type": "boolean"
           }
         }
       },
       "blank": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Leave a whole panel EMPTY as an answer space — the question hook for each direction. The panel keeps its grid, its caption and its size, so the figure is the same shape as the worked version.",
         "properties": {
           "codes": {
-            "type": "boolean",
-            "description": "Render the stored-code panel as an EMPTY grid of the right size — the answer space. Use with the image panel shown: that is the whole question. Different from a per-cell occlude (\"?\" on a few pixels); a blank panel poses nothing at all, and nothing about it reaches the markup or the aria. Default false."
+            "type": "boolean"
           },
           "image": {
-            "type": "boolean",
-            "description": "Render the displayed-image panel as an EMPTY grid of the right size — the answer space. Use with the stored-code panel shown: that is the whole question. Different from a per-cell occlude (\"?\" on a few pixels); a blank panel poses nothing at all, and nothing about it reaches the markup or the aria. Default false."
+            "type": "boolean"
           }
         }
       },
       "reveal": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Draw only the FIRST N pixels of a panel, counted in reading order (left to right, then down) — the staged decode or encode. The rest render as empty cells. Omit a key to draw that panel in full; the figure is sized from the whole grid either way, so it never resizes as stages reveal more.",
         "properties": {
           "codes": {
             "type": "integer",
-            "minimum": 0,
-            "description": "How many stored codes to write, in reading order. With a 7-wide grid, 7 is the first row, 14 the first two. 0 is the same as blank.codes."
+            "minimum": 0
           },
           "image": {
             "type": "integer",
-            "minimum": 0,
-            "description": "How many pixels to colour in, in reading order. With a 7-wide grid, 7 is the first row, 14 the first two. 0 is the same as blank.image."
+            "minimum": 0
           }
         }
       },
       "cells": {
         "type": "array",
-        "description": "Per-pixel question and emphasis flags. Every pixel already exists and its colour is always computed — list one here only to occlude or highlight it. Addresses outside the grid are ignored.",
         "items": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "row": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Row of the pixel, counted from 1 at the TOP row."
+              "minimum": 1
             },
             "col": {
               "type": "integer",
-              "minimum": 1,
-              "description": "Column of the pixel, counted from 1 at the LEFT column."
+              "minimum": 1
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Hide this pixel: \"?\" in place of its code AND an uncoloured cell in the picture, so neither panel gives the other away. The question hook for \"what is stored here?\" / \"what colour is this pixel?\". Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Ring this pixel in amber in both panels (and amber its code) — the pixel under discussion, or the answer. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -170,47 +118,38 @@
       "readouts": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The derived figures beneath the grid. Include a key to render that row, omit it for silence; every value is computed from the artwork and the palette.",
         "properties": {
           "resolution": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Renders \"resolution — 7 × 7 (49 pixels)\".",
             "properties": {
               "occlude": {
-                "type": "boolean",
-                "description": "Render the value as \"?\" — \"what is the resolution?\". Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the value — answer emphasis. Default false."
+                "type": "boolean"
               }
             }
           },
           "depth": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Renders \"colour depth — 2 bits per pixel (4 colours)\", both figures derived from the palette length.",
             "properties": {
               "occlude": {
-                "type": "boolean",
-                "description": "Render the value as \"?\" — \"how many bits per pixel?\". Note that binary codes are exactly as wide as the depth, so pair this with codeBase \"denary\" or show.key false, or the answer is on show. Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the value. Default false."
+                "type": "boolean"
               }
             }
           },
           "fileSize": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Renders \"file size — 98 bits (12.25 bytes)\": width × height × colour depth, plus any metadata. The classic exam calculation.",
             "properties": {
               "metadataBits": {
                 "type": "integer",
-                "minimum": 0,
-                "description": "Bits of header metadata the file format adds on top of the pixel data (a real file stores its dimensions, depth and palette). Adds a \"metadata\" row of its own and is included in the file-size total. Omit for pixel data only."
+                "minimum": 0
               },
               "unit": {
                 "type": "string",
@@ -218,24 +157,20 @@
                   "bits",
                   "bytes",
                   "both"
-                ],
-                "description": "Which units the total is given in. \"both\" (default) writes \"98 bits (12.25 bytes)\"; \"bits\" or \"bytes\" writes just the one."
+                ]
               },
               "occlude": {
-                "type": "boolean",
-                "description": "Render the value as \"?\" — \"what is the file size?\". Default false."
+                "type": "boolean"
               },
               "highlight": {
-                "type": "boolean",
-                "description": "Amber the value. Default false."
+                "type": "boolean"
               }
             }
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       }
     },
     "required": [
@@ -245,7 +180,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — a 7×7 monochrome icon: 1 bit per pixel, both panels, all readouts",
       "params": {
         "header": "One bit per pixel",
         "pixels": [
@@ -275,7 +209,6 @@
       }
     },
     {
-      "label": "Blank answer space — codes given, colour in the picture",
       "params": {
         "header": "Colour in the image",
         "pixels": [
@@ -305,7 +238,6 @@
       }
     },
     {
-      "label": "Reverse direction — picture given, write the code for each pixel",
       "params": {
         "pixels": [
           "0110110",
@@ -332,7 +264,6 @@
       }
     },
     {
-      "label": "Occluded question — the picture alone: what is the file size?",
       "params": {
         "pixels": [
           "1110011111",
@@ -384,7 +315,6 @@
       }
     },
     {
-      "label": "Hard case — the same icon re-encoded at 2 bits per pixel, two pixels occluded and one highlighted, coordinates on",
       "params": {
         "header": "Two bits per pixel",
         "pixels": [
@@ -442,7 +372,6 @@
       }
     },
     {
-      "label": "Deeper palette — 8 colours, 3 bits per pixel, denary codes",
       "params": {
         "header": "Three bits per pixel",
         "pixels": [

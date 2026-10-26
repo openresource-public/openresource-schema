@@ -4,53 +4,23 @@
   "name": "compound-growth-table",
   "version": 1,
   "title": "Compound growth & decay table",
-  "tagline": "A period-by-period table for compound interest, depreciation and repeated % change: derived opening balance, ×(1±r) multiplier, interest and closing balance each year.",
-  "description": "A period-by-period working table for compound interest, depreciation and repeated percentage change: one row per Year, with the derived columns Opening balance, × multiplier (the 1 + r or 1 − r factor applied each period), Interest / Loss / Change this period, and Closing balance — and an optional Simple-interest comparison column. Below the table the model works the headline overall multiplier × (1 ± r)ⁿ, the final value (principal × the multiplier), the overall percentage change, a compound-versus-simple comparison and, when a target is set, the solve-for-n line (\"the balance first exceeds / falls below the target after N years\"). You author only the givens — a principal and either a uniform rate plus a number of years or a list of signed per-period rates (so +8%, −12%, +5% mixed changes work) — and the mode (interest, depreciation or neutral change), the currency prefix and what to occlude. Every multiplier, balance, interest figure, total, overall multiplier, final value and solve-for-n answer is computed from the principal and the rates, so the table cannot disagree with itself. Occlude any cell (it renders \"?\") to pose \"complete the table\", \"find the value after n years\", \"work back to the original amount\" or \"how many years until …?\"; an occluded money cell automatically hides the cells that would directly reconstruct it. A static model with teacher-led staged builds (reveal the table one year at a time, or work the multiplier then the value). The rolling × (1 ± r) multiplier is the lesson, which makes it a MODEL, not a plain content table.",
-  "whenToUse": "Reach for this for the growth and decay working table — compound interest, depreciation, and repeated percentage change worked period by period. Author the givens: a principal (the starting amount), then either a uniform rate (a percentage per period) with years (how many periods) or a rates array of signed per-period percentages ([8, -12, 5] = +8% then −12% then +5%, for mixed up-and-down changes). Choose mode: \"interest\" (growth — the change column reads \"Interest\"), \"depreciation\" (decay — with a uniform rate give the magnitude, e.g. rate 20 with mode depreciation means × 0.8; the change column reads \"Loss\") or \"change\" (neutral repeated % change — the column reads \"Change\" and shows signed values, for populations, prices, etc.). If you omit mode it is inferred: mixed-sign rates → change, an all-decrease rate → depreciation, otherwise interest. prefix is the currency symbol on money columns (default \"£\"; set \"\" for a population or other count, or \"$\"). The Opening balance, × multiplier, change and Closing balance are all derived (opening of year 1 = the principal; each later opening = the previous closing; closing = opening × the multiplier), as are the headline × (1±r)ⁿ multiplier, the final value, the overall % change, the simple-interest balances and the solve-for-n answer. Choose the columns with show: show.opening / show.multiplier / show.change / show.closing (all default on), show.simple (a Simple-interest comparison column, default off — uniform-rate interest only). Choose the readouts below the table with the line objects ({ show: true }): multiplierLine (the overall × (1±r)ⁿ and its value — default on), finalLine (\"Value after n years = …\" — default on), overallChange (\"Overall change = +/−X%\" — default off; turn on for the repeated-% lesson that the overall change is not the sum of the rates), compareLine (\"Compound … · Simple … · difference …\" — default off, uniform interest only) and solveLine (default on whenever target is set). Solve for n: set target to a threshold value and the table auto-extends year by year (uniform rate) until the balance first crosses it; the crossing year is highlighted and the solveLine reports it — occlude the solveLine to ask \"how many years until …?\". Work backwards (reverse to the original amount): give the true principal, set show.workings false (this blanks every derived cell), occlude the year-1 opening cell (cells: [{ row: 1, col: \"opening\", occlude: true }]) and keep finalLine on — the model still computes the correct final value as the given, and the principal shows as \"?\". Occlude to make a question: per cell use cells: [{ row, col, occlude }] with row the year (1..N) and col one of \"opening\", \"multiplier\", \"change\", \"closing\", \"simple\"; or occlude a readout line ({ occlude: true }) to hide just that result. A fully blank answer space comes from show.workings false — the principal and the multipliers stay as the givens and every derived cell empties, leaving \"complete the table\". Keep the same columns and prefix across one lesson so pupils track one table. Staged builds read well: open on the labelled table with the working blank, then reveal one year at a time (blank the not-yet-reached rows), or reveal the multiplier column, then the closing column, then the final value. Switch primitive when the teaching changes: for a single percentage change / percentage of an amount use number/percentage-square; for ratio or proportion scaling use number/ratio-table; for a non-mathematical table use a content table. Synonyms a teacher might use: compound interest, amount after n years, depreciation, depreciate, decay, growth, repeated percentage change, percentage increase/decrease, multiplier, decimal multiplier, growth factor, decay factor, principal, investment, savings, how many years until, compound vs simple interest, overall percentage change, work backwards, original amount.",
   "responseModes": [
     "fill-derived"
-  ],
-  "tags": [
-    "compound interest",
-    "depreciation",
-    "repeated percentage change",
-    "percentage change",
-    "growth",
-    "decay",
-    "multiplier",
-    "growth factor",
-    "decay factor",
-    "amount after n years",
-    "compound vs simple",
-    "simple interest",
-    "overall percentage change",
-    "investment",
-    "savings",
-    "principal",
-    "work backwards",
-    "original amount",
-    "how many years until",
-    "exponential growth",
-    "number",
-    "maths"
   ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
     "properties": {
       "principal": {
-        "type": "number",
-        "description": "The starting amount — the opening balance of year 1. The given the whole table grows or decays from (e.g. 2400 for £2400 invested, 18000 for an £18,000 car). Negative principals are not supported."
+        "type": "number"
       },
       "rate": {
-        "type": "number",
-        "description": "A UNIFORM percentage applied EACH period — use with years. Give the MAGNITUDE and let mode set the direction: rate 5 with mode \"interest\" multiplies by 1.05 each year; rate 20 with mode \"depreciation\" multiplies by 0.8. (For neutral \"change\" mode a positive rate increases.) Ignored when rates is given. Assume greater than −100."
+        "type": "number"
       },
       "years": {
         "type": "integer",
         "minimum": 1,
-        "maximum": 50,
-        "description": "The number of periods (rows) for a uniform rate. \"Year\" is the default period name; the period column simply numbers the rows 1..years. Ignored when rates is given (the rates array sets the row count). When target is set with a uniform rate, the table may auto-extend beyond years to reach the target."
+        "maximum": 50
       },
       "rates": {
         "type": "array",
@@ -58,8 +28,7 @@
         "maxItems": 30,
         "items": {
           "type": "number"
-        },
-        "description": "SIGNED per-period percentages, one per row, for repeated percentage change — [8, -12, 5] means +8% (× 1.08), then −12% (× 0.88), then +5% (× 1.05). Use this for MIXED up-and-down changes that a single uniform rate cannot express. Overrides rate / years. Each entry is the signed percentage for that period; assume each is greater than −100."
+        }
       },
       "mode": {
         "type": "string",
@@ -67,156 +36,123 @@
           "interest",
           "depreciation",
           "change"
-        ],
-        "description": "How the table is framed. \"interest\" — growth; the change column reads \"Interest\", values positive. \"depreciation\" — decay; with a uniform rate the magnitude is treated as a decrease (rate 20 → × 0.8); the change column reads \"Loss\". \"change\" — neutral repeated % change (populations, prices); the column reads \"Change\" and shows signed values. If omitted, inferred: mixed-sign rates → \"change\", an all-decrease rate → \"depreciation\", otherwise \"interest\". (Mixed-sign rates always display signed values under a \"Change\" header regardless of mode.)"
+        ]
       },
       "prefix": {
-        "type": "string",
-        "description": "The symbol shown before every money value (opening, change, closing, simple, and the money readouts). Default \"£\". Set \"\" for a population or other count, or \"$\", \"€\" etc. Never applied to the period number or the multiplier."
+        "type": "string"
       },
       "decimals": {
         "type": "integer",
         "minimum": 0,
-        "maximum": 4,
-        "description": "Decimal places for displayed money values. Default 2 (pennies). A value with a fractional part is padded to this many places; a whole-number value shows with no decimals. Use 0 for whole-unit counts (populations)."
+        "maximum": 4
       },
       "roundPeriod": {
-        "type": "boolean",
-        "description": "Round the running balance to \"decimals\" places at the END of each period — the realistic to-the-penny money process, which guarantees the on-screen columns always reconcile (opening + interest = closing, and each closing equals the next opening). Default true. Set false to keep the chain exact and matching the one-step × (1±r)ⁿ formula (over many periods the displayed columns may then differ by a rounding penny)."
+        "type": "boolean"
       },
       "target": {
-        "type": "number",
-        "description": "A threshold value for a solve-for-n question. With a uniform rate the table AUTO-EXTENDS year by year until the rolling balance first crosses the target (capped at 50 years); the crossing year is highlighted and the solveLine reports \"the balance first exceeds / falls below the target after N years\" (exceeds when target is above the principal, falls below when it is beneath). With a rates array the row count is fixed by the array, and target only highlights a crossing within those periods. Occlude the solveLine to ask \"how many years until …?\"."
+        "type": "number"
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Column toggles.",
         "properties": {
           "opening": {
-            "type": "boolean",
-            "description": "Show the Opening balance column (balance at the start of each year). Default true."
+            "type": "boolean"
           },
           "multiplier": {
-            "type": "boolean",
-            "description": "Show the × multiplier column (the 1 + r or 1 − r decimal factor applied that period — the heart of the method). Default true."
+            "type": "boolean"
           },
           "change": {
-            "type": "boolean",
-            "description": "Show the Interest / Loss / Change column (the money gained or lost that period = opening × (multiplier − 1)). Default true."
+            "type": "boolean"
           },
           "closing": {
-            "type": "boolean",
-            "description": "Show the Closing balance column (balance at the end of each year = opening × multiplier). Default true."
+            "type": "boolean"
           },
           "simple": {
-            "type": "boolean",
-            "description": "Show a Simple-interest comparison column — the balance if the SAME rate were applied as simple interest (principal × (1 + n·r)), to contrast with compound growth. Uniform-rate interest only; ignored for mixed rates or depreciation. Default false."
+            "type": "boolean"
           },
           "workings": {
-            "type": "boolean",
-            "description": "When false, EMPTY every derived cell (every opening after year 1, every multiplier, change, closing and simple cell) — leaving the principal and nothing else as a blank \"complete the table\" answer space. The principal (year-1 opening) stays as the given. Default true."
+            "type": "boolean"
           }
         }
       },
       "multiplierLine": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The headline overall-multiplier readout below the table: \"Multiplier = (1.05)³ = 1.157625\" (uniform) or \"= 1.08 × 0.88 × 1.05 = 0.99792\" (mixed). Omit / set show false to hide. The multiplier and its value are computed.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the multiplier line. Default true."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the multiplier value as \"?\" — \"what is the overall multiplier?\". The formula still shows. Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the multiplier line. Default false."
+            "type": "boolean"
           }
         }
       },
       "finalLine": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The final-value readout: \"Value after n years = …\" (the table's final closing balance). Omit / set show false to hide. Computed.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the final-value line. Default true."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the final value as \"?\" — \"find the value after n years\" (the final closing cell is hidden to match). Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the final-value line. Default false."
+            "type": "boolean"
           }
         }
       },
       "overallChange": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The overall percentage-change readout: \"Overall change = +12.55%\" (= the overall multiplier − 1, as a percentage). Turn this on for the repeated-% lesson that the overall change is NOT the sum of the per-period rates. Default off.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the overall-% line. Default false (set the object with show true to use it)."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the overall % as \"?\" — \"what is the overall percentage change?\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the overall-% line. Default false."
+            "type": "boolean"
           }
         }
       },
       "compareLine": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The compound-vs-simple readout: \"Compound = … · Simple = … · difference = …\". Uniform-rate interest only (simple interest is undefined for mixed rates / depreciation); ignored otherwise. Default off.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the compound-vs-simple line. Default false."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the difference as \"?\" — \"how much more does compound earn?\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the comparison line. Default false."
+            "type": "boolean"
           }
         }
       },
       "solveLine": {
         "type": "object",
         "additionalProperties": false,
-        "description": "The solve-for-n readout (only meaningful when target is set): \"The balance first exceeds / falls below £X after N years\". Default on whenever target is set.",
         "properties": {
           "show": {
-            "type": "boolean",
-            "description": "Show the solve-for-n line. Default true when target is set."
+            "type": "boolean"
           },
           "occlude": {
-            "type": "boolean",
-            "description": "Render the number of years as \"?\" — \"how many years until the balance reaches £X?\". Default false."
+            "type": "boolean"
           },
           "highlight": {
-            "type": "boolean",
-            "description": "Amber the solve-for-n line and the crossing row. Default true when target is set."
+            "type": "boolean"
           }
         }
       },
       "cells": {
         "type": "array",
-        "description": "Per-cell question / staging flags. Every cell's value is always computed; list a cell only to occlude, blank or highlight it. ADDRESSING: row is the year, 1..N (1 = top); col names the column.",
         "items": {
           "type": "object",
           "additionalProperties": false,
@@ -224,8 +160,7 @@
             "row": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 50,
-              "description": "The year (table row), 1..N counted from the top."
+              "maximum": 50
             },
             "col": {
               "type": "string",
@@ -235,20 +170,16 @@
                 "change",
                 "closing",
                 "simple"
-              ],
-              "description": "Which column: \"opening\" (opening balance), \"multiplier\" (the × factor), \"change\" (interest / loss / change), \"closing\" (closing balance) or \"simple\" (the simple-interest comparison)."
+              ]
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render this cell as \"?\" — the question hook. To stop the answer leaking, the model also hides the same-row money cells and the cross-row mirror (a closing equals the next opening) that would directly reconstruct it. Default false."
+              "type": "boolean"
             },
             "blank": {
-              "type": "boolean",
-              "description": "Render nothing in this cell — an unfilled cell for staged builds. Different from occlude: \"?\" poses a question, blank poses nothing yet. If both are set, blank wins. Default false."
+              "type": "boolean"
             },
             "highlight": {
-              "type": "boolean",
-              "description": "Amber fill and value for this cell — draw the eye to a result. Default false."
+              "type": "boolean"
             }
           },
           "required": [
@@ -258,12 +189,10 @@
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the table; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below everything, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -272,7 +201,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — compound interest, £2400 at 3% for 4 years",
       "params": {
         "header": "£2400 invested at 3% per year",
         "principal": 2400,
@@ -289,7 +217,6 @@
       }
     },
     {
-      "label": "Blank answer space — complete the table",
       "params": {
         "header": "£1800 at 5% per year",
         "principal": 1800,
@@ -308,7 +235,6 @@
       }
     },
     {
-      "label": "Occluded question — work backwards to the original deposit",
       "params": {
         "principal": 2500,
         "rate": 4,
@@ -331,7 +257,6 @@
       }
     },
     {
-      "label": "Hard case — solve for n, full columns with the simple-interest comparison",
       "params": {
         "header": "£1000 at 6% per year",
         "principal": 1000,
@@ -351,7 +276,6 @@
       }
     },
     {
-      "label": "Depreciation — an £18,000 car losing 20% a year for 4 years",
       "params": {
         "header": "Car value, depreciating 20% per year",
         "principal": 18000,
@@ -370,7 +294,6 @@
       }
     },
     {
-      "label": "Hard case — mixed repeated % change (overall change is NOT +8 − 12 + 5)",
       "params": {
         "header": "House value, year by year",
         "principal": 250000,

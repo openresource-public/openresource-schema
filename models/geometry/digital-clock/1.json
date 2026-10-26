@@ -4,37 +4,7 @@
   "name": "digital-clock",
   "version": 1,
   "title": "Digital clock",
-  "tagline": "Segmented digital time display (12-hr with am/pm or 24-hr) and a 12↔24 conversion table; period, 12-hr number and +12 link all derived, per-segment occlude.",
-  "description": "A digital time shown two ways from one authored 24-hour time. In readout mode it draws a chunky segmented digital display — seven-segment hour and minute digits with a colon, in 12-hour form (\"9:05\" plus an am/pm token) or 24-hour form (\"09:05\", \"21:05\") — and each segment (hour, minute, the am/pm box) can be occluded to \"?\" to \"complete the readout\". In table mode it draws a 12↔24-hour conversion table — one row per time, with an analogue mini-dial reference, the 12-hour time and the 24-hour time side by side and a derived link showing the actual hour change (\"+12\" for pm, \"−12\" for midnight, \"same\" for am and noon) — and any cell can be occluded for \"fill in the missing time\". The am/pm period, the 12-hour hour number (0→12, 13→1, 23→11), the +12 conversion, the mini-dial hand angles and a warm verbal stem sentence are all derived from the time, so the figure cannot state a wrong or inconsistent time. Distinct from the analogue clock model; the mini-dial here is a small reference glyph only.",
-  "whenToUse": "Reach for this whenever the figure is a digital clock or a 12-hour ↔ 24-hour conversion: reading the time on a digital display, writing / completing a digital time, the +12 rule, and am vs pm. Author the time as { hour, minute } in 24-hour form (hour 0–23: 0 midnight, 12 noon, 13 = 1 pm, 23 = 11 pm); everything else is derived — you never write the 12-hour number, the am/pm, or a converted time. Reading / telling the time: display \"readout\" (default), format \"12\" for \"9:05 am\" or \"24\" for \"09:05\" / \"21:05\"; add a time label (\"School starts\") for context. Complete the readout: put \"hour\", \"minute\" or \"ampm\" in that time's occlude array to hide a segment as \"?\" — pair it with block text that says what to fill in (an occluded readout is a \"write it\" task, not a solvable one). 12↔24 conversion: display \"table\" with several times — each row shows the analogue mini-dial, the 12-hour time and the 24-hour time; show.arrow draws the derived hour change between the two digital cells, so the two 12s (midnight 00:30 and noon 12:30) visibly break the naïve \"add 12\" rule — teach that contrast. Occlude \"twentyFourHour\" (or \"twelveHour\") on every row for an answer space (\"fill in the 24-hour times\"); show.analogue false drops the mini-dial column for a purely digital table. Highlight a segment or cell (amber) to mark the answer just revealed. Staged builds work well — reveal the conversion one cell at a time, or build a single row analogue → 12-hour → 24-hour. Keep the same display mode and format across one lesson. Switch model when the clock is analogue (hands, angle between the hands, fractions of a turn) — use geometry/clock; for durations / timetables use number/timetable. Synonyms a teacher might use: digital clock, digital time, 24-hour clock, twenty-four hour, 12-hour clock, am, pm, morning, afternoon, evening, midnight, noon, midday, telling the time, read the clock, convert the time, twelve hour, twenty four hour time, military time.",
   "responseModes": [],
-  "tags": [
-    "digital clock",
-    "digital time",
-    "24-hour clock",
-    "24 hour",
-    "twenty-four hour",
-    "12-hour clock",
-    "12 hour",
-    "am",
-    "pm",
-    "morning",
-    "afternoon",
-    "evening",
-    "midnight",
-    "noon",
-    "midday",
-    "telling the time",
-    "tell the time",
-    "read the clock",
-    "convert the time",
-    "time conversion",
-    "seven segment",
-    "clock",
-    "time",
-    "geometry",
-    "maths"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -44,8 +14,7 @@
         "enum": [
           "readout",
           "table"
-        ],
-        "description": "\"readout\" (default): one big segmented digital display of the first time. \"table\": a 12↔24 conversion table, one row per time, with an analogue mini-dial reference and a derived +12 link."
+        ]
       },
       "times": {
         "type": "array",
@@ -54,28 +23,23 @@
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "description": "One time, written in 24-hour canonical form. Both digital forms, the am/pm period and the mini-dial hands are derived from it.",
           "properties": {
             "hour": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 23,
-              "description": "The hour on the 24-hour clock, 0–23 (0 = midnight, 12 = noon, 13 = 1 pm, 23 = 11 pm). The 12-hour number and am/pm are derived from it."
+              "maximum": 23
             },
             "minute": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 59,
-              "description": "Minutes past the hour, 0–59. Always shown as two digits (\"05\")."
+              "maximum": 59
             },
             "label": {
-              "type": "string",
-              "description": "Optional context name for this time — a caption beside a single readout (\"School starts\") or the row label in the conversion table (\"Sunset\"). Omit for none."
+              "type": "string"
             },
             "occlude": {
               "type": "array",
               "uniqueItems": true,
-              "description": "Render the named parts as \"?\" — the question hook (\"complete the readout\" / \"fill in the cell\"). The part stays in place; only its value hides. Vocabulary depends on the display: in a READOUT use the segments \"hour\", \"minute\", \"ampm\"; in a TABLE use the whole-cell forms \"twelveHour\", \"twentyFourHour\", \"analogue\". Tokens that do not apply to the current display are ignored. Default none.",
               "items": {
                 "type": "string",
                 "enum": [
@@ -91,7 +55,6 @@
             "highlight": {
               "type": "array",
               "uniqueItems": true,
-              "description": "Amber the named parts to draw the eye (same vocabulary as occlude). Use for the answer just revealed or the part a lesson is about. Default none.",
               "items": {
                 "type": "string",
                 "enum": [
@@ -109,43 +72,35 @@
             "hour",
             "minute"
           ]
-        },
-        "description": "The time(s), each in 24-hour form. READOUT mode shows only the FIRST entry (extra entries are ignored — for several times use the table). TABLE mode shows one row per entry, top to bottom."
+        }
       },
       "format": {
         "type": "string",
         "enum": [
           "12",
           "24"
-        ],
-        "description": "READOUT only: which digital form the big display shows. \"12\" → \"9:05\" with an am/pm token; \"24\" → \"09:05\" / \"21:05\" (two-digit hour, no am/pm). Default \"12\". (The table always shows both forms.)"
+        ]
       },
       "show": {
         "type": "object",
         "additionalProperties": false,
-        "description": "Furniture toggles — all default true.",
         "properties": {
           "analogue": {
-            "type": "boolean",
-            "description": "TABLE only: include the analogue mini-dial column (a small reference clock face — ring and two hands, no numerals). False drops it for a purely digital 12-hr | 24-hr table. Default true."
+            "type": "boolean"
           },
           "arrow": {
-            "type": "boolean",
-            "description": "TABLE only: draw the derived link between the 12-hour and 24-hour cells showing the hour change (\"+12\" for pm times, \"−12\" for midnight, \"same\" for am times and noon). Default true."
+            "type": "boolean"
           },
           "stem": {
-            "type": "boolean",
-            "description": "Show the warm verbal stem sentence — the spoken twin of the figure (READOUT: \"13:07 is the same as 1:07 pm, in the afternoon\"; TABLE: the conversion rule). It is automatically suppressed whenever a segment or cell is occluded, so it can never leak an answer. Default true."
+            "type": "boolean"
           }
         }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title centred above the figure; the top padding grows to clear it."
+        "type": "string"
       },
       "caption": {
-        "type": "string",
-        "description": "Optional line centred below the figure, e.g. a short context note. Never the question or an instruction: that wording is the block's text."
+        "type": "string"
       }
     },
     "required": [
@@ -154,7 +109,6 @@
   },
   "examples": [
     {
-      "label": "Worked example — 24-hour readout 13:07, with the verbal twin",
       "params": {
         "display": "readout",
         "format": "24",
@@ -168,7 +122,6 @@
       }
     },
     {
-      "label": "Worked conversion table — 7:30 in the morning vs 7:30 in the evening",
       "params": {
         "display": "table",
         "times": [
@@ -187,7 +140,6 @@
       }
     },
     {
-      "label": "Blank answer space — read each clock and fill in the 24-hour times",
       "params": {
         "display": "table",
         "times": [
@@ -216,7 +168,6 @@
       }
     },
     {
-      "label": "Occluded question — complete the readout (is it am or pm?)",
       "params": {
         "display": "readout",
         "format": "12",
@@ -233,7 +184,6 @@
       }
     },
     {
-      "label": "The hard case — midnight and noon break the \"add 12\" rule",
       "params": {
         "display": "table",
         "times": [
@@ -262,7 +212,6 @@
       }
     },
     {
-      "label": "Simple 12-hour readout — a labelled morning time",
       "params": {
         "display": "readout",
         "format": "12",

@@ -4,43 +4,7 @@
   "name": "circle-theorems",
   "version": 3,
   "title": "Circle geometry",
-  "tagline": "Circle with named points, chords, radii and tangents and computed angle marks; presets for the standard circle theorems, every value derived from the geometry.",
-  "description": "A circle with named points on the circumference, joined by chords, radii, tangents and dashed construction lines, with angle marks computed from the real geometry (numeric, algebraic or occluded as \"?\", and reflex-aware), right-angle squares, equal-length tick marks / parallel chevrons / length labels on segments, derived chord midpoints (the foot of the perpendicular from the centre) and chord crossings, and shaded segments, sectors or highlighted arcs. Theorem presets cover angle at the centre, same segment, angle in a semicircle, cyclic quadrilateral, tangent–radius and alternate segment; every preset field can be overridden for custom constructions, proofs and questions.",
-  "whenToUse": "Any circle geometry teaching across the whole circle-theorems unit: angle at the centre is twice the angle at the circumference (incl. the reflex central-angle case — set `reflex: true` on the centre mark), angles in the same segment, the angle in a semicircle, opposite angles of a cyclic quadrilateral, a tangent meeting a radius at 90°, the two tangents from an external point being equal in length, the perpendicular from the centre bisecting a chord, and the alternate segment theorem — plus freeform constructions (triangles in circles, kites, isosceles-from-two-radii). Author the explicit construction (the examples show full paramsets to model from): set angle labels to algebraic (\"x\", \"2x\", \"180° − x\") for teaching the relationship, `value: true` for numeric worked examples, `occlude: true` on one mark for \"find the missing angle\". Mark equal lengths with matching `segmentMarks.ticks` (two equal tangents, two equal radii of an isosceles triangle, the two halves of a bisected chord); show a side length with `segmentMarks.label` (\"OC = 10 cm\", or \"?\" for the unknown) for Pythagoras / length problems; mark parallel chords with matching `segmentMarks.arrows`. For a single tangent + Pythagoras (a tangent at 90° to the radius makes a right-angled triangle of the radius, the tangent and the centre-to-external-point line), place the external point on the tangent with `externalPoints` set to angle = the contact point's degrees + atan(tangent ÷ radius) and distance = hypotenuse ÷ radius (in radii), so it sits exactly on the tangent and the right-angle square lines up; join the centre→external point with `segments`, square the contact with `rightAngles` ({ at: contact, from: \"O\", to: \"tangent\" }), and label the three sides (the \"Tangent and radius — length by Pythagoras\" example shows the 6-8-10 figure). For \"the perpendicular from the centre bisects the chord\", add a `midpoints` point M on the chord, draw the segment centre→M, square it with `rightAngles`, and tick the two half-chords equal. Use `shadedRegions` to shade the major/minor segment (same-segment / alternate-segment / shaded-area work), the sector between two radii, or to highlight the arc a pair of angles (or a reflex angle) stands on. Use `constructionSegments` for the dashed proof line (the radius drawn in, the chord that names an arc), and `draggablePoints` so pupils drag a point and watch the invariant hold (web only). Point positions are degrees on the circumference (0° = right, anticlockwise). UNITS — set unit: \"cm\" once per figure and any bare-number segment label (\"6\") reads \"6 cm\"; a label carrying its own text (\"6 cm\", \"x\", \"?\") stays verbatim; angle labels never take it. Keep to at most two highlight colours per figure. For a circular-geoboard scaffold (the regularly-spaced peg boards Oak uses), add unlabelled `dots` at the peg degrees. (Out of scope: square-grid backgrounds; use a coordinate grid for those.)",
   "responseModes": [],
-  "tags": [
-    "circle",
-    "circle theorems",
-    "geometry",
-    "angles",
-    "angle at centre",
-    "same segment",
-    "semicircle",
-    "cyclic quadrilateral",
-    "tangent",
-    "radius",
-    "chord",
-    "alternate segment",
-    "theorem",
-    "proof",
-    "maths",
-    "segment",
-    "sector",
-    "arc",
-    "shade",
-    "reflex angle",
-    "bisect",
-    "perpendicular",
-    "midpoint",
-    "equal lengths",
-    "tick marks",
-    "parallel",
-    "length",
-    "pythagoras",
-    "isosceles",
-    "kite",
-    "external point"
-  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -54,15 +18,13 @@
           "cyclic-quadrilateral",
           "tangent-radius",
           "alternate-segment"
-        ],
-        "description": "OPTIONAL shortcut: fills points / chords / radii / tangents / angleMarks / rightAngles with a canonical figure for that theorem; any field you also supply REPLACES the preset's value. Prefer authoring the explicit construction instead (see the examples) — full paramsets adapt to the teacher's actual question; reach for the preset only when the canonical figure is exactly what you want."
+        ]
       },
       "points": {
         "type": "object",
         "additionalProperties": {
           "type": "number"
-        },
-        "description": "Named points on the circumference: { \"A\": -150, \"P\": 110 }. Values are degrees (0° = right / east, anticlockwise positive). The centre is automatic — refer to it by the centre label (default \"O\")."
+        }
       },
       "externalPoints": {
         "type": "object",
@@ -71,21 +33,18 @@
           "additionalProperties": false,
           "properties": {
             "angle": {
-              "type": "number",
-              "description": "Direction from the centre, degrees (same convention as circumference points)."
+              "type": "number"
             },
             "distance": {
               "type": "number",
-              "exclusiveMinimum": 1,
-              "description": "Distance from the centre in radii (> 1 = outside the circle)."
+              "exclusiveMinimum": 1
             }
           },
           "required": [
             "angle",
             "distance"
           ]
-        },
-        "description": "Named points OUTSIDE the circle, placed polar around the centre: { \"D\": { \"angle\": 8, \"distance\": 2.5 } }. Join to other points with `segments`. Prefer `tangentIntersections` when the external point is where two tangents meet — that placement is computed, so the tangency is exact."
+        }
       },
       "tangentIntersections": {
         "type": "array",
@@ -94,8 +53,7 @@
           "additionalProperties": false,
           "properties": {
             "name": {
-              "type": "string",
-              "description": "Name for the derived external point (e.g. \"D\")."
+              "type": "string"
             },
             "points": {
               "type": "array",
@@ -103,16 +61,14 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two circumference touch points whose tangents meet there."
+              "maxItems": 2
             }
           },
           "required": [
             "name",
             "points"
           ]
-        },
-        "description": "DERIVED external points: where the tangent lines at two circumference points meet (the classic \"two tangents from an external point\" figure). The position is computed from the touch points — exact tangency, stays correct when a touch point is dragged. The two tangent segments draw automatically; add other connections (e.g. centre to the point) via `segments`. The touch points must be less than 176° apart."
+        }
       },
       "midpoints": {
         "type": "array",
@@ -121,8 +77,7 @@
           "additionalProperties": false,
           "properties": {
             "name": {
-              "type": "string",
-              "description": "Name for the derived midpoint, e.g. \"M\"."
+              "type": "string"
             },
             "chord": {
               "type": "array",
@@ -130,16 +85,14 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two circumference points whose chord this is the midpoint of."
+              "maxItems": 2
             }
           },
           "required": [
             "name",
             "chord"
           ]
-        },
-        "description": "DERIVED points: the midpoint of a chord — which is exactly the foot of the perpendicular from the centre to that chord. Computed, so it stays at the true midpoint under drag. The \"perpendicular from the centre bisects the chord\" figure: add M on the chord, join centre→M with `segments`, square the foot with `rightAngles` ({ at: \"M\", from: \"O\", to: <a chord end> }), and tick the two half-chords equal with `segmentMarks`."
+        }
       },
       "chordIntersections": {
         "type": "array",
@@ -148,8 +101,7 @@
           "additionalProperties": false,
           "properties": {
             "name": {
-              "type": "string",
-              "description": "Name for the derived crossing point, e.g. \"E\"."
+              "type": "string"
             },
             "chords": {
               "type": "array",
@@ -162,16 +114,14 @@
                 },
                 "minItems": 2,
                 "maxItems": 2
-              },
-              "description": "The two chords/segments (each a pair of point names) that cross."
+              }
             }
           },
           "required": [
             "name",
             "chords"
           ]
-        },
-        "description": "DERIVED points: where two chords (or segments) cross inside the circle — the intersection is computed, so it stays correct under drag. For the \"crossing chords / diagonals meet at E\" figures; mark the angle at the crossing with `angleMarks` ({ at: \"E\", ... }). The two crossing lines must still be drawn via `chords`/`segments`."
+        }
       },
       "chords": {
         "type": "array",
@@ -182,8 +132,7 @@
           },
           "minItems": 2,
           "maxItems": 2
-        },
-        "description": "Chords as pairs of point names, e.g. [[\"A\",\"P\"],[\"B\",\"P\"]]. A chord between two points 180° apart is a diameter."
+        }
       },
       "segments": {
         "type": "array",
@@ -194,8 +143,7 @@
           },
           "minItems": 2,
           "maxItems": 2
-        },
-        "description": "Straight lines between ANY two named points — circumference, centre, external, derived midpoint or crossing, e.g. [[\"O\",\"M\"]]. Use for lines that leave the circle, or the perpendicular centre→midpoint."
+        }
       },
       "constructionSegments": {
         "type": "array",
@@ -206,22 +154,19 @@
           },
           "minItems": 2,
           "maxItems": 2
-        },
-        "description": "Auxiliary lines drawn DASHED in the construction grey (the same scaffolding ink as radii) between ANY two named points — the proof radius added to a vertex, the dashed chord that names an arc. Use this instead of `segments` when the line is construction scaffolding rather than part of the figure itself."
+        }
       },
       "radii": {
         "type": "array",
         "items": {
           "type": "string"
-        },
-        "description": "Radii drawn from the centre to these named points (dashed construction style)."
+        }
       },
       "tangents": {
         "type": "array",
         "items": {
           "type": "string"
-        },
-        "description": "Tangent lines touching the circle at these named points (drawn perpendicular to the radius at the point)."
+        }
       },
       "angleMarks": {
         "type": "array",
@@ -230,44 +175,34 @@
           "additionalProperties": false,
           "properties": {
             "at": {
-              "type": "string",
-              "description": "Vertex point name — a circumference point, the centre label, or a derived crossing point."
+              "type": "string"
             },
             "from": {
-              "type": "string",
-              "description": "Point name the first ray points at. At a tangent point you may use \"tangent\" / \"tangent-\" for the two tangent directions."
+              "type": "string"
             },
             "to": {
-              "type": "string",
-              "description": "Point name the second ray points at (or \"tangent\" / \"tangent-\")."
+              "type": "string"
             },
             "label": {
-              "type": "string",
-              "description": "Algebraic or fixed label rendered at the mark, e.g. \"x\", \"2x\", \"180° − x\"."
+              "type": "string"
             },
             "value": {
-              "type": "boolean",
-              "description": "Render the COMPUTED angle in degrees, to the nearest 0.1° — whole angles show as whole numbers, a half-degree shows as .5, so a doubled or halved pair always reads exactly (live-updates when a point is dragged). Ignored when `label` is set."
+              "type": "boolean"
             },
             "occlude": {
-              "type": "boolean",
-              "description": "Render \"?\" instead of the label/value — the question hook for \"find the missing angle\"."
+              "type": "boolean"
             },
             "reflex": {
-              "type": "boolean",
-              "description": "Mark the REFLEX angle (the major, > 180° sweep) between the two rays instead of the interior one. For the reflex case of the angle-at-the-centre theorem and reflex central angles in cyclic-quadrilateral / angles-around-a-point work. With `value: true` the reflex degrees are computed."
+              "type": "boolean"
             },
             "awayFrom": {
-              "type": "string",
-              "description": "A point name: the mark sweeps whichever side of the angle does NOT contain that point, turning reflex by itself when it must. Set it on a centre mark to the circumference point P ({ at: \"O\", from: \"A\", to: \"B\", awayFrom: \"P\" }) so the angle at the centre stays on the arc opposite P while points are dragged: then it always reads twice the angle at P. Overrides `reflex`."
+              "type": "string"
             },
             "color": {
-              "type": "string",
-              "description": "Optional CSS colour for this mark's arc. Default is the theme accent. Use a matched pair of colours to pair angles (e.g. the two alternate-segment angle pairs)."
+              "type": "string"
             },
             "radius": {
-              "type": "number",
-              "description": "Arc distance from the vertex in canvas units. Default 24; use different radii to separate stacked marks at one vertex."
+              "type": "number"
             }
           },
           "required": [
@@ -275,8 +210,7 @@
             "from",
             "to"
           ]
-        },
-        "description": "Angle marks. The arc and (with value: true) the degrees are computed from the actual construction — they stay correct when points move. Set `reflex: true` for the major angle."
+        }
       },
       "rightAngles": {
         "type": "array",
@@ -299,8 +233,7 @@
             "from",
             "to"
           ]
-        },
-        "description": "Right-angle squares, same vertex/ray addressing as angleMarks (including \"tangent\" rays, and a derived midpoint vertex for the perpendicular-from-the-centre foot)."
+        }
       },
       "segmentMarks": {
         "type": "array",
@@ -314,35 +247,29 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two endpoints of the segment to annotate (any named points — circumference, centre, external, derived). The line itself must be drawn via chords/segments/radii/tangents/constructionSegments; this only annotates it."
+              "maxItems": 2
             },
             "ticks": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 3,
-              "description": "Equal-length hatch marks at the segment midpoint. Two segments marked with the SAME number of ticks read as equal in length (the two tangents from an external point, the two halves of a bisected chord, the equal radii of an isosceles triangle). Default 0."
+              "maximum": 3
             },
             "arrows": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 3,
-              "description": "Parallel-mark chevrons at the segment midpoint. Two segments with the SAME number of chevrons read as parallel (e.g. a chord parallel to a tangent). Default 0."
+              "maximum": 3
             },
             "label": {
-              "type": "string",
-              "description": "Optional length label beside the segment, e.g. \"6 cm\", \"x\", or \"?\" for an unknown length to find. A bare-number label (\"6\") takes the figure's `unit` automatically (\"6 cm\"); a label with any other text (\"6 cm\", \"x\", \"?\") is shown verbatim."
+              "type": "string"
             },
             "color": {
-              "type": "string",
-              "description": "Optional CSS colour for the ticks/chevrons. Default is the theme accent."
+              "type": "string"
             }
           },
           "required": [
             "between"
           ]
-        },
-        "description": "Marks ON a segment: equal-length ticks, parallel chevrons and/or a length label, all positioned from the two endpoints and tracking them under drag. The construction-language way to say \"these two lengths are equal\" or \"this side is 6 cm\"."
+        }
       },
       "shadedRegions": {
         "type": "array",
@@ -356,8 +283,7 @@
                 "segment",
                 "sector",
                 "arc"
-              ],
-              "description": "segment = the region between a chord and one of its arcs (the major/minor segment); sector = the pie slice between the two radii to the points and the arc; arc = highlight a portion of the circumference itself (a bold stroke, no fill)."
+              ]
             },
             "through": {
               "type": "array",
@@ -365,64 +291,53 @@
                 "type": "string"
               },
               "minItems": 2,
-              "maxItems": 2,
-              "description": "The two CIRCUMFERENCE points bounding the region/arc."
+              "maxItems": 2
             },
             "arc": {
               "type": "string",
               "enum": [
                 "minor",
                 "major"
-              ],
-              "description": "Which of the two arcs the region uses: \"minor\" (the shorter arc / the ≤180° sector) or \"major\" (the longer arc / the reflex sector). Default \"minor\"."
+              ]
             },
             "color": {
-              "type": "string",
-              "description": "Optional CSS colour (default the theme accent). Pass a second colour to distinguish two regions — major vs minor segment, or the two alternate segments."
+              "type": "string"
             }
           },
           "required": [
             "region",
             "through"
           ]
-        },
-        "description": "Shaded / highlighted regions for naming and emphasis: shade the major/minor SEGMENT (same-segment, alternate-segment, shaded-area problems), the SECTOR between two radii, or HIGHLIGHT an ARC of the circumference (to show two angles — or a reflex angle — stand on the same arc). Fills are subtle tints; arc highlights are a bold stroke. At most two colours per figure."
+        }
       },
       "dots": {
         "type": "array",
         "items": {
           "type": "number"
-        },
-        "description": "Unlabelled peg dots on the circumference at these degrees (same convention as points) — the circular-geoboard scaffold. Named points draw their own dot and label over a peg at the same position."
+        }
       },
       "header": {
-        "type": "string",
-        "description": "Optional short title rendered above the construction."
+        "type": "string"
       },
       "centreLabel": {
-        "type": "string",
-        "description": "Label for the centre point. Default \"O\"."
+        "type": "string"
       },
       "showCentre": {
-        "type": "boolean",
-        "description": "Show the centre dot + label. Defaults to true whenever radii, tangents, a centre angle, a sector or a centre-joined segment reference it."
+        "type": "boolean"
       },
       "draggablePoints": {
         "type": "array",
         "items": {
           "type": "string"
-        },
-        "description": "Web-only: these circumference points can be dragged around the circle; chords, marks, derived midpoints/crossings and computed values follow live. The invariant IS the lesson — e.g. drag P in same-segment and watch x stay equal."
+        }
       },
       "unit": {
-        "type": "string",
-        "description": "The figure's length unit, e.g. \"cm\", \"m\", \"mm\". Appended to every segment length label (segmentMarks[].label) that is a BARE NUMBER (\"6\" → \"6 cm\"). A label with any other text (\"6 cm\", \"x\", \"?\") is shown verbatim — an authored override always wins. Angle labels never take it. Default \"\" (labels stay bare). @3."
+        "type": "string"
       }
     }
   },
   "examples": [
     {
-      "label": "Angle at the centre (algebraic)",
       "params": {
         "points": {
           "A": -150,
@@ -460,7 +375,6 @@
       }
     },
     {
-      "label": "Reflex angle at the centre (major arc highlighted)",
       "params": {
         "points": {
           "A": 150,
@@ -511,7 +425,6 @@
       }
     },
     {
-      "label": "Same segment — draggable invariant",
       "params": {
         "points": {
           "A": -150,
@@ -559,7 +472,6 @@
       }
     },
     {
-      "label": "Major and minor segments (name the parts)",
       "params": {
         "points": {
           "A": 160,
@@ -596,7 +508,6 @@
       }
     },
     {
-      "label": "Perpendicular from the centre bisects the chord",
       "params": {
         "points": {
           "A": 210,
@@ -668,7 +579,6 @@
       }
     },
     {
-      "label": "Two tangents from an external point — equal lengths",
       "params": {
         "points": {
           "A": 50,
@@ -741,7 +651,6 @@
       }
     },
     {
-      "label": "Tangent meets a radius",
       "params": {
         "points": {
           "T": -25
@@ -763,7 +672,6 @@
       }
     },
     {
-      "label": "Tangent and radius — length by Pythagoras",
       "params": {
         "points": {
           "B": -25
@@ -822,7 +730,6 @@
       }
     },
     {
-      "label": "Cyclic quadrilateral — find the missing angle",
       "params": {
         "points": {
           "A": 155,
@@ -865,7 +772,6 @@
       }
     },
     {
-      "label": "Alternate segment — colour-matched angle pairs",
       "params": {
         "points": {
           "T": -90,
