@@ -7,6 +7,7 @@ JSON schemas for the structured resource format used by Open Resource. The same 
 - `SCHEMA.md` — resource model overview.
 - `VERSIONING.md` — what a schema version promises: the scheme, what counts as breaking, and what readers, writers and extensions must do.
 - `CHANGELOG.md` — every version, newest first, with what changed and whether it breaks. `versions.json` is the same list for machines: version, date, status, support end, tag.
+- `PROVENANCE.json` — the source commit and schema version this copy was cut from. `scripts/check.mjs` proves the index, schemas, labels and provenance agree; CI runs it on every push.
 - `blocks/bento.md` — the block: tile catalogue and content shape.
 - `MODELS.md` — computed models (parameterised coded figures): the concept and where they appear.
 - `models/<name>.md` — per-model parameter interface (one published example).

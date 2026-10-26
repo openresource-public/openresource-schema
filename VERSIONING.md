@@ -64,3 +64,4 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 - **OR-VER-071.** 0.12.0 is the first tagged version. 0.9, 0.10 and 0.11 predate the tags and are still read.
 - **OR-VER-072.** `versions.json` lists every version with date, status (`current`, `supported`, `retired`), support end, tag and breaking flag; `CHANGELOG.md` describes each. The newest entry in both is the current version.
 - **OR-VER-073.** Each tag has a GitHub release whose notes are that version's changelog entry. Nothing is attached.
+- **OR-VER-074.** Every copy of this repository carries `PROVENANCE.json`: the schema version and the source commit it was cut from.
