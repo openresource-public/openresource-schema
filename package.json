@@ -1,0 +1,13 @@
+{
+  "name": "openresource-schema",
+  "private": true,
+  "type": "module",
+  "description": "The Open Resource schema: data model, migrations and conformance corpus. The schemas are data; this file only installs the validator the conformance runner uses.",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "conformance": "node conformance/run.mjs conformance/validators/ajv.mjs --schema-only"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}

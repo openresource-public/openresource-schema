@@ -16,9 +16,9 @@ The data model for a structured educational resource: a lesson, a quiz, a worksh
 - `examples/` — real lessons in the schema, stripped of platform internals.
 - `schemas/` — machine-readable JSON Schemas: `resource.schema.json` (the envelope), `bento-content.schema.json` (block content) and `tiptap-doc-schema.json` (the rich-text document every text field carries). `schemas/<version>/` holds each published version, never changed once published; the files at `schemas/` are the current version; `schemas/index.json` lists every file's SHA-256. Each file's `$id` is its versioned URL.
 
-## Contributing
+## Ownership and stability
 
-Issues welcome. The source lives in a separate repository; this one is regenerated on each schema-version release, and each release is tagged `v<version>`.
+Maintained by Open Resource. The source lives in a private repository; this one is regenerated from it, each release is tagged `v<version>`, and a tag is never moved or deleted. Before 1.0 a minor may break documents of the previous minor and a patch may not ([VERSIONING.md](VERSIONING.md)). Open Resource reads each minor for at least twelve months after the next ships. Report a problem as an issue here.
 
 ## Licence
 

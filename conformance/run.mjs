@@ -13,7 +13,7 @@
  * (cross-block rules such as question-group contiguity).
  *
  * validators/ajv.mjs is a ready validator for the published JSON Schemas;
- * it needs `ajv` installed next to this repository.
+ * `npm install` in this repository installs the `ajv` it needs.
  */
 
 import { readFileSync, readdirSync } from 'node:fs';

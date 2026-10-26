@@ -8,9 +8,9 @@
  * - versions.json, CHANGELOG.md, SCHEMA.md, the examples, PROVENANCE.json and
  *   migrations/index.mjs all name the same current version
  * - every migration fixture replays: the step turns before into after
- * - models/catalogue.json counts what it lists and its interface digests match
+ * - models/catalogue.json lists its current versions first with matching digests
  *
- * CI runs it on every push and weekly (.github/workflows/check.yml).
+ * CI runs it on every push to main and on pull requests (.github/workflows/check.yml).
  */
 
 import { createHash } from 'node:crypto';
@@ -62,15 +62,24 @@ if (existsSync(path.join(ROOT, 'PROVENANCE.json'))) {
   problems.push('PROVENANCE.json missing');
 }
 
-const { MIGRATIONS, CURRENT, migrate } = await import('../migrations/index.mjs');
-check(CURRENT === current, `migrations/index.mjs CURRENT (${CURRENT}) is not ${current}`);
-for (const step of MIGRATIONS) {
-  const file = `migrations/fixtures/${step.name}.json`;
-  if (!existsSync(path.join(ROOT, file))) { problems.push(`${file} missing`); continue; }
-  const fx = JSON.parse(read(file));
-  const out = step.migrate(fx.before);
-  const stamped = JSON.stringify({ ...out, meta: { ...(out.meta || {}), schemaVersion: step.to } });
-  check(stamped === JSON.stringify(fx.after), `${file}: the step no longer turns before into after`);
+let chain = null;
+try { chain = await import('../migrations/index.mjs'); } catch (e) { problems.push(`migrations/index.mjs does not load: ${e.message}`); }
+if (chain) {
+  const { MIGRATIONS, CURRENT, migrate } = chain;
+  check(CURRENT === current, `migrations/index.mjs CURRENT (${CURRENT}) is not ${current}`);
+  for (const step of MIGRATIONS) {
+    const file = `migrations/fixtures/${step.name}.json`;
+    if (!existsSync(path.join(ROOT, file))) { problems.push(`${file} missing`); continue; }
+    const fx = JSON.parse(read(file));
+    const out = step.migrate(fx.before);
+    const stamped = JSON.stringify({ ...out, meta: { ...(out.meta || {}), schemaVersion: step.to } });
+    check(stamped === JSON.stringify(fx.after), `${file}: the step no longer turns before into after`);
+  }
+  const first = `migrations/fixtures/${MIGRATIONS[0].name}.json`;
+  if (existsSync(path.join(ROOT, first))) {
+    const oldest = JSON.parse(read(first));
+    check(migrate(oldest.before).resource.meta.schemaVersion === current, 'migrations: the chain does not end at the current version');
+  }
 }
 const catalogue = JSON.parse(read('models/catalogue.json'));
 check(catalogue.count === catalogue.models.length, 'models/catalogue.json count differs from its list');
@@ -81,8 +90,6 @@ for (const m of catalogue.models) {
   else problems.push(`${m.ref}: interface file missing`);
 }
 
-const oldest = JSON.parse(read(`migrations/fixtures/${MIGRATIONS[0].name}.json`));
-check(migrate(oldest.before).resource.meta.schemaVersion === current, 'migrations: the chain does not end at the current version');
 
 if (problems.length) {
   console.error(`✗ ${problems.length} problem(s):`);
