@@ -1,11 +1,22 @@
 {
-  "current": "0.12.2",
+  "current": "0.12.3",
   "policy": "VERSIONING.md",
   "versions": [
     {
+      "version": "0.12.3",
+      "date": "2026-10-27",
+      "status": "current",
+      "breaking": false,
+      "tag": "v0.12.3",
+      "schemas": "schemas/0.12.3/",
+      "migration": null,
+      "summary": "The migration chain states its scope: documents made of bento blocks, which is every document since July 2026; earlier shapes are reported as unsupported.",
+      "tagged": "2026-10-27"
+    },
+    {
       "version": "0.12.2",
       "date": "2026-10-26",
-      "status": "current",
+      "status": "supported",
       "breaking": false,
       "tag": "v0.12.2",
       "schemas": "schemas/0.12.2/",

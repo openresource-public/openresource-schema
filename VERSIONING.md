@@ -2,7 +2,7 @@
 
 What a version of the Open Resource schema promises. Each clause has a stable identifier (`OR-VER-nnn`); later versions add clauses and never renumber.
 
-The current schema version is **0.12.2**.
+The current schema version is **0.12.3**.
 
 ## Three version lines
 
@@ -50,7 +50,7 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 
 - **OR-VER-050.** Open Resource reads each minor for at least twelve months after the next minor ships, migrating on read.
 - **OR-VER-051.** The public repository keeps every published version forever. Nothing published changes meaning in place.
-- **OR-VER-052.** `migrations/` carries the chain from the oldest supported version to the current one as dependency-free code with a fixture per step, so any reader can bring an old document forward. `conformance/` carries documents that must and must not validate, with the rule each breaks.
+- **OR-VER-052.** `migrations/` carries the chain to the current version as dependency-free code with a fixture per step, so any reader can bring an old document forward. Its scope is every document whose blocks are all `bento`, which is every document written since the block consolidation of July 2026; a document with retired block types is reported as unsupported and left as it is. `conformance/` carries documents that must and must not validate, with the rule each breaks.
 
 ## Models
 

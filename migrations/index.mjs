@@ -2,15 +2,22 @@
  * Bring a resource forward to the current schema version.
  *
  *   import { migrate } from './migrations/index.mjs';
- *   const { resource, applied } = migrate(oldResource);
+ *   const { resource, applied, status } = migrate(oldResource);
  *
  * Dependency-free. Each step is a pure function from one minor to the next;
  * the chain is keyed on major.minor (a patch is additive, so no step is ever
- * keyed on one) and the head step stamps the full current version. A resource
- * already at the current minor, or at a version the chain does not know, is
- * returned untouched with `applied: []`. Every step is idempotent. Fixtures
- * for each step are in ./fixtures/, one file per step: `before` and the
- * `after` this chain must produce.
+ * keyed on one) and the head step stamps the full current version. Every
+ * step is idempotent. Fixtures for each step are in ./fixtures/, one file
+ * per step: `before` and the `after` this chain must produce.
+ *
+ * Scope. The chain covers documents whose blocks are all of type `bento`,
+ * which is every document written since the block consolidation of July
+ * 2026. Earlier documents carry retired block types (`content_text`,
+ * `question_choice`, `primitive_layered` and others); those types have no
+ * mechanical mapping to tiles, so such a document is reported as
+ * `unsupported`, naming the types found, and returned untouched. The
+ * version stamp alone does not tell the two apart: the consolidation happened
+ * under 0.11 without a version change.
  *
  * CURRENT is written by the release tooling; it always equals versions.json.
  */
@@ -18,7 +25,7 @@
 import { migrateLessonTo010 } from './migrate_0_10_objectiveBlocks.mjs';
 import { migrateLessonTo012 } from './migrate_0_12_projectionCollapse.mjs';
 
-export const CURRENT = '0.12.2';
+export const CURRENT = '0.12.3';
 
 export function parseVersion(value) {
   if (typeof value !== 'string') return null;
@@ -64,13 +71,25 @@ export const MIGRATIONS = [
   if (head.to !== CURRENT) throw new Error(`migrations: the chain ends at ${head.to} but CURRENT is ${CURRENT}; add the ${next(parseVersion(head.to))} step`);
 }
 
+/** Block types in the document that are not `bento`, in first-seen order. */
+export function retiredBlockTypes(resource) {
+  const found = [];
+  const blocks = resource && typeof resource === 'object' && resource.blocks && typeof resource.blocks === 'object' ? resource.blocks : {};
+  for (const block of Object.values(blocks)) {
+    const type = block && typeof block === 'object' ? block.type : undefined;
+    if (type !== 'bento' && !found.includes(type)) found.push(type);
+  }
+  return found;
+}
+
 /**
  * @param {object} resource
- * @returns {{ resource: object, applied: string[], status: 'current' | 'migrated' | 'newer' | 'unknown' }}
+ * @returns {{ resource: object, applied: string[], status: 'current' | 'migrated' | 'newer' | 'unknown' | 'unsupported', unsupportedTypes?: string[] }}
  *   `current`: already at the current minor. `migrated`: walked forward.
  *   `newer`: a later minor than this chain knows; a reader refuses it
- *   (VERSIONING.md, OR-VER-023). `unknown`: no version, or one the chain
- *   has no step for; returned as is.
+ *   (VERSIONING.md, OR-VER-023). `unsupported`: carries block types from
+ *   before the consolidation, listed in `unsupportedTypes`; returned as is.
+ *   `unknown`: no version, or one the chain has no step for; returned as is.
  */
 export function migrate(resource) {
   if (!resource || typeof resource !== 'object') return { resource, applied: [], status: 'unknown' };
@@ -78,6 +97,8 @@ export function migrate(resource) {
   const declared = current.meta && typeof current.meta === 'object' ? current.meta.schemaVersion : undefined;
   let version = minorOf(declared);
   const applied = [];
+  const unsupportedTypes = retiredBlockTypes(resource);
+  if (unsupportedTypes.length) return { resource, applied, status: 'unsupported', unsupportedTypes };
   if (version === minorOf(CURRENT)) return { resource, applied, status: 'current' };
   const d = parseVersion(declared); const c = parseVersion(CURRENT);
   if (d && (d.major > c.major || (d.major === c.major && d.minor > c.minor))) return { resource, applied, status: 'newer' };

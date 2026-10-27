@@ -8,7 +8,7 @@
     "type": "resource",
     "title": "A resource",
     "meta": {
-      "schemaVersion": "0.12.2",
+      "schemaVersion": "0.12.3",
       "version": "2"
     },
     "blocks": {},

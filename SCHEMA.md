@@ -1,4 +1,4 @@
-# Open Resource schema v0.12.2
+# Open Resource schema v0.12.3
 
 A data model for educational resources.
 
@@ -21,7 +21,7 @@ A data model for educational resources.
   assumedKnowledge: AssumedKnowledge[],
 
   meta: {
-    schemaVersion: '0.12.2',
+    schemaVersion: '0.12.3',
     credits?: string,       // optional provenance line for the resource as a whole
     version?: number,       // the resource's own edition, from 1 — see Editions
     status?: 'draft' | 'published' | 'retired',

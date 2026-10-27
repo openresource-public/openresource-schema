@@ -75,10 +75,15 @@ if (chain) {
     const stamped = JSON.stringify({ ...out, meta: { ...(out.meta || {}), schemaVersion: step.to } });
     check(stamped === JSON.stringify(fx.after), `${file}: the step no longer turns before into after`);
   }
-  const first = `migrations/fixtures/${MIGRATIONS[0].name}.json`;
-  if (existsSync(path.join(ROOT, first))) {
-    const oldest = JSON.parse(read(first));
-    check(migrate(oldest.before).resource.meta.schemaVersion === current, 'migrations: the chain does not end at the current version');
+  // The whole chain on a bento document one minor behind: it must land on
+  // the current version. (The oldest fixture is pre-bento by nature and is
+  // reported as unsupported, which the gate in the source repository checks.)
+  const head = MIGRATIONS[MIGRATIONS.length - 1];
+  const headFixture = `migrations/fixtures/${head.name}.json`;
+  if (existsSync(path.join(ROOT, headFixture))) {
+    const fx = JSON.parse(read(headFixture));
+    const r = migrate(fx.before);
+    check(r.status === 'migrated' && r.resource.meta.schemaVersion === current, `migrations: the chain does not bring a ${head.from} document to ${current} (status ${r.status})`);
   }
 }
 const catalogue = JSON.parse(read('models/catalogue.json'));

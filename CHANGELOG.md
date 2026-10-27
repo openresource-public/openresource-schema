@@ -2,6 +2,10 @@
 
 Every schema version, newest first, with whether it breaks documents of the previous version ([VERSIONING.md](VERSIONING.md), OR-VER-010). The date is when the version became current in Open Resource. The same list is machine-readable in [versions.json](versions.json).
 
+## 0.12.3 (2026-10-27, tagged 2026-10-27)
+
+- The migration chain states its scope: documents made of `bento` blocks, which is every document since July 2026. A document carrying retired block types is reported as `unsupported`, with the types named, and left as it is. No shape changed.
+
 ## 0.12.2 (2026-10-26, tagged 2026-10-26)
 
 - Every description in `bento-content.schema.json` rewritten for a reader; the shape is unchanged.
@@ -32,7 +36,7 @@ Every schema version, newest first, with whether it breaks documents of the prev
 
 - The artefact is a resource, not a lesson. No stored field moved; the migration is the identity.
 - First public publication, 2026-06-08.
-- June to July 2026, under this label and without a version change: seventeen block types became the one `bento` type with tile kinds; questions became markable tiles; groups were retired. Under OR-VER-010 each of those would now take a new minor.
+- June to July 2026, under this label and without a version change: seventeen block types became the one `bento` type with tile kinds; questions became markable tiles; groups were retired. Under OR-VER-010 each of those would now take a new minor. The migration chain does not cover documents from before this consolidation; it reports them as unsupported.
 
 ## 0.10.0 (2026-05-28) · breaking
 

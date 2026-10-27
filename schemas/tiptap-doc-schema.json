@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.2/tiptap-doc-schema.json",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.3/tiptap-doc-schema.json",
   "title": "richText document",
   "description": "TipTap (ProseMirror) JSON document. The shape every text-bearing field in the resource schema points at.",
   "type": "object",

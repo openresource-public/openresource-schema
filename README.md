@@ -8,7 +8,7 @@ The data model for a structured educational resource: a lesson, a quiz, a worksh
 - `VERSIONING.md` — what a schema version promises: the scheme, what counts as breaking, and what readers, writers and extensions must do.
 - `CHANGELOG.md` — every version, newest first, with what changed and whether it breaks. `versions.json` is the same list for machines: version, date, status, support end, tag.
 - `PROVENANCE.json` — the source commit and schema version this copy was cut from. `scripts/check.mjs` proves the index, schemas, labels, provenance and migration fixtures agree; CI runs it on every push.
-- `migrations/` — the chain from 0.9 to the current version as dependency-free modules, `migrate(resource)` to run it, and a fixture per step.
+- `migrations/` — the chain to the current version as dependency-free modules, `migrate(resource)` to run it, and a fixture per step. It covers every document made of `bento` blocks, which is every document since July 2026; earlier shapes are reported as unsupported.
 - `conformance/` — valid and invalid documents with the rule each breaks, and a runner to prove a validator against them.
 - `blocks/bento.md` — the block: tile catalogue and content shape.
 - `MODELS.md` — computed models (parameterised coded figures): the concept and where they appear.
