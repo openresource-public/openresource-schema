@@ -1,11 +1,22 @@
 {
-  "current": "0.12.3",
+  "current": "0.12.4",
   "policy": "VERSIONING.md",
   "versions": [
     {
-      "version": "0.12.3",
+      "version": "0.12.4",
       "date": "2026-10-27",
       "status": "current",
+      "breaking": false,
+      "tag": "v0.12.4",
+      "schemas": "schemas/0.12.4/",
+      "migration": null,
+      "summary": "Extensions scoped to the envelope, meta and a block; block content is closed. altText optional on images. Model contracts updated in place. No shape changed.",
+      "tagged": "2026-10-27"
+    },
+    {
+      "version": "0.12.3",
+      "date": "2026-10-27",
+      "status": "supported",
       "breaking": false,
       "tag": "v0.12.3",
       "schemas": "schemas/0.12.3/",

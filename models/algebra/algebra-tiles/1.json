@@ -48,6 +48,22 @@
             },
             "hidden": {
               "type": "boolean"
+            },
+            "arrange": {
+              "type": "string",
+              "enum": [
+                "row",
+                "stack",
+                "grid"
+              ]
+            },
+            "perRow": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "joined": {
+              "type": "boolean"
             }
           },
           "required": [
@@ -70,8 +86,8 @@
               "properties": {
                 "coeff": {
                   "type": "integer",
-                  "minimum": -6,
-                  "maximum": 6
+                  "minimum": -12,
+                  "maximum": 12
                 },
                 "x": {
                   "type": "boolean"
@@ -103,8 +119,8 @@
               "properties": {
                 "coeff": {
                   "type": "integer",
-                  "minimum": -6,
-                  "maximum": 6
+                  "minimum": -12,
+                  "maximum": 12
                 },
                 "x": {
                   "type": "boolean"
@@ -131,6 +147,61 @@
           "top",
           "side"
         ]
+      },
+      "tileStyle": {
+        "type": "string",
+        "enum": [
+          "abstract",
+          "classroom"
+        ]
+      },
+      "columns": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          }
+        }
+      },
+      "mat": {
+        "type": "string",
+        "enum": [
+          "none",
+          "axes"
+        ]
+      },
+      "regions": {
+        "type": "array",
+        "maxItems": 9,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "top": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2
+            },
+            "side": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2
+            },
+            "show": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "top",
+            "side",
+            "show"
+          ]
+        }
       },
       "occlude": {
         "type": "string",
@@ -178,6 +249,9 @@
             "type": "boolean"
           },
           "grid": {
+            "type": "boolean"
+          },
+          "tileLabels": {
             "type": "boolean"
           }
         }
@@ -341,6 +415,37 @@
         "occlude": "factors",
         "show": {
           "collected": true
+        }
+      }
+    },
+    {
+      "params": {
+        "mode": "rectangle",
+        "tileStyle": "classroom",
+        "mat": "axes",
+        "factors": {
+          "top": [
+            {
+              "coeff": -3
+            },
+            {
+              "coeff": 1,
+              "x": true
+            }
+          ],
+          "side": [
+            {
+              "coeff": 1,
+              "x": true
+            },
+            {
+              "coeff": -1
+            }
+          ]
+        },
+        "show": {
+          "collected": true,
+          "factorLabels": false
         }
       }
     },

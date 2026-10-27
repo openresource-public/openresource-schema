@@ -4,7 +4,9 @@
   "name": "area-model",
   "version": 1,
   "title": "Area model",
-  "responseModes": [],
+  "responseModes": [
+    "fill-derived"
+  ],
   "interface": {
     "type": "object",
     "additionalProperties": false,
@@ -33,6 +35,9 @@
             "type": "boolean"
           },
           "highlight": {
+            "type": "boolean"
+          },
+          "blank": {
             "type": "boolean"
           }
         },
@@ -152,6 +157,12 @@
             "type": "boolean"
           },
           "factorTotals": {
+            "type": "boolean"
+          },
+          "edgeArrows": {
+            "type": "boolean"
+          },
+          "cornerMark": {
             "type": "boolean"
           }
         }
@@ -353,6 +364,44 @@
         },
         "total": {
           "expanded": false
+        }
+      }
+    },
+    {
+      "params": {
+        "factors": {
+          "top": [
+            {
+              "coeff": 1,
+              "symbol": "x"
+            },
+            {
+              "coeff": -6,
+              "blank": true
+            }
+          ],
+          "side": [
+            {
+              "coeff": 1,
+              "symbol": "x"
+            },
+            {
+              "coeff": 4,
+              "blank": true
+            }
+          ]
+        },
+        "cells": [
+          {
+            "row": 2,
+            "col": 1,
+            "blank": true
+          }
+        ],
+        "sizing": "equal",
+        "show": {
+          "edgeArrows": true,
+          "cornerMark": false
         }
       }
     }

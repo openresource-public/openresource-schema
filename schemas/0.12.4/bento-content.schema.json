@@ -1,0 +1,2021 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.4/bento-content.schema.json",
+  "title": "block content",
+  "description": "The `content` object of a block (`type: 'bento'`, the fixed discriminator): an optional stem, a list of tiles on the 12-column grid, and an optional beat timeline. Generated from the runtime validator — regenerate rather than edit. Prose documentation: blocks/bento.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "stem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "$ref": "#/$defs/richTextDoc"
+        }
+      },
+      "description": "An optional line of text above the grid that frames the block, such as the stem of a question. Figures belong in tiles, not here."
+    },
+    "tiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "An id unique within the block. Beats and dialogue turns refer to a tile by it."
+          },
+          "part": {
+            "type": "string",
+            "description": "Groups tiles into the lettered or numbered parts of a question: a lowercase letter or roman numeral. Surfaces render the part label from this field, so the tile text does not repeat it. A part's tiles are contiguous in the list."
+          },
+          "speaker": {
+            "type": "string",
+            "description": "The id of a speaker in a dialogue tile of this block. The tile is shown as that speaker's, with their avatar beside it and no speech bubble."
+          },
+          "cell": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "col": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12,
+                "description": "The leftmost column, counting from 1 of 12."
+              },
+              "row": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "The top band, counting from 1. Bands are unbounded; a slide shows six, and a taller block paginates at band boundaries."
+              },
+              "w": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12,
+                "description": "The width in columns. Spans of 3, 4, 6 and 12 are a quarter, a third, a half and the full width."
+              },
+              "h": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 6,
+                "description": "The height in bands, at most 6, so that a tile fits one slide."
+              }
+            },
+            "required": [
+              "col",
+              "row",
+              "w",
+              "h"
+            ],
+            "description": "The rectangle the tile occupies on the 12-column grid. Tiles do not overlap; empty cells are allowed."
+          },
+          "marking": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode": {
+                    "const": "auto"
+                  },
+                  "correctAnswer": {},
+                  "match": {
+                    "type": "string",
+                    "enum": [
+                      "exact",
+                      "set",
+                      "range",
+                      "tolerance",
+                      "latex",
+                      "value"
+                    ]
+                  },
+                  "intent": {
+                    "type": "string",
+                    "enum": [
+                      "equivalent",
+                      "same-form"
+                    ],
+                    "description": "For LaTeX keys only: \"equivalent\" accepts any algebraically equal form; \"same-form\" compares the written form."
+                  },
+                  "tolerance": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "marks": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "groups": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "blanks": {
+                          "type": "array",
+                          "minItems": 2,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "pairs": {
+                          "type": "array",
+                          "minItems": 2,
+                          "items": {
+                            "type": "array",
+                            "minItems": 2,
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "anyOrder": {
+                          "type": "boolean"
+                        },
+                        "distinct": {
+                          "type": "boolean"
+                        },
+                        "sum": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "description": "Constraints across several typed answers. A group of blanks with anyOrder is marked by one-to-one assignment, so either order is accepted; distinct requires the entries to differ; sum requires them to total the given number. A group of pairs lists ordered tuples of blank ids and is marked tuple by tuple. A group carries blanks or pairs, not both."
+                  }
+                },
+                "required": [
+                  "mode"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode": {
+                    "const": "rubric"
+                  },
+                  "scheme": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "const": "criteria"
+                          },
+                          "criteria": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "properties": {
+                                "description": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "object"
+                                    }
+                                  ]
+                                },
+                                "marks": {
+                                  "type": "number",
+                                  "minimum": 0
+                                }
+                              },
+                              "required": [
+                                "description",
+                                "marks"
+                              ]
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "criteria"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "const": "levels"
+                          },
+                          "levels": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "properties": {
+                                "range": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "descriptor": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "object"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "range",
+                                "descriptor"
+                              ]
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "levels"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "const": "method-accuracy"
+                          },
+                          "marks": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "enum": [
+                                    "method",
+                                    "accuracy"
+                                  ]
+                                },
+                                "description": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "object"
+                                    }
+                                  ]
+                                },
+                                "marks": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "answer": {},
+                                "tolerance": {
+                                  "type": "number",
+                                  "minimum": 0
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "description",
+                                "marks"
+                              ]
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "marks"
+                        ]
+                      }
+                    ]
+                  },
+                  "marks": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "mode",
+                  "scheme",
+                  "marks"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode": {
+                    "const": "none"
+                  }
+                },
+                "required": [
+                  "mode"
+                ]
+              }
+            ],
+            "description": "How the tile is scored. Mode \"auto\" carries a machine-checked key and sits on an options, matching, ordering, gaps, table or model tile. Mode \"rubric\" carries a scheme a person marks against and sits on a text or working tile that states the task. Mode \"none\" is unmarked. A marked tile's block declares role \"question\" or \"worked-example\". Answers are stored against the block id and tile id."
+          },
+          "response": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "free-text",
+                  "working"
+                ],
+                "description": "\"free-text\" gives ruled prose lines; \"working\" gives squared space for stepped mathematics."
+              },
+              "lines": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 30,
+                "description": "The size of the answer space in lines. When omitted, two lines per rubric mark, between 4 and 12."
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "description": "The answer space of a rubric-marked tile: an input on the web, ruled lines or working space in print and in Word export. Nothing marks what is written here by machine."
+          },
+          "responseMode": {
+            "type": "string",
+            "enum": [
+              "place-point",
+              "select-point",
+              "select-region",
+              "run-value",
+              "run-sheet",
+              "run-query",
+              "run-statement",
+              "run-program",
+              "run-figure",
+              "fill-derived",
+              "place-derived",
+              "construct",
+              "place-line",
+              "show-inequality",
+              "mark-cross",
+              "plot-curve",
+              "draw-histogram",
+              "draw-journey",
+              "shade-region",
+              "construct-region",
+              "line-of-best-fit",
+              "read-off",
+              "transform-curve",
+              "sketch-curve",
+              "draw-tangent"
+            ],
+            "description": "For a marked model tile: how the answer is given on the figure. Each mode names an interaction and what the key is. place-point: a point is placed; the key is coordinates. select-point: a drawn point is chosen; the key is its label. select-region: an area is chosen; the key is a set of region ids. run-value: the model reports a computed value; the key is a value. run-sheet, run-program, run-query and run-figure: the model runs what was written and marks the result; the key is derived from the model's parameters. fill-derived, place-derived and construct: hidden values are typed, placed or shaped and checked against what the model derives from its own data. place-line, show-inequality, mark-cross, plot-curve, transform-curve, sketch-curve, draw-histogram and draw-tangent: a line, interval, cross, curve, bar or tangent is drawn or moved into place and checked against the target named in the model's parameters. For every derived mode the key is { derived: true } and the model's parameters carry the target. The model must list the mode among those it supports."
+          },
+          "text": {
+            "$ref": "#/$defs/richTextDoc",
+            "description": "Prose: paragraphs and lists as a rich-text document."
+          },
+          "working": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Stepped written mathematics: equation chains, elimination, proofs with reasons, the balance method. Lines are aligned on their relation automatically from plain equations. Annotations are optional and used sparingly.",
+            "properties": {
+              "lhsAlign": {
+                "enum": [
+                  "right",
+                  "left"
+                ],
+                "description": "How the left-hand side of each line is aligned. \"right\" (the default) suits equation chains; \"left\" suits balance-method layouts."
+              },
+              "lines": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "statement": {
+                      "$ref": "#/$defs/richTextDoc",
+                      "description": "The line: one paragraph of text and mathematics. A mathematical line is usually a single math node."
+                    },
+                    "label": {
+                      "type": "string",
+                      "description": "A short lead-in in the gutter, for equation references and operation notes. Parenthesised integers such as \"(1)\" render as circled references; notes such as \"×100\" render as written."
+                    },
+                    "note": {
+                      "$ref": "#/$defs/richTextDoc",
+                      "description": "A reason shown in a right-hand column, smaller and muted; it may contain mathematics."
+                    },
+                    "rule": {
+                      "enum": [
+                        "above",
+                        "below"
+                      ],
+                      "description": "A thick rule: \"above\" sits on a result line, as in column addition; \"below\" underlines the line."
+                    },
+                    "align": {
+                      "type": "boolean",
+                      "description": "Whether the line joins the relation alignment. Default true; false for prose lines and full-width givens."
+                    },
+                    "alignAt": {
+                      "type": "integer",
+                      "description": "A manual alignment point, as a character offset into the statement, for the rare case where the derived alignment is wrong."
+                    },
+                    "arcs": {
+                      "type": "array",
+                      "description": "Arcs linking terms in the statement, as in an expansion. Each arc joins two term marks authored in the statement's LaTeX.",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "description": "The mark id of the first term."
+                          },
+                          "to": {
+                            "type": "string",
+                            "description": "The mark id of the second term."
+                          },
+                          "side": {
+                            "enum": [
+                              "above",
+                              "below"
+                            ],
+                            "description": "Whether the arc bows above or below the terms. Default above."
+                          }
+                        },
+                        "required": [
+                          "from",
+                          "to"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "statement"
+                  ]
+                }
+              },
+              "result": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Answer lines: one LaTeX string per line, each shown centred on a dotted answer line beneath the working, revealed last.",
+                "properties": {
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "lines"
+                ]
+              }
+            },
+            "required": [
+              "lines"
+            ]
+          },
+          "image": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "src": {
+                "type": "string"
+              },
+              "srcRect": {
+                "type": "object"
+              },
+              "altText": {
+                "type": "string"
+              },
+              "search": {
+                "type": "string"
+              },
+              "rotation": {
+                "type": "number"
+              },
+              "caption": {
+                "$ref": "#/$defs/richTextDoc"
+              },
+              "attribution": {
+                "$ref": "#/$defs/richTextDoc"
+              },
+              "orientation": {
+                "type": "string",
+                "enum": [
+                  "landscape",
+                  "portrait"
+                ]
+              },
+              "width": {
+                "type": "number"
+              },
+              "slideWidth": {
+                "type": "number"
+              }
+            }
+          },
+          "model": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ref": {
+                "type": "string",
+                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
+              },
+              "params": {
+                "type": "object",
+                "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
+              },
+              "altText": {
+                "type": "string",
+                "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
+              },
+              "caption": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
+              },
+              "width": {
+                "type": "number"
+              },
+              "slideWidth": {
+                "type": "number"
+              },
+              "steps": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                      "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
+                    },
+                    "ref": {
+                      "type": "string",
+                      "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                      "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
+                    },
+                    "params": {
+                      "type": "object",
+                      "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
+                    },
+                    "altText": {
+                      "type": "string",
+                      "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
+                    },
+                    "revealAt": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "params"
+                  ]
+                },
+                "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
+              }
+            },
+            "required": [
+              "ref",
+              "params",
+              "altText"
+            ],
+            "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
+          },
+          "video": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The video's URL: a YouTube or Vimeo link, a direct video file, or a video uploaded to Open Resource. The renderer chooses the player from the URL."
+              },
+              "altText": {
+                "type": "string",
+                "description": "A description of what the video shows or teaches. It is the accessibility text, the text that search sees, and what is shown where a video cannot play, as in print."
+              },
+              "title": {
+                "type": "string",
+                "description": "An optional short title shown above the player."
+              },
+              "caption": {
+                "$ref": "#/$defs/richTextDoc",
+                "description": "An optional caption as a rich-text document, shown beneath the video, such as a source credit."
+              },
+              "width": {
+                "type": "number"
+              },
+              "slideWidth": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "url",
+              "altText"
+            ],
+            "description": "An embedded video from a URL, in the position an image would take."
+          },
+          "dialogue": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "speakers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "src": {
+                          "type": "string"
+                        },
+                        "srcRect": {
+                          "type": "object"
+                        },
+                        "altText": {
+                          "type": "string"
+                        },
+                        "search": {
+                          "type": "string"
+                        },
+                        "rotation": {
+                          "type": "number"
+                        },
+                        "caption": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "attribution": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "orientation": {
+                          "type": "string",
+                          "enum": [
+                            "landscape",
+                            "portrait"
+                          ]
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              },
+              "turns": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "speaker": {
+                      "type": "string",
+                      "description": "The id of one of the tile's speakers."
+                    },
+                    "text": {
+                      "$ref": "#/$defs/richTextDoc"
+                    },
+                    "about": {
+                      "type": "string",
+                      "description": "Optionally, the id of another tile in the block this turn comments on; the bubble points at it."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "speaker"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "speakers",
+              "turns"
+            ],
+            "description": "Speech between named speakers, each shown with an avatar, as ordered turns with one bubble per turn."
+          },
+          "table": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "rows": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "cells": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "An optional cell id, required on the gap cells of an auto-marked table so that the key can name them."
+                          },
+                          "text": {
+                            "$ref": "#/$defs/richTextDoc"
+                          },
+                          "image": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "src": {
+                                "type": "string"
+                              },
+                              "srcRect": {
+                                "type": "object"
+                              },
+                              "altText": {
+                                "type": "string"
+                              },
+                              "search": {
+                                "type": "string"
+                              },
+                              "rotation": {
+                                "type": "number"
+                              },
+                              "caption": {
+                                "$ref": "#/$defs/richTextDoc"
+                              },
+                              "attribution": {
+                                "$ref": "#/$defs/richTextDoc"
+                              },
+                              "orientation": {
+                                "type": "string",
+                                "enum": [
+                                  "landscape",
+                                  "portrait"
+                                ]
+                              },
+                              "width": {
+                                "type": "number"
+                              },
+                              "slideWidth": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "gap": {
+                            "type": "boolean",
+                            "description": "The cell's content is withheld. On a teaching surface a beat reveals it; on an auto-marked table the pupil types into it."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "cells"
+                  ]
+                }
+              },
+              "hasHeaderRow": {
+                "type": "boolean"
+              },
+              "hasHeaderCol": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "rows"
+            ],
+            "description": "A rectangular grid of cells, every row the same length, with optional header row and column. With marking on the tile, gap cells become typed-answer inputs."
+          },
+          "options": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "variant": {
+                "type": "string",
+                "enum": [
+                  "single",
+                  "multi",
+                  "boolean"
+                ],
+                "description": "\"single\" has one correct option, \"multi\" several, and \"boolean\" is a fixed true-or-false pair with no authored options."
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "$ref": "#/$defs/richTextDoc"
+                    },
+                    "image": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "src": {
+                          "type": "string"
+                        },
+                        "srcRect": {
+                          "type": "object"
+                        },
+                        "altText": {
+                          "type": "string"
+                        },
+                        "search": {
+                          "type": "string"
+                        },
+                        "rotation": {
+                          "type": "number"
+                        },
+                        "caption": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "attribution": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "orientation": {
+                          "type": "string",
+                          "enum": [
+                            "landscape",
+                            "portrait"
+                          ]
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "primitive": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "ref": {
+                          "type": "string",
+                          "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
+                        },
+                        "params": {
+                          "type": "object",
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
+                        },
+                        "altText": {
+                          "type": "string",
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
+                        },
+                        "caption": {
+                          "type": "object",
+                          "additionalProperties": true,
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        },
+                        "steps": {
+                          "type": "array",
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
+                              },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
+                              },
+                              "params": {
+                                "type": "object",
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
+                              },
+                              "altText": {
+                                "type": "string",
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
+                              },
+                              "revealAt": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "params"
+                            ]
+                          },
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
+                        }
+                      },
+                      "required": [
+                        "ref",
+                        "params",
+                        "altText"
+                      ],
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
+                    },
+                    "shapeCluster": {
+                      "type": "object"
+                    },
+                    "feedback": {
+                      "$ref": "#/$defs/richTextDoc",
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
+                    },
+                    "misconceptionId": {
+                      "type": "string",
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                },
+                "description": "The options. Omitted for the boolean variant."
+              },
+              "justification": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "options": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "correctWhen": {
+                          "type": "boolean",
+                          "description": "The truth value this justification is correct for."
+                        },
+                        "text": {
+                          "$ref": "#/$defs/richTextDoc"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "correctWhen"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "options"
+                ],
+                "description": "For the boolean variant: the secondary options that justify the answer."
+              }
+            },
+            "description": "A choice question. The key is one option id for \"single\", an array of ids for \"multi\", and a boolean for \"boolean\"."
+          },
+          "matching": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "variant": {
+                "type": "string",
+                "enum": [
+                  "pairs",
+                  "categorise"
+                ],
+                "description": "\"pairs\" matches one to one between equal columns; \"categorise\" matches many left items to each right item."
+              },
+              "leftColumn": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "$ref": "#/$defs/richTextDoc"
+                    },
+                    "image": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "src": {
+                          "type": "string"
+                        },
+                        "srcRect": {
+                          "type": "object"
+                        },
+                        "altText": {
+                          "type": "string"
+                        },
+                        "search": {
+                          "type": "string"
+                        },
+                        "rotation": {
+                          "type": "number"
+                        },
+                        "caption": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "attribution": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "orientation": {
+                          "type": "string",
+                          "enum": [
+                            "landscape",
+                            "portrait"
+                          ]
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "primitive": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "ref": {
+                          "type": "string",
+                          "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
+                        },
+                        "params": {
+                          "type": "object",
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
+                        },
+                        "altText": {
+                          "type": "string",
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
+                        },
+                        "caption": {
+                          "type": "object",
+                          "additionalProperties": true,
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        },
+                        "steps": {
+                          "type": "array",
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
+                              },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
+                              },
+                              "params": {
+                                "type": "object",
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
+                              },
+                              "altText": {
+                                "type": "string",
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
+                              },
+                              "revealAt": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "params"
+                            ]
+                          },
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
+                        }
+                      },
+                      "required": [
+                        "ref",
+                        "params",
+                        "altText"
+                      ],
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
+                    },
+                    "shapeCluster": {
+                      "type": "object"
+                    },
+                    "feedback": {
+                      "$ref": "#/$defs/richTextDoc",
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
+                    },
+                    "misconceptionId": {
+                      "type": "string",
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              },
+              "rightColumn": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "$ref": "#/$defs/richTextDoc"
+                    },
+                    "image": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "src": {
+                          "type": "string"
+                        },
+                        "srcRect": {
+                          "type": "object"
+                        },
+                        "altText": {
+                          "type": "string"
+                        },
+                        "search": {
+                          "type": "string"
+                        },
+                        "rotation": {
+                          "type": "number"
+                        },
+                        "caption": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "attribution": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "orientation": {
+                          "type": "string",
+                          "enum": [
+                            "landscape",
+                            "portrait"
+                          ]
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "primitive": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "ref": {
+                          "type": "string",
+                          "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
+                        },
+                        "params": {
+                          "type": "object",
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
+                        },
+                        "altText": {
+                          "type": "string",
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
+                        },
+                        "caption": {
+                          "type": "object",
+                          "additionalProperties": true,
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        },
+                        "steps": {
+                          "type": "array",
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
+                              },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
+                              },
+                              "params": {
+                                "type": "object",
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
+                              },
+                              "altText": {
+                                "type": "string",
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
+                              },
+                              "revealAt": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "params"
+                            ]
+                          },
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
+                        }
+                      },
+                      "required": [
+                        "ref",
+                        "params",
+                        "altText"
+                      ],
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
+                    },
+                    "shapeCluster": {
+                      "type": "object"
+                    },
+                    "feedback": {
+                      "$ref": "#/$defs/richTextDoc",
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
+                    },
+                    "misconceptionId": {
+                      "type": "string",
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "leftColumn",
+              "rightColumn"
+            ],
+            "description": "A matching question. The key maps each left item id to a right item id."
+          },
+          "ordering": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "items": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "$ref": "#/$defs/richTextDoc"
+                    },
+                    "image": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "src": {
+                          "type": "string"
+                        },
+                        "srcRect": {
+                          "type": "object"
+                        },
+                        "altText": {
+                          "type": "string"
+                        },
+                        "search": {
+                          "type": "string"
+                        },
+                        "rotation": {
+                          "type": "number"
+                        },
+                        "caption": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "attribution": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "orientation": {
+                          "type": "string",
+                          "enum": [
+                            "landscape",
+                            "portrait"
+                          ]
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "primitive": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "ref": {
+                          "type": "string",
+                          "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
+                        },
+                        "params": {
+                          "type": "object",
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
+                        },
+                        "altText": {
+                          "type": "string",
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
+                        },
+                        "caption": {
+                          "type": "object",
+                          "additionalProperties": true,
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        },
+                        "steps": {
+                          "type": "array",
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
+                              },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
+                              },
+                              "params": {
+                                "type": "object",
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
+                              },
+                              "altText": {
+                                "type": "string",
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
+                              },
+                              "revealAt": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "params"
+                            ]
+                          },
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
+                        }
+                      },
+                      "required": [
+                        "ref",
+                        "params",
+                        "altText"
+                      ],
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
+                    },
+                    "shapeCluster": {
+                      "type": "object"
+                    },
+                    "feedback": {
+                      "$ref": "#/$defs/richTextDoc",
+                      "description": "A note on the item: for a distractor, why it tempts and where it goes wrong; for the right answer, why it is right. It is the record of the item's reasoning and is never shown to the pupil; the worked solution a pupil reads is the block's explanation."
+                    },
+                    "misconceptionId": {
+                      "type": "string",
+                      "description": "The id of the misconception in the resource's registry that this distractor embodies. Never shown to the pupil."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "items"
+            ],
+            "description": "An ordering question. The key is the item ids in the correct sequence."
+          },
+          "gaps": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "blanks": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "input": {
+                      "type": "string",
+                      "enum": [
+                        "math"
+                      ],
+                      "description": "\"math\" makes the blank a mathematics field whose key is a set of LaTeX forms compared structurally, so that notational variants match and a different mathematical form does not. Omitted for a plain typed blank."
+                    },
+                    "intent": {
+                      "type": "string",
+                      "enum": [
+                        "equivalent",
+                        "same-form"
+                      ],
+                      "description": "For mathematics blanks: \"same-form\" (the default) assesses the written form, so an unsimplified or rearranged answer is wrong; \"equivalent\" accepts any algebraically equal answer."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              },
+              "template": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "text": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "text"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "blank": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "blank"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "description": "The cloze text, stored as an array of text runs and blanks."
+              },
+              "wordBank": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "blanks",
+              "template"
+            ],
+            "description": "A cloze: text with typed blanks. The key maps each blank id to a string, an array of accepted strings, a set key when one blank takes a collection, or a precision key when the written precision is assessed. A blank whose answer is mathematical notation declares input \"math\" and its key is a set of LaTeX forms compared structurally."
+          },
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "cols": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 6,
+                "description": "A fixed column count. When omitted the grid balances itself."
+              },
+              "numbered": {
+                "type": "boolean"
+              },
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "$ref": "#/$defs/richTextDoc"
+                    },
+                    "image": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "src": {
+                          "type": "string"
+                        },
+                        "srcRect": {
+                          "type": "object"
+                        },
+                        "altText": {
+                          "type": "string"
+                        },
+                        "search": {
+                          "type": "string"
+                        },
+                        "rotation": {
+                          "type": "number"
+                        },
+                        "caption": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "attribution": {
+                          "$ref": "#/$defs/richTextDoc"
+                        },
+                        "orientation": {
+                          "type": "string",
+                          "enum": [
+                            "landscape",
+                            "portrait"
+                          ]
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "primitive": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "ref": {
+                          "type": "string",
+                          "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                          "description": "The pinned model reference, family/name@version, such as \"graphing/coordinate-grid@4\". Open Resource also resolves a \"user:<id>\" reference to a model published from its workshop; such references are not part of the public library."
+                        },
+                        "params": {
+                          "type": "object",
+                          "description": "The model's parameters, valid against the parameter schema of the version pinned by ref (models/<family>/<name>/<version>.json)."
+                        },
+                        "altText": {
+                          "type": "string",
+                          "description": "A description of what the rendered figure shows, written from the parameters. It is the accessibility text, the text that search sees, and what is shown if the figure cannot render."
+                        },
+                        "caption": {
+                          "type": "object",
+                          "additionalProperties": true,
+                          "description": "An optional caption as a rich-text document, shown as a small line beneath the figure."
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "slideWidth": {
+                          "type": "number"
+                        },
+                        "steps": {
+                          "type": "array",
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+                                "description": "The stage's name in kebab case. Stage markers in a text document refer to a step by this id; beat ops refer to it by its zero-based index."
+                              },
+                              "ref": {
+                                "type": "string",
+                                "pattern": "^(?:([a-z0-9]+(?:-[a-z0-9]+)*)\\/([a-z0-9]+(?:-[a-z0-9]+)*)@(\\d+)|user:([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$",
+                                "description": "Optionally, a different model for this stage, pinned like the slot's ref. When omitted the stage uses the slot's model."
+                              },
+                              "params": {
+                                "type": "object",
+                                "description": "The complete parameter set for this stage, not a patch, valid against the stage's model."
+                              },
+                              "altText": {
+                                "type": "string",
+                                "description": "An optional accessibility text for this stage. When omitted the slot's altText applies."
+                              },
+                              "revealAt": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "For a figure on a question: the answer-reveal beat, counting from 1, at which this stage becomes active. Between pegged beats the figure holds. When no step carries revealAt, the figure completes on the final reveal."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "params"
+                            ]
+                          },
+                          "description": "An optional staged progression of the figure: each entry is a complete parameter set reached in order after the base params, on the same model unless the step names its own ref. On a model tile a beat op of type \"stage\" advances to a step; in a staged text document, stage markers between top-level nodes advance it in step with the prose; on a question, steps advance with the answer reveal, each pegged to a beat by revealAt or, when none is pegged, completing on the final reveal."
+                        }
+                      },
+                      "required": [
+                        "ref",
+                        "params",
+                        "altText"
+                      ],
+                      "description": "A computed figure from the model library, in the position an image would take. It is generated from params rather than bound to an asset."
+                    },
+                    "shapeCluster": {
+                      "type": "object"
+                    },
+                    "icon": {
+                      "type": "string",
+                      "description": "An icon accent on the card, which may sit beside an image."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "items"
+            ],
+            "description": "A uniform collection of cards, never marked. Beats can reveal one item at a time."
+          },
+          "glossary": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "term": {
+                      "$ref": "#/$defs/richTextDoc"
+                    },
+                    "definition": {
+                      "$ref": "#/$defs/richTextDoc"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "items"
+            ],
+            "description": "A list of terms and definitions, never marked."
+          }
+        },
+        "required": [
+          "id",
+          "cell"
+        ],
+        "description": "One tile. Exactly one payload slot is set, and that slot is the tile's kind: text, working, image, model, video, dialogue, table, options, matching, ordering, gaps, items or glossary. Options, matching, ordering, gaps and table tiles may carry marking; items and glossary never do.",
+        "oneOf": [
+          {
+            "required": [
+              "text"
+            ]
+          },
+          {
+            "required": [
+              "working"
+            ]
+          },
+          {
+            "required": [
+              "image"
+            ]
+          },
+          {
+            "required": [
+              "model"
+            ]
+          },
+          {
+            "required": [
+              "video"
+            ]
+          },
+          {
+            "required": [
+              "dialogue"
+            ]
+          },
+          {
+            "required": [
+              "table"
+            ]
+          },
+          {
+            "required": [
+              "options"
+            ]
+          },
+          {
+            "required": [
+              "matching"
+            ]
+          },
+          {
+            "required": [
+              "ordering"
+            ]
+          },
+          {
+            "required": [
+              "gaps"
+            ]
+          },
+          {
+            "required": [
+              "items"
+            ]
+          },
+          {
+            "required": [
+              "glossary"
+            ]
+          }
+        ]
+      }
+    },
+    "beats": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "tile": {
+              "type": "string",
+              "description": "The id of the tile the op targets."
+            },
+            "op": {
+              "type": "string",
+              "enum": [
+                "reveal",
+                "hide",
+                "stage"
+              ],
+              "default": "reveal",
+              "description": "\"reveal\" (the default) shows the target; \"hide\" removes it; \"stage\" advances a model to the step named by stage."
+            },
+            "turn": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "For a dialogue tile: the zero-based turn. Omitted to target the whole tile."
+            },
+            "paragraph": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "For a text tile: the zero-based paragraph. Omitted to target the whole tile."
+            },
+            "line": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "For a working tile: the zero-based statement line. A tile-level op with no line reveals the rest of the working, including the result."
+            },
+            "result": {
+              "type": "boolean",
+              "description": "For a working tile: reveals the result box on its own."
+            },
+            "stage": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "For a model tile with op \"stage\": the zero-based index into the model's steps."
+            },
+            "tableRow": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "For a table tile: the zero-based row of the target cell, with tableCol."
+            },
+            "tableCol": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "For a table tile: the zero-based column of the target cell, with tableRow."
+            },
+            "item": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "For an items tile: the zero-based item, so that cards reveal one at a time. Omitted to target the whole tile. Options, ordering and matching tiles reveal as one."
+            },
+            "answer": {
+              "type": "boolean",
+              "description": "Marks the op as revealing an answer rather than pacing the teaching. Such ops are withheld on pupil-facing surfaces: behind \"Show answer\" in quiz mode and in the answers section of a printed workbook. A block in a sequence with an answer-flagged op is a posed question and carries role \"question\"."
+            }
+          },
+          "required": [
+            "tile"
+          ]
+        }
+      },
+      "description": "The reveal timeline: an ordered list of beats, each a set of ops that happen together on one click. Anything an op targets starts hidden; everything else is visible from the start. Slides play the timeline; the web and print surfaces show it played through, with answer-flagged ops held back for the answers."
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ids"
+      ],
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "The registry entry ids to render. When projection is omitted the whole registry renders."
+        }
+      },
+      "description": "For a projection block (role objectives, glossary, assumed-knowledge, misconceptions or teacher-tips): an optional subset of the registry the block renders."
+    }
+  },
+  "required": [
+    "tiles"
+  ],
+  "$defs": {
+    "richTextDoc": {
+      "description": "A TipTap rich-text document — the shape every text field carries. Full shape: schemas/tiptap-doc-schema.json.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "doc"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/richTextNode"
+          }
+        },
+        "attrs": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "richTextNode": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attrs": {
+          "type": "object"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/richTextNode"
+          }
+        },
+        "marks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "attrs": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  }
+}

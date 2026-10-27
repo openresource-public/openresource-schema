@@ -2,7 +2,7 @@
 
 What a version of the Open Resource schema promises. Each clause has a stable identifier (`OR-VER-nnn`); later versions add clauses and never renumber.
 
-The current schema version is **0.12.3**.
+The current schema version is **0.12.4**.
 
 ## Three version lines
 
@@ -29,7 +29,7 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 
 ## Readers
 
-- **OR-VER-020.** Unknown fields are ignored, never required.
+- **OR-VER-020.** On the envelope, in `meta` and on a block, unknown fields are ignored, never required. Block content is closed: it carries only the fields its schema defines.
 - **OR-VER-021.** An unknown vocabulary value degrades (render the `altText` or text, or skip the tile); known content is never dropped.
 - **OR-VER-022.** A reader that supports a minor accepts every patch of it.
 - **OR-VER-023.** A reader refuses a newer minor with a message naming both versions. It may migrate an older one.
@@ -42,7 +42,7 @@ Each line bumps only for its own kind of change. The tiptap rich-text schema rid
 
 ## Extensions
 
-- **OR-VER-040.** Extension keys begin with `x-`.
+- **OR-VER-040.** Extension keys begin with `x-` and live on the envelope, in `meta` or on a block, never inside block content.
 - **OR-VER-041.** An extension never redefines a core field.
 - **OR-VER-042.** A core-only reader must still process a document that carries extensions.
 

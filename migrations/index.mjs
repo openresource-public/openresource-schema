@@ -25,7 +25,7 @@
 import { migrateLessonTo010 } from './migrate_0_10_objectiveBlocks.mjs';
 import { migrateLessonTo012 } from './migrate_0_12_projectionCollapse.mjs';
 
-export const CURRENT = '0.12.3';
+export const CURRENT = '0.12.4';
 
 export function parseVersion(value) {
   if (typeof value !== 'string') return null;

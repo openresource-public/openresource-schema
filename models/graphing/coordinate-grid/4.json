@@ -56,6 +56,15 @@
             },
             "minItems": 2,
             "maxItems": 2
+          },
+          "showNumbers": {
+            "type": "boolean"
+          },
+          "squareCells": {
+            "type": "boolean"
+          },
+          "majorGrid": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -105,12 +114,64 @@
       "segments": {
         "type": "array",
         "items": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 2,
-          "maxItems": 2
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "from",
+                "to"
+              ],
+              "properties": {
+                "from": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "to": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "arrow": {
+                  "type": "boolean"
+                },
+                "dashed": {
+                  "type": "boolean"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "labelSide": {
+                  "type": "string",
+                  "enum": [
+                    "above",
+                    "below",
+                    "left",
+                    "right"
+                  ]
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
+                }
+              }
+            }
+          ]
         }
       },
       "lines": {
@@ -159,6 +220,10 @@
             },
             "highlight": {
               "type": "boolean"
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^(?:accent|accent-[2-5]|ink|muted|scaffold|#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\\(\\s*[0-9.,%\\s/]+\\)|[a-zA-Z]{3,20})$"
             }
           }
         }
@@ -559,6 +624,97 @@
         "placeLine": {
           "x": -2
         }
+      }
+    },
+    {
+      "params": {
+        "axes": {
+          "x": [
+            -1,
+            4
+          ],
+          "y": [
+            -3,
+            11
+          ],
+          "step": 0.5,
+          "yStep": 1,
+          "labelStep": 1,
+          "yLabelStep": 2,
+          "squareCells": true,
+          "majorGrid": true
+        },
+        "lines": [
+          {
+            "m": 3,
+            "c": -2
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              1,
+              1
+            ],
+            "to": [
+              3,
+              1
+            ],
+            "arrow": true,
+            "dashed": true,
+            "label": "+2",
+            "color": "accent-2"
+          },
+          {
+            "from": [
+              3,
+              1
+            ],
+            "to": [
+              3,
+              7
+            ],
+            "arrow": true,
+            "dashed": true,
+            "label": "+6",
+            "color": "accent-2"
+          }
+        ]
+      }
+    },
+    {
+      "params": {
+        "axes": {
+          "x": [
+            -6,
+            6
+          ],
+          "y": [
+            -6,
+            6
+          ],
+          "showNumbers": false
+        },
+        "lines": [
+          {
+            "m": 2,
+            "c": 1,
+            "label": "P",
+            "color": "accent"
+          },
+          {
+            "m": -0.5,
+            "c": -2,
+            "label": "Q",
+            "color": "accent-4"
+          },
+          {
+            "m": 0.5,
+            "c": 3,
+            "label": "R",
+            "color": "accent-5"
+          }
+        ]
       }
     }
   ]

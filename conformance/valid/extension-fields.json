@@ -1,11 +1,12 @@
 {
-  "reason": "OR-VER-020 and OR-VER-040: x- prefixed fields anywhere are ignored",
+  "reason": "OR-VER-020 and OR-VER-040: x- fields on the envelope, in meta and on a block are ignored",
   "document": {
     "id": "res-1",
     "type": "resource",
     "title": "A resource",
     "meta": {
-      "schemaVersion": "0.12.3"
+      "schemaVersion": "0.12.4",
+      "x-imported-from": "deck-17.pptx"
     },
     "blocks": {
       "b1": {

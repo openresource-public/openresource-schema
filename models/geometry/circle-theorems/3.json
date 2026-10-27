@@ -264,6 +264,12 @@
             },
             "color": {
               "type": "string"
+            },
+            "arrow": {
+              "type": "boolean"
+            },
+            "awayFrom": {
+              "type": "string"
             }
           },
           "required": [
@@ -333,6 +339,21 @@
       },
       "unit": {
         "type": "string"
+      },
+      "pointStyles": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "showDot": {
+              "type": "boolean"
+            }
+          }
+        }
       }
     }
   },
@@ -826,6 +847,144 @@
           }
         ],
         "header": "Alternate segment theorem"
+      }
+    },
+    {
+      "params": {
+        "dots": [
+          0,
+          36,
+          72,
+          108,
+          144,
+          180,
+          216,
+          252,
+          288,
+          324
+        ],
+        "showCentre": true,
+        "points": {
+          "A": 36,
+          "B": 216,
+          "C": 144
+        },
+        "chords": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "C"
+          ],
+          [
+            "C",
+            "A"
+          ]
+        ],
+        "rightAngles": [
+          {
+            "at": "C",
+            "from": "A",
+            "to": "B"
+          }
+        ],
+        "angleMarks": [
+          {
+            "at": "A",
+            "from": "B",
+            "to": "C",
+            "value": true
+          },
+          {
+            "at": "B",
+            "from": "C",
+            "to": "A",
+            "value": true
+          }
+        ],
+        "pointStyles": {
+          "O": {
+            "label": ""
+          },
+          "A": {
+            "label": "",
+            "showDot": false
+          },
+          "B": {
+            "label": "",
+            "showDot": false
+          },
+          "C": {
+            "label": "",
+            "showDot": false
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "points": {
+          "P": 110,
+          "Q": -10
+        },
+        "midpoints": [
+          {
+            "name": "M",
+            "chord": [
+              "P",
+              "Q"
+            ]
+          }
+        ],
+        "chords": [
+          [
+            "P",
+            "Q"
+          ]
+        ],
+        "segments": [
+          [
+            "O",
+            "P"
+          ],
+          [
+            "O",
+            "M"
+          ]
+        ],
+        "angleMarks": [
+          {
+            "at": "P",
+            "from": "O",
+            "to": "Q",
+            "label": "30°"
+          }
+        ],
+        "rightAngles": [
+          {
+            "at": "M",
+            "from": "O",
+            "to": "P"
+          }
+        ],
+        "segmentMarks": [
+          {
+            "between": [
+              "O",
+              "M"
+            ],
+            "label": "4 cm",
+            "arrow": true,
+            "awayFrom": "P"
+          }
+        ],
+        "pointStyles": {
+          "Q": {
+            "label": ""
+          }
+        }
       }
     }
   ]

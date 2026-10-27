@@ -13,7 +13,7 @@
           "version": 1,
           "status": "current",
           "interface": "models/algebra/algebra-tiles/1.json",
-          "sha256": "62900f4152d0684b1aea4317f8bb2f126f1d3e6ad203cc58a6d1c22bcee512a6"
+          "sha256": "661dc4f1e0dd2d3c8260ee4a468f29f616fc83699e2f27935b6b714e3e231f54"
         }
       ]
     },
@@ -28,7 +28,7 @@
           "version": 1,
           "status": "current",
           "interface": "models/algebra/area-model/1.json",
-          "sha256": "457b959e1c50c19ce6d7b5cd721df9e54151a300b9797e7df47ac5d2d0939008"
+          "sha256": "db0afcb3dc0debf412ddb75346a4eb0b71f81dfdfc991863efc49c939c94958a"
         }
       ]
     },
@@ -859,7 +859,7 @@
           "version": 3,
           "status": "current",
           "interface": "models/geometry/circle-theorems/3.json",
-          "sha256": "a52541e1ab9e91bf065f9f930793e2c8597506752af8a4dac07d35ffe654267e"
+          "sha256": "e92876ee0eced41028ab3a7c6a4458e94923fe4311f038c606e3227f264f265f"
         },
         {
           "version": 2,
@@ -1585,7 +1585,7 @@
           "version": 6,
           "status": "current",
           "interface": "models/geometry/triangle/6.json",
-          "sha256": "e0c4c5c851d5a4f9b9e8fdb16f6c703ab6dc6b511f2c57e5ea4f984c55f232fe"
+          "sha256": "06afe6fe55b940c8f49bed5f3699f0f6a977ae181afc318a8439fab56b967395"
         },
         {
           "version": 5,
@@ -1747,7 +1747,7 @@
           "version": 4,
           "status": "current",
           "interface": "models/graphing/coordinate-grid/4.json",
-          "sha256": "24002a2ce31ecdca50ab818cc8fc488942c60aecd04684ec73fcf99671a2207f"
+          "sha256": "cb33502703678ff71aabe4001906426345f9b8f392ef59bbef0e401bb7ee45c0"
         },
         {
           "version": 3,

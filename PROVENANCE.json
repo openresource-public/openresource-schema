@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "0.12.3",
+  "schemaVersion": "0.12.4",
   "source": "a private monorepo",
-  "sourceCommit": "d43be2752376ceeaff9a25a4e650d0d8c13a2cf8",
-  "sourceCommitDate": "2026-10-27T17:50:32Z",
+  "sourceCommit": "448e5b45423be027d61e0403e10172731e2f1152",
+  "sourceCommitDate": "2026-10-27T20:46:55Z",
   "sourceClean": true
 }

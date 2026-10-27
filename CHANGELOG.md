@@ -2,6 +2,12 @@
 
 Every schema version, newest first, with whether it breaks documents of the previous version ([VERSIONING.md](VERSIONING.md), OR-VER-010). The date is when the version became current in Open Resource. The same list is machine-readable in [versions.json](versions.json).
 
+## 0.12.4 (2026-10-27, tagged 2026-10-27)
+
+- OR-VER-020 and OR-VER-040 say where unknown and `x-` fields may live: on the envelope, in `meta` and on a block. Block content is closed, as the schemas have always had it. A conformance document for each side.
+- `altText` on an image is optional, as the schema always had it; SCHEMA.md said otherwise.
+- Model contracts updated in place, no version bump (OR-VER-064): new optional parameters on algebra tiles, area model, circle theorems, coordinate grid and triangle.
+
 ## 0.12.3 (2026-10-27, tagged 2026-10-27)
 
 - The migration chain states its scope: documents made of `bento` blocks, which is every document since July 2026. A document carrying retired block types is reported as `unsupported`, with the types named, and left as it is. No shape changed.

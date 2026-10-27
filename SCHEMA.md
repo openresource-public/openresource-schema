@@ -1,4 +1,4 @@
-# Open Resource schema v0.12.3
+# Open Resource schema v0.12.4
 
 A data model for educational resources.
 
@@ -21,7 +21,7 @@ A data model for educational resources.
   assumedKnowledge: AssumedKnowledge[],
 
   meta: {
-    schemaVersion: '0.12.3',
+    schemaVersion: '0.12.4',
     credits?: string,       // optional provenance line for the resource as a whole
     version?: number,       // the resource's own edition, from 1 — see Editions
     status?: 'draft' | 'published' | 'retired',
@@ -136,14 +136,14 @@ Many places pair an optional image with text: an `image` tile, table cells, and 
 type Image = {
   src?: string,        // the bound asset
   search?: string,     // unfilled slot: an image-search query in place of src
-  altText: string,
+  altText?: string,
   caption?: Doc,       // figure gloss, under the image
   attribution?: Doc,   // credit / licence line, under the caption
   orientation?: 'landscape' | 'portrait'   // layout hint beside text
 }
 ```
 
-`altText` is required for accessibility. `caption` is a `Doc`, so it can carry inline styling and links. `src` is an asset URL or a platform asset id; the example lessons use `"PLACEHOLDER"` where binary assets were stripped. A slot authored before any asset is bound carries `search` — a query the platform resolves to openly-licensed candidates for the teacher to pick — instead of `src`.
+`altText` should be given: it is the accessibility text and what is shown if the image cannot load. `caption` is a `Doc`, so it can carry inline styling and links. `src` is an asset URL or a platform asset id; the example lessons use `"PLACEHOLDER"` where binary assets were stripped. A slot authored before any asset is bound carries `search` — a query the platform resolves to openly-licensed candidates for the teacher to pick — instead of `src`.
 
 Stored resources may also carry platform-written presentation fields on these slots. All are must-ignore for consumers:
 
@@ -152,7 +152,7 @@ Stored resources may also carry platform-written presentation fields on these sl
 - `width` / `slideWidth` — drag-resize width, as a percent of the host
 - paragraph attrs `bullet`, `pEndDefaults`, `align` inside tiptap docs — import provenance
 
-The general rule: unknown fields are must-ignore, never must-understand. Both `text` and `image` are optional in each block where this pair appears — renderers compose text-only, image-only, or both. Where a block can instead carry a computed figure, that figure slot is a **model** rather than an image — see [Models](#models).
+Unknown fields on the envelope, in `meta` and on a block are ignored; block content is closed, so inside it there are none (VERSIONING.md, OR-VER-020). Both `text` and `image` are optional in each block where this pair appears — renderers compose text-only, image-only, or both. Where a block can instead carry a computed figure, that figure slot is a **model** rather than an image — see [Models](#models).
 
 ## Models
 

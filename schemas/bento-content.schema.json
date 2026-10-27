@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.3/bento-content.schema.json",
+  "$id": "https://openresource-public.github.io/openresource-schema/schemas/0.12.4/bento-content.schema.json",
   "title": "block content",
   "description": "The `content` object of a block (`type: 'bento'`, the fixed discriminator): an optional stem, a list of tiles on the 12-column grid, and an optional beat timeline. Generated from the runtime validator — regenerate rather than edit. Prose documentation: blocks/bento.md.",
   "type": "object",
